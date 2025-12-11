@@ -1,7 +1,7 @@
 // components/StudentSignupModal.jsx
 import { useState } from "react";
 import Button from "./Button";
-
+import { useNavigate } from "react-router-dom";
 export default function StudentSignupModal({ onClose }) {
   const [form, setForm] = useState({
     name: "",
@@ -14,13 +14,20 @@ export default function StudentSignupModal({ onClose }) {
     level: "",
   });
 
+  const navigate = useNavigate();
+
+  // Navigate to /generate after successful login/signup
+  const gotoUniversities = () => {
+    navigate("/universities");
+  };
+
   function update(key, value) {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-8 w-full max-w-md shadow-lg">
+      <div className="bg-gray-700 rounded-xl p-8 w-full max-w-md shadow-lg">
         <h2 className="text-2xl font-semibold mb-6 text-center">
           Student Signup
         </h2>
@@ -84,7 +91,7 @@ export default function StudentSignupModal({ onClose }) {
             onChange={(e) => update("level", e.target.value)}
           />
 
-          <Button variant="primary" onClick={onClose}>
+          <Button variant="primary" onClick={gotoUniversities}>
             Sign Up
           </Button>
 

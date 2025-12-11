@@ -1,30 +1,27 @@
 import React from "react";
-import SchoolIcon from '@mui/icons-material/School';
 
 export default function Navbar() {
   return (
-    <header className="container mx-auto px-6 py-6">
-      <nav className="flex justify-between items-center">
-        <a className="flex items-center gap-3" href="#">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-            <SchoolIcon/>
-          </div>
-          <span className="text-2xl font-bold text-gray-900 dark:text-white">SS4</span>
-        </a>
-
-        <div className="hidden md:flex items-center space-x-6 text-gray-600 dark:text-gray-300 font-medium">
-          <a className="hover:text-primary" href="#">Features</a>
-          <a className="hover:text-primary" href="#">Pricing</a>
-          <a className="hover:text-primary" href="#">Discover</a>
-          <a className="hover:text-primary" href="#">Contact</a>
+    <header className="flex shrink-0 items-center justify-between border-b border-[#283039] bg-[#111418] px-6 py-3 text-white">
+      <div className="flex items-center gap-4 cursor-pointer">
+        <div className="size-8 text-[#137fec]">
+          {/* Logo */}
+          <svg viewBox="0 0 48 48" className="w-full h-full" fill="none">
+            <path
+              fill="currentColor"
+              d="M24 0.757L47.243 24 24 47.243 0.757 24 24 0.757ZM21 35.757V12.243L9.243 24 21 35.757Z"
+            />
+          </svg>
         </div>
+        <h2 className="text-2xl font-bold">SS4</h2>
+      </div>
 
-        <div className="flex items-center space-x-4">
-          <a className="text-gray-600 dark:text-gray-300 font-medium hover:text-primary" href="#">Log in</a>
-          <a className="bg-primary text-white font-semibold px-5 py-2.5 rounded-lg shadow-sm hover:bg-blue-600 transition-colors" href="#">
-            Sign Up
-          </a>
-        </div>
+      {/* Fake nav links */}
+      <nav className="hidden lg:flex items-center gap-6">
+        <a className="hover:text-[#137fec] text-sm font-medium" href="#">Browse</a>
+        <a className="hover:text-[#137fec] text-sm font-medium" href="#">Upload Resource</a>
+        <a className="hover:text-[#137fec] text-sm font-medium" href="#">Community</a>
+        <a className="hover:text-[#137fec] text-sm font-medium" href="#">My Library</a>
       </nav>
     </header>
   );

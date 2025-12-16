@@ -9,9 +9,9 @@ export default function Breadcrumbs() {
         <span><ChevronRightIcon/></span>
         <a className="text-[#9dabb9] hover:text-white font-medium" href="#">MIT</a>
         <span ><ChevronRightIcon/></span>
-        <a className="text-[#9dabb9] hover:text-white font-medium" href="#">Science</a>
+        {/* <a className="text-[#9dabb9] hover:text-white font-medium" href="#">Science</a>
         <span><ChevronRightIcon/></span>
-        <span className="text-white font-bold bg-[#137fec33] px-2 py-0.5 rounded text-xs uppercase tracking-wide">Physics</span>
+        <span className="text-white font-bold bg-[#137fec33] px-2 py-0.5 rounded text-xs uppercase tracking-wide">Physics</span> */}
       </div>
     </div>
   );

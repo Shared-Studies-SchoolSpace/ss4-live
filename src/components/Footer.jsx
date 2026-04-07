@@ -21,8 +21,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 mb-24">
           <div className="space-y-8 sm:col-span-2 lg:col-span-1">
              <div className="flex items-center gap-2 opacity-40 grayscale hover:grayscale-0 transition-all cursor-pointer">
-                <img src="/Niche-N-Green-900.svg" alt="Niche" className="h-6" />
-                <span className="text-xl font-bold tracking-tighter text-brand-dark-green">NICHE</span>
+                <img src="/ss4_logo.jpg" alt="SS4" className="h-6" />
              </div>
              <ul className="space-y-4">
                 {['About Us', 'SS4 For Schools', 'SS4 For Sponsors', 'Blog', 'Contact SS4', 'Careers', 'Press'].map(l => (

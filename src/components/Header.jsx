@@ -8,8 +8,7 @@ export const Header = () => {
       <div className="container mx-auto px-4 h-16 lg:h-20 flex items-center justify-between">
         <div className="flex items-center gap-10">
           <a href="/" className="flex items-center">
-            <img src="/Niche-N-Green-900.svg" alt="Niche" className="h-8 lg:h-10" />
-            <span className="hidden lg:block ml-2 text-2xl font-bold tracking-tighter text-brand-dark-green">NICHE</span>
+            <img src="/ss4_logo.jpg" alt="SS4" className="h-8 lg:h-10" />
           </a>
           
           <nav className="hidden lg:flex items-center gap-6">

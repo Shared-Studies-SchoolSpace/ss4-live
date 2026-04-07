@@ -60,7 +60,7 @@ export default function SasPage() {
                                 </div>
                                 {subj.isAvailable ? (
                                     <button className="mt-8 w-full bg-[#004529] text-white font-bold py-3.5 rounded-xl hover:bg-[#26844D] hover:shadow-md transition-all">
-                                        Start Module
+                                        Download Module
                                     </button>
                                 ) : (
                                     <button disabled className="mt-8 w-full bg-gray-100 text-gray-400 font-bold py-3.5 rounded-xl cursor-not-allowed">

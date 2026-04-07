@@ -1,4 +1,3 @@
-import Navbar from "../components/Navbar";
 import UniversityListHeader from "../components/UniversityListHeader";
 import UniversitySearchBar from "../components/UniversitySearchBar";
 import UniversityCard from "../components/UniversityCard";
@@ -46,8 +45,6 @@ export default function UniversitiesPage() {
   };
   return (
     <div className="bg-[#F6F4F0] min-h-screen text-[#111111]">
-      <Navbar />
-
       <main className="px-6 lg:px-10 py-8 max-w-[1400px] mx-auto">
         <UniversityListHeader />
         <UniversitySearchBar />

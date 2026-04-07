@@ -39,10 +39,7 @@ export const Footer = () => {
             title="Junior Secondary"
             links={['JSS Rankings', 'Best Public Schools', 'Best Private Schools', 'Best Boarding Schools']}
           />
-          <FooterColumn 
-            title="Places to Live"
-            links={['Best Places to Live', 'Best Neighborhoods', 'Best Places for Families', 'Rentals']}
-          />
+
           <FooterColumn 
             title="Search Categories"
             links={['JSS', 'SSS', 'A-Levels', 'Scholarships', 'Study Resources']}

@@ -12,32 +12,24 @@ export const Header = () => {
           </a>
           
           <nav className="hidden lg:flex items-center gap-6">
-            {['Junior Secondary', 'Senior Secondary', 'A-Levels', 'Scholarships & Financial Aid', 'Resources'].map((item) => (
-              <a 
-                key={item} 
-                href="#" 
-                className="text-[14px] font-bold text-gray-700 hover:text-brand-primary-green transition-colors"
-              >
-                {item}
-              </a>
-            ))}
-            <button className="text-gray-400 hover:text-brand-primary-green">
+            <a href="/universities" className="text-[14px] font-bold text-gray-700 hover:text-[#26844D] transition-colors">Schools Directory</a>
+            <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-[#26844D] transition-colors">SAS</a>
+            <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-[#26844D] transition-colors">Aspirants Award</a>
+            <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-[#26844D] transition-colors">News</a>
+            <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-[#26844D] transition-colors">About Us</a>
+            <button className="text-gray-400 hover:text-[#26844D]">
               <span className="text-xl">•••</span>
             </button>
           </nav>
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="p-2 text-gray-500 hover:text-brand-primary-green">
-            <SearchIcon className="w-6 h-6" />
+          <button className="hidden sm:block px-6 py-2 border border-[#111111] text-[#111111] font-bold rounded-full hover:bg-gray-100 transition-colors" onClick={() => window.location.href='/about'}>
+            Our Story
           </button>
           
-          <button className="hidden sm:block px-6 py-2 border border-brand-dark-green text-brand-dark-green font-bold rounded-full hover:bg-green-50 transition-colors">
-            Log In
-          </button>
-          
-          <button className="px-6 py-2 bg-brand-dark-green text-white font-bold rounded-full hover:bg-brand-primary-green transition-colors">
-            Sign Up
+          <button className="px-6 py-2 bg-[#26844D] text-white font-bold rounded-full hover:bg-[#1a5b35] transition-colors" onClick={() => window.location.href='/partner'}>
+            Partner With Us
           </button>
         </div>
       </div>

@@ -18,35 +18,35 @@ export const Hero = () => {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-20 text-white">
         <div className="max-w-lg">
           <h2 className="text-xs lg:text-sm font-bold tracking-[0.2em] mb-6 opacity-80 uppercase">
-            Find the school
+            Empowering Secondary Education
           </h2>
           <h1 className="text-4xl lg:text-6xl font-black leading-tight mb-8">
-            THAT FITS YOU BEST
+            ACADEMIC EXCELLENCE REIMAGINED
           </h1>
           
           <div className="w-24 h-1 bg-brand-primary-green mb-8 rounded-full" />
           
           <p className="text-white text-lg lg:text-xl font-medium mb-10 max-w-sm drop-shadow-md leading-snug">
-            Finding the right school shouldn't be hard. From Junior Secondary to Senior Secondary, we make it easy to discover and connect with the best ones for you.
+            Join the premier network of African secondary schools. Equip your students with the rigorous Shared Studies Assessment Series (SAS) and elevate their potential.
           </p>
 
           <div className="space-y-6">
             <h3 className="text-xs font-bold tracking-widest uppercase opacity-80">
-              Start your search
+              Get Started
             </h3>
-            <div className="flex gap-2 mb-6">
-              {['JSS', 'SSS', 'A-Levels'].map((cat) => (
-                <button
-                  key={cat}
-                  className={`px-4 py-2 rounded-full font-bold text-sm transition shadow-sm ${
-                    cat === 'JSS' 
-                      ? 'bg-brand-dark-green text-white' 
-                      : 'bg-white text-[#111111] hover:bg-gray-100'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+            <div className="flex gap-4 mb-6">
+              <a
+                href="/sas"
+                className="px-8 py-3 rounded-full font-bold text-sm transition shadow-lg bg-brand-primary-green text-white hover:bg-[#1a5b35]"
+              >
+                Explore SAS
+              </a>
+              <a
+                href="/partner"
+                className="px-8 py-3 rounded-full font-bold text-sm transition shadow-sm bg-white text-[#111111] hover:bg-gray-100"
+              >
+                Partner With Us
+              </a>
             </div>
           </div>
         </div>

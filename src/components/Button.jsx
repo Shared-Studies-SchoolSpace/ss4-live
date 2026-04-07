@@ -1,11 +1,11 @@
 export default function Button({ children, variant = "primary", ...props }) {
   const variants = {
     primary:
-      "bg-blue-500 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:bg-blue-600 transition-colors",
+      "bg-[#004529] text-white font-bold px-8 py-3 rounded-full shadow-md hover:bg-[#26844D] transition-colors",
     secondary:
-      "bg-white text-gray-700 font-semibold px-8 py-3 rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors",
+      "bg-white text-[#111111] font-bold px-8 py-3 rounded-full shadow-sm border border-gray-200 hover:bg-[#F6F4F0] transition-colors",
     minimal:
-      "text-gray-600 dark:text-gray-300 font-medium hover:text-blue-500",
+      "text-[#111111] font-bold hover:text-[#26844D]",
   };
   return (
     <button className={variants[variant]} {...props}>

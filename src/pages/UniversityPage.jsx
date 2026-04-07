@@ -6,7 +6,7 @@ import CourseSection from "../components/CourseSection";
 
 export default function UniversityPage() {
   return (
-    <div className="bg-[#111418] min-h-screen text-white">
+    <div className="bg-[#F6F4F0] min-h-screen text-[#111111]">
       <Navbar />
       <Breadcrumbs />
 
@@ -14,7 +14,7 @@ export default function UniversityPage() {
         <UniversityHeader />
         <Filters />
 
-        <CourseSection title="Courses Offered" />
+        <CourseSection title="SAS Subjects Scope" />
       </main>
     </div>
   );

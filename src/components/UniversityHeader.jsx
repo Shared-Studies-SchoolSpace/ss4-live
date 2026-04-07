@@ -7,37 +7,37 @@ export default function UniversityHeader() {
   return (
     <div className="flex flex-col md:flex-row gap-6 mb-8 items-start">
       <div className="relative shrink-0">
-        <div className="bg-white rounded-xl h-24 w-24 md:h-32 md:w-32 flex items-center justify-center shadow-lg border border-[#283039]">
+        <div className="bg-[#F6F4F0] rounded-xl h-24 w-24 md:h-32 md:w-32 flex items-center justify-center shadow-md border border-gray-200">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/0/0c/MIT_logo.svg"
-            alt="MIT"
-            className="w-full object-contain"
+            src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/Kings_College_Lagos_Logo.png/220px-Kings_College_Lagos_Logo.png"
+            alt="King's College"
+            className="w-full object-contain mix-blend-multiply"
           />
         </div>
-        <div className="absolute -bottom-2 -right-2 bg-green-500 rounded-full p-1 border-4 border-[#111418]">
-          <span><VerifiedIcon/></span>
+        <div className="absolute -bottom-2 -right-2 bg-[#26844D] text-white rounded-full p-1 border-4 border-white">
+          <VerifiedIcon fontSize="small"/>
         </div>
       </div>
 
       <div className="flex flex-col justify-center flex-1">
-        <h1 className="text-white text-4xl font-bold mb-2">
-          Massachusetts Institute of Technology
+        <h1 className="text-[#111111] text-4xl font-bold mb-2">
+          King's College
         </h1>
 
-        <p className="text-[#9dabb9] text-lg mb-4">University</p>
+        <p className="text-gray-500 text-lg mb-4">Secondary School</p>
 
-        <div className="flex flex-wrap gap-4 text-sm text-[#9dabb9]">
-          <div className="flex items-center gap-1.5 bg-[#181b21] px-3 py-1.5 rounded-full border border-[#283039]">
-            <span><LibraryBooksIcon/></span>
-            <span>1,204 Resources</span>
+        <div className="flex flex-wrap gap-4 text-sm text-[#111111]">
+          <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
+            <span className="text-[#26844D]"><LibraryBooksIcon fontSize="small"/></span>
+            <span className="font-medium">5 SAS Subjects</span>
           </div>
-          <div className="flex items-center gap-1.5 bg-[#181b21] px-3 py-1.5 rounded-full border border-[#283039]">
-            <span><GroupIcon/></span>
-            <span>3.5k Students</span>
+          <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
+            <span className="text-[#26844D]"><GroupIcon fontSize="small"/></span>
+            <span className="font-medium">950 Candidates</span>
           </div>
-          <div className="flex items-center gap-1.5 bg-[#181b21] px-3 py-1.5 rounded-full border border-[#283039]">
-            <span><LocationOnIcon/></span>
-            <span>Cambridge, MA</span>
+          <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
+            <span className="text-[#26844D]"><LocationOnIcon fontSize="small"/></span>
+            <span className="font-medium">Lagos, NG</span>
           </div>
         </div>
       </div>

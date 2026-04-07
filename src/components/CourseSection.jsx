@@ -2,15 +2,16 @@ import CourseCard from "./CourseCard";
 
 export default function CourseSection({ title }) {
   const courses = [
-    { title: "Quantum Mechanics I", description: "Introductory quantum theory." },
-    { title: "Electromagnetism II", description: "Maxwell equations and waves." },
-    { title: "Statistical Physics", description: "Entropy, ensembles, thermodynamics." },
-    { title: "Solid State Physics", description: "Crystals, bands, materials." },
+    { title: "English Language", description: "Comprehension, lexis and structure." },
+    { title: "Mathematics", description: "Algebra, geometry and trigonometry." },
+    { title: "Physics", description: "Mechanics, energy and waves." },
+    { title: "Chemistry", description: "Organic and inorganic chemistry." },
+    { title: "Biology", description: "Ecology, genetics and human biology." },
   ];
 
   return (
     <div className="mb-10">
-      <h3 className="text-white text-xl font-bold mb-4">{title}</h3>
+      <h3 className="text-[#111111] text-2xl font-bold mb-4">{title}</h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {courses.map((c, i) => (

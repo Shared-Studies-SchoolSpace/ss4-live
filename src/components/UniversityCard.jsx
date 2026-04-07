@@ -5,43 +5,41 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 export default function UniversityCard({ name, type, location, resources, logo, verified, onClicked }) {
   return (
     <div 
-    className="group rounded-xl border border-[#283039] bg-[#181b21] p-5 flex flex-col hover:border-[#137fec] transition-all cursor-pointer"
+    className="group rounded-xl border border-gray-200 bg-white p-5 flex flex-col hover:border-[#26844D] hover:shadow-md transition-all cursor-pointer"
     role='button'
     onClick={onClicked}>
       
       {/* Logo */}
       <div className="relative w-16 h-16 mb-4">
-        <div className="bg-white w-full h-full rounded-xl flex items-center justify-center shadow border border-[#283039]">
-          <img src={logo} alt={name} className="w-12 object-contain" />
+        <div className="bg-[#F6F4F0] w-full h-full rounded-xl flex items-center justify-center border border-gray-200 shadow-sm">
+          <img src={logo} alt={name} className="w-12 object-contain mix-blend-multiply" />
         </div>
 
         {/* Verified Badge */}
         {verified && (
-          <div className="absolute -bottom-2 -right-2 bg-green-500 rounded-full p-1 border-4 border-[#181b21]">
-            <span>
-              <VerifiedIcon/>
-            </span>
+          <div className="absolute -bottom-2 -right-2 bg-[#26844D] rounded-full p-1 border-4 border-white text-white">
+            <VerifiedIcon fontSize="small"/>
           </div>
         )}
       </div>
 
       {/* Name */}
-      <h3 className="text-white text-lg font-bold mb-1 group-hover:text-[#137fec] transition-all">
+      <h3 className="text-[#111111] text-lg font-bold mb-1 group-hover:text-[#26844D] transition-all">
         {name}
       </h3>
 
       {/* Type */}
-      <p className="text-[#9dabb9] text-sm mb-2 capitalize">{type}</p>
+      <p className="text-gray-500 text-sm mb-2 capitalize">{type}</p>
 
-      <div className="flex flex-col gap-2 text-sm text-[#9dabb9]">
+      <div className="flex flex-col gap-2 text-sm text-gray-600">
         <div className="flex items-center gap-1.5">
-          <span><LocationOnIcon/></span>
+          <span className="text-gray-400"><LocationOnIcon fontSize="small" /></span>
           <span>{location}</span>
         </div>
 
         <div className="flex items-center gap-1.5">
-          <span><SchoolIcon/></span>
-          <span>{resources} Courses</span>
+          <span className="text-gray-400"><SchoolIcon fontSize="small" /></span>
+          <span>{resources} SAS Subjects</span>
         </div>
       </div>
     </div>

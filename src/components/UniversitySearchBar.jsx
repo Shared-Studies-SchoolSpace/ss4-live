@@ -3,12 +3,12 @@ import SearchIcon from '@mui/icons-material/Search';
 export default function UniversitySearchBar() {
   return (
     <div className="w-full mb-8">
-      <div className="flex items-center bg-[#181b21] border border-[#283039] rounded-xl px-4 h-12 w-full">
-        <span> <SearchIcon/></span>
+      <div className="flex items-center bg-white border border-gray-200 shadow-sm rounded-xl px-4 h-12 w-full focus-within:border-[#26844D] focus-within:ring-2 focus-within:ring-[#26844D]/20 transition-all cursor-text">
+        <span className="text-gray-400 mr-2"><SearchIcon/></span>
         <input
           type="text"
-          placeholder="Search universities..."
-          className="bg-transparent text-white placeholder:text-[#9dabb9] w-full outline-none"
+          placeholder="Search partner schools by name or state..."
+          className="bg-transparent text-[#111111] placeholder:text-gray-400 w-full outline-none"
         />
       </div>
     </div>

@@ -6,46 +6,46 @@ import { useNavigate } from "react-router-dom";
 export default function UniversitiesPage() {
   const universities = [
     {
-      name: "Massachusetts Institute of Technology",
-      type: "university",
-      location: "Cambridge, MA",
-      resources: 1204,
-      logo: "https://upload.wikimedia.org/wikipedia/commons/0/0c/MIT_logo.svg",
+      name: "King's College",
+      type: "secondary school",
+      location: "Lagos, NG",
+      resources: 5,
+      logo: "https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/Kings_College_Lagos_Logo.png/220px-Kings_College_Lagos_Logo.png",
       verified: true,
     },
     {
-      name: "Stanford University",
-      type: "university",
-      location: "Stanford, CA",
-      resources: 980,
-      logo: "https://upload.wikimedia.org/wikipedia/en/b/b7/Stanford_University_seal_2003.svg",
+      name: "Queen's College",
+      type: "secondary school",
+      location: "Lagos, NG",
+      resources: 5,
+      logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/ca/Queens_College_Lagos_Logo.png/220px-Queens_College_Lagos_Logo.png",
       verified: true,
     },
     {
-      name: "Harvard University",
-      type: "university",
-      location: "Cambridge, MA",
-      resources: 1022,
-      logo: "https://upload.wikimedia.org/wikipedia/en/2/29/Harvard_shield_wreath.svg",
+      name: "Christ the King College",
+      type: "secondary school",
+      location: "Onitsha, NG",
+      resources: 5,
+      logo: "https://upload.wikimedia.org/wikipedia/en/7/75/CKCOnitshaLogo.png",
       verified: true,
     },
     {
-      name: "Caltech",
-      type: "university",
-      location: "Pasadena, CA",
-      resources: 650,
-      logo: "https://upload.wikimedia.org/wikipedia/en/5/5d/Caltech_logo.svg",
+      name: "Loyola Jesuit College",
+      type: "secondary school",
+      location: "Abuja, NG",
+      resources: 5,
+      logo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Loyola_Jesuit_College_logo.svg/220px-Loyola_Jesuit_College_logo.svg.png",
       verified: true,
     },
   ];
   const navigate = useNavigate();
 
-  // Navigate to /generate after successful login/signup
+  // Navigate to school profile
   const gotoMit = () => {
-    navigate("/mit");
+    navigate("/school");
   };
   return (
-    <div className="bg-[#111418] min-h-screen text-white">
+    <div className="bg-[#F6F4F0] min-h-screen text-[#111111]">
       <Navbar />
 
       <main className="px-6 lg:px-10 py-8 max-w-[1400px] mx-auto">

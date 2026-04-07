@@ -3,11 +3,14 @@ import CreateUniversityForm from "../components/CreateUniversityForm";
 
 export default function CreateUniversityPage() {
   return (
-    <div className="bg-[#111418] min-h-screen text-white">
+    <div className="bg-[#F6F4F0] min-h-screen text-[#111111]">
       <Navbar />
 
-      <main className="px-6 lg:px-10 py-10 max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Add a New University</h1>
+      <main className="px-6 lg:px-10 py-16 max-w-3xl mx-auto">
+        <h1 className="text-[3rem] font-black text-[#111111] mb-2 leading-[1.1] text-center">Partner With Us</h1>
+        <p className="text-gray-600 text-center text-lg mb-8">
+          Join the Shared Studies network to equip your students with rigorous assessment tools and global exposure.
+        </p>
 
         <CreateUniversityForm />
       </main>

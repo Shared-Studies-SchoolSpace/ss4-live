@@ -3,15 +3,11 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 export default function Breadcrumbs() {
   return (
-    <div className="px-6 py-4 border-b border-[#283039] bg-[#111418] sticky top-0 z-10">
+    <div className="px-6 py-4 border-b border-gray-200 bg-white sticky top-0 z-10 shadow-sm">
       <div className="flex flex-wrap items-center gap-2 text-sm">
-        <a className="text-[#9dabb9] hover:text-white font-medium" href="#">Universities</a>
-        <span><ChevronRightIcon/></span>
-        <a className="text-[#9dabb9] hover:text-white font-medium" href="#">MIT</a>
-        <span ><ChevronRightIcon/></span>
-        {/* <a className="text-[#9dabb9] hover:text-white font-medium" href="#">Science</a>
-        <span><ChevronRightIcon/></span>
-        <span className="text-white font-bold bg-[#137fec33] px-2 py-0.5 rounded text-xs uppercase tracking-wide">Physics</span> */}
+        <a className="text-gray-500 hover:text-[#26844D] font-medium transition-colors" href="/universities">Partner Schools</a>
+        <span className="text-gray-300"><ChevronRightIcon fontSize="small"/></span>
+        <a className="text-[#111111] hover:text-[#26844D] font-medium transition-colors" href="#">King's College</a>
       </div>
     </div>
   );

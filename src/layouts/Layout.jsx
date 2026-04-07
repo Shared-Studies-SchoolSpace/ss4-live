@@ -3,7 +3,7 @@ import PageContainer from "./PageContainer";
 
 export default function Layout({ header, footer }) {
   return (
-    <div className="min-h-screen flex flex-col bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+    <div className="min-h-screen flex flex-col bg-[#F6F4F0] font-sans text-[#111111]">
       {header}
       <main className="flex-grow">
         <PageContainer>

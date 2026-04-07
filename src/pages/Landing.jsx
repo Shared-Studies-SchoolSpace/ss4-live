@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import SectionWrapper from "../components/SectionWrapper";
@@ -9,116 +8,81 @@ import NavBar from "../components/Navbar";
 
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-
-import SignupChoiceModal from "../components/SignupChoiceModal";
-import StudentSignupModal from "../components/StudentSignupModal";
+import VerifiedIcon from "@mui/icons-material/Verified";
 
 export default function LandingPage() {
   const navigate = useNavigate();
 
-  const [openSignupChoice, setOpenSignupChoice] = useState(false);
-  const [openStudentSignup, setOpenStudentSignup] = useState(false);
-
-  function handleGuest() {
-    setOpenSignupChoice(false);
-    navigate("/home");
-  }
-
-  function handleStudent() {
-    setOpenSignupChoice(false);
-    setOpenStudentSignup(true);
-  }
-
   return (
-    <>
+    <div className="bg-[#F6F4F0] min-h-screen text-[#111111]">
       <NavBar />
 
-      {openSignupChoice && (
-        <SignupChoiceModal
-          onGuest={handleGuest}
-          onStudent={handleStudent}
-          onClose={() => setOpenSignupChoice(false)}
-        />
-      )}
-
-      {openStudentSignup && (
-        <StudentSignupModal
-          onClose={() => setOpenStudentSignup(false)}
-        />
-      )}
-
       <SectionWrapper variant="default">
-        <div className="text-center max-w-4xl mx-auto">
-          <H1>Upload, Share, and Monetize Your University Resources</H1>
+        <div className="text-center max-w-4xl mx-auto py-12">
+          <H1>Raising the Standard of African Secondary Education</H1>
 
           <BodyLarge className="mt-6">
-            SS4 is the social-learning marketplace for students and graduates
-            to share and monetize notes, study guides, and more.
+            Shared-Studies-SchoolSpace (SS4) is an institution dedicated to academic excellence,
+            providing rigorous assessment tools and prestigious awards for the brightest students.
           </BodyLarge>
 
           <div className="mt-10 flex justify-center items-center gap-4">
             <Button
               variant="primary"
-              onClick={() => setOpenSignupChoice(true)}
+              onClick={() => navigate("/universities")}
             >
-              Get Started for Free
+              Browse Partner Schools
             </Button>
 
-            <Button variant="secondary">
-              Explore Resources
+            <Button variant="secondary" onClick={() => navigate("/guest")}>
+              View SAS Scope
             </Button>
           </div>
         </div>
       </SectionWrapper>
 
-      <SectionWrapper variant="white">
-        <div className="text-center mb-16">
-          <H2>Everything You Need to Succeed</H2>
+      <SectionWrapper variant="white" className="bg-white">
+        <div className="text-center mb-16 py-12">
+          <H2>Our Core Pillars</H2>
 
           <Body className="mt-4 max-w-2xl mx-auto">
-            Discover a new way to learn and earn with our powerful platform
-            features.
+            We partner with premier schools to ensure every student is prepared for success.
           </Body>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <Card icon={<CloudUploadIcon />} title="Resource Sharing & Monetization">
-            Easily upload your study materials and set your own prices. Turn
-            your hard work into a rewarding side income.
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 py-8">
+          <Card icon={<TravelExploreIcon />} title="The SS4 Network">
+            A comprehensive directory of verified partner secondary schools across Nigeria. Ensure your institution is recognized for its academic rigor.
           </Card>
 
-          <Card icon={<TravelExploreIcon />} title="Structured Content Discovery">
-            Find exactly what you need by filtering by university, course,
-            or topic. Connect with peers and discover trending content.
+          <Card icon={<WorkspacePremiumIcon />} title="Shared Studies Assessment Series">
+            A premier, proprietary academic tool covering 5 core subjects: English, Math, Physics, Chemistry, and Biology.
           </Card>
 
-          <Card icon={<WorkspacePremiumIcon />} title="Flexible Subscription Models">
-            Start with the Freemium plan or upgrade to Premium for unlimited
-            access and exclusive features.
+          <Card icon={<VerifiedIcon />} title="SS4 Aspirants Award">
+            A prestige award celebrating the top JAMB scorer among SS4-affiliated students, featuring a cash reward and sponsor recognition.
           </Card>
         </div>
       </SectionWrapper>
 
       <SectionWrapper variant="light">
-        <div className="text-center max-w-4xl mx-auto">
-          <H2>Join Thousands of Students Today</H2>
+        <div className="text-center max-w-4xl mx-auto py-16">
+          <H2>Become an Official Sponsor</H2>
 
           <BodyLarge className="mt-4">
-            Sign up now to start exploring, sharing, and monetizing your
-            educational resources.
+            Reach students at scale, be associated with excellence, and give back with measurable impact. Join us in shaping the next generation.
           </BodyLarge>
 
           <div className="mt-8">
             <Button
               variant="primary"
-              onClick={() => setOpenSignupChoice(true)}
+              onClick={() => {}}
             >
-              Create Your Free Account
+              Contact for Sponsorship
             </Button>
           </div>
         </div>
       </SectionWrapper>
-    </>
+    </div>
   );
 }

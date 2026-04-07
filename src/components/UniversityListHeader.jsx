@@ -7,14 +7,14 @@ export default function UniversityListHeader() {
   return (
     <div>
       <div className="mb-6 flex justify-between text-center items-center">
-        <h1 className="text-white text-3xl font-bold mb-2">Universities</h1>
-        <button className="border border-white px-3 py-2 rounded-full text-sm hover:bg-gray-600"
+        <h1 className="text-[#111111] text-4xl font-black mb-2">Partner Schools</h1>
+        <button className="bg-white border border-gray-200 shadow-sm text-[#111111] px-4 py-2 rounded-full text-sm hover:bg-[#F6F4F0] font-bold transition-colors"
         onClick={gotoCreateUniversity}>
-          Create
+          Apply to Partner
         </button>
       </div>
-      <p className="text-[#9dabb9]">
-        Browse all available schools and institutions.
+      <p className="text-gray-600">
+        Browse all partner secondary schools in the Shared Studies assessment network.
       </p>
     </div>
   );

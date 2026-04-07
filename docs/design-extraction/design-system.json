@@ -1,0 +1,207 @@
+{
+  "metadata": {
+    "url": "http://localhost:5173",
+    "extractedAt": "2026-04-05T16:22:36Z",
+    "viewportWidth": 1440,
+    "viewportHeight": 900,
+    "userAgent": "Antigravity Extractor / Local File Context"
+  },
+  "designSystem": {
+    "colors": {
+      "primaries": [
+        {"name": "Brand Primary Green", "value": "#26844D", "usage": ["buttons", "links", "accents", "decorative wavy lines", "active pagination dots"]},
+        {"name": "Brand Dark Green", "value": "#004529", "usage": ["headings", "footers", "primary buttons", "hero background", "solid sections"]}
+      ],
+      "neutrals": [
+        {"name": "Brand BG Cream", "value": "#F6F4F0", "usage": ["main application background", "direct admissions section", "light content cards"]},
+        {"name": "Brand Text Dark", "value": "#111111", "usage": ["main body text", "general copy"]},
+        {"name": "White", "value": "#FFFFFF", "usage": ["cards", "header", "discovery grid section", "footer", "text on dark backgrounds"]}
+      ],
+      "accents": [
+        {"name": "Brand Accent Orange", "value": "#FF6B00", "usage": ["direct admissions logo wave", "high contrast call to actions"]}
+      ],
+      "semantic": {
+        "success": null,
+        "error": null, 
+        "warning": null,
+        "info": null
+      },
+      "gradients": [],
+      "backgrounds": [
+        {"element": "body", "value": "#F6F4F0"},
+        {"element": "header", "value": "#FFFFFF"},
+        {"element": "hero", "value": "#004529"},
+        {"element": "footer", "value": "#FFFFFF"},
+        {"element": "stay on track", "value": "#004529"}
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {"name": "Avenir Next", "faces": ["regular", "medium", "bold", "black"], "source": "system"}
+      ],
+      "fontSizes": {
+        "min": "0.625rem",
+        "max": "3.75rem",
+        "scale": [
+          {"name": "xs", "size": "0.75rem", "lineHeight": "1", "letterSpacing": "0.2em", "fontWeight": 700},
+          {"name": "sm", "size": "0.875rem", "lineHeight": "1.25", "letterSpacing": "0.2em", "fontWeight": 700},
+          {"name": "base", "size": "1rem", "lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": 400},
+          {"name": "lg", "size": "1.125rem", "lineHeight": "1.75", "letterSpacing": "0em", "fontWeight": 500},
+          {"name": "xl", "size": "1.25rem", "lineHeight": "1.75", "letterSpacing": "0em", "fontWeight": 500},
+          {"name": "4xl", "size": "2.25rem", "lineHeight": "1.1", "letterSpacing": "0em", "fontWeight": 900},
+          {"name": "5xl", "size": "3rem", "lineHeight": "1.1", "letterSpacing": "0em", "fontWeight": 900},
+          {"name": "6xl", "size": "3.75rem", "lineHeight": "1.1", "letterSpacing": "0em", "fontWeight": 900}
+        ]
+      },
+      "headings": {
+        "h1": {"size": "3.75rem", "weight": 900, "lineHeight": 1.1, "letterSpacing": "0em", "marginBottom": "2rem"},
+        "h2": {"size": "3rem", "weight": 900, "lineHeight": 1.1, "letterSpacing": "0em", "marginBottom": "2rem"},
+        "h3": {"size": "0.875rem", "weight": 700, "lineHeight": 1.25, "letterSpacing": "0.2em", "marginBottom": "1rem"}
+      },
+      "body": {
+        "size": "1rem",
+        "weight": 400,
+        "lineHeight": 1.5,
+        "color": "#111111"
+      },
+      "small": {"size": "0.75rem", "weight": 700, "lineHeight": 1, "color": "#6B7280"},
+      "link": {"color": "#374151", "hoverColor": "#26844D", "textDecoration": "none"}
+    },
+    "spacing": {
+      "baseUnit": "0.25rem",
+      "scale": [
+        {"name": "4", "value": "1rem"},
+        {"name": "8", "value": "2rem"},
+        {"name": "12", "value": "3rem"},
+        {"name": "16", "value": "4rem"},
+        {"name": "24", "value": "6rem"}
+      ],
+      "containerPadding": {"mobile": "1rem", "tablet": "2rem", "desktop": "2rem"},
+      "sectionGaps": {"between": "6rem", "within": "2rem"}
+    },
+    "layout": {
+      "gridSystem": {"columns": 12, "gutter": "1rem", "margin": "1rem", "breakpoints": {"mobile": "0px", "tablet": "768px", "desktop": "1024px"}},
+      "maxWidths": {"container": "80rem", "text": "42rem", "content": "80rem"},
+      "zIndexLayers": [{"name": "header", "value": 50}],
+      "positioningStrategy": "relative"
+    },
+    "borders": {
+      "radius": {
+        "none": "0rem",
+        "sm": "0.125rem",
+        "md": "0.375rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "2xl": "1rem",
+        "3xl": "3rem",
+        "full": "9999px"
+      },
+      "widths": {"thin": "1px", "normal": "2px", "thick": "4px"},
+      "styles": ["solid", "dashed"]
+    },
+    "shadows": {
+      "sm": {"value": "0 1px 2px 0 rgb(0 0 0 / 0.05)", "usage": ["header navigation border", "subtle UI tags"]},
+      "md": {"value": "0 4px 6px -1px rgb(0 0 0 / 0.1)", "usage": ["interactive cards default", "buttons"]},
+      "lg": {"value": "0 10px 15px -3px rgb(0 0 0 / 0.1)", "usage": ["elevated widgets", "dropdowns"]},
+      "xl": {"value": "0 20px 25px -5px rgb(0 0 0 / 0.1)", "usage": ["prominent cards", "mockup containers"]},
+      "inner": {"value": "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)", "usage": ["direct admissions graphic container"]}
+    },
+    "animation": {
+      "durations": {"instant": "0ms", "fast": "200ms", "normal": "300ms", "slow": "700ms", "verySlow": "1000ms"},
+      "easing": {"default": "ease", "enter": "ease-out", "exit": "ease-in", "spring": "cubic-bezier(0.4, 0, 0.2, 1)"},
+      "transitions": [
+        {"property": "all", "duration": "200ms", "easing": "ease"},
+        {"property": "transform", "duration": "300ms", "easing": "ease"},
+        {"property": "opacity", "duration": "1000ms", "easing": "ease-in-out"}
+      ]
+    },
+    "interactions": {
+      "hover": {"scale": 1.1, "opacity": 1, "transition": "transform 300ms ease"},
+      "focus": {"outlineWidth": "2px", "outlineColor": "#26844D", "offset": "2px"},
+      "active": {"scale": 0.98, "opacity": 1},
+      "loading": {"spinnerType": "pulse", "skeletonColor": "#e5e7eb"}
+    }
+  },
+  "components": [
+    {
+      "name": "Header",
+      "selector": "header.sticky",
+      "screenshot": null,
+      "styles": {
+        "container": {"backgroundColor": "#FFFFFF", "borderBottom": "1px solid #f3f4f6", "zIndex": 50},
+        "inner": {"height": "5rem", "display": "flex", "alignItems": "center", "justifyContent": "space-between"},
+        "text": {"fontWeight": 700, "fontSize": "0.875rem"}
+      },
+      "variants": [
+        {
+          "name": "Sign Up Button",
+          "styles": {"backgroundColor": "#004529", "color": "#FFFFFF", "borderRadius": "9999px"},
+          "behavior": "hover: background darkens"
+        }
+      ]
+    },
+    {
+      "name": "Hero CTA Pill",
+      "selector": ".bg-brand-primary-green.rounded",
+      "screenshot": null,
+      "styles": {
+        "container": {"backgroundColor": "#26844D", "padding": "1rem 2rem", "borderRadius": "0.25rem", "boxShadow": "0 10px 15px -3px rgb(0 0 0 / 0.1)"},
+        "text": {"fontWeight": 700, "color": "#FFFFFF"}
+      },
+      "variants": [],
+      "breakpoints": {}
+    },
+    {
+      "name": "Discovery Item",
+      "selector": ".flex-col.items-center.text-center.group",
+      "screenshot": null,
+      "styles": {
+        "container": {"display": "flex", "flexDirection": "column", "alignItems": "center"},
+        "inner": {"backgroundColor": "#F6F4F0", "borderRadius": "9999px", "padding": "1.5rem"}
+      },
+      "variants": [
+        {"name": "Icon Hover", "styles": {}, "behavior": "scale to 110% on group hover"}
+      ]
+    }
+  ],
+  "patterns": {
+    "navigation": {
+      "type": "top",
+      "behavior": "sticky",
+      "items": 5,
+      "mobileBehavior": "hamburger"
+    },
+    "cards": {
+      "count": 3,
+      "layout": "grid",
+      "hoverEffect": "scale",
+      "contentStructure": ["icon", "title", "description"]
+    },
+    "forms": {
+      "inputStyle": "outlined",
+      "borderRadius": "0.5rem",
+      "validationStyle": "inline"
+    },
+    "modals": {
+      "triggerType": "click",
+      "animation": "fade",
+      "backdropBlur": true,
+      "closeBehavior": "click-outside"
+    }
+  },
+  "designPrinciples": {
+    "overallVibe": ["Educational", "Trustworthy", "Modern", "Dynamic", "Clean"],
+    "references": ["Modern SaaS platforms", "Premium direct-to-consumer services"],
+    "uniqueElements": ["Wavy bottom border transitions", "Thick dark green backgrounds contrasted with light cream", "Pulse animations simulating UI skeletons"],
+    "accessibility": {
+      "contrastRatios": {"minimum": 4.5, "violations": []},
+      "focusIndicators": true,
+      "ariaLabels": true
+    },
+    "performance": {
+      "imageOptimization": true,
+      "fontLoading": "swap",
+      "criticalCSS": "inline"
+    }
+  }
+}

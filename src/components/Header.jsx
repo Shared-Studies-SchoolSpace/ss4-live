@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NicheLogo, SearchIcon } from './icons';
 
 export const Header = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-100 shadow-sm">
       <div className="container mx-auto px-4 h-16 lg:h-20 flex items-center justify-between">
@@ -23,6 +24,14 @@ export const Header = () => {
           </nav>
         </div>
 
+        {/* Mobile menu toggle */}
+        <button 
+          className="lg:hidden ml-auto mr-4 text-brand-dark-green"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+
         <div className="flex items-center gap-4">
           <button className="hidden sm:block px-6 py-2 border border-[#111111] text-[#111111] font-bold rounded-full hover:bg-gray-100 transition-colors" onClick={() => window.location.href='/about'}>
             Our Story
@@ -33,6 +42,24 @@ export const Header = () => {
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden absolute top-[100%] left-0 w-full bg-white border-b border-gray-100 shadow-md p-6 flex flex-col gap-4">
+          <a href="/universities" className="text-[14px] font-bold text-gray-700 hover:text-[#26844D]">Schools Directory</a>
+          <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-[#26844D]">SAS</a>
+          <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-[#26844D]">Aspirants Award</a>
+          <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-[#26844D]">News</a>
+          <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-[#26844D]">About Us</a>
+          <hr className="my-2 border-gray-100" />
+          <button className="py-3 border border-[#111111] text-[#111111] font-bold rounded-full hover:bg-gray-100 w-full" onClick={() => window.location.href='/about'}>
+            Our Story
+          </button>
+          <button className="py-3 bg-[#26844D] text-white font-bold rounded-full hover:bg-[#1a5b35] w-full" onClick={() => window.location.href='/partner'}>
+            Partner With Us
+          </button>
+        </div>
+      )}
     </header>
   );
 };

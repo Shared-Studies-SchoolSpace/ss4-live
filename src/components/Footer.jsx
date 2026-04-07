@@ -18,8 +18,8 @@ export const Footer = () => {
     <footer className="bg-white pt-24 pb-12 px-4 border-t border-gray-100">
       <div className="container mx-auto">
         {/* Main Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-12 mb-24">
-          <div className="space-y-8 col-span-2 lg:col-span-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 mb-24">
+          <div className="space-y-8 sm:col-span-2 lg:col-span-1">
              <div className="flex items-center gap-2 opacity-40 grayscale hover:grayscale-0 transition-all cursor-pointer">
                 <img src="/Niche-N-Green-900.svg" alt="Niche" className="h-6" />
                 <span className="text-xl font-bold tracking-tighter text-brand-dark-green">NICHE</span>

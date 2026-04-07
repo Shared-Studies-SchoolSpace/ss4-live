@@ -1,11 +1,11 @@
 export const H1 = ({ children, className = "" }) => (
-  <h1 className={`text-[3rem] lg:text-[3.75rem] font-black text-[#111111] leading-[1.1] mb-8 ${className}`}>
+  <h1 className={`text-4xl md:text-[3rem] lg:text-[3.75rem] font-black text-[#111111] leading-[1.1] mb-8 ${className}`}>
     {children}
   </h1>
 );
 
 export const H2 = ({ children, className = "" }) => (
-  <h2 className={`text-[2.25rem] lg:text-[3rem] font-black text-[#111111] leading-[1.1] mb-8 ${className}`}>
+  <h2 className={`text-3xl md:text-[2.25rem] lg:text-[3rem] font-black text-[#111111] leading-[1.1] mb-8 ${className}`}>
     {children}
   </h2>
 );

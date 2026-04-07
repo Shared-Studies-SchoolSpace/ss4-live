@@ -3,19 +3,19 @@ import React, { useState, useEffect } from 'react';
 const stories = [
   {
     name: "ABBY D.",
-    text: "During my college search, I was having a difficult time narrowing down what I wanted in a school, so I used Niche to help. I especially liked looking at the rankings for different aspects of the college experience, like the campus, academics, and much more!",
+    text: "During my secondary school search, I was having a difficult time narrowing down what I wanted in a school, so I used Shared Studies to help. I especially liked looking at the rankings for different aspects of the school experience, like the campus, academics, and much more!",
     image: "/home/abby-1.webp",
     color: "bg-red-400"
   },
   {
     name: "DAYNA M.",
-    text: "I am so grateful for Niche and their resources. Schooling children at home has truly had its challenges. But having resources has made it so much easier. Finding the right programs for my little ones has been invaluable.",
+    text: "I am so grateful for Shared Studies and their resources. Schooling children at home has truly had its challenges. But having resources has made it so much easier. Finding the right programs for my little ones has been invaluable.",
     image: "/home/dayna-1.webp",
     color: "bg-blue-400"
   },
   {
     name: "CLAY N.",
-    text: "When I was applying to college, I had no idea what I was looking for. Niche helped me explore different schools and see breakdowns on many aspects of their programs! Thanks to Niche, I found a school that was a perfect fit!",
+    text: "When I was preparing for JAMB, I had no idea what I was looking for. Shared Studies helped me explore different schools and see breakdowns on many aspects of their programs! Thanks to Shared Studies, I found a school that was a perfect fit!",
     image: "/home/clay-1.webp",
     color: "bg-yellow-400"
   }
@@ -37,10 +37,10 @@ export const NicheStories = () => {
         {/* Text Content */}
         <div className="w-full lg:w-5/12 space-y-8">
           <p className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase">
-            Real Niche Stories
+            Real SS4 Stories
           </p>
           <h2 className="text-4xl font-black text-brand-dark-green leading-tight">
-            Niche has helped millions of students and families find their fit.
+            Shared Studies has helped millions of students and families find their fit.
           </h2>
           
           <div className="relative min-h-[160px]">

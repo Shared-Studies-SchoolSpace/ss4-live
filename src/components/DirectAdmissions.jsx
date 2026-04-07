@@ -13,12 +13,12 @@ export const DirectAdmissions = () => {
           </h2>
           
           <p className="text-lg text-brand-dark-green/80 max-w-lg leading-relaxed">
-            No application. No waiting. With Direct Admissions, colleges can accept you based on the information in your Niche Profile.
+            No application. No waiting. With Direct Admissions, schools can accept you based on the information in your SS4 Profile.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <button className="px-8 py-4 bg-brand-dark-green text-white font-bold rounded shadow-lg hover:bg-brand-primary-green transition-colors">
-              Create a Niche Profile
+              Create an SS4 Profile
             </button>
             <button className="px-8 py-4 border-2 border-brand-dark-green text-brand-dark-green font-bold rounded hover:bg-brand-dark-green hover:text-white transition-all">
               Learn more
@@ -39,7 +39,7 @@ export const DirectAdmissions = () => {
                   </div>
                </div>
                <div className="space-y-3">
-                  {['INTERESTED IN ENGINEERING', 'DETROIT, MICHIGAN', '2.75 GPA'].map((tag) => (
+                  {['INTERESTED IN SCIENCE', 'LAGOS, NIGERIA', '300 JAMB SCORE'].map((tag) => (
                     <div key={tag} className="px-4 py-2 bg-yellow-700/80 text-white text-[10px] font-bold rounded-lg tracking-widest text-center shadow-sm">
                       {tag}
                     </div>

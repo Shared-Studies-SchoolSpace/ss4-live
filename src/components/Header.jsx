@@ -12,7 +12,7 @@ export const Header = () => {
           </a>
           
           <nav className="hidden lg:flex items-center gap-6">
-            {['K-12', 'Colleges', 'Graduate Schools', 'Scholarships & Financial Aid', 'Places to Live'].map((item) => (
+            {['Junior Secondary', 'Senior Secondary', 'A-Levels', 'Scholarships & Financial Aid', 'Resources'].map((item) => (
               <a 
                 key={item} 
                 href="#" 

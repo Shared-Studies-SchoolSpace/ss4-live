@@ -25,19 +25,19 @@ export const Footer = () => {
                 <span className="text-xl font-bold tracking-tighter text-brand-dark-green">NICHE</span>
              </div>
              <ul className="space-y-4">
-                {['About Us', 'Niche For Schools', 'Niche For Colleges', 'Blog', 'Contact Niche', 'Careers', 'Press'].map(l => (
+                {['About Us', 'SS4 For Schools', 'SS4 For Sponsors', 'Blog', 'Contact SS4', 'Careers', 'Press'].map(l => (
                     <li key={l}><a href="#" className="text-sm font-bold text-gray-500 hover:text-brand-primary-green">{l}</a></li>
                 ))}
              </ul>
           </div>
 
           <FooterColumn 
-            title="Colleges"
-            links={['College Rankings', 'Best Colleges', 'Best Value Colleges', 'Scholarships', 'Financial Aid']}
+            title="Secondary Schools"
+            links={['School Rankings', 'Best Schools', 'Best Value Schools', 'Scholarships', 'Financial Aid']}
           />
           <FooterColumn 
-            title="K-12"
-            links={['K-12 Rankings', 'Best School Districts', 'Best Private Schools', 'Best Elementary Schools']}
+            title="Junior Secondary"
+            links={['JSS Rankings', 'Best Public Schools', 'Best Private Schools', 'Best Boarding Schools']}
           />
           <FooterColumn 
             title="Places to Live"
@@ -45,7 +45,7 @@ export const Footer = () => {
           />
           <FooterColumn 
             title="Search Categories"
-            links={['K-12', 'Colleges', 'Graduate Schools', 'Scholarships', 'Places to Live']}
+            links={['JSS', 'SSS', 'A-Levels', 'Scholarships', 'Study Resources']}
           />
         </div>
 

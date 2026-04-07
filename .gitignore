@@ -24,3 +24,21 @@ dist-ssr
 *.sw?
 .env
 
+# Unused Clone/Agent Artifacts
+.agent/
+PRODUCT REQUIREMENTS DOCUMENT*.pdf
+docs/research/
+scripts/download-assets.mjs
+
+# Unused React Files
+src/layouts/Layout.jsx
+src/components/Navbar.jsx
+src/components/DirectAdmissions.jsx
+src/components/DiscoveryGrid.jsx
+src/components/NicheStories.jsx
+src/components/StayOnTrack.jsx
+src/guest/Home.jsx
+src/pages/Home.jsx
+src/pages/CreateCourseContentPage.jsx
+src/components/CreateCourseContentForm.jsx
+src/components/CourseSection.jsx

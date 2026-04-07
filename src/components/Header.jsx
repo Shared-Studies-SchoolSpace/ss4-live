@@ -8,7 +8,7 @@ export const Header = () => {
       <div className="container mx-auto px-4 h-16 lg:h-20 flex items-center justify-between">
         <div className="flex items-center gap-10">
           <a href="/" className="flex items-center">
-            <img src="/ss4_logo.jpg" alt="SS4" className="h-8 lg:h-10" />
+            <img src="/ss4_logo.jpg" alt="SS4" className="h-12 lg:h-16" />
           </a>
           
           <nav className="hidden lg:flex items-center gap-6">
@@ -36,9 +36,6 @@ export const Header = () => {
             Our Story
           </button>
           
-          <button className="px-6 py-2 bg-brand-primary text-white font-bold rounded-full hover:bg-brand-accent transition-colors" onClick={() => window.location.href='/partner'}>
-            Partner With Us
-          </button>
         </div>
       </div>
 
@@ -53,9 +50,6 @@ export const Header = () => {
           <hr className="my-2 border-gray-100" />
           <button className="py-3 border border-[#111111] text-[#111111] font-bold rounded-full hover:bg-gray-100 w-full" onClick={() => window.location.href='/about'}>
             Our Story
-          </button>
-          <button className="py-3 bg-brand-primary text-white font-bold rounded-full hover:bg-brand-accent w-full" onClick={() => window.location.href='/partner'}>
-            Partner With Us
           </button>
         </div>
       )}

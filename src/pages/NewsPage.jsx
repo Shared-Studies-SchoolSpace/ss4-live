@@ -26,7 +26,7 @@ export default function NewsPage() {
                                 <Body className="text-sm text-gray-600 mt-3 mb-8">{item.desc}</Body>
                                 <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
                                     <p className="text-sm font-bold text-gray-400">{item.date}</p>
-                                    <a href="#" className="text-sm font-bold text-[#26844D] hover:underline">Read full story &rarr;</a>
+                                    <a href="#" className="text-sm font-bold text-brand-primary hover:underline">Read full story &rarr;</a>
                                 </div>
                             </div>
                         ))}

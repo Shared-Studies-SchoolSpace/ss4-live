@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const NicheLogo = ({ className }) => (
-  <img src="/Niche-N-Green-900.svg" alt="Niche Logo" className={className} />
+export const SS4Logo = ({ className }) => (
+  <img src="/ss4_logo.jpg" alt="SS4 Logo" className={className} />
 );
 
 export const SearchIcon = ({ className }) => (

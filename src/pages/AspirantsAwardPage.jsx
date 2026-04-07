@@ -10,7 +10,7 @@ export default function AspirantsAwardPage() {
             <SectionWrapper variant="white">
                 <div className="text-center max-w-4xl mx-auto py-16">
                     <H1>SS4 Aspirants Award</H1>
-                    <BodyLarge className="mt-6 text-[#26844D] font-bold">
+                    <BodyLarge className="mt-6 text-brand-primary font-bold">
                         First Cycle Announcement: Applications open October 30, 2026.
                     </BodyLarge>
                     <Body className="mt-6 text-lg max-w-2xl mx-auto text-gray-600">

@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-dark-green: #004529;
-  --color-brand-primary-green: #26844D;
+  --color-brand-primary: #1A56C4;
+  --color-brand-accent: #E8640A;
   --color-brand-bg-cream: #F6F4F0;
   --color-brand-text-dark: #111111;
-  --color-brand-accent-orange: #FF6B00;
 
+  --font-space: "Space Grotesk", sans-serif;
   --font-avenir: "Avenir Next", "Avenir", "Helvetica Neue", sans-serif;
 }
 

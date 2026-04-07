@@ -5,7 +5,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 export default function UniversityCard({ name, type, location, resources, logo, verified, onClicked }) {
   return (
     <div 
-    className="group rounded-xl border border-gray-200 bg-white p-5 flex flex-col hover:border-[#26844D] hover:shadow-md transition-all cursor-pointer"
+    className="group rounded-xl border border-gray-200 bg-white p-5 flex flex-col hover:border-brand-primary hover:shadow-md transition-all cursor-pointer"
     role='button'
     onClick={onClicked}>
       
@@ -17,14 +17,14 @@ export default function UniversityCard({ name, type, location, resources, logo, 
 
         {/* Verified Badge */}
         {verified && (
-          <div className="absolute -bottom-2 -right-2 bg-[#26844D] rounded-full p-1 border-4 border-white text-white">
+          <div className="absolute -bottom-2 -right-2 bg-brand-primary rounded-full p-1 border-4 border-white text-white">
             <VerifiedIcon fontSize="small"/>
           </div>
         )}
       </div>
 
       {/* Name */}
-      <h3 className="text-[#111111] text-lg font-bold mb-1 group-hover:text-[#26844D] transition-all">
+      <h3 className="text-[#111111] text-lg font-bold mb-1 group-hover:text-brand-primary transition-all">
         {name}
       </h3>
 

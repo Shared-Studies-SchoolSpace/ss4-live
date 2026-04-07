@@ -14,7 +14,7 @@ export default function UniversityHeader() {
             className="w-full object-contain mix-blend-multiply"
           />
         </div>
-        <div className="absolute -bottom-2 -right-2 bg-[#26844D] text-white rounded-full p-1 border-4 border-white">
+        <div className="absolute -bottom-2 -right-2 bg-brand-primary text-white rounded-full p-1 border-4 border-white">
           <VerifiedIcon fontSize="small"/>
         </div>
       </div>
@@ -28,15 +28,15 @@ export default function UniversityHeader() {
 
         <div className="flex flex-wrap gap-4 text-sm text-[#111111]">
           <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
-            <span className="text-[#26844D]"><LibraryBooksIcon fontSize="small"/></span>
+            <span className="text-brand-primary"><LibraryBooksIcon fontSize="small"/></span>
             <span className="font-medium">5 SAS Subjects</span>
           </div>
           <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
-            <span className="text-[#26844D]"><GroupIcon fontSize="small"/></span>
+            <span className="text-brand-primary"><GroupIcon fontSize="small"/></span>
             <span className="font-medium">950 Candidates</span>
           </div>
           <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
-            <span className="text-[#26844D]"><LocationOnIcon fontSize="small"/></span>
+            <span className="text-brand-primary"><LocationOnIcon fontSize="small"/></span>
             <span className="font-medium">Lagos, NG</span>
           </div>
         </div>

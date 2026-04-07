@@ -16,7 +16,7 @@ import AboutPage from './pages/AboutPage';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-[#F6F4F0] text-[#111111] selection:bg-brand-primary-green selection:text-white">
+      <div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white">
         <Header />
         <main className="min-h-[70vh]">
           <Routes>

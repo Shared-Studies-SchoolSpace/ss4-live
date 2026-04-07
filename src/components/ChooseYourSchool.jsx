@@ -6,20 +6,20 @@ export const ChooseYourSchool = () => {
       <div className="container mx-auto flex flex-col lg:flex-row items-center gap-16">
         {/* Left Side: Content */}
         <div className="w-full lg:w-1/2 space-y-8">
-            <p className="text-xs font-bold tracking-[0.2em] text-brand-primary-green uppercase">Choose your school</p>
-            <h2 className="text-4xl lg:text-5xl font-black text-brand-dark-green leading-tight">
+            <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase">Choose your school</p>
+            <h2 className="text-4xl lg:text-5xl font-black text-brand-primary leading-tight">
                 Everything you need to make your decision.
             </h2>
-            <div className="w-32 h-1.5 bg-brand-primary-green rounded-full" />
+            <div className="w-32 h-1.5 bg-brand-accent rounded-full" />
             <p className="text-lg lg:text-xl text-gray-600 font-medium leading-relaxed max-w-lg">
                 With the information you care about on every school in Nigeria, we make it easy for you to compare schools and Secondary Schools to make your decision.
             </p>
             
             <div className="flex flex-col gap-4 pt-4">
-                <a href="#" className="inline-block text-xl font-black text-brand-primary-green hover:text-brand-dark-green transition-colors border-b-4 border-brand-primary-green/20 hover:border-brand-primary-green pb-1">
+                <a href="#" className="inline-block text-xl font-black text-brand-accent hover:text-brand-primary transition-colors border-b-4 border-brand-accent/20 hover:border-brand-accent pb-1">
                     Compare K-12 Schools
                 </a>
-                <a href="#" className="inline-block text-xl font-black text-brand-primary-green hover:text-brand-dark-green transition-colors border-b-4 border-brand-primary-green/20 hover:border-brand-primary-green pb-1">
+                <a href="#" className="inline-block text-xl font-black text-brand-accent hover:text-brand-primary transition-colors border-b-4 border-brand-accent/20 hover:border-brand-accent pb-1">
                     Compare Secondary Schools
                 </a>
             </div>
@@ -48,7 +48,7 @@ export const ChooseYourSchool = () => {
       </div>
 
       {/* Bottom Wave transition */}
-      <div className="absolute -bottom-1 left-0 w-full h-16 text-brand-dark-green fill-current">
+      <div className="absolute -bottom-1 left-0 w-full h-16 text-brand-primary fill-current">
         <svg viewBox="0 0 1440 320" className="w-full h-full">
             <path d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,144C672,139,768,181,864,186.7C960,192,1056,160,1152,144C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
         </svg>

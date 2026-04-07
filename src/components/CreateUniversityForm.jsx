@@ -33,7 +33,7 @@ export default function CreateUniversityForm() {
           <input
             type="text"
             name="schoolName"
-            className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] focus:ring-2 focus:ring-[#26844D] focus:border-[#26844D] transition-all"
+            className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] focus:ring-brand-primary focus:border-brand-primary transition-all"
             value={formData.schoolName}
             onChange={handleChange}
             placeholder="e.g. King's College"
@@ -46,7 +46,7 @@ export default function CreateUniversityForm() {
           <input
             type="text"
             name="contactName"
-            className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] focus:ring-2 focus:ring-[#26844D] focus:border-[#26844D] transition-all"
+            className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] focus:ring-brand-primary focus:border-brand-primary transition-all"
             value={formData.contactName}
             onChange={handleChange}
             placeholder="e.g. Dr. John Doe"
@@ -60,7 +60,7 @@ export default function CreateUniversityForm() {
             <input
               type="email"
               name="email"
-              className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] focus:ring-2 focus:ring-[#26844D] focus:border-[#26844D] transition-all"
+              className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] focus:ring-brand-primary focus:border-brand-primary transition-all"
               value={formData.email}
               onChange={handleChange}
               placeholder="principal@school.edu.ng"
@@ -73,7 +73,7 @@ export default function CreateUniversityForm() {
             <input
               type="tel"
               name="phone"
-              className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] focus:ring-2 focus:ring-[#26844D] focus:border-[#26844D] transition-all"
+              className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] focus:ring-brand-primary focus:border-brand-primary transition-all"
               value={formData.phone}
               onChange={handleChange}
               placeholder="+234..."
@@ -86,7 +86,7 @@ export default function CreateUniversityForm() {
           <span className="text-gray-600 text-sm font-bold tracking-wide">Additional Message</span>
           <textarea
             name="message"
-            className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] min-h-[120px] focus:ring-2 focus:ring-[#26844D] focus:border-[#26844D] transition-all"
+            className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] min-h-[120px] focus:ring-brand-primary focus:border-brand-primary transition-all"
             value={formData.message}
             onChange={handleChange}
             placeholder="Tell us about your school and how you'd like to partner..."

@@ -17,7 +17,7 @@ export default function SasPage() {
                 <div className="text-center max-w-4xl mx-auto py-12">
                     <H1>Shared Studies Assessment Series (SAS)</H1>
                     <BodyLarge className="mt-6 text-gray-700">
-                        A rigorous proprietary academic tool designed to prepare senior secondary students for their SSCE and UTME examinations.
+                        A rigorous proprietary academic tool designed to prepare secondary school students for their SSCE and UTME examinations.
                     </BodyLarge>
                 </div>
             </SectionWrapper>
@@ -44,7 +44,7 @@ export default function SasPage() {
                                     </div>
                                 )}
                                 {subj.isAvailable && (
-                                    <div className="absolute top-4 right-4 bg-[#26844D] text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
+                                    <div className="absolute top-4 right-4 bg-brand-accent text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
                                         Available Now
                                     </div>
                                 )}
@@ -59,7 +59,7 @@ export default function SasPage() {
                                     <p className="text-sm text-gray-600 line-clamp-3">{subj.topics}</p>
                                 </div>
                                 {subj.isAvailable ? (
-                                    <button className="mt-8 w-full bg-[#004529] text-white font-bold py-3.5 rounded-xl hover:bg-[#26844D] hover:shadow-md transition-all">
+                                    <button className="mt-8 w-full bg-brand-primary text-white font-bold py-3.5 rounded-xl hover:bg-brand-accent hover:shadow-md transition-all">
                                         Download Module
                                     </button>
                                 ) : (

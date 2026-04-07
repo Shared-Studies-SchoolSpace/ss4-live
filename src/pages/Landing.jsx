@@ -16,24 +16,24 @@ export default function LandingPage() {
       <Hero />
       
       <SectionWrapper variant="white" className="bg-white">
-        <div className="text-center mb-16 py-12">
-          <H2>Our Core Pillars</H2>
-          <Body className="mt-4 max-w-2xl mx-auto">
-            We partner with premier schools to ensure every student is prepared for success.
-          </Body>
+        <div className="max-w-4xl mx-auto py-20 text-center">
+          <H2>What is SS4?</H2>
+          <BodyLarge className="text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            SS4 is an African institution for secondary education excellence. We are to education what UEFA is to football — the structured environment where quality is assessed, recognized, and rewarded. We don't just tutor; we set the standard against which all academic diligence is measured.
+          </BodyLarge>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 py-8">
-          <Card icon={<TravelExploreIcon />} title="The SS4 Network">
-            A comprehensive directory of verified partner secondary schools across Nigeria. Ensure your institution is recognized for its academic rigor.
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 py-16 border-t border-gray-50">
+          <Card icon={<TravelExploreIcon className="text-brand-primary" />} title="The SS4 Network">
+            Africa's directory of verified partner secondary schools. We document institutions committed to the highest academic rigour, making excellence visible to parents and sponsors.
           </Card>
 
-          <Card icon={<WorkspacePremiumIcon />} title="Shared Studies Assessment Series">
-            A premier, proprietary academic tool covering 5 core subjects: English, Math, Physics, Chemistry, and Biology.
+          <Card icon={<WorkspacePremiumIcon className="text-brand-primary" />} title="Assessment Series (SAS)">
+            Our serious, proprietary academic tool defining the standard for five core subjects. SAS is built to challenge and sharpen students ahead of national examinations.
           </Card>
 
-          <Card icon={<VerifiedIcon />} title="SS4 Aspirants Award">
-            A prestige award celebrating the top JAMB scorer among SS4-affiliated students, featuring a cash reward and sponsor recognition.
+          <Card icon={<VerifiedIcon className="text-brand-primary" />} title="Aspirants Award">
+            The ultimate prestige for African students. We celebrate the top JAMB scorers from our partner schools with ceremonial recognition and significant cash rewards.
           </Card>
         </div>
       </SectionWrapper>
@@ -48,12 +48,12 @@ export default function LandingPage() {
                   { tag: 'Sponsorship', title: 'Welcome to our newest sponsor', desc: 'We are thrilled to welcome our new sponsors to the SS4 platform.', date: 'Oct 18, 2026' }
                 ].map((item, i) => (
                     <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow flex flex-col">
-                        <div className="mb-2"><span className="text-[10px] font-bold bg-[#26844D] text-white px-3 py-1 rounded-full uppercase tracking-wider">{item.tag}</span></div>
+                        <div className="mb-2"><span className="text-[10px] font-bold bg-brand-primary text-white px-3 py-1 rounded-full uppercase tracking-wider">{item.tag}</span></div>
                         <h3 className="text-lg font-bold mt-4 text-[#111111]">{item.title}</h3>
                         <p className="text-sm text-gray-600 mt-2 mb-6">{item.desc}</p>
                         <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
                             <p className="text-xs font-bold text-gray-400">{item.date}</p>
-                            <a href="/news" className="text-sm font-bold text-[#E8640A] hover:underline">Read more</a>
+                             <a href="/news" className="text-sm font-bold text-brand-accent hover:underline">Read more</a>
                         </div>
                     </div>
                 ))}

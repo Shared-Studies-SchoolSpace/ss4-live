@@ -53,10 +53,6 @@ export const Footer = () => {
             © 2026 SS4 Inc.
           </p>
 
-          <div className="flex gap-4">
-            <div className="h-10 w-32 bg-black rounded-lg flex items-center justify-center text-white text-[10px] font-bold">App Store</div>
-            <div className="h-10 w-32 bg-black rounded-lg flex items-center justify-center text-white text-[10px] font-bold">Google Play</div>
-          </div>
         </div>
       </div>
     </footer>

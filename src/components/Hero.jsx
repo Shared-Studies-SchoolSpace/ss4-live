@@ -1,10 +1,15 @@
-import React from 'react';
+import { motion as Motion } from 'framer-motion';
 
 export const Hero = () => {
   return (
     <section className="relative flex flex-col lg:flex-row min-h-[600px] bg-brand-primary overflow-hidden">
       {/* Left Side: Image */}
-      <div className="relative w-full lg:w-1/2 h-[300px] lg:h-auto">
+      <Motion.div 
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative w-full lg:w-1/2 h-[300px] lg:h-auto"
+      >
         <img 
           src="/home/hero-lg.webp" 
           alt="Students learning" 
@@ -12,11 +17,16 @@ export const Hero = () => {
         />
         {/* Wave Overlay */}
         <div className="absolute bottom-0 left-0 w-full h-12 lg:hidden bg-brand-primary wave-top transform rotate-180" />
-      </div>
+      </Motion.div>
 
       {/* Right Side: Content */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-20 text-white">
-        <div className="max-w-lg">
+        <Motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="max-w-lg"
+        >
           <h2 className="text-xs lg:text-sm font-space font-bold tracking-[0.2em] mb-6 opacity-90 uppercase">
             An Institution for Assessment, Recognition, and Reward
           </h2>
@@ -35,21 +45,25 @@ export const Hero = () => {
               Get Started
             </h3>
             <div className="flex gap-4 mb-6">
-              <a
+              <Motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 href="/sas"
                 className="px-8 py-3 rounded-full font-bold text-sm transition shadow-lg bg-brand-accent text-white hover:bg-[#c45608]"
               >
                 Explore SAS
-              </a>
-              <a
+              </Motion.a>
+              <Motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 href="/partner"
                 className="px-8 py-3 rounded-full font-bold text-sm transition shadow-sm bg-white text-[#111111] hover:bg-gray-100"
               >
-                Partner With Us
-              </a>
+                Find Your Fit
+              </Motion.a>
             </div>
           </div>
-        </div>
+        </Motion.div>
       </div>
       
       {/* Wave bottom decoration */}

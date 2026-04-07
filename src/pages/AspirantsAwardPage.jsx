@@ -6,7 +6,7 @@ import Button from '../components/Button';
 
 export default function AspirantsAwardPage() {
     return (
-        <div className="text-[#111111]">
+        <div className="w-full">
             <SectionWrapper variant="white">
                 <div className="text-center max-w-4xl mx-auto py-16">
                     <H1>SS4 Aspirants Award</H1>

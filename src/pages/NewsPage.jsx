@@ -12,7 +12,7 @@ const mockNews = [
 
 export default function NewsPage() {
     return (
-        <div className="text-[#111111]">
+        <div className="w-full">
             <SectionWrapper variant="default">
                 <div className="max-w-5xl mx-auto py-12">
                     <H1 className="text-center mb-12">Updates & News</H1>

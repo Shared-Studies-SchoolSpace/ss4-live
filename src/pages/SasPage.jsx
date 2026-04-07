@@ -15,7 +15,7 @@ const mockSubjects = [
 
 export default function SasPage() {
     return (
-        <div className="text-[#111111]">
+        <div className="w-full">
             <SectionWrapper variant="default">
                 <div className="text-center max-w-4xl mx-auto py-12">
                     <H1>Shared Studies Assessment Series (SAS)</H1>

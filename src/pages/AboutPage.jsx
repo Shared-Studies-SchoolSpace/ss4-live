@@ -5,8 +5,8 @@ import { H1, H2, Body, BodyLarge } from '../components/Typography';
 
 export default function AboutPage() {
     return (
-        <div className="bg-white min-h-screen text-[#111111]">
-            <SectionWrapper variant="light" className="bg-[#F6F4F0]">
+        <div className="w-full">
+            <SectionWrapper variant="default">
                 <div className="text-center max-w-4xl mx-auto py-16">
                     <H1>Our Vision for African Education</H1>
                     <BodyLarge className="mt-6 text-gray-600">

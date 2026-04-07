@@ -5,7 +5,7 @@ import CourseSection from "../components/CourseSection";
 
 export default function UniversityPage() {
   return (
-    <div className="bg-[#F6F4F0] min-h-screen text-[#111111]">
+    <div className="w-full">
       <Breadcrumbs />
 
       <main className="px-6 lg:px-10 py-8 max-w-[1400px] mx-auto">

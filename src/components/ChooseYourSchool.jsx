@@ -12,7 +12,7 @@ export const ChooseYourSchool = () => {
             </h2>
             <div className="w-32 h-1.5 bg-brand-primary-green rounded-full" />
             <p className="text-lg lg:text-xl text-gray-600 font-medium leading-relaxed max-w-lg">
-                With the information you care about on every school in America, we make it easy for you to compare schools and colleges to make your decision.
+                With the information you care about on every school in Nigeria, we make it easy for you to compare schools and Secondary Schools to make your decision.
             </p>
             
             <div className="flex flex-col gap-4 pt-4">
@@ -20,7 +20,7 @@ export const ChooseYourSchool = () => {
                     Compare K-12 Schools
                 </a>
                 <a href="#" className="inline-block text-xl font-black text-brand-primary-green hover:text-brand-dark-green transition-colors border-b-4 border-brand-primary-green/20 hover:border-brand-primary-green pb-1">
-                    Compare Colleges
+                    Compare Secondary Schools
                 </a>
             </div>
         </div>

@@ -25,7 +25,7 @@ function App() {
             <div className="container mx-auto">
                 <p className="text-xs font-bold tracking-[0.2em] text-white opacity-60 uppercase mb-4">2026 Rankings</p>
                 <h2 className="text-4xl lg:text-5xl font-black text-white mb-8">
-                    Browse schools & colleges by “best of” lists.
+                    Browse secondary schools by “best of” lists.
                 </h2>
                 <div className="w-32 h-1.5 bg-brand-primary-green mx-auto mb-12 rounded-full" />
                 <p className="max-w-2xl mx-auto text-lg text-white/80 font-medium mb-12 text-center">

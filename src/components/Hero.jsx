@@ -26,19 +26,23 @@ export const Hero = () => {
           
           <div className="w-24 h-1 bg-brand-primary-green mb-8 rounded-full" />
           
-          <p className="text-lg lg:text-xl mb-12 font-medium opacity-90 leading-relaxed">
-            Finding the right school shouldn't be hard. From K-12 to college to grad school, we make it easy to discover and connect with the best ones for you.
+          <p className="text-white text-lg lg:text-xl font-medium mb-10 max-w-sm drop-shadow-md leading-snug">
+            Finding the right school shouldn't be hard. From Junior Secondary to Senior Secondary, we make it easy to discover and connect with the best ones for you.
           </p>
 
           <div className="space-y-6">
             <h3 className="text-xs font-bold tracking-widest uppercase opacity-80">
               Start your search
             </h3>
-            <div className="flex flex-wrap gap-4">
-              {['K-12 Schools', 'Colleges', 'Grad Schools'].map((cat) => (
-                <button 
+            <div className="flex gap-2 mb-6">
+              {['JSS', 'SSS', 'A-Levels'].map((cat) => (
+                <button
                   key={cat}
-                  className="px-8 py-4 bg-brand-primary-green hover:bg-emerald-700 text-white font-bold rounded shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0"
+                  className={`px-4 py-2 rounded-full font-bold text-sm transition shadow-sm ${
+                    cat === 'JSS' 
+                      ? 'bg-brand-dark-green text-white' 
+                      : 'bg-white text-[#111111] hover:bg-gray-100'
+                  }`}
                 >
                   {cat}
                 </button>

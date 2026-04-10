@@ -7,6 +7,7 @@ import Card from "../components/Card";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import Carousel from "../components/Carousel";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -15,30 +16,32 @@ export default function LandingPage() {
     <>
       <Hero />
       
-      <SectionWrapper variant="white" className="bg-white">
-        <div className="max-w-4xl mx-auto py-20 text-center">
+      <SectionWrapper variant="white" py={5} className="bg-white">
+        <div className="max-w-4xl mx-auto py-10 text-center">
           <H2>What is SS4?</H2>
           <BodyLarge className="text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            SS4 is an African institution for secondary education excellence. We are to education what UEFA is to football — the structured environment where quality is assessed, recognized, and rewarded. We don't just tutor; we set the standard against which all academic diligence is measured.
+            We are shaping the future of African education by creating a structure that measures and rewards academic dedication. Without replacing the classroom, we elevate it, setting the standard for academic excellence.
           </BodyLarge>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 py-16 border-t border-gray-50">
-          <Card icon={<TravelExploreIcon className="text-brand-primary" />} title="The SS4 Network">
-            Africa's directory of verified partner secondary schools. We document institutions committed to the highest academic rigour, making excellence visible to parents and sponsors.
-          </Card>
-
-          <Card icon={<WorkspacePremiumIcon className="text-brand-primary" />} title="Assessment Series (SAS)">
-            Our serious, proprietary academic tool defining the standard for five core subjects. SAS is built to challenge and sharpen students ahead of national examinations.
-          </Card>
-
-          <Card icon={<VerifiedIcon className="text-brand-primary" />} title="Aspirants Award">
-            The ultimate prestige for African students. We celebrate the top JAMB scorers from our partner schools with ceremonial recognition and significant cash rewards.
-          </Card>
+        <div className="py-4 border-t border-gray-50 flex justify-center">
+          <Carousel 
+            items={[
+              <Card icon={<TravelExploreIcon className="text-brand-primary" />} title="The SS4 Network">
+                Africa's directory of verified partner secondary schools. We document institutions committed to the highest academic rigour, making excellence visible to parents and sponsors.
+              </Card>,
+              <Card icon={<WorkspacePremiumIcon className="text-brand-primary" />} title="Assessment Series (SAS)">
+                Our serious, proprietary academic tool defining the standard for five core subjects. SAS is built to challenge and sharpen students ahead of national examinations.
+              </Card>,
+              <Card icon={<VerifiedIcon className="text-brand-primary" />} title="Aspirants Award">
+                The ultimate prestige for African students. We celebrate the top JAMB scorers from our partner schools with ceremonial recognition and significant cash rewards.
+              </Card>
+            ]} 
+          />
         </div>
       </SectionWrapper>
 
-      <section className="bg-[#F6F4F0] py-20 px-4">
+      <section className="bg-[#F6F4F0] py-5 px-4">
         <div className="container mx-auto max-w-5xl">
             <H2 className="text-center mb-12">Latest Updates</H2>
             <div className="grid md:grid-cols-3 gap-6">
@@ -64,8 +67,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <SectionWrapper variant="light">
-        <div className="text-center max-w-4xl mx-auto py-16">
+      <SectionWrapper variant="light" py={0}>
+        <div className="text-center max-w-4xl mx-auto py-2">
           <H2>Become an Official Sponsor</H2>
           <BodyLarge className="mt-4">
             Reach students at scale, be associated with excellence, and give back with measurable impact. Join us in shaping the next generation.

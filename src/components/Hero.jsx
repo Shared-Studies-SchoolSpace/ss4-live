@@ -11,7 +11,7 @@ export const Hero = () => {
         className="relative w-full lg:w-1/2 h-[300px] lg:h-auto"
       >
         <img 
-          src="/home/hero-lg.webp" 
+          src="/home/bglg.png" 
           alt="Students learning" 
           className="absolute inset-0 w-full h-full object-cover"
         />

@@ -8,17 +8,16 @@ export const Header = () => {
       <div className="container mx-auto px-4 h-16 lg:h-20 flex items-center justify-between">
         <div className="flex items-center gap-10">
           <a href="/" className="flex items-center">
-            <img src="/ss4_logo.jpg" alt="SS4" className="h-12 lg:h-16" />
+            <img src="/ss4_logo.jpg" alt="SS4" className="h-10 lg:h-10" />
           </a>
           
           <nav className="hidden lg:flex items-center gap-6">
-            <a href="/universities" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Schools Directory</a>
+            <a href="/universities" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Schools</a>
             <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">SAS</a>
             <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Aspirants Award</a>
             <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">News</a>
             <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">About Us</a>
             <button className="text-gray-400 hover:text-brand-primary">
-              <span className="text-xl">•••</span>
             </button>
           </nav>
         </div>
@@ -32,8 +31,8 @@ export const Header = () => {
         </button>
 
         <div className="flex items-center gap-4">
-          <button className="hidden sm:block px-6 py-2 border border-[#111111] text-[#111111] font-bold rounded-full hover:bg-gray-100 transition-colors" onClick={() => window.location.href='/about'}>
-            Our Story
+          <button className="hidden sm:block px-6 py-2 border border-[#E8640A] text-[#E8640A] font-bold rounded-full hover:bg-gray-100 transition-colors" onClick={() => window.location.href='/about'}>
+            Our Vision
           </button>
           
         </div>
@@ -42,14 +41,14 @@ export const Header = () => {
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
         <div className="lg:hidden absolute top-[100%] left-0 w-full bg-white border-b border-gray-100 shadow-md p-6 flex flex-col gap-4">
-          <a href="/universities" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary">Schools Directory</a>
+          <a href="/universities" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary">Schools</a>
           <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary">SAS</a>
           <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary">Aspirants Award</a>
           <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary">News</a>
           <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary">About Us</a>
           <hr className="my-2 border-gray-100" />
           <button className="py-3 border border-[#111111] text-[#111111] font-bold rounded-full hover:bg-gray-100 w-full" onClick={() => window.location.href='/about'}>
-            Our Story
+            Our Vision
           </button>
         </div>
       )}

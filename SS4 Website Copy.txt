@@ -1,0 +1,349 @@
+SS4 Website Copy
+(Full Revised Text)
+NAVIGATION
+Logo/Brand: SS4
+Nav Links:
+•
+
+Schools
+
+•
+
+Assessment Series
+
+•
+
+Aspirants Award
+
+•
+
+News
+
+•
+
+About
+
+Nav CTA Button: Partner With Us
+Mobile Menu Items:
+•
+
+Our Story
+
+•
+
+Partner With Us
+
+HERO SECTION
+Eyebrow / Overline: An Institution for Secondary Education
+Excellence
+Headline: Where Academic Diligence Is Assessed, Recognised, and
+Rewarded
+Subheadline: SS4 is the structured ecosystem that sets the standard
+for secondary education across Africa — connecting high-performing
+students with the sponsors who believe in them.
+Primary CTA: Explore the Assessment Series
+Secondary CTA: Partner With SS4
+Tertiary / Ambient Label (image caption or badge): Shaping the
+next generation of African scholars
+
+"WHAT IS SS4?" SECTION
+Section Label: About SS4
+Headline: We Set the Standard for Education Excellence
+Body: Every great sport has a governing body — one that sets the rules,
+raises the standard, and makes excellence visible. African secondary
+education has never had that. SS4 is building it.
+We do not tutor. We do not replace teachers. We create the structured
+environment in which academic diligence becomes visible, measurable,
+and worth striving for. Through our Assessment Series, our Aspirants
+Award, and our growing network of partner schools, we are building the
+most credible institution in African secondary education — from the
+ground up.
+THREE PILLARS SECTION
+Section Label: What We Do
+Headline: Three Pillars. One Mission.
+Pillar 1 Title: The SS4 School Network
+Body: A curated directory of verified partner secondary schools. We
+document institutions that are committed to academic rigour, making
+their quality visible to parents, sponsors, and the wider public.
+Link Text: Browse Partner Schools →
+Pillar 2 Title: SS4 Assessment Series (SAS)
+Body: Our proprietary academic assessment tool, built around core
+subjects. SAS defines the standard for what students must know — and
+challenges them to rise to it ahead of national examinations.
+Link Text: Explore the Assessment Series →
+Pillar 3 Title: The SS4 Aspirants Award
+
+Body: The highest academic honour we confer. The top JAMB scorer
+among SS4-affiliated students earns ceremonial recognition, a
+significant cash prize, and a direct connection to our sponsors.
+Link Text: Learn About the Award →
+LATEST UPDATES SECTION
+Section Label: Latest from SS4
+Headline: Updates from Across the Network
+Card 1 Tag: Aspirants Award Headline: The First Award Cycle Is Now
+Open Excerpt: Applications and participation for the inaugural SS4
+Aspirants Award cycle are officially open. Here is everything you need to
+know. Date: Oct 24, 2026 CTA: Read More
+Card 2 Tag: Assessment Series Headline: SAS Mathematics Scope
+Expanded for 2026 Excerpt: The Further Mathematics syllabus has been
+fully integrated into the General Mathematics framework, raising the
+ceiling for top performers. Date: Oct 22, 2026 CTA: Read More
+Card 3 Tag: Sponsorship Headline: SS4 Welcomes Its Newest Official
+Sponsor Excerpt: We are proud to announce a new sponsorship
+commitment that will directly fund this year's Aspirants Award prize.
+Date: Oct 18, 2026 CTA: Read More
+View All CTA: View All Updates
+SPONSOR CALL-TO-ACTION SECTION
+Section Label: Sponsorship
+Headline: Invest in the Next Generation.
+Body: SS4 gives sponsors something rare — direct, credible association
+with academic excellence at scale. Your brand reaches students, parents,
+and schools across Africa through a platform built on rigour and
+prestige. More than visibility, you gain the knowledge that your
+investment is shaping real academic outcomes.
+CTA Button: Become an Official Sponsor
+Supporting Line: For partnership inquiries, reach us at
+partners@ssfour.org
+
+FOOTER
+Brand: SS4
+Tagline: An Institution for Secondary Education Excellence
+Column 1 — Platform
+•
+
+Schools
+
+•
+
+Assessment Series
+
+•
+
+Aspirants Award
+
+•
+
+News & Updates
+
+Column 2 — Organisation
+•
+
+About SS4
+
+•
+
+For Schools
+
+•
+
+For Sponsors
+
+•
+
+Press & Media
+
+Column 3 — Connect
+•
+
+Contact SS4
+
+•
+
+Partner With Us
+
+•
+
+Careers
+
+Column 4 — Explore
+•
+
+Secondary Schools
+
+•
+
+Scholarships
+
+•
+
+Study Resources
+
+Social Media Links: [Instagram] [X / Twitter] [LinkedIn] [Facebook]
+Copyright Line: © 2026 SS4. All rights reserved.
+Legal Note: SS4 is a mission-driven education initiative. Formal
+registration in progress.
+SCHOOLS PAGE
+
+Page Label: The SS4 Network
+Headline: Overview list of Partner Secondary Schools
+Subheadline: Every school in the SS4 network has committed to the
+standard of academic rigour that SS4 represents. As partnerships grow,
+so does this directory.
+Search Placeholder: Search by school name or state...
+Filter Label: Filter by Region
+Empty State / Placeholder Notice: The SS4 Schools grows with
+every new partnership. If your school is not yet listed, reach out to us —
+we would like to change that.
+School Card CTA: View School Profile
+School Profile Page Label: Partner School Profile
+School Profile CTA: Is your school not yet listed? Apply for
+Partnership →
+SS4 ASSESSMENT SERIES (SAS) PAGE
+Page Label: The Assessment Series
+Headline: This Is What Academic Excellence Looks Like on Paper
+Subheadline: The SS4 Assessment Series is a proprietary academic
+tool built around all core subjects, though only 5 of the main science
+subjects have been complete. It does not guess what students should
+know — it defines it. Rigorous, structured, and aligned to national
+examination standards, SAS exists to challenge students and give schools
+a credible measure of learning quality.
+Subject Cards — Labels:
+•
+
+English Language
+
+•
+
+Mathematics
+
+•
+
+Physics
+
+•
+
+Chemistry
+
+•
+
+Biology
+
+Subject Card Body (template — to be filled per subject): [Subject
+Name] in SAS covers [scope summary]. Assessments are structured to
+align with WAEC and JAMB standards while pushing students beyond
+rote memorisation.
+CTA for Schools: Ready to bring SAS to your school?
+CTA Button: Apply to Host SAS
+Supporting Line: SAS materials are administered through partner
+schools. Online testing is not available at this stage.
+ASPIRANTS AWARD PAGE
+Page Label: The Aspirants Award
+Headline: The Highest Honour We Confer
+Subheadline: Every year, one student rises above the rest. The top
+JAMB scorer among all SS4-affiliated students receives the SS4
+Aspirants Award — a ceremonial recognition, a significant cash prize,
+and a direct connection to the sponsors who made it possible.
+Award Detail Block:
+Who is eligible? Any student enrolled in an SS4 partner school who sits
+the JAMB examination during the active award cycle.
+What does the winner receive? A cash prize funded by SS4's official
+sponsors, public recognition on the SS4 platform and communications,
+and a permanent place in the SS4 record.
+When is the first award? The inaugural SS4 Aspirants Award will be
+presented during the April JAMB cycle. This moment has been years in
+the making.
+Countdown / Announcement Badge: First Award — April 2026.
+The cycle is open.
+Past Winners Section Placeholder: After the first award is
+conferred, this section will display every winner — their name, school,
+score, and the year they rose to the top of African secondary education.
+CTA: Is your school part of the SS4 network?
+CTA Button: Register Your School
+
+NEWS & UPDATES PAGE
+Page Label: News & Updates
+Headline: From Across the SS4 Network
+Subheadline: Updates from partner schools, young achievers, sponsor
+commitments, and the SS4 institution itself. Everything happening in
+the ecosystem, in one place.
+Filter Tags: All · Aspirants Award · Assessment Series · School News ·
+Sponsorship · Announcements
+Empty State: No updates yet in this category. Check back soon.
+SPONSORS PAGE
+Page Label: Sponsorship
+Headline: The People Who Make Excellence Possible
+Subheadline: SS4's sponsors are not just funders — they are
+institutional partners in a movement to raise the quality of African
+secondary education. Their names appear alongside our most prestigious
+moments.
+Current Sponsors Section Label: Our Official Sponsors
+Placeholder (if no sponsors yet): Our first official sponsors will be
+announced here. If you are ready to be among them, we would like to
+hear from you.
+"Become a Sponsor" Sub-Section
+Headline: Why Sponsor SS4?
+Body: SS4 offers sponsors something most platforms cannot —
+credibility. Our audience is secondary school students, parents, and
+school administrators across Africa. Your brand is not placed in a feed; it
+is associated with a moment that matters: the recognition of genuine
+academic achievement.
+Here is what sponsorship means in practice:
+•
+
+Your logo and name displayed prominently across the SS4
+platform
+
+•
+
+Direct association with the Aspirants Award — Africa's most
+prestigious student recognition
+
+•
+
+Reach across our entire network of partner schools
+
+•
+
+A visible commitment to African youth education, backed by a
+measurable outcome
+
+CTA Headline: Ready to Partner With SS4?
+CTA Body: Reach out to begin a conversation. We will walk you
+through the sponsorship tiers, your brand placement, and the impact
+your investment makes.
+CTA Button: Contact Us for Sponsorship
+Supporting Line: Or write directly to: partners@ssfour.org
+ABOUT SS4 PAGE
+Page Label: Our Story
+Headline: We Built the Institution African Secondary Education Was
+Missing
+Body — Opening: Six years. JSS1 to SS3. That is the window in which
+the academic foundations of a generation are either set or neglected. For
+too long, those six years have passed without a credible, independent
+institution to measure, celebrate, or reward what happens inside them.
+Teachers enter the profession underpaid and undervalued. Students
+complete secondary school without a single credential that reflects how
+hard they worked. And the most diligent among them — the ones who
+stayed in class when their peers did not — walk into JAMB without
+anyone having noticed.
+SS4 was built to fix that.
+Body — Mission: We are not a tutoring platform. We do not teach.
+What we do is build the structure around learning that makes learning
+feel worth doing.
+Through the SS4 Assessment Series, we define what mastery looks like in
+five core subjects. Through our Aspirants Award, we make the highest
+JAMB score from our network into a moment worth remembering. And
+through our Schools Directory, we make the institutions committed to
+
+this standard visible to the parents, sponsors, and partners who want to
+find them.
+Body — Vision: The long-term vision is not modest. We intend to be to
+African secondary education what UEFA is to football — the institution
+that sets the rules, elevates the game, and makes excellence something
+everyone in the system feels.
+We are starting in Nigeria. But the continent is watching.
+Team Section Label: The Team Behind SS4
+Team Intro: SS4 is built by a small, focused team that believes the
+most important investment Africa can make is in its secondary school
+students. We are founders, educators, and builders working toward a
+single outcome: an African secondary education ecosystem that rewards
+diligence at the highest level.
+Partnership CTA Block:
+Headline: Bring Your School Into the Network
+Body: If you are a school principal or administrator who believes your
+institution belongs in the SS4 network, we want to hear from you.
+Partnership is not automatic — it is earned. And that is exactly what
+makes it worth having.
+CTA Button: Apply for School Partnership
+
+

@@ -26,7 +26,7 @@ export default function SasPage() {
                 <div className="text-center mb-16">
                     <H2>SAS Curriculum Outline</H2>
                     <Body className="mt-4">
-                        Comprehensive topics and scope for all 5 core subjects.
+                        Comprehensive topics and scope for all subjects.
                     </Body>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4 pb-16">

@@ -1,13 +1,14 @@
-export default function SectionWrapper({ children, variant = "default" }) {
-  const base = "py-12 md:py-24";
+export default function SectionWrapper({ children, variant = "default", py = "8 md:py-24" }) {
+  const pyClass = String(py).startsWith("py-") ? py : `py-${py}`;
   const variants = {
     default: "",
     light: "bg-background-light",
     white: "bg-white",
   };
   return (
-    <section className={`${base} ${variants[variant]}`}>
+    <section className={`${pyClass} ${variants[variant]}`}>
       {children}
     </section>
   );
 }
+

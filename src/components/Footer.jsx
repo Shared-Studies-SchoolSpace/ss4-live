@@ -1,4 +1,20 @@
 import React from 'react';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import XIcon from '@mui/icons-material/X';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+
+const TikTokIcon = () => (
+  <svg 
+    width="20" 
+    height="20" 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.28-3.99 3.5-7.52 7.42-7.03.3.03.59.08.88.17v4.47c-.46-.15-.95-.26-1.44-.26-1.53-.14-3.15.75-3.69 2.19-.31.84-.13 1.81.46 2.45.61.58 1.41.86 2.22.84 1.25-.01 2.4-.92 2.74-2.12.18-.57.17-1.17.17-1.75V.02z" />
+  </svg>
+);
 
 const FooterColumn = ({ title, links }) => (
   <div className="space-y-6">
@@ -41,10 +57,15 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex gap-6 text-gray-400">
-            {/* Social Icons would go here */}
-            {['Instagram', 'Facebook', 'Twitter', 'TikTok', 'YouTube'].map(s => (
-                <a key={s} href="#" className="hover:text-brand-accent transition-colors">
-                    <span className="text-xs font-bold uppercase">{s[0]}</span>
+            {[
+              { icon: <InstagramIcon fontSize="small" />, link: '#' },
+              { icon: <FacebookIcon fontSize="small" />, link: '#' },
+              { icon: <XIcon fontSize="small" />, link: '#' },
+              { icon: <TikTokIcon />, link: '#' },
+              { icon: <YouTubeIcon fontSize="small" />, link: '#' }
+            ].map((social, i) => (
+                <a key={i} href={social.link} className="hover:text-brand-accent transition-all duration-300">
+                    {social.icon}
                 </a>
             ))}
           </div>

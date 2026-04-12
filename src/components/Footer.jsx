@@ -40,7 +40,7 @@ export const Footer = () => {
                 <img src="/ss4_logo.jpg" alt="SS4" className="h-6" />
              </div>
              <ul className="space-y-4">
-                {['About Us', 'SS4 For Schools', 'SS4 For Sponsors', 'Blog', 'Contact SS4', 'Careers', 'Press'].map(l => (
+                {['About Us', 'SS4 For Schools', 'SS4 For Sponsors', 'Blog', 'Contact SS4'].map(l => (
                     <li key={l}><a href="#" className="text-sm font-bold text-gray-500 hover:text-brand-accent">{l}</a></li>
                 ))}
              </ul>
@@ -48,7 +48,7 @@ export const Footer = () => {
 
           <FooterColumn 
             title="Search Categories"
-            links={['Secondary Schools', 'A-Levels', 'Scholarships', 'Study Resources']}
+            links={['Secondary Schools', 'Scholarships', 'Study Resources']}
           />
         </div>
 

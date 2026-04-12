@@ -18,7 +18,8 @@ export default function LandingPage() {
       
       <SectionWrapper variant="white" py={5} className="bg-white">
         <div className="max-w-4xl mx-auto py-10 text-center">
-          <H2>What is SS4?</H2>
+          <H2>Shared Study School Space(SS4)</H2>
+          <h1 className="text-2xl font-bold">Clear Standards . Recognized Achievements . Visible Progress</h1>
           <BodyLarge className="text-gray-700 max-w-3xl mx-auto leading-relaxed">
             We are shaping the future of African education by creating a structure that measures and rewards academic dedication. Without replacing the classroom, we elevate it, setting the standard for academic excellence.
           </BodyLarge>

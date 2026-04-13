@@ -13,7 +13,7 @@ export default function UniversityCard({ name, type, location, resources, logo, 
       onClick={onClicked}
     >
       {/* School Image / Thumbnail */}
-      <div className="relative h-40 overflow-hidden">
+      <div className="relative h-48 md:h-40 overflow-hidden">
         <img 
           src={image || "https://images.unsplash.com/photo-1541339907198-e08756ebafe3?auto=format&fit=crop&q=80&w=600"} 
           alt={name} 

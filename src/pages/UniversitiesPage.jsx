@@ -57,7 +57,7 @@ export default function UniversitiesPage() {
   };
   return (
     <div className="w-full">
-      <main className="px-6 lg:px-10 py-8 max-w-[1400px] mx-auto">
+      <main className="px-4 md:px-6 lg:px-10 py-8 max-w-[1400px] mx-auto">
         <UniversityListHeader />
         <UniversitySearchBar />
 

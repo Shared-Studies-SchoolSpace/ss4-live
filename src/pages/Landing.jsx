@@ -29,13 +29,13 @@ export default function LandingPage() {
           <Carousel 
             items={[
               <Card icon={<TravelExploreIcon className="text-brand-primary" />} title="The SS4 Network">
-                Africa's directory of verified partner secondary schools. We document institutions committed to the highest academic rigour, making excellence visible to parents and sponsors.
+                Africa's directory of verified secondary schools. We document institutions committed to the highest academic rigour, making excellence visible to parents and sponsors.
               </Card>,
               <Card icon={<WorkspacePremiumIcon className="text-brand-primary" />} title="Assessment Series (SAS)">
                 Our serious, proprietary academic tool defining the standard for five core subjects. SAS is built to challenge and sharpen students ahead of national examinations.
               </Card>,
               <Card icon={<VerifiedIcon className="text-brand-primary" />} title="Aspirants Award">
-                The ultimate prestige for African students. We celebrate the top JAMB scorers from our partner schools with ceremonial recognition and significant cash rewards.
+                The ultimate prestige for African students. We celebrate the top JAMB scorers within our network with ceremonial recognition and significant cash rewards.
               </Card>
             ]} 
           />

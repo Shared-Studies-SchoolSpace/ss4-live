@@ -17,9 +17,9 @@ const TikTokIcon = () => (
 );
 
 const FooterColumn = ({ title, links }) => (
-  <div className="space-y-6">
+  <div className="space-y-4">
     <h3 className="text-[10px] font-black text-gray-400 tracking-[0.25em] uppercase">{title}</h3>
-    <ul className="space-y-3">
+    <ul className="flex flex-wrap gap-x-6 gap-y-2">
       {links.map((link) => (
         <li key={link}>
           <a href="#" className="text-[13px] font-bold text-gray-600 hover:text-brand-accent transition-colors">{link}</a>
@@ -34,14 +34,14 @@ export const Footer = () => {
     <footer className="bg-white pt-24 pb-12 px-4 border-t border-gray-100">
       <div className="container mx-auto">
         {/* Main Links Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 mb-24">
-          <div className="space-y-8 sm:col-span-2 lg:col-span-1">
+        <div className="flex flex-col gap-12 mb-24">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-gray-50 pb-8">
              <div className="flex items-center gap-2 opacity-100 transition-all cursor-pointer">
                 <img src="/ss4_logo.jpg" alt="SS4" className="h-6" />
              </div>
-             <ul className="space-y-4">
-                {['About Us', 'SS4 For Schools', 'SS4 For Sponsors', 'Blog', 'Contact SS4'].map(l => (
-                    <li key={l}><a href="#" className="text-sm font-bold text-gray-500 hover:text-brand-accent">{l}</a></li>
+             <ul className="flex flex-wrap gap-x-8 gap-y-3">
+                {['About Us', 'SS4 Network', 'SS4 For Sponsors', 'Blog', 'Contact SS4'].map(l => (
+                    <li key={l}><a href="#" className="text-sm font-bold text-gray-500 hover:text-brand-accent whitespace-nowrap">{l}</a></li>
                 ))}
              </ul>
           </div>

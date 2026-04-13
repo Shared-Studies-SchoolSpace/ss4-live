@@ -89,13 +89,13 @@ export default function CreateUniversityForm() {
             className="w-full bg-[#F6F4F0] border border-gray-200 rounded-lg px-4 py-3 outline-none text-[#111111] min-h-[120px] focus:ring-brand-primary focus:border-brand-primary transition-all"
             value={formData.message}
             onChange={handleChange}
-            placeholder="Tell us about your school and how you'd like to partner..."
+            placeholder="Tell us about your school and how you'd like to enhance your profile..."
           ></textarea>
         </label>
 
         <div className="pt-4 text-center">
           <Button type="submit" variant="primary">
-            Submit Partnership Inquiry
+            Request Profile Enhancement
           </Button>
         </div>
       </form>

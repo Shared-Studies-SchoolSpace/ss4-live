@@ -12,6 +12,7 @@ import SasPage from './pages/SasPage';
 import AspirantsAwardPage from './pages/AspirantsAwardPage';
 import NewsPage from './pages/NewsPage';
 import AboutPage from './pages/AboutPage';
+import BackToTop from './components/BackToTop';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <BackToTop />
       </div>
     </Router>
   );

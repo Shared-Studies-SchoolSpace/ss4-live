@@ -9,6 +9,12 @@ export const Header = () => {
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
+      // Don't close if clicking on the toggle button itself (to let the onClick handle it)
+      const toggleButton = document.getElementById('mobile-menu-toggle');
+      if (toggleButton && toggleButton.contains(event.target)) {
+        return;
+      }
+      
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsMobileMenuOpen(false);
       }
@@ -27,13 +33,13 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-100 shadow-sm">
-      <div className="container mx-auto px-4 h-16 lg:h-20 flex items-center justify-between">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 h-16 lg:h-20 flex items-center justify-between">
         <div className="flex items-center gap-10">
           <a href="/" className="flex items-center">
-            <img src="/ss4_logo.jpg" alt="SS4" className="h-10 lg:h-10" />
+            <img src="/ss4_logo.jpg" alt="SS4" className="h-10 lg:h-12" />
           </a>
           
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-8">
             <a href="/universities" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Network</a>
             <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">SAS</a>
             <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Aspirants Award</a>
@@ -49,9 +55,9 @@ export const Header = () => {
           
           {/* Mobile menu toggle */}
           <button 
+            id="mobile-menu-toggle"
             className="lg:hidden p-2 text-brand-primary focus:outline-none"
             onClick={(e) => {
-              e.stopPropagation();
               setIsMobileMenuOpen(!isMobileMenuOpen);
             }}
             aria-label="Toggle menu"

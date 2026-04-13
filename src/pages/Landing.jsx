@@ -18,8 +18,14 @@ export default function LandingPage() {
       
       <SectionWrapper variant="white" py={5} className="bg-white">
         <div className="max-w-4xl mx-auto py-10 text-center">
-          <H2>Shared Study School Space(SS4)</H2>
-          <h1 className="text-2xl font-bold">Clear Standards . Recognized Achievements . Visible Progress</h1>
+          <H2 className="mb-2">Shared Study School Space (SS4)</H2>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-10 overflow-hidden">
+            <span className="text-xs md:text-sm font-black tracking-[0.3em] uppercase text-brand-accent whitespace-nowrap">Clear Standards</span>
+            <span className="hidden sm:inline text-gray-300">•</span>
+            <span className="text-xs md:text-sm font-black tracking-[0.3em] uppercase text-brand-primary whitespace-nowrap">Recognized Achievements</span>
+            <span className="hidden sm:inline text-gray-300">•</span>
+            <span className="text-xs md:text-sm font-black tracking-[0.3em] uppercase text-brand-accent whitespace-nowrap">Visible Progress</span>
+          </div>
           <BodyLarge className="text-gray-700 max-w-3xl mx-auto leading-relaxed">
             We are shaping the future of African education by creating a structure that measures and rewards academic dedication. Without replacing the classroom, we elevate it, setting the standard for academic excellence.
           </BodyLarge>

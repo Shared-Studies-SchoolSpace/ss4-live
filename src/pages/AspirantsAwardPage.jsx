@@ -27,9 +27,6 @@ export default function AspirantsAwardPage() {
                         <li><strong>Reward:</strong> A comprehensive cash prize and exclusive sponsorship recognition.</li>
                         <li><strong>Recognition:</strong> National highlight on the SS4 platform and partner sponsor networks.</li>
                     </ul>
-                    <div className="mt-10 text-center">
-                        <Button variant="primary">Apply for Award</Button>
-                    </div>
                 </div>
             </SectionWrapper>
         </div>

@@ -67,62 +67,68 @@ export default function UniversitySearchBar({ onSearch, onClear }) {
       {/* Filters Row */}
       <div className="grid grid-cols-2 gap-4">
         {/* State Dropdown */}
-        <div className="flex items-center gap-2 sm:gap-3 bg-white border border-gray-400 rounded-2xl px-4 sm:px-6 py-3 focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all">
-          <span className="text-brand-accent hidden sm:flex items-center">
-            <LocationOnIcon sx={{ fontSize: 20 }} />
-          </span>
-          <select
-            className="bg-transparent text-[#111111] font-medium w-full outline-none text-sm appearance-none cursor-pointer"
-            value={selectedState}
-            onChange={(e) => setSelectedState(e.target.value)}
-          >
-            <option value="">Select State</option>
-            {nigeriaStates.map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-          </select>
+        <div className="flex flex-col gap-1.5 w-full">
+          <label className="text-sm font-semibold text-gray-700 ml-2">State</label>
+          <div className="flex items-center gap-2 sm:gap-3 bg-white border border-gray-400 rounded-2xl px-4 sm:px-6 py-3 focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all">
+            <span className="text-brand-accent hidden sm:flex items-center">
+              <LocationOnIcon sx={{ fontSize: 20 }} />
+            </span>
+            <select
+              className="bg-transparent text-[#111111] font-medium w-full outline-none text-sm appearance-none cursor-pointer"
+              value={selectedState}
+              onChange={(e) => setSelectedState(e.target.value)}
+            >
+              <option value="">Select State</option>
+              {nigeriaStates.map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* LGA Dropdown */}
-        <div 
-          ref={lgaDropdownRef}
-          className={`relative flex items-center gap-2 sm:gap-3 bg-white border border-gray-400 rounded-2xl px-4 sm:px-6 py-3 transition-all ${selectedState ? 'cursor-pointer hover:border-brand-primary/50' : 'opacity-70 cursor-not-allowed'}`}
-          onClick={() => { if (selectedState) setIsLgaDropdownOpen(!isLgaDropdownOpen); }}
-        >
-          <span className="text-brand-accent hidden sm:flex items-center">
-            <LocationOnIcon sx={{ fontSize: 20 }} />
-          </span>
-          <div className="flex-1 text-[#111111] font-medium text-sm truncate select-none">
-            {selectedLga.length === 0 ? 'Select LGA' : selectedLga.join(', ')}
-          </div>
-          
-          {/* Dropdown Menu */}
-          {isLgaDropdownOpen && selectedState && (
-            <div 
-              className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 shadow-xl rounded-xl z-50 max-h-60 overflow-y-auto" 
-              onClick={(e) => e.stopPropagation()}
-            >
-              {availableLgas.map((lga) => (
-                <label key={lga} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-0">
-                  <input 
-                    type="checkbox" 
-                    className="w-4 h-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"
-                    checked={selectedLga.includes(lga)}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setSelectedLga([...selectedLga, lga]);
-                      } else {
-                        setSelectedLga(selectedLga.filter(item => item !== lga));
-                      }
-                    }}
-                  />
-                  <span className="text-sm font-medium text-gray-700 truncate">{lga}</span>
-                </label>
-              ))}
+        <div className="flex flex-col gap-1.5 w-full">
+          <label className="text-sm font-semibold text-gray-700 ml-2">Local Government Area</label>
+          <div 
+            ref={lgaDropdownRef}
+            className={`relative flex items-center gap-2 sm:gap-3 bg-white border border-gray-400 rounded-2xl px-4 sm:px-6 py-3 transition-all ${selectedState ? 'cursor-pointer hover:border-brand-primary/50' : 'opacity-70 cursor-not-allowed'}`}
+            onClick={() => { if (selectedState) setIsLgaDropdownOpen(!isLgaDropdownOpen); }}
+          >
+            <span className="text-brand-accent hidden sm:flex items-center">
+              <LocationOnIcon sx={{ fontSize: 20 }} />
+            </span>
+            <div className="flex-1 text-[#111111] font-medium text-sm truncate select-none">
+              {selectedLga.length === 0 ? 'Select LGA' : selectedLga.join(', ')}
             </div>
-          )}
+            
+            {/* Dropdown Menu */}
+            {isLgaDropdownOpen && selectedState && (
+              <div 
+                className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 shadow-xl rounded-xl z-50 max-h-60 overflow-y-auto" 
+                onClick={(e) => e.stopPropagation()}
+              >
+                {availableLgas.map((lga) => (
+                  <label key={lga} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-0">
+                    <input 
+                      type="checkbox" 
+                      className="w-4 h-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"
+                      checked={selectedLga.includes(lga)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedLga([...selectedLga, lga]);
+                        } else {
+                          setSelectedLga(selectedLga.filter(item => item !== lga));
+                        }
+                      }}
+                    />
+                    <span className="text-sm font-medium text-gray-700 truncate">{lga}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

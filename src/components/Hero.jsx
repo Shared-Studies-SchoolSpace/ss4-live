@@ -59,7 +59,7 @@ export const Hero = () => {
                 href="/partner"
                 className="px-8 py-3 rounded-full font-bold text-sm transition shadow-sm bg-white text-[#111111] hover:bg-gray-100"
               >
-                Find Your Fit
+                Discover Schools
               </Motion.a>
             </div>
           </div>

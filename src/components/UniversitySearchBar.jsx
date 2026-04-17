@@ -1,14 +1,17 @@
 import SearchIcon from '@mui/icons-material/Search';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Button from './Button';
 import { nigeriaStates, nigeriaLgas } from '../data/nigeria-states-lga';
 
 export default function UniversitySearchBar({ onSearch, onClear }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedState, setSelectedState] = useState('');
-  const [selectedLga, setSelectedLga] = useState('');
+  const [selectedLga, setSelectedLga] = useState([]);
   const [availableLgas, setAvailableLgas] = useState([]);
+  const [isLgaDropdownOpen, setIsLgaDropdownOpen] = useState(false);
+  
+  const lgaDropdownRef = useRef(null);
 
   useEffect(() => {
     if (selectedState) {
@@ -16,8 +19,19 @@ export default function UniversitySearchBar({ onSearch, onClear }) {
     } else {
       setAvailableLgas([]);
     }
-    setSelectedLga('');
+    setSelectedLga([]);
+    setIsLgaDropdownOpen(false);
   }, [selectedState]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (lgaDropdownRef.current && !lgaDropdownRef.current.contains(event.target)) {
+        setIsLgaDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleApply = () => {
     onSearch({
@@ -30,7 +44,7 @@ export default function UniversitySearchBar({ onSearch, onClear }) {
   const handleClear = () => {
     setSearchTerm('');
     setSelectedState('');
-    setSelectedLga('');
+    setSelectedLga([]);
     onClear();
   };
 
@@ -51,10 +65,10 @@ export default function UniversitySearchBar({ onSearch, onClear }) {
       </div>
 
       {/* Filters Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {/* State Dropdown */}
-        <div className="flex items-center gap-3 bg-white border border-gray-200 shadow-sm rounded-2xl px-6 py-3 focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all">
-          <span className="text-brand-accent flex items-center">
+        <div className="flex items-center gap-2 sm:gap-3 bg-white border border-gray-400 rounded-2xl px-4 sm:px-6 py-3 focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all">
+          <span className="text-brand-accent hidden sm:flex items-center">
             <LocationOnIcon sx={{ fontSize: 20 }} />
           </span>
           <select
@@ -72,40 +86,60 @@ export default function UniversitySearchBar({ onSearch, onClear }) {
         </div>
 
         {/* LGA Dropdown */}
-        <div className="flex items-center gap-3 bg-white border border-gray-200 shadow-sm rounded-2xl px-6 py-3 focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all">
-          <span className="text-brand-accent flex items-center">
+        <div 
+          ref={lgaDropdownRef}
+          className={`relative flex items-center gap-2 sm:gap-3 bg-white border border-gray-400 rounded-2xl px-4 sm:px-6 py-3 transition-all ${selectedState ? 'cursor-pointer hover:border-brand-primary/50' : 'opacity-70 cursor-not-allowed'}`}
+          onClick={() => { if (selectedState) setIsLgaDropdownOpen(!isLgaDropdownOpen); }}
+        >
+          <span className="text-brand-accent hidden sm:flex items-center">
             <LocationOnIcon sx={{ fontSize: 20 }} />
           </span>
-          <select
-            className="bg-transparent text-[#111111] font-medium w-full outline-none text-sm appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            value={selectedLga}
-            onChange={(e) => setSelectedLga(e.target.value)}
-            disabled={!selectedState}
-          >
-            <option value="">Select Local Government</option>
-            {availableLgas.map((lga) => (
-              <option key={lga} value={lga}>
-                {lga}
-              </option>
-            ))}
-          </select>
+          <div className="flex-1 text-[#111111] font-medium text-sm truncate select-none">
+            {selectedLga.length === 0 ? 'Select LGA' : selectedLga.join(', ')}
+          </div>
+          
+          {/* Dropdown Menu */}
+          {isLgaDropdownOpen && selectedState && (
+            <div 
+              className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 shadow-xl rounded-xl z-50 max-h-60 overflow-y-auto" 
+              onClick={(e) => e.stopPropagation()}
+            >
+              {availableLgas.map((lga) => (
+                <label key={lga} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-0">
+                  <input 
+                    type="checkbox" 
+                    className="w-4 h-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"
+                    checked={selectedLga.includes(lga)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedLga([...selectedLga, lga]);
+                      } else {
+                        setSelectedLga(selectedLga.filter(item => item !== lga));
+                      }
+                    }}
+                  />
+                  <span className="text-sm font-medium text-gray-700 truncate">{lga}</span>
+                </label>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
       {/* Actions */}
-      <div className="flex flex-col md:flex-row items-center gap-3 pt-2">
+      <div className="flex flex-row items-center gap-3 pt-2">
         <Button 
           variant="primary" 
-          className="w-full md:w-auto px-8 py-3 rounded-xl shadow-md font-bold"
+          className="flex-1 md:flex-none md:w-auto px-6 py-3 rounded-xl shadow-md font-bold text-sm md:text-base"
           onClick={handleApply}
         >
-          Apply Filter
+          Apply Filters
         </Button>
         <button 
-          className="text-sm font-bold text-gray-400 hover:text-brand-accent transition-colors py-2 px-4"
+          className="text-sm font-bold text-gray-500 hover:text-brand-accent transition-colors py-2 px-4 whitespace-nowrap"
           onClick={handleClear}
         >
-          Clear Filter
+          Clear Filters
         </button>
       </div>
     </div>

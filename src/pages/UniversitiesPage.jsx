@@ -59,7 +59,7 @@ export default function UniversitiesPage() {
     const filtered = INITIAL_UNIVERSITIES.filter(u => {
       const matchesName = !name || u.name.toLowerCase().includes(name.toLowerCase());
       const matchesState = !state || u.location.toLowerCase().includes(state.toLowerCase());
-      const matchesLga = !lga || u.address.toLowerCase().includes(lga.toLowerCase());
+      const matchesLga = !lga || (Array.isArray(lga) ? (lga.length === 0 || lga.some(l => u.address.toLowerCase().includes(l.toLowerCase()))) : u.address.toLowerCase().includes(lga.toLowerCase()));
       return matchesName && matchesState && matchesLga;
     });
     setFilteredUniversities(filtered);

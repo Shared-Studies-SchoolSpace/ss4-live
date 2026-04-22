@@ -1,5 +1,4 @@
 import VerifiedIcon from '@mui/icons-material/Verified';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import GroupIcon from '@mui/icons-material/Group';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
@@ -28,12 +27,8 @@ export default function UniversityHeader() {
 
         <div className="flex flex-wrap gap-3 md:gap-4 text-xs md:text-sm text-[#111111] justify-center md:justify-start">
           <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm hover:border-brand-primary transition-colors">
-            <span className="text-brand-primary flex items-center"><LibraryBooksIcon sx={{ fontSize: 18 }}/></span>
-            <span className="font-bold">5 SAS Subjects</span>
-          </div>
-          <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm hover:border-brand-primary transition-colors">
             <span className="text-brand-primary flex items-center"><GroupIcon sx={{ fontSize: 18 }}/></span>
-            <span className="font-bold">950 Candidates</span>
+            <span className="font-bold">950 Students</span>
           </div>
           <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm hover:border-brand-primary transition-colors">
             <span className="text-brand-primary flex items-center"><LocationOnIcon sx={{ fontSize: 18 }}/></span>

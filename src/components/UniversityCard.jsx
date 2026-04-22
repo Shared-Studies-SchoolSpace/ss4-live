@@ -1,4 +1,3 @@
-import SchoolIcon from '@mui/icons-material/School';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import InfoIcon from '@mui/icons-material/Info';
@@ -54,11 +53,6 @@ export default function UniversityCard({ name, type, location, resources, logo, 
               <span className="font-bold text-gray-700">{location}</span>
               <span className="opacity-80 mt-0.5">{address || "Principal's Office, Main Campus"}</span>
             </div>
-          </div>
-
-          <div className="flex items-center gap-2 text-xs text-gray-500">
-            <SchoolIcon sx={{ fontSize: 16 }} className="text-brand-primary" />
-            <span className="font-bold">{resources} SAS Subjects Available</span>
           </div>
         </div>
       </div>

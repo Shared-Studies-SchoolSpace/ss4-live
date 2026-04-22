@@ -13,10 +13,12 @@ import AspirantsAwardPage from './pages/AspirantsAwardPage';
 import NewsPage from './pages/NewsPage';
 import AboutPage from './pages/AboutPage';
 import BackToTop from './components/BackToTop';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white">
         <Header />
         <main className="min-h-[70vh]">

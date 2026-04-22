@@ -4,7 +4,7 @@ import SectionWrapper from '../components/SectionWrapper';
 import { H1, H2, Body } from '../components/Typography';
 
 const mockNews = [
-    { tag: 'Aspirants Award', title: 'Q1 Award Cycle Opens', desc: 'The first cycle of the Aspirants Award is now open for participants. Ensure your school registers candidates before the deadline.', date: 'Oct 24, 2026' },
+    { tag: 'Aspirants Award', title: 'Q1 Award Cycle Opens', desc: 'The first cycle of the Aspirants Award is now open for participants. Ensure your school registers students before the deadline.', date: 'Oct 24, 2026' },
     { tag: 'SAS Updates', title: 'New Math Curriculum Integration', desc: 'The SAS syllabus for Further Math has been fully merged into General Math based on the new WAEC curriculum standards.', date: 'Oct 22, 2026' },
     { tag: 'Sponsorship', title: 'Welcome to our newest sponsor', desc: 'We are thrilled to welcome our new sponsors to the SS4 platform. Their contribution will expand our reach to 50 more schools.', date: 'Oct 18, 2026' },
     { tag: 'Partner Schools', title: 'Loyola Jesuit College Joins SS4', desc: 'Loyola Jesuit College is our latest partner school, granting its students full access to the SAS mock series.', date: 'Oct 10, 2026' },

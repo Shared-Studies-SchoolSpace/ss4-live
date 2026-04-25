@@ -40,7 +40,7 @@ export const Header = () => {
           </a>
           
           <nav className="hidden lg:flex items-center gap-8">
-            <a href="/universities" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Network</a>
+            <a href="/schools" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Schools</a>
             <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">SAS</a>
             <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Aspirants Award</a>
             <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">News</a>
@@ -90,7 +90,7 @@ export const Header = () => {
             exit={{ opacity: 0, y: -20 }}
             className="lg:hidden absolute top-[100%] left-0 w-full bg-white border-b border-gray-100 shadow-xl p-6 flex flex-col gap-4 z-40"
           >
-            <a href="/universities" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Network</a>
+            <a href="/schools" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Schools</a>
             <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>SAS</a>
             <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</a>
             <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>News</a>

@@ -22,7 +22,7 @@ export default function CreateUniversityForm() {
     console.log("Submitting Inquiry:", formData);
     // Add your API call here
     alert("Inquiry sent successfully.");
-    navigate("/universities");
+    navigate("/schools");
   };
 
   return (

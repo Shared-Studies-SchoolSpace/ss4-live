@@ -18,7 +18,7 @@ export default function StudentSignupModal({ onClose }) {
 
   // Navigate to /generate after successful login/signup
   const gotoUniversities = () => {
-    navigate("/universities");
+    navigate("/schools");
   };
 
   function update(key, value) {

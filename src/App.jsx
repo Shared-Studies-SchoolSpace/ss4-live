@@ -5,7 +5,7 @@ import { Footer } from './components/Footer';
 
 // Pages
 import LandingPage from './pages/Landing';
-import UniversitiesPage from './pages/UniversitiesPage';
+import SchoolsPage from './pages/SchoolsPage';
 import UniversityPage from './pages/UniversityPage';
 import CreateUniversityPage from './pages/CreateUniversityPage';
 import SasPage from './pages/SasPage';
@@ -24,7 +24,7 @@ function App() {
         <main className="min-h-[70vh]">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/universities" element={<UniversitiesPage />} />
+            <Route path="/schools" element={<SchoolsPage />} />
             <Route path="/school/:id" element={<UniversityPage />} />
             <Route path="/partner" element={<CreateUniversityPage />} />
             <Route path="/sas" element={<SasPage />} />

@@ -1,0 +1,776 @@
+[
+  {
+    "name": "Kanta College",
+    "location": "Argungu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sama Secondary School",
+    "location": "Argungu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic And Islamic Secondary School",
+    "location": "Argungu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Comprehensive Secondary School",
+    "location": "Argungu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Aluwasa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gulma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Lailaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kaurar Sanni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Natsini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yeldu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Augie",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Augie",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Bayawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Tiggi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kaoje",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Zagga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Illo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Bagudo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Lolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Tsamiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nagari College",
+    "location": "Birnin Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Birnin Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abdullahi Fodio Secondary School",
+    "location": "Birnin Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ College",
+    "location": "Birnin Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School",
+    "location": "Birnin Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic & Islamic Secondary School",
+    "location": "Ambrusa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kalgo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Ambursa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kardi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Makera",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. James Anglican College",
+    "location": "Badariya Birnin Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Basaura Institute Of Comprehensive Education",
+    "location": "Birnin Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Zauro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abudullahi Bin Fodiyo Islamic Institute",
+    "location": "Birnin- Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gulumbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Joda International School",
+    "location": "B/Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brilliance College, Gra",
+    "location": "B/Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abi Private School",
+    "location": "B/Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Diggi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gwadangaji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Badariya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School, Gesse Phase",
+    "location": "Birnin- Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "High Standard College",
+    "location": "Birnin Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kamba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girl’s Secondary School",
+    "location": "Kamba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bachaka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gwandu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls’ College",
+    "location": "Gwandu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gwandu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Dalijan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Malisa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Masama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kambaza",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Jega",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Haliru Abdu Arabic Secondary School",
+    "location": "Jega",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Aliero",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Comprehensive Secondary School",
+    "location": "Aliero",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Jandutse",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Basaura",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kashin Zama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic And Islamic Secondary School",
+    "location": "Kangiwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kangiwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Bui",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School, Rafin Tsaka",
+    "location": "Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Koko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Besse",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Mahuta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Mahuta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Birnin Tudu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kukum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dirin-Daji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Makuku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gelwasa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dakin-Gari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Suru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girl’s Comprehensive Secondary School",
+    "location": "Suru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Fana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Aijannare",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Yelwa",
+    "location": "Yauri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abarshi Secondary School",
+    "location": "Yauri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Science College, Yelwa",
+    "location": "Yauri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Birnin Yauri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abarshi Girls Secondary School",
+    "location": "Yauri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Birnin-Yauri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Yelwa Yauri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Zamare",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Tondi Tsamiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science College",
+    "location": "Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bahago Gomo Day Secondary School",
+    "location": "Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School",
+    "location": "Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic And Islamic Secondary School",
+    "location": "Wasagu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mama Arziki Comprehensive High School",
+    "location": "Senchi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibrahim Sakaba Government Day Secondary School, Dabai",
+    "location": "Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "School For Higher Islamic Studies",
+    "location": "Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Danko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Science & Technical College",
+    "location": "Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emir Sani Sami Staff Science Secondary School",
+    "location": "Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The King International School",
+    "location": "Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dominican College",
+    "location": "Dabai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Bedi Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Magoro Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Tadurga/Zodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Isgogo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Amanawa- Zuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Wara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Ngaski",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kambuna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kimo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Libata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Ribah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Bena",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Comprehensive Secondary School",
+    "location": "Maga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School, Unashi",
+    "location": "Kebbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Ayu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kanya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Raha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Tilli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School, Tungar",
+    "location": "Dannufe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Zogirma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girl’s Secondary School",
+    "location": "Bunza",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Maiyama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Sambawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day School",
+    "location": "Andarai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Mungadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gebbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Shanga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Giron Masa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kuka",
+    "type": "secondary school",
+    "verified": false
+  }
+]

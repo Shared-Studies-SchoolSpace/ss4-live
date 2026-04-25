@@ -1,0 +1,2930 @@
+[
+  {
+    "name": "Holy Family College",
+    "location": "Oku Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary Commercial School, Ikot Etokudo/Ibong",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Afaha Obong",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School, Midim",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Ediene Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saints’ Comprehensive Secondary School",
+    "location": "Ikot Oku Mfang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Mary’s Science College",
+    "location": "Ediene Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Christian Secondary School, Ukpom",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen Of Apostles Seminary, Afaha Obong",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Loreto Girls’ Juniorate",
+    "location": "Eriam Afaha Obong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mcintire Secondary Commercial School, Utu-Abak",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Church Of Jesus Christ Comprehensive Secondary School, Atai Otoro",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School",
+    "location": "Ibagwa-Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marie Brown Community Secondary Commercial School, Ikot Edong",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Comprehensive Secondary School, Ikot Essien Etok",
+    "location": "Otoro-Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Palmgrove Christian Seminary",
+    "location": "Utu Abak Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Universal Secondary Academy",
+    "location": "Manta  Abak L.G.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anietie Christian Academy",
+    "location": "Ikot Obong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nsentip High School",
+    "location": "Ekpat Iduot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King’s International College",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Independent Comprehensive College",
+    "location": "Itung",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Urom Academy",
+    "location": "Ikot Essien Utem",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goodnews Community High School",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Esteem Secondary School, Midim Waterside",
+    "location": "Abak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Iko Town Eastern Obolo L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Koromita Comprehensive Secondary School",
+    "location": "Okoroete Eastern Obolo L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Comprehensive Secondary School",
+    "location": "Amadaka Eastern Obolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nduo Eduo High School, Nduo Eduo",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Francis Secondary School",
+    "location": "Ikot Ataku/Akpandem Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Afaha Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Uso Ekong",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ High School, Ikot Ibiok",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Commercial Development Agency Secondary School",
+    "location": "Iko-Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Idong Iniang",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Apostolic Church High School",
+    "location": "Esit Urua-Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Billson Secondary Commercial School",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wills’ Commercial Secondary School",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alex Secondary Commercial School",
+    "location": "Idua-Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amatech Comprehensive High School",
+    "location": "Ataidung Afaha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eket Comprehensive College",
+    "location": "Efoi-Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dayspring Comprehensive College",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Frankfurt High School",
+    "location": "(Science Technical) Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Qua Iboe Church Secondary School",
+    "location": "Afaha Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excellent Comprehensive Secondary School",
+    "location": "Ikot Udoma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hope Power College",
+    "location": "Ikot Nsidibe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Touchstone High School, Ikot Okudom",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Imperial Secondary School",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Weather Secondary School",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pegasus High School",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dominion International High School, Ikot-Okudom",
+    "location": "Okon Edet",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progressive High School",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School, Edo",
+    "location": "Esit Eket L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Akpautong",
+    "location": "Esit Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eket Modern High School, Ekpene Obo",
+    "location": "Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National High School",
+    "location": "Etebi Esit Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian Comprehensive High School, Idong Usiong Village",
+    "location": "Akpautong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model International Secondary School, Ntak Inyang",
+    "location": "Esit Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okon Secondary Commercial School, Ikot Oko",
+    "location": "Essien Udim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School, Ikpe Annang",
+    "location": "Essien Udim L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ukana East",
+    "location": "Essien Udim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School, Nto Osung",
+    "location": "Ekpenyong Atai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Independence High School, Ukana Essien",
+    "location": "Udim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Nto Nsek",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kizito Comprehensive Secondary School, Adiasim",
+    "location": "Essien Udim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School",
+    "location": "Odoro Ikot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School, Ukana West",
+    "location": "Essien Udim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Notre Dame Girls’ Secondary School",
+    "location": "Urua Edet",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Top Faith International Secondary School",
+    "location": "Mkpatak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Inland Secondary Commerical School",
+    "location": "Ikot Afanga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Annong Secondary School",
+    "location": "Idung Esimuk",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Andy Comprehensive College",
+    "location": "Ikot Ondo-Adiasim Essien Udim L.g.a.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pentecostal Comprehensive Secondary School, Ikot Akpan Essiet",
+    "location": "Essien",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Century College",
+    "location": "Mkporoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Ikot Ese",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School, Ikot Esop",
+    "location": "Etim Ekpo L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary (technical) School",
+    "location": "Etok Uruk Eshiet",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Uruk Ata Ii",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Eka Uruk Eshiet",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Eka Obong",
+    "location": "Etim Ekpo L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Northern Annang Secondary Commercial School",
+    "location": "Utu Etim Ekpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iwukem High School",
+    "location": "Iwukem",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obong Christian High School, Obong Ntak",
+    "location": "Etim Ekpo L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Christian Academy",
+    "location": "Uruta Ikot Akpan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian Comprehensive Secondary school",
+    "location": "Ikot Edet",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School, Uruk Ata",
+    "location": "Ikot Orok",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foresight Comprehensive College",
+    "location": "Etim Ekpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abat High School, Abat Town",
+    "location": "Etim Ekpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ntawin Secondary Commercial School",
+    "location": "Ikot Odongo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Faith Comprehensive College",
+    "location": "Utu Ikot Ekpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wisdom Based Academy",
+    "location": "Ikot Mboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikono Annang Comprehensive High School",
+    "location": "Nkwot Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nsituk Modern Academy, Atai Nto Obo",
+    "location": "Etim Ekpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Comprehensive Secondary School",
+    "location": "Etim Ekpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divinewill Christian College, Esa Obong",
+    "location": "Etim Ekpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Christian Comprehensive High School",
+    "location": "Etim Ekpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Intergrity Comprehensive College, Utu Idung Akpan Udom",
+    "location": "Etim Ekpo.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grasp International College",
+    "location": "Etim-Ekpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Nkana-Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Nte",
+    "location": "Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Etinan Community Comprehensive Secondary School",
+    "location": "Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Grammar School",
+    "location": "Ikot Akpabio-Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Etinan Institute",
+    "location": "Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Theresa’s Secondary School",
+    "location": "Edem Ekpat",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School, Ikot-Eba",
+    "location": "Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Salvation Army High School, Efa",
+    "location": "Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Mbioto Ii",
+    "location": "Etinan L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Asuna",
+    "location": "Etinan L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Grammar School, Ikot Itina",
+    "location": "Etinan L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary Commercial School",
+    "location": "Ikot Obio Inyang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alta Academy",
+    "location": "Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ewil Comprehensive Secondary School, Mbioto I",
+    "location": "Etinan L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Calvary-Victory Comprehensive Institute",
+    "location": "Ikot Esua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Slawd Peters Comprehensive Secondary (technical) School",
+    "location": "Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Qua-Iboe Church Women Fellowship Girls’ Secondary School",
+    "location": "Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School, Ekom Iman",
+    "location": "Etinam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Beulah International School, Ekom Iman",
+    "location": "Etinan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lutheran High School, Obot Idim",
+    "location": "Ibesikpo Asutan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brotherhood Secondary School",
+    "location": "Ikot Ide Akpakpan Ibiesikpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary Commercial School",
+    "location": "Iwawa Usung Eket",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Ikot Akpa Etok/Ediam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Grammar School",
+    "location": "Ikot Essien-Ibesikpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ndikpo Grammar School",
+    "location": "Ikot Obio Nko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibesikpo Secondary Commercial School",
+    "location": "Nung Udoe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Asutan Ekpe Comprehensive Secondary School",
+    "location": "Okop Ndua Erong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lutheran Secondary School",
+    "location": "Obot Ideng-Ibesikpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Will Comprehensive Secondary School",
+    "location": "Obot Idim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Airforce Comprehensive Secondary School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Ikot Atang Esen Ibesikpa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The City Of God Secondary Commercial School",
+    "location": "Ito-Oko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apostolic Faith Science School",
+    "location": "Mbierebe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uduaku College",
+    "location": "Afaha Ikot Obio Nkan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Golden Child Secondary School, Ikot-Obio",
+    "location": "Nko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary Grammar School",
+    "location": "Ibeno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "S.S. Peter & Paul Comprehensive High School, Inuaeyen Ikot",
+    "location": "Mkpanak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School",
+    "location": "Ibiaku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School, Ntan Ekere",
+    "location": "Ibiono Ibom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School, Ididep",
+    "location": "Ibiono Ibom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Idoro",
+    "location": "Ibiono Ibom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ikot Usen",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ibiaku Ibiono Western",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Presbyterian Senior Science School",
+    "location": "Ididep",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lott Carey Baptist Secondary School",
+    "location": "Afaha-Obio Eno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibiono Community High School",
+    "location": "Edem Urua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Ono Ibiono Ibom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Commuinty Secondary School",
+    "location": "Itukho-Ibiono Ibom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progressive Secondary Commercial School",
+    "location": "Mbiabong Edem Edik",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mary Slessor Presbyterian Sec. School, Ikot Obong",
+    "location": "Ibiono Ibom L.g.a.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mary Slessor International School, Use Ikot Oku",
+    "location": "Ibiono-Ibom L.g.a.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Use Ikot Amama",
+    "location": "Ibiono Ibom L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model Secondary Comm. School",
+    "location": "Iboku Itu Udo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fulga International College",
+    "location": "Mbeabam Ibiono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Presbyterian Secondary School",
+    "location": "Use Ikot Oku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School",
+    "location": "Mbiabong Nsan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibiono South Community Secondary School",
+    "location": "Ibiaku Ikpedip",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Ikot Uneke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary, Ntan",
+    "location": "Mbat",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ika Comprehensive High School",
+    "location": "Ikot Akpan Anwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ika Secondary Commercial School",
+    "location": "Ikot Osukpong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Augustine’s Secondary School",
+    "location": "Urua Inyang Ika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King Of Kings Secondary Commercial School",
+    "location": "Nto Ntia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gracefield Comprehensive Academy",
+    "location": "Udi Ika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Redeemed Secondary School",
+    "location": "Ikot Ekong Ika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mary Day Christian Comprehensive Secondary School",
+    "location": "Ikot Inyang Ese",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trinity High School, Ikot Inyang",
+    "location": "Ika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alfred Science & Computer School",
+    "location": "Ikot Akpan Ifang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bright Step College",
+    "location": "Ikot Okoro Ata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessed Hope Comprehensive College, Ikot Otong",
+    "location": "Ika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progressive Secondary Commercial School",
+    "location": "Okon",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ukpum Okon Comprehensive Secondary School, Okon Town",
+    "location": "Ikot Abasi L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Midtown Secondary Commercial School",
+    "location": "Edemaya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Odoro Atan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Secondary School, Ete",
+    "location": "Ikot Abasi L.g.a.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Regina Coeli Secondary School",
+    "location": "Essene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary Commercial School, Ibekwe",
+    "location": "Ikot Abasi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Edemaya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akama Catholic Girls’ High School",
+    "location": "Essene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Qua Iboe Church Comprehensive Secondary School",
+    "location": "Ikot Osudu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alexma Secondary School",
+    "location": "Ibekwe Ikpetim Ibekwe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Comprehensive Secondary School",
+    "location": "Ikot Obong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shining Stars Comprehensive Secondary School",
+    "location": "Ikot Obong.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alscon Staff Secondary School",
+    "location": "Ikot Abasi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ikot Abia Idem/ikot Enwang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "State College",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amanyam Community Secondary School, Mbiaso",
+    "location": "Ikot Ekpene L.g.a.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Ikot Inyang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lutheran High School",
+    "location": "Ikot Obong Edong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goretti Girls’ Secondary Commercial School",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Girls’ Secondary School",
+    "location": "Utu Ikpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "State Secondary Commercial School",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary Commercial School",
+    "location": "Ndon Ide Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Child Girls’ Secondary School",
+    "location": "Ifuho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Urua Obo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mid-Town Secondary Commercial School",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Modern Comprehensive Secondary School, Abiakpo Ikot Essien",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Paul’s Comprehensive Secondary School",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okonosco Comprehensive High School",
+    "location": "ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Edemsco Secondary Commercial School",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Itai Comprehensive High School",
+    "location": "Abiakpa Ikot Obio",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban High School,  Chubb Road",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian Secondary Community School, Abiakpo",
+    "location": "Ikot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ritman College",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Edwina College",
+    "location": "Ibiakpan Akananwan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hossana Comprehensive High School",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apostolic Faith Secondary School",
+    "location": "Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Confidence Comprehensive High School",
+    "location": "Ikot-Ekpene.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Premium College",
+    "location": "Abak Oko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nkwot Ikot Obok Idem",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Ndiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School, Ukpom",
+    "location": "Ikono L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lutheran Senior Science Secondary School",
+    "location": "Ibakachi-Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban Secondary Commercial School",
+    "location": "Ibiaku Ntok Okpo-Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Conception Secondary School",
+    "location": "Itak-Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Mary’s Secondary Commercial School, Ikot Nseyen",
+    "location": "Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Archibong Memorial Secondary School",
+    "location": "Ukpom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikono People’s High School",
+    "location": "Nung Ukim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ediene Community Secondary School, Ikot Ayan",
+    "location": "Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trinity Academy",
+    "location": "Iton Odoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tarbas Memorial Comprehensive High School",
+    "location": "Ibiaku Ntok Okpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ediene Bible College",
+    "location": "Nung Idio-Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lott Carey Baptist Secondary Commercial School",
+    "location": "Ikot Efre Itak-Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity High School, Mbiabong Ukan",
+    "location": "Ikono L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obio Ediene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikono Women Education Centre, Itak Ikot Akpanaem",
+    "location": "Ikono L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akwa Ibom State College Of Arts & Science, Nung-Ukim",
+    "location": "Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Effective Secondary Commercial School",
+    "location": "Afaha Ediene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Secondary Commercial School, Oduk",
+    "location": "Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unwana-Abasi Comprehensive Secondary School",
+    "location": "Osuk-Ediene Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National High School",
+    "location": "Ekpemiong Itak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Ukpap",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Competent Comprehensive Secondary School",
+    "location": "Nkara Obio-Ikot Ekpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uncle Peter’s International College",
+    "location": "Ukpom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Danuko Comprehensive Secondary School",
+    "location": "Asanting",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eboison Comprehensive College, Ndiya Etok",
+    "location": "Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The People’s Modern High School",
+    "location": "Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De Trio International School",
+    "location": "Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Providence Secondary School, Aka- Ekpeme",
+    "location": "Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School",
+    "location": "Itu Mbon Uso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ukwok",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogu Community Secondary Commercial School, Ogu Itu Mbonuso",
+    "location": "Ini L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ini Secondary School",
+    "location": "Ikpe Ikot Nkon",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Odoro Ikono Secondary School",
+    "location": "Mbiabong Ikot Udofia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikpe Community Secondary School",
+    "location": "Ibam Edet",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nkari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dikko Secondary Commercial School, Edem Idim",
+    "location": "Ibakesi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist College",
+    "location": "Edem Idim Ibakesi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary Commercial School",
+    "location": "Mbiabong Ikot Udofia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Franco Secondary Commercial School",
+    "location": "Ananamong Itu-Mbonuso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iwerre Comprehensive Secondary School, Obotme",
+    "location": "Ini L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School, Mbiabet Ikpe",
+    "location": "Ini L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prince Michael’s Comprehensive Secondary School",
+    "location": "Itak Ikot Obio Ise",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian Comprehensive College, Ibam Edet",
+    "location": "Ini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ukpaubong Community Secondary School",
+    "location": "Itam-Itu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Andem Itam",
+    "location": "Itu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ntiat/Mbak I Comprehensive Secondary School, Itu Urban",
+    "location": "Itu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ibiaku-Itam",
+    "location": "Itu L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Itam Secondary School, Itam",
+    "location": "Itu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "African Church Secondary Commercial School, Oku, Iboku",
+    "location": "Itu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "West Itam Secondary School",
+    "location": "Ekit Itam Ii Itu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School",
+    "location": "East Itam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Mbak Obio Itam",
+    "location": "Itu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ododuma Secondary Commercial School, Efi North Itam",
+    "location": "Itu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jimbo Secondary Commercial School, Afaha Ubong, Itam Ii",
+    "location": "Itu L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian International Academy",
+    "location": "Ikot Ayan Itam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Confidence Trinity Secondary School",
+    "location": "Akon Itam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ideal Comprehensive Secondary School",
+    "location": "Ikot Ekwere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Oku Iboku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rowth Christian Academy, Nung Ukot Itam",
+    "location": "Itu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Monef High School, Ikot Ebom",
+    "location": "Itam Itu.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Comprehensive Secondary School",
+    "location": "Itu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Enwang Comprehensive Secondary School, Enwang",
+    "location": "Mbo L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Grammar School",
+    "location": "Ebughu Mbo L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Udesi",
+    "location": "Mbo L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uda Community Secondary School, Ofi Uda",
+    "location": "Mbo L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibaka Community Secondary School",
+    "location": "Ibaka Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unyenge Community Comprehensive Secondary School, Unyenge",
+    "location": "Mbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School, Ukam Mkpat",
+    "location": "Enin L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikpa Ibom Comprehensive Secondary School",
+    "location": "Ikot Ekong/Ikot Enin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Asong Community Grammar School",
+    "location": "Asong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Esetang High School",
+    "location": "Ekim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Edu Secondary School",
+    "location": "Ikot Edeghe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Esa Ekpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nya Odiong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Ikot Ayan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ikot Essen/Mkpat Enin L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School",
+    "location": "Ibotio/Ndon",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Mkpat Enin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibiaku Clan Community Secondary School",
+    "location": "Ikot Ebak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Iffe Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Qua Iboe Church Secondary Commercial School",
+    "location": "Minya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adiahadbong Girls’ High School, Ikot Ekpo",
+    "location": "Ukam P.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Apostolic Church Comprehensive Secondary School",
+    "location": "Ikot Obiokoi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Father Fintan’s Memorial Comprehensive Secondary School",
+    "location": "Ikot Ntot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls’ College, Ikot Obio Itong",
+    "location": "Ukam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "A.M.E. Zion Secondary Commercial School",
+    "location": "Ikot Ohio Ekpong Mkpat Enin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Ikot Abia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hope Academy",
+    "location": "Ikot Ekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Penticostal Assemblies High School",
+    "location": "Mkpat Enin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Essien Itiaba Community Secondary School",
+    "location": "Ikot Asua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Iwok",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Ikot Akpan Ike",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eastern Nsit Secondary School",
+    "location": "Odot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ibedu/Idikpa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ikot Ubok Udom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Danson Secondary Commercial School",
+    "location": "Ikot Uyo-Nsit",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary Commercial School, Afaha Offiong Nsit",
+    "location": "Ibom L. G. A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onward Secondary Commercial School",
+    "location": "Mbiokporo I. Nsit Ibom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Afia Nsit",
+    "location": "Urua Nko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nsit Peoples Grammar School",
+    "location": "Afaha Offiong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apostolic Church Secondary School",
+    "location": "Ikot Oku Nsit",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Oboetim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School, Mbiokporo Ii",
+    "location": "Nsit Ibom L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Edeobom I",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary Commercial School",
+    "location": "Ikot Nya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive High School",
+    "location": "Obo Atai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Martha Memorial Comprehensive Secondary School",
+    "location": "Afaha Nsit",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Asang Community High School",
+    "location": "Obotim Nsit",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Afaha Abia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian Academy",
+    "location": "Oboyo Ikot Ita",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ampam Nsit",
+    "location": "Nsit Ibom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ikot Ewang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ubium Community Secondary School",
+    "location": "Ikot Okwot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Nung Obong Nsit Ubium",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Itreto Community Secondary School, Ikot Okobo",
+    "location": "Nsit Ubium",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Salvation Army Secondary School",
+    "location": "Akai Ubium",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ndukpoise",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Western Nsit Secondary School",
+    "location": "Ukat Aran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprenesive Secondary School",
+    "location": "Ndiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School, Ikot Ekpene",
+    "location": "Udo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ikot Ubo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian Comprehensive Secondary School",
+    "location": "Edem Idim Okpot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adiaha Obong Girls’ Secondary School",
+    "location": "Ikot Imo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School",
+    "location": "Ikot Eyo Ubium",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Akpan Abia",
+    "location": "Ubium",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jabuk High School",
+    "location": "Ikot Ntung",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wah Zee Academy",
+    "location": "Ikot Esen",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abiakpo Community Comprehensive Secondary School",
+    "location": "Ikot Ukana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Nto Edino",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fida Secondary Commercial School",
+    "location": "Urua Offiong Eto Udo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School",
+    "location": "Obon Ukwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Columbanu’s Secondary School",
+    "location": "Ikwen",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Secondary School",
+    "location": "Nto Ndang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Abia Osom",
+    "location": "Obot Akara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ideal Secondary Comm. School",
+    "location": "Urua Offiong Etorudo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Etda Secondary Commercial School",
+    "location": "Nto Eton",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Ikpe Mbak Eyop",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Godswill Secondary Commercial School",
+    "location": "Ikot Idem Udo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Standard Secondary Commercial School",
+    "location": "Obot Akara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Odobo",
+    "location": "Okobo L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School",
+    "location": "Nsie",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National High School, Nung Atai Odobo",
+    "location": "Okobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eastern Okobo High School",
+    "location": "Obufi-Okobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Vincent’s Secondary School",
+    "location": "Oti Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Okobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Urue-Ita",
+    "location": "Okobo L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Offi Atak Oro",
+    "location": "Okobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School",
+    "location": "Ekeya Okobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ame Zion Secondary Commercial School, Mbokpu Oduobo",
+    "location": "Okobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Afaha Inang Secondary School",
+    "location": "Ikot Idem Udo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Ebiere",
+    "location": "Onna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oniong West Secondary School",
+    "location": "Ikot Edor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nung Oku Itina Community Secondary School",
+    "location": "Ikot Mbong Onna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Qua Iboe Church Senior Science School",
+    "location": "Ndon Eyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onna People’s High School",
+    "location": "Abat",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Akpan Ishiet",
+    "location": "Onna L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School",
+    "location": "Okat",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Odio Eket",
+    "location": "Odio Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oniong East Community Secondary School, Ikwe",
+    "location": "Onna L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Egad Comprehensive High School, Nung Oku Ekanem",
+    "location": "Onna L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mary Hanney Secondary School",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Boys’ High School",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Senior Science College",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National Secondary Commercial School",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Eyo Abasi",
+    "location": "oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brainway Secondary Commercial School",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mafon Secondary Community School",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immanuel Secondary School",
+    "location": "Own",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Modern Christian Institute",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Frank Comprehensive High School",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Desu Secondary School",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Eyo-Abasi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Infant Jesus Model Secondary School",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen Pecares High School",
+    "location": "Oron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nung Ita/Ikot Ibritam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Inuen",
+    "location": "Oruk Anam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Madonna Community Secondary School",
+    "location": "Obo Ntanya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eastern Midim Secondary School, Ikot Owobo/Ikot Otok",
+    "location": "Oruk",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School, Ikot Esenam",
+    "location": "Oruk Anam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Qua Iboe Church Secondary School",
+    "location": "Ika Annang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Southern Annang Comprehensive Secondary School",
+    "location": "Ikot Okoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Qua Iboe Church Secondary School, Ibesit",
+    "location": "Oruk Anam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ekparakwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Mbiakot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Otop Christian High School",
+    "location": "Ikot Ukpong Eren",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Afanga",
+    "location": "Oruk Anam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Apostolic Church High School",
+    "location": "Ikot Akpan Ibesit",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Ikot Osute",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Ikot Ikpene",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Inen Ekeffe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Standard Comprehensive High School",
+    "location": "Ikot-Akpan Ikot-Okoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seat Of Wisdom Comprehensive Secondary School, Ibianga",
+    "location": "Oruk Anam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive School",
+    "location": "Ediene Atai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Favour Christian College",
+    "location": "Ikot Udo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Udung Uko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Odikor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive High School",
+    "location": "Ntak Afaha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nkek",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Western Annang Secondary Commercial School",
+    "location": "Ukanafun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Afaha Obo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Urua Ekpa Enang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Afaha High School",
+    "location": "Ikot Udo Mbang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian Community Secondary School, Okoyo",
+    "location": "Ukanafun L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goodshepherd High School, Ikot Akpan Nkuk",
+    "location": "Ukanafun L.G.A.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stella Maris Girls’ College",
+    "location": "Ikot Etim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. James Comprehensive Secondary School",
+    "location": "Ikot Inyang Ukanafun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unique Comprehensive Secondary School",
+    "location": "Ikot Akpan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Usung Atiat",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ikot Effiong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive School",
+    "location": "Edem Idim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings And Queens College",
+    "location": "Ukanafun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Udomfu International College",
+    "location": "Ukanafun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gateway Standard Academy",
+    "location": "Ukanafun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ifiayong Usuk",
+    "location": "Uruan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School",
+    "location": "Ibiaku Uruan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School",
+    "location": "Adadia Uruan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atakpo Community Secondary School, Mbiaya",
+    "location": "Uruan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Trinity Secondary School, Mbiakong",
+    "location": "Uruan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "African Methodist Episcopal Zion Secondary Commercial School",
+    "location": "Ndon Ebom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adiaha Obong Secondary School",
+    "location": "Ekpene Ukim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Secondary School",
+    "location": "Ibiaku Issiet",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Assumption Girls’ Juniorate",
+    "location": "Ndon Ebom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Saints Secondary School",
+    "location": "Ibikpe Uruan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Idagha Secondary School",
+    "location": "Nung Oku Uruan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School, Idu",
+    "location": "Uruan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ubodung Community Secondary School",
+    "location": "Oruko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Okuko",
+    "location": "Urue Offong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian Secondary Technical School",
+    "location": "Oyubia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Mbukpu",
+    "location": "Eyokan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Okossi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cornelia Connelly College, Afaha Oku",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Mbak Etoi",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Oku Ikono",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Modern Training Institute Limited",
+    "location": "Uyo.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Secondary School",
+    "location": "Etoi Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Aka Offot",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School",
+    "location": "Ikot Okubo Offot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Offot Ukwa Secondary School, Obio Offot",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adiaha Obong Secondary Commercial School",
+    "location": "Eniong Offot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Efficient Secondary Commercial School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Commercial School, Ikot Ekpeyak",
+    "location": "Ikono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Northern Ikono Community Secondary School, Ikot Odung",
+    "location": "Ikono Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian Secondary Commercial School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School, Four Towns",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikono Ibom Comprehensive Secondary School, Ikot Ayan, Ikono",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cardinal Ekandem Seminary",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uyo High School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Christian Institute",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ernest Secondary Commercial School, Itiam, Ikot Ebia-Etoi",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Offot Usung Ifiayong",
+    "location": "Ibiaku Offot Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "College Of Science, Afaha Oku",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anua Community Comprehensive High School, Anua Offot",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saints College, Use Offot",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bright Stars Model Secondary School",
+    "location": "Uyo Aka Itiam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Success Secondary Commercial School",
+    "location": "Use Ikot-Ebio",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bright Future College, Off Nsikak Eduok",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King Solomon Secondary School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fortune High School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baudidson Secondary Commercial School, Ikot Mbon Ikono",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Special Education Centre For Exceptional Children",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Brian’s Model College",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekasus Secondary School",
+    "location": "Uduetong-Oku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glad Tidings College",
+    "location": "Mbiabong Etoi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City Union Academy",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Science & Technical College",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Kings College",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Greater Light Academy, Use Ikot Ebio",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jevic Science Academy",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Graceland High School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fellowship High School, Idoro Road",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rayfield International Secondary School, Nsukara Offot",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Pearls College, Mbiabong Etoi",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jesus Saves Comprehensive Secondary School, Ifa Ikot Okpon",
+    "location": "Etoi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Neson Schools {Secondary}",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Reward Foundation High School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Christian High School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Scripture Union Secondary School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Evangel Comprehensive High School",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fulga International Model Secondary School, Ikot Ekpene Road",
+    "location": "Uyo",
+    "type": "secondary school",
+    "verified": false
+  }
+]

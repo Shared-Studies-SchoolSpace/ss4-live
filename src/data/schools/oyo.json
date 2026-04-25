@@ -1,0 +1,4832 @@
+[
+  {
+    "name": "Ajibode Grammar School, Ajibode",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aroro Community Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Orogun Grammar School, Orogun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Otun-Agbaakin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Arulogun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School, Odogbo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Apapa Odan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Grammar School",
+    "location": "Agbirigidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikereku Community Grammar School",
+    "location": "Ikereku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Alabata/ajibade",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Laleye Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oyo State School Of Science",
+    "location": "Pade",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Command Day Secondary School, Odogbo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Olanla",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Atapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojoo High School, Alaka",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aponmode/moniya High School",
+    "location": "Moniya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Pade",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yinbol College, Orogun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iwokoto Community Secondary School",
+    "location": "Olubo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Islamic Comprehensive High School",
+    "location": "Olope",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Gospel Faith Mission International Compr. High Sch.",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King’s International College, Moniya",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Posit College, Ojoo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Crown Heights College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Victory College",
+    "location": "Moniya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trinity Home College",
+    "location": "Ojoo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Mountain College, Moniya",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Imperial International College, Sasa, Ojoo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Diplomats College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glory Academy Int’l College, Orogun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogunsanya Girls’ Science Academy",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Kajorepo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School, Senior.Sasa",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Distinct Jubilee International College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Honeycomb Unique College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Graceland College, Moniya",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Moniya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amazing Grace Comprehensive College, Arulogun Rd.",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Sec. School, Mele-Okegbemi, Moniya",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emmanuel Alayande Jnr Seminary, Moyede",
+    "location": "Akobo Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls’ College",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oranyan Grammar School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Otefon Grammar School, Otefon",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isale Oyo Community Grammar School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alaafin High School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Ijawaye",
+    "location": "Asipa Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Lagunna",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isale Oyo Commercial Secondary School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Olola Community Secondary School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bode-Thomas Memorial Grammar School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "School Of Science",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aatan Baptist Comprehensive High School",
+    "location": "Koro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anwar-Ul-Islam College",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Winners International College",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Mercy Comprehensive College, Agunpopo",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Oke Olola",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Happy Day Secondary School, Oke-Oroki",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adejare- Oloyede High School, Koso",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Irawo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Secondary Grammar School",
+    "location": "Ago-Are",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progressive Secondary Grammar School",
+    "location": "Tede",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Society High School",
+    "location": "Ago-Are",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ofiki Grammar School",
+    "location": "Ofiki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Owo Community Grammar School",
+    "location": "Owo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "A.D.S. Comprehensive Secondary School",
+    "location": "Tede",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Owode Irawo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Comprehensive High School, Ago-Are",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Philips Academy, Iwo Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban Day Grammar School, Old Ife Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Idi-Ito High School",
+    "location": "Erunmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kumapayi Community High School, Kumapayi",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Osegere Olukeye Community High School",
+    "location": "Osegere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Ogungbade",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilupeju Community Grammar School",
+    "location": "Alugbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Kasumu-Ajia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olodo Community Grammar School",
+    "location": "Olodo Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Commercial High School",
+    "location": "Ayede",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Owobale",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Providence High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Make-Hay International Comprehensive College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sow The Seed Model College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Achievers Comprehensive High School",
+    "location": "Old Ife Rd.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amazing Grace International College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stars Comprehensive College",
+    "location": "Old Ife Road",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibadan City Model College, Iyana Church",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Samuel Memorial College, Oke Koto Sawmill",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Living Stone College Of Arts And Science, Akobo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De Ayo International College, Old-Ife Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Deril Academy, Old Ife Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Educational Legacy College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tin Carol College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Hayyu Model College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God Is Able College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Global School Of Science",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ore-Ofe Oluwa College",
+    "location": "Jagun-Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bethel Comprehensive College, Alakia Isebo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Thywill College, Alakia",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Jewels College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior High School, Alakia Isebo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Erumu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Olaogun",
+    "location": "Old Ife Road",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban Day Grammar School Iii, Old Ife Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Steadfast Comprehensive College",
+    "location": "Egbeda Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Springs Of Wisdom High School",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "David Joel Model College, Oki Egbeda",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victop College, Eleyele Iyana Church",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Morning Star Comprehensive College, Olode",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olive Branch College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ogungbade",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Temidire Oxford College",
+    "location": "Monatan Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wakajaye Community High School",
+    "location": "Ajagba Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De Lord’s Model College, Molade",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Life College, New Ife Rd.",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olatundun Model College, Alakia",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Regina James Academy",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lasting Glory Comprehensive College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Alarere",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Todebim College",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Acumen Global College, Monatan",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mount Sinai College, Adegbayi",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goshen High School, Ibadan- Ife Expressway",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excellers Comprehensive College, Iyana Church",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Triumph College, Kl  New- Ife, Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Anne’s School, Molete",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibadan Grammar School, Molete",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibadan City Academy",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yejide Girls’ Grammar School, Molete",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibadan Christ Apostolic Grammar School",
+    "location": "Aperin Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adelagun Memorial Grammar School",
+    "location": "Odinjo Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adekile Goodwill Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Grammar School, Molete",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint David High School, Kudeti",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eyinni High School, Orita Challenge",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eleta High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olubi Memorial Grammar School, Kedeti",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Secondary Grammar School, Elekuro",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aperin Oniyere Commercial Grammar School, Aperin",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aperin Boys’ High School, Orita-Aperin",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban Day Grammar School, Elekuro",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School, Kedeti",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wesley College Of Science",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Luke’s College, Molete",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "George And Duke International College",
+    "location": "Felele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bolade Model College",
+    "location": "Owode",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Debby International College",
+    "location": "Olorunsogo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Varsity High School, Scout Camp",
+    "location": "Challenge Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Calvary International College, Felele",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibadan Grammar School Senior School Il",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yejide Girls Grammar School Senior School Il",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Annes Senior School Ll",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibadan Christ Apostolic Grammar School Il",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St Lukes College Senior School Ll",
+    "location": "Molete",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adelagun Senior Grammar School Il, Odinjo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Scores College, Scout Camp, Challenge",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abayomi International College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Periscope College",
+    "location": "Aperin Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Idikan Baptist Comprehensive College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Patimo College, Adesola",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayobami Comprehensive High School, Odo-Oba",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rubies International College, Felele",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sheikh Ibrahim Model College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Benevolent College, Molete",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School, Orita-Aperin",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emerald Laurel Comprehensive College, Felele",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omolola Wisdom College",
+    "location": "Odinjo Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. David’s Cathedral College, Kudeti",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apel Model College, Adesola Area",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Loyola College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagelu Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Trinity Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Renascent High School",
+    "location": "Aremo Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen Of Apostles Secondary Commercial Grammar School",
+    "location": "Oluyoro Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Secondary School",
+    "location": "Agugu Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke Ibadan High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olubadan High School",
+    "location": "Aperin Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Basorun High School, Bode Wasimi",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Barracks Grammar School, Iwo Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mufutau Lanihun Comprehensive High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King’s & Queen’s College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Best Brain College Basorun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Racheal International School, Basorun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Headquaters International College, Adekule",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bloom Heights Secondary School",
+    "location": "Idi-Ape Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Frontliner’s College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excellence Model College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hizbu Lahi-Algalib (Hla) Grammar School",
+    "location": "Agodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagelu Senior Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Renascent Senior High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagelu Senior Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queens Of Apostles High School",
+    "location": "Oluyoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olubadan Senior High School Ill",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olubadan Grammar School",
+    "location": "Aperin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Love Foundation High School, Iwo- Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Toyosi Model College, Basorun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aanu-Olu College, Oluyoro Alaadorin Rd",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omoladun Comprehensive College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comfort Standard Secondary, School, E/ Yidi Area Agodi",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foundation College, Idi-Obi Agugu",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marvellous Greatness College, Yidi Agodi",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Patrick’s Grammar School",
+    "location": "Basorun Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abadina College, University Of Ibadan",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Louis Grammar School",
+    "location": "Mokola Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Commercial Grammar School, Orita-Mefa",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Islamic High School",
+    "location": "Basorun Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immanuel College High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Onabanjo High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Gabriel’s Secondary Commercial School",
+    "location": "Mokola Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mount Olivet Grammar School",
+    "location": "Bodija Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Grammar School",
+    "location": "Bodija Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oba Akinyele Memorial High School, Basorun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Basorun/Ojoo High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oba Akinbiyi High School",
+    "location": "Mokola Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikolaba High School",
+    "location": "Agodi Gra Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Humani Alaga High School",
+    "location": "Sango Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikolaba Grammar School, Agodi Gra",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oba Akinbiyi High School , Mokola",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Theresa’s Seminary",
+    "location": "Oke-Aare Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Mokola Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijokodo High School",
+    "location": "Ijokodo Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Secondary School",
+    "location": "Ijokodo Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cheshire High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Poly High School",
+    "location": "Ijokodo Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The International School, University Of Ibadan",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bodija International College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Reliance International High School",
+    "location": "Ijokodo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Walbrook College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lifeforte International High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ise-Oluwa Montessori High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oritamefa Baptist Model School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lead City High School, Bodija",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Moret Comprehensive College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Souls’ High School, Bodija",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Akinyele Grammar School, Oke-Are",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ade Royal Comprehensive College",
+    "location": "Oke-Itunu Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marella International College, Kongi-Bodija",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nawair-Ud-Deen High School, Inalende",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shiloh High School, Total Garden",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maverick College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Starlite College, Eleyele Road Ijokodo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Achiever High School, Bodija",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cenfex High School, Mokola",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikolaba High Senior School Ii",
+    "location": "Ikolaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immanuel College Senior School Ii",
+    "location": "Ui",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Samchris International Model College Ashi",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gods Blessing Comprehensive College",
+    "location": "Yemetu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City Of Faith Comprehensive College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kolmor Metropolitan College",
+    "location": "N/ Bodija Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King College",
+    "location": "Basorun Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sedepo International College",
+    "location": "Oke- Itunu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings Gate College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Img Grammar School",
+    "location": "Yemetu Aladorin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Senior Agbowo Bodija",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Command Day Secondary School, Letmauck Barrack",
+    "location": "Mokola",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Gems High School, Ashi",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikolaba International College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School, Agbowo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Francis ‘M’ College",
+    "location": "Bodija Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Josabig High School, Okoro, Oke-Itun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ebenezer Baptist High School, Okoro Oke-Itunu",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Apostolic Church Model College, Ijokodo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Graceville College, New Bodija",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anwar-Ul-Islam Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban Day Secondary School, Jericho",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eleyele High School, Eleyele",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eleyele Secondary School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oba Abass Alesinloye Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jericho High School, Eleyele",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onireke Girls High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Saints College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Winfield High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seed Of Life College, Onireke",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shalom Christian College, Idi-Isin",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Allahu-S-Samad Model College, Ijokodo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olayomi Highview International College, Arometa",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day High School, Letmauck",
+    "location": "Mokola",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Beechford High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen High School, Sango",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Andrew Foster Memorial College, Gra",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Isabel Comprehensive Model College",
+    "location": "Eleyele Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fowebs College",
+    "location": "Eleyele Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Barracks Grammar School, Letmauck Barracks, Mokola",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sacred Heart Secondary School, Ode- Oolo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Crown College",
+    "location": "Ibadan.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glorious Height College, Eleyele",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College, Apata",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Theresa’s College, Oke-Ado",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibadan Boys’ High School",
+    "location": "Oke-Bola Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen’s School, Apata",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "African Church Grammar School, Apata",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apata Grammar School",
+    "location": "Apata Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Odo-Ona Girls’ Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibadan Municipal Government Grammar School, Oke-Ado",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Bola Comprehensive High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oluyole Estate Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Basorun Ogunmola High School, Ring Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Celestial Church Of Christ High School, Oke-Ado",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oluyole Extension High School, Ring Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oluyole High School, Ring-Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Secondary School, Liberty Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Grammar School, Idi-Isin",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "People Girls’ Grammar School, Molete",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apata Community Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School, Ring-Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Ado High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adifase High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban Day Grammar School, Ring-Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School, Elewura",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady Of Apostles Secondary Commercial Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen High School, Oke-Ado",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "School Of Science, Oke-Bola",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atanda International High School, Oluyole Estate",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Vale College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Missionary Comprehensive College, Molete",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bambo Academy",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fola Model College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sacred Heart College, Akinyemi Way",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Christian College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pislib De Varsity International High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Ambassadors College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Immaculate Model College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grace Private School (Secondary)",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omoniyi International College, Aba Elesin",
+    "location": "Apata Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ecwa Model College Challenge",
+    "location": "Ibadan.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olapade Agoro Leaders High School, Apata",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Model College, Oke-Ado",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kambridge Comprehensive College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sunshine International High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Catherine’s College, Alesinloye",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oritamefa Baptist Model School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Senior Secondary School Ii",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foremost International Secondary School",
+    "location": "Adeoyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Teresa’s College Senior School Ii",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oluyole Private International College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rhema Chapel International College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Concord College",
+    "location": "Ring Road Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mighty Miracle College",
+    "location": "Oke-Bola Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bevy High School, College",
+    "location": "Crescent Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rochas Foundation College, Ntc, Rd",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. James Cathedral College Oke-Bola",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stand Hope International College, Oke-Ado",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apostolic Faith Secondary School Oke-Ado",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Amazing Grace High School, Anfani, L/Out",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atanda Neighbourhood Private Secondary School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abbey Standard College",
+    "location": "Oke- Ado Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Praise Academy Akinyemi Way, Ring Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igboora High School",
+    "location": "Igboora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Grammar School",
+    "location": "Igboora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lasogba High School",
+    "location": "Idofin Igboora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lajorun High School",
+    "location": "Okeiserin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogboja Grammar School",
+    "location": "Igboora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igboora Grammar School",
+    "location": "Igboora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aiyelogun Grammar School, Idere",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oyo State School Of Science",
+    "location": "Idere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Udeen Grammar School",
+    "location": "Igboora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ingenious Comprehensive Academy",
+    "location": "Igboora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okedere High School, Idere",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kastad Royal Secondary School, Igbole",
+    "location": "Igboora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adegoke College",
+    "location": "Igboora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obaseeku High School",
+    "location": "Eruwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Grammar School",
+    "location": "Eruwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lanlate High School",
+    "location": "Lanlate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eruwa High School",
+    "location": "Eruwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akolu Grammar School",
+    "location": "Eruwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bioku Grammar School",
+    "location": "Lanlate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apode High School",
+    "location": "Eruwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim High School",
+    "location": "Sango Eruwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Model High School",
+    "location": "Eruwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifelodun Comprehensive High School",
+    "location": "Eruwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onitabo High School, Itabo",
+    "location": "Lanlate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goodness And Mercy College",
+    "location": "Lanlate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rockview Model College",
+    "location": "Lanlate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayete Grammar School",
+    "location": "Ayete",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igangan High School",
+    "location": "Igangan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tapa Community High School",
+    "location": "Tapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Aako High School",
+    "location": "Igangan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Ayete",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maku Grammar School",
+    "location": "Tapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maja Academy Senior Secondary School",
+    "location": "Igangan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Model College, Igangan",
+    "location": "Oyo State",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Angels Height College",
+    "location": "Ayete",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adegun Asake Grammar School",
+    "location": "Igangan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Christian Secondary School",
+    "location": "Omi-Adio Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akufo High School",
+    "location": "Akufo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Michael’s African Church Grammar School",
+    "location": "Owode",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Command Secondary School, Bode-Igbo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Awotan Araromi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ogundele Alaho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Elenusonso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ido",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Batake/idi-Iya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ National Model College, Idi Awun",
+    "location": "Apata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Eleshinfunfun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prospect Comprehensive College, Apata",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brilliant Stars College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bibiire International Comprehensive College, Bembo Apata",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "D-Way College, Apete",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Micheals African Church Model Snr Grammar Schl II",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. John Senior Secondary School",
+    "location": "Omi-Onigbagbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Taas College",
+    "location": "Bode-Igbo Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Funmilayo Comprehensive College Owode",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal People College, Lakoto Apete",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Gift High School",
+    "location": "Apete Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Ologuneru",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apete/Ayegun Community Grammar School, Ariyibi",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Leo Community High School, Apata",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bakatari Community High School, Abeokuta Rd",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Elizabeth College, Apata",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lariken College, Abysam Estate",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marks Comprehensive High School, Gbopa",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jesus Glory College, Akuru, Elebu-Area",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marianne College, Ekerin Ologuneru",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omega International College",
+    "location": "Bembo Loguda Apata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Diadem College, Nnpc Area, Apata",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory College, Jankata, Apata",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kisi Community Grammar School",
+    "location": "Kisi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagbulu Memorial High School",
+    "location": "Kisi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iba High School",
+    "location": "Kisi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olanipekun Memorial College",
+    "location": "Kisi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progressive Islamic And Arabic College",
+    "location": "Kisi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Heritage High School",
+    "location": "Kisi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nybrosis College",
+    "location": "Kisi Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansaru-Deen Society High School",
+    "location": "Kisi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iseyin District Grammar School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progressive Secondary Grammar School",
+    "location": "Ado-Awaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Samuel Ajayi Crowther Memorial High School",
+    "location": "Osoogun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anwar-Ul-Islam High School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Secondary Grammar School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekunle High School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Secondary Grammar School",
+    "location": "Koso Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Koso Community Grammar School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint John’s Catholic Grammar School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faramora Grammar School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aseyin High School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kelani College",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akinwumi Methodist High School",
+    "location": "Akinwumi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Grammar School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Thomas Catholic College",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blue Crescent International College",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. John’s Catholic Senior Grammar School Il",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iseyin District Senior Grammar School Il",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim High School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilado-Sagbo Community Grammar School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Ado- Awaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekunle Grammar School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anwar-Ul-Islam College",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Islamic Girls’ High School",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Double Major College",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Pen Model College, Amukoro",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Baptist Church Model College",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rehoboth College, Oremoje",
+    "location": "Iseyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okaka Community Grammar School",
+    "location": "Okaka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ipapo Community Grammar School",
+    "location": "Ipapo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Komu/Babaode High School",
+    "location": "Komu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Grammar School",
+    "location": "Otu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbojaye Community High School",
+    "location": "Igbojaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Amu Community College",
+    "location": "Oke-Amu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Otu Community Grammar School",
+    "location": "Otu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Grammar School",
+    "location": "Otu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Babaode Community College",
+    "location": "Babaode",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Baptist College",
+    "location": "Otu.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iganna High School",
+    "location": "Iganna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iwajowa Community High School",
+    "location": "Ijio",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Idiko-Ago",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilupeju Community Grammar School",
+    "location": "Iwere-Ile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Iganna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Elelokan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ade-Ayo International College",
+    "location": "Iganna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Itile Comprehensive High School",
+    "location": "Itasa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansaru-Deen Society High School",
+    "location": "Iwere-Ile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okeho Iganna Grammar School",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Ilero",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Awoyemi Commercial High School",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Comprehensive High School",
+    "location": "Ilero",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Ilua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Society High School",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iwa Community Grammar School",
+    "location": "Ayetoro-Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isemi-Ile Grammar School",
+    "location": "Isemi-Ile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "School Of Science",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "ISMOG Community Grammar School",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gegun High School",
+    "location": "Ayetoro-Oke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ads Gammar School",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onjo Senior High School",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Irepodun Community High School",
+    "location": "Ilero",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victoria Comprehensive College, Sawmill",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omolewu Academy Bucksman Height",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okeogun/ Ogbinte Community Grammar School",
+    "location": "Okeho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbo Elerin Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "N.O. Idowu Comprehensive High School",
+    "location": "Olorunda-Abaa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Estate High School, Basorun, Akobo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Monatan High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isabatudeen Girls’ Grammar School, Basorun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Grammar School",
+    "location": "Oyedeji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ejioku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School, Lalupon",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagun Community Grammar School",
+    "location": "Lagun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Grammar School",
+    "location": "Kutayi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Alegongo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abudoro Community High School",
+    "location": "Abudoro-Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olosunde Community High School",
+    "location": "Olosunde",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ofa-Adedokun Community High School",
+    "location": "Ofatedo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Apatere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Air-Force Comprehensive School",
+    "location": "Iyana Offa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nickdel College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ogunjana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alapata/onireke Community Grammar School",
+    "location": "Alapata/onireke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Graceland Heights, Wofun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unique College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adetunji-Olowode Community High School",
+    "location": "Lagelu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goodnews International High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "J.Nissi College, Oke’badan Estate, Akobo, Alegongo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De Overcomer’s College, Akobo Ojurin",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adesina College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "T.L Oyesina Model Secondary School (Senior)",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atorise Comprehensive College",
+    "location": "Olorunda-Abaa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hope College, Ejioku",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Escas College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rosebud College",
+    "location": "Alao Akala Way Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Comprehensive High School",
+    "location": "Ejioku Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifesowapo Community High School",
+    "location": "Kute",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Ajara",
+    "location": "Lagelu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Valiants Havilan International College, Ejioku",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogbomoso Grammar School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adeniran Memorial Grammar School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nurudeen Grammar School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogbomoso Girls’ High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Grammar School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Orioke Community High School, Ori-Oke",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Soun High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Are-Ago High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The School Of Science",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Best Legacy International High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akhbarud-Deen College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adebolu Comprehensive College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Model College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Women’s League Secondary School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fasal College",
+    "location": "Onipanu Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajogbe Comprehensive College",
+    "location": "Kuye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "At-Taoheed International Coll., Owoade",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lautech International College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Soun Secondary School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nurudeen High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Millenium Secondary Model School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Owode Community Grammar School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ori-Oke Community High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School, Orioke",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great City Senior Secondary School, Obenite",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Grammar School II Senior",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings International College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "George Green Baptist College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Reg. Comprehensive College",
+    "location": "Igbo Agbanni Area Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King Of Kings Baptist College",
+    "location": "Kinnira Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Model College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mergo Baptist College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Morenike Comprehensive High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Premier Baptist Academy Pakiotan Estate",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogbomoso High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Apostolic Church Grammar School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogbomoso Baptist High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Secondary Grammar School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Comprehensive High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Apostolic Church Grammar School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Ferdinard Grammar School",
+    "location": "Osuuru Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Secondary Grammar School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Molete Community High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Caretaker Community High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Laogun Adeoye Memorial High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayegun Baptist Church College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maryland Catholic Grammar School",
+    "location": "Akata-Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Smith International Baptist Academy",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal International College, Odo Alalubosa",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gomal Baptist College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wesley Comprehensive High School, Arowomole",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aitch American Model College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jesco College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jaf Comprehensive College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Apostolic Church Senior Grammar School II",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Grammar School",
+    "location": "Saanuaje. Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogbomoso Senior High School II",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogbomoso High School III",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Grammar School, Susun",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emmanuel Agboola Grammar School",
+    "location": "Kajola",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Comprehensive High School",
+    "location": "Oke-Onisuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Secondary Grammar Schoo II",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bethel Baptist College, Ijeru",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Favour College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olafunmi Comprehensive College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amicable High School",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Time College, Odokoto",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Grammar School",
+    "location": "Ajaawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obada Community High School, Obada",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Idi-Araba Community High School",
+    "location": "Idi-Araba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Otamokun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Iwo-Ate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagbedu Orile Community High School",
+    "location": "Lagbedu Orile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Idewure",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obandi Community High School",
+    "location": "Odo-Oba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ajaawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Missionary Church Of Africa Sec. Grammar School",
+    "location": "Igbeti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Community High School",
+    "location": "Igbeti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogunbode Memorial Grammar School",
+    "location": "Igbeti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gbadamosi Memorial Royal Academy",
+    "location": "Igbeti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Mary’s Catholic College",
+    "location": "Igbeti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Islamic Senior Grammar School",
+    "location": "Igbeti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prospect High School",
+    "location": "Abanla",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abe Secondary Technical School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Liberty Secondary Commercial Academy",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Moslem Grammar School, Odinjo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist High School, Express Road",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifesowapo Community Secondary School",
+    "location": "Onigambari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ High School, Oleyo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Onipe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Molete High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olojuoro Grammar School, Olojuoro",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ad-Din International College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alaho Community Grammar School",
+    "location": "Alaho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Bare",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ariyo International College",
+    "location": "Sango Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hill Top High School",
+    "location": "Olunde-Olomi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Peace International College, Ogundepo Area, Mosfala",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Merit Comprehensive High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Senior High School II",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St Annes Comprehensive College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Moslem Secondary School,",
+    "location": "Odinjo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oasis International High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior Secondary School, Abafa Olomi",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School Senior, Olomi",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pace Setter Comprehensive College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hallmark College",
+    "location": "Odo-Ona Elewe Rd Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "C.T.Y. Model College, Ajao Village",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olunde Secondary School , Olunde",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Moslem Senior Grammar School",
+    "location": "Odinjo Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist High School",
+    "location": "Lagos/ Ibadan Exp. Rd Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifelodun Community Grammar School",
+    "location": "Moslem Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Summit Comprehensive College, Ayegun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atagba Community Grammar Shool, Boluwaji",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dominion College, Ayegun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Icreti Model College, Oloola",
+    "location": "Idi- Mango Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lanfams Advance Comprehensive College, Ayegun",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibukunolu Model College, Soka Sanyo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Grammar School",
+    "location": "Ojebode",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zumatul Hujaj Community Grammar School, Olorunsogo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajia Secondary Grammar School, Ajia",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Araromi",
+    "location": "Aperin Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Elekuro High School, Oke Ogbere",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Akanran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olorunda Ogunsola Community Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Gbedun",
+    "location": "Via Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Badeku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogbere Community High School, Idi-Osan",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sucess High School",
+    "location": "Akilapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Asegun Comprehensive High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tunmise Comprehensive Model College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jesus The Rock College, Jegede",
+    "location": "Akanran Road Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abundant Model College",
+    "location": "Orita Merin Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ummul-Qura High School, Amuloko Area",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adura International Model College",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goodwill Comprehensive High School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Secondary School, Gangansi",
+    "location": "Ogbere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zumuratul Hujaj Community Grammar School Ii",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zumuratul Hujaj Secondary School, Olorunsogo",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Airport Community Senior High School II",
+    "location": "Ogbere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Sawia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Help- Line College",
+    "location": "Gbaremu. Oremeji Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tender Care College, Amuloko",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zumratul Hujaj High School",
+    "location": "Oke- Ogbere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bioku Alaadun Community Grammar School",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Alaadun Area",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glorious College Amuloko",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glory Comprehensive College, Olorunsogo, Nepa Exp.",
+    "location": "Ibadan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Irepo Grammar School",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifelodun Grammar School",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igboho More Community Grammar School",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith Immaculate Academy",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Igbope",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Grammar School",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oore-Oluwa Baptist Academy",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "C & S Model College",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ireti- Ogo Baptist College",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim High School, Bonni",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbehin – Adun College",
+    "location": "Igboho.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shining Stars Model College",
+    "location": "Igboho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tewure Grammar School",
+    "location": "Tewure Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikoyi Grammar School",
+    "location": "Ikoyi-Ile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Oolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ahoro-Dada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ahoro Esinele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Iluju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olokoto C. Grammar School, Olokoto",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lasubu/Alada Community Grammar School",
+    "location": "Lasubu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eso Comprehensive College",
+    "location": "Ikoyi-Ile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School, Alaroponla",
+    "location": "Oriire Local Govt. Ikoyi Ile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajinapa Community Senior School",
+    "location": "Ajinapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Comprehensive College",
+    "location": "Orile Aipo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olorunda Community Grammar School",
+    "location": "Guguru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jehovah Shammah Baptist College",
+    "location": "Araromi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Ayekale",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Adafila Via Ikoyi-Ile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olivet Baptist High School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Bernardine Girls’ Grammar School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Durbar Grammar School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican/Methodist Secondary School, Ajagba",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abiodun Atiba Memorial Institute",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oba Adeyemi High School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nesto College",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Francis Catholic College",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jimade Comprehensive College Araromi",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rock Of Ages Comprehensive High School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Afolabi Memorial Comprehensive High School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Durbar Senior Grammar School II",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abiodun Atiba Memorial Institute Senior School II",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olivet Baptist Senior High School II",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican/Methodist High School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Ameen Comprehensive High School",
+    "location": "Agbogangan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Liberty College",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith International College",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Overcomers College",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olivet Baptist Academy",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ladigbolu Grammar School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojongbodu Grammar School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Grammar School, Opapa",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fasola Grammar School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Taiwo Memorial Secondary School, Oluwatedo",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maradesa Memorial Comprehensive College",
+    "location": "Isokun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Salamat Olaniyan Memorial Model College",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oyo State College Of Education Model High School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bright Stars International High School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ads High School, Opapa",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ladigbolu Senior Grammar School II",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Baptist Academy, Isokun",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Premier College, Ojongbodu",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shepherdsfield International College",
+    "location": "Off Iseyin Road. Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The Cornerstone Model College",
+    "location": "New Iyaji Layout Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goodnews College, Alagbon, Owode",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bamdek High School",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Crescent Heights Odo- Arin",
+    "location": "Oyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Idi-Emi",
+    "location": "Sepeteri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Ogbooro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oje Grammar School",
+    "location": "Aha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adu Grammar School, Oke-Inanfo",
+    "location": "Ago-Amodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Grammar School",
+    "location": "Ago-Amodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Grammar School",
+    "location": "Sepeteri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Grammar School",
+    "location": "Oje-Owode",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Comprehensive Grammar School",
+    "location": "Ogbooro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Arolu Community Grammar School",
+    "location": "Agbonle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Society High School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saki Parapo Community Grammar School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Ayekale",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Asabari Grammar School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Otun Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Army Barracks",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okere Secondary Grammar School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Medical Centre Secondary School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Elam Baptist Secondary School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Society Comprehensive College",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sharon Rose College",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Primerose Model Private College",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Benefit Comprehensive College",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aisha Model College",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "International Muslim College",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King Catholic College",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ads College",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okere Senior Secondary Grammar School Ii",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Secondary School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Islamic Senior High School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Senior Secondary School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gboro Muslim Senior College",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith College",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Grammar School, Gedu Estate",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ahmadiyya Muslim Grammar School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Better Care Secondary School",
+    "location": "Saki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iresaadu High School",
+    "location": "Iresaadu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Arolu Community High School",
+    "location": "Arolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Secondary Grammar School",
+    "location": "Oko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olumayin High School",
+    "location": "Mayin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Irepodun Community High School",
+    "location": "Alagbede/Onikeke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Alayin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbon Gambari Community High School",
+    "location": "Igbon/gambari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Gbede",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ori-Eran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifelodun Grammar School",
+    "location": "Ilajue",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Iregba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Comprehensive High School",
+    "location": "Oko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Comprehensive College",
+    "location": "Gambari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Arayin High School",
+    "location": "Iranyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Comprehensive College",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Juli Standard College",
+    "location": "Oko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iresaapa Community High School",
+    "location": "Iresaapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sheperd Academy",
+    "location": "Iresaadu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikunsin Community High School",
+    "location": "Ikunsin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Senior Grammar School",
+    "location": "Oko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Ajase/Jabata",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Iya-Oje",
+    "location": "Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Baptist Church Academy",
+    "location": "Oko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aroje/Abaa Community High School",
+    "location": "Aroje Village.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Remak High School",
+    "location": "Iresa Pupa Via Ogbomoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gloria Comprehensive College",
+    "location": "Iresa Adu",
+    "type": "secondary school",
+    "verified": false
+  }
+]

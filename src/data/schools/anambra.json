@@ -1,0 +1,3158 @@
+[
+  {
+    "name": "Community Secondary School",
+    "location": "Akpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban Girls’ Secondary School",
+    "location": "Ekwulobia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Umuchu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Technical College",
+    "location": "Umuchu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Isuofia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Nkpologwu",
+    "location": "Aguata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Ezinifite-Aguata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Oraeri-Aguata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Agulu Ezechukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The Redeemer College, Amesi",
+    "location": "Aguata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Peter’s Special Science School",
+    "location": "Achina",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aguata High School",
+    "location": "Aguata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uga Boys’ Secondary School",
+    "location": "Uga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pioneer Secondary School",
+    "location": "Umuchu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Boys’ Secondary School",
+    "location": "Igbo-Ukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ezinifite Aguata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School, Igboukwu",
+    "location": "Aguata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ High School",
+    "location": "Uga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School, Achina",
+    "location": "Aguata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Umuchu High School",
+    "location": "Umuchu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Uga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Peter’s Secondary School",
+    "location": "Achina",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Concepts Secondary School",
+    "location": "Ekwulobia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Child Secondary School",
+    "location": "Isuofia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Delight International Secondary School, Ekwulobia",
+    "location": "Aguata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model Comprehensive Secondary School",
+    "location": "Isuofia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Premier Comprehensive Secondary School",
+    "location": "Nkpologwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Paul’s Academy High School",
+    "location": "Ekwulobia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Konigin Des Friendens College",
+    "location": "Uga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Comprehensive Secondary School",
+    "location": "Isuofia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Family Secondary School",
+    "location": "Igbo-Ukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King Secondary School",
+    "location": "Igbo-Ukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Own Secondary School",
+    "location": "Umuchu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Monsignor Maduka Memorial Secondary",
+    "location": "Ula Ekwulobia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady’s Comprehensive College",
+    "location": "Akpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St Anthony’s Secondary School",
+    "location": "Ikenga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Hill Secondary School",
+    "location": "Ekwulobia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Heart Secondary School",
+    "location": "Uga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Name Secondary School",
+    "location": "Umuchu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Madonna Secondary School",
+    "location": "Uga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mother Of Christ Secondary School, Ezinifite",
+    "location": "Aguata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Augustine Model Secondary School",
+    "location": "Uga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goodness Comprehensive Secondary School",
+    "location": "Ekwulobia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ High School",
+    "location": "Umuleri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Nsugbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Umuleri High School",
+    "location": "Umuleri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Umuoba-Anam Community Secondary School",
+    "location": "Otuocha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ifite Umuleri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Justice Chinwuba Memorial Secondary School",
+    "location": "Aguleri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Father Joseph’s Memorial High School",
+    "location": "Aguleri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Madonna Secondary School, Umuleri",
+    "location": "Otuocha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "International Model Comprehensive College",
+    "location": "Nsugbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Enchristo Comprehensive Secondary School",
+    "location": "Aguleri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prime Foundation Secondary School",
+    "location": "Abata Nsugbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fr. Tansi Secondary School",
+    "location": "Aguleri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nwafor Orizu College, Demonstration Sec. School",
+    "location": "Nsugbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Col. Mike Attah Secondary School, Enugu-Otu",
+    "location": "Aguleri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Umueze-Anam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anam High School",
+    "location": "Oroma Etiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ifite Anam-Mmiata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Igbedor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School",
+    "location": "Nzam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Udama Community Secondary School",
+    "location": "Inoma-Akator",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The Kings College",
+    "location": "Umuan-Anam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Father Ohai Memorial Model Secondary School",
+    "location": "Oroma Etiti Anam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Sailor International Secondary School",
+    "location": "Onono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ichida",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Akwaeze",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lake City Girls’ Secondary School",
+    "location": "Nri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Adazi-Nnukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School",
+    "location": "Agulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Agulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lorretto Special Science School",
+    "location": "Adazi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bubendorf Memorial Grammar School",
+    "location": "Adazin-Nnukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Agulu Grammar School",
+    "location": "Agulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ High School",
+    "location": "Agulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Flora Azikiwe Model Comprehensive Secondary School",
+    "location": "Neni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojiako Memorial Grammar School",
+    "location": "Adazi-Ani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Adazi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Regal Secondary School",
+    "location": "Nri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Aguluzigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obeledu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Anthony’s Catholic Comprehensive Institute",
+    "location": "Agulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Queen Secondary School",
+    "location": "Aguluzigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ifite-Ogwari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Igbakwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Umumbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Omor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Riverside Secondary School",
+    "location": "Umerum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogbe High School",
+    "location": "Anaku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Simon Faith International Secondary School",
+    "location": "Omor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Universal Secondary School",
+    "location": "Omasi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Regina Ceali Secondary School",
+    "location": "Omor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Joseph’s International Secondary School",
+    "location": "Anaku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amikwe Community Secondary School",
+    "location": "Omor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Amawbia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint John Of God Secondary School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emeka Aghasili High School",
+    "location": "Nise",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Crowther Seminary",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Mbaukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Umuawulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School",
+    "location": "Amawbia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Cross High School",
+    "location": "Umuawulu/Mbaukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igwebuike Grammar School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ezeike High School",
+    "location": "Nibo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National Secondary School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Paul’s University Secondary School",
+    "location": "Nibo-Nise",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary Schools",
+    "location": "Umuokpu-Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Netherlands International Schools",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Ghost Academy Secondary School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unique Comprehensive Secondary School",
+    "location": "Amawbia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Agulu-Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Destiny Comprehensive Secondary School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kabe College, Amawbia",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tansi International College, Umuodu Village, Okpuno",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ubaka Comprehensive Secondary School School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nneoma Community Secondary School",
+    "location": "Nibo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Science & Technical College",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kenneth Dike Memorial Secondary School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ezi- Akwa Community Secondary School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Okpuno",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Capital City Secondary School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rosary College",
+    "location": "Nise",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Krosa Secondary School",
+    "location": "Amawbia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hez-Dike Secondary School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Amanuke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ebenebe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint John Bosco Seminary",
+    "location": "Isuaniocha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Amansea",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Urum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Mgbakwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Isuaniocha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Achalla",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Awba-Ofemili",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Nise",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anerobi International College",
+    "location": "Amansea",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seat Of Wisdom Secondary School",
+    "location": "Urum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Augustine’s Secondary School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nnamdi Azikiwe University High School",
+    "location": "Awka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Handsmaids Girl’s Secondary School",
+    "location": "Amansea",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School",
+    "location": "Ichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Oraifite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ihembosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oraifite Secondary School",
+    "location": "Oraifite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zixton Secondary School",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mater Dei Secondary School",
+    "location": "Oraifite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Saints Secondary School",
+    "location": "Oraifite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seat Of Wisdom Secondary School",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Carol Standard Convent, Ichi",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Versity Comprehensive Secondary School",
+    "location": "Ugworie Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City High School",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Michael’s Boys’ Secondary School",
+    "location": "Eziora-Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Jude’s Comprehensive Secondary School",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sacred Heart College",
+    "location": "Oraifite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mount Olives Academy",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Patrick’s International Secondary School",
+    "location": "Ichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Carol Standard Convent",
+    "location": "Ichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vision International Sec. School",
+    "location": "Oraifite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Recdot Vocational Secondary School",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sancta Maria Secondary School",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Archdeacon Nwosu Memorial Secondary School",
+    "location": "Ozubulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Ojoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Boys’ Secondary School",
+    "location": "Ojoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Secondary School",
+    "location": "Nnokwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King Seminary",
+    "location": "Nnobi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Merchant Of Light School",
+    "location": "Oba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint John’s Science and Technical College",
+    "location": "Alor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Awka-Etiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nnobi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Joseph’s Secondary School",
+    "location": "Awka-Etiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Oba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Alor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady’s Secondary School",
+    "location": "Nnobi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nnokwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady’s Special Science School",
+    "location": "Nnobi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seat Of Wisdom Comprehensive Secondary School",
+    "location": "Idemili",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grundtvig International Secondary School",
+    "location": "Oba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekwuno Memorial Comprehensive Secondary School",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Madonna International Academy",
+    "location": "Nnobi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Father Paul Memorial School",
+    "location": "Awka-Etiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Merchant of Light Special Science Secondary School",
+    "location": "Oba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Giant Step International Secondary School",
+    "location": "Oba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ave Maria Secondary School",
+    "location": "Nnokwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Knowledge Secondary School",
+    "location": "Oba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mater Del Model Secondary School",
+    "location": "Alor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. John’s Secondary School",
+    "location": "Akwu Ukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okigbo Memorial International Secondary School",
+    "location": "Ojoto-Uno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Umuoji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ideani Community Secondary School",
+    "location": "Ideani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Uke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Oraukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Abatete",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Eziowelle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Technical College",
+    "location": "Nkpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mater Amabilis Secondary School",
+    "location": "Umuoji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Innocents Juniorate Convent",
+    "location": "Nkpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Ogidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Notre Dame High School",
+    "location": "Abatete",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oraukwu Grammar School",
+    "location": "Oraukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Boys’ Secondary School",
+    "location": "Ogidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Redemption Model Secondary School",
+    "location": "Awada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Good News Special College",
+    "location": "Ogidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen Of Rosary Comprehensive Secondary School",
+    "location": "Eziowelle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady’s Comprehensive Secondary School",
+    "location": "Nkpor-Unor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Summer International School, Awada",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model Innovative School Of Today",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ideal Mind Foundation Secondary School",
+    "location": "Nkpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sedes Sapentiae Secondary School",
+    "location": "Nkpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Foundation Secondary School",
+    "location": "Awada-Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Campus Secondary School",
+    "location": "Awada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban Secondary School",
+    "location": "Nkpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Devans Comprehensive Secondary School",
+    "location": "Oba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cor Mariae Girls’ Secondary School",
+    "location": "Nkpor-Agu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Child Madonna College",
+    "location": "Awada Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Starlight Comprehensive Secondary School",
+    "location": "Ogidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Summit Comprehensive College",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Anthony Of Padua High School",
+    "location": "Nkpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Supreme Knowledge Secondary School",
+    "location": "Nkpor-Agu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Joseph’s Comprehensive Academy",
+    "location": "Ogidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School, Awada",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dominican Sisters College",
+    "location": "Abatete",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Standard International Secondary School",
+    "location": "Eziowelle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mater Christi Secondary School, Awada",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mercy Girls’ Secondary School",
+    "location": "Umuoji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trinity Model Secondary School",
+    "location": "Nnobi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nazareth Secondary School",
+    "location": "Nkpor Agu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Edmund Secondary School, Maryland",
+    "location": "Nkpor-Agu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marian Foundation Secondary School",
+    "location": "Oraukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Winners International Secondary School",
+    "location": "Nkpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Patrick’s Secondary School, Ugwuagba",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Daystar Secondary School",
+    "location": "Ogidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Choice De Immaculate Demonstration Secondary School",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dominion Comprehensive Secondary School",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City Secondary School",
+    "location": "Ogidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mount Zion Secondary School",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings And Queens Secondary School",
+    "location": "Akuzor-Nkpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Genius Model Secondary School",
+    "location": "Awada-Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Busy Brain Secondary School",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Royal International College",
+    "location": "Nkpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Don Bosco Secondary School",
+    "location": "Obosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Orsumoghu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Mbosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Isseke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School",
+    "location": "Okija",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Amorka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abbot Girls’ Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Umuoma Uli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Azia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Lilu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okija Grammar School",
+    "location": "Okija",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abbot Boys’ Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uli High School",
+    "location": "Uli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Anthony’s Secondary School",
+    "location": "Azia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Uli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Ghost Juniorate",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Judes Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jubilee Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Patterson Comprehensive Secondary School",
+    "location": "Mbosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Royal Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City Comprehensive Secondary School",
+    "location": "Uli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Spencer Secondary School",
+    "location": "Uli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Vincent’s Secondary School",
+    "location": "Uli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pacnodim Comprehensive Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jon-Jay Comprehensive Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vic Comprehensive Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Louis Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abbot Girls’ Special Science School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Azia Comprehensive Secondary School",
+    "location": "Azia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Saints Secondary School",
+    "location": "Uli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alpat Model Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Foundation Secondary School",
+    "location": "Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal International Secondary School",
+    "location": "Okija",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Secondary School",
+    "location": "Akwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Prince Secondary School",
+    "location": "Orsumoghu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Precious Child Secondary School",
+    "location": "Uli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mother Paul Offiah Memorial Girl’s Secondary School",
+    "location": "Azia Ihiala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Higher Achievers International Secondary School",
+    "location": "Uli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Family Comprehensive Secondary School",
+    "location": "Okija",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Nimo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Technical College",
+    "location": "Enugu-Agidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nawfia Community Secondary School",
+    "location": "Nawfia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Abba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Nawfia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Michael’s Model Comprehensive Secondary School",
+    "location": "Nimo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Abagana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nnamdi Azikiwe Secondary School",
+    "location": "Abagana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ide Secondary School",
+    "location": "Enugwu-Ukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Enugwu-Agidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Boys’ Secondary School",
+    "location": "Enugwu-Ukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Special Science School",
+    "location": "Abagana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Joseph Girls’ Secondary School",
+    "location": "Nimo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Busy International Secondary School",
+    "location": "Nimo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Theresa’s Secondary School",
+    "location": "Enugwu- Ukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federated Bilingual Secondary School",
+    "location": "Abagbana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ukpor High School",
+    "location": "Ukpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Boys’ High School",
+    "location": "Osumenyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ High School",
+    "location": "Osumenyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Awor-Ezimuzor Comm. Secondary School",
+    "location": "Ezinifite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ekwulumili",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ezinifite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ High School",
+    "location": "Utuh",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unubi High School",
+    "location": "Unubi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School",
+    "location": "Amichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Technical College",
+    "location": "Utuh",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ukpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Premier Senior Secondary School",
+    "location": "Unubi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Special Science School",
+    "location": "Azigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trinity Comprehensive Secondary School",
+    "location": "Amichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Ebenator",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mater Amabilis Comprehensive High School",
+    "location": "Osumenyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Paul’s Seminary, Umunuko",
+    "location": "Ukpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ebe Community Secondary School",
+    "location": "Ukpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Talent Comprehensive Secondary School",
+    "location": "Ezinifite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fidelity Secondary School",
+    "location": "Unubi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Child Convent",
+    "location": "Amichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Anthony Of Padua",
+    "location": "Osunmeyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Akwaiedi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Paul’s Secondary School",
+    "location": "Utuh",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Enizim Secondary School",
+    "location": "Ekwulumili",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen Of Angels Secondary School",
+    "location": "Osumenyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Assumption Comprehensive Secondary School",
+    "location": "Ukpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Mary’s Comprehensive Secondary School",
+    "location": "Ukpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Patrick’s Secondary School",
+    "location": "Unubi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okongwu Memorial Grammar School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Science and Technical College",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maria Regina Model Comprehensive Secondary School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nnewi High School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Good Shepherd Secondary School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akaboezem Community Secondary School",
+    "location": "Uruagu-Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Era Model Secondary School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The Way Secondary School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Summit International Secondary School",
+    "location": "Umudim-Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dr. Alutu’s College Of Excellence",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Innocent Secondary School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Later Rain Foundation Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fountain Of Knowledge Model School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mother Of Mercy Girls’ Secondary School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nodos International Secondary School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King David International Secondary School, Uruagu",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Uzodike Memorial Seminary",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Saints Secondary School",
+    "location": "Umudim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Philip’s Anglican Grammar School, Okofia",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Joseph Secondary School, Okofia",
+    "location": "Otolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nneoma Secondary School Otolo",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stella Maris Comprehensive Secondary School",
+    "location": "Uruagu-Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Keep Looking To Jesus Comprehensive Secondary School",
+    "location": "Nnewichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen Of Angels Secondary School",
+    "location": "Nnewichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Girls Model Secondary School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Monsignor Joseph Nwibegbanam Memorial Secondary School",
+    "location": "Otolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eagles International High School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Lord’s Foundation Secondary School",
+    "location": "Nnewichi-Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Netherlands International Secondary School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prof. Sam Chukwujekwu Memorial Grammar School",
+    "location": "Nnewi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ideke Girls’ Secondary School",
+    "location": "Odekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogbaru High School",
+    "location": "Ogbakuba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Comprehensive Girls’ High School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Global Secondary School, Okpono",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Vincent De Paul National Secondary School",
+    "location": "Iyiowa Odekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Manus Comprehensive Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ede Secondary School",
+    "location": "Okoti-Odekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Paul’s Comprehensive Secondary School",
+    "location": "Ogwu Ikpele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Girls’ Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Calvary Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ogwuaniocha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Arch Bishop Albert Obiefuna Secondary School",
+    "location": "Iyiowa Odekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oxford Creative International Secondary School",
+    "location": "Iyiowa-Odekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Comprehensive Secondary School",
+    "location": "Atani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Atani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Showlight International Secondary School",
+    "location": "Iyiowa-Odoekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady of Grace International Secondary School, Iyiowa",
+    "location": "Odekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Universal Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progress Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Liberty Secondary School",
+    "location": "Okpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holyland Foundation Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Versity Comprehensive Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Rapheal The Archangel Model Secondary School, Anumudi",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King Model Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "China Foundation International Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apex International Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Friend International Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Technical College",
+    "location": "Ossomala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Busy Minds Secondary School",
+    "location": "Okpoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. James Anglican Secondary School",
+    "location": "Iyiowa- Odekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ss Peters & Paul Model Secondary School, Nkutaku",
+    "location": "Ogbaru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Josephine Oduah Memorial Secondary School",
+    "location": "Akili-Ozizor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban Girls’ Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Metu Memorial Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Modebe Memorial Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kezz Foundation Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nkem Comprehensive Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Learning Field International Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Promise International Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Infant Jesus Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Estate Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Urban Boys’ Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prudence Comprehensive Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queens Comprehensive Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Charles International Secondary School, Okpoko",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Onyemelukwe Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Comprehensive College",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Child International Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Redeemed Christian Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Destiny International School",
+    "location": "Odekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pinnacle Secondary School",
+    "location": "Fegge Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Special Secondary School For The Deaf",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King College",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dennis Memorial Grammar School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen Of The Rosary College",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ado Girls’ Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prince Memorial High School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Era Girls’ Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Charles Special Science School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Charles Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Metropolitan College",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Washington Memorial Grammar School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Hallow’s Seminary",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onitsha High School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Inland Girls’ Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eastern Academy",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls’ College",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady’s High School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trinity Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dayspring Girls’ Comprehensive Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Regina Pacis Model Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Learning Field International Secondary School, Omagba",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nkisi Comprehensive Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Deo Gratias Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Heritage Hieght Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seat Of Wisdom Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maranatha International Seconary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rock Foundation College",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Christopher’s Junior Seminary -",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gipps Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Latter Rain Foundation Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bethroot Model Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Spirit International Secondary School, Omagba",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akunne Oniah Memorial Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emmanuel College",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ozougwu Comprehensive Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glory Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bethlehem Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Busy Brain International Secondary School",
+    "location": "Onitsha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ufuma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Awgbu Grammar School",
+    "location": "Awgbu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nanka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Oko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Awgbu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ndikelionwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ndiowu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Omogho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Awgbu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Nanka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Enugwuabo Ufuma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ajalli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Daughters Of Mary Mother Of Mercy Girls’ High School",
+    "location": "Ndiowu Orumba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Mary The Virgin Convent",
+    "location": "Ufuma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Catherine’s Comprehensive Secondary School",
+    "location": "Nanka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Austica Memorial College",
+    "location": "Nanka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gaius Benton Secondary School",
+    "location": "Oko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Christ College",
+    "location": "Awgbu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mind Of God International Secondary School",
+    "location": "Ufuma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Polytechnic Staff Secondary School",
+    "location": "Oko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Ghost Academy",
+    "location": "Amaokpala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Awa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jesurite Secondary School",
+    "location": "Nanka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School",
+    "location": "Umuomaku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ihite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory High School",
+    "location": "Ezira",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Boys’ Secondary School",
+    "location": "Owerre Ezukala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Nawfija",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Umunze",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Technical College",
+    "location": "Umunze",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ogboji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Saints Secondary School",
+    "location": "Umunze",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Boys’ Secondary School",
+    "location": "Ogbunka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Union Secondary School",
+    "location": "Owerre Ezukala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Secondary School",
+    "location": "Ogbunka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Bethel Secondary School",
+    "location": "Isulo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Demostration Secondary School",
+    "location": "Eziagu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Madonna Girls’ Secondary School",
+    "location": "Umunze",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model Secondary School",
+    "location": "Umunze",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Beati Mundo Corde Comprehensive Secondary School",
+    "location": "Umunze",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Universal Comprehensive Secondary School",
+    "location": "Umunze",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ike Memorial Secondary School",
+    "location": "Ihite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Calvary Comprehensive Secondary School, Ururo",
+    "location": "Umunze",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Conception International Secondary School",
+    "location": "Umuchukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Umunya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cave City Secondary School",
+    "location": "Ogbunike",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Nkwelle Ezunaka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model Comprehensive Secondary School",
+    "location": "Nkwelle Ezunaka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Igbariam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progressive Senior Secondary School",
+    "location": "Umunya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Era Secondary School",
+    "location": "Nteje",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Awkuzu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Monica’s College",
+    "location": "Ogbunike",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Boys’ High School",
+    "location": "Nteje",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Secondary School",
+    "location": "Awkuzu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mater Dei Girls’ Secondary School",
+    "location": "Awkuzu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sacred Heart College",
+    "location": "Nteje",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marist Comprehensive College",
+    "location": "Nteje",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Raphael’s Secondary School",
+    "location": "Awkuzu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Starlight Secondary School",
+    "location": "Ogbunike",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ukpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary",
+    "location": "Umunnachi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nneamaka Secondary School",
+    "location": "Ifitedunu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nawgu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dunukofia High School",
+    "location": "Ukpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Mary’s High School",
+    "location": "Ifitedunu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gilrs’ Secondary School",
+    "location": "Umudioka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ukwulu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okpatu Comprehensive Secondary School",
+    "location": "Ukpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St Anthony’s Comprehensive Secondary School",
+    "location": "Umudioka",
+    "type": "secondary school",
+    "verified": false
+  }
+]

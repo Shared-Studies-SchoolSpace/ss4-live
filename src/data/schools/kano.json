@@ -1,0 +1,2816 @@
+[
+  {
+    "name": "Aunty Lailka Private School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Channel International Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Comprehensive Secondary School",
+    "location": "Nasarawa Calabar",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ajingi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Toranke",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gurduba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Chula",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Secondary School",
+    "location": "Albasu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic Secondary School",
+    "location": "Tsangaya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic Secondary School",
+    "location": "Faragai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Albasu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Panda",
+    "location": "Kano State",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kano Foundation Girls’ Secondary School",
+    "location": "Bebeji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bebeji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Rantan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Rahama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Bichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic Secondary School",
+    "location": "Kargon/bichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Secondary School",
+    "location": "Danzabuwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Saye-Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Harbau",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girl’s Secondary School",
+    "location": "Bichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Danzabuwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Buden Gari Bichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Chiromawa",
+    "location": "Bichi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ College",
+    "location": "Dala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gwamaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School, Kofar Mazugal",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amana International College, K/Ruwa",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hope Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Allahullateef International College",
+    "location": "Kurna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Secondary School",
+    "location": "Gwammaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Kuka Bulu-Kiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Assahaba College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kurna Asabe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Arabic Secondary School",
+    "location": "Tudun Bojuwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen Amina College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Dandishe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Gwammaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Fauzsylim Group Of Schools",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Green Olive International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Azim Comprehensive College, Rijiyar Lemo",
+    "location": "Dala Kano State",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gora Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Raj’s Success College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girl’s Secondary School",
+    "location": "Yammata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dambatta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Senior Secondary School",
+    "location": "Dambatta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Fagwalawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Koren Danbatta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Zago",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maimunatu Government Girls Secondary School",
+    "location": "Danbatta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Dambata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dawakin Kudu Science College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic Senior Secondary School",
+    "location": "Dawakin Kudu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Yar’gaya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tsakuwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dawakiji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yankatsari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Yar’gaya",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Doguwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Riruwai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Burji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic Secondary School, Falgoren Daji",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dawakin-Tofa Science College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Kwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dawakin Tofa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dawanau",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwa Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic Secondary School",
+    "location": "Dawankin Tofa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dandalama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Secondary School",
+    "location": "D/Tofa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jalli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Thomas Secondary School, Airport Road",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "College Of Arts And Science Staff Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary Commercial School, Airport Road",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School, Bukavu Barracks",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Stadium",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tony Cheta College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mohammed Vice Adamu Government Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Success Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abbas Maje Nasarawa Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faan Staff Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unique National Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwakwachi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Standard Comprehensive Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Maikwatashi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Maikwatashi (boys’)",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Trinity Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hannatu Memorial College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tropical College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Standard Foundation Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings International College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maryam Abacha Government Girls’ Secondary School",
+    "location": "Kurna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Daughters’ College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Community College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican High School, Sabon Gari",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Evangel International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tambaya Yahaya Comprehensive School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model International College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sorters International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Lords Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Researcher’s International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Triumph Model College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Veraben Grammar School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Premier College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Apostolic Mission School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School (Girls), Bukavu",
+    "location": "Barracks",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "F. A. Group Of Schools",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith International College",
+    "location": "Fagge Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Golden Crown International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gulf Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic Secondary School",
+    "location": "Kwachiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Dabo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sharon Academy International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Citadel Academy College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abu Science & Commerce College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Good Shepherd Model School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Floral International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kizito International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rochas Foundation College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Supreme International Schools",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Majesty College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Salam International College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Foundation Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foundation Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen Ad Schools",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Golden Future Academy, Burma Road, Sabo Gari",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Best Brains Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Governor’s College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jum-Ben International High School, Sabongari",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen’s College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Roselle Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Zakirai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gabasawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yola Wangara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Garko Girls’ Science College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Garko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maitama Sule Science College",
+    "location": "Gaya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic Secondary School, Gaya",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kademi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Gaya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Maimakawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gaya- Gandu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Jogana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Guduwawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gezawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ College",
+    "location": "Gezawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Garun Danga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jogana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School, Gezawa",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gwale",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aminu Kano Commercial College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Musa Iliasu College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal College Of Education Staff Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School, S/Mainagge",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Goron Dutse",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic College, G/Dutse",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Governmant Arabic College, Gwale",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ace Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Ansar Girls’ College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iman Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Izazuddeen Girls’ Arabic Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sheik Bashir El-Rayal Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Warure",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nasara Academy, Kabuga",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adeola Comprehensive College",
+    "location": "Kofar Kabuga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abu Hanifa Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pyramid (Al-Aharam) Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sheik Tijjani Usman Islamic College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dorayi Baba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zayyad Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abu Hanifa College",
+    "location": "Madawari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sheik Mahiula Islamic Secondary School",
+    "location": "Sani Mainaggae",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Dsukawuya Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Senior Secondary School",
+    "location": "Gwale",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Dorayi-Babba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School, Ai’sami",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adamu Nama’aji Islamic Secondary School, Goron-Dutse",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City Centre College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Ameen Model School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Azhar School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Balarabe Haladu, Islamic Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Ja’en",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Waya School, Complex College",
+    "location": "Ja’en",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sheikh Isyaku Rabiu College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kuntau Science Academy",
+    "location": "Dorayi Babba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prestige International Comprehensive College",
+    "location": "Kagon Kaya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Buhari Government Girls Arabic Secondary School",
+    "location": "Sabon-Sara Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Caliphate Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Darul Arkan College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gwarzo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Riji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Gwarzo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Karkari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Getso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kutama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Kabo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kabo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Garo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Karaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Chedi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "K/Maiyaki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kiru Yamma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yako",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dangora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Galadimawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Sakarma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Kiru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Naibawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Panshekara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kumbotso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mariri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Shekar Barde",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De Larfel Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Crown Science & Commercial College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mulco Science And Commercial College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Top Quality College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uthman Bin Affan Model College",
+    "location": "Kumbotso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Special Education School",
+    "location": "T/Maliki Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kids High School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Liberty International College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brains International School, Chiranchi",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Best College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Diamond International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "M.T. International College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Breed College",
+    "location": "N/Maikalwa Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Chiranchi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Senior Secondary School",
+    "location": "Wailari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girl’s Arabic Secondary School",
+    "location": "Panshekara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sundora International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Arabic Secondary School, Sheka",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Berachah International",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nice Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amazing Academy International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rabi And Zainab International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Assayyada Zainab Science Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dan-Maliki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Best Alternative Comprehensive College, Tudun Maliki",
+    "location": "Kano State",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saádatu Rimi College Of Education Staff School, Kumbotso",
+    "location": "Kano State",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Light College, Panshekara",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fatima Mahmoud College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Babayaro Memorial International School",
+    "location": "Kumbotso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Arabic Secondary School",
+    "location": "Kura",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Kura",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Arabic Secondary School, Tanawa, Kura",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dan-Hassan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tamburawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yandakwari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Karfi, Zaria Road",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kunya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Minjibir",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls’ College",
+    "location": "Minjibir",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Minjibir",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rumfa College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Sharada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shekara Government Girls’ Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Senior Arabic Secondary School",
+    "location": "(his) Shahuci",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "K/Nasarawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "School For Arabic Studies",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alhassan Usman College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Umma Zaria Government Girls’ Senior Secondary School",
+    "location": "Koki Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Spring Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Halal College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hasiya Bayero Government Girls’ Arabic Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Continuing Education Centre, Gidan Galadima",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School, Gandun Albasa",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Hassana Sufi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amina Memorial College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Standard College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Sabuwar Kofa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City Education Centre",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Yakasai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Education Resource Centre (Cerc) Staff School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Arabic Secondary School",
+    "location": "Kofar Nai’sa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Festival K/ Wambai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary. School, Sharada",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Noble Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pragmatic College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Louis Secondary School",
+    "location": "Bompai Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ahmadiyya College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kawaji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Crescent International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kano Capital Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Secondary School",
+    "location": "Kawaji Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tarauni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Comprehensive College, Kawaji",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Day Science College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ecwa Baba Alhamdu Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Danco Commercial College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kano Model School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Grils’ Secondary School",
+    "location": "Giginyu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hamdala Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dangana Government Girls’ Senior Secondary School",
+    "location": "Tudun-Wada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Samadi International School, Kawaji",
+    "location": "Dakata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Basic College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prime College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bennie College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ Science And Technical College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Grade Comprehensive School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "E. C. W. A. Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Dakata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pajec International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fatimat International High School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Palmgrove International Secondary School",
+    "location": "Badawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ave Madona College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christled Baptist High School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pathfinder Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gateway To Knowledge For Success College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "A. T. International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bristow International College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yakubu Memorial Secondary Schjool",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Turkish International College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gateway International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seat Of Wisdom College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Turkish International Girls College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onward Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Hotoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zaifat International School Kawaji",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kano Bright Star International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Suntulma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ecwa Restoration Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yandutse College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Precise Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hajara Ahmed International College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Islamic Secondary School",
+    "location": "Dakata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Hotoro Masallachi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Magwan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queens Science Academy",
+    "location": "Hotoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progressive Science & Commercial College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sankore International College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Da’awa Comprehensive Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jofay High School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "El-Litinin College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pinnacle Group Of School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alfijer Science College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Arabic Secondary School, Hotoro",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Charis College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Arabic Secondary School, Tudun/Murtala",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aunty Laila Private School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Channel Int’l Sec. School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cedar Presidential Private College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tireni International School",
+    "location": "Dakata Junction",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Happy Day International School",
+    "location": "Jotoro North",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ete Inoh College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wamy International Schools",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amazing Intelligence College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ultimate International College, Tudun Murtala",
+    "location": "Kano State",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kano Capital Boys Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Solid Rock College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eleganzar International Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hameedah International College",
+    "location": "Kano.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Rano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Rurum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Rano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Rimin Gado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yalwan Danziyal",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Rogo Ruma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Zarewa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yanoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Beli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Shanono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Police Girls Secondary School, Shanono",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tsaure",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Govt. Sec. School",
+    "location": "Faruruwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Rimi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Secondary School",
+    "location": "Sumaila",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Sumaila",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Govt. Sec. School",
+    "location": "(Kundum) Sumaila",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Unity College",
+    "location": "Kachako",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Takai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Kachako",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Faruruwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "School Of Business Studies",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hassan Ibrahim Gwarzo Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nana Aisha Girls’ Arabic Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lufaloy Grammar School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Franbeat International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dinop International Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excel College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Salsa College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gulf Group College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emphatic Neo-Classic College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Inter Continental College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cleopatra Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fatima Muhammad Government Girls’ Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kundila",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mayor Comprehensive College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Horizon Science And Commercial College",
+    "location": "Gyadigyadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gemstone College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maitama Sule Girl’s Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Hausawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Unguwan Uku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Reward International School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Essence College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Assalam Private School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Murtala Muhammed Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gold Star Secondary School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Havana College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Secondary School",
+    "location": "Ado Musa Nama Ituwo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Epic Academy",
+    "location": "Naibawa Quarters",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shehu Abdullahi Science Academy, Tarauni",
+    "location": "Kano State",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School, Janguza",
+    "location": "Army Barrack",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tofa-Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Lambu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Tofa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tsanyawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kabagiwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dunbulum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College, Dankadai, Tundun Wada",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Faskar Maaji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Tudun Wada Dankadai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Yaryasa",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dankadai Inuwa Memorial Government Secondary School, Tudun-Wada, Dankadai",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Karefa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bayero University Staff Secondary School",
+    "location": "Gwarzo rd.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Zaura Babba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Winners College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Kadawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "RijiyarZaki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fahad International School, Bachirawa",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ungogo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Annur College",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Bachirawa",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Jajira",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sunrise Academy",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Addy Basic School",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary Commercial School",
+    "location": "Wudil",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Wudil",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Darki Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Indabo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Utai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School, Sabon Garin",
+    "location": "Wudil",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Lajawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kibiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Arabic Secondary School",
+    "location": "Kibiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Burum Burum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Durba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tahfeezul Qur’an College",
+    "location": "Kibiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Bagwai",
+    "location": "Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gadanya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kiyawa Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Madobi Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwankwaso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Madobi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akilu Comprehensive Islamic Secondary School",
+    "location": "Madobi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Malamai Government Secondary School",
+    "location": "Kwankwaso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bunkure",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kumurya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Barkum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Chiromawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "G/Malam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kunchi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Shuwaki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yan’dadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Koguna Kano",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Makoda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Maitasaidau",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Secondary School",
+    "location": "Maitsidau",
+    "type": "secondary school",
+    "verified": false
+  }
+]

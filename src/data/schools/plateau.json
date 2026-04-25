@@ -1,0 +1,3062 @@
+[
+  {
+    "name": "Government Secondary School",
+    "location": "Barkin Ladi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dalo Memorial High School",
+    "location": "Foron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Foron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Beco Comprehensive High School",
+    "location": "Kwi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint John Vianney Seminary",
+    "location": "Barkin Ladi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ropp",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bethany Christian Academy",
+    "location": "Barkin Ladi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gashish",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bakin Kogi Foron",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mai-Idontaro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Messiah College",
+    "location": "Gana Ropp Barakin Ladi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Heipang Barkin Ladi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mazat",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Fan-Loh",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kakpwis",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dorowa-Tsoho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Islamic Orientation Secondary School",
+    "location": "B/Ladi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Sho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School, Ex-Lands",
+    "location": "Gindi Akwati",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist College",
+    "location": "Barkin Ladi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eliztor High School",
+    "location": "Barkin-Ladi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gwol Prime Secondary School",
+    "location": "Bakin-Ladi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Buji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Miango",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Amo-Katako",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Jengre",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ecwa Secondary School",
+    "location": "Miango",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Zagun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Command Day Secondary School",
+    "location": "Rukuba Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist High School",
+    "location": "Bassa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Plateau School For The Deaf",
+    "location": "Bassa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Fuskan-Mata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hyde Memorial Secondary School",
+    "location": "Jengre",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bassa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mista-Ali",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Binchi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jebbu Miango",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Garba Daho Memorial Islamic Secondary School",
+    "location": "Mista Ali",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwall",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bassa Comprehensive Secondary School",
+    "location": "Bassa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Kawam",
+    "location": "Bassa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atinga Deki Memorial Secondary School",
+    "location": "Miango",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sambo Memorial Secondary School",
+    "location": "Jengere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Rimi-Bassa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Buyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Manguna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mushere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Richa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Masharkut",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kopyal-Bokkos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mushu-Tangur",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mbar",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Bokkos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Daffo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Apostolic College",
+    "location": "Kuba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Toff",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Butura-Kampani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bokkos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gawarza",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Paul’s College",
+    "location": "Forof-Kwatas",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Horop",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tarangol",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tom Owen’s Memorial College",
+    "location": "(Cocin) Kwatas-Tarangol",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Evangelical Secondary School, Matelem",
+    "location": "Bokkos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Andy Comprehensive College",
+    "location": "Forof-Marish",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Baptist High School",
+    "location": "Tenti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ruwi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Garah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kamwai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ngoksar",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gwande",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Hokk",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Nations Academy, Dashorong",
+    "location": "Bokkos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Nghatator-Daffo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akiluwa Secondary School, Fakkos",
+    "location": "Bokkos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mangar Community Secondary School, Mangar",
+    "location": "Plateau State",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Federe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Faith Tabernacle College",
+    "location": "Jarawan Kogi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Maijuju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Fobur",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Zandi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Piran’s High School, Zarazong",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Shere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Kerker",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Gora",
+    "location": "Fadan Fursum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Metropolitan College, Fari Gada",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "University Of Jos Demonstration Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ecwa Staff School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tempest Comprehensive High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Louis College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Murumba College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint John’s College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Naraguta Grammar School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mount Olive Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Commonwealth Comprehensive College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sardauna Memorial College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Command Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Laranto",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Plateau High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Babale",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School, Gangare",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "College Of Islamic Studies",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Iman Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "School For Higher Islamic Studies Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gwong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rockland College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "College Of Arabic And Islamic Studies",
+    "location": "Rikkos-Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nurudeen Islamic College",
+    "location": "Laranto Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maygo High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tin City College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Academy",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Tudun Wada Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Michael College",
+    "location": "Farin-Gada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Salama High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Science Grammar School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Science Day Private Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jabal-Un-Noor International School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Calvary Science College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Hilal Secondary School",
+    "location": "Rikkos Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Township Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kabong Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Lamingo Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kyan Rikkos Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Chwel-Nyap",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Pauls Academy",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Redeemed Peoples Academy",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Liberty Comprehensive College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cherubim & Seraphim College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cocin Hq. Church Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Usama Arabic Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City Comprehensive Secondary School, Bauchi Ring Road",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hayatul Islam Private School",
+    "location": "Ang. Rogo Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Joseph Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Plastabs Comprehensive College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Godiya Private Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amazing Grace College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Arewa Model Private Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Infant Jesus Academy, Rukuba Road",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zawan Comprehensive College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Philips Academy, Bauchi Ring Road",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Apostolic Church High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, West Of Mines",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Victory International College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Ikhlas Secondary School, Rikkos",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Angels International College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nasarawa Comprehensive Model School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Jos Jarawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Theresa Girls College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibrahim Memorial Arabic College",
+    "location": "Nasarawa Gwom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop’s College, Zaria Rd",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory International Christian Academy",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nan-Mak Comprehensive Secondary. School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excellence International Academy Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Premier High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sele-Nei High School, Kabong",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School, Rot-Norong",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sheik Abubakar Gumi Memorial Private Secondary School, Nassrawa",
+    "location": "Gwong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Joshua Generation Foundation Secondary School, Alheri",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Grace High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mafeng High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School, Utan",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School, Kuwiri",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Executive Child Model Academy",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excellent Bridge International College",
+    "location": "Tina Junction Jos Jarawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saints Academy",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Success And Unity Secondary School, Kyan",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Science High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Messiah Covenant College",
+    "location": "Apata-Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ecwa Private Secondary School, Kabong",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al Khairat Private Secondary School",
+    "location": "Rikkos-Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Esteem Private School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gloryland College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omega High School",
+    "location": "Kwanga Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alama Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Noble International School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al- Yusra Private School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trust International School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Vwang",
+    "location": "Vom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "College Of Mary Immaculate",
+    "location": "Zawan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science School",
+    "location": "Kuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Joseph’s College",
+    "location": "Vom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zang Secondary Commercial School",
+    "location": "Bukuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abbah Memorial College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Airforce Military School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Du",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kanadap-Kuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Anglo-Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gyel",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National Veterinary Research Institute, Staff Secondary School",
+    "location": "Vom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Highland College",
+    "location": "Zawan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Theological College Of Northern Nigeria Staff Secondary School",
+    "location": "Bukuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Airforce Girls’ Comprehensive School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zawan Community Secondary School, Bukuru",
+    "location": "Zawan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Hei-Rayfield",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Kufang",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Baptist Secondary School",
+    "location": "Bukuru Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Taoheed Secondary School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emmanuel International College, Rayfield",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Hwak-Kuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Bukuru",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bukuru Comprehensive Secondary School",
+    "location": "Rahwol Kanang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cocin Secondary School, Dadin-Kowa",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Canaan High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De African Child College",
+    "location": "Bukuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sunnah Private High School",
+    "location": "Bukuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School, Hwolshe",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bethel International Christian Academy, Ray Field",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dadinkowa High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rantya High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Ambassadors College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tanbihis Sunnah High School",
+    "location": "Bukuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Beulah High School",
+    "location": "Anglo-Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Noble College",
+    "location": "Bukuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shekina Glory International Academy",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Nyango-Gyel",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Chugwi-Vwang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nurul Islam High School",
+    "location": "Bukuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ngwa’al Community Secondary School",
+    "location": "Vwang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Plateau State Polytechnic Academy Trade Centre",
+    "location": "Bukuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Giring",
+    "location": "Abattoir",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Comprehensive College, Dadin-Kowa",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Imperial College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Way Comprehensive College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bilgade High School, Giring Abattoir",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gido Secondary School",
+    "location": "Bukuru Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Manje Y. Private Secondary School",
+    "location": "Bukuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sacred Scholars High Schools",
+    "location": "Nyago-Gyel",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prestige International Secondary School",
+    "location": "Dahwol Dangwong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King’s Secondary School",
+    "location": "Kangang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sunshine International School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Junuco High School, Hwolshe",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "High Standard Secondary School",
+    "location": "Dahwol Dangwong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Luke’s College",
+    "location": "Kuffang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Revival Royal College",
+    "location": "Gyel",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Starlet High School",
+    "location": "Zarmaganada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unique High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Regal High School",
+    "location": "Abattoir",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sureq Model College, Abattoir",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kuru Comprehensive Secondary School",
+    "location": "Kuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rochas Foundation College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Kung-Bwuna",
+    "location": "Du",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vineyard Academy",
+    "location": "Rabin-Du",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Assemblies High School",
+    "location": "Bukuru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Educare Chosen High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adonai Vine School, Rayfield",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Child- Care High School",
+    "location": "Anguldi- Zawan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Rita’s High School",
+    "location": "K/ Vom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mt Tabor International College",
+    "location": "Kufang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rhemaville Christian Academy, Kufang",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessed Academy Comprehensive College",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Radiantway High School, Bukuru",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gaskiya High School, Diye- Tohwot",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Beatrice Memorial Academy",
+    "location": "Anguldizawan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mt. Carmel Christian School, Hwolshe",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shalom Private School, Kufang",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Creative Minds International Academy",
+    "location": "Dadin Kowa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Remus High School",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ampang-East",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tom-Tom Garram",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kabwir",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Amper",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kalashi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yakubu Gowon College",
+    "location": "Sharam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gonerit Memorial College, Tuwan",
+    "location": "Kabwir",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dawaki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Shiwer",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Forkhir-Amper",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Lebwit",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Langshi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gyanggang I",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gugur",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Lun-Tabulung",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Nemel",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Nyayit-Garam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fundamental College",
+    "location": "Kabwir",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Dengi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Model Senior Secondary School",
+    "location": "Dengi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bashar",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Garga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kafel",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gagdi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jarmai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gidgid",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bankilong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kantana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gyangyang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gar",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kunkyam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwalmiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Zungun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Governtment Senior Secondary School",
+    "location": "Dugub",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kanam High Secondary School",
+    "location": "Pidum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Govt. Senior Secondary School",
+    "location": "Tunga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Day Secondary School",
+    "location": "Dengi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gwamlar",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Gumsher",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dam-Ungwa Hakimi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dadur",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nimbar Secondary School",
+    "location": "Langtang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwampe Langtang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Langtang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Langtang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls’ College",
+    "location": "Langtang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gazum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Zamko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Useni Memorial College",
+    "location": "Dadur",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gani Development College",
+    "location": "Pil-Gani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Pil-Gani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cooper Memorial Secondary School",
+    "location": "Langtang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian College",
+    "location": "Langtang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Talbut",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Lipchok",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Nacha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Pangna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary Shool",
+    "location": "Kaplak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Limun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Funyallang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lyangjit Community Secondary School",
+    "location": "Ndem",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kumkwam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Piga Community Model College",
+    "location": "Yakot-Gani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Litch Way College",
+    "location": "Langtang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Salama High School",
+    "location": "Pilgani Langtang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mabudi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dorowa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Sabon Gida",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dadin Kowa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Fajul",
+    "location": "Langtang-South",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Magama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Takalafiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Timbol",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nehemiah Memorial College",
+    "location": "Sabon-Gida",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School.",
+    "location": "Gamakai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Kamkun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Talgwang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fakat Comprehensive Science School",
+    "location": "Mabudi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Governement Secondary School, Faya",
+    "location": "Langtang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith Cocin Secondary School",
+    "location": "Mabudi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls’ High School",
+    "location": "Gindiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Boys’ Secondary School",
+    "location": "Gindiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Pushit",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ampang-West",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cocin Comprehensive College",
+    "location": "Gindiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mwansat College",
+    "location": "Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hauwa Memorial Secondary School",
+    "location": "Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mangu Secondary School",
+    "location": "Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nakam Memorial Secondary School",
+    "location": "Panyam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bwalbwang Gindiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mangun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mwaghavul Community Secondary School",
+    "location": "Pushit",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kombun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mwaghavul Community Secondary School",
+    "location": "Kerang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mangu-Halle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Panyam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kerang Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kogap High School",
+    "location": "Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Langai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bwai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jipal",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kombili",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jannaret",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bwonpe Community Secondary School",
+    "location": "Bwonpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Katul Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jakatai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nyemdung Community Secondary School",
+    "location": "Mangun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kam’ar Comprehensive High School",
+    "location": "(sabon Gari) Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cocin Secondary School",
+    "location": "Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Balka Community Secondary School",
+    "location": "Mwar-Chakfem",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Equal Right Secondary School",
+    "location": "Ampang-West",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Chanso",
+    "location": "Gindiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Murish Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Chakfem",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Daika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Twaspughal",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bidol/Kopshu Community Secondary School",
+    "location": "Ampang West",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yigo Memorial Secondary School",
+    "location": "Badni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Islamic Sec. School",
+    "location": "Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kopal Comm. Sec. Sch",
+    "location": "Sakjimut – Kopal",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Phirapan Science And Technical College",
+    "location": "Daika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajing Community Sec. Sch",
+    "location": "Ajing",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Manchet Comprehensive Sec. School",
+    "location": "Kasuwa Ali",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dangkwat Memorial Secondary School",
+    "location": "Kantoma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nyemlighit Community Comprehensive Secondary School",
+    "location": "Mangun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fomulam Community Secondary School",
+    "location": "Fomulam Kerang-West",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kerang North Community Secondary School",
+    "location": "Kon",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Niyes Community Secondary School",
+    "location": "Niyes",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Manja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gyong Memorial College",
+    "location": "Gyambwas",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dastu Comprehensive Academy",
+    "location": "Pushit",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ruff Community Secondary School, Ruff",
+    "location": "Mangu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vodni Community Secondary School",
+    "location": "Vodni Pushit.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Garkawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Lalin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Zomo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tunkus",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Garkawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mission High School",
+    "location": "Tunkus",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jibam-Chip Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Macauley Memorial Secondary School",
+    "location": "Ballang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Asa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Tongfom Fellowship College",
+    "location": "Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Kagu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bet-Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jing",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Chigwong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Fier",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Langkuk Memorial Comprehensive Secondary School",
+    "location": "Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Mugulum",
+    "location": "Chip",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kumbul-Kadung",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trinity Missionary College",
+    "location": "Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Wokkos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Benedicts Seminary And Convent",
+    "location": "Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kor Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Nyelleng",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Abwor-Dyis",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jiblik",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tinjim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kagu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ballang-Kalep",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Linak Academy Secondary School",
+    "location": "Jannaret",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Takkas",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Pai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Good Shepherd College",
+    "location": "Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Tal",
+    "location": "Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Helen’s Anglican Girl’s Grammar School",
+    "location": "Tambes-Pankshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kotlang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Doemak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwalla",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kurgwi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Potter Memorial Secondary School",
+    "location": "Kwalla",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Namu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwande",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bakin-Ciyawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bwall",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dokan-Kasuwa Qua’an-Pan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kopduak Comprehensive College",
+    "location": "Pangkwoeloep",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary Shool",
+    "location": "Njak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Heart College",
+    "location": "M/Demshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Gidan-Dabat",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Kwang",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Yitlaar",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Shindai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cocin Redemption College",
+    "location": "Luukwo-Bakin Ciyawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bwall Unity Secondary School",
+    "location": "Dungras",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Salama Private School",
+    "location": "Namu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Iman Private Secondary School",
+    "location": "Kurgwi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vision Science International School",
+    "location": "Mararaba-Demshin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Quaan-Pan Unity Private Secondary School",
+    "location": "Gidan Dabat",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Sabon-Gida",
+    "location": "Plateau State",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Princeton Science/ Technical College",
+    "location": "Namu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Turniang.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Treasure Field Academy Secondary School",
+    "location": "Hancin Kare",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pedong Comprehensive Secondary School",
+    "location": "Kwaggar- Kwalla",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ganawuri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Riyom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Andrew’s High School",
+    "location": "Ganawuri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Rim",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kalong",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Piapung",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Science Secondary School",
+    "location": "Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Goepa’al Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Yelwa-Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Shimankar",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Poeship-Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dokan-Tofa Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kuka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwansan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Duankwan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Army Barracks Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cocin Salvation Private Sec. School",
+    "location": "Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Bernadette’s College",
+    "location": "Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Winner’s College",
+    "location": "Kuka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Moekat",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Model Secondary School",
+    "location": "Nyak Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grace Of God Private Secondary Schooll",
+    "location": "Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Nshar-Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "I.C. International Academy",
+    "location": "Ungwan Zam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Messiah College",
+    "location": "Jelbang (Laraba)",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Ngoot-Long",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Biem-Biem",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ecwa Comprehensive Secondary School",
+    "location": "Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cocin Maranatha Secondary School, Yelwa- Nshar",
+    "location": "Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Academy",
+    "location": "Kuka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gik Plang Memorial Secondary School",
+    "location": "Gai- Dokan- Tofa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sylverson College Poeship",
+    "location": "Bakin Kogi Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "High Academy Private Secondary School",
+    "location": "Sokluut",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Peace Comprehensive College",
+    "location": "Sabon Layi Lakushi- Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cocin Peace Secondary School",
+    "location": "Shimankar- Shendam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kadarko-Wase",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Wase",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science College",
+    "location": "Wase",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gudus",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Wase-Tofa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Lamba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yuli",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Guiwan-Kogi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Mavo-Wase",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muhammed Abdullahi Wase Memorial Senior Secondary School",
+    "location": "Wase",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School, Tundun- Wada",
+    "location": "Jos",
+    "type": "secondary school",
+    "verified": false
+  }
+]

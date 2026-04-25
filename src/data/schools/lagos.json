@@ -1,0 +1,7826 @@
+[
+  {
+    "name": "Anwar-Ul-Islam (Model) College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Joseph Secondary School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saka Tinubu Memorial High School",
+    "location": "Orile Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos Baptist Senior Secondary School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oniwaya High School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abibatu Mogaji Millennium Senior Secondary School",
+    "location": "Iloro- Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Orile Agege Community High School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yewa High School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dairy Farm Senior Secondary School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sango Senior Secondary School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "State Senior High School",
+    "location": "Oyewole Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onipetesi High School",
+    "location": "Iloro-Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls Senior High School",
+    "location": "Iyana Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jubril Martins High School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jelly-Las College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Links International School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Folbim High School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atlas College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onibu-Ore Comprehensive High School, Oko-Oba",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "A&T College, Tabon-Tabon",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Mark College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sarah Comprehensive College, Oko Oba",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Honey Spring High School",
+    "location": "Fagba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rose Valley High School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adegoke High School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagooz College",
+    "location": "Orile Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ored College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glory Emmanuel High School, Oke-Odo",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brilliant Academy",
+    "location": "Iloro Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abiks High School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Juli Comprehensive College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Golden Stars College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brighter Hope Comprehensive High School",
+    "location": "Ogba-Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fitjoy Academy, Okekoto",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tofek Secondary School, New Oko Aba",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ope-Olu Comprehensive Secondary School, Dopemu-Agege",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Darman Model College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Blessed College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Status Comprehensive College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Field Comprehensive College",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos Baptist Senior Secondary School Ii",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Normal College, Ijaiye",
+    "location": "Ogba-Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oshboug Modern Secondary School",
+    "location": "Aguda-Ogba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Roy Faith Platinum College, Oke-Odo",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fountain Of Wisdom College, Oko-Oba",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hope Dynamic Comprehensive College",
+    "location": "Papa Asafa Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pandora Comprehensive College,Mulero",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gaskiya Senior College",
+    "location": "Badia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trinity Secondary School, Araromi",
+    "location": "Olodi-Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cardoso Senior High School",
+    "location": "Badia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajeromi Ifelodun Senior High School",
+    "location": "Osho Drive",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Awodi-Ora Senior Secondary School",
+    "location": "Cardoso Ajegunle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adeolu Senior Secondary School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alakoto High School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olodi-Apapa Senior Secondary School",
+    "location": "Olodi-Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tincan Island Senior High School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Senior Secondary School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Creek Senior High School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Newland Senior Secondary School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mokoya Senior High School",
+    "location": "Olodi-Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojoku Senior High School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojora Memorial Senior Secondary School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oluwa Memorial Senior Secondary School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oshodi Senior Secondary School",
+    "location": "Olodi-Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Reservation Senior Secondary School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Temidire Senior High School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Expressway Senior Secondary School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hope Bay College",
+    "location": "Ajegunle Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "High Achievers College",
+    "location": "Apapa Ajegunle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekum College, Amukoko",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-Light International Secondary School",
+    "location": "Olodi-Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Foundation College, Ajegunle",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kalac-Loyola Secondary School",
+    "location": "Olodi-Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Noel College Of Arts & Science",
+    "location": "Orile Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Moonlight College, Wowo Street",
+    "location": "Olodi Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Topfield College",
+    "location": "Ajegunle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Leonard Umunna College",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oloye Comprehensive College",
+    "location": "Sari Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rybeka Model College",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bola Ige Millennium Senior Secondary School",
+    "location": "Tolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Johnson Grammar School, Alaba Oro",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Umbrella Comprehensive High School",
+    "location": "Olodi Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chambers College",
+    "location": "Amukoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Julewubi Foundation College",
+    "location": "Amukoko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dorcas Memorial College",
+    "location": "Awodi-Ora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Infant Jesus College, Ajegunle",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kingston High School, Alaba Oro",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Highstone College",
+    "location": "Ajegunle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sunfab College, Alafia B/Stop",
+    "location": "Orile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Caro Favoured College",
+    "location": "Ajegunle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emdee College",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Festlad College, Orile-Iganmu",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Patjoe High School",
+    "location": "Olodi-Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cedec International Secondary School",
+    "location": "Olodi-Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marian Academy",
+    "location": "Ijora Badiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Ambrose College",
+    "location": "Orile Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cardoso Catholic Secondaryschool",
+    "location": "Ajegunle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prince Charles Secondary School",
+    "location": "Olodi-Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Orire College",
+    "location": "Sari Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Progressive College",
+    "location": "Ajegunle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Awori Anglican Comprehensive High School",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Command Secondary School",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abesan Senior High School",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alimosho Senior Grammar School",
+    "location": "Gowon Estate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Akowonjo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior Grammar School",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "State Senior High School",
+    "location": "Gowon Estate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igando Community Senior High School",
+    "location": "Igando-Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sasa Community Senior High School",
+    "location": "Sasa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Odo Senior High School",
+    "location": "Oke Odo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos State Model Senior College",
+    "location": "Meiran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chrisland College, Idimu",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Egan Senior Grammar School",
+    "location": "Egan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikotun Senior High School",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Doregos Private Academy",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Topmost International Comprehensive Secondary School",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lerato Comprehensive College",
+    "location": "Ijaiye-Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Modern Age College, Baruwa",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Francis Catholic Secondary School",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gec Comprehensive College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sunbeam Comprehensive College",
+    "location": "Sasa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "High Grade Secondary School",
+    "location": "Akowonjo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bamaka International College, Abesan",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Josemaria College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikotun Comprehensive College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Michael’s Model College",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Legacy High School",
+    "location": "Akowonjo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pacific Comprehensive College",
+    "location": "Bammeke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Latmos Comprehensive College",
+    "location": "Egbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Saviour’s High School, Alagbada",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Elias International Secondary School",
+    "location": "Okeodo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Good Shephered Comprehensive High School",
+    "location": "Meiran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tomia Community Senior Secondary School",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijegun Comprehensive Senior High School",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "High Class Comprehensive High School",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Model High School",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dee Unique College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Konsol Private College",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tunyo Comprehensive College",
+    "location": "Egan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Laurels Academy",
+    "location": "Akowonjo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Elibel Comprehensive Academy",
+    "location": "Abesan-Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Medal Merit High School",
+    "location": "Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yetkem High School, Ajasa/surulere Town",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Living-Spring Comprehensive College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Remade High School, Egan",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sound Hope Private Academy, Baruwa",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sweet Valley College, Ikotun",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queenmaris College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mandate Private College, Obadore",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifesowapo/Aboru Senior Secondary School",
+    "location": "Aboru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Grace Private High School, Onikanga",
+    "location": "Ayobo Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Comprehensive College, Candos",
+    "location": "Baruwa Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olorunfunmi Senior Grammar School, Sanusi Street",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kinsol High School, Agodo, Egbe",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Alphonsus Liguori Private Secondary School, Aboru",
+    "location": "Iyana Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prime Focus Comprehensive Academy, Fatolu",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Roshallom International Secondary School, Gowon Estate",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Angels College",
+    "location": "Oke-Odo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sigma Bond Academy",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foldemi Private College, Abaranje Road",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Meiran Community Senior High School",
+    "location": "Meiran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Rainbow High School",
+    "location": "Agodo Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Flourescent Comprehensive Private Academy",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Zion High School",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fanlot Comprehensive High School",
+    "location": "Abule-Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bejide Memorial College, Isheri Olofin",
+    "location": "Lasu Road",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Universal College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Meu Victory Comprehensive College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Skylight Comprehensive College",
+    "location": "Ikola Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Westminster College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emmanuel Comprehensive College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Global Excellence Comprehensive College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akinrotoye Memorial High School",
+    "location": "Ayobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wetland Comprehensive College",
+    "location": "Obadare",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tadey International College",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bols International College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ferscoat Comprehensive Academy",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Renics College, Gowon Estate",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prime Amos Grammar School, Omiata",
+    "location": "Agbelekale",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessed Trinity Comprehensive High School",
+    "location": "Isheri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ejiflox College",
+    "location": "Egan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cal College",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Toklak Private Comprehensive College",
+    "location": "Alimoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Toamy Private College",
+    "location": "Egbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Academy High School",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Towergate Secondary School",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Palm-Ville College",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Intelligent High School",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fortune Private College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Spring Board College",
+    "location": "Egbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Krisbethel College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Blessing International School",
+    "location": "Ayobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Markin Grace College",
+    "location": "Isheri Osun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Liberty College, Ayobo",
+    "location": "Alimoso",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Green Pasture High School",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Egbeda Millennium Senior School",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogunlade College",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Awori-Ajeromi Senior Grammar School",
+    "location": "Agboju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amuwo Senior Grammar School",
+    "location": "Agboju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dr. Lucas Memorial Senior Grammar School",
+    "location": "Kirikiri Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Festac Senior College",
+    "location": "Festac",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Agboju Senior Secondary School",
+    "location": "Agboju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ivory Senior Grammar School",
+    "location": "Ibeshe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Senior Grammar School",
+    "location": "Amuwo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amuwo-Odofin Senior Secondary School",
+    "location": "Mile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Festac Senior Girls Secondary School",
+    "location": "Festac",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Festac Senior Grammar School",
+    "location": "Festac-Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Imoye Senior High School",
+    "location": "Mile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kuje Senior Secondary School",
+    "location": "Agboju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Odofin Senior Secondary School",
+    "location": "Mile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Satellite Town Senior Secondary School",
+    "location": "Satelite Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amuwo-Odofin Community Senior Secondary School",
+    "location": "Amuwo Odofin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amuwo-Odofin Senior High School",
+    "location": "Amuwo Odofin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbologun Senior Secondary School",
+    "location": "Igbologun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Navy Secondary School, Navy Town",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Navy Town Senior Secondary School",
+    "location": "Navy Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King’s High School, Satellite Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Jude’s Private Secondary School, Festac Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tendertouch College, Festac Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Earlylife Secondary School, Festac Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mason College, Festac Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Universal-Muslim Comprehensive High School",
+    "location": "Agboju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "S-Tee High School, Festac Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Scottfield International School",
+    "location": "Amuwo-Odofin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stepping Stone College",
+    "location": "Satellite Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Doseg International College",
+    "location": "Amuwo-Odofin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pat’s Private Secondary School",
+    "location": "Agboju Amuwo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ambassador College",
+    "location": "Festac Town Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Learningfield Secondary School",
+    "location": "Satellite Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hopebay College",
+    "location": "Maza-Maza",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Junifpride International Private School",
+    "location": "Festac Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Radiance High School",
+    "location": "Festac Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Bliss Co-Educational Secondary School",
+    "location": "Abule",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "A. A. International School, Marwa Way",
+    "location": "Satelite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Margaret Secondary School",
+    "location": "Amuwo Agboju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Leads College, Ijegun Village",
+    "location": "Satelite",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bookman Academy",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Darman Model College",
+    "location": "Satellite Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Loral International Secondary School",
+    "location": "Festac Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kabe College",
+    "location": "Festac Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Trinity College, Kirikiri",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jomal Comprehensive College",
+    "location": "Festac",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Golden Step Secondary School",
+    "location": "Amuwo-Odofin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kingstep School",
+    "location": "Festac",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Whitefield High School",
+    "location": "Amuwo- Odofin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Mary’s College, Festac Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "P&K High School",
+    "location": "Amuwo-Odofin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christhill College, Amuwo Odofin",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dr. Soyemi Memorial Secondary School, Festac Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nowa Secondary School, Navy Town",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Solika High School",
+    "location": "Amuwo-Odofin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Danvic Leaders’ School, Kirikiri Town",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iman College, Ago Okota Palace Way, Amuwo Odofin",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Barbara Cox College, Festac Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alternative High School For Girls",
+    "location": "Amuwo Odofin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Christian Senior High School",
+    "location": "Bambay Cresent",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apapa Senior High School",
+    "location": "Pelewura",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Randle Senior Secondary School",
+    "location": "Pelewura Crescent",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sari Iganmu Senior High School",
+    "location": "Sari-Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iganmu Senior High School",
+    "location": "Sari-Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Araromi Senior Secondary School",
+    "location": "Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "An-Najat International School, Apapa",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Starlight College",
+    "location": "Sari-Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brightland College",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mavir Leaders College",
+    "location": "Olodi-Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seagate College",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sacred Heart College",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immanuel Anglican Secondary School, Marine Beach",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Badagry Senior Grammar School",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iworo Ajido Senior High School",
+    "location": "Ebute Olofin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Senior Grammar School",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajara Senior Grammar School",
+    "location": "Ajara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Un-Deen Senior Grammar School",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Araromi Ilogbo Senior High School",
+    "location": "Oko-Afo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikoga Senior Grammar School",
+    "location": "Ikogazebbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kankon Senior Secondary School",
+    "location": "Kankon",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sito-Gbethrome Senior Secondary School",
+    "location": "Sito",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Topo Senior Grammar School",
+    "location": "Topo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos State Model Senior College",
+    "location": "Kankon",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Odofa Private Secondary School, Km Badagry Expressway",
+    "location": "Agbara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "State Senior High School",
+    "location": "Ibereko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior College",
+    "location": "Ajara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Damtops International Secondary School",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Opeyemi Comprehensive High School",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Beulah Comprehensive College",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Supreme Pillars College, Agemowo Town, Via Movo",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Javy College",
+    "location": "Bereko Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uth Manzak Comprehensive College",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Osyglad Comprehensive College, Oko-Afo",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Frontline Comprehensive College",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ascension College Imeke, Badagry",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Larion College, Morogbo",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bamfem Comprehensive High School",
+    "location": "Magbon-Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Meritland College",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Josad Heritage Int’l School",
+    "location": "Povita Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajoke High School",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Michael Alabstars College",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sugarfield High School",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Everfaithful God College",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dikor Comprehensive High School",
+    "location": "Badagry",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Philbeth College, Badagry",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "French Village International College, Badagry",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Epe Senior Grammar School",
+    "location": "Iraye-Oke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igboye Community Senior High School",
+    "location": "Igbooye Mojoda-Epe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okemagba Senior High School",
+    "location": "Mojoda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pobuna Senior Secondary Grammar School",
+    "location": "Poka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nazareth Senior College",
+    "location": "Ibonwon",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lofi Comprehensive Senior High School",
+    "location": "Ejinrin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior College",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Patrick’s Grammar School",
+    "location": "Eredo-Epe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Agbowa Senior Community Grammar School",
+    "location": "Agbowa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Epe Senior Girls’ High School",
+    "location": "Apena",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos State Senior Model College",
+    "location": "Agbowa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Odomola Senior High School",
+    "location": "Iraye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Model High School",
+    "location": "Agbowa-Ikosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajebo Senior High School",
+    "location": "Ajebo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ise Senior High School",
+    "location": "Epe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Molajoye Community Senior High School",
+    "location": "Molajoye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Odo-Obara Senior High School",
+    "location": "Awolowo Rd Epe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogunmodede Senior College",
+    "location": "Papa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Children Senior High School",
+    "location": "Lasu Rd",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oriba Senior High School",
+    "location": "Oriba Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbogun Senior High School",
+    "location": "Igbogun Village",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Otta Ikosi Senior High School",
+    "location": "Otta Ikosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alaro Senior High School",
+    "location": "Iraye-Oke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos State Model Senior College",
+    "location": "Igbonla",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yegunda/Idomu Senior High School",
+    "location": "Yegunda Village",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbo-Apawa Senior High School",
+    "location": "Igbo-Apawa Village",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Citizens Comprehensive College",
+    "location": "Temu-Epe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atlantic Hall, Poka",
+    "location": "Epe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "El-Bossaa Model Senior College",
+    "location": "Epe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eucharistic Heart Of Jesus Senior Model College",
+    "location": "Epe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Boys’ High School",
+    "location": "Victoria Island",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Gregory’s College",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Child College",
+    "location": "Ikoyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aunty Ayo Girls Comprehensive Senior High School",
+    "location": "Ikoyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aunty Ayo’s Girls Senior High School",
+    "location": "Ikoyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilado Community Senior High School",
+    "location": "Osborne Rd Ikoyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls Secondary Grammar School",
+    "location": "Lalupon Close",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior College",
+    "location": "Ikoyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior College",
+    "location": "Maroko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kuramo Senior College",
+    "location": "Ozumba Mbadiwe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akande Dahunsi Memorial Senior High School",
+    "location": "Osborne",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Falomo Senior High School",
+    "location": "Falomo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior College",
+    "location": "Victoria Island",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ireti Senior Grammar School",
+    "location": "Akanbi Damola",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victoria Island Senior Secondary School",
+    "location": "Ozumba Mbadiwe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wahab Folawiyo Senior High School",
+    "location": "Osborne",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos State Senior Model College Badore",
+    "location": "Badore",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "A.D.R.A.O. International School, Victoria Island",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eti-Osa Community Senior High School",
+    "location": "Sangotedo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aunty Ayo’s International School, Ikoyi",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "School Masters Academy",
+    "location": "Ajah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dowen College",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stride Tower College, Alfa Beach",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Lagoon Secondary School",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilasan Senior Secondary School",
+    "location": "Ilasan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "White Sands School",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lekki Penisula College",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Edidot College",
+    "location": "Badore Ajah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Canterbury International High School",
+    "location": "Ajah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aldamak Nouran Senior Secondary School",
+    "location": "Eti-Osa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chrisland High School",
+    "location": "Ajah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Joyceville College",
+    "location": "Ajah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Akeedat Model College",
+    "location": "Ajah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vesture Of Glory Sec. School",
+    "location": "Ajah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jesilo High School, Ikota",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chartered College",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Crane College",
+    "location": "Ajah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gbara Community Senior Secondary School",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Crescent College",
+    "location": "Victoria Island",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibeju Senior High School",
+    "location": "Ibeju-Agbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior High School",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Magbon-Alade Senior Grammar School",
+    "location": "Magbon-Alade",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior High School",
+    "location": "Orimedu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iwerekun Community Senior High School",
+    "location": "Lakowe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior High School",
+    "location": "Magbon-Segun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior High School",
+    "location": "Ilagbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akodo Community Senior High School",
+    "location": "Akodo-Orofun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior High School",
+    "location": "Debojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Caleb International College",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Albesta Academy",
+    "location": "Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The White Dove High School",
+    "location": "Eti-Osa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Option College, Abijoh",
+    "location": "Ibeju Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Scholars College, Bogije",
+    "location": "Ibeju- Lekki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos African Church Grammar School",
+    "location": "Ifako/ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "State High School, New Oko-Oba",
+    "location": "Ifako/ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ebenezer Comprehensive High School",
+    "location": "Ijaye-Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anwar-Ul-Islam Girls’ High School",
+    "location": "Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sonmori Senior Comprehensive High School",
+    "location": "Ifako-Jaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijaye Ojokoro Senior High School",
+    "location": "Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iju Senior Grammar School",
+    "location": "Iju Station",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vetland Senior Grammar School",
+    "location": "Ifako Ijaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifako International Secondary School",
+    "location": "Ifako-Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Imola Comprehensive College",
+    "location": "Ifako Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Home Science Association Secondary School",
+    "location": "Alakuko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stadium Grammar School",
+    "location": "Ijaiye Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tifedayo International High School",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mercy College",
+    "location": "Ijaiye Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oxford College",
+    "location": "New Oko-Oba Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Providence Heights ‘ph’ Secondary School",
+    "location": "Ifako/ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Crown Comprehensive High School",
+    "location": "Iju-Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Burkinsheen International Secondary School",
+    "location": "Ijaiye Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pre-Campus College, Ifako",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "African Church Model College",
+    "location": "Ifako Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sachel College",
+    "location": "Ijaiye-Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ezekiel Private College",
+    "location": "Iju-Ishaga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Starfield Private College",
+    "location": "Fagba Iju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omobola Secondary School",
+    "location": "Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Blessing College",
+    "location": "Abule-Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abiola Grammar School",
+    "location": "Alakuko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Success International School",
+    "location": "Alakuko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Santos Comprehensive High School",
+    "location": "Ifako",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pythagoras College Of Nigeria",
+    "location": "Ogba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Badestay Comprehensive High School",
+    "location": "Iju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Golden Triangle College",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amje College",
+    "location": "Alakuko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Anthony’s International Secondary School",
+    "location": "Ifako Ijaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Temidire Comprehensive College",
+    "location": "Abule Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Solomon Grace Secondary School",
+    "location": "Abule-Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Raymond Private Secondary School",
+    "location": "Alakuko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Erral College, Obadeyi Ijaye",
+    "location": "Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Azim College",
+    "location": "Iju Ifako-Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Supreme Height College, Ifako",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Owen Thomas College",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iqra Comprehensive College",
+    "location": "Ijaye-Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Guaranty High School",
+    "location": "Iju Ishaga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Good Foundation College",
+    "location": "Ifako-Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Angolu High School",
+    "location": "Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vega College, Alagbado",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Molaks High School",
+    "location": "Iju-Ishaga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New-Tech College, Fagba",
+    "location": "Iju-Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Reima Royal College",
+    "location": "Ijaiye Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Most High College",
+    "location": "Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De Glorious College, Agbado Crossing",
+    "location": "Ifako Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dream Makers College Ifako Ijaiye",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "High Standard College",
+    "location": "Ifako Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anastasia Comprehensive College",
+    "location": "Abule-Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Grace Academy",
+    "location": "Ijaiye-Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Datforte High School",
+    "location": "Ijaiye Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mcroyal College, Obawole, Iju",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Pinnacle Grammar School",
+    "location": "Ifako Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pledge Private College",
+    "location": "Abule Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lizben Private College",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Canaan College",
+    "location": "Ijaiye-Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Taqwa High School",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Damiland High School",
+    "location": "Iju-Ifako",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Educare Comprehensive High School",
+    "location": "Ijaiye-Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bachel Model College",
+    "location": "Ifako-Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tetton Secondary School, Meiran",
+    "location": "Ifako-Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lato High School",
+    "location": "Ifako-Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijaiye Ojokoro Senior High School Ii",
+    "location": "Ijaiye Ifako",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Karmel College",
+    "location": "Iju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adeola Memorial College",
+    "location": "Iju-Ifako",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mafazat Comprehensive High School",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Utopia Comprehensive College",
+    "location": "Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gibraltar Secondary School",
+    "location": "Ifako-Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ewoma College Ii, Awori",
+    "location": "Abule Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lashbol College, Ojokoro",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lords Blossom Pathcollege",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mimak College",
+    "location": "Alakuko-Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hanse-Bol College, Abule-Egba",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Barachel Model College",
+    "location": "Ifako-Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dadeyo High School",
+    "location": "Abule Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sonmori Senior Comprehensive High School Ii",
+    "location": "Ifako Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijaiye Highland College",
+    "location": "Ifake Ogba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De- Rehoboth College",
+    "location": "Ojokoro Lsdpc Estate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fastspeed Comprehensive College",
+    "location": "Ifako-Ijaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory High School",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikeja Senior High School",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory College",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogba Grammar School, Ogba",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Ira Senior Grammar School",
+    "location": "Oke-Ira Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oregun Senior High School",
+    "location": "Oregun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Agidingbi Senior Grammar School",
+    "location": "Agidingbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Babs Fafunwa Millennium Senior Secondary School",
+    "location": "Ojodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Opebi Senior Grammar School",
+    "location": "Opebi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omole Senior Grammar School",
+    "location": "Omole Estate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Cantonment Senior Secondary School",
+    "location": "Onigbongbo/Bank Anthony Way",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Air Force Secondary School",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Command Day Secondary School, Military Cantonment",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Children Senior High School",
+    "location": "Maryland",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior High School",
+    "location": "Wasimi-Maryland",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adebayo Mokuolu College",
+    "location": "Ogba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atlantic Hall, Maryland",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zinnia College",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ashdale College, Ojodu",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Grammar School",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pre-Varsity Education Centre",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Summit International High School",
+    "location": "Ojodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cayley College",
+    "location": "Agidingbi Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dansol High School",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jerare Summit Secondary School",
+    "location": "Ogba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Topmost International Comprehensive Sec. School",
+    "location": "Maryland",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unique Heights Junior And Senior High School",
+    "location": "Isheri Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Frances College",
+    "location": "Ogba Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prismoni Comprehensive High School",
+    "location": "Ojodu Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vivian Fowler Memorial College For Girls’",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Gloria’s College",
+    "location": "G.R.A. Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ctc International School, Junior And Senior High School",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isolog College",
+    "location": "Ojodu-Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "D-Ivy College",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "State Senior High School, Gra",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Camp David Academy",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Veritas College",
+    "location": "Oregun Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Specialist College",
+    "location": "Aguda Ogba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rita College",
+    "location": "Ojodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Universal White Hall",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wisdom Gate High School",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Turkish International College",
+    "location": "Opebi Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oak International College, Ogba",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Leeland College, Oregun",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Logos Comprehensive College",
+    "location": "Maryland",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Crescent Hall International School",
+    "location": "Gra-Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wellspring College",
+    "location": "Omole-Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lerato Comprehensive School II Valley Estate",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cambridge College, Ikeja",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excellent Foundation College",
+    "location": "Agidingbi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vicsum Private College",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "S.T.T. Regency College",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Murtala Muhammed Airport Secondary School",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Melville College",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chemline Academy",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mayor Heights College",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yeshua High School",
+    "location": "Ojodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chrisland High Schol",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mind Builders High School",
+    "location": "Alausa- Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Babs Fafunwa Millenium Senior Grammar School",
+    "location": "Ojodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oriwu Senior Model College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zumratul Islamiyyah Senior Grammar School",
+    "location": "Igbogbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikorodu Senior High School",
+    "location": "Apeka Estate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Imota Community Senior Grammar School",
+    "location": "Imota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior College",
+    "location": "Owutu Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Senior High School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikorodu Senior Grammar School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Majidun Community Senior Grammar School",
+    "location": "Majidun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Senior Grammar School",
+    "location": "Imota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ipakodo Senior Grammar School",
+    "location": "Ipakodo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shams-El-Deen Senior Grammar School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isiu Senior Grammar School",
+    "location": "Isiu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Keme Balogun Senior College",
+    "location": "Ibeshe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Luwasa Senior High School",
+    "location": "Ijede",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Odogunyan Senior Grammar School",
+    "location": "Odogunyan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oreyo Senior Grammar School",
+    "location": "Igbogbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maya Community Senior Grammar School",
+    "location": "Maya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior Grammar School",
+    "location": "Gberigbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior Secondary School",
+    "location": "Bayeku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifelodun Senior High School",
+    "location": "Oke Agbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Reri Senior Secondary School",
+    "location": "Oreta-Offin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yewa Senior Grammar School",
+    "location": "Aga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos State Model Senior College",
+    "location": "Igbokuta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goodwill Secondary School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos State Civil Service Senior Model College",
+    "location": "Igbogbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stars International College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Homat Comprehensive College",
+    "location": "Igbogbo Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Saints International School",
+    "location": "Isawo Via Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mahmud Ahmadiyya College, Ijede",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Babington Macaulay Junior Seminary",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Living Stone College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lighthouse International Secondary School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fountain International College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nepa Staff Secondary School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Inglewood Academy, Owutu",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adtak College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goshen College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Totallight College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Primelight High School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kith & Kin International College",
+    "location": "Onode-Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yintab College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dolafield College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "True Vine College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zeekay College, Agbede",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adebayo Abiola Comprehensive College, Sabo",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Debest College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goodluck Comprehensive College, Orimedu Ita-Oluwo",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "El-Supreme Secondary School, Igbogbo",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Homat Pivotal College, Owutu",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jane-Nath College, Ipakodo",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Topville College",
+    "location": "Oke-Oko Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Avit College, Isawo",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Triumphant College, Ori-Okuta",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings Land Comprehensive College, Asolo",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Anchor Secondary School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kingsfield College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lawbson International College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lord’s Victory College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Winsford Comprehensive College",
+    "location": "Igbogbo Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Landmark College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Citizens College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Totland Secondary School",
+    "location": "Agric-Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "High Lead Comprehensive College",
+    "location": "Ijede Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lisaville High School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Noble Stars College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sagab College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tindip College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Franmich College, Elepe",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bimron Comprehensive College, Ibeshe",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kaydel Comprehensive College, Igbo-Oluwo",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Julius Grace Salom College",
+    "location": "Ikoro-Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seatos College, Oke-Ota Ona",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayangburen Senior High School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isawo Comprehensive Senior High School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Elepe Community Senior High School, Elepe",
+    "location": "Ijede Road",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Debisland College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Harmony Land College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-Young Comprehensive College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-Mays College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Appollian Comprehensive High School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Homat Unique College",
+    "location": "Odogunyan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Golden Treasure College",
+    "location": "Offin Ile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hadex Comprehensive High School",
+    "location": "Ijede",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayotunde College, Igbogbo",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-Kadmo Private School",
+    "location": "Odogunyan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Albert Aluko High School",
+    "location": "Igbogbo Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Help College",
+    "location": "Odogunyan-Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajalogun Memorial College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uncle Bayus College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Charismartin International School",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De Praiseville College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Vision College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tedoway College",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings College",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Boys Senior Academy",
+    "location": "Lafiaji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Girls Senior Academy",
+    "location": "Simpson",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dolphin Senior High School",
+    "location": "Adeniji Adele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ebute-Elefun Senior High School",
+    "location": "Adeniji Adele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eko-Akete Senior Grammar School",
+    "location": "Campus Square",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Epetedo Senior High School",
+    "location": "Adeniji Adele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isale-Eko Senior Grammar School",
+    "location": "Jankara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King Ado Senior High School",
+    "location": "Jankara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lafiaji Senior High School",
+    "location": "Hawley",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okesuna Senior High School",
+    "location": "Hawley",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Keystone College",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rio International Secondary School",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Was-Lat Private College",
+    "location": "Lagos Island",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Edwina College",
+    "location": "Ibiakpan Akananwan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Apostolic Church Grammar School",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maryland Comprehensive Secondary School",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aladura Comprehensive High School, Anthony Village",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anthony Village Senior High School",
+    "location": "Anthony-Village",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kosofe Senior College",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojota Senior Secondary School",
+    "location": "Ojota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifako Comprehensive Senior High School",
+    "location": "Ifako",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Senior High School",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Heart School (Senior)",
+    "location": "Maryland",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogudu Senior Grammar School",
+    "location": "Ogudu Gra",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajao Estate High School, Anthony Village",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Orishigun High School, Ketu",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aiyedere-Ajibola Senior High School",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikosi Senior High School",
+    "location": "Ikosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isheri Senior Grammar School",
+    "location": "Isheri-Oke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim Senior College",
+    "location": "Oworonsoki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Distinct Medal College, Isheri",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajegunle Senior High School",
+    "location": "Ikorodu Road",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Caleb International College, Ketu",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jextoban Secondary School, Ketu",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shadel International High School, Olowora",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ejidey Comprehensive High School, Magodo, Gra",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King International School",
+    "location": "Gbagada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Continental Comprehensive Secondary School, Omole Ii",
+    "location": "Olowora-Isheri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mictec International High School",
+    "location": "Ogudu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Redeemer’s International Secondary School, Maryland",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Supreme Education Foundation High School, Magodo Gra",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Assfood International College",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Leso Rond High School",
+    "location": "Olowora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Daily Light College",
+    "location": "Olowora",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marigold College",
+    "location": "Oworonsoki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chasy Comprehensive Secondary School, Mile",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hogas International College",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gladys High School",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alpha Plus High School",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chris College",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tesmoh Comprehensive College, Agiliti",
+    "location": "Mile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tripple Crown College",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mate Comprehensive High School",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Estaport Secondary School",
+    "location": "Kosofe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Topflight College",
+    "location": "Ifako Gbagada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "S & J College",
+    "location": "Owode-Orile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Ocean Comprehensive High School",
+    "location": "Oworonsoki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Flourish College",
+    "location": "Ikosi Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Paul’s Comprehensive College, Mile",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apostolic Faith Secondary School",
+    "location": "Anthony Villlage",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sceptre Comprehensive College",
+    "location": "Ogudu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Harrobs College, Alapere",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Proper Arsenal College",
+    "location": "Ojota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Komfota College, Alapere",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gulf Flower High School",
+    "location": "Oworonsoki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Princeway Excellent College",
+    "location": "Oworonsoki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Allen High School, Agiliti",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Torch College, Kosofe",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lolad College",
+    "location": "Magodo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nodos College, Ajegunle",
+    "location": "Ikorodu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Teenland Secondary School",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lead Forte Gate College",
+    "location": "Ogudu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De Sophia College",
+    "location": "Anthony Village",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sam ‘O’ High School",
+    "location": "Ogudu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mende Senior High School, Maryland",
+    "location": "Ikeja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Halifield College",
+    "location": "Maryland",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fly High College",
+    "location": "Agiliti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hebron Land College",
+    "location": "Ajegunle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Janet And John College",
+    "location": "Gbagada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wonderful Lord College",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glasshouse College, Agiliti",
+    "location": "Mile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ministers’ International College, Isheri",
+    "location": "Kosofe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Promise College",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior High School, Alapere",
+    "location": "Ketu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Girls’ High School",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen’s College",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Reagan Memorial Baptist Girls’ Secondary School",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady Of Apostles Secondary School",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Finbarr’s College",
+    "location": "Akoka Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Longford International School",
+    "location": "Ebute Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jubril Martins Memorial Grammar School",
+    "location": "Iponri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos City Senior College",
+    "location": "Sabo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jibowu High School",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Western College",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Timothy’s College",
+    "location": "Onike Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iponri Grammar School, Abulenla",
+    "location": "Iponri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aje Comprehensive High School, Sabo",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Denton Grammar School",
+    "location": "Ebute-Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Francis Grammar School, Iwaya",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eletu-Odibo Senior High School",
+    "location": "Abule-Oja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jubril Martin High School",
+    "location": "Iponri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kadara Grammar School",
+    "location": "Ebute-Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mobolaji Bank Anthony High School, Sabo",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Odo High School",
+    "location": "Ebute-Mette",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aiyetoro Grammar School (Senior)",
+    "location": "Ebute-Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akoka High School",
+    "location": "Akoka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Birrel Avenue Senior High School",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Herbert Macaulay Senior Girls School",
+    "location": "Oko Baba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Herbert Macaulay Grammar School",
+    "location": "Ebute-Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilogbo High School",
+    "location": "Ebute-Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "International School, University Of Lagos",
+    "location": "Akoka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mainland Senior High School",
+    "location": "Fadeyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onike Girls’ High School",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wesley Girls Senior Secondary School",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ebute-Metta High School",
+    "location": "Abule-Nla Iponri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijero Girls’ High School",
+    "location": "Ebute-Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fazil-Omar Senior High School",
+    "location": "Iwaya Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nawarul-Ud-Deen School Senior High School",
+    "location": "Ebute-Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marywood Senior Grammar School",
+    "location": "Ebute-Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foucos Secondary School",
+    "location": "Ebute-Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bellina College",
+    "location": "Akoka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yaba College Of Technology Secondary School",
+    "location": "Yaba.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emma El-Shaddai Secondary School, Sabo",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Science & Technical College",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glory Point College",
+    "location": "Ebute Metta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brainpoint College, Ebute-Metta",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mbari Mbayo Secondary School, Hussey Street",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal College Of Education (Technical) Secondary School",
+    "location": "Akoka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mountain Top Secondary School, Onike",
+    "location": "Iwaya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Canon James Pearse Anglican College",
+    "location": "Iwaya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eko Boys Senior High School",
+    "location": "Idi Oro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-U-Deen Girls Senior High School",
+    "location": "Itire",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Birch Freeman Senior High School",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Agbayewa Memorial College",
+    "location": "Ilupeju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Archbishop Aggey Memorial Senior Secondary School",
+    "location": "Ilasamaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New State High School",
+    "location": "Mushin Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigeria Model High School, Alakara, Idioro",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Idi-Araba Senior High School",
+    "location": "Idi Araba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ransome-Kuti Memorial Senior Grammar School",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atunrase Senior High School",
+    "location": "Itire Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Joseph’s Boys Senior Secondary School",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior Secondary School",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Estate Senior Grammar School",
+    "location": "Ilupeju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Euba Senior Secondary School",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbo-Owu Senior Secondary School",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilupeju Senior Grammar School",
+    "location": "Ilupeju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilupeju Senior Secondary School",
+    "location": "Ilupeju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Itire Community Senior Secondary School",
+    "location": "Itire",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oduduwa Senior Secondary School",
+    "location": "Mushin (Ajina) Lga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajumoni Senior Secondary School",
+    "location": "Iyana-Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mushin Community Senior High School",
+    "location": "Idi Araba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint John’s College, Palm-Groove",
+    "location": "Mushin Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigeria Premier College",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Suzan Martins Comprehensive High School, Papa Ajao",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "S.T.A. International College",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Basil College, Ilupeju",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Lagos College, Onipanu",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prince Heirs College",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Star Comprehensive College",
+    "location": "Ijeshatedo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Santa Maria College",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Kriston College",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marjos International College",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "P & P Comprehensive College",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divrel Comprehensive College",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jonsog College, Ilasamaja",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bethel Comprehensive College",
+    "location": "Mushin-Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olufilade Comprehensive College, Papa Ajao",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jeed Trinity College, Ilasamaja",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stella Maris College, Palm Grove",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Bowen College",
+    "location": "Itire Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fortlad International College",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Briggs’ Gate Comprehensive College",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifelodun Comprehensive High School",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sunny Side College, Palmgrove",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adex Comprehensive College",
+    "location": "Ilesamaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dabitos College, Ilasamaja",
+    "location": "Mushin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Awori Senior College",
+    "location": "Olojo Drive",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos State Senior Model College",
+    "location": "Agric",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior Secondary School",
+    "location": "Schools Complex",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojo Senior High School",
+    "location": "Agric",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Egan Senior High School",
+    "location": "Egan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Osolu Senior High School",
+    "location": "Irewe Village",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajangbadi Senior High School",
+    "location": "Ajangbadi Afromedia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Secondary School",
+    "location": "Ijanikin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Cantonment Boys Senior Secondary School",
+    "location": "Baracks Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Cantonment Girls Senior Secondary School",
+    "location": "Baracks Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilogbo-Elegba Senior Secondary School",
+    "location": "Ilogbo-Elegba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Command Day Secondary School",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Ijanikin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jubilee College",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Paxton International School",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kabe College",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Time And Tide International College, Iba",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Mary’s College",
+    "location": "Ilemba Hausa Ajangbadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rolex Comprehensive College",
+    "location": "Iba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mar-Yola College, Isashi",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ideal Comprehesive High School",
+    "location": "Afro-Ajangbadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Career Comprehensive Secondary School",
+    "location": "Okokomaiko Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nodos International Secondary School, Onireke",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Angel’s College, Iba New Town",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Millbank Hall Secondary School",
+    "location": "Iba-Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hopebay College",
+    "location": "Okokomaiko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emergency Comprehensive High School",
+    "location": "Okokomaiko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gloryville College",
+    "location": "Okokomaiko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mike Comprehensive High School",
+    "location": "Igbede Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "S-Triumph International School",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Evangel College",
+    "location": "Okokomaiko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oghenovo Memorial International College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iba Housing Estate Senior Secondary School",
+    "location": "Iba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pakunola Comprehensive College",
+    "location": "Iba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Germaine College, Ilogbo Elegba",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Upper College",
+    "location": "Aiyetoro Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Soltabaj Royal College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Luciana College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Evergreen Comprehensive High School, Afromedia",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foundation Upper Standard College, Ajangbandi",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mivara Secondary School, Edi-Town",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessed Winners College",
+    "location": "Alaba Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jollat College",
+    "location": "Igbede Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Kingsway College",
+    "location": "Ilogbo Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Remson College, Alaba",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Barek Memorial High School",
+    "location": "Iba New Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Busy Brain Comprehensive College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dunamis Universal College, Ilemba-Awori",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rockville College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bonjeh High School, Okokomaiko",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gateway Comprehensive College",
+    "location": "Sabo Oniba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isasi Senior Grammar School",
+    "location": "Isasi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Penfield College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New World College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Newton College, Okokomaiko",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Beta College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Esther Foundation College",
+    "location": "Ajangbadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Bells College",
+    "location": "Oto Awori",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chi-Ben Comprehensive College",
+    "location": "Iba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kem’s College, Alasia",
+    "location": "Ijanikin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ebenezer Noble Comprehensive College Mosafejo",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tos Vvi Precious College",
+    "location": "Ajangbadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nobel Comprehensive High School",
+    "location": "Okokomaiko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adeniyi Goodwill Private Secondary School",
+    "location": "Ijanikin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stokhan Comprehensive College",
+    "location": "Ishasi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Micco College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Edma Dec College",
+    "location": "Alasia Ijanikin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lireni College",
+    "location": "Igbo-Elerin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Alpha Comprehensive College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fidel Madonna College",
+    "location": "New-Iba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Future Height Secondary School",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Maala College",
+    "location": "Okokomaiko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Clapat Comprehensive College",
+    "location": "Ajangbadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Henna-Teck International College, Iba Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abdallah Comprehensive College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Augusta College",
+    "location": "Okokomaiko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Learnfast Comprehensive Academy, Ajangbadi",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emilia-Foremost High School, Oke-Agbo Shibiri",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rose Of Sharon Comprehensive College, Iba Town",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Favourite Comprehensive High School, New Era",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Step Forward College Okokomaiko",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-Victoryland College",
+    "location": "Ajangbadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Friends Of Success International College",
+    "location": "Ilogbo Elegba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tola Comprehensive College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Emma Comprehensive College, Ajangbadi",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amai College",
+    "location": "Ajangbadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Montana Secondary School, Alaba",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijeododo Senior Grammar School",
+    "location": "Ijeododo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progressive Victory College",
+    "location": "Ketu-Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pentecost College, Victory Estate",
+    "location": "Iba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Junacad High School, Ajangbadi",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Heritage College, Ishasi",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Treasurecourt College, Iba New Town",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "High Hope Academy, Alakija",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Holy Infant College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Caritas College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikenna Stars Academy",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aocoed International School",
+    "location": "Otto-Ijanikin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Evalight International College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Senior College",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikeja Senior Grammar School",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Saviour’s College",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Metropolitan Senior College",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Comprehensive Senior High School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eko Girls Senior Grammar School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ejigbo Senior High School",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilamoye Senior Grammar School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mushin Boys Senior High School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajumoni Senior Grammar School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ewutuntun Senior Grammar School",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Matori Senior Grammar School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okota Senior Grammar School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mafoluku Senior Grammar School",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bolade Senior Grammar School",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Central Senior High School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijeshatedo Senior Grammar School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isolo Comprehensive Senior High School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isolo Senior High School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mushin Senior High School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okota Senior High School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ire-Akari Senior Grammar School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isolo Senior Secondary School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oshodi Comprehensive Senior High School",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okota Senior Secondary School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oshodi Senior High School",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isolo Grammar School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajao Estate Senior Grammar School",
+    "location": "Ajao Estate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apata Memorial High School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "A-Z International Secondary School",
+    "location": "Ajao Estate",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gideon Comprehensive High School",
+    "location": "okota Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mercy Day High School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mount Zion Academy",
+    "location": "Okota Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ronik Comprehensive School",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Senior High School",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Beautiful Gate Secondary School",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Command Day Secondary School, Nafrc",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excel College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Monica Secondary School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Binta International High School",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Krystal-Bal Comprehensive College, Shogunle",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Covenant High School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brightville College",
+    "location": "Osodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Affa Senior Comprehensive College",
+    "location": "Oke Afa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ultimate Heights International School",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gbolahan High School, Ajao Estate",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Effortswill Academy",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grandmates Secondary School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Razeva College, Kogberegbe",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oakland Comprehensive College",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Marcs College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Top Laurels High School",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Altitude College",
+    "location": "Ago Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queensland Academy",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "A. P. College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Top Highflyer College, Oke Afa",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lily Fields Comprehensive College, Asamu Estate",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prime Heritage Secondary School",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Genius High School, Ejigbo",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sma College, Oke-Afa",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omatseye Tuedor Memorial College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Classic Comprehensive College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sure Foundation Comprehensive College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hope-Bay College",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "High Que Secondary School",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kembos College",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Total Standard College",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Islamic English Education Foundation Academy",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mater Dei Model School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Faruq College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Laureates College",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bosworth College, Ewutuntun",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Primark College",
+    "location": "Ago-Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Cambridge High School",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-Gloryland College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rosyland Comprehensive College",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. John-Vic College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seed Of Messiah College, Oke-Afa",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Livingspring Hi-Grade College",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emerald College",
+    "location": "Ilasamaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dis Academy",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ghazlak College",
+    "location": "Mafoluku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Moshelen High School",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The Ultimate College, Okota",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Mother Mary College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Upper Grade Comprehensive College",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ephraim High School, Ilamose, Oke Afa",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ostra Heights College",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brainstar College",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oluwole Christ The King College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nubi College, Ago",
+    "location": "Okota",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rona Kings And Queens High School, Oke-Afa",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dominican College",
+    "location": "Mafoluku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Opulent High School, Oke- Afa",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marybene College, Oke- Afa",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Turning Point College",
+    "location": "Isolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Highgate College",
+    "location": "Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kole Best Secondary School",
+    "location": "Mafoluku Oshodi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Academy",
+    "location": "Obanikoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "C.M.S Grammar School",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbobi College",
+    "location": "Yaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eva-Adelaja Senior Secondary School",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National College",
+    "location": "Gbagada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajayi Crowther Memorial Senior Grammar School",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Morocco Comprehensive High School",
+    "location": "Somolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Girls’ Academy",
+    "location": "Obanikoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gbagada Comprehensive High School",
+    "location": "Gbagada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gbagada Senior Grammar School",
+    "location": "Gbagada Phase",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbobi Girls’ High School",
+    "location": "Igbobi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Angus Memorial Senior High School",
+    "location": "Igbobi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Senior High School",
+    "location": "Obanikoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "C.M.S Girls Grammar School (Senior)",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gbagada Girls’ Secondary School",
+    "location": "Gbagada Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Luke’s Grammar School",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Howells Memorial Grammar School",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Toyibat Comprehensive High School",
+    "location": "Gbagada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bright Star Comprehensive High School",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The Redeemer’s Secondary School, Gbagada",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Solid Foundation International School",
+    "location": "Ifako Gbagada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grace High School",
+    "location": "Gbagada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bola Olat Private College, Bariga",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brilliant Child College",
+    "location": "Akoka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stockbridge College",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Engreg High School, Pedro",
+    "location": "Somolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ade Osho Comprehensive College",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bright Future International College",
+    "location": "Somolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Laoye College, Akoka",
+    "location": "Somolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wuraville College",
+    "location": "Somolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Somolu Senior High School",
+    "location": "Igbobi – Somolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jagunmolu Girl’s Senior Grammar School Ii",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Arch Deacon Adelaja Senior High School",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lanre Awolokun Senior High School",
+    "location": "Gbagada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Westerville College",
+    "location": "Bariga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vinestar College, Bariga",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos Anglican Girls’ Grammar School",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Era Girls Senior Secondary School",
+    "location": "Stadium",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Senior Grammar School",
+    "location": "Randle Where",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Senior High School",
+    "location": "Falolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior College",
+    "location": "Eric-Moore",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eric-Moore Senior High School",
+    "location": "Eric-Moore",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Surulere Girls Senior Secondary School",
+    "location": "Mosalasi Road",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zumuratul-Islamiya Senior High School",
+    "location": "Atan Road Railway Line",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aguda Senior Grammar School",
+    "location": "Aguda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akintan Senior Grammar School",
+    "location": "Ojuelegba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Surulere Senior Secondary School",
+    "location": "Akinsemoyin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onitolo Community Senior High School",
+    "location": "Stadium",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Senior Secondary School",
+    "location": "Randle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gbaja Senior Girls High School",
+    "location": "Akerele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijeshatedo Boys High School",
+    "location": "Sanya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obele Community Senior High School",
+    "location": "Randle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stadium Senior High School",
+    "location": "Stadium",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "State Senior Grammar School",
+    "location": "Eric-Moore",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajigbeda Senior Girls High School",
+    "location": "Stadium",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Clegg Girls Senior High School",
+    "location": "Modupe Johnson",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior Grammar School",
+    "location": "Adelabu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Senior High School",
+    "location": "Adeniran Ogunsanya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gbaja Boys Senior High School",
+    "location": "Eric-Moore",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ideal Girls Senior High School",
+    "location": "Randle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iponri Estate Senior High School",
+    "location": "Iponri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Itolo Girls Senior Secondary School",
+    "location": "Eric-Moore",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Coker Senior Secondary School",
+    "location": "Orile Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sanya Senior Grammar School",
+    "location": "Sanya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jubilee Model Senior Grammar School",
+    "location": "Coker",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cherubim & Seraphim College",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogunlade College",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tonia International College, Orile-Iganmu",
+    "location": "Suru-Lere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aquinas Private College, Aguda",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Innocent Comprehensive High School",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bedrock College",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rainbow College",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "May Day College",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gloryland International College, Aguda",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Del International College",
+    "location": "Ijeshatedo Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lagos Progressive Senior Secondary School",
+    "location": "Ogunsanya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adebola Baptist School Surulere",
+    "location": "Ogunsanya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Topgrade Secondary School",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Penny International College",
+    "location": "Orile Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Mary & Alfred College",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Somerset College",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gracewell Academy, Coker",
+    "location": "Orile-Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tenderland College, Coker Village",
+    "location": "Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fountain Heights Secondary School",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Duntro High School, Ijesha-Tedo",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Josbec College",
+    "location": "Ikate Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Febilak International Secondary School, Aguda",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jeno Grammar School",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "C.A.C College",
+    "location": "Itire",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prestige Private College",
+    "location": "Aguda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Smac College, Coker Village",
+    "location": "Orile Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Peter Bay College",
+    "location": "Orile Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Helpers College",
+    "location": "Orile-Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kemeesther College,Aguda",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Academy, Surulere",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oba Adelani Gbogboade Memorial College",
+    "location": "Itire",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Timi Comprehensive College",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Select International College",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vineville Academy, Alaka",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Princeton College, Aguda",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victoria High School, Ijesha-Tedo",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Esteem Secondary School",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aunty Dare Memorial College",
+    "location": "Orile Iganmu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abs College, Orile Iganmu, Aguda",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Onward High School, Ikate",
+    "location": "Surulere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigeria International School",
+    "location": "Cotonou",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cotonou International School",
+    "location": "Benin Republic",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessed Assurance College",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Golden Touch College, Arida",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marigold College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bopton Comprehensive College",
+    "location": "Abule Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brainfield College",
+    "location": "Meran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fasoma Comprehensive High School, Abule-Egba",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Memkad Secondary School, Ijegun",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Talent-Link Comprehensive College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rev. Job Memorial High School",
+    "location": "Ikotun-Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aunty Yemi Academy",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vineyard Comprehensive College",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wet-Land Comprehensive College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hans Private School",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shesfun Comprehensive School",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Easyflow College",
+    "location": "Meiran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shalom-Kliffon Secondary School",
+    "location": "Ayobo-Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abbot Dayspring College",
+    "location": "Ayobo-Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zodiac High School",
+    "location": "Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Optimum High School",
+    "location": "Ikola-Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eagles Comprehensive High School",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sun Stars College",
+    "location": "Egan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anchor Mirrors College",
+    "location": "Abesan-Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eminent Comprehensive College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Janet Memorial College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Malad College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Kings Academy",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dominion College, Abeokuta Expressway",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Havanah College",
+    "location": "Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wenby’s College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Merfis International College",
+    "location": "Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Distinction Gate College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divinity Comprehensive College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kehinde Bashorun Memorial Compr. College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dada El-Shaddai Comprehensive College",
+    "location": "Iyana-Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cornerstone College",
+    "location": "Egbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wisdom Spring College, Egan",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "El- Crystal Star College",
+    "location": "Egan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gracious Secondary School",
+    "location": "Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Trend College",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Durable Comprehensive High School",
+    "location": "Ijegun-Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sapphire Stone College, Ojokoro",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Augustine College",
+    "location": "Idimu-Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Access Universal College, Shasha",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Living Seed College, Abule Egba",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Elite Crop College, Ijegun, Ikotun",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pacesetters Academy",
+    "location": "Meiran Ojokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Learners Academy",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nikky Bee Comprehensive High School",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Miyzan College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Arisonia Private College",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Roseville College",
+    "location": "Meiran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Evaton Comprehensive College",
+    "location": "Abule Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cedar College, Olofin Baruwa",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kanmi Comprehensive College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-Modern Pace College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saliu Abdul Malik College",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Havillah High School, Ikotun",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Will Secondary School",
+    "location": "Isheri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eunice College, Odutola Layout Ajasa Command",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Daniel Comprehensive College, Olude Ipaja",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bolthine College",
+    "location": "Aboru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Clemmy High School",
+    "location": "Agodo Egbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foremost Comprehensive College, Ijegun",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Medias College",
+    "location": "Alaguntan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Peace Field College",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Silver Spring College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith Concept College, Ijegun",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Triumph Academy, Agodo, Egbe",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Skyop Secondary School, Oke Odo",
+    "location": "Abule- Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pacey Manuel College",
+    "location": "Oke-Odo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ike-Oluwa Comprehensive College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nistech College",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mighty Oaks Comprehensive College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dekinban College",
+    "location": "Egan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Korecome Comprehensive College, Igando",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "O’mark College",
+    "location": "Egan-Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen Diana College",
+    "location": "Abule Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eko Idyll College",
+    "location": "Akowonjo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Borik Comprehensive Secondary School",
+    "location": "Okerube Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajibay Academy, Ayobo",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Clementine High School",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Racy Comprehensive College",
+    "location": "Idimu Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bosede Idehen International Academy",
+    "location": "Abule Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ideal Modern College",
+    "location": "Abule Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Exclusive Mustard College",
+    "location": "Agbelekale",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eagle’s Tower College",
+    "location": "Aboru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nightingale Academy",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dee Ultimate Comprehensive High School",
+    "location": "Ikola-Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lolaolu Comprehensive College",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Honeyland College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King Emmanuel Progressive College",
+    "location": "Ayobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anointed Gate High School, Egan",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Primetouch College",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fountain Of Hope College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Flor-Peak Comprehensive College, Ayobo",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Simmic High School",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Towab High School",
+    "location": "Ijegun-Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Breed Lilies College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bosol God’s Will College Aboru",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Befrank Secondary School",
+    "location": "Ijanikin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apex Secondary School",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gracious Leedsway College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Andrew’s Model College",
+    "location": "Ajangbadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Zion Place College, Ijagemo",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Haklat College",
+    "location": "Ijanikin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-Rita Comprehensive College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rocland Secondary School",
+    "location": "Ijanikin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pauliven College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Light Bearers College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oto-Awori Grammar School",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Superstars Secondary School",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Quality Focus Schools",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Diamond College",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eden’s High School, Alaba",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "F-Hope Secondary School",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Moyi Comprehensive High School",
+    "location": "Ajangbadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Orisan Sec School, Ilemba-Awori",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Danvic Leaders’school, Kirikiri Town",
+    "location": "Apapa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prime Iqrah College, Ojo",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Meritha High School, Ajangbadi, Ojo",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Orange Height Comprehensive College",
+    "location": "Ajangbadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kenral College, Ketu, Ijanikin",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Famonik College ,Igbo Elerin",
+    "location": "Okokomaiko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Golden Hallmark College, Ijanikin",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-Yet College, Okokomaiko",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glo-Fidel Comprehensive High School",
+    "location": "Ijagemo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Citizens Secondary School",
+    "location": "Ojo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ltb High School",
+    "location": "Aboru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aunty May High School",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blue Royal High School",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Silverdale High School",
+    "location": "Iyana Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hybrid College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Michael Comprehensive College",
+    "location": "Shasha-Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bachel Model College",
+    "location": "Alaja-Ayobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lifetime Comprehensive College",
+    "location": "Ifako-Ijaiye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bisam Comprehensive College",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Silver Fountain College",
+    "location": "Akowonjo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dynamic Landmark",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jordan Academy",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Empirical College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grand College",
+    "location": "Egan-Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isefun Community Senior Secondary School",
+    "location": "Ayobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abesan Comprehensive Senior College",
+    "location": "Abesan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Odo Senior High School II",
+    "location": "Agege",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "State Senior High School II",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dan Martins College",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayobami College",
+    "location": "Egan-Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mic-Flow Comprehensive High School",
+    "location": "Egan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "True Life Academy",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prevailer Comprehensive College, Ijegun",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vineli Secondary School",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alpha Comprehensive College",
+    "location": "Okerube",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Matty Mary Comprehensive College",
+    "location": "Akesan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tommy Gee College",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rising Sun High School",
+    "location": "Egbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abiolu Comprehensive College",
+    "location": "Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Standard Gek College",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ulysses Private College",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alpha Rehoboth College",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Molan High School, Ikotun, Ikotun",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Best Gift Comprehensive College",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ed-Migan College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akod College",
+    "location": "Ikotun-Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Miketoy College",
+    "location": "Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grimes International College",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Titus Jane High School",
+    "location": "Abule-Egba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hightree College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Model High School",
+    "location": "Ikola",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dorkiel Colege",
+    "location": "Iyana-Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings Anchor College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Misam Int’l College",
+    "location": "Ajasa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Do-Estdot College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Florin High School",
+    "location": "Ejigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessed Ave Maria Schools",
+    "location": "Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ebis Comprehensive College",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bbic College",
+    "location": "Abule Ode Bus Stop",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bayo Tijani Secondary School",
+    "location": "Egan",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "ST. SAVIOUR’S HIGH SCHOOL",
+    "location": "EGAN",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Optimist College",
+    "location": "Egbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Peter Bay College",
+    "location": "Ikotun-Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Larb College",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jostiana International Schools Abaranje",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Lawrence Greater Heights College",
+    "location": "Ajasa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Apex Secondary School",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Femi Omolade Private College, Command",
+    "location": "Ajasa Road",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lily Pride Comprehensive High School",
+    "location": "Igando",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Osedec Secondary School",
+    "location": "Ikotun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Floral Golden Heritage College",
+    "location": "Ikotun Lagos",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Decency Comprehensive High School",
+    "location": "Meiran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rholak High School",
+    "location": "Meiran",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Deh Best College",
+    "location": "Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hall Of Fame Academy",
+    "location": "Baruwa- Ipaja",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "George Michael’s College",
+    "location": "Ajasa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Woodland Hills High School",
+    "location": "Shasha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Covet The Redeemer College, Abule Odu",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mary Greg High School",
+    "location": "Okerube- Alimosho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kobiville International Academy",
+    "location": "Idimu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Remroyal Secondary School",
+    "location": "Ijegun",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gwat Private College ,Abule Odu",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Surulere Senior Secondary School",
+    "location": "Alagbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Gate College, Ijegun",
+    "location": "Lagos",
+    "type": "secondary school",
+    "verified": false
+  }
+]

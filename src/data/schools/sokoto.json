@@ -1,0 +1,590 @@
+[
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Bodinga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Bodinga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Sifawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Danchadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Govt Day Secondary School",
+    "location": "Dingyadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Ihsan Standard Schools",
+    "location": "Sifana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Badau",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Dange",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Comprehensive Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Wauru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Goronyo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Shinaka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science Secondary School",
+    "location": "Gwadabawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gwadabawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gigare",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Asara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Salame",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Illela",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Illela",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Isa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Day Secondary School",
+    "location": "Isa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kebbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kuchi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Science College",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kware",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gamji Girls’ College",
+    "location": "Rabah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gandi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Rabah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Sabon Birini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gatawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kurawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Makuwana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Technical College",
+    "location": "R/sambo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sultan Attahiru Ahmadu Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sultan Abubakar College",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sokoto Science College",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Comprehensive School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Asma’u Girls’ Islamic College",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kofar Marke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Khalil Fodiyo Islamic Academy",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marshall International School, Rijin Sambo",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bravo International School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Runji Sambo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kofa- Rini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Day Arabic Secondary School",
+    "location": "Sabon Birini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School, Gidan Igwai",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nagarta College",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ College",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sultan Atiku Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sultan Bello Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nana Girls’ Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Giginya Memorial Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sheikh Abubakar Gummi Memorial College",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hafsat Ahmadu Bello Model Arabic Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Agency For Mass Educ., Centre For Continuing Education",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Women Centre For Continuing Education",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abdul Rasheed Adisa Raji Special School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Institute For Comprehensive Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blue Crescent Schools",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zasshaz International School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Day Arabic Secondary School",
+    "location": "Yarakija",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Tundunwada Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Mabera",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fededral Staff Schools",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Minarat Science Academy, Gagi Road",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Tambuwal",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abdullahi Bara’u Secondary School",
+    "location": "Dongon-Daji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Sanyinna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Jabo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Day Secondary School",
+    "location": "Tambuwal",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls’ College",
+    "location": "Tambuwal",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Romon Sarki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls Day Secondary School",
+    "location": "Dagon Daji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tangaza",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gidan-Madi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Tureta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ahmadu Bello Academy",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Technical College",
+    "location": "Fargaru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sani Dingyadi Unity Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Arkilla",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Usmanu Danfodo University Model Secondary School",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sultan Muhammadu Maccido Institute For Qur’an & General Studies",
+    "location": "Sokot",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Wamakko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Dundaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aiheri School, Tsafe Gwiwa Layout",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sokoto Cement Schools",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Success Schools",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al- Hudah Schools",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Wurno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Achida",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science Secondary School",
+    "location": "Yabo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Shagari",
+    "location": "Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Day Secondary School",
+    "location": "Yabo-Sokoto",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kajiji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Silame",
+    "type": "secondary school",
+    "verified": false
+  }
+]

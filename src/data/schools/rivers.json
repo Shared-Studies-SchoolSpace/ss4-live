@@ -1,0 +1,3476 @@
+[
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Ahoada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Western Ahoada County High School",
+    "location": "Ahoada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Upata  Community Secondary School",
+    "location": "Odiabidi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ogbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Odiemerenyi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School",
+    "location": "Okporowo-Ekpeye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ozochi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sonnicity Universal Secondary School",
+    "location": "Ahoada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Science & Technical College",
+    "location": "Ahoada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Light Foundation Secondary School",
+    "location": "Ahoada East",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Uka-Opata",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ochigba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Ikata",
+    "location": "Ahoada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ugbobi Community Secondary School",
+    "location": "Idu-Ekpeye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ubeta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Akinima",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbuduya Community Secondary School",
+    "location": "Okogbe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ubie Community Secondary School",
+    "location": "Ula-Ubie",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Joinkarama Grammar School",
+    "location": "Joinkrama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Okarki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Comprehensive Secondary School",
+    "location": "Mbiama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Joinkrama Girls’ Secondary School",
+    "location": "Joinkrama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Oyigba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ikodi Engenni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Okporomini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ihuaba Community Secondary School",
+    "location": "Ihuaba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ubarama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Uptabo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Echo High School, Odiabidi",
+    "location": "Ahoada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Governmentt. Comprehensive Seondary School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Odiereke",
+    "location": "Ahoada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abonnema Girls’ Secondary School",
+    "location": "Abonnema",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nyemoni Grammar School",
+    "location": "Abonnema",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obonoma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Soku-Akulga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School, Elem",
+    "location": "Sangana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ido",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Krakrama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kalabari Girls’ High School",
+    "location": "Buguma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kalabari National College",
+    "location": "Buguma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King’s College Of Commerce",
+    "location": "Buguma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Abalama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ifoko Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Oproama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Minama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Angulama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victor International Sec. School",
+    "location": "Ogale- Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bonny National Grammar School",
+    "location": "Bonny",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Finima Bonny",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Paul’s Comprehensive College",
+    "location": "Bonny",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Bonny Island",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Burukiri-Bonny",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Spring Foundation College",
+    "location": "Bonny",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings & Queens High School, Abalamabia Rd",
+    "location": "Bonny",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibitamuno Secondary School",
+    "location": "Bonny Island",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oba-Ama Boys’ High School",
+    "location": "Bakana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Bille",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Tombia-Del Ga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Scholarstica Girls’ High School",
+    "location": "Bakana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obuama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Degema National High School",
+    "location": "Degema",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Abissa Akulga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Idama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Usokun Degema",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Kula",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Bukuma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Model Secondary School",
+    "location": "Old Bakana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Abonnema",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Soku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Alesa-Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ascension High School",
+    "location": "Nchia-Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Onne-Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "International Secondary School",
+    "location": "Onne Campus",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ranjenny’s High School",
+    "location": "Ogale Nchia Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ebubu Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lion Comprehensive High School",
+    "location": "Ogale",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rhoda Heartfelt Comprehensive College",
+    "location": "Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Eteo-Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Aloda-Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Milly International School",
+    "location": "Alode Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Arise & Shine Educational Centre",
+    "location": "Akpajo Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Favour International Secondary School",
+    "location": "Akpajjo-Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lord’s International Secondary School",
+    "location": "Agbonchia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goel International School",
+    "location": "Onne",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-Living Proof Academy",
+    "location": "Ogale",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glorious Commercial Secodnary School",
+    "location": "Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oswol Academy",
+    "location": "Aleto Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine Secondary School, Aleto",
+    "location": "Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Aleto-Nchia Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sunshine International Secondary School, Alejor-Onne",
+    "location": "Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Big Sky International Sec. School",
+    "location": "Alejor Onne",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obarijima Comprehensive College, Ebubu",
+    "location": "Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Peniel Academy International",
+    "location": "Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excellence Model Academy",
+    "location": "Eleme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nazareth College",
+    "location": "Woji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Silver Bird International School, Rumueme",
+    "location": "P/H",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Omudioga Emohua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Egbeda",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Elele-Alimini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obelle",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Odegu Community Secondary School",
+    "location": "Rumuewhor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibaa Girls’ Secondary School",
+    "location": "Ibaa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Girls’ Secondary School",
+    "location": "Okporowo-Ogbakiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ommunity Secondary School",
+    "location": "Oduoha Emohua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rundele High School",
+    "location": "Agba-Ndele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Rumuekpe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojim’s College",
+    "location": "Rumuji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "East West Comprehensive College",
+    "location": "Elele-Alimini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Rumuji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emmanuel College Of Commerce",
+    "location": "Emohua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "okporowo-Ogbakiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Govenment Secondary School",
+    "location": "Emohua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rivers State College Of Educ. Demostration Sec. Schl.",
+    "location": "Ndele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ndele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uvahu Comprehensive High School",
+    "location": "Ibaa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Elibrada-Emohua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rundele Community Secondary School",
+    "location": "Emofo/egamini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "C.s.s. Ahai",
+    "location": "Emolga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Advent Secondary School",
+    "location": "Rumuji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Akpabo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Umuozoche",
+    "location": "Etche Igbodo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Egbu-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obite-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ulakwo Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Igbo-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Odagwa Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Umuselem Community Secondary School",
+    "location": "Odufor Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Isu-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Umuoye-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "County Grammar School",
+    "location": "Ikwerre-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School Umuola",
+    "location": "Etche.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Joseph’s Secondary School",
+    "location": "Umuaturu-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ndashi-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Okehi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ozuzu-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nihi Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Okoroagu-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Egwi-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Annunciation Girls’ Secondary School",
+    "location": "Akpoku Eteh",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Masuna International Secondary School",
+    "location": "Emuebulu Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Community Secondary School",
+    "location": "Ndashi Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divinity Academy College",
+    "location": "Umuebulu Eteshe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessed Child International College",
+    "location": "Umuebulu Ii Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Re-Angels Secondary Academy, Umuebule Ii",
+    "location": "Eteche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Panos Secondary School",
+    "location": "Umuebule Ii Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unique International Secondary School",
+    "location": "Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Meved Model International School",
+    "location": "Chokota Igbo Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anita Early Foundation School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jopack Academy Secondary School, Umuebule Ii",
+    "location": "Port -Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nobsams International Secondary School",
+    "location": "Igbo Eteche.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chrisway Model School",
+    "location": "Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings Word College",
+    "location": "Umuebule",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goldsprings High School, Ikwerre Ngwo",
+    "location": "Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Bomu",
+    "location": "Gokana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Biara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Bera",
+    "location": "Gokana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Kegbara Dere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Baranyowa Dere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bua Yeghe Community Secondary School",
+    "location": "Yeghe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Mogho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Pius X College",
+    "location": "Bodo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kpor Gokana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bodo City Girls’ Secondary School, Bodo",
+    "location": "Gokana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Nweol",
+    "location": "Gokogana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apostolic Comprehensive Secondary School",
+    "location": "Bodo City",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Deken",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive, Secondary School",
+    "location": "Lewe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ubima",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Omuanwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Aluu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Omademe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model Secondary School",
+    "location": "Isiokpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School",
+    "location": "Apani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okeh Memorial Secondary Commercial School",
+    "location": "Elele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Aquinas Secondary School",
+    "location": "Elele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Isiokpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Macdonald Memorial Institute",
+    "location": "Igwuruta Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Omagwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Omerelu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Army Secondary School",
+    "location": "Elele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igwuruta Community Secondary School",
+    "location": "igwuruta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Girls’ Secondary School, Elele",
+    "location": "Kelga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adventist Comprehensive High School",
+    "location": "Elele",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foundation Comprehensive Secondary School",
+    "location": "Omuoko Aluu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emarid College",
+    "location": "Igwuruta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faasaa Comprehensive College",
+    "location": "Aluu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessed Model Secondary School",
+    "location": "Omueke Igwurunta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Secondary School",
+    "location": "Isiokpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Charles Dale Memorial International School",
+    "location": "Ikwerre",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trinitate International School",
+    "location": "Igwuruta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Ozuaha",
+    "location": "Isiokpo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jesus The Saviour International Secondary School",
+    "location": "Elele Town.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Queen’s International High School",
+    "location": "Igwuruta-Ali",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Martin De Porres Girls’ College, Omordu",
+    "location": "Ubima",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Uegwere-Boue",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Kono Boue",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Kpean",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kono Secondary School",
+    "location": "Kono",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bua Nama Community Secondary School",
+    "location": "Gwara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Okwale",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Wiiyaakara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Berri High School",
+    "location": "Beeri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Lueku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kabangha Comprehensive Secondary School",
+    "location": "Kabangha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Buako",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kidi Commercial Secondary School",
+    "location": "Zaakpon",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Birabi Memorial Grammar School",
+    "location": "Bori",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Comprehensive High School",
+    "location": "Taabaa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mariam High School",
+    "location": "Bane",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Sogho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Lumene-Bangha",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kaa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Luawii",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Kaani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Palace Tots Secondary School",
+    "location": "Bori",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Bori",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Comprehensive High School",
+    "location": "Baen",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "River State Polytechnic Secodnary Schoo",
+    "location": "Bori",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "(lorre) Khana",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pope John Paul Ii College",
+    "location": "Bori",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Sii Khanna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zina Academy, Nyokuru",
+    "location": "Bori.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ibotirem-Andoni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Agwut-Obolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ebukuma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Dema",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Comprehensive Secondary School",
+    "location": "Ataba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ikuru-Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Asarama",
+    "location": "Andoni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ekede-Andoni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ngo-Andoni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Christian Comprehensive College",
+    "location": "Asarama-Andoni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Monatata Secondary Commercial School",
+    "location": "Okoroboile",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ngo-Uyeada",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Egbormung Andoni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Archdeacon Crowther Memorial Girls’ Sec. School",
+    "location": "Elelenwo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Boys’ Secondary School",
+    "location": "Elelenwo Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Okoro-Nu-Odo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School, Rumuokwuta",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "University Demonstration Secondary School, Uniport",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sacred Heart Seminary",
+    "location": "Rumuibekwe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Commercial & Industrial Trade Centre",
+    "location": "Rumuolumeni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obio Comprehensive College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Rumueme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School, Bori Camp",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady Of Lourdes Secondary School",
+    "location": "Ozuoba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Eneka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bishop Crowther Memorial Secondary School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bereton Academy",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School",
+    "location": "Rumuokwurusi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Rumuapara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Airforce Secondary School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chuks Comprehensive College, Choba",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hallel College, Rumuogba",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "De-World International Secondary School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First International Academy",
+    "location": "Port-Hacourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lincoln Comprehensive College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immanuel Comprehensive High School",
+    "location": "Rumuobiakani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Regina Memorial Secondary Academy",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Girls’ Academy",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brainfield Secondary School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jephthah Comprehensive Secondary School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oginigba Comprehensive Secondary School, Oginigba",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Michael Comprehensive College",
+    "location": "Rumuepirikom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Modern Comprehensive Secondary School",
+    "location": "Rumuobiokani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessed Comprehensive Secondary School, Rumueme",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Rumuekini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Rumuolumeni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jenida Secondary School, Rukpokwu",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faasa Comprehensive College",
+    "location": "Rumuodara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Era Secondary School",
+    "location": "Azuabie",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojims Christian College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oasis International High Sch., Rumuomoni/rumuorosi",
+    "location": "P/harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goman International Secondary School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Beryl Comprehensive College, Diobu",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cadgif Model Comprehensive College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith International College",
+    "location": "Rumuomasi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Pillar College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Port-Harcourt International School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Mgbuosimini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Expectation College, Rumuokwuta",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Istan Comprehensive High School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kumoni International Secondary School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sure Foundation Comprehensive College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mater Christi High School, Woji Obio",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ogbogoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Haruk International College",
+    "location": "Portharcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Atlantic Heralds High School",
+    "location": "Portharcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wify Comprehensive College",
+    "location": "Eliozu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National Comprehensive Secondary School",
+    "location": "Elelenwo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Benviatto Secondary School",
+    "location": "Rukpokwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Doma Comprehensive Secondary School",
+    "location": "Rumuolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abijah Model College",
+    "location": "Mgbuoba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bfb International College",
+    "location": "Igwuruta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Meved Model International High School",
+    "location": "Oginigba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kateville International High School, Mgbuoba",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Salvation Heights Secondary School, Elelenwo",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "A-Z International High School, Woji",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emmy Norberton International Secondary School",
+    "location": "Rumuordara",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rosalyn Memorial College, Woji",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glorious Child International College",
+    "location": "Mni Ewa-Oginigba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tititrinity College, Rumuduru Town",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tessy International Secondary School",
+    "location": "Rumuokoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rozy Step International Secondary School",
+    "location": "rumuigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tenderfoot International Secondary School",
+    "location": "Rumuigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bamef Comprehensive Secondary School, Rumuewhor",
+    "location": "Oro-Igwe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Success Comprehensive High School",
+    "location": "Ozobua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Glorious Child Secondary School",
+    "location": "Rumuodomaya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Redemption International Secondary School",
+    "location": "Mgbuoba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Paragon City Light College",
+    "location": "Rumueme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alabaster School Of Excellence",
+    "location": "Rumueme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anchorleg International Academy",
+    "location": "Rumuolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christian Council College, Elekhia",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith International School, Off Alcon Rd.",
+    "location": "Woji Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Intelligent High School",
+    "location": "Rumuokwuta",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cherry Forte College, Woji",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Early Steps Secondary School",
+    "location": "Rumuigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Comprehensive College, Elelenwo",
+    "location": "P/Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ International Secondary School",
+    "location": "Ogbatai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brilliant International Secondary School, Mgbuoba NTA Road",
+    "location": "Port Harco",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Archdeacon Brown Education Centre",
+    "location": "Woji",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National College",
+    "location": "Eneka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Princess International College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gracefield International Academy, Orazi",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gafed International College, Rumuodara",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lift-Up Child Secondary School",
+    "location": "Elelenwo Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "F. E. Maryland Secondary School",
+    "location": "Elelenwo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory High School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "House Of Wisdom Secondary School",
+    "location": "Iriebe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gracefield Missionary Secondary School",
+    "location": "Eliowhani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Perfect International College",
+    "location": "Elelenwo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Erema",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obagi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Girls’ Secondary School",
+    "location": "Omoku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Osiakpu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obigwe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sancta Maria High School",
+    "location": "Omoku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Egbema Grammar School",
+    "location": "Okwuzi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Akabuka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ndoni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kreigani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Aggah",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obrikom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogba Comprehensive High School",
+    "location": "Ogba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Ebogoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Comprehensive Secondary School",
+    "location": "Omoku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Oboburu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Idu Comprehensive High School",
+    "location": "Obosiukwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Demonstration Secondary School",
+    "location": "Omoku Onelga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kin’s Comprehensive College",
+    "location": "Omoku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Talent International Academy",
+    "location": "Onwoku Onelga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Comprehensive Secondary School, Obite",
+    "location": "Onelga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Amah Onelga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model Boy’s Secondary School",
+    "location": "Omoku Onelga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kings & Queens Model College",
+    "location": "Omoku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Ogbogu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Omoku",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obioziminini",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Mgbede",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obiofu Ndoni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Bolo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ogu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Kula Aku Lga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okrika Grammar School",
+    "location": "Okrika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Okochiri",
+    "location": "Okrika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Kalio-Ama-Okrika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okrika National Secondary School",
+    "location": "Okrika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Okumgba-Ama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Ibaka Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ogan-Ama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The King s College, Okochion",
+    "location": "Okirika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Okujagu- Ama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Amaji-Omuma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Umuogba",
+    "location": "Omuma-Etche",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Eberi-Omuma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Essence Comprehensive College",
+    "location": "Ohimogho",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Umuajuloke Omuma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive Secondary School",
+    "location": "Opobo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Nkoro Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Egberu-Ndoki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Obete-Ndoki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foundation Comprehensive College",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Umuagbai-Ndoki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zunic Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brilliant Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Paradise International Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Evangel International Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grace International Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Capital Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lilly International Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Heaven International Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal International Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Saviour’s Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shalom Gate International Secondary School",
+    "location": "Oyingbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National Technical Secondary School",
+    "location": "Oyingbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Morning Star Secondary School",
+    "location": "Oyingbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Destiny College, Satellite Village",
+    "location": "Oyingbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Saints Secondary School",
+    "location": "Oyingbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nepa Secondary School",
+    "location": "Afam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vantage International School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Shield Model Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wisdom International School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Godstime Comprehensive Secondary School",
+    "location": "Oyingbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rich Model Secondary School, Alam Road",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chambers Comprehensive College",
+    "location": "Oyingbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Flolidid World College",
+    "location": "Oyingbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pace Setters’ International College",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excel International Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bravery International Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Youth Technical Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Solid Step International High School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Trinity Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Success Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessed Model Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Child Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lakewood International Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Better Life International School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Child Educational Centre, Kom Kom",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Good Beginning Education Centre, (Secondary)",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Era Model Secondary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "G. K. College",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alpha Missionary School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Genuis International School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Diamond International School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rapid Result Academy",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dominite Model Secondary School, Umuoshi",
+    "location": "Ndoki",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Basic International School, Church Road",
+    "location": "Kom-Kom",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City International School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sit-Up International School",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Living Kingdom International College",
+    "location": "Umuosi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Spring Field Secondary School",
+    "location": "Oyigbo.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unique Brain Academy Afam Road",
+    "location": "Oyigbo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Priston International School",
+    "location": "Oyigbo.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Stella Maris College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "International Secondary School, Unitech",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kenneth Commercial & Technical College",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Orominieke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Comprehensive Secondary School",
+    "location": "Borikiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Rosary Secondary School",
+    "location": "P/harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Girls’ High School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Enitonna High School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sports Institute Of Rivers State",
+    "location": "Isaka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls’ College",
+    "location": "Abuloma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Nkpolu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lao Russell Memorial Secondary School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Midtown College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Niger Grammar School",
+    "location": "Portharcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Randolph Comprehensive College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Abuloma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emarid College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Elekahia",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Joemax Commercial Secondary School, Elekeahia",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Navy Secondary School",
+    "location": "Portharcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tantua International High School",
+    "location": "Portharcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Niger Delta Science School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National Professional Secondary School",
+    "location": "Porthacourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Base Comprehensive College",
+    "location": "Portharcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady Of Fatima College",
+    "location": "Portharcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Amadi-Ama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Oroworukwo",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immanuel International School",
+    "location": "Amadi-Ama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Covenant Secondary School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sonny Memorial College Diobu",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Era Brilliant College, Borikiri",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Levinda College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iverok College, Railway Compound",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The Light Secondary School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National High School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ For All Nations College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Philips Academy, Diobu",
+    "location": "Portharcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Child College, Rumuokwurisi",
+    "location": "Portharcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aladumo High School",
+    "location": "Portharcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Starlet Academy",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate Heart College",
+    "location": "Borokiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Greenfield Secondary School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King Secondary School, Mile Ii, Diobu",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olivet Heights Secondary School, Diobu",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fibella International School",
+    "location": "Rumueme",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Comprehensive High School",
+    "location": "D.line Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Zion International High School, Diobu",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Science & Arts Specialist College",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Showers International High School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Favour Secondary School, Ozuboko Road",
+    "location": "P/H.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith Baptist College",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Millennium High School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Charry Comprehensive Secondary School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sharon International Secondary School",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "German International Concept Academy",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jireh’s Secondary School",
+    "location": "Azuabie Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rootway Comprehensive College",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Covenant Secondary School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wisdom Child International Secondary School, Borikiri",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model International High School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Graceland International School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Total Victory College",
+    "location": "P/Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cornerstone International Secondary School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dave Christian Academy, Azubia Town",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Divine International College",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obiye Academy Secondary School",
+    "location": "P/ Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Model Secondary School",
+    "location": "(Gra) Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bloom Breed High School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Mary’s Catholic Model High School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Catoky International Secondary School,Gra Phase Iii",
+    "location": "Port-Harcourt.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Child De Excellence Secondary School, Diobu",
+    "location": "Port-Harcourt.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alpha Academy",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tago Education Centre",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Seedtime Model Secondary School",
+    "location": "Port- Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Matilda International Secondary School",
+    "location": "Port – Harcourt.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tua-Tua Community Secondary School",
+    "location": "Aabue-Korokoro Tai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Sime-Tai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ban-Ogoi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Bunu-Tai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive Secondary School",
+    "location": "Nonwa/gbam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Kira",
+    "location": "Tai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Commercial Secondary School",
+    "location": "Botem Tai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kpite-Tai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Koroma-Tai",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School, Kporghor Tai",
+    "location": "Telga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gloria Comprehensive High School",
+    "location": "Ehia Paranwo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King David College, Pipeline",
+    "location": "Rumukwurushi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gloria Comprehensive High School",
+    "location": "Eliaparanwo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Total Child Secondary School",
+    "location": "Rumuopirikom Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Susan Educational Centre (Secondary) Rumueme",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cita High School, Rumuogba Housing Estate",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Chamba International Secondary School, Woji",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Scholarstica High School, Orazi",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unibek College Of Science And Technical Education",
+    "location": "Rumuokwurushi P/H",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City Model College, Rumuoprikom",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emarid College, Eneka/Igwuruta Road",
+    "location": "P/Harcort",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Virgitab Education Centre Secondary School",
+    "location": "Aguabie",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "International Royal Academy",
+    "location": "Rukpokwu Town",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olobo Premier College, East-West Road",
+    "location": "Beside Uniport",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "La Pierre Angulaire High School",
+    "location": "P/Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Malvan International Secondary School, Elioparanwo",
+    "location": "P/Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal Gate International College, Eneka",
+    "location": "P/Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Merit International School, Rukpokwu",
+    "location": "P/Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Viviland Mark Comprehensive Secondary School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sampav Model Secondary School, Choba",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Word Of Faith Secondary School",
+    "location": "Obio Akpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Penielvile International Secondary School",
+    "location": "Oginigba-Obio Akpor",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sureway International High School, Elelenwo",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jesus Cares Academy",
+    "location": "Rumuo-Lumeni",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vivre De-Prince High School",
+    "location": "Rumuwuegwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Gradefield International Academy",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adonaibest Education Centre, Hospital Rd",
+    "location": "P/H",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sprout Hall International High School",
+    "location": "Rumuodara P/H",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jeck Comprehensive College",
+    "location": "Elimgbu P/H",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Marygold International College",
+    "location": "Elelenwo P/H",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wisdom Gate International College, Eligbolo",
+    "location": "P/H",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Uniport International Secondary School",
+    "location": "Choba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rumuodomaya Model Secondary School",
+    "location": "P/Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brookstone Secondary School",
+    "location": "Igwuruta P/ Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Enyinda International College",
+    "location": "Ogbogoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Confidence Group Of Schools",
+    "location": "Eneka Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Topline Secondary School",
+    "location": "Elelenwo Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Convenant Academy Secondary School",
+    "location": "Rumuokwu P/Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alpha Comprehensive Training Institute",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Harmony International Secondary School",
+    "location": "Rumuosita",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Darlingnah International College, Location Rd.",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Redeemer’s International Secondary School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grand Child College",
+    "location": "Rumuokwurusi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emilo Piazza Memorial College, Rumuigbo",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Madonna Model Secondary School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Hallel College, Boarding Airport Rd",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Vondorix International Secondary School",
+    "location": "Rukpokwu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Butter Stone International School, Okporo Road",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foundation Secondary School",
+    "location": "Rumu Odomaya.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Excellent College, Mgbuoba",
+    "location": "Port-Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Betty Ivory Towers Secondary School, Rumuokwuta",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Famvar International Secondary School",
+    "location": "Port Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Standard Vinto International College",
+    "location": "Elelenwo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Laurels Model College",
+    "location": "Port- Harcourt",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Ghost Manifestation Secondary, Rumuodara",
+    "location": "Port-Harcout",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Maria Goretti’s High School, Rumuodara",
+    "location": "Port – Harcourt",
+    "type": "secondary school",
+    "verified": false
+  }
+]

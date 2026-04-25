@@ -1,0 +1,386 @@
+[
+  {
+    "name": "Government Science & Technical College",
+    "location": "Gashu’a",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gashua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Secondary School",
+    "location": "Dagona",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jicon Secondary School",
+    "location": "Gashua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gwio Kura",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yusad Standard Secondary School",
+    "location": "Gashua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bade Heritage Secondary School",
+    "location": "Gashua",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Science And Technical College",
+    "location": "Dapchi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ College",
+    "location": "Damaturu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Damaturu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Leaders’ Private School",
+    "location": "Damaturu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yobe Scholars Academy",
+    "location": "Damaturu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yobe Childrens’ Academy",
+    "location": "Yobe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Damaturu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Damaturu International School",
+    "location": "Damaturu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yobe Islamic Center Secondary School",
+    "location": "Bamaturu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Mary’s School",
+    "location": "Damaturu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal School",
+    "location": "Damaturu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Foundation Secondary School",
+    "location": "Damaturu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Gadaka",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kukar-Gadu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Fika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Zadawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science And Technical College",
+    "location": "Damagum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Ngelzarma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jajere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Daura/Damagun.",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Geidam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science And Technical College",
+    "location": "Geidam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Buni Yadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Goniri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science And Technical College",
+    "location": "Gujba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Buni-Yadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Buni-Yadi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Bularafa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gulani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jakusko",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Amshi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Machina",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Nangere",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Degubi",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kukuri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science And Technical College",
+    "location": "Nguru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Nguru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Nguru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Army Day Secondary School",
+    "location": "Nguru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Nguru",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science And Technical College",
+    "location": "Potiskum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fika Government Secondary School",
+    "location": "Potiskum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls’ College",
+    "location": "Potiskum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Science And Technical College",
+    "location": "Potiskum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Potiskum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Mamudo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "King Abdul Aziz African Institute",
+    "location": "Potiskum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal College Of Education (Technical) Demonstration Secondary School",
+    "location": "Potiskum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Peter’s College",
+    "location": "Potiskum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nigerian Turkish International College",
+    "location": "Mamudo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Model College",
+    "location": "Potiskum",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yunusari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kanamma",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kumagannam",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Yusufari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Higher Islamic College",
+    "location": "Yusu Fari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Jajimaji",
+    "type": "secondary school",
+    "verified": false
+  }
+]

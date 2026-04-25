@@ -1,0 +1,836 @@
+[
+  {
+    "name": "Government Secondary School",
+    "location": "Malamfatori",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Uba Borno State",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Askira",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Lassa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Lassa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Uvu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Rumirgo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Wamdeo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Science And Technical College",
+    "location": "Lassa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Dille",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Alagarno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Mussa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Science Secondary School",
+    "location": "Bama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Bama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kumshe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Bama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Kur Mohammed Day Secondary School",
+    "location": "Bama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibrahim Musa Staff Secondary School",
+    "location": "Bama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Waka-Biu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Biu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Science Secondary School",
+    "location": "Biu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Mirnga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Biu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lajada High School",
+    "location": "Biu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Godiya Private Secondary School",
+    "location": "Biu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Unity College",
+    "location": "Biu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Standard Secondary School",
+    "location": "Biu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Miringa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pre-Campus College",
+    "location": "Biu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibra Foundation School",
+    "location": "Miringa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Chibok",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Damboa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Dikwa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gubio",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gwoza",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ville-Gwoza",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gwoza",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Ngoshe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Warabe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Ngoshe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Izge",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Ashigashiya",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kwajaffa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Marama",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School, Sakwa",
+    "location": "Borno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Shaffa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shaffa Community Day Secondary School",
+    "location": "Shaffa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sakwa East Community Day Secondary School",
+    "location": "Yimirshika",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Namu Model Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mairi Islamic Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maiduguri Capital School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Elkanemi College Of Business Administration",
+    "location": "(ecoba) Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Telta Memorial Secondary School",
+    "location": "Molai Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unimaid Demonstration Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fizi High School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ruby Springfield College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maiduguri Experimental Schools Corner",
+    "location": "Yobe",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Herwa Academy",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Success Private School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sunshine Stars Private School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Darul Qur’an Science Secondary School, Londoin Ciki",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Dala Standard Secondary School, Dala Alamderi Ward",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amina Memorial Islamic Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shehu Sanda Kyrami Government Day Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Old Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School, Mairi",
+    "location": "Maidugurii",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nakowa Model College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Namu Model Secondary School, Pom",
+    "location": "Pouari",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Future Hope Private School",
+    "location": "Maidiguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Learning Right Private Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Godiya Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "North East International School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Benisheikh",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Ngamdu",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Senior Science Secondary School",
+    "location": "Konduga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Auno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kukawa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Baga",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Kwaya-Kusar",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Wandali",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Arabic Secondary School",
+    "location": "Mafa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Gajiganna",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Yerwa Government Girls’ Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Brigadier Maimalari Day Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "El-Kanemi College Of Islamic Theology",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Himma Secondary School",
+    "location": "(private) Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alau Private Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Immaculate College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mafoni Government Day Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mustafa Umar El-Kanemi Arabic College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maiduguri International School",
+    "location": "(Educational Trust) Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saviour Model College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Foundation Model Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Benex Comprehensive School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Thanawiyyatu Sheikh Ahmad Abulfathi Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jafra Private School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Imam Malik Islamic Centre",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Shehu Garbai School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Maiduguri Innovative Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Evangel Model Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "City International Secondary School, Wulari",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. John’s College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "A.K. Benisheikh Staff Model Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Women Day Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Winners Model Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School, Lamisula",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibrahim Islamic Secondary School",
+    "location": "Maduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Zajiri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Bulabulin",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Success Secondary School",
+    "location": "Umurari Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Royal High School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Abba Bulkar Memorial Private School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Al-Burhan Islamic School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ammy Academy College",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Pearl’s Comprehensive School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Millennium International School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bara’lmul Iman Islamic Integrated School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bethel Private School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady’s Secondary School",
+    "location": "Maiduguri",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "New Marte",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Damasak",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Senior Science Secondary School",
+    "location": "Monguno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Monguno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Monguno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls’ College",
+    "location": "Munguno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ibn Fartuwa Islamic Science Secondary School",
+    "location": "Monguno",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Girls’ Secondary School",
+    "location": "Wulgo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Gamboru-Ngala",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Shani",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Day Secondary School",
+    "location": "Kubo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Briyel",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Secondary School",
+    "location": "Gajiram",
+    "type": "secondary school",
+    "verified": false
+  }
+]

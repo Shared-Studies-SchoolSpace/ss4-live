@@ -1,0 +1,1808 @@
+[
+  {
+    "name": "Christ’s School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ’s Girls’ School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ado Grammar School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mary Immaculate Grammar School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ola-Oluwa Muslim Grammar School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ado Community High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Apostolic Church Comprehensive High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist Comprehensive High School, Oke-Ila",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mary Hill Boys’ High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ben-Folarin College",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekiti State Government College",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King Comprehensive High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Comprehensive High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Falana High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eureka National Comprehensive High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Nova International Secondary School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Child Catholic Secondary School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekiti Anglican Diocesan High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omega Academy",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adewale Comprehensive College",
+    "location": "Ado Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fountain International High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Muslim College",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "First Class Academy",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Living Spring International Model College",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Living Christ College",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Busy Minds Star International College",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekiti Methodist High School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wisdom Foundations International College",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jokotayo Academy",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "All Souls Anglican Senior Grammar School",
+    "location": "Ado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Young Brain Education College",
+    "location": "Ado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ideal Grammar School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Petoa City College, Ekute Quarters",
+    "location": "Ado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Providence Secondary School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Creation College",
+    "location": "Temidire Quarters Ado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Convenant Secondary Academy",
+    "location": "Ado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sheperd International College",
+    "location": "Ado- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "At-Tawheed Model Senior School",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tinuola International College",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Wonder City College",
+    "location": "Ado- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Model International College",
+    "location": "Ado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Greater Tomorrow Model College",
+    "location": "Ado- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bestline Distinct College",
+    "location": "Ado Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Linkers Model College",
+    "location": "Ado- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Great Mercies International College",
+    "location": "Ado- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Apostolic Church Grammar School",
+    "location": "Efon Alaaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Efon Alaaye High School",
+    "location": "Efon Alaaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Apostole Babalola Memorial Grammar School",
+    "location": "Efon Alaaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Anglican Secondary School",
+    "location": "Efon Alaaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Michael Catholic Grammar School",
+    "location": "Efon Alaaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Efon Alaaye City College",
+    "location": "Oke-Are",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government Girls College",
+    "location": "Efon-Alaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Saviour’s Standard College",
+    "location": "Efon-Alaaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekiti State Government College",
+    "location": "Efon Alaaye",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omuo Comprehensive High School",
+    "location": "Omuo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekamefa Community Commercial Grammar School",
+    "location": "Ilasa-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Omuo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omuooke Grammar School",
+    "location": "Omuooke-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obedu Community Grammar School",
+    "location": "Isinbode-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omuo-Ore Secondary School",
+    "location": "Omuo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amunnu Comprehensive High School",
+    "location": "Omuo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olivet High School",
+    "location": "Omuo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mouro Memorial High School",
+    "location": "Omuo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Sola Babalola Memorial High School",
+    "location": "Iro-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Modupe Akinlabi Memorial High School",
+    "location": "Ilasa",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Blessing Model Secondary School",
+    "location": "Omuo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Silas Anglican Secondary School",
+    "location": "Omuo-Oke Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogunmokunwa Memorial Christ College, Kota",
+    "location": "Omuo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isedo Comprehensive High School, Omuo-Oke",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ore-Ofe Academy Secondary School",
+    "location": "Omuo-Oke Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Elites Secondary School",
+    "location": "Omuo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Living Spring International College",
+    "location": "Omuo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Senior High School",
+    "location": "Isinbode-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifelodun Community Grammar School",
+    "location": "Ikun/Araromi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "C.A.C. Secondary School, Ita-Alaafia",
+    "location": "Omuo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glory Ideal College",
+    "location": "Omuo- Oke",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olukayode College, Omuo",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Citadel Of Success College",
+    "location": "Isibode- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Corpus Christi College",
+    "location": "Ilawe-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Igbara-Odo",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United High School",
+    "location": "Ilawe-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogotun High School",
+    "location": "Ogotun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omoeleye Comprehensive High School, Igbara-Odo",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oniwe Comprehensive High School",
+    "location": "Ilawe-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojorube Grammar School",
+    "location": "Ogotun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alarelu Comprehensive High School",
+    "location": "Igbara-Odo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ademeso Royal College",
+    "location": "Ogotun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilawe Grammar School",
+    "location": "Ilawe-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Solid Foundation International College",
+    "location": "Ilawe-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Unity Secondary School",
+    "location": "Ogotun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory College",
+    "location": "Ilawe Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Toluwani Sec School",
+    "location": "Igbara-Odo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glory International Secondary School",
+    "location": "Igbara-Odo",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okemesi Grammar School",
+    "location": "Okemesi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "District Commercial Secondary School",
+    "location": "Aramoko-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Edu High School",
+    "location": "Erio-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Erin-Ayonigba High School",
+    "location": "Erijiyan-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajinare Grammar School, Ido-Ajinare",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Alamoye Comprehensive High School",
+    "location": "Aramoko-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Okemesi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ipole/iloro Commercial Grammar School, Ipole Iloro",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikogosi High School",
+    "location": "Ikogosi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Aramoko-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Erijiyan Community High School",
+    "location": "Erijiyan-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory Royal College, Aramoko",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Glory Model College, Aramoko",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bezaleel Excellent College",
+    "location": "Erijiyan-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fabunmi Memorial Senior High School",
+    "location": "Okemesi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Olive Royal Academy College",
+    "location": "Erinjiyan Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Merciful God Int’l High School",
+    "location": "Aramoko-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijaloke Grammar School",
+    "location": "Emure-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Orija High School",
+    "location": "Emure-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eporo High School, Eporo-Emure",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science College",
+    "location": "Emure Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Emure Model High School",
+    "location": "Emure",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Own Comprehensive College",
+    "location": "Emure",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Our Foundation Academy",
+    "location": "Emure-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Paul Anglican Grammar School",
+    "location": "Emure- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Victory Academy",
+    "location": "Emure",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Progressive International High School",
+    "location": "Emure- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ode-Ekiti High School",
+    "location": "Ode-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aisegba Community Grammar School",
+    "location": "Aisegba-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijanmodu Comprehensive High School",
+    "location": "Ijan-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojugbaye Comprehensive High School",
+    "location": "Imesi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ileowuro High School",
+    "location": "Agbado-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist High School",
+    "location": "Egbe-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Iluomoba-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aisegba Comprehensive High School",
+    "location": "Aisegba-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ International Comprehensive College",
+    "location": "Agbado",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayo Daramola Memorial Grammar School",
+    "location": "Ijan Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayeteju Comprehensive Senior College",
+    "location": "Iro Ayeteju",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The Answer Secondary School",
+    "location": "Aisegba-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Jobabeg International College",
+    "location": "Aisegba",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith And Love College",
+    "location": "Ode-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "New Era College",
+    "location": "Ode Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Toluwani Golden College",
+    "location": "Imesi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ujilogun High School, Ilupeju-Ijan",
+    "location": "Ijan Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekiti Parapo College",
+    "location": "Ido-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifaki Grammar School",
+    "location": "Ifaki-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Notre-Dame Grammar School",
+    "location": "Usi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Girls’ Grammar School",
+    "location": "Ifaki-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Methodist Comprehensive High School",
+    "location": "Aaye-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilogbo High School",
+    "location": "Ilogbo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oganganmodu Grammar School",
+    "location": "Ido-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Elo High School",
+    "location": "Ayetoro-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ojo-Ugbole High School",
+    "location": "Igbole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Orin High School",
+    "location": "Orin-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Usi High School",
+    "location": "Usi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ora Community High School",
+    "location": "Ora-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekiti State Government College",
+    "location": "Usi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Osi Community High School",
+    "location": "Osi-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adladof High School, Ifaki",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oke-Osanyintolu Model High School, Ido-Ekiti",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Liberty International Science College",
+    "location": "Ido-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aanu Oluwa Progressive College",
+    "location": "Ifaki Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ifisin Grammar School",
+    "location": "Ifisin-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Science & Technical College",
+    "location": "Usi Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Doherty Memorial Grammar School",
+    "location": "Ijero-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayetoro/Iloro High School",
+    "location": "Iloro-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ipoti High School",
+    "location": "Ipoti-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Babatope Memorial High School",
+    "location": "Ikoro-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School, Odo-Owa",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayegunle/temidire Comprehensive High School, Ayegunle",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekameta Community High School",
+    "location": "Epe/ara/araromi Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijero High School",
+    "location": "Ijero-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ijurin Comprehensive High School",
+    "location": "Ijurin-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iloro Community High School",
+    "location": "iloro-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Secondary School",
+    "location": "Ipoti-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eso-Obe Comprehensive High School",
+    "location": "Ikoro-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ara Comprehensive High School",
+    "location": "Ara-Ijero-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omotade College",
+    "location": "Ijero-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okeoro/Iroko Comprehensive High School",
+    "location": "Okeoro-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Grace Youth College",
+    "location": "Ijero-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Faith Royal College",
+    "location": "Ijero Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oluwalose Secondary School",
+    "location": "Ipoti-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Gabriel Catholic Secondary School",
+    "location": "Ijero Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Cornerstone International School",
+    "location": "Ikoro",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "The African Church Grammar School",
+    "location": "Iloro-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Orisunbare Community Secondary School",
+    "location": "Ijero-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Apostolic Church High School",
+    "location": "Ijero- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Annunciation School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amoye Grammar School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Louis’ Grammar School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "African Church Comprehensive High School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eleyo High School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ajolagun High School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen Comprehensive High School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Irepodun Community High School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekiti State Government College",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Bobas High School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "College Of Education Demonstration Secondary School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Distinction Secondary School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prince & Princess Academy",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikere High School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Baptist High School",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Victory City College",
+    "location": "Ikere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Egbeoba High School",
+    "location": "Ikole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen High School",
+    "location": "Ikole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Mary’s Girls’ Grammar School",
+    "location": "Ikole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Ayedun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Comprehensive High School",
+    "location": "Ijesa-Isu-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Irepodun High School",
+    "location": "Ipao-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Odo-Oro High School, Odo-Oro",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayebode High School",
+    "location": "Ayobode-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ara Community High School, Ara",
+    "location": "Ikole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Itapaji Community High School",
+    "location": "Itapaji-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Oke-Ako-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Irele-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Apostolic High School",
+    "location": "Ikole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School, Orin-Odo",
+    "location": "Ikole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Fiyinfolu High School, Oke Ayedun",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Odundun High School",
+    "location": "Odo-Ayedun Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ebenezer Premier Secondary School",
+    "location": "Asin Ikole Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Theresa’s Catholic Secondary School",
+    "location": "Ikole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Tessy Gacamic Hope College",
+    "location": "Ikole",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rapid High School",
+    "location": "Ikole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Crown Secondary School",
+    "location": "Ikole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Federal Government College",
+    "location": "Ikole-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iyemero Community High School",
+    "location": "Iyemero-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Success High School, Odo-Ayodun",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikole City College",
+    "location": "Ikole- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Prospect Varsity College",
+    "location": "Ikole Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Goodnews Secondary School",
+    "location": "Orin Odo- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilejemeje Community High School",
+    "location": "Iye-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iludun Community High School",
+    "location": "Iludun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ewu Comprehensive High School",
+    "location": "Ewu Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ipere Comprehensive High School",
+    "location": "Ipere-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oniyo Grammar School",
+    "location": "Eda Oniyo Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Canaanland Pre-Varsity Academy",
+    "location": "Iye- Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekiti Baptist High School",
+    "location": "Igede-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eyemote Comprehensive High School",
+    "location": "Iyin-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igbemo Community Comprehensive High School",
+    "location": "Igbemo Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Comprehensive High School",
+    "location": "Awo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Okunsusi/Jemiriye High School",
+    "location": "Igede-Ikiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Egirioke High School",
+    "location": "Iyin-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Are/Afao Comprehensive High School, Are-Afao",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Iropora Community High School",
+    "location": "Iropora Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Iworoko-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oloketuyi Memorial Grammar School",
+    "location": "Igbemo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mater Christi Girls’ High School",
+    "location": "Igede",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science College",
+    "location": "Iyin Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Esure Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eyio Comm. High School",
+    "location": "Eyio-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ise-Emure Grammar School",
+    "location": "Ise-Emure Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ise Comprehensive High School",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Akinluse Comprehensive High School",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community Grammar School",
+    "location": "Orun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obada High School",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "United Comprehensive High School",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lord’s College",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Agbede Comprehensive College",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Mercy Grammar School",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "God’s Wisdom Comprehensive High School",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogbese Comprehensive High School",
+    "location": "Ogbese-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Academy Secondary School, Afolu",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Multi-Talent Comprehensive College",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Success College",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Arinjale Comprehensive Senior High School",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adetunji Ajayi Senior Secondary School",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Berachah Glorious College",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Rhema Greater Height International Secondary School",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "St. Mark’s Anglican Comprehensive High School",
+    "location": "Ise",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "C.A.C. Comprehensive High School",
+    "location": "Ise-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Moba Grammar School",
+    "location": "Otun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Igogo Commercial High School",
+    "location": "Igogo-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amure High School",
+    "location": "Ikun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Eyemojo Comprehensive High School",
+    "location": "Osan-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Otun Comprehensive High School",
+    "location": "Otun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Osun Grammar School",
+    "location": "Osun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Erinmope High School",
+    "location": "Erinmope Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud Deen Islamic Secondary School",
+    "location": "Otun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Adventist Comprehensive High School",
+    "location": "Otun Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Aaye Oja Community Grammar School",
+    "location": "Aaye-Oja-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Amazing Grace College",
+    "location": "Otun Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ikosu Senior Comprehensive High School",
+    "location": "Ikosu Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ Royal Master College",
+    "location": "Otun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Holy Michael Champion College",
+    "location": "Otun Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Lumen Christi Catholic Secondary School",
+    "location": "Otun-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Epe Community High School",
+    "location": "Epe Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ayede Grammar School",
+    "location": "Ayede-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Obalatan Commercial Grammar School",
+    "location": "Ilupeju Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ansar-Ud-Deen High School",
+    "location": "Ire-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Saint Augustine’s Comprehensive High School",
+    "location": "Oye-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Isan Secondary School",
+    "location": "Isan-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Ayegbaju-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ogunnire Comprehensive High School",
+    "location": "Ire-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Itapa/osin Community Comprehensive High School",
+    "location": "Itapa-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Itaji Community Grammar School",
+    "location": "Itaji-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ilupeju High School",
+    "location": "Ilupeju-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Ekiti State Government College",
+    "location": "Oye-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Omu-Ijelu High School",
+    "location": "Omu-Ijelu Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "National High School",
+    "location": "Oye-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King’s Catholic College",
+    "location": "Ire-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Our Lady Seat Of Wisdom Catholic Girls’ Secondary School, Oye",
+    "location": "Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Community High School",
+    "location": "Osin-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Government Science College",
+    "location": "Ayede Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oye Egbo High School",
+    "location": "Oye-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Oluwanifesimi College",
+    "location": "Ilupeju-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Concentric International Group Of Schools",
+    "location": "Oye-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  },
+  {
+    "name": "Christ The King Academy",
+    "location": "Ilupeju-Ekiti",
+    "type": "secondary school",
+    "verified": false
+  }
+]

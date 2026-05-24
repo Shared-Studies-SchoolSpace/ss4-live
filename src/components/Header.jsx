@@ -44,6 +44,7 @@ export const Header = () => {
             <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">SAS</a>
             <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Aspirants Award</a>
             <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">News</a>
+            <a href="/chess-league" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Chess League</a>
             <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">About Us</a>
           </nav>
         </div>
@@ -94,6 +95,7 @@ export const Header = () => {
             <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>SAS</a>
             <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</a>
             <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>News</a>
+            <a href="/chess-league" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Chess League</a>
             <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>About Us</a>
             <hr className="my-2 border-gray-100" />
             <button className="py-3 border border-[#E8640A] text-[#E8640A] font-bold rounded-full hover:bg-gray-50 w-full" onClick={() => window.location.href='/about'}>

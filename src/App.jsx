@@ -12,6 +12,8 @@ import SasPage from './pages/SasPage';
 import AspirantsAwardPage from './pages/AspirantsAwardPage';
 import NewsPage from './pages/NewsPage';
 import AboutPage from './pages/AboutPage';
+import ChessLeaguePage from './pages/ChessLeaguePage';
+
 import BackToTop from './components/BackToTop';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -31,6 +33,7 @@ function App() {
             <Route path="/award" element={<AspirantsAwardPage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/chess-league" element={<ChessLeaguePage />} />
           </Routes>
         </main>
         <Footer />

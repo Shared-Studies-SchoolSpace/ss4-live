@@ -14,7 +14,6 @@ export const StandingsTab = ({ standings, onPlayerSelect }) => {
                 <th className="py-5 px-4 text-[10px] font-black text-gray-400 uppercase tracking-wider text-center w-[50px]">W</th>
                 <th className="py-5 px-4 text-[10px] font-black text-gray-400 uppercase tracking-wider text-center w-[50px]">D</th>
                 <th className="py-5 px-4 text-[10px] font-black text-gray-400 uppercase tracking-wider text-center w-[50px]">L</th>
-                <th className="py-5 px-4 text-[10px] font-black text-gray-400 uppercase tracking-wider text-center w-[60px]" title="Buchholz score">BH</th>
                 <th className="py-5 px-6 text-[10px] font-black text-gray-400 uppercase tracking-wider text-center w-[80px]">Pts</th>
                 <th className="py-5 px-6 text-[10px] font-black text-gray-400 uppercase tracking-wider w-[160px]">Recent Form</th>
               </tr>
@@ -65,7 +64,6 @@ export const StandingsTab = ({ standings, onPlayerSelect }) => {
                     <td className="py-4 px-4 text-center font-semibold text-gray-600 text-sm">{p.W}</td>
                     <td className="py-4 px-4 text-center font-semibold text-gray-600 text-sm">{p.D}</td>
                     <td className="py-4 px-4 text-center font-semibold text-gray-600 text-sm">{p.L}</td>
-                    <td className="py-4 px-4 text-center font-bold text-gray-400 text-xs">{p.buchholz}</td>
                     <td className="py-4 px-6 text-center font-black text-brand-accent text-base">{p.Pts}</td>
                     <td className="py-4 px-6">
                       <div className="flex gap-1.5">

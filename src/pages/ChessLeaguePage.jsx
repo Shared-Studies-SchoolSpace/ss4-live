@@ -122,7 +122,7 @@ export default function ChessLeaguePage() {
     if (!currentDivision || !currentDivision.players || currentDivision.players.length === 0) return [];
     
     const stats = {};
-    currentDivision.players.forEach(p => {
+    currentDivision.players.filter(p => !p.hidden).forEach(p => {
       const lbl = playerLabel(p);
       stats[lbl] = { 
         label: lbl, 
@@ -137,14 +137,12 @@ export default function ChessLeaguePage() {
         L: 0, 
         Pts: 0, 
         h2h: {}, 
-        history: [], 
-        buchholz: 0, 
-        opponents: [] 
+        history: []
       };
     });
 
     if (currentDivision.rounds) {
-      currentDivision.rounds.forEach(r => {
+      currentDivision.rounds.filter(r => !r.hidden).forEach(r => {
         r.games.forEach(([w, b]) => {
           if (w === 'BYE' || b === 'BYE') {
             const player = w === 'BYE' ? b : w;
@@ -160,10 +158,6 @@ export default function ChessLeaguePage() {
           
           const key = gameKey(currentDivision.id, r.round, w, b);
           const res = gameResults[key];
-          
-          // Add to opponents list for Buchholz calculation
-          stats[w].opponents.push(b);
-          stats[b].opponents.push(w);
 
           if (!res) return;
 
@@ -185,14 +179,8 @@ export default function ChessLeaguePage() {
       });
     }
 
-    // Calculate Buchholz
-    Object.values(stats).forEach(player => {
-      player.buchholz = player.opponents.reduce((sum, opp) => sum + (stats[opp]?.Pts || 0), 0);
-    });
-
     return Object.values(stats).sort((a, b) => {
       if (b.Pts !== a.Pts) return b.Pts - a.Pts;
-      if (b.buchholz !== a.buchholz) return b.buchholz - a.buchholz;
       const aVsB = a.h2h[b.label] || 0;
       const bVsA = b.h2h[a.label] || 0;
       if (bVsA !== aVsB) return bVsA - aVsB;
@@ -294,8 +282,22 @@ export default function ChessLeaguePage() {
     }
   };
 
-  const handleCreateRound = async (dateStr) => {
+  const handleCreateFixtures = async (dateStr) => {
     if (!isAdmin) return;
+
+    let lastPlayedRound = 0;
+    (currentDivision.rounds || []).forEach(r => {
+      const anyResult = r.games.some(([w, b]) => gameResults[gameKey(currentDivision.id, r.round, w, b)]);
+      if (anyResult) lastPlayedRound = Math.max(lastPlayedRound, r.round);
+    });
+
+    const nextRoundNum = lastPlayedRound + 1;
+    const playersLabels = currentDivision.players.filter(p => !p.hidden).map(p => playerLabel(p));
+    const previousRounds = currentDivision.rounds.filter(r => r.round <= lastPlayedRound);
+
+    const nextGames = generateSwissNextRound(playersLabels, previousRounds, gameResults, currentDivision.id);
+
+    // Determine date: use provided date or 2 days after the last round
     let roundDate = dateStr;
     if (!roundDate) {
       if (currentDivision.rounds && currentDivision.rounds.length > 0) {
@@ -316,22 +318,19 @@ export default function ChessLeaguePage() {
       }
     }
 
-    const nextRoundNum = currentDivision.rounds && currentDivision.rounds.length > 0
-      ? Math.max(...currentDivision.rounds.map(r => r.round)) + 1
-      : 1;
-
     const newRound = {
       round: nextRoundNum,
       date: roundDate,
-      games: []
+      games: nextGames
     };
 
-    const newRounds = [...(currentDivision.rounds || []), newRound];
+    const newRounds = [...currentDivision.rounds.filter(r => r.round <= lastPlayedRound), newRound];
+
     try {
       await supabase.from('divisions').update({ rounds: newRounds }).eq('id', currentDivision.id);
-      toast.success(`Round ${nextRoundNum} created (${roundDate})!`, { theme: 'dark' });
+      toast.success(`Round ${nextRoundNum} fixtures created using Swiss system!`, { theme: 'dark' });
     } catch (e) {
-      toast.error('Failed to create round');
+      toast.error('Failed to create fixtures');
     }
   };
 
@@ -415,65 +414,39 @@ export default function ChessLeaguePage() {
 
   const handleDeleteRound = async (roundNum) => {
     if (!isAdmin) return;
-    if (!window.confirm(`Delete Round ${roundNum}? This will also clear its results.`)) return;
 
-    const newRounds = currentDivision.rounds.filter(r => r.round !== roundNum);
-
-    const nextResults = { ...gameResults };
-    const prefix = `${currentDivision.id}_R${roundNum}_`;
-    Object.keys(nextResults).forEach(key => {
-      if (key.startsWith(prefix)) {
-        delete nextResults[key];
-      }
-    });
+    const newRounds = currentDivision.rounds.map(r => 
+      r.round === roundNum ? { ...r, hidden: true } : r
+    );
 
     try {
       await supabase.from('divisions').update({ rounds: newRounds }).eq('id', currentDivision.id);
-      await supabase.from('settings').upsert({ id: 'gameResults', data: nextResults });
       
       if (currentRound === roundNum) {
-        if (newRounds.length > 0) {
-          setCurrentRound(newRounds[0].round);
+        const activeRounds = newRounds.filter(r => !r.hidden);
+        if (activeRounds.length > 0) {
+          setCurrentRound(activeRounds[0].round);
         } else {
           setCurrentRound(1);
         }
       }
       
-      toast.warn(`Round ${roundNum} deleted`, { theme: 'dark' });
+      toast.warn(`Round ${roundNum} hidden`, { theme: 'dark' });
     } catch (e) {
-      toast.error('Failed to delete round');
+      toast.error('Failed to hide round');
     }
   };
 
-  const handleSwissShuffle = async () => {
+  const handleRestoreRound = async (roundNum) => {
     if (!isAdmin) return;
-    if (window.confirm("This will regenerate the NEXT round based on current standings. Existing played rounds will be preserved. Proceed?")) {
-      let lastPlayedRound = 0;
-      (currentDivision.rounds || []).forEach(r => {
-        const anyResult = r.games.some(([w, b]) => gameResults[gameKey(currentDivision.id, r.round, w, b)]);
-        if (anyResult) lastPlayedRound = Math.max(lastPlayedRound, r.round);
-      });
-
-      const nextRoundNum = lastPlayedRound + 1;
-      const playersLabels = currentDivision.players.map(p => playerLabel(p));
-      const previousRounds = currentDivision.rounds.filter(r => r.round <= lastPlayedRound);
-
-      const nextGames = generateSwissNextRound(playersLabels, previousRounds, gameResults, currentDivision.id);
-      
-      const newRound = {
-        round: nextRoundNum,
-        date: `Round ${nextRoundNum} - ${new Date().toLocaleDateString()}`,
-        games: nextGames
-      };
-
-      const newRounds = [...currentDivision.rounds.filter(r => r.round <= lastPlayedRound), newRound];
-
-      try {
-        await supabase.from('divisions').update({ rounds: newRounds }).eq('id', currentDivision.id);
-        toast.success(`Round ${nextRoundNum} generated using Swiss system!`, { theme: 'dark' });
-      } catch (e) {
-        toast.error('Failed to update fixtures');
-      }
+    const newRounds = currentDivision.rounds.map(r => 
+      r.round === roundNum ? { ...r, hidden: false } : r
+    );
+    try {
+      await supabase.from('divisions').update({ rounds: newRounds }).eq('id', currentDivision.id);
+      toast.success(`Round ${roundNum} restored`, { theme: 'dark' });
+    } catch (e) {
+      toast.error('Failed to restore round');
     }
   };
 
@@ -625,10 +598,10 @@ export default function ChessLeaguePage() {
                 selectedDivisionId={selectedDivisionId}
                 setSelectedDivisionId={setSelectedDivisionId}
                 handleAdminToggle={handleAdminToggle}
-                handleSwissShuffle={handleSwissShuffle}
+                handleCreateFixtures={handleCreateFixtures}
                 currentDivision={currentDivision}
-                handleCreateRound={handleCreateRound}
                 handleDeleteRound={handleDeleteRound}
+                handleRestoreRound={handleRestoreRound}
                 handleSyncPlayers={handleSyncPlayers}
                 handleUpdatePlayer={handleUpdatePlayer}
               />

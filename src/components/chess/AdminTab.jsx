@@ -14,10 +14,10 @@ export const AdminTab = ({
   selectedDivisionId,
   setSelectedDivisionId,
   handleAdminToggle,
-  handleSwissShuffle,
+  handleCreateFixtures,
   currentDivision,
-  handleCreateRound,
   handleDeleteRound,
+  handleRestoreRound,
   handleSyncPlayers,
   handleUpdatePlayer
 }) => {
@@ -53,13 +53,27 @@ export const AdminTab = ({
   };
 
   const handleDeletePlayer = async (username) => {
-    if (!window.confirm(`Remove player ${username}?`)) return;
-    const updatedPlayers = currentDivision.players.filter(p => p.username !== username);
+    if (!window.confirm(`Archive player ${username}? This will soft-delete them from standings.`)) return;
+    const updatedPlayers = currentDivision.players.map(p => 
+      p.username === username ? { ...p, hidden: true } : p
+    );
     try {
       await supabase.from('divisions').update({ players: updatedPlayers }).eq('id', currentDivision.id);
-      toast.warn('Player removed');
+      toast.warn('Player archived successfully');
     } catch (e) {
-      toast.error('Failed to remove player');
+      toast.error('Failed to archive player');
+    }
+  };
+
+  const handleRestorePlayer = async (username) => {
+    const updatedPlayers = currentDivision.players.map(p => 
+      p.username === username ? { ...p, hidden: false } : p
+    );
+    try {
+      await supabase.from('divisions').update({ players: updatedPlayers }).eq('id', currentDivision.id);
+      toast.success('Player restored successfully!');
+    } catch (e) {
+      toast.error('Failed to restore player');
     }
   };
 
@@ -130,10 +144,13 @@ export const AdminTab = ({
     }
   };
 
-  const playerOptions = currentDivision.players.map(p => playerLabel(p));
+  const playerOptions = currentDivision.players.filter(p => !p.hidden).map(p => playerLabel(p));
 
   const inputClass = "w-full px-4 py-2 text-sm text-[#111111] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary placeholder-gray-400 transition-all";
   const labelClass = "block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5";
+
+  const activeRoundsList = (currentDivision.rounds || []).filter(r => !r.hidden);
+  const archivedRoundsList = (currentDivision.rounds || []).filter(r => r.hidden);
 
   return (
     <div className="w-full space-y-8">
@@ -178,7 +195,7 @@ export const AdminTab = ({
 
         {/* Player List */}
         <div className="border border-gray-100 rounded-2xl overflow-hidden max-h-[350px] overflow-y-auto divide-y divide-gray-50">
-          {currentDivision.players.map(p => (
+          {currentDivision.players.filter(p => !p.hidden).map(p => (
             <div key={p.username} className="p-4 hover:bg-brand-bg-cream/10 transition-colors">
               {editingPlayerUsername === p.username ? (
                 <div className="flex flex-col gap-3 w-full">
@@ -208,64 +225,81 @@ export const AdminTab = ({
                   </div>
                   <div className="flex gap-2">
                     <button className="bg-brand-primary/5 hover:bg-brand-primary/10 text-brand-primary text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer" onClick={() => startEditPlayer(p)}>Edit</button>
-                    <button className="bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer" onClick={() => handleDeletePlayer(p.username)}>Remove</button>
+                    <button className="bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer" onClick={() => handleDeletePlayer(p.username)}>Archive</button>
                   </div>
                 </div>
               )}
             </div>
           ))}
         </div>
+
+        {/* Archived Players list */}
+        {currentDivision.players.some(p => p.hidden) && (
+          <div className="mt-8 pt-6 border-t border-gray-100">
+            <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Archived Players (Hidden)</h4>
+            <div className="border border-dashed border-gray-200 rounded-2xl overflow-hidden max-h-[200px] overflow-y-auto divide-y divide-gray-50 bg-gray-50/20">
+              {currentDivision.players.filter(p => p.hidden).map(p => (
+                <div key={p.username} className="p-4 flex items-center justify-between gap-4">
+                  <div>
+                    <span className="text-sm font-bold text-gray-400 line-through">{p.name}</span>
+                    <span className="text-xs font-bold text-gray-400 ml-2">@{p.username}</span>
+                  </div>
+                  <button 
+                    className="bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer transition-colors" 
+                    onClick={() => handleRestorePlayer(p.username)}
+                  >
+                    Restore
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
 
       {/* ── Manage Rounds & Fixtures ── */}
       <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
         <h3 className="font-space text-lg font-black text-[#111111] mb-6 pb-3 border-b border-gray-50">Manage Rounds &amp; Fixtures</h3>
         
-        {/* Shuffle Swiss Pairing */}
-        <div className="bg-brand-bg-cream/40 rounded-2xl p-6 border border-gray-100 mb-8">
-          <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-            The Swiss system matches players with equivalent match scores. Click below to shuffle and generate the fixtures list for the next round.
+        {/* Create Swiss Pairing Round */}
+        <div className="bg-brand-bg-cream/40 rounded-3xl p-6 border border-gray-100 mb-8 space-y-4 animate-in fade-in duration-200">
+          <p className="text-sm text-gray-700 font-bold">Generate Round Fixtures (Swiss Pairing System)</p>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            Automatically generates match fixtures for the next round based on current standings. The Swiss system will pair active players of similar standings.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label className={labelClass}>Round Date (optional)</label>
+              <input 
+                type="date" 
+                value={newRoundDate}
+                onChange={e => setNewRoundDate(e.target.value)}
+                className={inputClass}
+              />
+            </div>
+          </div>
+          <p className="text-[11px] text-gray-400">
+            If left blank, the date will automatically default to 2 days after the last active round (or today if no rounds exist).
           </p>
           <button 
             className="bg-brand-primary text-white font-bold px-5 py-3 rounded-xl shadow-sm hover:shadow transition-all text-xs cursor-pointer" 
-            onClick={handleSwissShuffle}
+            onClick={() => {
+              handleCreateFixtures(newRoundDate || undefined);
+              setNewRoundDate('');
+            }}
           >
-            Shuffle Fixtures (Swiss Pairing)
+            Generate Swiss Round Fixtures
           </button>
         </div>
 
-        {/* Create Empty Round */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className={labelClass}>Round Date (optional)</label>
-            <input 
-              type="date" 
-              value={newRoundDate}
-              onChange={e => setNewRoundDate(e.target.value)}
-              className={inputClass}
-            />
-          </div>
-        </div>
-        <p className="text-xs text-gray-400 mb-4">
-          If left blank, the date will be automatically set to 2 days after the last active round.
-        </p>
-        <button
-          className="bg-green-600 hover:bg-green-500 text-white font-bold px-6 py-2.5 rounded-xl shadow-sm hover:shadow transition-all text-xs cursor-pointer mb-8"
-          onClick={() => {
-            handleCreateRound(newRoundDate || undefined);
-            setNewRoundDate('');
-          }}
-        >
-          + Create Empty Round
-        </button>
-
         {/* Rounds Management */}
-        <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Existing Rounds</h4>
-        {currentDivision.rounds.length === 0 ? (
-          <p className="text-sm text-gray-400 italic">No rounds created yet in this division.</p>
+        <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Active Rounds</h4>
+        {activeRoundsList.length === 0 ? (
+          <p className="text-sm text-gray-400 italic mb-8">No active rounds in this division.</p>
         ) : (
-          <div className="space-y-4">
-            {currentDivision.rounds.map(r => (
+          <div className="space-y-4 mb-8">
+            {activeRoundsList.map(r => (
               <div key={r.round} className="border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
                 
                 {/* Accordion Trigger */}
@@ -281,10 +315,10 @@ export const AdminTab = ({
                   <div className="flex items-center gap-3">
                     <span className="text-xs text-brand-accent">{expandedRound === r.round ? '▲' : '▼'}</span>
                     <button 
-                      className="bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold px-3 py-1.5 rounded-xl cursor-pointer" 
+                      className="bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1.5 rounded-xl cursor-pointer transition-colors" 
                       onClick={(e) => { e.stopPropagation(); handleDeleteRound(r.round); }}
                     >
-                      Delete
+                      Archive
                     </button>
                   </div>
                 </div>
@@ -298,7 +332,7 @@ export const AdminTab = ({
                         <p className="text-xs text-gray-400 italic">No games configured in this round.</p>
                       ) : (
                         <div className="grid gap-2 max-h-[200px] overflow-y-auto">
-                          {r.games.map(([w, b], idx) => (
+                           {r.games.map(([w, b], idx) => (
                             <div key={idx} className="flex justify-between items-center bg-gray-50 border border-gray-200/40 px-4 py-2 rounded-xl">
                               <span className="text-xs font-bold text-gray-600">
                                 <span className="text-brand-primary font-black">W:</span> {w.split(' (')[0]} <span className="text-gray-300 mx-2">vs</span> <span className="text-[#111111] font-black">B:</span> {b.split(' (')[0]}
@@ -350,6 +384,30 @@ export const AdminTab = ({
             ))}
           </div>
         )}
+
+        {/* Archived Rounds list */}
+        {archivedRoundsList.length > 0 && (
+          <div className="pt-6 border-t border-gray-100">
+            <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Archived Rounds (Hidden)</h4>
+            <div className="space-y-3">
+              {archivedRoundsList.map(r => (
+                <div key={r.round} className="flex justify-between items-center p-4 bg-gray-50/50 border border-dashed border-gray-200 rounded-2xl">
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-bold text-gray-400 line-through">Round {r.round}</span>
+                    <span className="text-xs text-gray-400 font-bold bg-gray-100 px-2.5 py-0.5 rounded-full">{r.date}</span>
+                  </div>
+                  <button 
+                    className="bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold px-3 py-1.5 rounded-xl cursor-pointer transition-colors" 
+                    onClick={() => handleRestoreRound(r.round)}
+                  >
+                    Restore
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
 
       {/* ── Create / Delete Divisions ── */}

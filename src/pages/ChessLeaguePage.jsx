@@ -585,7 +585,14 @@ export default function ChessLeaguePage() {
                 handleSetResult={handleSetResult}
               />
             )}
-            {activeTab === 'fixtures' && <FixturesTab currentDivision={currentDivision} gameResults={gameResults} />}
+            {activeTab === 'fixtures' && (
+              <FixturesTab 
+                currentDivision={currentDivision} 
+                gameResults={gameResults} 
+                currentRound={currentRound}
+                setCurrentRound={setCurrentRound}
+              />
+            )}
             {activeTab === 'admin' && (
               <AdminTab 
                 isAdmin={isAdmin}

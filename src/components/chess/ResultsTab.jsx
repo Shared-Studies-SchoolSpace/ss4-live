@@ -80,7 +80,17 @@ export const ResultsTab = ({
                 {/* Matchup Details */}
                 <div className="flex items-center justify-between w-full md:flex-grow max-w-xl gap-4">
                   <div className="flex-1 truncate">
-                    <span className="text-sm font-bold text-[#111111] block truncate">{wP.name}</span>
+                    <span className={`text-sm block truncate ${
+                      isBye ? (
+                        w === 'BYE' ? 'text-gray-300 font-medium' : 'text-green-600 font-extrabold'
+                      ) : res ? (
+                        res === 'white' 
+                          ? 'text-green-600 font-extrabold' 
+                          : res === 'draw' 
+                            ? 'text-gray-500 font-semibold' 
+                            : 'text-red-500 font-semibold'
+                      ) : 'text-[#111111] font-bold'
+                    }`}>{wP.name}</span>
                     {wP.username && (
                       <a 
                         href={`https://www.chess.com/member/${wP.username}`}
@@ -97,7 +107,17 @@ export const ResultsTab = ({
                   <span className="text-xs font-black text-gray-300 uppercase select-none flex-shrink-0">vs</span>
                   
                   <div className="flex-1 text-right truncate">
-                    <span className="text-sm font-bold text-[#111111] block truncate">{bP.name}</span>
+                    <span className={`text-sm block truncate ${
+                      isBye ? (
+                        b === 'BYE' ? 'text-gray-300 font-medium' : 'text-green-600 font-extrabold'
+                      ) : res ? (
+                        res === 'black' 
+                          ? 'text-green-600 font-extrabold' 
+                          : res === 'draw' 
+                            ? 'text-gray-500 font-semibold' 
+                            : 'text-red-500 font-semibold'
+                      ) : 'text-[#111111] font-bold'
+                    }`}>{bP.name}</span>
                     {bP.username && (
                       <a 
                         href={`https://www.chess.com/member/${bP.username}`}
@@ -127,7 +147,7 @@ export const ResultsTab = ({
                           !isAdmin ? 'cursor-not-allowed' : 'cursor-pointer'
                         } ${
                           res === 'white'
-                            ? 'bg-brand-primary text-white shadow-sm font-bold'
+                            ? 'bg-green-600 text-white shadow-sm font-bold'
                             : 'text-gray-500 hover:bg-gray-100'
                         }`}
                       >
@@ -140,7 +160,7 @@ export const ResultsTab = ({
                           !isAdmin ? 'cursor-not-allowed' : 'cursor-pointer'
                         } ${
                           res === 'draw'
-                            ? 'bg-brand-accent text-white shadow-sm font-bold'
+                            ? 'bg-gray-500 text-white shadow-sm font-bold'
                             : 'text-gray-500 hover:bg-gray-100'
                         }`}
                       >
@@ -153,7 +173,7 @@ export const ResultsTab = ({
                           !isAdmin ? 'cursor-not-allowed' : 'cursor-pointer'
                         } ${
                           res === 'black'
-                            ? 'bg-[#111111] text-white shadow-sm font-bold'
+                            ? 'bg-green-600 text-white shadow-sm font-bold'
                             : 'text-gray-500 hover:bg-gray-100'
                         }`}
                       >

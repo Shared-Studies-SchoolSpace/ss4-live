@@ -28,16 +28,16 @@ export const Hero = () => {
           className="max-w-lg"
         >
           <h2 className="text-xs lg:text-sm font-space font-bold tracking-[0.2em] mb-6 opacity-90 uppercase">
-            An Institution for Assessment, Recognition, and Reward
+            An Institution for Secondary Education Excellence
           </h2>
           <h1 className="text-4xl lg:text-6xl font-space font-black leading-tight mb-8">
-            RAISING THE STANDARD OF ACADEMIC EXCELLENCE
+            WHERE ACADEMIC DILIGENCE IS ASSESSED, RECOGNISED, AND REWARDED
           </h1>
           
           <div className="w-24 h-1 bg-brand-accent mb-8 rounded-full" />
           
-          <p className="text-white text-lg lg:text-xl font-medium mb-10 max-w-sm drop-shadow-md leading-snug">
-            SS4 sets the benchmark for assessment, recognition, and reward. We connect the next generation of secondary school students with sponsors who invest in excellence.
+          <p className="text-white text-lg lg:text-xl font-medium mb-10 max-w-lg drop-shadow-md leading-relaxed">
+            SS4 is the structured ecosystem that sets the standard for secondary education across Africa — connecting high-performing students with the sponsors who believe in them.
           </p>
 
           <div className="space-y-6">
@@ -51,7 +51,7 @@ export const Hero = () => {
                 href="/sas"
                 className="px-8 py-3 rounded-full font-bold text-sm transition shadow-lg bg-brand-accent text-white hover:bg-[#c45608]"
               >
-                Explore SAS
+                Explore the Assessment Series
               </Motion.a>
               <Motion.a
                 whileHover={{ scale: 1.05 }}
@@ -59,7 +59,7 @@ export const Hero = () => {
                 href="/partner"
                 className="px-8 py-3 rounded-full font-bold text-sm transition shadow-sm bg-white text-[#111111] hover:bg-gray-100"
               >
-                Discover Schools
+                Partner With SS4
               </Motion.a>
             </div>
           </div>

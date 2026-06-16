@@ -41,17 +41,16 @@ export const Header = () => {
           
           <nav className="hidden lg:flex items-center gap-8">
             <a href="/schools" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Schools</a>
-            <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">SAS</a>
+            <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Assessment Series</a>
             <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Aspirants Award</a>
             <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">News</a>
-            <a href="/chess-league" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Chess League</a>
-            <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">About Us</a>
+            <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">About</a>
           </nav>
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="hidden sm:block px-6 py-2 border border-[#E8640A] text-[#E8640A] font-bold rounded-full hover:bg-gray-100 transition-colors" onClick={() => window.location.href='/about'}>
-            Our Vision
+          <button className="hidden sm:block px-6 py-2 border border-[#E8640A] text-[#E8640A] font-bold rounded-full hover:bg-gray-100 transition-colors" onClick={() => window.location.href='/partner'}>
+            Partner With Us
           </button>
           
           {/* Mobile menu toggle */}
@@ -92,14 +91,13 @@ export const Header = () => {
             className="lg:hidden absolute top-[100%] left-0 w-full bg-white border-b border-gray-100 shadow-xl p-6 flex flex-col gap-4 z-40"
           >
             <a href="/schools" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Schools</a>
-            <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>SAS</a>
+            <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Assessment Series</a>
             <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</a>
             <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>News</a>
-            <a href="/chess-league" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Chess League</a>
-            <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>About Us</a>
+            <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>About</a>
             <hr className="my-2 border-gray-100" />
-            <button className="py-3 border border-[#E8640A] text-[#E8640A] font-bold rounded-full hover:bg-gray-50 w-full" onClick={() => window.location.href='/about'}>
-              Our Vision
+            <button className="py-3 border border-[#E8640A] text-[#E8640A] font-bold rounded-full hover:bg-gray-50 w-full" onClick={() => window.location.href='/partner'}>
+              Partner With Us
             </button>
           </motion.div>
         )}

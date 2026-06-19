@@ -1,0 +1,102 @@
+[
+  {
+    "id": "uniuyo",
+    "name": "University of Uyo",
+    "abbreviation": "UNIUYO",
+    "type": "federal university",
+    "location": "Uyo",
+    "state": "Akwa Ibom",
+    "verified": true,
+    "studentsCount": "18,400 Students",
+    "bio": "A premier federal institution committed to academic excellence, innovation, and technological advancement in the Niger Delta region.",
+    "departments": [
+      {
+        "name": "Computer Science",
+        "bio": "A department dedicated to artificial intelligence, software engineering, and computational theory. Connecting students to global tech challenges."
+      },
+      {
+        "name": "Mathematics",
+        "bio": "Focused on pure and applied mathematical research, cryptography, and quantitative analysis."
+      },
+      {
+        "name": "Mechanical Engineering",
+        "bio": "Centered on thermodynamic systems, robotics, and structural design."
+      }
+    ]
+  },
+  {
+    "id": "covenant",
+    "name": "Covenant University",
+    "abbreviation": "COVENANT",
+    "type": "private university",
+    "location": "Ota",
+    "state": "Ogun",
+    "verified": true,
+    "studentsCount": "8,500 Students",
+    "bio": "A leading private Christian institution in Nigeria driven by human development, enterprise development, and leadership education.",
+    "departments": [
+      {
+        "name": "Computer Science",
+        "bio": "One of the leading computing departments in Nigeria, focused on software development, cloud computing, and cyber security."
+      },
+      {
+        "name": "Information and Communication Technology",
+        "bio": "Centered on network infrastructure, telecommunications, and digital systems."
+      },
+      {
+        "name": "Business Management",
+        "bio": "Shaping future corporate leaders through rigorous enterprise strategy and entrepreneurial training."
+      }
+    ]
+  },
+  {
+    "id": "unn",
+    "name": "University of Nigeria, Nsukka",
+    "abbreviation": "UNN",
+    "type": "federal university",
+    "location": "Nsukka",
+    "state": "Enugu",
+    "verified": true,
+    "studentsCount": "22,000 Students",
+    "bio": "A historic federal university renowned for restoring the dignity of man through intensive research, engineering excellence, and clinical training.",
+    "departments": [
+      {
+        "name": "Electronic Engineering",
+        "bio": "A historic engineering hub pioneering research in embedded systems, power systems, and signal processing."
+      },
+      {
+        "name": "Computer Science",
+        "bio": "Driving academic excellence through database systems, web technologies, and computational science."
+      },
+      {
+        "name": "Medicine & Surgery",
+        "bio": "Educating world-class healthcare professionals with state-of-the-art clinical training."
+      }
+    ]
+  },
+  {
+    "id": "bells",
+    "name": "Bells University of Technology",
+    "abbreviation": "BELLS",
+    "type": "private university",
+    "location": "Ota",
+    "state": "Ogun",
+    "verified": true,
+    "studentsCount": "5,200 Students",
+    "bio": "Nigeria's premier private university of technology, fostering technological development and specialized engineering disciplines.",
+    "departments": [
+      {
+        "name": "Biomedical Engineering",
+        "bio": "Intersecting biology, medicine, and engineering to design healthcare instrumentation and prosthetics."
+      },
+      {
+        "name": "Computer Engineering",
+        "bio": "Focused on hardware-software co-design, computer networks, and microprocessors."
+      },
+      {
+        "name": "Mechatronics Engineering",
+        "bio": "Combining mechanical, electrical, and control systems for industrial automation."
+      }
+    ]
+  }
+]

@@ -79,8 +79,8 @@ export default function SchoolsPage() {
   };
 
   // Navigate to school profile
-  const gotoSchool = (id) => {
-    navigate(`/school/${id}`);
+  const gotoSchool = (s) => {
+    navigate(`/school/${s.name.replace(/\s+/g, '-').toLowerCase()}`, { state: { school: s } });
   };
 
   // Show only 9 initially, show all matching when filtered
@@ -125,7 +125,7 @@ export default function SchoolsPage() {
                   bio={`${s.name} is a ${s.type} located in ${s.location}.`}
                   image="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=800"
                   verified={s.verified}
-                  onClicked={() => gotoSchool(index)}
+                  onClicked={() => gotoSchool(s)}
                 />
               ))}
             </div>

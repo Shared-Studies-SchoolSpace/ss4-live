@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Button from './Button';
 import { nigeriaStates, nigeriaLgas } from '../data/nigeria-states-lga';
 
-export default function UniversitySearchBar({ onSearch, onClear }) {
+export default function UniversitySearchBar({ onSearch, onClear, placeholder = "Search schools by name..." }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedState, setSelectedState] = useState('');
   const [selectedLga, setSelectedLga] = useState([]);
@@ -57,7 +57,7 @@ export default function UniversitySearchBar({ onSearch, onClear }) {
         </span>
         <input
           type="text"
-          placeholder="Search schools by name..."
+          placeholder={placeholder}
           className="bg-transparent text-[#111111] font-medium placeholder:text-gray-400 w-full outline-none text-sm md:text-base"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

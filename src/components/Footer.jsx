@@ -21,8 +21,8 @@ const FooterColumn = ({ title, links }) => (
     <h3 className="text-[10px] font-black text-gray-400 tracking-[0.25em] uppercase">{title}</h3>
     <ul className="flex flex-wrap gap-x-6 gap-y-2">
       {links.map((link) => (
-        <li key={link}>
-          <a href="#" className="text-[13px] font-bold text-gray-600 hover:text-brand-accent transition-colors">{link}</a>
+        <li key={link.label}>
+          <a href={link.href} className="text-[13px] font-bold text-gray-600 hover:text-brand-accent transition-colors">{link.label}</a>
         </li>
       ))}
     </ul>
@@ -31,8 +31,8 @@ const FooterColumn = ({ title, links }) => (
 
 export const Footer = () => {
   return (
-    <footer className="bg-white pt-24 pb-12 px-4 border-t border-gray-100">
-      <div className="container mx-auto">
+    <footer className="bg-white pt-24 pb-12 border-t border-gray-100 w-full">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16">
         {/* Main Links Grid */}
         <div className="flex flex-col gap-12 mb-24">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-gray-50 pb-8">
@@ -40,15 +40,26 @@ export const Footer = () => {
                 <img src="/ss4_logo.jpg" alt="SS4" className="h-6" />
              </div>
              <ul className="flex flex-wrap gap-x-8 gap-y-3">
-                {['About Us', 'SS4 Network', 'SS4 For Sponsors', 'Blog', 'Contact SS4'].map(l => (
-                    <li key={l}><a href="#" className="text-sm font-bold text-gray-500 hover:text-brand-accent whitespace-nowrap">{l}</a></li>
+                {[
+                  { label: 'About Us', href: '/about' },
+                  { label: 'The League', href: '/chess-league' },
+                  { label: 'SS4 for Sponsors', href: '/partner' },
+                  { label: 'Blog', href: '/news' },
+                  { label: 'Contact SS4', href: 'mailto:ss4.mail.org@gmail.com' }
+                ].map(l => (
+                    <li key={l.label}><a href={l.href} className="text-sm font-bold text-gray-500 hover:text-brand-accent whitespace-nowrap">{l.label}</a></li>
                 ))}
              </ul>
           </div>
 
           <FooterColumn 
             title="Search Categories"
-            links={['Secondary Schools', 'Scholarships', 'Study Resources']}
+            links={[
+              { label: 'Secondary Schools', href: '/schools' },
+              { label: 'Tertiary Institutions', href: '/tertiary' },
+              { label: 'Departments', href: '/tertiary' },
+              { label: 'Divisions', href: '/chess-league' }
+            ]}
           />
         </div>
 

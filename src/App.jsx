@@ -13,6 +13,8 @@ import AspirantsAwardPage from './pages/AspirantsAwardPage';
 import NewsPage from './pages/NewsPage';
 import AboutPage from './pages/AboutPage';
 import ChessLeaguePage from './pages/ChessLeaguePage';
+import TertiaryPage from './pages/TertiaryPage';
+import TertiaryDetailPage from './pages/TertiaryDetailPage';
 
 import BackToTop from './components/BackToTop';
 import ScrollToTop from './components/ScrollToTop';
@@ -21,9 +23,9 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white">
+      <div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white flex flex-col">
         <Header />
-        <main className="min-h-[70vh]">
+        <main className="flex-grow">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/schools" element={<SchoolsPage />} />
@@ -34,6 +36,8 @@ function App() {
             <Route path="/news" element={<NewsPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/chess-league" element={<ChessLeaguePage />} />
+            <Route path="/tertiary" element={<TertiaryPage />} />
+            <Route path="/tertiary/:id" element={<TertiaryDetailPage />} />
           </Routes>
         </main>
         <Footer />

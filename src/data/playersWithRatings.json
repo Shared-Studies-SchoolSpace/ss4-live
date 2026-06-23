@@ -1,0 +1,512 @@
+[
+  {
+    "name": "Kingsley Ekpo",
+    "username": "Kontor_001",
+    "department": "Computer Science",
+    "school": "University of Uyo",
+    "contact": "09060515456",
+    "rating": 0,
+    "gamesCount": 0,
+    "isProvisional": true
+  },
+  {
+    "name": "Anietie Ben",
+    "username": "Jude_Ben",
+    "department": "Electrical/Electronics Engineering",
+    "school": "Bells University of Technology",
+    "contact": "08063071862",
+    "rating": 1379,
+    "gamesCount": 2497,
+    "isProvisional": false
+  },
+  {
+    "name": "Robert Victor Imo",
+    "username": "Kidd9h",
+    "department": "Computer Science",
+    "school": "University of Uyo",
+    "contact": "07055234409",
+    "rating": 929,
+    "gamesCount": 318,
+    "isProvisional": false
+  },
+  {
+    "name": "Rowland Ini John",
+    "username": "Rowlex19",
+    "department": "Estate management",
+    "school": "University of Uyo",
+    "contact": "08106144924",
+    "rating": 613,
+    "gamesCount": 1106,
+    "isProvisional": false
+  },
+  {
+    "name": "OKOYA OLADIMEJI OLUWADAMILARE",
+    "username": "OkoyaOluwadamilare",
+    "department": "MECHATRONICS ENGINEERING",
+    "school": "BELLS UNIVERSITY OF TECHNOLOGY",
+    "contact": "09023984526",
+    "rating": 2004,
+    "gamesCount": 957,
+    "isProvisional": false
+  },
+  {
+    "name": "Efeturi Joseph Ishaka",
+    "username": "Efejossy",
+    "department": "Medical Lab Science",
+    "school": "University of Uyo",
+    "contact": "08103257385",
+    "rating": 1705,
+    "gamesCount": 3263,
+    "isProvisional": false
+  },
+  {
+    "name": "Jerome, Anietienteabasi Lawrence",
+    "username": "Shazanny-112",
+    "department": "Civil engineering",
+    "school": "AKSU",
+    "contact": "070046383887",
+    "rating": 241,
+    "gamesCount": 13,
+    "isProvisional": true
+  },
+  {
+    "name": "John Israel",
+    "username": "Ezzy29",
+    "department": "Computer Science",
+    "school": "Uniuyo",
+    "contact": "09061764913",
+    "rating": 762,
+    "gamesCount": 476,
+    "isProvisional": false
+  },
+  {
+    "name": "Emmanuel Edet",
+    "username": "NobbieFF",
+    "department": "Pharmacology",
+    "school": "UNICAL",
+    "contact": "08069307996",
+    "rating": 1439,
+    "gamesCount": 344,
+    "isProvisional": false
+  },
+  {
+    "name": "Ohzzy",
+    "username": "Ohzzy90",
+    "department": "Mechanical Engineering",
+    "school": "Uniuyo",
+    "contact": "08089900375",
+    "rating": 1007,
+    "gamesCount": 593,
+    "isProvisional": false
+  },
+  {
+    "name": "Kingsley Basssy",
+    "username": "kingsleydominus",
+    "department": "Mechanical Engineering",
+    "school": "University of Uyo",
+    "contact": "070/5493993",
+    "rating": 1634,
+    "gamesCount": 853,
+    "isProvisional": false
+  },
+  {
+    "name": "Abasifreke Sylvester Nyarks",
+    "username": "Mfonmyservant",
+    "department": "Mechanical engineering",
+    "school": "AKSU",
+    "contact": "08167184937",
+    "rating": 400,
+    "gamesCount": 2,
+    "isProvisional": true
+  },
+  {
+    "name": "Sunny Sunday George",
+    "username": "WS-Mic-Hael",
+    "department": "Mechanical engineering",
+    "school": "University of Uyo",
+    "contact": "09079299847",
+    "rating": 555,
+    "gamesCount": 104,
+    "isProvisional": false
+  },
+  {
+    "name": "Jesse Gregory Edem",
+    "username": "Jesse70256",
+    "department": "Biochemistry",
+    "school": "Uniuyo",
+    "contact": "08145074849",
+    "rating": 2086,
+    "gamesCount": 484,
+    "isProvisional": false
+  },
+  {
+    "name": "Philip Favour",
+    "username": "Favourizo1",
+    "department": "Computer Science",
+    "school": "University of Uyo",
+    "contact": "08081779634",
+    "rating": 1470,
+    "gamesCount": 715,
+    "isProvisional": false
+  },
+  {
+    "name": "Oliver Emmanuel",
+    "username": "Emex1",
+    "department": "Electric/Electronic Engineering",
+    "school": "University of uyo",
+    "contact": "08146211361",
+    "rating": 1298,
+    "gamesCount": 289,
+    "isProvisional": false
+  },
+  {
+    "name": "Daniel Richard",
+    "username": "danielrich69",
+    "department": "Computer Engineering",
+    "school": "University of Uyo",
+    "contact": "08145021780",
+    "rating": 1465,
+    "gamesCount": 992,
+    "isProvisional": false
+  },
+  {
+    "name": "Jerome, Anietienteabasi Lawrence",
+    "username": "Shazam-112",
+    "department": "Civil Engineering",
+    "school": "Akwa Ibom State University",
+    "contact": "07046383887",
+    "rating": 0,
+    "gamesCount": 0,
+    "isProvisional": true
+  },
+  {
+    "name": "Nnenji Favour Emmanuel",
+    "username": "Sprky124",
+    "department": "Electrical Electronics Engineering",
+    "school": "University of Uyo",
+    "contact": "08027587953",
+    "rating": 759,
+    "gamesCount": 56,
+    "isProvisional": false
+  },
+  {
+    "name": "Uzochukwu Chiedozie Prince",
+    "username": "Princedoziee",
+    "department": "Chemical engineering",
+    "school": "Nnamdi Azikiwe university Awka",
+    "contact": "07045981381",
+    "rating": 272,
+    "gamesCount": 58,
+    "isProvisional": false
+  },
+  {
+    "name": "Ugbani Onyekachi Favour",
+    "username": "r2snyp",
+    "department": "Mathematics",
+    "school": "Unizik",
+    "contact": "08122126954",
+    "rating": 0,
+    "gamesCount": 0,
+    "isProvisional": true
+  },
+  {
+    "name": "Precious Egware",
+    "username": "precious2145",
+    "department": "Law",
+    "school": "University of Uyo",
+    "contact": "08106900661",
+    "rating": 722,
+    "gamesCount": 4,
+    "isProvisional": true
+  },
+  {
+    "name": "Ubongabasi Iyanam",
+    "username": "kingiyanam",
+    "department": "Law",
+    "school": "University of Uyo",
+    "contact": "07046317575",
+    "rating": 1502,
+    "gamesCount": 1395,
+    "isProvisional": false
+  },
+  {
+    "name": "Etengeabasi Ekpe",
+    "username": "Power_101",
+    "department": "Electrical/Electronics",
+    "school": "University of Uyo",
+    "contact": "09064196491",
+    "rating": 1884,
+    "gamesCount": 1505,
+    "isProvisional": false
+  },
+  {
+    "name": "Oliaku Chiedozie Christian",
+    "username": "chibest9",
+    "department": "Mathematics",
+    "school": "Nnandi Azikiwe University(UNIZIK)",
+    "contact": "09044372256",
+    "rating": 425,
+    "gamesCount": 68,
+    "isProvisional": false
+  },
+  {
+    "name": "Oyebode Samuel Adewale",
+    "username": "TheWeehfhi",
+    "department": "Pmt",
+    "school": "Bells University of technology",
+    "contact": "08169442714",
+    "rating": 1992,
+    "gamesCount": 77,
+    "isProvisional": false
+  },
+  {
+    "name": "UduakAbasi Francis Ekanem",
+    "username": "Stormcote",
+    "department": "Accounting",
+    "school": "Uniuyo",
+    "contact": "09078186827",
+    "rating": 1962,
+    "gamesCount": 2551,
+    "isProvisional": false
+  },
+  {
+    "name": "James Mfon",
+    "username": "Rfirm842",
+    "department": "Mechanical engineering",
+    "school": "University of Uyo",
+    "contact": "07041110528",
+    "rating": 931,
+    "gamesCount": 449,
+    "isProvisional": false
+  },
+  {
+    "name": "Essien Jonathan Victor",
+    "username": "Jonzing200",
+    "department": "Computer science",
+    "school": "University of uyo",
+    "contact": "08128173134",
+    "rating": 1282,
+    "gamesCount": 1146,
+    "isProvisional": false
+  },
+  {
+    "name": "Adeoye Daniel",
+    "username": "Ay_ano_koji123444562",
+    "department": "Mechatronics engineering",
+    "school": "Bells University",
+    "contact": "+2349071086914",
+    "rating": 1038,
+    "gamesCount": 1455,
+    "isProvisional": false
+  },
+  {
+    "name": "Azeez Agbaje",
+    "username": "Strav1k",
+    "department": "Comp network systems",
+    "school": "Mohawk College",
+    "contact": "+12896892415",
+    "rating": 2286,
+    "gamesCount": 273,
+    "isProvisional": false
+  },
+  {
+    "name": "Sammuel Robert",
+    "username": "Unclesam34e",
+    "department": "Chemical engineering",
+    "school": "Uniuyo",
+    "contact": "0806 475 5213",
+    "rating": 1352,
+    "gamesCount": 2490,
+    "isProvisional": false
+  },
+  {
+    "name": "Archibong Otobong Bassey",
+    "username": "OtobongBassey",
+    "department": "Chemical Engineering",
+    "school": "University of Uyo",
+    "contact": "09138794763",
+    "rating": 1565,
+    "gamesCount": 5,
+    "isProvisional": true
+  },
+  {
+    "name": "Henshaw Johnstone",
+    "username": "Shin_12",
+    "department": "Mechatronics Engineering",
+    "school": "Bells University",
+    "contact": "07084064561",
+    "rating": 2023,
+    "gamesCount": 38,
+    "isProvisional": false
+  },
+  {
+    "name": "Michael Denis Okon",
+    "username": "Dharrygee",
+    "department": "Chemical Engineering",
+    "school": "University of uyo",
+    "contact": "09114317232",
+    "rating": 0,
+    "gamesCount": 0,
+    "isProvisional": true
+  },
+  {
+    "name": "Isuekevbo Uduehi Joel",
+    "username": "MaouTanner",
+    "department": "Mechatronics",
+    "school": "Bells University of Technology",
+    "contact": "09126606382",
+    "rating": 2185,
+    "gamesCount": 1984,
+    "isProvisional": false
+  },
+  {
+    "name": "Sunday, Excellence Kufre",
+    "username": "sellysmart",
+    "department": "Mechanical engineering",
+    "school": "University of Uyo",
+    "contact": "09130160444",
+    "rating": 444,
+    "gamesCount": 50,
+    "isProvisional": false
+  },
+  {
+    "name": "Princewill",
+    "username": "PRI639",
+    "department": "Computer Science",
+    "school": "University of Uyo",
+    "contact": "09124106396",
+    "rating": 1447,
+    "gamesCount": 386,
+    "isProvisional": false
+  },
+  {
+    "name": "Shalom Bebebaraseigha",
+    "username": "shalombenx",
+    "department": "Computer Science",
+    "school": "University of Uyo",
+    "contact": "07070576049",
+    "rating": 770,
+    "gamesCount": 220,
+    "isProvisional": false
+  },
+  {
+    "name": "Samuel Amiang Akpan",
+    "username": "Samuelikescodin",
+    "department": "Statistics",
+    "school": "University of Uyo",
+    "contact": "08104382157",
+    "rating": 100,
+    "gamesCount": 23,
+    "isProvisional": false
+  },
+  {
+    "name": "Nkereuwem Samuel Ime",
+    "username": "Fulgent47",
+    "department": "Computer Engineering",
+    "school": "University of Uyo",
+    "contact": "09029710550",
+    "rating": 1768,
+    "gamesCount": 3455,
+    "isProvisional": false
+  },
+  {
+    "name": "Adepoju Emmanuel Olamide",
+    "username": "olami254",
+    "department": "Info Tech",
+    "school": "200level",
+    "contact": "07051977326",
+    "rating": 915,
+    "gamesCount": 20,
+    "isProvisional": false
+  },
+  {
+    "name": "Kesene Nicholas",
+    "username": "keseneNicholas",
+    "department": "Computer Engineering",
+    "school": "Bells university",
+    "contact": "09015125293",
+    "rating": 1684,
+    "gamesCount": 3258,
+    "isProvisional": false
+  },
+  {
+    "name": "Israel",
+    "username": "thatshortboyeyez",
+    "department": "Computer science",
+    "school": "Uniuyo",
+    "contact": "07076807027",
+    "rating": 708,
+    "gamesCount": 21,
+    "isProvisional": false
+  },
+  {
+    "name": "Destiny Chilaka",
+    "username": "Chilax333",
+    "department": "Computer Engineering",
+    "school": "University of Uyo",
+    "contact": "08139732276",
+    "rating": 1661,
+    "gamesCount": 386,
+    "isProvisional": false
+  },
+  {
+    "name": "Osmond-Nath Robson Robinson",
+    "username": "Robdarkknight",
+    "department": "Medicine and Surgery",
+    "school": "University of Uyo",
+    "contact": "08126329930",
+    "rating": 0,
+    "gamesCount": 0,
+    "isProvisional": true
+  },
+  {
+    "name": "Henshaw James",
+    "username": "oblivion1416",
+    "department": "Mechatronics",
+    "school": "Bells university",
+    "contact": "09028045978",
+    "rating": 1332,
+    "gamesCount": 9,
+    "isProvisional": true
+  },
+  {
+    "name": "Emmanuel Aniema Michael",
+    "username": "Ikbeast1",
+    "department": "Aerospace Engineering",
+    "school": "FUTIA",
+    "contact": "09067107943",
+    "rating": 2228,
+    "gamesCount": 459,
+    "isProvisional": false
+  },
+  {
+    "name": "Etim Chris Emmanuel",
+    "username": "Karyptus",
+    "department": "Medicine and surgery",
+    "school": "University of Uyo",
+    "contact": "09168636887",
+    "rating": 1535,
+    "gamesCount": 2102,
+    "isProvisional": false
+  },
+  {
+    "name": "Victor Augustine",
+    "username": "victoraugustine",
+    "department": "Elect/Elect",
+    "school": "Uniuyo",
+    "contact": "07071724882",
+    "rating": 1722,
+    "gamesCount": 3114,
+    "isProvisional": false
+  },
+  {
+    "name": "Inimfon Celestine",
+    "username": "Inimfon_67",
+    "department": "Medicine and Surgery",
+    "school": "Uniuyo",
+    "contact": "09136098015",
+    "rating": 1800,
+    "gamesCount": 901,
+    "isProvisional": false
+  }
+]

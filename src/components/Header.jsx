@@ -53,7 +53,19 @@ export const Header = () => {
                 <a href="/tertiary" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">Tertiary Institutions</a>
               </div>
             </div>
-            <a href="/chess-league" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Chess League</a>
+            <div className="relative group py-2">
+              <button className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer">
+                Chess League
+                <svg className="w-3.5 h-3.5 transition-transform duration-250 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {/* Dropdown Card */}
+              <div className="absolute top-[100%] left-0 mt-1 w-48 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
+                <a href="/chess-league" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">League Divisions</a>
+                <a href="/chess-league/tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">Monthly Tournament</a>
+              </div>
+            </div>
             <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Assessment Series</a>
             <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Aspirants Award</a>
             <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">News</a>
@@ -108,7 +120,11 @@ export const Header = () => {
               <a href="/schools" className="pl-4 text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Secondary Schools</a>
               <a href="/tertiary" className="pl-4 text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Institutions</a>
             </div>
-            <a href="/chess-league" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Chess League</a>
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Chess League</span>
+              <a href="/chess-league" className="pl-4 text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>League Divisions</a>
+              <a href="/chess-league/tournament" className="pl-4 text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournament</a>
+            </div>
             <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Assessment Series</a>
             <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</a>
             <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>News</a>

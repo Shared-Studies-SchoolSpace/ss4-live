@@ -13,6 +13,7 @@ import AspirantsAwardPage from './pages/AspirantsAwardPage';
 import NewsPage from './pages/NewsPage';
 import AboutPage from './pages/AboutPage';
 import ChessLeaguePage from './pages/ChessLeaguePage';
+import ChessTournamentPage from './pages/ChessTournamentPage';
 import TertiaryPage from './pages/TertiaryPage';
 import TertiaryDetailPage from './pages/TertiaryDetailPage';
 
@@ -36,6 +37,7 @@ function App() {
             <Route path="/news" element={<NewsPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/chess-league" element={<ChessLeaguePage />} />
+            <Route path="/chess-league/tournament" element={<ChessTournamentPage />} />
             <Route path="/tertiary" element={<TertiaryPage />} />
             <Route path="/tertiary/:id" element={<TertiaryDetailPage />} />
           </Routes>

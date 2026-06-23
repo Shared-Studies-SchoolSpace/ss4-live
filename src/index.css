@@ -39,3 +39,12 @@ body {
   mask-size: cover;
   mask-repeat: no-repeat;
 }
+
+/* Hide scrollbar for Chrome, Safari, Opera, Edge, Firefox */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}

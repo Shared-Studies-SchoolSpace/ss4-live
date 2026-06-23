@@ -44,8 +44,8 @@ export default function LandingPage() {
                 This is the Shared Study School Space. A single, connected environment where institutions stop operating alone and start building as one. The SS4 Chess League is the first engine powering that connection. More engines will follow. The village comes first.
               </Card>,
               <Card icon={<WorkspacePremiumIcon className="text-brand-primary" />} title="The SS4 Chess League (SCL)">
-                <span className="block font-bold text-brand-accent mb-2">The first engine inside the SS4 network.</span>
-                A structured, recurring competition system where students across Nigerian institutions compete in ranked divisions, monthly tournaments, and continuous league matches every two days. Student performance profiles accumulate across seasons. Institutional rankings make schools visible to the world. Live now with players spanning multiple states. Growing entirely through students inviting students, school linking to school.
+                <span className="block font-bold text-brand-accent mb-2">Cerebral Minds. Continental Game.</span>
+                The SCL is the network’s competitive arena. Boardsmen and Boardswomen clash in matches every 48 hours to progress from the Pin to the Fork Division. With ELO-tracked profiles and institutional leaderboards, the league elevates school status on a continental stage. The Board Remembers.
               </Card>,
               <Card icon={<VerifiedIcon className="text-brand-primary" />} title="Assessment Series (SAS)">
                 A self-assessment tool built to help students identify and close knowledge gaps ahead of national examinations. SAS serves the SS4 community directly, offering structured academic preparation alongside structured competition.

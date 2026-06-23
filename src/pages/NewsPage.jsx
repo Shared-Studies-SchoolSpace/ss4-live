@@ -4,10 +4,11 @@ import SectionWrapper from '../components/SectionWrapper';
 import { H1, H2, Body } from '../components/Typography';
 
 const mockNews = [
-    { tag: 'Aspirants Award', title: 'Q1 Award Cycle Opens', desc: 'The first cycle of the Aspirants Award is now open for participants. Ensure your school registers students before the deadline.', date: 'Oct 24, 2026' },
-    { tag: 'SAS Updates', title: 'New Math Curriculum Integration', desc: 'The SAS syllabus for Further Math has been fully merged into General Math based on the new WAEC curriculum standards.', date: 'Oct 22, 2026' },
-    { tag: 'Sponsorship', title: 'Welcome to our newest sponsor', desc: 'We are thrilled to welcome our new sponsors to the SS4 platform. Their contribution will expand our reach to 50 more schools.', date: 'Oct 18, 2026' },
-    { tag: 'Partner Schools', title: 'Loyola Jesuit College Joins SS4', desc: 'Loyola Jesuit College is our latest partner school, granting its students full access to the SAS mock series.', date: 'Oct 10, 2026' },
+    { tag: 'June Tournament Ahead', title: 'Preparations Underway', desc: 'The June tournament runs in the last seven days of the month. League matches continue every two days. Students are preparing. Institutions are watching. Registration remains open.', date: 'Jun 16, 2026' },
+    { tag: 'League Growth', title: '140 Players and Counting', desc: 'The SS4 Chess League has grown from 60 to 140 players in less than 40 days, 100% through peer referral across multiple Nigerian states. Institutions are connecting through their students.', date: 'Jun 14, 2026' },
+    { tag: 'Retention', title: 'Inter-Tournament League Active', desc: 'Over 30 matches played by more than 30 players in the weeks between tournaments. The calendar is working. The habit is forming.', date: 'Jun 10, 2026' },
+    { tag: 'Sponsorship', title: 'Partner with the Next Generation', desc: 'SS4 offers sponsors direct visibility into an active, connected community of Nigerian students and institutions competing on a known monthly calendar.', date: 'Jun 5, 2026' },
+    { tag: 'May Tournament Concludes', title: 'First Tournament Cycle Complete', desc: 'The inaugural SS4 Chess League tournament wrapped successfully. Winners recorded. Rankings live. The leaderboard is no longer empty.', date: 'Jun 2, 2026' }
 ];
 
 export default function NewsPage() {

@@ -43,3 +43,5 @@ src/pages/Home.jsx
 src/pages/CreateCourseContentPage.jsx
 src/components/CreateCourseContentForm.jsx
 src/components/CourseSection.jsx
+src/components/tournament/SplitBracketVisualizer.jsx
+

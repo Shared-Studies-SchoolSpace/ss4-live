@@ -6,7 +6,6 @@ import { useTournament } from '../hooks/useTournament';
 import { TournamentHero } from '../components/tournament/TournamentHero';
 import { BracketTab } from '../components/tournament/BracketTab';
 import { TournamentPlayerModal } from '../components/tournament/TournamentPlayerModal';
-import { SplitBracketVisualizer } from '../components/tournament/SplitBracketVisualizer';
 
 const ADMIN_PIN = '1926';
 
@@ -38,7 +37,6 @@ export default function ChessTournamentPage() {
 
   const TABS = [
     { id: 'bracket',    label: 'Bracket'   },
-    { id: 'visualizer', label: 'Visualizer' },
     { id: 'fixtures',   label: 'Fixtures'  },
     { id: 'rules',      label: 'Rules & Schedule' },
     ...(isAdmin ? [{ id: 'admin', label: 'Admin' }] : []),
@@ -93,13 +91,7 @@ export default function ChessTournamentPage() {
           />
         )}
 
-        {/* VISUALIZER */}
-        {activeTab === 'visualizer' && (
-          <SplitBracketVisualizer
-            tournament={tournament}
-            onPlayerClick={setSelectedPlayerForModal}
-          />
-        )}
+
 
         {/* FIXTURES */}
         {activeTab === 'fixtures' && (

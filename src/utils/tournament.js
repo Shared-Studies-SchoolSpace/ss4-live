@@ -28,7 +28,20 @@ export function propagateWinners(rounds) {
 
 const ROUND_NAMES = ['Round 1', 'Round 2', 'Round 3', 'Quarterfinals', 'Semifinals', 'Final'];
 
-// Generate only Round 1 — permanent, called once by admin
+// Helper to extract school for separation logic (Rule 3.4)
+const getSchool = (p) => {
+  if (!p || !p.school) return '';
+  return p.school.toLowerCase().trim()
+    .replace(/university of /g, "")
+    .replace(/nnamdi azikiwe university\(unizik\)/g, "unizik")
+    .replace(/nnamdi azikiwe university awka/g, "unizik")
+    .replace(/nnandi azikiwe university\(unizik\)/g, "unizik")
+    .replace(/bells university of technology/g, "bells")
+    .replace(/bells university/g, "bells")
+    .replace(/uniuyo/g, "uyo")
+    .replace(/university of uyo/g, "uyo");
+};
+
 // Generate only Round 1 — permanent, called once by admin
 export function generateRound1(players, year, month) {
   // 1. Separate non-provisional and provisional
@@ -53,20 +66,6 @@ export function generateRound1(players, year, month) {
   // Byes go to the highest-rated non-provisional players
   const byePlayers = sortedPlayers.slice(0, numByes);
   const activePlayers = sortedPlayers.slice(numByes);
-
-  // 6. Same-school separation logic (Rule 3.4)
-  const getSchool = (p) => {
-    if (!p || !p.school) return '';
-    return p.school.toLowerCase().trim()
-      .replace(/university of /g, "")
-      .replace(/nnamdi azikiwe university\(unizik\)/g, "unizik")
-      .replace(/nnamdi azikiwe university awka/g, "unizik")
-      .replace(/nnandi azikiwe university\(unizik\)/g, "unizik")
-      .replace(/bells university of technology/g, "bells")
-      .replace(/bells university/g, "bells")
-      .replace(/uniuyo/g, "uyo")
-      .replace(/university of uyo/g, "uyo");
-  };
 
   const BYE_OBJ = { name: 'BYE', username: 'bye', school: '', department: '' };
 
@@ -134,12 +133,83 @@ export function generateNextRound(rounds, year, month) {
   const nextNum = last.roundNum + 1;
   const dates = getTournamentDates(year, month);
   const dateIdx = Math.min(nextNum - 1, dates.length - 1);
-  const games = Array.from({ length: Math.floor(winners.length / 2) }, (_, i) => ({
-    id: `R${nextNum}_G${i + 1}`,
-    p1: winners[i * 2],
-    p2: winners[i * 2 + 1],
-    winner: null, gameLink: ''
-  }));
+
+  // 1. Sort winners by ELO rating desc to calculate boundaries
+  const sortedWinners = [...winners].sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  const numPairs = Math.floor(sortedWinners.length / 2);
+
+  // 2. Compute boundary gaps
+  let minAvg = 0;
+  let maxAvg = 0;
+
+  if (numPairs > 0) {
+    // min_avg: adjacent pairing
+    let sumMin = 0;
+    for (let i = 0; i < numPairs; i++) {
+      sumMin += Math.abs((sortedWinners[i * 2].rating || 0) - (sortedWinners[i * 2 + 1].rating || 0));
+    }
+    minAvg = sumMin / numPairs;
+
+    // max_avg: split-half pairing
+    let sumMax = 0;
+    for (let i = 0; i < numPairs; i++) {
+      sumMax += Math.abs((sortedWinners[i].rating || 0) - (sortedWinners[i + numPairs].rating || 0));
+    }
+    maxAvg = sumMax / numPairs;
+  }
+
+  // 3. Determine target Elo gap
+  let target = 400;
+  if (target < minAvg) {
+    target = minAvg;
+  } else if (target > maxAvg) {
+    target = maxAvg;
+  }
+
+  // 4. Greedy cost-based pairing
+  const unpaired = [...winners];
+  const games = [];
+  let gameIdCounter = 1;
+  const BYE_OBJ = { name: 'BYE', username: 'bye', school: '', department: '' };
+
+  while (unpaired.length > 0) {
+    const p1 = unpaired.shift();
+    
+    let bestIdx = -1;
+    let minCost = Infinity;
+    
+    for (let i = 0; i < unpaired.length; i++) {
+      const p2 = unpaired[i];
+      const sameSchool = getSchool(p1) && getSchool(p2) && (getSchool(p1) === getSchool(p2));
+      const eloDiff = Math.abs((p1.rating || 0) - (p2.rating || 0));
+      const dev = Math.abs(eloDiff - target);
+      const cost = dev + (sameSchool ? 150 : 0);
+      
+      if (cost < minCost) {
+        minCost = cost;
+        bestIdx = i;
+      }
+    }
+
+    if (bestIdx !== -1) {
+      const p2 = unpaired.splice(bestIdx, 1)[0];
+      games.push({
+        id: `R${nextNum}_G${gameIdCounter++}`,
+        p1: p1,
+        p2: p2,
+        winner: null,
+        gameLink: ''
+      });
+    } else {
+      games.push({
+        id: `R${nextNum}_G${gameIdCounter++}`,
+        p1: p1,
+        p2: BYE_OBJ,
+        winner: p1,
+        gameLink: ''
+      });
+    }
+  }
   return { roundNum: nextNum, name: ROUND_NAMES[nextNum - 1] ?? `Round ${nextNum}`, date: dates[dateIdx], games };
 }
 

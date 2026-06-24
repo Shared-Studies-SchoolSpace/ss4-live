@@ -48,7 +48,7 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
   return (
     <section
       className="relative text-white px-6 md:px-12 lg:px-16 py-16 md:py-24 overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #1A3A8F 0%, #1e3faa 35%, #c2410c 80%, #ea580c 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #0B193C 0%, #1E1B4B 55%, #431407 100%)' }}
     >
       {/* Ambient glow blobs */}
       <div className="pointer-events-none absolute inset-0">

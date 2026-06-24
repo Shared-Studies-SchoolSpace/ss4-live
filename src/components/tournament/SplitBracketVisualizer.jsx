@@ -270,23 +270,103 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
   const handleDownload = async () => {
     if (!parentRef.current || downloading) return;
     setDownloading(true);
+
+    const originalScrollLeft = scrollRef.current ? scrollRef.current.scrollLeft : 0;
+    
+    // Temporarily reset horizontal scroll to 0 to align canvas dimensions
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = 0;
+    }
+
+    const originalGetComputedStyle = window.getComputedStyle;
+    
+    // Monkey-patch window.getComputedStyle during html2canvas lifecycle to strip oklch/oklab
+    window.getComputedStyle = function(el, pseudo) {
+      const style = originalGetComputedStyle.call(this, el, pseudo);
+      return new Proxy(style, {
+        get(target, prop) {
+          const val = target[prop];
+          if (prop === 'cssText' && typeof val === 'string') {
+            return val.replace(/oklch\([^)]+\)/g, '#1A56C4').replace(/oklab\([^)]+\)/g, '#1A56C4');
+          }
+          if (typeof val === 'string' && (val.includes('oklch') || val.includes('oklab'))) {
+            let fallback = '#1A56C4';
+            const propStr = prop.toString().toLowerCase();
+            if (propStr.includes('background') || propStr.includes('bg')) {
+              fallback = '#FFFFFF';
+            } else if (propStr.includes('border') || propStr.includes('gray') || propStr.includes('neutral') || propStr.includes('slate') || propStr.includes('ring')) {
+              fallback = '#E5E7EB';
+            }
+            return val.replace(/oklch\([^)]+\)/g, fallback).replace(/oklab\([^)]+\)/g, fallback);
+          }
+          if (typeof val === 'function') {
+            if (prop === 'getPropertyValue') {
+              return function(styleProp) {
+                const rawVal = target.getPropertyValue(styleProp);
+                if (typeof rawVal === 'string' && (rawVal.includes('oklch') || rawVal.includes('oklab'))) {
+                  let fallback = '#1A56C4';
+                  const stylePropStr = styleProp.toLowerCase();
+                  if (stylePropStr.includes('background') || stylePropStr.includes('bg')) {
+                    fallback = '#FFFFFF';
+                  } else if (stylePropStr.includes('border') || stylePropStr.includes('gray') || stylePropStr.includes('neutral') || stylePropStr.includes('slate') || stylePropStr.includes('ring')) {
+                    fallback = '#E5E7EB';
+                  }
+                  return rawVal.replace(/oklch\([^)]+\)/g, fallback).replace(/oklab\([^)]+\)/g, fallback);
+                }
+                return rawVal;
+              };
+            }
+            return val.bind(target);
+          }
+          return val;
+        }
+      });
+    };
+
     try {
       const html2canvas = (await import('html2canvas')).default;
+      
+      // Temporary style overrides to optimize html2canvas capture compatibility
+      const elementsToClean = parentRef.current.querySelectorAll('.backdrop-blur-md');
+      elementsToClean.forEach(el => {
+        el.style.backdropFilter = 'none';
+        el.style.webkitBackdropFilter = 'none';
+        el.style.backgroundColor = '#FAFAF9';
+      });
+
       const canvas = await html2canvas(parentRef.current, {
-        scale: 2.5, // Retina quality
+        width: 1900, // Force full width representation of canvas
+        height: 1050, // Force full height representation of canvas
+        scale: 2, // 2x scale is perfect balance of crispness and memory limits
         useCORS: true,
         backgroundColor: '#F6F4F0',
         logging: false,
-        windowWidth: 1950,
-        windowHeight: 1100
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: 1900,
+        windowHeight: 1050
       });
+
+      // Restore backdrop filters
+      elementsToClean.forEach(el => {
+        el.style.backdropFilter = '';
+        el.style.webkitBackdropFilter = '';
+        el.style.backgroundColor = '';
+      });
+
       const link = document.createElement('a');
       link.download = `scl_tournament_${tournament.month_year}_bracket.png`;
       link.href = canvas.toDataURL('image/png');
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     } catch (err) {
       console.error('Download failed:', err);
     } finally {
+      window.getComputedStyle = originalGetComputedStyle;
+      if (scrollRef.current) {
+        scrollRef.current.scrollLeft = originalScrollLeft;
+      }
       setDownloading(false);
     }
   };
@@ -351,10 +431,15 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
         <div 
           ref={parentRef} 
           className="flex items-stretch justify-between gap-2 p-8 relative overflow-hidden select-none bg-[#F6F4F0]" 
-          style={{ minWidth: '1900px', height: '1050px' }}
+          style={{ width: '1900px', height: '1050px' }}
         >
           {/* SVG Connector Lines Background */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+          <svg 
+            width="1900" 
+            height="1050" 
+            viewBox="0 0 1900 1050" 
+            className="absolute inset-0 pointer-events-none z-0"
+          >
             {lines.map((line) => {
               const { pG1, pG2, pCurr, side, champPath1, champPath2 } = line;
               const midX = (pG1.x + pCurr.x) / 2;

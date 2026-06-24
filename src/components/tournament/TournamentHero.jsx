@@ -14,7 +14,7 @@ function CountdownCell({ value, label }) {
   );
 }
 
-export function TournamentHero({ tournament, selectedMonthYear, history, onMonthChange }) {
+export function TournamentHero({ tournament, selectedMonthYear, history, onMonthChange, onTitleDoubleClick }) {
   const [{ days, hours, mins, secs, label }, setClock] = useState({ days: 0, hours: 0, mins: 0, secs: 0, label: '' });
 
   // Detect timezone abbreviation (e.g. WAT, BST, EST)
@@ -75,7 +75,10 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left: title + timer */}
           <div>
-            <h1 className="font-space font-black text-4xl md:text-5xl lg:text-6xl text-white leading-[1.05] mb-4">
+            <h1
+              onDoubleClick={onTitleDoubleClick}
+              className="font-space font-black text-4xl md:text-5xl lg:text-6xl text-white leading-[1.05] mb-4 cursor-pointer select-none"
+            >
               SCL Monthly<br />
               <span
                 className="font-black"

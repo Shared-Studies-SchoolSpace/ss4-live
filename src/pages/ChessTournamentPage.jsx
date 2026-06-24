@@ -53,6 +53,7 @@ export default function ChessTournamentPage() {
         selectedMonthYear={selectedMonthYear}
         history={history}
         onMonthChange={setSelectedMonthYear}
+        onTitleDoubleClick={() => { setPinInput(''); setPinErr(''); setPinModal(true); }}
       />
 
       {/* Tab bar */}
@@ -377,15 +378,7 @@ export default function ChessTournamentPage() {
         )}
       </div>
 
-      {/* Double-click trigger */}
-      {!isAdmin && (
-        <div className="text-center py-8 border-t border-gray-200">
-          <span onDoubleClick={() => { setPinInput(''); setPinErr(''); setPinModal(true); }}
-            className="text-[10px] font-bold text-gray-300 uppercase tracking-widest cursor-pointer hover:text-gray-400 transition-colors select-none">
-            Double-click to unlock admin
-          </span>
-        </div>
-      )}
+
 
       {/* PIN modal */}
       {pinModal && (

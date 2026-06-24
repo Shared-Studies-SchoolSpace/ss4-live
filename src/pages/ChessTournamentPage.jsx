@@ -226,9 +226,9 @@ export default function ChessTournamentPage() {
                 <div className="pt-5">
                   <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 6: Scheduling &amp; Grace Period</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
-                    <li><strong>6.1</strong> Every round starts at 8:00 PM WAT on its assigned date: R1: June 24 · R2: June 25 · R3: June 26 · R4: June 27 · QF: June 28 · SF: June 29 · Final: June 30.</li>
-                    <li><strong>6.2</strong> When pairings are posted, immediately contact your opponent to agree on a start time between 8:00 PM – 11:00 PM WAT.</li>
-                    <li><strong>6.3</strong> Grace period closes at 11:00 PM WAT. Both players must be ready.</li>
+                    <li><strong>6.1</strong> Every round starts at 8:00 PM WAT on its assigned date. **Round 1 lasts from 8:00 PM WAT (June 24) to 12:00 PM (noon) tomorrow (June 25)**. Other rounds: R2: June 25 · R3: June 26 · R4: June 27 · QF: June 28 · SF: June 29 · Final: June 30.</li>
+                    <li><strong>6.2</strong> When pairings are posted, immediately contact your opponent to agree on a start time. For Round 1, agree on a time between 8:00 PM June 24 and 12:00 PM June 25. For subsequent rounds, agree on a time between 8:00 PM – 11:00 PM WAT same night.</li>
+                    <li><strong>6.3</strong> Grace period closes at 11:00 PM WAT (or 12:00 PM tomorrow for Round 1). Both players must be ready.</li>
                     <li><strong>6.4</strong> Early play (before 8:00 PM WAT) allowed only with admin approval requested before 6:00 PM WAT that day.</li>
                   </ul>
                 </div>

@@ -25,8 +25,24 @@ export const MOCK_HISTORY = [
   }))
 ];
 
+const normalizeRoundNames = (t) => {
+  if (!t || !t.rounds) return t;
+  const nameMapping = {
+    'Round of 64': 'Round 1',
+    'Round of 32': 'Round 2',
+    'Round of 16': 'Round 3'
+  };
+  t.rounds.forEach(r => {
+    if (nameMapping[r.name]) {
+      r.name = nameMapping[r.name];
+    }
+  });
+  return t;
+};
+
 export function useTournament(monthYear) {
-  const [tournament, setTournamentState] = useState(null);
+  const [tournament, setTournamentStateRaw] = useState(null);
+  const setTournamentState = (t) => setTournamentStateRaw(normalizeRoundNames(t));
   const [history, setHistory] = useState([]);
   const [isDbFallback, setIsDbFallback] = useState(false);
 

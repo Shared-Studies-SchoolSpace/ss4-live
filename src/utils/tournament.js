@@ -26,7 +26,7 @@ export function propagateWinners(rounds) {
   return r;
 }
 
-const ROUND_NAMES = ['Round of 64', 'Round of 32', 'Round of 16', 'Quarterfinals', 'Semifinals', 'Final'];
+const ROUND_NAMES = ['Round 1', 'Round 2', 'Round 3', 'Quarterfinals', 'Semifinals', 'Final'];
 
 // Generate only Round 1 — permanent, called once by admin
 // Generate only Round 1 — permanent, called once by admin

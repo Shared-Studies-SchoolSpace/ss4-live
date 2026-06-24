@@ -6,13 +6,14 @@ import { useTournament } from '../hooks/useTournament';
 import { TournamentHero } from '../components/tournament/TournamentHero';
 import { BracketTab } from '../components/tournament/BracketTab';
 import { TournamentPlayerModal } from '../components/tournament/TournamentPlayerModal';
+import { SplitBracketVisualizer } from '../components/tournament/SplitBracketVisualizer';
 
 const ADMIN_PIN = '1926';
 
 const SCHEDULE = [
-  { label: 'Day 1', desc: 'Round of 64',  date: 'June 24' },
-  { label: 'Day 2', desc: 'Round of 32',  date: 'June 25' },
-  { label: 'Day 3', desc: 'Round of 16',  date: 'June 26' },
+  { label: 'Day 1', desc: 'Round 1',  date: 'June 24' },
+  { label: 'Day 2', desc: 'Round 2',  date: 'June 25' },
+  { label: 'Day 3', desc: 'Round 3',  date: 'June 26' },
   { label: 'Day 4', desc: 'Quarterfinals',date: 'June 27' },
   { label: 'Day 5', desc: 'Semifinals',   date: 'June 28' },
   { label: 'Day 6', desc: 'Rest / Tiebreaks', date: 'June 29' },
@@ -36,9 +37,10 @@ export default function ChessTournamentPage() {
   };
 
   const TABS = [
-    { id: 'bracket',  label: 'Bracket'   },
-    { id: 'fixtures', label: 'Fixtures'  },
-    { id: 'rules',    label: 'Rules & Schedule' },
+    { id: 'bracket',    label: 'Bracket'   },
+    { id: 'visualizer', label: 'Visualizer' },
+    { id: 'fixtures',   label: 'Fixtures'  },
+    { id: 'rules',      label: 'Rules & Schedule' },
     ...(isAdmin ? [{ id: 'admin', label: 'Admin' }] : []),
   ];
 
@@ -86,6 +88,14 @@ export default function ChessTournamentPage() {
             onSaveGameLink={saveGameLink}
             onAdvanceRound={advanceRound}
             onInitialize={initialize}
+            onPlayerClick={setSelectedPlayerForModal}
+          />
+        )}
+
+        {/* VISUALIZER */}
+        {activeTab === 'visualizer' && (
+          <SplitBracketVisualizer
+            tournament={tournament}
             onPlayerClick={setSelectedPlayerForModal}
           />
         )}

@@ -31,7 +31,7 @@ export const tournamentPlayers = [
     "name": "OKOYA OLADIMEJI OLUWADAMILARE",
     "username": "OkoyaOluwadamilare",
     "department": "MECHATRONICS ENGINEERING",
-    "school": "BELLS UNIVERSITY OF TECHNOLOGY",
+    "school": "Bells University of Technology",
     "contact": "09023984526"
   },
   {
@@ -45,7 +45,7 @@ export const tournamentPlayers = [
     "name": "Jerome, Anietienteabasi Lawrence",
     "username": "Shazanny-112",
     "department": "Civil engineering",
-    "school": "AKSU",
+    "school": "Akwa Ibom State University",
     "contact": "070046383887"
   },
   {
@@ -59,7 +59,7 @@ export const tournamentPlayers = [
     "name": "Emmanuel Edet",
     "username": "NobbieFF",
     "department": "Pharmacology",
-    "school": "UNICAL",
+    "school": "University of Calabar",
     "contact": "08069307996"
   },
   {
@@ -80,7 +80,7 @@ export const tournamentPlayers = [
     "name": "Abasifreke Sylvester Nyarks",
     "username": "Mfonmyservant",
     "department": "Mechanical engineering",
-    "school": "AKSU",
+    "school": "Akwa Ibom State University",
     "contact": "08167184937"
   },
   {
@@ -136,14 +136,14 @@ export const tournamentPlayers = [
     "name": "Uzochukwu Chiedozie Prince",
     "username": "Princedoziee",
     "department": "Chemical engineering",
-    "school": "Nnamdi Azikiwe university Awka",
+    "school": "Nnamdi Azikiwe University",
     "contact": "07045981381"
   },
   {
     "name": "Ugbani Onyekachi Favour",
     "username": "r2snyp",
     "department": "Mathematics",
-    "school": "Unizik",
+    "school": "Nnamdi Azikiwe University",
     "contact": "08122126954"
   },
   {
@@ -171,14 +171,14 @@ export const tournamentPlayers = [
     "name": "Oliaku Chiedozie Christian",
     "username": "chibest9",
     "department": "Mathematics",
-    "school": "Nnandi Azikiwe University(UNIZIK)",
+    "school": "Nnamdi Azikiwe University",
     "contact": "09044372256"
   },
   {
     "name": "Oyebode Samuel Adewale",
     "username": "TheWeehfhi",
     "department": "Pmt",
-    "school": "Bells University of technology",
+    "school": "Bells University of Technology",
     "contact": "08169442714"
   },
   {
@@ -206,7 +206,7 @@ export const tournamentPlayers = [
     "name": "Adeoye Daniel",
     "username": "Ay_ano_koji123444562",
     "department": "Mechatronics engineering",
-    "school": "Bells University",
+    "school": "Bells University of Technology",
     "contact": "+2349071086914"
   },
   {
@@ -234,7 +234,7 @@ export const tournamentPlayers = [
     "name": "Henshaw Johnstone",
     "username": "Shin_12",
     "department": "Mechatronics Engineering",
-    "school": "Bells University",
+    "school": "Bells University of Technology",
     "contact": "07084064561"
   },
   {
@@ -290,14 +290,14 @@ export const tournamentPlayers = [
     "name": "Adepoju Emmanuel Olamide",
     "username": "olami254",
     "department": "Info Tech",
-    "school": "200level",
+    "school": "Bells University of Technology",
     "contact": "07051977326"
   },
   {
     "name": "Kesene Nicholas",
     "username": "keseneNicholas",
     "department": "Computer Engineering",
-    "school": "Bells university",
+    "school": "Bells University of Technology",
     "contact": "09015125293"
   },
   {
@@ -325,14 +325,14 @@ export const tournamentPlayers = [
     "name": "Henshaw James",
     "username": "oblivion1416",
     "department": "Mechatronics",
-    "school": "Bells university",
+    "school": "Bells University of Technology",
     "contact": "09028045978"
   },
   {
     "name": "Emmanuel Aniema Michael",
     "username": "Ikbeast1",
     "department": "Aerospace Engineering",
-    "school": "FUTIA",
+    "school": "Federal University of Technology, Ikot Abasi",
     "contact": "09067107943"
   },
   {

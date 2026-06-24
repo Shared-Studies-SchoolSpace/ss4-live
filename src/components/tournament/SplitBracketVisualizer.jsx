@@ -271,13 +271,6 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
     if (!parentRef.current || downloading) return;
     setDownloading(true);
 
-    const originalScrollLeft = scrollRef.current ? scrollRef.current.scrollLeft : 0;
-    
-    // Temporarily reset horizontal scroll to 0 to align canvas dimensions
-    if (scrollRef.current) {
-      scrollRef.current.scrollLeft = 0;
-    }
-
     const originalGetComputedStyle = window.getComputedStyle;
     
     // Monkey-patch window.getComputedStyle during html2canvas lifecycle to strip oklch/oklab
@@ -323,20 +316,31 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
       });
     };
 
+    // Create a temporary off-screen clone container to avoid viewport clipping and scroll container boundaries
+    const clone = parentRef.current.cloneNode(true);
+    clone.style.position = 'fixed';
+    clone.style.left = '-9999px';
+    clone.style.top = '0';
+    clone.style.width = '1900px';
+    clone.style.height = '1050px';
+    clone.style.overflow = 'visible';
+    clone.style.zIndex = '-9999';
+    document.body.appendChild(clone);
+
     try {
       const html2canvas = (await import('html2canvas')).default;
       
       // Temporary style overrides to optimize html2canvas capture compatibility
-      const elementsToClean = parentRef.current.querySelectorAll('.backdrop-blur-md');
+      const elementsToClean = clone.querySelectorAll('.backdrop-blur-md');
       elementsToClean.forEach(el => {
         el.style.backdropFilter = 'none';
         el.style.webkitBackdropFilter = 'none';
         el.style.backgroundColor = '#FAFAF9';
       });
 
-      const canvas = await html2canvas(parentRef.current, {
-        width: 1900, // Force full width representation of canvas
-        height: 1050, // Force full height representation of canvas
+      const canvas = await html2canvas(clone, {
+        width: 1900,
+        height: 1050,
         scale: 2, // 2x scale is perfect balance of crispness and memory limits
         useCORS: true,
         backgroundColor: '#F6F4F0',
@@ -345,13 +349,6 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
         scrollY: 0,
         windowWidth: 1900,
         windowHeight: 1050
-      });
-
-      // Restore backdrop filters
-      elementsToClean.forEach(el => {
-        el.style.backdropFilter = '';
-        el.style.webkitBackdropFilter = '';
-        el.style.backgroundColor = '';
       });
 
       const link = document.createElement('a');
@@ -363,10 +360,8 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
     } catch (err) {
       console.error('Download failed:', err);
     } finally {
+      document.body.removeChild(clone);
       window.getComputedStyle = originalGetComputedStyle;
-      if (scrollRef.current) {
-        scrollRef.current.scrollLeft = originalScrollLeft;
-      }
       setDownloading(false);
     }
   };

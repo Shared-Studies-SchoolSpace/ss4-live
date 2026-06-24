@@ -55,7 +55,6 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
 }
 
 export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, onAdvanceRound, onInitialize, onPlayerClick }) {
-  const [mode, setMode] = useState('round');
   const [activeRound, setActiveRound] = useState(1);
   const [loggingGame, setLoggingGame] = useState(null);
   const [gameLinkInput, setGameLinkInput] = useState('');
@@ -86,20 +85,27 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
 
   return (
     <div className="space-y-4">
+      {/* BYE Explanation Note */}
+      <div className="bg-[#FAF9F5] border border-brand-primary/10 rounded-2xl p-4 flex items-start gap-3 shadow-sm">
+        <div className="p-2 bg-brand-primary/5 rounded-xl text-brand-primary shrink-0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 111.085 1.085l-.04.04m-2.137.082a.75.75 0 111.085-1.085l.04.04m-4.5 1.25V18.75A2.25 2.25 0 008.25 21h7.5A2.25 2.25 0 0018 18.75V11.25m-12 0A2.25 2.25 0 018.25 9h7.5A2.25 2.25 0 0118 11.25M3 9h18" />
+          </svg>
+        </div>
+        <div className="space-y-1">
+          <p className="text-xs font-black text-brand-primary uppercase tracking-wider">Tournament Note: What is a "BYE"?</p>
+          <p className="text-[11px] text-gray-500 leading-relaxed font-medium">
+            A <strong className="text-brand-primary">BYE</strong> is awarded to a competitor when there is an uneven bracket pairing (e.g., 51 players in a 64-player template). In SCL, BYEs are seeded to the top 13 highest-rated non-provisional players, allowing them to automatically advance to <strong className="text-[#111111]">Round 2</strong> without playing a match.
+          </p>
+        </div>
+      </div>
+
       {/* Controls */}
       <div className="flex flex-wrap items-center justify-between gap-3 bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
-        <div className="flex gap-2">
-          {['round', 'full'].map(m => (
-            <button key={m} onClick={() => setMode(m)}
-              className={`text-xs font-bold px-4 py-2 rounded-xl cursor-pointer transition-colors ${mode === m ? 'bg-brand-primary text-white' : 'text-gray-500 hover:text-[#111111]'}`}>
-              {m === 'round' ? 'By Round' : 'Full Tree'}
-            </button>
-          ))}
-        </div>
         <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
           {tournament.rounds.map(r => (
-            <button key={r.roundNum} onClick={() => { setMode('round'); setActiveRound(r.roundNum); }}
-              className={`text-[10px] font-bold px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors ${activeRound === r.roundNum && mode === 'round' ? 'bg-brand-primary text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}>
+            <button key={r.roundNum} onClick={() => { setActiveRound(r.roundNum); }}
+              className={`text-[10px] font-bold px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors ${activeRound === r.roundNum ? 'bg-brand-primary text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}>
               {r.name}
             </button>
           ))}
@@ -114,28 +120,12 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
       </div>
 
       {/* Round grid */}
-      {mode === 'round' && round && (
+      {round && (
         <div>
           <p className="text-[10px] font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date}</p>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {round.games.map((g, i) => (
               <MatchCard key={g.id} game={g} idx={i} isAdmin={isAdmin} onClick={openModal} onPlayerClick={onPlayerClick} />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Full tree */}
-      {mode === 'full' && (
-        <div className="overflow-x-auto bg-white border border-gray-100 rounded-2xl p-6 shadow-sm no-scrollbar">
-          <div className="flex gap-8" style={{ minWidth: `${tournament.rounds.length * 280}px`, minHeight: '700px' }}>
-            {tournament.rounds.map(r => (
-              <div key={r.roundNum} className="flex flex-col justify-around min-w-[260px]">
-                <p className="text-[9px] font-black text-brand-primary uppercase tracking-widest text-center mb-3 bg-brand-primary/5 py-2 rounded-lg">{r.name}</p>
-                <div className="flex flex-col justify-around flex-1 gap-2">
-                  {r.games.map((g, i) => <MatchCard key={g.id} game={g} idx={i} isAdmin={isAdmin} onClick={openModal} onPlayerClick={onPlayerClick} />)}
-                </div>
-              </div>
             ))}
           </div>
         </div>

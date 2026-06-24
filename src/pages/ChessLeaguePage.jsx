@@ -297,7 +297,7 @@ export default function ChessLeaguePage() {
 
     const nextGames = generateSwissNextRound(playersLabels, previousRounds, gameResults, currentDivision.id);
 
-    // Determine date: use provided date or 2 days after the last round
+    // Determine date: use provided date or 1 day after the last round
     let roundDate = dateStr;
     if (!roundDate) {
       if (currentDivision.rounds && currentDivision.rounds.length > 0) {
@@ -306,11 +306,11 @@ export default function ChessLeaguePage() {
         const parsedDate = new Date(lastDateRaw);
         const isValid = !isNaN(parsedDate.getTime());
         if (isValid) {
-          parsedDate.setDate(parsedDate.getDate() + 2);
+          parsedDate.setDate(parsedDate.getDate() + 1);
           roundDate = parsedDate.toISOString().split('T')[0];
         } else {
           const d = new Date();
-          d.setDate(d.getDate() + 2);
+          d.setDate(d.getDate() + 1);
           roundDate = d.toISOString().split('T')[0];
         }
       } else {

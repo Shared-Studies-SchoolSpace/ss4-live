@@ -280,7 +280,7 @@ export const AdminTab = ({
             </div>
           </div>
           <p className="text-[11px] text-gray-400">
-            If left blank, the date will automatically default to 2 days after the last active round (or today if no rounds exist).
+            If left blank, the date will automatically default to 1 day after the last active round (or today if no rounds exist).
           </p>
           <button 
             className="bg-brand-primary text-white font-bold px-5 py-3 rounded-xl shadow-sm hover:shadow transition-all text-xs cursor-pointer" 

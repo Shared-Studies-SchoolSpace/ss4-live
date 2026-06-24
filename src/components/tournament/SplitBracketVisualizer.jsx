@@ -546,7 +546,7 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
             {/* Top: Title & Date */}
             <div className="space-y-1">
               <h4 className="text-xs font-black text-brand-accent uppercase tracking-widest">SCL Cup Final</h4>
-              <p className="text-[10px] text-gray-400 font-bold">June 30th · 8:30 PM</p>
+              <p className="text-[10px] text-gray-400 font-bold">June 30th · 8:00 PM WAT</p>
             </div>
 
             {/* Middle: Grand Final Matchup Box (Centered Vertically) */}

@@ -166,7 +166,7 @@ export default function ChessTournamentPage() {
                     <li>· <strong>Platform:</strong> Chess.com (all games)</li>
                     <li>· <strong>Duration:</strong> June 24 – 30, 2026</li>
                     <li>· <strong>One round per day</strong></li>
-                    <li>· <strong>Kick-off time:</strong> 8:30 PM daily</li>
+                    <li>· <strong>Kick-off time:</strong> 8:00 PM WAT daily</li>
                   </ul>
                 </div>
 
@@ -216,8 +216,8 @@ export default function ChessTournamentPage() {
                     <li><strong>5.2</strong> Best of 3: first to win 2 games advances.</li>
                     <li><strong>5.3</strong> Tiebreak time control: Game 1: original 10+0 · Game 2: 10+0 · Game 3 (if needed): 5+3 (5 minutes, 3-second increment) to prevent endless draws.</li>
                     <li><strong>5.4</strong> Colours alternate: Game 1: original assignment · Game 2: reversed · Game 3 (if needed): original again.</li>
-                    <li><strong>5.5</strong> All tiebreak games must be completed by 10:00 PM same night.</li>
-                    <li><strong>5.6</strong> If still tied after 3 tiebreak games (extremely rare): Armageddon: White gets 5+0, Black gets 4+0, draw = Black wins (guarantees a winner before 10:15 PM).</li>
+                    <li><strong>5.5</strong> All tiebreak games must be completed by 11:00 PM WAT same night.</li>
+                    <li><strong>5.6</strong> If still tied after 3 tiebreak games (extremely rare): Armageddon: White gets 5+0, Black gets 4+0, draw = Black wins (guarantees a winner before 11:15 PM WAT).</li>
                   </ul>
                 </div>
 
@@ -225,10 +225,10 @@ export default function ChessTournamentPage() {
                 <div className="pt-5">
                   <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 6: Scheduling &amp; Grace Period</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
-                    <li><strong>6.1</strong> Every round starts at 6:00 PM on its assigned date: R1: June 24 · R2: June 25 · R3: June 26 · R4: June 27 · QF: June 28 · SF: June 29 · Final: June 30.</li>
-                    <li><strong>6.2</strong> When pairings are posted, immediately contact your opponent to agree on a start time between 6:00 PM – 10:00 PM.</li>
-                    <li><strong>6.3</strong> Grace period closes at 10:00 PM. Both players must be ready.</li>
-                    <li><strong>6.4</strong> Early play (before 6:00 PM) allowed only with admin approval requested before 4:00 PM that day.</li>
+                    <li><strong>6.1</strong> Every round starts at 8:00 PM WAT on its assigned date: R1: June 24 · R2: June 25 · R3: June 26 · R4: June 27 · QF: June 28 · SF: June 29 · Final: June 30.</li>
+                    <li><strong>6.2</strong> When pairings are posted, immediately contact your opponent to agree on a start time between 8:00 PM – 11:00 PM WAT.</li>
+                    <li><strong>6.3</strong> Grace period closes at 11:00 PM WAT. Both players must be ready.</li>
+                    <li><strong>6.4</strong> Early play (before 8:00 PM WAT) allowed only with admin approval requested before 6:00 PM WAT that day.</li>
                   </ul>
                 </div>
 
@@ -236,7 +236,7 @@ export default function ChessTournamentPage() {
                 <div className="pt-5">
                   <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 7: Forfeit Rules</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
-                    <li><strong>7.1</strong> One player absent: If opponent does not respond to WhatsApp and is not online by 9:30 PM: Screenshot your unanswered message(s) and send to admin immediately. You receive a walkover win.</li>
+                    <li><strong>7.1</strong> One player absent: If opponent does not respond to WhatsApp and is not online by 10:30 PM WAT: Screenshot your unanswered message(s) and send to admin immediately. You receive a walkover win.</li>
                     <li><strong>7.2</strong> Both players absent: Both disqualified. Highest-rated first-round loser from same bracket quarter becomes lucky loser. If no eligible player, admin awards a bye.</li>
                     <li><strong>7.3</strong> Responsibility: You must check the group and contact your opponent. "I did not see the message" is not an excuse.</li>
                     <li><strong>7.4</strong> Admin forfeit decisions are final but may be reviewed within the appeal window.</li>

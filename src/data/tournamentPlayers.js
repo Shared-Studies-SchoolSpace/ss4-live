@@ -52,7 +52,7 @@ export const tournamentPlayers = [
     "name": "John Israel",
     "username": "Ezzy29",
     "department": "Computer Science",
-    "school": "Uniuyo",
+    "school": "University of Uyo",
     "contact": "09061764913"
   },
   {
@@ -66,7 +66,7 @@ export const tournamentPlayers = [
     "name": "Ohzzy",
     "username": "Ohzzy90",
     "department": "Mechanical Engineering",
-    "school": "Uniuyo",
+    "school": "University of Uyo",
     "contact": "08089900375"
   },
   {
@@ -94,7 +94,7 @@ export const tournamentPlayers = [
     "name": "Jesse Gregory Edem",
     "username": "Jesse70256",
     "department": "Biochemistry",
-    "school": "Uniuyo",
+    "school": "University of Uyo",
     "contact": "08145074849"
   },
   {
@@ -108,7 +108,7 @@ export const tournamentPlayers = [
     "name": "Oliver Emmanuel",
     "username": "Emex1",
     "department": "Electric/Electronic Engineering",
-    "school": "University of uyo",
+    "school": "University of Uyo",
     "contact": "08146211361"
   },
   {
@@ -185,7 +185,7 @@ export const tournamentPlayers = [
     "name": "UduakAbasi Francis Ekanem",
     "username": "Stormcote",
     "department": "Accounting",
-    "school": "Uniuyo",
+    "school": "University of Uyo",
     "contact": "09078186827"
   },
   {
@@ -199,7 +199,7 @@ export const tournamentPlayers = [
     "name": "Essien Jonathan Victor",
     "username": "Jonzing200",
     "department": "Computer science",
-    "school": "University of uyo",
+    "school": "University of Uyo",
     "contact": "08128173134"
   },
   {
@@ -220,7 +220,7 @@ export const tournamentPlayers = [
     "name": "Sammuel Robert",
     "username": "Unclesam34e",
     "department": "Chemical engineering",
-    "school": "Uniuyo",
+    "school": "University of Uyo",
     "contact": "0806 475 5213"
   },
   {
@@ -241,7 +241,7 @@ export const tournamentPlayers = [
     "name": "Michael Denis Okon",
     "username": "Dharrygee",
     "department": "Chemical Engineering",
-    "school": "University of uyo",
+    "school": "University of Uyo",
     "contact": "09114317232"
   },
   {
@@ -304,7 +304,7 @@ export const tournamentPlayers = [
     "name": "Israel",
     "username": "thatshortboyeyez",
     "department": "Computer science",
-    "school": "Uniuyo",
+    "school": "University of Uyo",
     "contact": "07076807027"
   },
   {
@@ -346,14 +346,14 @@ export const tournamentPlayers = [
     "name": "Victor Augustine",
     "username": "victoraugustine",
     "department": "Elect/Elect",
-    "school": "Uniuyo",
+    "school": "University of Uyo",
     "contact": "07071724882"
   },
   {
     "name": "Inimfon Celestine",
     "username": "Inimfon_67",
     "department": "Medicine and Surgery",
-    "school": "Uniuyo",
+    "school": "University of Uyo",
     "contact": "09136098015"
   }
 ];

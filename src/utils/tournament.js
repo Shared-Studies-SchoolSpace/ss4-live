@@ -149,13 +149,13 @@ export function getCountdownTarget(tournament) {
   const y = now.getFullYear(), m = now.getMonth() + 1;
   if (!tournament || tournament.status === 'upcoming') {
     const dates = getTournamentDates(y, m);
-    return { date: new Date(`${dates[0]}T18:00:00`), label: 'Tournament begins in' };
+    return { date: new Date(`${dates[0]}T20:00:00+01:00`), label: 'Tournament begins in' };
   }
   if (tournament.status === 'active') {
     const pending = tournament.rounds.find(r => r.games.some(g => !g.winner));
-    if (pending) return { date: new Date(`${pending.date}T18:00:00`), label: `${pending.name} starts in` };
+    if (pending) return { date: new Date(`${pending.date}T20:00:00+01:00`), label: `${pending.name} starts in` };
   }
   // completed — next month's first tournament day
   const nm = m === 12 ? 1 : m + 1, ny = m === 12 ? y + 1 : y;
-  return { date: new Date(`${getTournamentDates(ny, nm)[0]}T18:00:00`), label: "Next tournament in" };
+  return { date: new Date(`${getTournamentDates(ny, nm)[0]}T20:00:00+01:00`), label: "Next tournament in" };
 }

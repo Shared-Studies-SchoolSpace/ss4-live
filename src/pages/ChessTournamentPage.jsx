@@ -104,37 +104,37 @@ export default function ChessTournamentPage() {
         {activeTab === 'fixtures' && (
           <div className="space-y-6">
             {!tournament ? (
-              <p className="text-center text-gray-400 py-20 text-sm font-bold">No fixtures generated yet.</p>
+              <p className="text-center text-gray-400 py-20 text-base font-bold">No fixtures generated yet.</p>
             ) : tournament.rounds.map(r => {
               const active = r.games.filter(g => g.p1 && g.p2 && g.p2.username !== 'bye');
               if (!active.length) return null;
               return (
                 <div key={r.roundNum} className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-50">
-                    <h3 className="font-space font-black text-sm text-[#111111]">{r.name}</h3>
-                    <span className="text-[10px] font-bold text-brand-primary bg-brand-primary/5 px-3 py-1 rounded-full">{r.date}</span>
+                    <h3 className="font-space font-black text-lg text-[#111111]">{r.name}</h3>
+                    <span className="text-xs font-bold text-brand-primary bg-brand-primary/5 px-3 py-1.5 rounded-full">{r.date}</span>
                   </div>
                   <div className="divide-y divide-gray-50">
                     {active.map((g, i) => (
-                      <div key={g.id} className="py-3 flex items-center justify-between gap-4">
+                      <div key={g.id} className="py-4 flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3 flex-1 min-w-0">
                           <button
                             onClick={() => setSelectedPlayerForModal(g.p1)}
-                            className="text-xs font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none"
+                            className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none"
                           >
                             {g.p1?.name}
                           </button>
-                          <span className="text-[10px] font-black text-brand-accent shrink-0 select-none">VS</span>
+                          <span className="text-xs font-black text-brand-accent shrink-0 select-none">VS</span>
                           <button
                             onClick={() => setSelectedPlayerForModal(g.p2)}
-                            className="text-xs font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none"
+                            className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none"
                           >
                             {g.p2?.name}
                           </button>
                         </div>
                         {g.winner
-                          ? <span className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-lg shrink-0">Won: {g.winner.name}</span>
-                          : <span className="text-[10px] bg-amber-50 text-amber-600 font-bold px-3 py-1 rounded-lg shrink-0">Pending</span>
+                          ? <span className="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-lg shrink-0">Won: {g.winner.name}</span>
+                          : <span className="text-xs bg-amber-50 text-amber-600 font-bold px-3 py-1.5 rounded-lg shrink-0">Pending</span>
                         }
                       </div>
                     ))}
@@ -151,17 +151,17 @@ export default function ChessTournamentPage() {
             {/* Left/Middle Column: Scrollable Rulebook */}
             <div className="lg:col-span-2 bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-sm max-h-[800px] overflow-y-auto no-scrollbar space-y-6">
               <div>
-                <p className="text-[10px] font-bold tracking-[0.25em] text-brand-accent uppercase mb-1">Official Rulebook</p>
-                <h2 className="font-space font-black text-2xl text-[#111111] mb-2 uppercase">SCL Tournament Rules</h2>
-                <p className="text-xs text-gray-500 italic">Read carefully. Ignorance of these rules is not an excuse, but honest mistakes have a fair appeal window.</p>
+                <p className="text-xs font-bold tracking-[0.25em] text-brand-accent uppercase mb-1">Official Rulebook</p>
+                <h2 className="font-space font-black text-3xl text-[#111111] mb-2 uppercase">SCL Tournament Rules</h2>
+                <p className="text-sm text-gray-500 italic">Read carefully. Ignorance of these rules is not an excuse, but honest mistakes have a fair appeal window.</p>
               </div>
 
-              <div className="space-y-6 divide-y divide-gray-100 text-xs text-gray-600 leading-relaxed">
+              <div className="space-y-6 divide-y divide-gray-100 text-sm text-gray-600 leading-relaxed">
                 {/* SECTION 1 */}
                 <div className="pt-5 first:pt-0">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 1: Overview</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 1: Overview</h3>
                   <p className="mb-2">The SS4 Chess League (SCL) is a monthly inter-institutional chess tournament open to students across multiple universities and colleges. It operates as a single-elimination knockout competition, styled after football cup tournaments.</p>
-                  <ul className="space-y-1 bg-gray-50 p-3 rounded-xl font-medium">
+                  <ul className="space-y-1.5 bg-gray-50 p-3 rounded-xl font-medium">
                     <li>· <strong>Format:</strong> Single Elimination Knockout</li>
                     <li>· <strong>Platform:</strong> Chess.com (all games)</li>
                     <li>· <strong>Duration:</strong> June 24 – 30, 2026</li>
@@ -172,7 +172,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 2 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 2: Eligibility &amp; Registration</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 2: Eligibility &amp; Registration</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>2.1</strong> Open to students of any institution. Register via the official Google Form before the deadline.</li>
                     <li><strong>2.2</strong> Registration deadline: June 22nd, 11:59 PM. No late registrations.</li>
@@ -185,7 +185,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 3 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 3: Seeding &amp; Bracket</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 3: Seeding &amp; Bracket</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>3.1</strong> Seeded by Chess.com Rapid rating (minimum 20 rated games).</li>
                     <li><strong>3.2</strong> Provisional (less than 20 games) or unrated players go to bottom of bracket (random order).</li>
@@ -197,7 +197,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 4 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 4: Match Rules</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 4: Match Rules</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>4.1</strong> All games on Chess.com with your registered username only.</li>
                     <li><strong>4.2</strong> Time control: 10+0 Rapid (10 minutes, no increment).</li>
@@ -210,7 +210,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 5 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 5: Draw Rule</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 5: Draw Rule</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>5.1</strong> If a game ends in a draw, a Best of 3 tiebreak applies immediately.</li>
                     <li><strong>5.2</strong> Best of 3: first to win 2 games advances.</li>
@@ -223,7 +223,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 6 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 6: Scheduling &amp; Grace Period</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 6: Scheduling &amp; Grace Period</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>6.1</strong> Every round starts at 6:00 PM on its assigned date: R1: June 24 · R2: June 25 · R3: June 26 · R4: June 27 · QF: June 28 · SF: June 29 · Final: June 30.</li>
                     <li><strong>6.2</strong> When pairings are posted, immediately contact your opponent to agree on a start time between 6:00 PM – 10:00 PM.</li>
@@ -234,7 +234,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 7 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 7: Forfeit Rules</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 7: Forfeit Rules</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>7.1</strong> One player absent: If opponent does not respond to WhatsApp and is not online by 9:30 PM: Screenshot your unanswered message(s) and send to admin immediately. You receive a walkover win.</li>
                     <li><strong>7.2</strong> Both players absent: Both disqualified. Highest-rated first-round loser from same bracket quarter becomes lucky loser. If no eligible player, admin awards a bye.</li>
@@ -245,7 +245,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 8 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 8: Fair Play &amp; Conduct</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 8: Fair Play &amp; Conduct</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>8.1</strong> Engine use is strictly forbidden. No computer assistance, databases, or analysis tools during games.</li>
                     <li><strong>8.2</strong> Chess.com Fair Play system monitors all games. If flagged: Immediate disqualification, opponent advances, permanent ban from all future SCL tournaments. No warnings. No appeals for engine use.</li>
@@ -258,7 +258,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 9 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 9: School Leaderboard</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 9: School Leaderboard</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>9.1</strong> Every player represents their school. Results contribute to a School Leaderboard.</li>
                     <li><strong>9.2</strong> Performance Above Expected (PAE): Exceeding expectation based on seed = positive PAE for school. Underperforming = negative PAE.</li>
@@ -270,7 +270,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 10 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 10: Prizes</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 10: Prizes</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>10.1</strong> Champion: Chess.com Diamond Premium (1 month), Official SCL Champion title, permanent spot on SCL leaderboard.</li>
                     <li><strong>10.2</strong> Runner-up and future tournament prizes announced as SCL grows.</li>
@@ -280,7 +280,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 11 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 11: Admin &amp; Disputes</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 11: Admin &amp; Disputes</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>11.1</strong> The SCL admin has full authority over all tournament decisions (forfeits, conduct, bracket corrections, prizes).</li>
                     <li><strong>11.2</strong> Dispute window: Within 2 hours of the incident OR before 12:00 AM midnight (whichever is earlier).</li>
@@ -292,7 +292,7 @@ export default function ChessTournamentPage() {
 
                 {/* SECTION 12 */}
                 <div className="pt-5">
-                  <h3 className="font-space font-black text-sm text-[#111111] uppercase mb-2">Section 12: General</h3>
+                  <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 12: General</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>12.1</strong> Participation = full acceptance of all rules above.</li>
                     <li><strong>12.2</strong> SCL reserves the right to disqualify any player for conduct unbecoming of the competition.</li>
@@ -306,28 +306,28 @@ export default function ChessTournamentPage() {
             {/* Right Column: Schedule & Support Panel */}
             <div className="space-y-6">
               <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-                <p className="text-[10px] font-bold tracking-[0.2em] text-brand-accent uppercase mb-2">June 2026</p>
-                <h2 className="font-space font-black text-lg text-[#111111] mb-4">Daily Schedule</h2>
-                <div className="space-y-2">
+                <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-2">June 2026</p>
+                <h2 className="font-space font-black text-xl text-[#111111] mb-4">Daily Schedule</h2>
+                <div className="space-y-2.5">
                   {SCHEDULE.map(s => (
-                    <div key={s.label} className="flex items-center justify-between p-3 bg-[#F6F4F0] rounded-xl">
+                    <div key={s.label} className="flex items-center justify-between p-3.5 bg-[#F6F4F0] rounded-xl">
                       <div>
-                        <p className="text-xs font-black text-[#111111]">{s.label}</p>
-                        <p className="text-[10px] text-gray-500">{s.desc}</p>
+                        <p className="text-sm font-black text-[#111111]">{s.label}</p>
+                        <p className="text-xs text-gray-500">{s.desc}</p>
                       </div>
-                      <span className="text-[10px] font-bold text-brand-primary bg-brand-primary/5 px-2 py-1 rounded-lg shrink-0">{s.date}</span>
+                      <span className="text-xs font-bold text-brand-primary bg-brand-primary/5 px-2.5 py-1 rounded-lg shrink-0">{s.date}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-6 text-center">
-                <p className="text-[10px] font-bold tracking-[0.2em] text-brand-primary uppercase mb-2">Official Contact</p>
-                <h3 className="font-space font-black text-base text-[#111111] mb-1">Need Assistance?</h3>
-                <p className="text-xs text-gray-500 mb-4">Contact tournament support directly on WhatsApp.</p>
+                <p className="text-xs font-bold tracking-[0.2em] text-brand-primary uppercase mb-2">Official Contact</p>
+                <h3 className="font-space font-black text-lg text-[#111111] mb-1.5">Need Assistance?</h3>
+                <p className="text-sm text-gray-500 mb-4">Contact tournament support directly on WhatsApp.</p>
                 <a href="https://wa.me/2347071724882" target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-brand-primary text-white text-xs font-bold px-6 py-3 rounded-full w-full hover:bg-brand-primary/95 transition-all shadow-md">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  className="inline-flex items-center justify-center gap-2 bg-brand-primary text-white text-sm font-bold px-6 py-3.5 rounded-full w-full hover:bg-brand-primary/95 transition-all shadow-md">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4.5 h-4.5">
                     <path d="M12.012 2c-5.506 0-9.988 4.482-9.988 9.988 0 1.76.457 3.48 1.328 5l-1.352 4.938 5.056-1.326c1.472.802 3.128 1.226 4.816 1.226 5.506 0 9.988-4.482 9.988-9.988 0-5.506-4.482-9.988-9.988-9.988zm-3.328 5.766c.228 0 .438.006.63.024.198.018.36.036.528.378.228.468.78 1.902.846 2.04.066.138.108.3.006.504-.102.204-.15.33-.3.504-.15.174-.318.39-.456.522-.15.144-.306.3-.132.6.174.3.774 1.278 1.662 2.064.9.792 1.656 1.038 1.89 1.152.234.114.372.096.51-.06.138-.156.6-1.038.756-1.254.156-.216.312-.18.528-.096.216.084 1.368.648 1.602.768.234.12.39.18.45.282.06.102.06.582-.162 1.218-.222.636-1.296 1.242-1.788 1.296-.492.054-.972.192-3.138-.654-2.61-.99-4.29-3.642-4.422-3.816-.132-.174-1.074-1.428-1.074-2.73 0-1.302.678-1.944.918-2.19.24-.246.48-.306.642-.306z" />
                   </svg>
                   Message Support
@@ -341,34 +341,34 @@ export default function ChessTournamentPage() {
         {activeTab === 'admin' && isAdmin && (
           <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm space-y-8">
             <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-              <h2 className="font-space font-black text-xl text-[#111111]">Admin Panel</h2>
-              <span className="text-[10px] font-bold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">Unlocked</span>
+              <h2 className="font-space font-black text-2xl text-[#111111]">Admin Panel</h2>
+              <span className="text-xs font-bold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">Unlocked</span>
             </div>
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-6 space-y-3">
-                <p className="font-space font-black text-sm text-[#111111]">Initialize Bracket</p>
-                <p className="text-xs text-gray-500">Seed {selectedMonthYear} tournament with 53 registered players.</p>
-                <button onClick={() => { if (window.confirm('Initialize?')) initialize(); }} className="bg-brand-primary text-white text-xs font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-brand-primary/90 transition-colors">
+                <p className="font-space font-black text-base text-[#111111]">Initialize Bracket</p>
+                <p className="text-sm text-gray-500">Seed {selectedMonthYear} tournament with 53 registered players.</p>
+                <button onClick={() => { if (window.confirm('Initialize?')) initialize(); }} className="bg-brand-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-brand-primary/90 transition-colors">
                   Generate Bracket
                 </button>
               </div>
               <div className="bg-red-50 border border-red-100 rounded-2xl p-6 space-y-3">
-                <p className="font-space font-black text-sm text-[#111111]">Reset Bracket</p>
-                <p className="text-xs text-gray-500">Wipe all results and reshuffle pairings.</p>
-                <button onClick={() => { if (window.confirm('Reset? This cannot be undone.')) reset(); }} className="bg-red-600 text-white text-xs font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-red-500 transition-colors">
+                <p className="font-space font-black text-base text-[#111111]">Reset Bracket</p>
+                <p className="text-sm text-gray-500">Wipe all results and reshuffle pairings.</p>
+                <button onClick={() => { if (window.confirm('Reset? This cannot be undone.')) reset(); }} className="bg-red-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-red-500 transition-colors">
                   Reset Tournament
                 </button>
               </div>
             </div>
             {/* Test cleanup — user requested */}
             <div className="border border-dashed border-amber-200 bg-amber-50/30 rounded-2xl p-5 space-y-3">
-              <p className="font-space font-black text-sm text-amber-900">Test Data Cleanup</p>
-              <p className="text-xs text-amber-700">Removes April &amp; May 2026 mock archives from local storage after testing.</p>
+              <p className="font-space font-black text-base text-amber-900">Test Data Cleanup</p>
+              <p className="text-sm text-amber-700">Removes April &amp; May 2026 mock archives from local storage after testing.</p>
               <div className="flex flex-wrap gap-3">
-                <button onClick={clearMocks} className="text-xs font-bold bg-amber-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-amber-500 transition-colors">
+                <button onClick={clearMocks} className="text-sm font-bold bg-amber-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-amber-500 transition-colors">
                   Clear Mock History
                 </button>
-                <button onClick={() => { setIsAdmin(false); toast.info('Admin locked'); }} className="text-xs font-bold bg-gray-200 text-gray-600 px-4 py-2 rounded-xl cursor-pointer hover:bg-gray-300 transition-colors">
+                <button onClick={() => { setIsAdmin(false); toast.info('Admin locked'); }} className="text-sm font-bold bg-gray-200 text-gray-600 px-4 py-2 rounded-xl cursor-pointer hover:bg-gray-300 transition-colors">
                   Lock Panel
                 </button>
               </div>

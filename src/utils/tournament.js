@@ -68,32 +68,6 @@ export function generateRound1(players, year, month) {
       .replace(/university of uyo/g, "uyo");
   };
 
-  // Group active players by school
-  const groups = {};
-  activePlayers.forEach(p => {
-    const s = getSchool(p);
-    if (!groups[s]) groups[s] = [];
-    groups[s].push(p);
-  });
-
-  // Sort school groups by player count desc
-  const schoolNames = Object.keys(groups).sort((a, b) => groups[b].length - groups[a].length);
-
-  // Interleave schools to keep same-school players as far apart as possible
-  const interleaved = [];
-  const schoolQueues = schoolNames.map(name => groups[name]);
-  
-  while (interleaved.length < activePlayers.length) {
-    for (const queue of schoolQueues) {
-      if (queue.length > 0) {
-        interleaved.push(queue.shift());
-      }
-    }
-  }
-
-  // Pair them up: first half vs second half to draw them as far apart as possible
-  const half = activePlayers.length / 2;
-  const pairedGames = [];
   const BYE_OBJ = { name: 'BYE', username: 'bye', school: '', department: '' };
 
   // Create bye games (Auto-advancing)
@@ -105,15 +79,48 @@ export function generateRound1(players, year, month) {
     gameLink: ''
   }));
 
-  // Create paired matchups
-  for (let i = 0; i < half; i++) {
-    pairedGames.push({
-      id: `R1_G${numByes + i + 1}`,
-      p1: interleaved[i],
-      p2: interleaved[i + half],
-      winner: null,
-      gameLink: ''
-    });
+  // Create paired matchups aiming for ELO difference of ~400
+  const unpaired = [...activePlayers];
+  const pairedGames = [];
+  let gameIdCounter = numByes + 1;
+
+  while (unpaired.length > 0) {
+    const p1 = unpaired.shift();
+    
+    let bestIdx = -1;
+    let minCost = Infinity;
+    
+    for (let i = 0; i < unpaired.length; i++) {
+      const p2 = unpaired[i];
+      const sameSchool = getSchool(p1) && getSchool(p2) && (getSchool(p1) === getSchool(p2));
+      const eloDiff = Math.abs((p1.rating || 0) - (p2.rating || 0));
+      const dev = Math.abs(eloDiff - 400);
+      const cost = dev + (sameSchool ? 150 : 0);
+      
+      if (cost < minCost) {
+        minCost = cost;
+        bestIdx = i;
+      }
+    }
+
+    if (bestIdx !== -1) {
+      const p2 = unpaired.splice(bestIdx, 1)[0];
+      pairedGames.push({
+        id: `R1_G${gameIdCounter++}`,
+        p1: p1,
+        p2: p2,
+        winner: null,
+        gameLink: ''
+      });
+    } else {
+      pairedGames.push({
+        id: `R1_G${gameIdCounter++}`,
+        p1: p1,
+        p2: BYE_OBJ,
+        winner: p1,
+        gameLink: ''
+      });
+    }
   }
 
   const dates = getTournamentDates(year, month);

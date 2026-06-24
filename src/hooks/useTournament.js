@@ -17,9 +17,9 @@ export const MOCK_HISTORY = [
     players: tournamentPlayers,
     rounds: [generateRound1(tournamentPlayers, 2026, 6)]
   },
-  ...['2026-04', '2026-05'].map(my => ({
+  ...['2026-05'].map(my => ({
     id: my, month_year: my,
-    name: `${my === '2026-04' ? 'April' : 'May'} 2026 SCL Tournament`,
+    name: 'May 2026 SCL Tournament',
     status: 'completed', winner: 'Player Alpha',
     players: [], rounds: []
   }))

@@ -3,53 +3,124 @@ import { toast } from 'react-toastify';
 
 function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
   const isBye = (p) => p?.username === 'bye';
-  const playerRow = (p) => {
-    const won = game.winner && game.winner.username === p?.username;
-    const lost = game.winner && !won;
+  const won = (p) => game.winner && game.winner.username === p?.username;
+  const lost = (p) => game.winner && !won(p);
+  const isMatchDone = !!game.winner;
+  const isByeMatch = isBye(game.p1) || isBye(game.p2);
+
+  const playerRow = (p, side) => {
+    const isWon = won(p);
+    const isLost = lost(p);
     const clickable = p && !isBye(p);
+    const bye = isBye(p);
+
     return (
-      <div 
+      <div
         onClick={(e) => {
           if (clickable && onPlayerClick) {
             e.stopPropagation();
             onPlayerClick(p);
           }
         }}
-        className={`flex items-center justify-between px-3 py-2 rounded-lg transition-all ${
-          clickable ? 'cursor-pointer hover:bg-brand-primary/5 group/row' : ''
-        } ${won ? 'bg-brand-primary/5 text-brand-primary' : lost ? 'opacity-40' : 'text-[#111111]'}`}
+        className={`relative flex items-center gap-2.5 px-3 py-2.5 transition-all duration-150 ${
+          clickable ? 'cursor-pointer group/row' : ''
+        } ${
+          isWon
+            ? 'bg-brand-primary text-white'
+            : isLost
+            ? 'opacity-40'
+            : 'hover:bg-gray-50'
+        }`}
       >
-        <div className="min-w-0">
-          <p className={`text-xs font-bold truncate ${clickable ? 'group-hover/row:underline' : ''}`}>{p ? p.name : 'TBD'}</p>
-          {p && !isBye(p) && <p className="text-[9px] text-gray-400 truncate">{p.school}</p>}
+        {/* Winner checkmark */}
+        {isWon && (
+          <span className="shrink-0">
+            <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-white/80">
+              <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+            </svg>
+          </span>
+        )}
+        
+        <div className="min-w-0 flex-1">
+          <p className={`text-sm leading-tight truncate font-bold ${
+            isWon ? 'font-black text-white' : bye ? 'text-gray-400 italic' : 'text-[#111111]'
+          } ${clickable ? 'group-hover/row:underline' : ''}`}>
+            {p ? (bye ? 'BYE' : p.name) : 'TBD'}
+          </p>
+          {p && !bye && (
+            <p className={`text-xs truncate mt-0.5 ${isWon ? 'text-white/70' : 'text-gray-400'}`}>
+              {p.school}{p.rating ? ` · ${p.rating}` : ''}
+            </p>
+          )}
         </div>
-        {p && !isBye(p) && <span className="text-[9px] font-bold text-brand-primary ml-2 shrink-0">@{p.username}</span>}
-        {isBye(p) && <span className="text-[9px] font-bold text-gray-300 ml-2">BYE</span>}
+
+        {p && !bye && (
+          <span className={`text-xs font-bold shrink-0 ${isWon ? 'text-white/80' : 'text-brand-primary/50'}`}>
+            @{p.username}
+          </span>
+        )}
       </div>
     );
   };
 
   return (
     <div
-      onClick={() => isAdmin && game.p1 && game.p2 && onClick(game)}
-      className={`bg-white border rounded-xl p-2 shadow-sm transition-all ${game.winner ? 'border-gray-100' : 'border-brand-primary/20'} ${isAdmin ? 'cursor-pointer hover:shadow-md hover:border-brand-primary/40' : ''}`}
+      onClick={() => isAdmin && game.p1 && game.p2 && !isByeMatch && onClick(game)}
+      className={`bg-white rounded-2xl overflow-hidden shadow-sm border transition-all duration-200 ${
+        isMatchDone
+          ? 'border-transparent shadow-md'
+          : 'border-brand-primary/15'
+      } ${isAdmin && !isByeMatch ? 'cursor-pointer hover:shadow-lg hover:-translate-y-0.5' : ''}`}
     >
-      <div className="flex items-center justify-between px-1 mb-1">
-        <p className="text-[8px] font-black text-gray-300 uppercase tracking-widest">Match {idx + 1}</p>
-        {game.gameLink && (
-          <a href={game.gameLink} target="_blank" rel="noopener noreferrer"
-            onClick={e => e.stopPropagation()}
-            className="text-[8px] font-bold text-brand-primary flex items-center gap-1 hover:underline">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-2.5 h-2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-            </svg>
-            View Game
-          </a>
-        )}
+      {/* Card header bar */}
+      <div className={`flex items-center justify-between px-3 py-2 ${
+        isMatchDone ? 'bg-brand-primary/5' : 'bg-gray-50/80'
+      }`}>
+        <div className="flex items-center gap-1.5">
+          <span className={`text-xs ${isMatchDone ? 'text-brand-primary' : 'text-gray-300'}`}>♟</span>
+          <span className={`text-xs font-black uppercase tracking-widest ${isMatchDone ? 'text-brand-primary' : 'text-gray-300'}`}>
+            Match {idx + 1}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          {isMatchDone && !isByeMatch && (
+            <span className="text-[10px] font-black text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded-full">
+              DONE
+            </span>
+          )}
+          {isByeMatch && (
+            <span className="text-[10px] font-black text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full">
+              AUTO-ADVANCE
+            </span>
+          )}
+          {game.gameLink && (
+            <a
+              href={game.gameLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              className="flex items-center gap-0.5 text-xs font-bold text-brand-primary hover:underline"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              </svg>
+              Game
+            </a>
+          )}
+        </div>
       </div>
-      {playerRow(game.p1)}
-      <div className="h-px bg-gray-50 my-0.5" />
-      {playerRow(game.p2)}
+
+      {/* Players */}
+      {playerRow(game.p1, 'top')}
+      
+      {/* VS divider */}
+      <div className="relative flex items-center">
+        <div className="flex-1 h-px bg-gray-100" />
+        <span className="text-xs font-black text-gray-300 px-2 shrink-0">VS</span>
+        <div className="flex-1 h-px bg-gray-100" />
+      </div>
+
+      {playerRow(game.p2, 'bottom')}
     </div>
   );
 }
@@ -105,7 +176,7 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
         <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
           {tournament.rounds.map(r => (
             <button key={r.roundNum} onClick={() => { setActiveRound(r.roundNum); }}
-              className={`text-[10px] font-bold px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors ${activeRound === r.roundNum ? 'bg-brand-primary text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}>
+              className={`text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors ${activeRound === r.roundNum ? 'bg-brand-primary text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}>
               {r.name}
             </button>
           ))}
@@ -113,7 +184,7 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
         {/* Advance round — only when last round is fully complete */}
         {isAdmin && allLastRoundDone && lastRound.games.length > 1 && (
           <button onClick={onAdvanceRound}
-            className="text-xs font-bold bg-brand-accent text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-brand-accent/90 transition-colors shrink-0">
+            className="text-sm font-bold bg-brand-accent text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-brand-accent/90 transition-colors shrink-0">
             Generate {lastRound.roundNum === 5 ? 'Final' : 'Next Round'} →
           </button>
         )}
@@ -122,7 +193,7 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
       {/* Round grid */}
       {round && (
         <div>
-          <p className="text-[10px] font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date}</p>
+          <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date}</p>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {round.games.map((g, i) => (
               <MatchCard key={g.id} game={g} idx={i} isAdmin={isAdmin} onClick={openModal} onPlayerClick={onPlayerClick} />
@@ -135,40 +206,40 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
       {loggingGame && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" onClick={closeModal}>
           <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl" onClick={e => e.stopPropagation()}>
-            <p className="font-space font-black text-base text-[#111111] mb-1">Log Match — {loggingGame.id}</p>
-            <p className="text-xs text-gray-400 mb-5">Paste the Chess.com game link and select the winner.</p>
+            <p className="font-space font-black text-lg text-[#111111] mb-1">Log Match — {loggingGame.id}</p>
+            <p className="text-sm text-gray-400 mb-5">Paste the Chess.com game link and select the winner.</p>
 
             {/* Game link */}
             <div className="mb-4">
-              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1.5">Chess.com Game Link</label>
+              <label className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1.5">Chess.com Game Link</label>
               <input
                 type="url"
                 placeholder="https://www.chess.com/game/live/..."
                 value={gameLinkInput}
                 onChange={e => setGameLinkInput(e.target.value)}
-                className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] placeholder-gray-300"
+                className="w-full text-sm font-bold px-3 py-2.5 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] placeholder-gray-300"
               />
               {gameLinkInput && (
                 <button
                   onClick={() => { onSaveGameLink(loggingGame.id, gameLinkInput); toast.success('Link saved'); }}
-                  className="mt-1.5 text-[10px] font-bold text-brand-primary hover:underline cursor-pointer">
+                  className="mt-1.5 text-xs font-bold text-brand-primary hover:underline cursor-pointer">
                   Save link only (no winner yet)
                 </button>
               )}
             </div>
 
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Select Winner</p>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Select Winner</p>
             <div className="space-y-2">
               {[loggingGame.p1, loggingGame.p2].filter(p => p && p.username !== 'bye').map(p => (
                 <button key={p.username}
                   onClick={() => { onLogResult(loggingGame.id, p, gameLinkInput); closeModal(); }}
                   className="w-full text-left p-4 border border-gray-200 hover:border-brand-primary/40 hover:bg-brand-primary/5 rounded-xl transition-all cursor-pointer">
-                  <p className="text-sm font-black text-[#111111]">{p.name}</p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">{p.school} · @{p.username}</p>
+                  <p className="text-base font-black text-[#111111]">{p.name}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">{p.school} · @{p.username}</p>
                 </button>
               ))}
             </div>
-            <button onClick={closeModal} className="mt-4 w-full text-xs font-bold text-gray-400 py-2 hover:text-gray-600 cursor-pointer">Cancel</button>
+            <button onClick={closeModal} className="mt-4 w-full text-sm font-bold text-gray-400 py-2 hover:text-gray-600 cursor-pointer">Cancel</button>
           </div>
         </div>
       )}

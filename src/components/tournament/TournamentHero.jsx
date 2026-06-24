@@ -9,7 +9,7 @@ function CountdownCell({ value, label }) {
       <div className="bg-white/15 border border-white/20 text-white font-space font-black text-2xl md:text-3xl w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center backdrop-blur-sm">
         {pad(value)}
       </div>
-      <span className="text-[9px] font-bold text-white/50 uppercase tracking-widest mt-1.5">{label}</span>
+      <span className="text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">{label}</span>
     </div>
   );
 }
@@ -46,13 +46,28 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
   const status = tournament?.status ?? 'upcoming';
 
   return (
-    <section className="bg-brand-primary text-white px-6 md:px-12 lg:px-16 py-16 md:py-24">
+    <section
+      className="relative text-white px-6 md:px-12 lg:px-16 py-16 md:py-24 overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #1A3A8F 0%, #1e3faa 35%, #c2410c 80%, #ea580c 100%)' }}
+    >
+      {/* Ambient glow blobs */}
+      <div className="pointer-events-none absolute inset-0">
+        {/* Top-right orange bloom */}
+        <div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full opacity-30"
+          style={{ background: 'radial-gradient(circle, #fb923c 0%, transparent 70%)' }} />
+        {/* Bottom-left indigo bloom */}
+        <div className="absolute -bottom-32 -left-20 w-[400px] h-[400px] rounded-full opacity-20"
+          style={{ background: 'radial-gradient(circle, #6366f1 0%, transparent 70%)' }} />
+        {/* Center accent streak */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px opacity-10"
+          style={{ background: 'linear-gradient(90deg, transparent, #fdba74, transparent)' }} />
+      </div>
       <div className="max-w-5xl mx-auto">
         {/* Overline row */}
         <div className="flex flex-wrap items-center gap-3 mb-6">
-          <p className="text-[10px] font-bold tracking-[0.25em] text-white/70 uppercase">SS4 Chess Network</p>
+          <p className="text-xs font-bold tracking-[0.25em] text-white/70 uppercase">SS4 Chess Network</p>
           <span className="text-white/30">·</span>
-          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${statusColors[status]}`}>
+          <span className={`text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${statusColors[status]}`}>
             {status}
           </span>
         </div>
@@ -62,14 +77,17 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
           <div>
             <h1 className="font-space font-black text-4xl md:text-5xl lg:text-6xl text-white leading-[1.05] mb-4">
               SCL Monthly<br />
-              <span className="text-white/80">Tournament</span>
+              <span
+                className="font-black"
+                style={{ background: 'linear-gradient(90deg, #fdba74, #fb923c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+              >Tournament</span>
             </h1>
-            <p className="text-white/60 text-sm font-medium max-w-sm mb-8 leading-relaxed">
+            <p className="text-white/60 text-base font-medium max-w-sm mb-8 leading-relaxed">
               Single elimination. Last 7 days of the month. One champion claims the prize.
             </p>
 
             {/* Countdown */}
-            <p className="text-[10px] font-bold tracking-[0.2em] text-white/50 uppercase mb-3">
+            <p className="text-xs font-bold tracking-[0.2em] text-white/50 uppercase mb-3">
               {label} · <span className="text-white/40">18:00 {tzAbbr}</span>
             </p>
             <div className="flex gap-3">
@@ -84,7 +102,7 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
           <div className="flex flex-col gap-4">
             {/* Prize */}
             <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-              <p className="text-[10px] font-bold tracking-[0.2em] text-white/60 uppercase mb-3">Grand Prize</p>
+              <p className="text-xs font-bold tracking-[0.2em] text-white/60 uppercase mb-3">Grand Prize</p>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-white">
@@ -100,13 +118,14 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
 
             {/* Cycle selector */}
             <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center justify-between gap-3">
-              <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest whitespace-nowrap">Cycle</p>
+              <p className="text-xs font-bold text-white/50 uppercase tracking-widest whitespace-nowrap">Cycle</p>
               <select
                 value={selectedMonthYear}
                 onChange={e => onMonthChange(e.target.value)}
-                className="bg-transparent text-white font-bold text-sm flex-1 outline-none border-none cursor-pointer"
+                disabled
+                className="bg-transparent text-white font-bold text-base flex-1 outline-none border-none opacity-70 cursor-not-allowed"
               >
-                {history.map(h => (
+                {history.filter(h => h.month_year !== '2026-04').map(h => (
                   <option key={h.month_year} value={h.month_year} className="text-[#111111] bg-white">
                     {h.name}{h.status === 'active' ? ' (Live)' : ''}
                   </option>

@@ -29,7 +29,7 @@ function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
   const renderRow = (p) => {
     if (!p) {
       return (
-        <div className="h-7 flex items-center px-2 text-[10px] text-gray-300 font-bold italic">
+        <div className="flex items-center px-2.5 py-1.5 text-xs text-gray-300 font-semibold italic">
           TBD
         </div>
       );
@@ -48,29 +48,34 @@ function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
             onPlayerClick(p);
           }
         }}
-        className={`h-7 flex items-center justify-between px-2 text-[10px] transition-all select-none ${
-          bye ? 'text-gray-300 bg-gray-50/20' : 'cursor-pointer hover:bg-brand-primary/5 group/row'
-        } ${won ? 'bg-emerald-50/30 text-emerald-700 font-black' : lost ? 'opacity-40 text-gray-500' : 'text-[#111111] font-bold'}`}
+        className={`flex items-center justify-between px-2.5 py-1.5 transition-all select-none ${
+          bye ? 'opacity-40' : 'cursor-pointer hover:bg-brand-primary/5 group/row'
+        } ${
+          won
+            ? 'bg-emerald-50 text-emerald-800'
+            : lost
+            ? 'opacity-35'
+            : 'text-[#111111]'
+        }`}
       >
-        <div className="flex items-center gap-1.5 min-w-0 flex-1">
+        <div className="flex flex-col min-w-0 flex-1">
+          <span className={`text-xs leading-tight font-bold truncate ${won ? 'font-black' : ''} ${!bye ? 'group-hover/row:underline' : ''}`}>
+            {bye ? 'BYE' : formatName(p.name)}
+          </span>
           {!bye && (
-            <span className="text-[7px] font-black bg-gray-100 text-gray-400 px-1 py-0.5 rounded shrink-0">
-              {getSchoolInitials(p.school)}
+            <span className="text-[10px] text-gray-400 font-medium truncate leading-tight">
+              {getSchoolInitials(p.school)}{p.rating ? ` · ${p.rating}` : ''}
             </span>
           )}
-          <span className={`truncate ${!bye ? 'group-hover/row:underline' : ''}`}>
-            {formatName(p.name)}
-          </span>
+        </div>
+        <div className="flex items-center gap-1 shrink-0 ml-1">
+          {won && (
+            <span className="text-[9px] font-black text-emerald-600 bg-emerald-100 px-1 py-0.5 rounded">W</span>
+          )}
           {isChamp && (
-            <span title="Champion" className="text-amber-500 text-xs shrink-0 select-none">👑</span>
+            <span title="Champion" className="text-amber-500 text-xs select-none">👑</span>
           )}
         </div>
-        {!bye && p.rating && (
-          <span className="text-[8px] font-bold text-brand-primary/60 shrink-0 ml-1">
-            {p.rating}
-          </span>
-        )}
-        {bye && <span className="text-[8px] font-black text-gray-300">BYE</span>}
       </div>
     );
   };
@@ -82,13 +87,14 @@ function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
   return (
     <div 
       data-game-id={game.id}
-      className={`w-[170px] bg-white border rounded-xl overflow-hidden shadow-sm transition-all duration-300 relative z-10 ${
+      className={`bg-white border rounded-lg overflow-hidden shadow-sm transition-all duration-200 relative z-10 ${
         isGameOnChampPath 
-          ? 'border-amber-400 ring-1 ring-amber-300 shadow-md' 
+          ? 'border-amber-400 ring-1 ring-amber-300 shadow-amber-100' 
           : game.winner 
             ? 'border-gray-100' 
-            : 'border-brand-primary/20 hover:border-brand-primary/40'
+            : 'border-brand-primary/25'
       }`}
+      style={{ width: `${200}px` }}
     >
       {renderRow(game.p1)}
       <div className="h-px bg-gray-100" />
@@ -177,6 +183,16 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
     leftRounds.push({ roundNum: r.roundNum, name: r.name, games: r.games.slice(0, totalG / 2) });
     rightRounds.push({ roundNum: r.roundNum, name: r.name, games: r.games.slice(totalG / 2) });
   }
+
+  // Compute minimum total width needed: 5 rounds each side at 185px + gaps, plus 300px center column
+  const COL_W = 185;
+  const COL_GAP = 8;
+  const CENTER_W = 300;
+  const PADDING = 64; // p-8 = 32px each side
+  const numRoundCols = leftRounds.length; // 5
+  const sideWidth = numRoundCols * COL_W + (numRoundCols - 1) * COL_GAP;
+  const TOTAL_W = sideWidth * 2 + CENTER_W + COL_GAP * 4 + PADDING;
+  const TOTAL_H = 1100;
 
   // Draw lines based on bounding rect coordinates
   const calculateLines = () => {
@@ -316,39 +332,62 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
       });
     };
 
-    // Create a temporary off-screen clone container to avoid viewport clipping and scroll container boundaries
-    const clone = parentRef.current.cloneNode(true);
-    clone.style.position = 'fixed';
-    clone.style.left = '-9999px';
-    clone.style.top = '0';
-    clone.style.width = '1900px';
-    clone.style.height = '1050px';
-    clone.style.overflow = 'visible';
-    clone.style.zIndex = '-9999';
-    document.body.appendChild(clone);
-
     try {
       const html2canvas = (await import('html2canvas')).default;
-      
-      // Temporary style overrides to optimize html2canvas capture compatibility
-      const elementsToClean = clone.querySelectorAll('.backdrop-blur-md');
-      elementsToClean.forEach(el => {
-        el.style.backdropFilter = 'none';
-        el.style.webkitBackdropFilter = 'none';
-        el.style.backgroundColor = '#FAFAF9';
-      });
 
-      const canvas = await html2canvas(clone, {
-        width: 1900,
-        height: 1050,
-        scale: 2, // 2x scale is perfect balance of crispness and memory limits
+      // Read actual dimensions from the inner canvas div — these match the computed TOTAL_W/TOTAL_H
+      const fullWidth = parentRef.current.scrollWidth;
+      const fullHeight = parentRef.current.scrollHeight;
+
+      const canvas = await html2canvas(parentRef.current, {
+        width: fullWidth,
+        height: fullHeight,
+        scale: 2,
         useCORS: true,
         backgroundColor: '#F6F4F0',
         logging: false,
         scrollX: 0,
         scrollY: 0,
-        windowWidth: 1900,
-        windowHeight: 1050
+        windowWidth: fullWidth,
+        windowHeight: fullHeight,
+        onclone: (clonedDoc) => {
+          // In the cloned doc, find the scroll wrapper and force it open so all content is accessible
+          const clonedCanvas = clonedDoc.querySelector('[data-visualizer-canvas]');
+          if (clonedCanvas) {
+            clonedCanvas.style.width = `${fullWidth}px`;
+            clonedCanvas.style.height = `${fullHeight}px`;
+            clonedCanvas.style.overflow = 'visible';
+          }
+
+          // Strip overflow:hidden/auto from every ancestor so nothing clips
+          clonedDoc.querySelectorAll('*').forEach(el => {
+            const cs = el.style;
+            if (cs) {
+              const ov = getComputedStyle(el).overflow;
+              if (ov === 'hidden' || ov === 'auto' || ov === 'scroll') {
+                el.style.overflow = 'visible';
+              }
+              const ovx = getComputedStyle(el).overflowX;
+              if (ovx === 'hidden' || ovx === 'auto' || ovx === 'scroll') {
+                el.style.overflowX = 'visible';
+              }
+            }
+          });
+
+          // Force scroll wrapper itself wide open
+          const scrollWrap = clonedDoc.querySelector('[data-scroll-wrapper]');
+          if (scrollWrap) {
+            scrollWrap.style.width = `${fullWidth}px`;
+            scrollWrap.style.overflow = 'visible';
+          }
+
+          // Clean up backdrop filters
+          clonedDoc.querySelectorAll('.backdrop-blur-md').forEach(el => {
+            el.style.backdropFilter = 'none';
+            el.style.webkitBackdropFilter = 'none';
+            el.style.backgroundColor = '#FAFAF9';
+          });
+        }
       });
 
       const link = document.createElement('a');
@@ -360,7 +399,6 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
     } catch (err) {
       console.error('Download failed:', err);
     } finally {
-      document.body.removeChild(clone);
       window.getComputedStyle = originalGetComputedStyle;
       setDownloading(false);
     }
@@ -387,32 +425,44 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
           <button 
             onClick={handleDownload} 
             disabled={downloading}
-            className="flex items-center gap-1.5 text-xs font-black bg-brand-primary text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-brand-primary/95 transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 text-xs font-black bg-brand-primary text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-brand-primary/95 transition-colors disabled:opacity-75"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-3.5 h-3.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
-            {downloading ? 'Generating...' : 'Download Image'}
+            {downloading ? (
+              <>
+                <svg className="animate-spin h-3.5 w-3.5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Generating...</span>
+              </>
+            ) : (
+              <>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-3.5 h-3.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                <span>Download Image</span>
+              </>
+            )}
           </button>
         </div>
 
         {/* Mobile helper navigation */}
         <div className="flex lg:hidden gap-1 bg-gray-50 p-1 rounded-xl">
-          <button onClick={() => snapTo('left')} className="text-[10px] font-bold px-2.5 py-1.5 rounded-lg bg-white text-gray-600 hover:text-brand-primary shadow-sm">
+          <button onClick={() => snapTo('left')} className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-white text-gray-600 hover:text-brand-primary shadow-sm">
             Left Bracket
           </button>
-          <button onClick={() => snapTo('center')} className="text-[10px] font-bold px-2.5 py-1.5 rounded-lg bg-white text-gray-600 hover:text-brand-primary shadow-sm">
+          <button onClick={() => snapTo('center')} className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-white text-gray-600 hover:text-brand-primary shadow-sm">
             Final & Trophy
           </button>
-          <button onClick={() => snapTo('right')} className="text-[10px] font-bold px-2.5 py-1.5 rounded-lg bg-white text-gray-600 hover:text-brand-primary shadow-sm">
+          <button onClick={() => snapTo('right')} className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-white text-gray-600 hover:text-brand-primary shadow-sm">
             Right Bracket
           </button>
         </div>
       </div>
 
       {/* Swipe notification for mobile users */}
-      <div className="lg:hidden text-center bg-brand-primary/5 py-2 px-4 rounded-xl border border-brand-primary/10 select-none">
-        <p className="text-[9px] font-black uppercase text-brand-primary tracking-widest animate-pulse">
+      <div className="lg:hidden text-center bg-brand-primary/5 py-2.5 px-4 rounded-xl border border-brand-primary/10 select-none">
+        <p className="text-xs font-black uppercase text-brand-primary tracking-widest animate-pulse">
           👈 Swipe / Pan horizontally to view entire tree 👉
         </p>
       </div>
@@ -420,19 +470,21 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
       {/* Scrollable canvas wrapper */}
       <div 
         ref={scrollRef} 
+        data-scroll-wrapper="true"
         className="w-full overflow-x-auto no-scrollbar border border-gray-100 rounded-3xl bg-[#F6F4F0] relative"
       >
         {/* Inner high-resolution canvas container */}
         <div 
           ref={parentRef} 
-          className="flex items-stretch justify-between gap-2 p-8 relative overflow-hidden select-none bg-[#F6F4F0]" 
-          style={{ width: '1900px', height: '1050px' }}
+          data-visualizer-canvas="true"
+          className="flex items-stretch justify-between gap-2 p-8 relative select-none bg-[#F6F4F0]" 
+          style={{ width: `${TOTAL_W}px`, height: `${TOTAL_H}px` }}
         >
           {/* SVG Connector Lines Background */}
           <svg 
-            width="1900" 
-            height="1050" 
-            viewBox="0 0 1900 1050" 
+            width={TOTAL_W}
+            height={TOTAL_H}
+            viewBox={`0 0 ${TOTAL_W} ${TOTAL_H}`}
             className="absolute inset-0 pointer-events-none z-0"
           >
             {lines.map((line) => {
@@ -469,11 +521,11 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
           </svg>
 
           {/* LEFT SIDE BRACKET */}
-          <div className="flex justify-between flex-1 gap-2 relative z-10">
-            {leftRounds.map((r, rIdx) => (
-              <div key={r.roundNum} className="flex flex-col justify-around h-full w-[175px]">
+          <div className="flex justify-between gap-2 relative z-10 shrink-0">
+            {leftRounds.map((r) => (
+              <div key={r.roundNum} className="flex flex-col justify-around h-full" style={{ width: `${COL_W}px` }}>
                 <div className="text-center py-1 bg-brand-primary/10 rounded-lg border border-brand-primary/20 shadow-sm">
-                  <span className="text-[8px] font-black uppercase text-brand-primary tracking-wider">{r.name}</span>
+                  <span className="text-[10px] font-black uppercase text-brand-primary tracking-wider">{r.name}</span>
                 </div>
                 <div className="flex flex-col justify-around flex-grow py-4">
                   {r.games.map((g) => (
@@ -493,14 +545,14 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
           <div className="w-[300px] flex flex-col justify-between items-center py-8 px-4 bg-white/70 backdrop-blur-md rounded-3xl border border-white/60 text-center shrink-0 mx-4 shadow-xl relative z-20">
             {/* Top: Title & Date */}
             <div className="space-y-1">
-              <h4 className="text-[10px] font-black text-brand-accent uppercase tracking-widest">SCL Cup Final</h4>
-              <p className="text-[8px] text-gray-400 font-bold">June 30th · 8:30 PM</p>
+              <h4 className="text-xs font-black text-brand-accent uppercase tracking-widest">SCL Cup Final</h4>
+              <p className="text-[10px] text-gray-400 font-bold">June 30th · 8:30 PM</p>
             </div>
 
             {/* Middle: Grand Final Matchup Box (Centered Vertically) */}
             <div className="w-full flex-1 flex flex-col justify-center my-6">
               <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm text-left relative z-30">
-                <span className="text-[8px] font-black text-brand-primary uppercase tracking-widest block mb-2 text-center">Grand Final Matchup</span>
+                <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest block mb-2 text-center">Grand Final Matchup</span>
                 
                 {finalGame ? (
                   <div className="space-y-2">
@@ -511,10 +563,10 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
                       }`}
                     >
                       <span className="truncate">{finalGame.p1 ? finalGame.p1.name : 'TBD'}</span>
-                      {finalGame.p1 && <span className="text-[9px] text-gray-400">@{finalGame.p1.username}</span>}
+                      {finalGame.p1 && <span className="text-xs text-gray-400">@{finalGame.p1.username}</span>}
                     </div>
                     
-                    <div className="text-center text-[9px] font-black text-brand-accent">VS</div>
+                    <div className="text-center text-[10px] font-black text-brand-accent">VS</div>
                     
                     <div 
                       onClick={() => finalGame.p2 && onPlayerClick(finalGame.p2)}
@@ -523,11 +575,11 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
                       }`}
                     >
                       <span className="truncate">{finalGame.p2 ? finalGame.p2.name : 'TBD'}</span>
-                      {finalGame.p2 && <span className="text-[9px] text-gray-400">@{finalGame.p2.username}</span>}
+                      {finalGame.p2 && <span className="text-xs text-gray-400">@{finalGame.p2.username}</span>}
                     </div>
                   </div>
                 ) : (
-                  <p className="text-[10px] text-gray-400 text-center italic font-semibold">Matches in progress...</p>
+                  <p className="text-xs text-gray-400 text-center italic font-semibold">Matches in progress...</p>
                 )}
               </div>
             </div>
@@ -536,15 +588,15 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
             <div className="w-full flex flex-col items-center gap-4">
               {champion ? (
                 <div className="bg-gradient-to-tr from-amber-500 to-yellow-400 text-white rounded-2xl p-4 shadow-md border border-amber-300 w-full">
-                  <span className="text-[8px] font-black uppercase tracking-[0.25em] block text-amber-100">Champion</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.25em] block text-amber-100">Champion</span>
                   <p 
                     onClick={() => onPlayerClick(champion)}
                     className="text-base font-black font-space mt-1 hover:underline cursor-pointer truncate"
                   >
                     {champion.name}
                   </p>
-                  <p className="text-[10px] font-bold text-amber-50 truncate mt-0.5">{champion.school}</p>
-                  <span className="inline-block mt-2 bg-white/20 text-[9px] font-black px-2 py-0.5 rounded-full">
+                  <p className="text-xs font-bold text-amber-50 truncate mt-0.5">{champion.school}</p>
+                  <span className="inline-block mt-2 bg-white/20 text-[10px] font-black px-2 py-0.5 rounded-full">
                     Rating: {champion.rating}
                   </span>
                 </div>
@@ -558,9 +610,9 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
               <div className="relative group">
                 <div className="absolute inset-0 bg-amber-400/10 blur-2xl rounded-full scale-75" />
                 <svg 
-                  viewBox="0 0 24 24" 
-                  className={`w-20 h-20 relative transition-transform duration-500 group-hover:scale-105 ${champion ? 'text-amber-500 drop-shadow-[0_4px_12px_rgba(245,158,11,0.4)]' : 'text-gray-200'}`}
-                  fill="currentColor"
+                   viewBox="0 0 24 24" 
+                   className={`w-20 h-20 relative transition-transform duration-500 group-hover:scale-105 ${champion ? 'text-amber-500 drop-shadow-[0_4px_12px_rgba(245,158,11,0.4)]' : 'text-gray-200'}`}
+                   fill="currentColor"
                 >
                   <path d="M19 5H17V3C17 2.45 16.55 2 16 2H8C7.45 2 7 2.45 7 3V5H5C3.9 5 3 5.9 3 7V9C3 10.87 4.31 12.43 6.07 12.87C6.77 14.73 8.39 16.14 10.4 16.44C10.74 17.3 11.33 18.03 12.09 18.52V20H9C8.45 20 8 20.45 8 21C8 21.55 8.45 22 9 22H15C15.55 22 16 21.55 16 21C16 20.45 15.55 20 15 20H12.09V18.52C12.85 18.03 13.43 17.3 13.78 16.44C15.78 16.14 17.41 14.73 18.11 12.87C19.87 12.43 21 10.87 21 9V7C21 5.9 20.1 5 19 5ZM5 9V7H7V10.24C5.81 9.87 5 9.02 5 9ZM19 9C19 9.02 18.19 9.87 17 10.24V7H19V9Z"/>
                 </svg>
@@ -569,11 +621,11 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
           </div>
 
           {/* RIGHT SIDE BRACKET */}
-          <div className="flex flex-row-reverse justify-between flex-1 gap-2 relative z-10">
-            {rightRounds.map((r, rIdx) => (
-              <div key={r.roundNum} className="flex flex-col justify-around h-full w-[175px]">
+          <div className="flex flex-row-reverse justify-between gap-2 relative z-10 shrink-0">
+            {rightRounds.map((r) => (
+              <div key={r.roundNum} className="flex flex-col justify-around h-full" style={{ width: `${COL_W}px` }}>
                 <div className="text-center py-1 bg-brand-primary/10 rounded-lg border border-brand-primary/20 shadow-sm">
-                  <span className="text-[8px] font-black uppercase text-brand-primary tracking-wider">{r.name}</span>
+                  <span className="text-[10px] font-black uppercase text-brand-primary tracking-wider">{r.name}</span>
                 </div>
                 <div className="flex flex-col justify-around flex-grow py-4">
                   {r.games.map((g) => (

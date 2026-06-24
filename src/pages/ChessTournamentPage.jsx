@@ -37,6 +37,7 @@ export default function ChessTournamentPage() {
 
   const TABS = [
     { id: 'bracket',    label: 'Bracket'   },
+    { id: 'results',    label: 'Results'   },
     { id: 'fixtures',   label: 'Fixtures'  },
     { id: 'rules',      label: 'Rules & Schedule' },
     ...(isAdmin ? [{ id: 'admin', label: 'Admin' }] : []),
@@ -91,8 +92,106 @@ export default function ChessTournamentPage() {
           />
         )}
 
+        {/* RESULTS */}
+        {activeTab === 'results' && (
+          <div className="space-y-6">
+            {!tournament ? (
+              <div className="bg-white border border-gray-100 rounded-2xl p-12 text-center shadow-sm">
+                <p className="text-gray-400 py-10 text-base font-bold">No tournament results available.</p>
+              </div>
+            ) : (() => {
+              const roundsWithResults = tournament.rounds.map(r => {
+                const completedGames = r.games.filter(g => g.winner && g.p1 && g.p2 && g.p2.username !== 'bye');
+                return { ...r, completedGames };
+              }).filter(r => r.completedGames.length > 0);
 
+              if (roundsWithResults.length === 0) {
+                return (
+                  <div className="bg-white border border-gray-100 rounded-2xl p-12 text-center shadow-sm">
+                    <p className="text-gray-400 py-10 text-base font-bold">No matches have been completed yet.</p>
+                  </div>
+                );
+              }
 
+              return roundsWithResults.map(r => (
+                <div key={r.roundNum} className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-50">
+                    <h3 className="font-space font-black text-lg text-[#111111]">{r.name}</h3>
+                    <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full">
+                      {r.completedGames.length} Completed
+                    </span>
+                  </div>
+                  <div className="divide-y divide-gray-50">
+                    {r.completedGames.map((g) => {
+                      const isP1Winner = g.winner?.username === g.p1?.username;
+                      const isP2Winner = g.winner?.username === g.p2?.username;
+                      return (
+                        <div key={g.id} className="py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                          <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                            {/* Player 1 */}
+                            <div className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${
+                              isP1Winner ? 'bg-emerald-50/40 border-emerald-100' : 'bg-gray-50/50 border-gray-100'
+                            }`}>
+                              <div className="min-w-0 flex-1">
+                                <button
+                                  onClick={() => setSelectedPlayerForModal(g.p1)}
+                                  className="text-sm font-black text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none block"
+                                >
+                                  {g.p1?.name}
+                                </button>
+                                <span className="text-[10px] font-bold text-gray-400 block truncate">
+                                  {g.p1?.school} {g.p1?.rating ? `(${g.p1.rating})` : ''}
+                                </span>
+                              </div>
+                              {isP1Winner && (
+                                <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2 py-1 rounded shrink-0 ml-2">
+                                  Winner
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Player 2 */}
+                            <div className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${
+                              isP2Winner ? 'bg-emerald-50/40 border-emerald-100' : 'bg-gray-50/50 border-gray-100'
+                            }`}>
+                              <div className="min-w-0 flex-1">
+                                <button
+                                  onClick={() => setSelectedPlayerForModal(g.p2)}
+                                  className="text-sm font-black text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none block"
+                                >
+                                  {g.p2?.name}
+                                </button>
+                                <span className="text-[10px] font-bold text-gray-400 block truncate">
+                                  {g.p2?.school} {g.p2?.rating ? `(${g.p2.rating})` : ''}
+                                </span>
+                              </div>
+                              {isP2Winner && (
+                                <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2 py-1 rounded shrink-0 ml-2">
+                                  Winner
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {g.gameLink && (
+                            <a
+                              href={g.gameLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs font-black text-brand-primary bg-brand-primary/5 hover:bg-brand-primary/10 px-4 py-2.5 rounded-xl transition-colors text-center shrink-0 border border-brand-primary/10"
+                            >
+                              View Game
+                            </a>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ));
+            })()}
+          </div>
+        )}
         {/* FIXTURES */}
         {activeTab === 'fixtures' && (
           <div className="space-y-6">

@@ -49,13 +49,17 @@ export function useTournament(monthYear) {
   const save = async (t) => {
     setTournamentState(t);
     localStorage.setItem(LS_KEY(t.month_year), JSON.stringify(t));
-    if (!isDbFallback) {
+    try {
       const { error } = await supabase.from('tournaments').upsert({
         id: t.id || t.month_year, name: t.name, month_year: t.month_year,
         players: t.players, rounds: t.rounds, status: t.status, winner: t.winner
       });
-      if (error) { setIsDbFallback(true); toast.info('Saved locally (offline)'); }
-      else toast.success('Saved!', { autoClose: 1000 });
+      if (error) throw error;
+      setIsDbFallback(false);
+      toast.success('Saved to Database!', { autoClose: 1000 });
+    } catch (e) {
+      setIsDbFallback(true);
+      toast.info('Saved locally (offline)');
     }
   };
 
@@ -63,20 +67,20 @@ export function useTournament(monthYear) {
     const now = new Date();
     const currentMY = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
     try {
-      const { data } = await supabase.from('tournaments').select('month_year,name,status');
+      const { data } = await supabase.from('tournaments').select('month_year,name,status,winner');
       const db = data || [];
       const merged = [...db];
       if (!merged.find(x => x.month_year === currentMY))
-        merged.push({ month_year: currentMY, name: `${currentMY} SCL Tournament`, status: 'upcoming' });
+        merged.push({ month_year: currentMY, name: `${currentMY} SCL Tournament`, status: 'upcoming', winner: null });
       MOCK_HISTORY.forEach(m => { if (!merged.find(x => x.month_year === m.month_year)) merged.push(m); });
       setHistory(merged.sort((a, b) => b.month_year.localeCompare(a.month_year)));
     } catch {
       const local = Object.keys(localStorage)
         .filter(k => k.startsWith('scl_tournament_'))
-        .map(k => { const t = JSON.parse(localStorage.getItem(k)); return { month_year: t.month_year, name: t.name, status: t.status }; });
+        .map(k => { const t = JSON.parse(localStorage.getItem(k)); return { month_year: t.month_year, name: t.name, status: t.status, winner: t.winner }; });
       const merged = [...local];
       if (!merged.find(x => x.month_year === currentMY))
-        merged.push({ month_year: currentMY, name: `${currentMY} SCL Tournament`, status: 'upcoming' });
+        merged.push({ month_year: currentMY, name: `${currentMY} SCL Tournament`, status: 'upcoming', winner: null });
       MOCK_HISTORY.forEach(m => { if (!merged.find(x => x.month_year === m.month_year)) merged.push(m); });
       setHistory(merged.sort((a, b) => b.month_year.localeCompare(a.month_year)));
     }
@@ -117,14 +121,15 @@ export function useTournament(monthYear) {
     const updated = tournament.rounds.map(r => ({
       ...r,
       games: r.games.map(g => g.id === gameId
-        ? { ...g, winner, gameLink: gameLink || g.gameLink || '' }
+        ? { ...g, winner: winner || null, gameLink: gameLink || '' }
         : g)
     }));
-    const finalWinner = updated.at(-1).games[0]?.winner;
+    const lastRound = updated[updated.length - 1];
+    const finalWinner = (lastRound && lastRound.games.length === 1) ? lastRound.games[0].winner : null;
     const t = {
       ...tournament, rounds: updated,
-      winner: finalWinner?.name ?? tournament.winner,
-      status: finalWinner ? 'completed' : tournament.status
+      winner: finalWinner ? finalWinner.name : (finalWinner === null && lastRound && lastRound.games.length === 1 ? null : tournament.winner),
+      status: finalWinner ? 'completed' : (finalWinner === null && lastRound && lastRound.games.length === 1 ? 'active' : tournament.status)
     };
     if (finalWinner) toast.success(`${finalWinner.name} is the Champion!`, { autoClose: 4000 });
     save(t);

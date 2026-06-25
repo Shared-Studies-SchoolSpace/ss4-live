@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,6 +19,94 @@ const SCHEDULE = [
   { label: 'Day 7', desc: 'Final',        date: 'June 30' },
 ];
 
+function AdminMatchRow({ game, onSave }) {
+  const [winnerUsername, setWinnerUsername] = useState(game.winner?.username || '');
+  const [gameLink, setGameLink] = useState(game.gameLink || '');
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    setWinnerUsername(game.winner?.username || '');
+    setGameLink(game.gameLink || '');
+  }, [game]);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      const selectedWinner = winnerUsername === game.p1?.username 
+        ? game.p1 
+        : winnerUsername === game.p2?.username 
+          ? game.p2 
+          : null;
+      await onSave(selectedWinner, gameLink);
+    } catch (e) {
+      toast.error('Failed to save match result');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all">
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-[10px] font-black text-brand-primary bg-brand-primary/5 px-2 py-0.5 rounded-full uppercase tracking-wider">
+            {game.id}
+          </span>
+          {game.winner && (
+            <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full uppercase tracking-wider">
+              Completed
+            </span>
+          )}
+        </div>
+        <div className="text-sm font-bold text-[#111111] flex items-center gap-2 flex-wrap mt-1">
+          <span className={winnerUsername === game.p1?.username ? 'text-brand-primary font-black underline decoration-2' : ''}>
+            {game.p1?.name}
+          </span>
+          <span className="text-gray-300 font-normal text-xs uppercase tracking-widest">VS</span>
+          <span className={winnerUsername === game.p2?.username ? 'text-brand-primary font-black underline decoration-2' : ''}>
+            {game.p2?.name}
+          </span>
+        </div>
+        <div className="text-[10px] font-bold text-gray-400 mt-1">
+          @{game.p1?.username} ({game.p1?.rating || 'unrated'}) &bull; @{game.p2?.username} ({game.p2?.rating || 'unrated'})
+        </div>
+      </div>
+      
+      <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+        <div className="flex-1 md:flex-initial min-w-[220px]">
+          <input
+            type="url"
+            placeholder="Chess.com Game Link"
+            value={gameLink}
+            onChange={(e) => setGameLink(e.target.value)}
+            className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] placeholder-gray-300 transition-all bg-gray-50/50"
+          />
+        </div>
+
+        <div className="min-w-[160px]">
+          <select
+            value={winnerUsername}
+            onChange={(e) => setWinnerUsername(e.target.value)}
+            className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] transition-all"
+          >
+            <option value="">-- Select Winner --</option>
+            <option value={game.p1?.username}>Winner: {game.p1?.name}</option>
+            <option value={game.p2?.username}>Winner: {game.p2?.name}</option>
+          </select>
+        </div>
+
+        <button
+          onClick={handleSave}
+          disabled={isSaving}
+          className="bg-brand-primary text-white text-xs font-black px-5 py-2.5 rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all disabled:opacity-50 cursor-pointer shrink-0 shadow-sm"
+        >
+          {isSaving ? 'Saving...' : 'Save'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function ChessTournamentPage() {
   const [selectedMonthYear, setSelectedMonthYear] = useState('2026-06');
   const [activeTab, setActiveTab]   = useState('bracket');
@@ -27,8 +115,15 @@ export default function ChessTournamentPage() {
   const [pinInput, setPinInput]     = useState('');
   const [pinErr, setPinErr]         = useState('');
   const [selectedPlayerForModal, setSelectedPlayerForModal] = useState(null);
+  const [adminRoundNum, setAdminRoundNum] = useState(1);
 
   const { tournament, history, isDbFallback, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks } = useTournament(selectedMonthYear);
+
+  useEffect(() => {
+    if (tournament?.rounds?.length) {
+      setAdminRoundNum(tournament.rounds.length);
+    }
+  }, [tournament]);
 
   const submitPin = () => {
     if (pinInput === ADMIN_PIN) { setIsAdmin(true); setPinModal(false); toast.success('Admin unlocked'); }
@@ -452,6 +547,54 @@ export default function ChessTournamentPage() {
                 </button>
               </div>
             </div>
+
+            {/* Update Match Results */}
+            <div className="bg-[#FAF9F5] border border-brand-primary/10 rounded-2xl p-6 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-gray-100 flex-wrap gap-2">
+                <div>
+                  <h3 className="font-space font-black text-lg text-[#111111]">Update Match Results</h3>
+                  <p className="text-xs text-gray-400">Select a winner and game link for any active match, then click Save to sync directly to Supabase.</p>
+                </div>
+                {tournament?.rounds && (
+                  <select
+                    value={adminRoundNum}
+                    onChange={(e) => setAdminRoundNum(Number(e.target.value))}
+                    className="text-xs font-bold px-3 py-1.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer"
+                  >
+                    {tournament.rounds.map(r => (
+                      <option key={r.roundNum} value={r.roundNum}>{r.name}</option>
+                    ))}
+                  </select>
+                )}
+              </div>
+              
+              {!tournament || !tournament.rounds || tournament.rounds.length === 0 ? (
+                <p className="text-sm text-gray-400 italic py-4">No tournament or rounds initialized yet.</p>
+              ) : (() => {
+                const currentAdminRound = tournament.rounds.find(r => r.roundNum === adminRoundNum);
+                if (!currentAdminRound || !currentAdminRound.games || !currentAdminRound.games.length) {
+                  return <p className="text-sm text-gray-400 italic py-4">No matches in this round.</p>;
+                }
+                const gamesToShow = currentAdminRound.games.filter(g => g.p1 && g.p2 && g.p1.username !== 'bye' && g.p2.username !== 'bye');
+                if (gamesToShow.length === 0) {
+                  return <p className="text-sm text-gray-400 italic py-4">All matches in this round are BYEs / auto-advances.</p>;
+                }
+                return (
+                  <div className="space-y-3 max-h-[450px] overflow-y-auto pr-1">
+                    {gamesToShow.map((g) => (
+                      <AdminMatchRow
+                        key={g.id}
+                        game={g}
+                        onSave={(winner, gameLink) => {
+                          logResult(g.id, winner, gameLink);
+                        }}
+                      />
+                    ))}
+                  </div>
+                );
+              })()}
+            </div>
+
             {/* Test cleanup — user requested */}
             <div className="border border-dashed border-amber-200 bg-amber-50/30 rounded-2xl p-5 space-y-3">
               <p className="font-space font-black text-base text-amber-900">Test Data Cleanup</p>

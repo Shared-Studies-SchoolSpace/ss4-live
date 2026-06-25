@@ -43,7 +43,11 @@ const getSchool = (p) => {
 };
 
 // Generate only Round 1 — permanent, called once by admin
-export function generateRound1(players, year, month) {
+export function generateRound1(players, year, month, options = {}) {
+  const targetEloGap = options.targetEloGap ?? 400;
+  const schoolPenalty = options.schoolPenalty ?? 150;
+  const customDate = options.customDate;
+
   // 1. Separate non-provisional and provisional
   const nonProvisional = players.filter(p => !p.isProvisional);
   const provisional = players.filter(p => p.isProvisional);
@@ -93,8 +97,8 @@ export function generateRound1(players, year, month) {
       const p2 = unpaired[i];
       const sameSchool = getSchool(p1) && getSchool(p2) && (getSchool(p1) === getSchool(p2));
       const eloDiff = Math.abs((p1.rating || 0) - (p2.rating || 0));
-      const dev = Math.abs(eloDiff - 400);
-      const cost = dev + (sameSchool ? 150 : 0);
+      const dev = Math.abs(eloDiff - targetEloGap);
+      const cost = dev + (sameSchool ? schoolPenalty : 0);
       
       if (cost < minCost) {
         minCost = cost;
@@ -123,14 +127,18 @@ export function generateRound1(players, year, month) {
   }
 
   const dates = getTournamentDates(year, month);
-  return { roundNum: 1, name: ROUND_NAMES[0], date: dates[0], games: [...byeGames, ...pairedGames] };
+  const roundDate = customDate || dates[0];
+  return { roundNum: 1, name: ROUND_NAMES[0], date: roundDate, games: [...byeGames, ...pairedGames] };
 }
 
 // Generate next round from winners of the last round — called by admin after logging all results
-export function generateNextRound(rounds, year, month) {
+export function generateNextRound(rounds, year, month, options = {}) {
   const last = rounds[rounds.length - 1];
-  const winners = last.games.map(g => g.winner).filter(Boolean);
+  const winners = last.games.map(g => g.winner).filter(w => w && w.username !== 'forfeit');
   const nextNum = last.roundNum + 1;
+  const targetEloGap = options.targetEloGap ?? 400;
+  const schoolPenalty = options.schoolPenalty ?? 150;
+  const customDate = options.customDate;
   const dates = getTournamentDates(year, month);
   const dateIdx = Math.min(nextNum - 1, dates.length - 1);
 
@@ -159,7 +167,7 @@ export function generateNextRound(rounds, year, month) {
   }
 
   // 3. Determine target Elo gap
-  let target = 400;
+  let target = targetEloGap;
   if (target < minAvg) {
     target = minAvg;
   } else if (target > maxAvg) {
@@ -183,7 +191,7 @@ export function generateNextRound(rounds, year, month) {
       const sameSchool = getSchool(p1) && getSchool(p2) && (getSchool(p1) === getSchool(p2));
       const eloDiff = Math.abs((p1.rating || 0) - (p2.rating || 0));
       const dev = Math.abs(eloDiff - target);
-      const cost = dev + (sameSchool ? 150 : 0);
+      const cost = dev + (sameSchool ? schoolPenalty : 0);
       
       if (cost < minCost) {
         minCost = cost;
@@ -210,7 +218,8 @@ export function generateNextRound(rounds, year, month) {
       });
     }
   }
-  return { roundNum: nextNum, name: ROUND_NAMES[nextNum - 1] ?? `Round ${nextNum}`, date: dates[dateIdx], games };
+  const roundDate = customDate || dates[dateIdx];
+  return { roundNum: nextNum, name: ROUND_NAMES[nextNum - 1] ?? `Round ${nextNum}`, date: roundDate, games };
 }
 
 

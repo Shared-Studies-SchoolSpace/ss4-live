@@ -105,9 +105,9 @@ export function useTournament(monthYear) {
   }, [monthYear]);
 
   // Seed Round 1 permanently — called once by admin
-  const initialize = () => {
+  const initialize = (options = {}) => {
     const [y, m] = monthYear.split('-').map(Number);
-    const round1 = generateRound1(tournamentPlayers, y, m);
+    const round1 = generateRound1(tournamentPlayers, y, m, options);
     const t = {
       id: monthYear, name: `${monthYear} SCL Tournament`,
       month_year: monthYear, status: 'active', winner: null,
@@ -125,11 +125,12 @@ export function useTournament(monthYear) {
         : g)
     }));
     const lastRound = updated[updated.length - 1];
-    const finalWinner = (lastRound && lastRound.games.length === 1) ? lastRound.games[0].winner : null;
+    const rawWinner = (lastRound && lastRound.games.length === 1) ? lastRound.games[0].winner : null;
+    const finalWinner = (rawWinner && rawWinner.username !== 'forfeit') ? rawWinner : null;
     const t = {
       ...tournament, rounds: updated,
-      winner: finalWinner ? finalWinner.name : (finalWinner === null && lastRound && lastRound.games.length === 1 ? null : tournament.winner),
-      status: finalWinner ? 'completed' : (finalWinner === null && lastRound && lastRound.games.length === 1 ? 'active' : tournament.status)
+      winner: finalWinner ? finalWinner.name : (rawWinner === null && lastRound && lastRound.games.length === 1 ? null : tournament.winner),
+      status: finalWinner ? 'completed' : (rawWinner === null && lastRound && lastRound.games.length === 1 ? 'active' : tournament.status)
     };
     if (finalWinner) toast.success(`${finalWinner.name} is the Champion!`, { autoClose: 4000 });
     save(t);
@@ -144,13 +145,13 @@ export function useTournament(monthYear) {
   };
 
   // Generate next round from current winners — admin calls after all results are logged
-  const advanceRound = () => {
+  const advanceRound = (options = {}) => {
     const [y, m] = monthYear.split('-').map(Number);
     const last = tournament.rounds[tournament.rounds.length - 1];
     const allDone = last.games.every(g => g.winner);
     if (!allDone) { toast.error('Log all match results before generating the next round.'); return; }
     if (last.games.length === 1) { toast.info('Tournament complete — no more rounds.'); return; }
-    const nextRound = generateNextRound(tournament.rounds, y, m);
+    const nextRound = generateNextRound(tournament.rounds, y, m, options);
     save({ ...tournament, rounds: [...tournament.rounds, nextRound] });
   };
 

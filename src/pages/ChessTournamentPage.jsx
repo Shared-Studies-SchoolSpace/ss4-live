@@ -3,6 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useTournament } from '../hooks/useTournament';
+import { tournamentPlayers } from '../data/tournamentPlayers';
+import { getTournamentDates } from '../utils/tournament';
 import { TournamentHero } from '../components/tournament/TournamentHero';
 import { BracketTab } from '../components/tournament/BracketTab';
 import { TournamentPlayerModal } from '../components/tournament/TournamentPlayerModal';
@@ -36,7 +38,9 @@ function AdminMatchRow({ game, onSave }) {
         ? game.p1 
         : winnerUsername === game.p2?.username 
           ? game.p2 
-          : null;
+          : winnerUsername === 'forfeit'
+            ? { username: 'forfeit', name: 'Double Forfeit', rating: 0, school: '' }
+            : null;
       await onSave(selectedWinner, gameLink);
     } catch (e) {
       toast.error('Failed to save match result');
@@ -92,6 +96,7 @@ function AdminMatchRow({ game, onSave }) {
             <option value="">-- Select Winner --</option>
             <option value={game.p1?.username}>Winner: {game.p1?.name}</option>
             <option value={game.p2?.username}>Winner: {game.p2?.name}</option>
+            <option value="forfeit">Double Forfeit (Both Removed)</option>
           </select>
         </div>
 
@@ -116,12 +121,60 @@ export default function ChessTournamentPage() {
   const [pinErr, setPinErr]         = useState('');
   const [selectedPlayerForModal, setSelectedPlayerForModal] = useState(null);
   const [adminRoundNum, setAdminRoundNum] = useState(1);
+  const [adminSubView, setAdminSubView] = useState('main'); // 'main' | 'generate-r1' | 'generate-next'
+  const [activeFixtureRound, setActiveFixtureRound] = useState(1);
+  const [paramTargetElo, setParamTargetElo] = useState(400);
+  const [paramSchoolPenalty, setParamSchoolPenalty] = useState(150);
+  const [paramCustomDate, setParamCustomDate] = useState('');
+
+  const handleOpenR1Gen = () => {
+    const [y, m] = selectedMonthYear.split('-').map(Number);
+    const dates = getTournamentDates(y, m);
+    setParamCustomDate(dates[0]);
+    setParamTargetElo(400);
+    setParamSchoolPenalty(150);
+    setAdminSubView('generate-r1');
+  };
+
+  const handleOpenNextGen = () => {
+    const [y, m] = selectedMonthYear.split('-').map(Number);
+    const dates = getTournamentDates(y, m);
+    const nextNum = (tournament?.rounds?.length || 0) + 1;
+    const dateIdx = Math.min(nextNum - 1, dates.length - 1);
+    setParamCustomDate(dates[dateIdx]);
+    setParamTargetElo(400);
+    setParamSchoolPenalty(150);
+    setAdminSubView('generate-next');
+  };
+
+  const getSeededPlayersR1 = () => {
+    const nonProvisional = tournamentPlayers.filter(p => !p.isProvisional);
+    const provisional = tournamentPlayers.filter(p => p.isProvisional);
+    nonProvisional.sort((a, b) => b.rating - a.rating);
+    const shuffledProvisional = [...provisional].sort((a, b) => {
+      const hashA = [...(a.username || '')].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
+      const hashB = [...(b.username || '')].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
+      return hashA - hashB || a.username.localeCompare(b.username);
+    });
+    const sorted = [...nonProvisional, ...shuffledProvisional];
+    const numByes = 64 - sorted.length;
+    const byes = sorted.slice(0, numByes);
+    const active = sorted.slice(numByes);
+    return { byes, active };
+  };
+
+  const getSeededPlayersNext = () => {
+    if (!tournament?.rounds?.length) return [];
+    const last = tournament.rounds[tournament.rounds.length - 1];
+    return last.games.map(g => g.winner).filter(w => w && w.username !== 'forfeit');
+  };
 
   const { tournament, history, isDbFallback, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks } = useTournament(selectedMonthYear);
 
   useEffect(() => {
     if (tournament?.rounds?.length) {
       setAdminRoundNum(tournament.rounds.length);
+      setActiveFixtureRound(tournament.rounds.length);
     }
   }, [tournament]);
 
@@ -220,12 +273,15 @@ export default function ChessTournamentPage() {
                     {r.completedGames.map((g) => {
                       const isP1Winner = g.winner?.username === g.p1?.username;
                       const isP2Winner = g.winner?.username === g.p2?.username;
+                      const isForfeit = g.winner?.username === 'forfeit';
                       return (
                         <div key={g.id} className="py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                           <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
                             {/* Player 1 */}
                             <div className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${
-                              isP1Winner ? 'bg-emerald-50/40 border-emerald-100' : 'bg-gray-50/50 border-gray-100'
+                              isP1Winner ? 'bg-emerald-50/40 border-emerald-100' :
+                              isForfeit ? 'bg-red-50/40 border-red-100' :
+                              'bg-gray-50/50 border-gray-100'
                             }`}>
                               <div className="min-w-0 flex-1">
                                 <button
@@ -243,11 +299,18 @@ export default function ChessTournamentPage() {
                                   Winner
                                 </span>
                               )}
+                              {isForfeit && (
+                                <span className="text-[10px] font-black uppercase text-red-700 bg-red-100 px-2 py-1 rounded shrink-0 ml-2">
+                                  Forfeit
+                                </span>
+                              )}
                             </div>
 
                             {/* Player 2 */}
                             <div className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${
-                              isP2Winner ? 'bg-emerald-50/40 border-emerald-100' : 'bg-gray-50/50 border-gray-100'
+                              isP2Winner ? 'bg-emerald-50/40 border-emerald-100' :
+                              isForfeit ? 'bg-red-50/40 border-red-100' :
+                              'bg-gray-50/50 border-gray-100'
                             }`}>
                               <div className="min-w-0 flex-1">
                                 <button
@@ -263,6 +326,11 @@ export default function ChessTournamentPage() {
                               {isP2Winner && (
                                 <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2 py-1 rounded shrink-0 ml-2">
                                   Winner
+                                </span>
+                              )}
+                              {isForfeit && (
+                                <span className="text-[10px] font-black uppercase text-red-700 bg-red-100 px-2 py-1 rounded shrink-0 ml-2">
+                                  Forfeit
                                 </span>
                               )}
                             </div>
@@ -289,46 +357,70 @@ export default function ChessTournamentPage() {
         )}
         {/* FIXTURES */}
         {activeTab === 'fixtures' && (
-          <div className="space-y-6">
-            {!tournament ? (
+          <div className="space-y-4">
+            {!tournament || !tournament.rounds?.length ? (
               <p className="text-center text-gray-400 py-20 text-base font-bold">No fixtures generated yet.</p>
-            ) : tournament.rounds.map(r => {
-              const active = r.games.filter(g => g.p1 && g.p2 && g.p2.username !== 'bye');
-              if (!active.length) return null;
+            ) : (() => {
+              const currentRound = tournament.rounds.find(r => r.roundNum === activeFixtureRound) || tournament.rounds[tournament.rounds.length - 1];
+              const activeGames = currentRound.games.filter(g => g.p1 && g.p2 && g.p2.username !== 'bye');
               return (
-                <div key={r.roundNum} className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-50">
-                    <h3 className="font-space font-black text-lg text-[#111111]">{r.name}</h3>
-                    <span className="text-xs font-bold text-brand-primary bg-brand-primary/5 px-3 py-1.5 rounded-full">{r.date}</span>
+                <>
+                  {/* Round Selector Tabs */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
+                    <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
+                      {tournament.rounds.map(r => (
+                        <button key={r.roundNum} onClick={() => { setActiveFixtureRound(r.roundNum); }}
+                          className={`text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors ${
+                            activeFixtureRound === r.roundNum ? 'bg-brand-primary text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'
+                          }`}>
+                          {r.name}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <div className="divide-y divide-gray-50">
-                    {active.map((g, i) => (
-                      <div key={g.id} className="py-4 flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-3 flex-1 min-w-0">
-                          <button
-                            onClick={() => setSelectedPlayerForModal(g.p1)}
-                            className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none"
-                          >
-                            {g.p1?.name}
-                          </button>
-                          <span className="text-xs font-black text-brand-accent shrink-0 select-none">VS</span>
-                          <button
-                            onClick={() => setSelectedPlayerForModal(g.p2)}
-                            className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none"
-                          >
-                            {g.p2?.name}
-                          </button>
-                        </div>
-                        {g.winner
-                          ? <span className="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-lg shrink-0">Won: {g.winner.name}</span>
-                          : <span className="text-xs bg-amber-50 text-amber-600 font-bold px-3 py-1.5 rounded-lg shrink-0">Pending</span>
-                        }
+
+                  {/* Games for the selected round */}
+                  <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-50">
+                      <h3 className="font-space font-black text-lg text-[#111111]">{currentRound.name}</h3>
+                      <span className="text-xs font-bold text-brand-primary bg-brand-primary/5 px-3 py-1.5 rounded-full">
+                        {currentRound.date} @ 6:00 PM
+                      </span>
+                    </div>
+                    
+                    {!activeGames.length ? (
+                      <p className="text-sm text-gray-400 italic py-4 text-center">No active matches in this round (all BYEs / auto-advances).</p>
+                    ) : (
+                      <div className="divide-y divide-gray-50">
+                        {activeGames.map((g, i) => (
+                          <div key={g.id} className="py-4 flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-3 flex-1 min-w-0">
+                              <button
+                                onClick={() => setSelectedPlayerForModal(g.p1)}
+                                className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none"
+                              >
+                                {g.p1?.name}
+                              </button>
+                              <span className="text-xs font-black text-brand-accent shrink-0 select-none">VS</span>
+                              <button
+                                onClick={() => setSelectedPlayerForModal(g.p2)}
+                                className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none"
+                              >
+                                {g.p2?.name}
+                              </button>
+                            </div>
+                            {g.winner
+                              ? <span className="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-lg shrink-0">Won: {g.winner.name}</span>
+                              : <span className="text-xs bg-amber-50 text-amber-600 font-bold px-3 py-1.5 rounded-lg shrink-0">Pending</span>
+                            }
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    )}
                   </div>
-                </div>
+                </>
               );
-            })}
+            })()}
           </div>
         )}
 
@@ -525,18 +617,26 @@ export default function ChessTournamentPage() {
         )}
 
         {/* ADMIN */}
-        {activeTab === 'admin' && isAdmin && (
+        {activeTab === 'admin' && isAdmin && adminSubView === 'main' && (
           <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm space-y-8">
             <div className="flex items-center justify-between pb-4 border-b border-gray-100">
               <h2 className="font-space font-black text-2xl text-[#111111]">Admin Panel</h2>
               <span className="text-xs font-bold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">Unlocked</span>
             </div>
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-3 gap-6">
               <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-6 space-y-3">
                 <p className="font-space font-black text-base text-[#111111]">Initialize Bracket</p>
                 <p className="text-sm text-gray-500">Seed {selectedMonthYear} tournament with 53 registered players.</p>
-                <button onClick={() => { if (window.confirm('Initialize?')) initialize(); }} className="bg-brand-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-brand-primary/90 transition-colors">
+                <button onClick={handleOpenR1Gen} className="bg-brand-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-brand-primary/90 transition-colors">
                   Generate Bracket
+                </button>
+              </div>
+              <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6 space-y-3">
+                <p className="font-space font-black text-base text-[#111111]">Advance Tournament</p>
+                {/* ponytail: calls advanceRound hook function directly */}
+                <p className="text-sm text-gray-500">Generate next round fixtures from current winners.</p>
+                <button onClick={handleOpenNextGen} className="bg-emerald-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-emerald-500 transition-colors">
+                  Generate Next Round
                 </button>
               </div>
               <div className="bg-red-50 border border-red-100 rounded-2xl p-6 space-y-3">
@@ -607,6 +707,223 @@ export default function ChessTournamentPage() {
                   Lock Panel
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* ADMIN GENERATE R1 VIEW */}
+        {activeTab === 'admin' && isAdmin && adminSubView === 'generate-r1' && (
+          <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm space-y-6">
+            <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
+              <button 
+                onClick={() => setAdminSubView('main')}
+                className="text-gray-400 hover:text-[#111111] transition-colors cursor-pointer"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+              </button>
+              <div>
+                <h2 className="font-space font-black text-2xl text-[#111111]">Generate Round 1 Fixtures</h2>
+                <p className="text-xs text-gray-400">Configure pairing parameters and verify seeding before bracket generation.</p>
+              </div>
+            </div>
+
+            {/* Parameters Grid */}
+            <div className="grid md:grid-cols-3 gap-6 bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+              <div className="space-y-1.5">
+                <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Round Date</label>
+                <input 
+                  type="text" 
+                  value={paramCustomDate}
+                  onChange={(e) => setParamCustomDate(e.target.value)}
+                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Target Elo Gap</label>
+                <input 
+                  type="number" 
+                  value={paramTargetElo}
+                  onChange={(e) => setParamTargetElo(Number(e.target.value))}
+                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-black uppercase text-gray-500 tracking-wider">School Protection Weight</label>
+                <input 
+                  type="number" 
+                  value={paramSchoolPenalty}
+                  onChange={(e) => setParamSchoolPenalty(Number(e.target.value))}
+                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                />
+              </div>
+            </div>
+
+            {/* Seeded Players Section */}
+            <div className="space-y-3">
+              <h3 className="font-space font-black text-lg text-[#111111]">Seeding Preview</h3>
+              {(() => {
+                const { byes, active } = getSeededPlayersR1();
+                return (
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {/* BYEs */}
+                    <div className="border border-amber-100 bg-amber-50/20 rounded-2xl p-5 space-y-3">
+                      <div className="flex items-center justify-between pb-2 border-b border-amber-100/50">
+                        <span className="font-space font-black text-sm text-amber-900">BYE Seeding ({byes.length})</span>
+                        <span className="text-[10px] font-black text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full uppercase">Auto-Advance</span>
+                      </div>
+                      <div className="space-y-2 max-h-[250px] overflow-y-auto pr-1">
+                        {byes.map(p => (
+                          <div key={p.username} className="flex justify-between items-center text-xs p-2 bg-white rounded-lg border border-amber-100/50">
+                            <div>
+                              <p className="font-bold text-amber-950">{p.name}</p>
+                              <p className="text-gray-400 text-[10px]">{p.school} &bull; @{p.username}</p>
+                            </div>
+                            <span className="font-black text-amber-700">{p.rating} ELO</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Active Matchups */}
+                    <div className="border border-brand-primary/10 bg-brand-primary/5 rounded-2xl p-5 space-y-3">
+                      <div className="flex items-center justify-between pb-2 border-b border-brand-primary/10">
+                        <span className="font-space font-black text-sm text-[#111111]">Active Matchups Seeding ({active.length})</span>
+                        <span className="text-[10px] font-black text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-full uppercase">Round 1 Opponents</span>
+                      </div>
+                      <div className="space-y-2 max-h-[250px] overflow-y-auto pr-1">
+                        {active.map(p => (
+                          <div key={p.username} className="flex justify-between items-center text-xs p-2 bg-white rounded-lg border border-gray-100">
+                            <div>
+                              <p className="font-bold text-[#111111]">{p.name}</p>
+                              <p className="text-gray-400 text-[10px]">{p.school} &bull; @{p.username}</p>
+                            </div>
+                            <span className="font-black text-brand-primary">{p.rating} ELO</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Actions */}
+            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+              <button 
+                onClick={() => setAdminSubView('main')}
+                className="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-500 rounded-xl text-sm font-bold cursor-pointer transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => {
+                  initialize({
+                    targetEloGap: paramTargetElo,
+                    schoolPenalty: paramSchoolPenalty,
+                    customDate: paramCustomDate
+                  });
+                  setAdminSubView('main');
+                  toast.success('Round 1 fixtures generated successfully!');
+                }}
+                className="px-6 py-2.5 bg-brand-primary hover:bg-brand-primary/95 text-white rounded-xl text-sm font-bold cursor-pointer transition-colors"
+              >
+                Generate Bracket
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ADMIN GENERATE NEXT VIEW */}
+        {activeTab === 'admin' && isAdmin && adminSubView === 'generate-next' && (
+          <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm space-y-6">
+            <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
+              <button 
+                onClick={() => setAdminSubView('main')}
+                className="text-gray-400 hover:text-[#111111] transition-colors cursor-pointer"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+              </button>
+              <div>
+                <h2 className="font-space font-black text-2xl text-[#111111]">Generate Next Round Fixtures</h2>
+                <p className="text-xs text-gray-400">Configure pairing parameters and verify survivors before advancing.</p>
+              </div>
+            </div>
+
+            {/* Parameters Grid */}
+            <div className="grid md:grid-cols-3 gap-6 bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+              <div className="space-y-1.5">
+                <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Round Date</label>
+                <input 
+                  type="text" 
+                  value={paramCustomDate}
+                  onChange={(e) => setParamCustomDate(e.target.value)}
+                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Target Elo Gap</label>
+                <input 
+                  type="number" 
+                  value={paramTargetElo}
+                  onChange={(e) => setParamTargetElo(Number(e.target.value))}
+                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-black uppercase text-gray-500 tracking-wider">School Protection Weight</label>
+                <input 
+                  type="number" 
+                  value={paramSchoolPenalty}
+                  onChange={(e) => setParamSchoolPenalty(Number(e.target.value))}
+                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                />
+              </div>
+            </div>
+
+            {/* Surviving Players preview */}
+            <div className="space-y-3">
+              <h3 className="font-space font-black text-lg text-[#111111]">Surviving Players Seeding ({getSeededPlayersNext().length})</h3>
+              <div className="border border-brand-accent/10 bg-brand-accent/5 rounded-2xl p-5">
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[250px] overflow-y-auto pr-1">
+                  {getSeededPlayersNext().map(p => (
+                    <div key={p.username} className="flex justify-between items-center text-xs p-2.5 bg-white rounded-lg border border-gray-100">
+                      <div>
+                        <p className="font-bold text-[#111111]">{p.name}</p>
+                        <p className="text-gray-400 text-[10px]">{p.school} &bull; @{p.username}</p>
+                      </div>
+                      <span className="font-black text-brand-accent shrink-0 ml-2">{p.rating} ELO</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+              <button 
+                onClick={() => setAdminSubView('main')}
+                className="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-500 rounded-xl text-sm font-bold cursor-pointer transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => {
+                  advanceRound({
+                    targetEloGap: paramTargetElo,
+                    schoolPenalty: paramSchoolPenalty,
+                    customDate: paramCustomDate
+                  });
+                  setAdminSubView('main');
+                  toast.success('Next round fixtures generated successfully!');
+                }}
+                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold cursor-pointer transition-colors"
+              >
+                Generate Next Round
+              </button>
             </div>
           </div>
         )}

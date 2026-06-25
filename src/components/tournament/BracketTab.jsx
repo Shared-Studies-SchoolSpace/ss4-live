@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
@@ -84,8 +84,10 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
         </div>
         <div className="flex items-center gap-2">
           {isMatchDone && !isByeMatch && (
-            <span className="text-[10px] font-black text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded-full">
-              DONE
+            <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${
+              game.winner?.username === 'forfeit' ? 'text-red-600 bg-red-100' : 'text-emerald-600 bg-emerald-100'
+            }`}>
+              {game.winner?.username === 'forfeit' ? 'DOUBLE FORFEIT' : 'DONE'}
             </span>
           )}
           {isByeMatch && (
@@ -129,6 +131,12 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
   const [activeRound, setActiveRound] = useState(1);
   const [loggingGame, setLoggingGame] = useState(null);
   const [gameLinkInput, setGameLinkInput] = useState('');
+
+  useEffect(() => {
+    if (tournament?.rounds?.length) {
+      setActiveRound(tournament.rounds.length);
+    }
+  }, [tournament?.rounds?.length]);
 
   const openModal = (game) => { setLoggingGame(game); setGameLinkInput(game.gameLink || ''); };
   const closeModal = () => { setLoggingGame(null); setGameLinkInput(''); };
@@ -193,7 +201,7 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
       {/* Round grid */}
       {round && (
         <div>
-          <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date}</p>
+          <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date} @ 6:00 PM</p>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {round.games.map((g, i) => (
               <MatchCard key={g.id} game={g} idx={i} isAdmin={isAdmin} onClick={openModal} onPlayerClick={onPlayerClick} />
@@ -238,6 +246,15 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
                   <p className="text-xs text-gray-400 mt-0.5">{p.school} · @{p.username}</p>
                 </button>
               ))}
+              <button
+                onClick={() => { 
+                  onLogResult(loggingGame.id, { username: 'forfeit', name: 'Double Forfeit', rating: 0, school: '' }, gameLinkInput); 
+                  closeModal(); 
+                }}
+                className="w-full text-left p-4 border border-red-200 hover:border-red-400 hover:bg-red-50 rounded-xl transition-all cursor-pointer">
+                <p className="text-base font-black text-red-600">Double Forfeit</p>
+                <p className="text-xs text-red-400 mt-0.5">Eliminates both players from tournament</p>
+              </button>
             </div>
             <button onClick={closeModal} className="mt-4 w-full text-sm font-bold text-gray-400 py-2 hover:text-gray-600 cursor-pointer">Cancel</button>
           </div>

@@ -16,6 +16,7 @@ import ChessLeaguePage from './pages/ChessLeaguePage';
 import ChessTournamentPage from './pages/ChessTournamentPage';
 import TertiaryPage from './pages/TertiaryPage';
 import TertiaryDetailPage from './pages/TertiaryDetailPage';
+import DashboardPage from './pages/DashboardPage';
 
 import BackToTop from './components/BackToTop';
 import ScrollToTop from './components/ScrollToTop';
@@ -40,8 +41,10 @@ function App() {
             <Route path="/chess-league/tournament" element={<ChessTournamentPage />} />
             <Route path="/tertiary" element={<TertiaryPage />} />
             <Route path="/tertiary/:id" element={<TertiaryDetailPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
           </Routes>
         </main>
+
         <Footer />
         <BackToTop />
       </div>

@@ -1,8 +1,8 @@
-export default function Input({ ...props }) {
+export default function Input({ className = "", ...props }) {
   return (
     <input
       {...props}
-      className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-800 focus:ring-primary focus:border-primary"
+      className={`w-full varsity-input text-brand-text-dark font-medium placeholder-gray-400 ${className}`}
     />
   );
 }

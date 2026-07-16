@@ -37,8 +37,8 @@ export default function ChessLeaguePage() {
   const [currentRound, setCurrentRound] = useState(1);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showPinModal, setShowPinModal] = useState(false);
-  const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState('');
+  const [showPin, setShowPin] = useState(false);
 
   // Division creation state
   const [newDivName, setNewDivName] = useState('');
@@ -52,6 +52,7 @@ export default function ChessLeaguePage() {
 
       const forkExists = currentDivisions.find(d => d.id === 'default');
       const pinExists = currentDivisions.find(d => d.id === 'pin');
+      const aExists = currentDivisions.find(d => d.id === 'a_division');
 
       if (!forkExists) {
         const defaultDiv = {
@@ -71,6 +72,16 @@ export default function ChessLeaguePage() {
           rounds: []
         };
         await supabase.from('divisions').upsert(pinDiv);
+      }
+
+      if (!aExists) {
+        const aDiv = {
+          id: 'a_division',
+          name: 'A Division',
+          players: [],
+          rounds: []
+        };
+        await supabase.from('divisions').upsert(aDiv);
       }
 
       const { data: updatedData } = await supabase.from('divisions').select('*');
@@ -214,6 +225,7 @@ export default function ChessLeaguePage() {
     } else {
       setPinInput('');
       setPinError('');
+      setShowPin(false);
       setShowPinModal(true);
     }
   };
@@ -234,6 +246,70 @@ export default function ChessLeaguePage() {
     } else {
       setPinError('Incorrect PIN. Try again.');
       setPinInput('');
+    }
+  };
+
+  const extractUsername = (label) => {
+    if (!label) return '';
+    const match = label.match(/\((.*?)\)$/);
+    return match ? match[1].trim() : label.trim();
+  };
+
+  const notifyOpponentsForGames = async (games, roundName) => {
+    try {
+      if (!games || games.length === 0) return;
+      const usernames = games.flatMap(g => g).map(label => extractUsername(label)).filter(Boolean);
+      if (usernames.length === 0) return;
+
+      const { data: profiles, error } = await supabase
+        .from('profiles')
+        .select('id, name, chess_username, lichess_username')
+        .or(`chess_username.in.(${usernames.join(',')}),lichess_username.in.(${usernames.join(',')})`);
+
+      if (error) throw error;
+      if (!profiles || profiles.length === 0) return;
+
+      const profileMap = {};
+      profiles.forEach(p => {
+        if (p.chess_username) profileMap[p.chess_username.toLowerCase()] = p;
+        if (p.lichess_username) profileMap[p.lichess_username.toLowerCase()] = p;
+      });
+
+      const notificationsToInsert = [];
+
+      games.forEach(([w, b]) => {
+        const wUser = extractUsername(w);
+        const bUser = extractUsername(b);
+
+        const whiteProfile = profileMap[wUser?.toLowerCase()];
+        const blackProfile = profileMap[bUser?.toLowerCase()];
+
+        if (whiteProfile) {
+          notificationsToInsert.push({
+            user_id: whiteProfile.id,
+            type: 'opponent_assigned',
+            title: 'Opponent Assigned! ♟',
+            message: `Opponent: ${blackProfile ? blackProfile.name : bUser}. Round: ${roundName}. Match Link: /dashboard?tab=pairings. Scheduled time: To be agreed in Match Chat.`,
+            link: '/dashboard?tab=pairings'
+          });
+        }
+
+        if (blackProfile) {
+          notificationsToInsert.push({
+            user_id: blackProfile.id,
+            type: 'opponent_assigned',
+            title: 'Opponent Assigned! ♟',
+            message: `Opponent: ${whiteProfile ? whiteProfile.name : wUser}. Round: ${roundName}. Match Link: /dashboard?tab=pairings. Scheduled time: To be agreed in Match Chat.`,
+            link: '/dashboard?tab=pairings'
+          });
+        }
+      });
+
+      if (notificationsToInsert.length > 0) {
+        await supabase.from('notifications').insert(notificationsToInsert);
+      }
+    } catch (err) {
+      console.warn('Failed to insert opponent assignment notifications:', err.message);
     }
   };
 
@@ -273,6 +349,12 @@ export default function ChessLeaguePage() {
 
     try {
       await supabase.from('divisions').insert(newDiv);
+      
+      // Notify opponents of games in all generated rounds
+      for (const r of (generatedRounds || [])) {
+        await notifyOpponentsForGames(r.games, `Round ${r.round}`);
+      }
+
       setNewDivName('');
       setNewDivPlayers('');
       setSelectedDivisionId(newId);
@@ -328,6 +410,10 @@ export default function ChessLeaguePage() {
 
     try {
       await supabase.from('divisions').update({ rounds: newRounds }).eq('id', currentDivision.id);
+      
+      // Notify opponents of games in the newly created Swiss round
+      await notifyOpponentsForGames(nextGames, `Round ${nextRoundNum}`);
+
       toast.success(`Round ${nextRoundNum} fixtures created using Swiss system!`, { theme: 'dark' });
     } catch (e) {
       toast.error('Failed to create fixtures');
@@ -488,7 +574,7 @@ export default function ChessLeaguePage() {
         {!searchResults && (
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
             {/* Division Selector */}
-            <div className="flex items-center gap-3 bg-white border border-gray-100 px-5 py-2.5 rounded-2xl shadow-sm">
+            <div className="flex items-center gap-3 varsity-card px-5 py-2">
               <span className="text-xs font-black text-gray-400 uppercase tracking-widest">Division:</span>
               <select 
                 value={selectedDivisionId} 
@@ -583,6 +669,7 @@ export default function ChessLeaguePage() {
                 setCurrentRound={setCurrentRound}
                 gameResults={gameResults}
                 handleSetResult={handleSetResult}
+                onPlayerSelect={(p) => setSelectedPlayer(p)}
               />
             )}
             {activeTab === 'fixtures' && (
@@ -591,6 +678,7 @@ export default function ChessLeaguePage() {
                 gameResults={gameResults} 
                 currentRound={currentRound}
                 setCurrentRound={setCurrentRound}
+                onPlayerSelect={(p) => setSelectedPlayer(p)}
               />
             )}
             {activeTab === 'admin' && (
@@ -632,37 +720,53 @@ export default function ChessLeaguePage() {
           onClick={() => setShowPinModal(false)}
         >
           <div 
-            className="bg-white rounded-3xl p-8 max-w-sm w-full relative shadow-2xl border border-gray-100 flex flex-col items-center text-center animate-in zoom-in-95 duration-150"
+            className="varsity-card p-8 max-w-sm w-full relative flex flex-col items-center text-center animate-in zoom-in-95 duration-150"
             onClick={e => e.stopPropagation()}
           >
-            <h3 className="text-lg font-black font-space text-[#111111] mb-2">🔐 Admin Login</h3>
+            <h3 className="text-lg font-black font-space text-[#111111] mb-2 flex items-center justify-center gap-1.5">
+              <span className="material-symbols-outlined text-[20px] select-none text-brand-primary" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
+              Admin Login
+            </h3>
             <p className="text-xs text-gray-500 font-semibold mb-6">Enter your 4-digit PIN to manage pairings and record results.</p>
             
-            <input
-              type="password"
-              inputMode="numeric"
-              maxLength={8}
-              placeholder="&bull; &bull; &bull; &bull;"
-              value={pinInput}
-              onChange={e => { setPinInput(e.target.value); setPinError(''); }}
-              onKeyDown={e => e.key === 'Enter' && submitPin()}
-              autoFocus
-              className={`w-40 text-center px-4 py-3 text-lg font-black tracking-[0.4em] bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-brand-primary mb-2 ${
-                pinError ? 'border-red-300 text-red-500 bg-red-50/50' : ''
-              }`}
-            />
+            <div className="relative flex items-center justify-center w-full">
+              <input
+                type={showPin ? "text" : "password"}
+                inputMode="numeric"
+                maxLength={8}
+                placeholder="&bull; &bull; &bull; &bull;"
+                value={pinInput}
+                onChange={e => { setPinInput(e.target.value); setPinError(''); }}
+                onKeyDown={e => e.key === 'Enter' && submitPin()}
+                autoFocus
+                className={`w-40 text-center varsity-input text-lg font-black tracking-[0.4em] mb-2 pr-10 ${
+                  pinError ? 'border-red-300 text-red-500 bg-red-50/50' : ''
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPin(!showPin)}
+                className="absolute text-gray-400 hover:text-gray-650 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
+                style={{ right: 'calc(50% - 72px)', top: '14px' }}
+                aria-label={showPin ? "Hide PIN" : "Show PIN"}
+              >
+                <span className="material-symbols-outlined text-[18px]">
+                  {showPin ? "visibility_off" : "visibility"}
+                </span>
+              </button>
+            </div>
             
             {pinError && <div className="text-xs font-bold text-red-500 mb-4">{pinError}</div>}
             
             <div className="flex gap-3 w-full mt-4">
               <button 
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-500 font-bold text-xs py-2.5 rounded-xl cursor-pointer transition-colors"
+                className="flex-1 varsity-btn-secondary text-xs py-2"
                 onClick={() => setShowPinModal(false)}
               >
                 Cancel
               </button>
               <button 
-                className="flex-1 bg-brand-primary hover:bg-brand-primary/95 text-white font-bold text-xs py-2.5 rounded-xl cursor-pointer transition-colors"
+                className="flex-1 varsity-btn-primary text-xs py-2"
                 onClick={submitPin}
               >
                 Unlock

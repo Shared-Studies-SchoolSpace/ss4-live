@@ -1,13 +1,42 @@
 @import "tailwindcss";
 
 @theme {
+  /* Brand Specific Colors */
   --color-brand-primary: #1A56C4;
   --color-brand-accent: #E8640A;
   --color-brand-bg-cream: #F6F4F0;
   --color-brand-text-dark: #111111;
 
+  /* Font Families */
   --font-space: "Space Grotesk", sans-serif;
-  --font-avenir: "Avenir Next", "Avenir", "Helvetica Neue", sans-serif;
+  --font-avenir: "Outfit", sans-serif;
+
+  /* Material 3 Semantic Colors Mapped to Varsity Theme */
+  --color-m3-primary: #1A56C4;
+  --color-m3-on-primary: #FFFFFF;
+  --color-m3-primary-container: #E8EFFF;
+  --color-m3-on-primary-container: #00194B;
+
+  --color-m3-secondary: #E8640A;
+  --color-m3-on-secondary: #FFFFFF;
+  --color-m3-secondary-container: #FFEEDB;
+  --color-m3-on-secondary-container: #2E0E00;
+
+  --color-m3-surface: #FFFFFF;
+  --color-m3-on-surface: #111111;
+  --color-m3-surface-variant: #F0EEEA;
+  --color-m3-on-surface-variant: #444444;
+
+  --color-m3-background: #F6F4F0;
+  --color-m3-on-background: #111111;
+
+  --color-m3-outline: #CCCCCC;
+  --color-m3-outline-variant: #EAEAEA;
+
+  /* Container states (Flat elevations) */
+  --color-m3-surface-low: #FAF8F4;
+  --color-m3-surface-high: #EBE9E4;
+  --color-m3-surface-highest: #E0DDD7;
 }
 
 :root {
@@ -17,6 +46,7 @@
 
   color: var(--color-brand-text-dark);
   background-color: var(--color-brand-bg-cream);
+  min-height: 100vh;
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -26,9 +56,11 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: var(--color-brand-bg-cream);
+  min-height: 100vh;
 }
 
-/* Global utility for noise texture if needed */
+/* Global utility for noise texture */
 .bg-noise {
   background-image: url("/home/noise.png");
 }
@@ -47,4 +79,174 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none; /* IE/Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+/* Material 3 Outlined Card (Flat, Structured, High-contrast) */
+.varsity-card {
+  background: var(--color-m3-surface);
+  border: 1px solid var(--color-m3-outline-variant);
+  border-radius: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.015);
+  transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.varsity-card:hover {
+  background: var(--color-m3-surface);
+  border-color: var(--color-brand-primary);
+  box-shadow: 0 4px 16px rgba(26, 86, 196, 0.05);
+  transform: translateY(-1px);
+}
+
+/* Material 3 Pill Button - Primary (Filled) */
+.varsity-btn-primary {
+  background-color: var(--color-brand-primary);
+  color: #FFFFFF;
+  border-radius: 9999px;
+  min-height: 48px;
+  padding: 10px 24px;
+  font-weight: 700;
+  font-family: var(--font-avenir);
+  transition: all 180ms cubic-bezier(0.2, 0, 0, 1);
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.varsity-btn-primary:hover {
+  background-color: #1545A2;
+  box-shadow: 0 2px 8px rgba(26, 86, 196, 0.25);
+  transform: translateY(-0.5px);
+}
+
+.varsity-btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Material 3 Pill Button - Secondary (Outlined) */
+.varsity-btn-secondary {
+  background-color: transparent;
+  color: var(--color-brand-primary);
+  border: 1px solid var(--color-brand-primary);
+  border-radius: 9999px;
+  min-height: 48px;
+  padding: 10px 24px;
+  font-weight: 700;
+  font-family: var(--font-avenir);
+  transition: all 180ms cubic-bezier(0.2, 0, 0, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.varsity-btn-secondary:hover {
+  background-color: rgba(26, 86, 196, 0.06);
+  border-color: var(--color-brand-primary);
+  transform: translateY(-0.5px);
+}
+
+.varsity-btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Material 3 Outlined Input Fields */
+.varsity-input {
+  background-color: var(--color-m3-surface);
+  border: 1px solid var(--color-m3-outline);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-family: var(--font-avenir);
+  transition: all 150ms ease-in-out;
+  color: var(--color-brand-text-dark);
+}
+
+.varsity-input:focus {
+  border-color: var(--color-brand-primary);
+  border-width: 2px;
+  outline: none;
+  box-shadow: none;
+}
+
+/* Material 3 Filter Chips styling */
+.m3-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: all 180ms cubic-bezier(0.2, 0, 0, 1);
+  border: 1px solid var(--color-m3-outline);
+  background-color: transparent;
+  color: var(--color-m3-on-surface-variant);
+  cursor: pointer;
+}
+
+.m3-filter-chip:hover {
+  background-color: rgba(68, 68, 68, 0.05);
+}
+
+.m3-filter-chip.active {
+  background-color: var(--color-m3-secondary-container);
+  color: var(--color-m3-on-secondary-container);
+  border-color: var(--color-brand-accent);
+}
+
+.m3-filter-chip.active-primary {
+  background-color: var(--color-m3-primary-container);
+  color: var(--color-m3-on-primary-container);
+  border-color: var(--color-brand-primary);
+}
+
+/* Material 3 Segmented Buttons container */
+.m3-segmented-container {
+  display: flex;
+  background-color: var(--color-m3-surface-variant);
+  border: 1px solid var(--color-m3-outline);
+  border-radius: 100px;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.m3-segmented-item {
+  flex: 1;
+  border: none;
+  background: transparent;
+  height: 38px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-m3-on-surface-variant);
+  transition: all 180ms cubic-bezier(0.2, 0, 0, 1);
+  cursor: pointer;
+}
+
+.m3-segmented-item:hover {
+  background-color: rgba(68, 68, 68, 0.04);
+}
+
+.m3-segmented-item.active {
+  background-color: var(--color-m3-surface);
+  color: var(--color-m3-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Reduced motion accessibility rules */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
 }

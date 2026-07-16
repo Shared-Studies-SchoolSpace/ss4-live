@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Pages
 import LandingPage from './pages/Landing';
@@ -20,14 +22,17 @@ import DashboardPage from './pages/DashboardPage';
 
 import BackToTop from './components/BackToTop';
 import ScrollToTop from './components/ScrollToTop';
+import { AuthModalProvider } from './context/AuthModalContext';
+
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white flex flex-col">
-        <Header />
-        <main className="flex-grow">
+    <AuthModalProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white flex flex-col">
+          <Header />
+          <main className="flex-grow">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/schools" element={<SchoolsPage />} />
@@ -47,8 +52,10 @@ function App() {
 
         <Footer />
         <BackToTop />
-      </div>
-    </Router>
+        <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} />
+        </div>
+      </Router>
+    </AuthModalProvider>
   );
 }
 

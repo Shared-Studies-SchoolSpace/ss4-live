@@ -15,8 +15,8 @@
     "department": "Electrical/Electronics Engineering",
     "school": "Bells University of Technology",
     "contact": "08063071862",
-    "rating": 1332,
-    "gamesCount": 2506,
+    "rating": 1358,
+    "gamesCount": 2517,
     "isProvisional": false
   },
   {
@@ -25,8 +25,8 @@
     "department": "Computer Science",
     "school": "University of Uyo",
     "contact": "07055234409",
-    "rating": 929,
-    "gamesCount": 320,
+    "rating": 923,
+    "gamesCount": 325,
     "isProvisional": false
   },
   {
@@ -35,8 +35,8 @@
     "department": "Estate management",
     "school": "University of Uyo",
     "contact": "08106144924",
-    "rating": 613,
-    "gamesCount": 1106,
+    "rating": 614,
+    "gamesCount": 1108,
     "isProvisional": false
   },
   {
@@ -45,8 +45,8 @@
     "department": "MECHATRONICS ENGINEERING",
     "school": "Bells University of Technology",
     "contact": "09023984526",
-    "rating": 2004,
-    "gamesCount": 957,
+    "rating": 2006,
+    "gamesCount": 958,
     "isProvisional": false
   },
   {
@@ -55,8 +55,8 @@
     "department": "Medical Lab Science",
     "school": "University of Uyo",
     "contact": "08103257385",
-    "rating": 1705,
-    "gamesCount": 3263,
+    "rating": 1706,
+    "gamesCount": 3266,
     "isProvisional": false
   },
   {
@@ -65,8 +65,8 @@
     "department": "Civil engineering",
     "school": "Akwa Ibom State University",
     "contact": "070046383887",
-    "rating": 241,
-    "gamesCount": 13,
+    "rating": 234,
+    "gamesCount": 15,
     "isProvisional": true
   },
   {
@@ -75,8 +75,8 @@
     "department": "Computer Science",
     "school": "University of Uyo",
     "contact": "09061764913",
-    "rating": 762,
-    "gamesCount": 476,
+    "rating": 782,
+    "gamesCount": 479,
     "isProvisional": false
   },
   {
@@ -95,8 +95,8 @@
     "department": "Mechanical Engineering",
     "school": "University of Uyo",
     "contact": "08089900375",
-    "rating": 1007,
-    "gamesCount": 593,
+    "rating": 1012,
+    "gamesCount": 595,
     "isProvisional": false
   },
   {
@@ -105,8 +105,8 @@
     "department": "Mechanical Engineering",
     "school": "University of Uyo",
     "contact": "070/5493993",
-    "rating": 1634,
-    "gamesCount": 853,
+    "rating": 1644,
+    "gamesCount": 855,
     "isProvisional": false
   },
   {
@@ -115,8 +115,8 @@
     "department": "Mechanical engineering",
     "school": "Akwa Ibom State University",
     "contact": "08167184937",
-    "rating": 400,
-    "gamesCount": 2,
+    "rating": 244,
+    "gamesCount": 4,
     "isProvisional": true
   },
   {
@@ -125,8 +125,8 @@
     "department": "Mechanical engineering",
     "school": "University of Uyo",
     "contact": "09079299847",
-    "rating": 561,
-    "gamesCount": 106,
+    "rating": 560,
+    "gamesCount": 108,
     "isProvisional": false
   },
   {
@@ -135,8 +135,8 @@
     "department": "Biochemistry",
     "school": "University of Uyo",
     "contact": "08145074849",
-    "rating": 2063,
-    "gamesCount": 487,
+    "rating": 2053,
+    "gamesCount": 498,
     "isProvisional": false
   },
   {
@@ -155,8 +155,8 @@
     "department": "Electric/Electronic Engineering",
     "school": "University of Uyo",
     "contact": "08146211361",
-    "rating": 1298,
-    "gamesCount": 289,
+    "rating": 1293,
+    "gamesCount": 290,
     "isProvisional": false
   },
   {
@@ -165,8 +165,8 @@
     "department": "Computer Engineering",
     "school": "University of Uyo",
     "contact": "08145021780",
-    "rating": 1465,
-    "gamesCount": 992,
+    "rating": 1511,
+    "gamesCount": 996,
     "isProvisional": false
   },
   {
@@ -186,7 +186,7 @@
     "school": "University of Uyo",
     "contact": "08027587953",
     "rating": 759,
-    "gamesCount": 56,
+    "gamesCount": 57,
     "isProvisional": false
   },
   {
@@ -195,19 +195,19 @@
     "department": "Chemical engineering",
     "school": "Nnamdi Azikiwe University",
     "contact": "07045981381",
-    "rating": 281,
-    "gamesCount": 69,
+    "rating": 350,
+    "gamesCount": 108,
     "isProvisional": false
   },
   {
     "name": "Ugbani Onyekachi Favour",
-    "username": "r2snyp",
+    "username": "r2_snyp",
     "department": "Mathematics",
     "school": "Nnamdi Azikiwe University",
     "contact": "08122126954",
-    "rating": 1200,
-    "gamesCount": 0,
-    "isProvisional": true
+    "rating": 1047,
+    "gamesCount": 1022,
+    "isProvisional": false
   },
   {
     "name": "Precious Egware",
@@ -226,7 +226,7 @@
     "school": "University of Uyo",
     "contact": "07046317575",
     "rating": 1502,
-    "gamesCount": 1395,
+    "gamesCount": 1396,
     "isProvisional": false
   },
   {
@@ -235,8 +235,8 @@
     "department": "Electrical/Electronics",
     "school": "University of Uyo",
     "contact": "09064196491",
-    "rating": 1903,
-    "gamesCount": 1512,
+    "rating": 1911,
+    "gamesCount": 1521,
     "isProvisional": false
   },
   {
@@ -245,8 +245,8 @@
     "department": "Mathematics",
     "school": "Nnamdi Azikiwe University",
     "contact": "09044372256",
-    "rating": 417,
-    "gamesCount": 70,
+    "rating": 408,
+    "gamesCount": 73,
     "isProvisional": false
   },
   {
@@ -255,8 +255,8 @@
     "department": "Pmt",
     "school": "Bells University of Technology",
     "contact": "08169442714",
-    "rating": 2017,
-    "gamesCount": 87,
+    "rating": 1997,
+    "gamesCount": 95,
     "isProvisional": false
   },
   {
@@ -265,8 +265,8 @@
     "department": "Accounting",
     "school": "University of Uyo",
     "contact": "09078186827",
-    "rating": 1970,
-    "gamesCount": 2562,
+    "rating": 1985,
+    "gamesCount": 2590,
     "isProvisional": false
   },
   {
@@ -275,8 +275,8 @@
     "department": "Mechanical engineering",
     "school": "University of Uyo",
     "contact": "07041110528",
-    "rating": 932,
-    "gamesCount": 453,
+    "rating": 955,
+    "gamesCount": 462,
     "isProvisional": false
   },
   {
@@ -286,7 +286,7 @@
     "school": "University of Uyo",
     "contact": "08128173134",
     "rating": 1282,
-    "gamesCount": 1146,
+    "gamesCount": 1149,
     "isProvisional": false
   },
   {
@@ -315,8 +315,8 @@
     "department": "Chemical engineering",
     "school": "University of Uyo",
     "contact": "0806 475 5213",
-    "rating": 1352,
-    "gamesCount": 2490,
+    "rating": 1344,
+    "gamesCount": 2491,
     "isProvisional": false
   },
   {
@@ -345,8 +345,8 @@
     "department": "Chemical Engineering",
     "school": "University of Uyo",
     "contact": "09114317232",
-    "rating": 1200,
-    "gamesCount": 0,
+    "rating": 399,
+    "gamesCount": 1,
     "isProvisional": true
   },
   {
@@ -355,8 +355,8 @@
     "department": "Mechatronics",
     "school": "Bells University of Technology",
     "contact": "09126606382",
-    "rating": 2185,
-    "gamesCount": 1984,
+    "rating": 2205,
+    "gamesCount": 1990,
     "isProvisional": false
   },
   {
@@ -375,8 +375,8 @@
     "department": "Computer Science",
     "school": "University of Uyo",
     "contact": "09124106396",
-    "rating": 1447,
-    "gamesCount": 386,
+    "rating": 1432,
+    "gamesCount": 388,
     "isProvisional": false
   },
   {
@@ -385,8 +385,8 @@
     "department": "Computer Science",
     "school": "University of Uyo",
     "contact": "07070576049",
-    "rating": 770,
-    "gamesCount": 224,
+    "rating": 748,
+    "gamesCount": 243,
     "isProvisional": false
   },
   {
@@ -396,7 +396,7 @@
     "school": "University of Uyo",
     "contact": "08104382157",
     "rating": 100,
-    "gamesCount": 23,
+    "gamesCount": 24,
     "isProvisional": false
   },
   {
@@ -405,8 +405,8 @@
     "department": "Computer Engineering",
     "school": "University of Uyo",
     "contact": "09029710550",
-    "rating": 1752,
-    "gamesCount": 3457,
+    "rating": 1701,
+    "gamesCount": 3478,
     "isProvisional": false
   },
   {
@@ -425,8 +425,8 @@
     "department": "Computer Engineering",
     "school": "Bells University of Technology",
     "contact": "09015125293",
-    "rating": 1684,
-    "gamesCount": 3258,
+    "rating": 1706,
+    "gamesCount": 3269,
     "isProvisional": false
   },
   {
@@ -435,8 +435,8 @@
     "department": "Computer science",
     "school": "University of Uyo",
     "contact": "07076807027",
-    "rating": 708,
-    "gamesCount": 21,
+    "rating": 688,
+    "gamesCount": 22,
     "isProvisional": false
   },
   {
@@ -445,8 +445,8 @@
     "department": "Computer Engineering",
     "school": "University of Uyo",
     "contact": "08139732276",
-    "rating": 1661,
-    "gamesCount": 386,
+    "rating": 1683,
+    "gamesCount": 391,
     "isProvisional": false
   },
   {
@@ -455,8 +455,8 @@
     "department": "Medicine and Surgery",
     "school": "University of Uyo",
     "contact": "08126329930",
-    "rating": 606,
-    "gamesCount": 4,
+    "rating": 682,
+    "gamesCount": 6,
     "isProvisional": true
   },
   {
@@ -466,7 +466,7 @@
     "school": "Bells University of Technology",
     "contact": "09028045978",
     "rating": 1332,
-    "gamesCount": 9,
+    "gamesCount": 10,
     "isProvisional": true
   },
   {
@@ -475,8 +475,8 @@
     "department": "Aerospace Engineering",
     "school": "Federal University of Technology, Ikot Abasi",
     "contact": "09067107943",
-    "rating": 2228,
-    "gamesCount": 459,
+    "rating": 2216,
+    "gamesCount": 463,
     "isProvisional": false
   },
   {
@@ -485,8 +485,8 @@
     "department": "Medicine and surgery",
     "school": "University of Uyo",
     "contact": "09168636887",
-    "rating": 1509,
-    "gamesCount": 2110,
+    "rating": 1508,
+    "gamesCount": 2113,
     "isProvisional": false
   },
   {
@@ -495,8 +495,8 @@
     "department": "Elect/Elect",
     "school": "University of Uyo",
     "contact": "07071724882",
-    "rating": 1728,
-    "gamesCount": 3127,
+    "rating": 1775,
+    "gamesCount": 3166,
     "isProvisional": false
   },
   {
@@ -505,8 +505,8 @@
     "department": "Medicine and Surgery",
     "school": "University of Uyo",
     "contact": "09136098015",
-    "rating": 1800,
-    "gamesCount": 901,
+    "rating": 1806,
+    "gamesCount": 903,
     "isProvisional": false
   }
 ]

@@ -2,7 +2,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import GroupIcon from '@mui/icons-material/Group';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-export default function UniversityHeader({ school }) {
+export default function UniversityHeader({ school, registeredCount }) {
   const name = school?.name || "King's College";
   const type = school?.type || "Secondary School";
   const location = school ? `${school.location}, ${school.state}` : "Lagos, NG";
@@ -54,6 +54,12 @@ export default function UniversityHeader({ school }) {
             <span className="text-brand-primary flex items-center"><GroupIcon sx={{ fontSize: 18 }}/></span>
             <span className="font-bold">{getStudentsCount()}</span>
           </div>
+          {registeredCount !== undefined && (
+            <div className="flex items-center gap-1.5 bg-brand-primary/5 px-3 py-1.5 rounded-full border border-brand-primary/20 shadow-sm hover:border-brand-primary transition-colors">
+              <span className="text-brand-primary font-bold">♟</span>
+              <span className="font-black text-brand-primary">{registeredCount} SCL Players</span>
+            </div>
+          )}
           <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm hover:border-brand-primary transition-colors">
             <span className="text-brand-primary flex items-center"><LocationOnIcon sx={{ fontSize: 18 }}/></span>
             <span className="font-bold">{location}</span>
@@ -63,3 +69,4 @@ export default function UniversityHeader({ school }) {
     </div>
   );
 }
+

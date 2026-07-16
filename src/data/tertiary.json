@@ -9,6 +9,7 @@
     "verified": true,
     "studentsCount": "18,400 Students",
     "bio": "A premier federal institution committed to academic excellence, innovation, and technological advancement in the Niger Delta region.",
+    "anthem": "To promote learning and research, character and service, in a culture of excellence.",
     "departments": [
       {
         "name": "Computer Science",
@@ -34,6 +35,7 @@
     "verified": true,
     "studentsCount": "8,500 Students",
     "bio": "A leading private Christian institution in Nigeria driven by human development, enterprise development, and leadership education.",
+    "anthem": "Raising a new generation of leaders, walking in integrity, mental resourcefulness, and spiritual capacity.",
     "departments": [
       {
         "name": "Computer Science",
@@ -59,6 +61,7 @@
     "verified": true,
     "studentsCount": "22,000 Students",
     "bio": "A historic federal university renowned for restoring the dignity of man through intensive research, engineering excellence, and clinical training.",
+    "anthem": "To restore the dignity of man, through knowledge, character, and service.",
     "departments": [
       {
         "name": "Electronic Engineering",
@@ -84,6 +87,7 @@
     "verified": true,
     "studentsCount": "5,200 Students",
     "bio": "Nigeria's premier private university of technology, fostering technological development and specialized engineering disciplines.",
+    "anthem": "Only the best is good enough for Bells, promoting technology, development, and service.",
     "departments": [
       {
         "name": "Biomedical Engineering",

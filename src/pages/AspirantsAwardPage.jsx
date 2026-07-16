@@ -19,7 +19,7 @@ export default function AspirantsAwardPage() {
                 </div>
             </SectionWrapper>
             <SectionWrapper variant="light">
-                <div className="max-w-4xl mx-auto bg-white p-10 rounded-2xl shadow-sm border border-gray-100 mb-16">
+                <div className="max-w-4xl mx-auto varsity-card p-10 mb-16">
                     <H2 className="mb-6">Award Details</H2>
                     <ul className="list-disc pl-6 space-y-4 text-gray-700 text-lg">
                         <li><strong>Eligibility:</strong> Must be a registered SS3 student in an SS4 affiliated secondary school.</li>

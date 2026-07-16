@@ -1,5 +1,6 @@
 import React from 'react';
 import { getPlayerDisplay, gameKey } from '../../utils/chessUtils';
+import { MatchResult } from './MatchResult';
 
 export const ResultsTab = ({
   isAdmin,
@@ -7,7 +8,8 @@ export const ResultsTab = ({
   currentRound,
   setCurrentRound,
   gameResults,
-  handleSetResult
+  handleSetResult,
+  onPlayerSelect
 }) => {
   if (!currentDivision || !currentDivision.rounds || currentDivision.rounds.length === 0) {
     return (
@@ -53,140 +55,43 @@ export const ResultsTab = ({
               ? 'bg-green-50 border-green-200 text-green-700' 
               : 'bg-gray-50 border-gray-200 text-gray-500'
           }`}>
-            <span>{isAdmin ? '🔓' : '🔒'}</span>
+            <span className="material-symbols-outlined text-[14px] leading-none align-middle mr-1 select-none">
+              {isAdmin ? 'lock_open' : 'lock'}
+            </span>
             <span>{isAdmin ? 'Admin Edit Mode' : 'View Only'}</span>
           </span>
         </div>
       </div>
 
-      {activeRoundData && (
-        <div className="text-center py-2 bg-brand-bg-cream/40 rounded-2xl border border-dashed border-gray-200/50">
-          <span className="text-xs font-black text-brand-primary uppercase tracking-widest">{activeRoundData.date}</span>
+      <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-m3-outline-variant flex flex-col gap-4 mt-6">
+        <div className="flex items-center justify-between mb-4 px-2">
+          <h2 className="text-xl font-bold text-brand-text-dark font-space tracking-tight">Round {currentRound} Results</h2>
+          {activeRoundData && (
+            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest border border-m3-outline-variant px-3.5 py-1.5 rounded-full">{activeRoundData.date}</span>
+          )}
         </div>
-      )}
 
-      <div className="grid gap-6">
-        {activeRoundData?.games.map(([w, b]) => {
-          const key = gameKey(currentDivision.id, currentRound, w, b);
-          const res = gameResults[key];
-          const wP = getPlayerDisplay(w);
-          const bP = getPlayerDisplay(b);
-          const isBye = w === 'BYE' || b === 'BYE';
-
-          return (
-            <div key={key} className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                
-                {/* Matchup Details */}
-                <div className="flex items-center justify-between w-full md:flex-grow max-w-xl gap-4">
-                  <div className="flex-1 truncate">
-                    <span className={`text-sm block truncate ${
-                      isBye ? (
-                        w === 'BYE' ? 'text-gray-300 font-medium' : 'text-green-600 font-extrabold'
-                      ) : res ? (
-                        res === 'white' 
-                          ? 'text-green-600 font-extrabold' 
-                          : res === 'draw' 
-                            ? 'text-gray-500 font-semibold' 
-                            : 'text-red-500 font-semibold'
-                      ) : 'text-[#111111] font-bold'
-                    }`}>{wP.name}</span>
-                    {wP.username && (
-                      <a 
-                        href={`https://www.chess.com/member/${wP.username}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[10px] font-semibold text-gray-400 hover:text-brand-primary transition-colors"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        @{wP.username}
-                      </a>
-                    )}
-                  </div>
-                  
-                  <span className="text-xs font-black text-gray-300 uppercase select-none flex-shrink-0">vs</span>
-                  
-                  <div className="flex-1 text-right truncate">
-                    <span className={`text-sm block truncate ${
-                      isBye ? (
-                        b === 'BYE' ? 'text-gray-300 font-medium' : 'text-green-600 font-extrabold'
-                      ) : res ? (
-                        res === 'black' 
-                          ? 'text-green-600 font-extrabold' 
-                          : res === 'draw' 
-                            ? 'text-gray-500 font-semibold' 
-                            : 'text-red-500 font-semibold'
-                      ) : 'text-[#111111] font-bold'
-                    }`}>{bP.name}</span>
-                    {bP.username && (
-                      <a 
-                        href={`https://www.chess.com/member/${bP.username}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[10px] font-semibold text-gray-400 hover:text-brand-primary transition-colors"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        @{bP.username}
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                {/* Score Controls */}
-                <div className="w-full md:w-auto flex justify-center flex-shrink-0">
-                  {isBye ? (
-                    <span className="text-xs font-bold bg-amber-50 text-amber-600 border border-amber-100/50 px-4 py-2 rounded-xl uppercase tracking-wider select-none">
-                      ⚡ Automatic BYE Win
-                    </span>
-                  ) : (
-                    <div className="flex bg-gray-50 border border-gray-200/60 rounded-2xl p-1 w-full sm:w-auto">
-                      <button
-                        disabled={!isAdmin}
-                        onClick={() => handleSetResult(key, 'white')}
-                        className={`flex-1 sm:flex-none px-4 py-2 text-xs font-black rounded-xl transition-all ${
-                          !isAdmin ? 'cursor-not-allowed' : 'cursor-pointer'
-                        } ${
-                          res === 'white'
-                            ? 'bg-green-600 text-white shadow-sm font-bold'
-                            : 'text-gray-500 hover:bg-gray-100'
-                        }`}
-                      >
-                        {wP.name.split(' ')[0]} Win
-                      </button>
-                      <button
-                        disabled={!isAdmin}
-                        onClick={() => handleSetResult(key, 'draw')}
-                        className={`flex-1 sm:flex-none px-4 py-2 text-xs font-black rounded-xl transition-all ${
-                          !isAdmin ? 'cursor-not-allowed' : 'cursor-pointer'
-                        } ${
-                          res === 'draw'
-                            ? 'bg-gray-500 text-white shadow-sm font-bold'
-                            : 'text-gray-500 hover:bg-gray-100'
-                        }`}
-                      >
-                        Draw
-                      </button>
-                      <button
-                        disabled={!isAdmin}
-                        onClick={() => handleSetResult(key, 'black')}
-                        className={`flex-1 sm:flex-none px-4 py-2 text-xs font-black rounded-xl transition-all ${
-                          !isAdmin ? 'cursor-not-allowed' : 'cursor-pointer'
-                        } ${
-                          res === 'black'
-                            ? 'bg-green-600 text-white shadow-sm font-bold'
-                            : 'text-gray-500 hover:bg-gray-100'
-                        }`}
-                      >
-                        {bP.name.split(' ')[0]} Win
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-              </div>
-            </div>
-          );
-        })}
+        <div className="flex flex-col gap-4">
+          {activeRoundData?.games.map(([w, b]) => {
+            const key = gameKey(currentDivision.id, currentRound, w, b);
+            const res = gameResults[key];
+            return (
+              <MatchResult
+                key={key}
+                w={w}
+                b={b}
+                res={res}
+                date={activeRoundData.date}
+                round={currentRound}
+                division={currentDivision}
+                onPlayerSelect={onPlayerSelect}
+                isAdmin={isAdmin}
+                handleSetResult={handleSetResult}
+                gameKeyStr={key}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

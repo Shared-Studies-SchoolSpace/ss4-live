@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useAuthModal } from '../context/AuthModalContext';
 import { supabase } from '../supabase';
+
 import { fetchChessComStats, fetchLichessStats, searchMutualGames } from '../utils/chessService';
 import MatchChat from '../components/tournament/MatchChat';
 import DirectChat from '../components/messaging/DirectChat';
@@ -9,14 +12,150 @@ import AdminBroadcastPanel from '../components/announcements/AdminBroadcastPanel
 import Button from '../components/Button';
 import { toast } from 'react-toastify';
 
+/**
+ * Inline guard shown on restricted tabs for unverified users.
+ */
+function UnverifiedGuard({ feature }) {
+  return (
+    <div className="varsity-card p-10 flex flex-col items-center text-center">
+      <div className="w-14 h-14 bg-amber-50 rounded-full flex items-center justify-center mb-4">
+        <svg className="w-7 h-7 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <h3 className="text-sm font-black text-brand-text-dark uppercase tracking-wider font-space">
+        Verify Your Email First
+      </h3>
+      <p className="text-xs font-semibold text-gray-400 mt-2 max-w-xs leading-relaxed">
+        <span className="text-brand-primary font-bold">{feature}</span> is only available to verified accounts.
+        Check your inbox and click the confirmation link we sent you.
+      </p>
+      <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest mt-4">
+        Didn't receive it? Use the banner at the top of the page to resend.
+      </p>
+    </div>
+  );
+}
+
+
 export default function DashboardPage() {
-  const { user, profile, refreshProfile } = useAuth();
+  const { user, profile, refreshProfile, unreadMessages = [], updatePlayerDivision } = useAuth();
+  const { openAuthModal } = useAuthModal();
+  const location = useLocation();
+
   const [activeTab, setActiveTab] = useState('profile');
   const [loadingSync, setLoadingSync] = useState(false);
   const [activePairings, setActivePairings] = useState([]);
   const [selectedPairing, setSelectedPairing] = useState(null);
   const [scanningPairingId, setScanningPairingId] = useState(null);
   const [awards, setAwards] = useState([]);
+
+  // SCL Tournament registration states
+  const [upcomingTournament, setUpcomingTournament] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [loadingReg, setLoadingReg] = useState(false);
+
+  // Fetch upcoming tournament to handle single-click registration
+  useEffect(() => {
+    if (!user) return;
+    const fetchUpcoming = async () => {
+      try {
+        let { data, error } = await supabase
+          .from('tournaments')
+          .select('*')
+          .eq('status', 'upcoming')
+          .maybeSingle();
+        
+        if (error) throw error;
+        
+        // ponytail: auto-create August 2026 tournament row if missing
+        if (!data) {
+          const targetMY = '2026-08';
+          const targetName = 'August 2026 SCL Tournament';
+          const newT = {
+            id: targetMY,
+            name: targetName,
+            month_year: targetMY,
+            status: 'upcoming',
+            players: [],
+            rounds: [],
+            winner: null
+          };
+          
+          const { data: upsertedData } = await supabase
+            .from('tournaments')
+            .upsert(newT)
+            .select()
+            .single();
+            
+          data = upsertedData;
+        }
+
+        setUpcomingTournament(data);
+        
+        if (data && data.players) {
+          const registered = data.players.some(p => 
+            p.id === user.id || 
+            (p.username && profile?.chess_username && p.username.toLowerCase() === profile.chess_username.toLowerCase())
+          );
+          setIsRegistered(registered);
+        }
+      } catch (err) {
+        console.error('Error loading SCL tournament registration:', err);
+      }
+    };
+    
+    fetchUpcoming();
+  }, [user, profile]);
+
+  const handleRegisterReady = async () => {
+    if (!upcomingTournament || !profile) return;
+    setLoadingReg(true);
+    
+    try {
+      const regPlayer = {
+        id: user.id,
+        name: profile.name,
+        username: profile.chess_username || profile.lichess_username || user.email.split('@')[0],
+        rating: Math.max(profile.chess_rating || 0, profile.lichess_rating || 0) || 1200,
+        school: profile.university || 'SS4 Member',
+        department: profile.department || ''
+      };
+      
+      const updatedPlayers = [
+        ...(upcomingTournament.players || []).filter(p => p.id !== user.id),
+        regPlayer
+      ];
+      
+      const { error } = await supabase
+        .from('tournaments')
+        .update({ players: updatedPlayers })
+        .eq('id', upcomingTournament.id);
+        
+      if (error) throw error;
+      
+      setUpcomingTournament(prev => ({ ...prev, players: updatedPlayers }));
+      setIsRegistered(true);
+      toast.success("Ready! You are confirmed for the tournament.");
+    } catch (err) {
+      console.error('Registration failed:', err);
+      toast.error('Registration failed: ' + err.message);
+    } finally {
+      setLoadingReg(false);
+    }
+  };
+
+  // Check query params on mount/location change to switch activeTab
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tabParam = params.get('tab');
+    if (tabParam) {
+      setActiveTab(tabParam);
+    } else if (location.state?.tab) {
+      setActiveTab(location.state.tab);
+    }
+  }, [location]);
 
   // Redirect if not logged in
   useEffect(() => {
@@ -126,6 +265,31 @@ export default function DashboardPage() {
 
       if (error) throw error;
 
+      // Auto-assign player division on rating sync
+      try {
+        const maxRating = Math.max(chessRating, lichessRating);
+        await updatePlayerDivision(profile, maxRating);
+      } catch (divErr) {
+        console.warn('Division sync failed during rating update:', divErr.message);
+      }
+
+      const ratingChanged = chessRating !== (profile.chess_rating || 0) || lichessRating !== (profile.lichess_rating || 0);
+      if (ratingChanged) {
+        try {
+          await supabase
+            .from('notifications')
+            .insert({
+              user_id: user.id,
+              type: 'rating_update',
+              title: 'Rating Updated! 📊',
+              message: `Your ratings have been updated: Chess.com is now ${chessRating} ELO, Lichess is now ${lichessRating} ELO.`,
+              link: '/dashboard?tab=profile'
+            });
+        } catch (notifErr) {
+          console.warn('Could not insert rating sync notification:', notifErr.message);
+        }
+      }
+
       await refreshProfile();
       toast.success('Ratings synced successfully!');
     } catch (err) {
@@ -182,9 +346,28 @@ export default function DashboardPage() {
 
   if (!user) {
     return (
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 py-20 text-center">
-        <h2 className="text-2xl font-black font-space text-brand-text-dark">Access Denied</h2>
-        <p className="text-xs font-semibold text-gray-400 mt-2">Please sign in from the header menu to view your dashboard.</p>
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 py-20 flex items-center justify-center min-h-[60vh]">
+        <div className="varsity-card p-10 sm:p-14 max-w-md w-full text-center">
+          <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-8 h-8 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-black font-space text-brand-text-dark leading-tight">Your Dashboard</h2>
+          <p className="text-xs font-semibold text-gray-400 mt-3 leading-relaxed max-w-xs mx-auto">
+            Sign in to access your player profile, match pairings, direct messages, awards, and live stats.
+          </p>
+          <button
+            onClick={() => openAuthModal('view your dashboard', null, 'login')}
+            className="mt-6 w-full py-3 rounded-full bg-brand-primary text-white font-bold text-sm hover:bg-brand-accent transition-colors cursor-pointer shadow-md"
+          >
+            Sign In to Continue
+          </button>
+          <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest mt-4">
+            All public pages — standings, leaderboards, news — are free to browse.
+          </p>
+        </div>
       </div>
     );
   }
@@ -193,7 +376,7 @@ export default function DashboardPage() {
     <div className="container mx-auto px-6 md:px-12 lg:px-16 py-10">
       
       {/* Header Profile Summary */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-150 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+      <div className="varsity-card p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
         <div className="flex items-center gap-5">
           <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-2xl flex items-center justify-center shadow-md select-none">
             {profile?.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
@@ -243,16 +426,25 @@ export default function DashboardPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`w-full flex items-center gap-3 px-5 py-3.5 rounded-2xl text-xs font-black transition-colors uppercase tracking-wider text-left cursor-pointer ${
+              className={`w-full flex items-center justify-between px-5 py-3.5 rounded-2xl text-xs font-black transition-colors uppercase tracking-wider text-left cursor-pointer ${
                 activeTab === tab.id 
                   ? 'bg-brand-primary text-white shadow-md' 
                   : 'bg-white text-gray-500 border border-gray-100 hover:bg-gray-50'
               }`}
             >
-              <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={tab.icon} />
-              </svg>
-              {tab.label}
+              <div className="flex items-center gap-3">
+                <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={tab.icon} />
+                </svg>
+                {tab.label}
+              </div>
+              {tab.id === 'messages' && unreadMessages.length > 0 && (
+                <span className={`text-[9px] font-black px-2 py-0.5 rounded-full shrink-0 shadow-sm ${
+                  activeTab === 'messages' ? 'bg-white text-brand-primary' : 'bg-brand-primary text-white'
+                }`}>
+                  {unreadMessages.length}
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -260,12 +452,49 @@ export default function DashboardPage() {
         {/* Tab Contents Panel */}
         <div className="lg:col-span-3">
           
-          {activeTab === 'profile' && (
+           {activeTab === 'profile' && (
             <div className="space-y-8">
               
+              {/* SCL Tournament Registration Card */}
+              {upcomingTournament && (
+                <div className="varsity-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="h-2.5 w-2.5 rounded-full bg-brand-accent animate-pulse"></span>
+                      <span className="text-[9px] font-black text-brand-accent uppercase tracking-widest">SCL Registration Open</span>
+                    </div>
+                    <h3 className="text-base font-black font-space text-brand-text-dark">
+                      {upcomingTournament.name}
+                    </h3>
+                    <p className="text-xs font-semibold text-gray-500">
+                      {isRegistered 
+                        ? "Your participation is locked and confirmed. Prepare your matches!"
+                        : "Sign up is open. Click the button to confirm your slot."
+                      }
+                    </p>
+                  </div>
+                  
+                  <div>
+                    {isRegistered ? (
+                      <span className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-50 text-emerald-700 text-xs font-black uppercase tracking-wider rounded-full border border-emerald-150">
+                        ✓ Confirmed Ready
+                      </span>
+                    ) : (
+                      <button
+                        onClick={handleRegisterReady}
+                        disabled={loadingReg}
+                        className="px-6 py-2.5 bg-brand-primary text-white text-xs font-black uppercase tracking-widest rounded-full hover:bg-brand-accent transition-colors shadow-sm disabled:opacity-50 cursor-pointer w-full sm:w-auto text-center"
+                      >
+                        {loadingReg ? "Registering..." : "I am Ready"}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Ratings Summary */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex items-center justify-between">
+                <div className="varsity-card p-6 flex items-center justify-between">
                   <div>
                     <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">Chess.com Rating</span>
                     <span className="text-3xl font-black text-brand-text-dark block mt-1.5">
@@ -280,7 +509,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
 
-                <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex items-center justify-between">
+                <div className="varsity-card p-6 flex items-center justify-between">
                   <div>
                     <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">Lichess Rating</span>
                     <span className="text-3xl font-black text-brand-text-dark block mt-1.5">
@@ -297,7 +526,7 @@ export default function DashboardPage() {
               </div>
 
               {/* Account Details */}
-              <div className="bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-sm">
+              <div className="varsity-card p-6 sm:p-8">
                 <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Academic & Profile Details</h3>
                 <div className="grid grid-cols-2 gap-y-4 gap-x-6 text-xs">
                   <div>
@@ -323,56 +552,64 @@ export default function DashboardPage() {
           )}
 
           {activeTab === 'pairings' && (
-            <div className="space-y-6">
-              <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm">
-                <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Active Pairings</h3>
-                {activePairings.length === 0 ? (
-                  <p className="text-xs font-semibold text-gray-400 italic">No active match pairings found for the current round.</p>
-                ) : (
-                  <div className="space-y-3">
-                    {activePairings.map(p => (
-                      <div key={p.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:border-gray-200 transition-colors">
-                        <div>
-                          <span className="text-[9px] font-black text-brand-primary uppercase tracking-widest">{p.roundName}</span>
-                          <h4 className="text-xs font-black text-brand-text-dark mt-1">vs {p.opponent.name} (@{p.opponent.username})</h4>
+            user.email_confirmed_at ? (
+              <div className="space-y-6">
+                <div className="varsity-card p-6">
+                  <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Active Pairings</h3>
+                  {activePairings.length === 0 ? (
+                    <p className="text-xs font-semibold text-gray-400 italic">No active match pairings found for the current round.</p>
+                  ) : (
+                    <div className="space-y-3">
+                      {activePairings.map(p => (
+                        <div key={p.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:border-gray-200 transition-colors">
+                          <div>
+                            <span className="text-[9px] font-black text-brand-primary uppercase tracking-widest">{p.roundName}</span>
+                            <h4 className="text-xs font-black text-brand-text-dark mt-1">vs {p.opponent.name} (@{p.opponent.username})</h4>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="secondary"
+                              onClick={() => handleScanMatch(p)}
+                              disabled={scanningPairingId === p.id}
+                              className="text-[10px] py-1.5 px-4 rounded-full"
+                            >
+                              {scanningPairingId === p.id ? 'Scanning...' : 'Scan Result'}
+                            </Button>
+                            <Button
+                              variant="primary"
+                              onClick={() => setSelectedPairing(p)}
+                              className="text-[10px] py-1.5 px-4 rounded-full"
+                            >
+                              Open Chat
+                            </Button>
+                          </div>
                         </div>
-                        <div className="flex gap-2">
-                          <Button 
-                            variant="secondary" 
-                            onClick={() => handleScanMatch(p)}
-                            disabled={scanningPairingId === p.id}
-                            className="text-[10px] py-1.5 px-4 rounded-full"
-                          >
-                            {scanningPairingId === p.id ? 'Scanning...' : 'Scan Result'}
-                          </Button>
-                          <Button 
-                            variant="primary" 
-                            onClick={() => setSelectedPairing(p)}
-                            className="text-[10px] py-1.5 px-4 rounded-full"
-                          >
-                            Open Chat
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {selectedPairing && (
+                  <div className="animate-in fade-in duration-200">
+                    <MatchChat
+                      matchId={selectedPairing.id}
+                      playerA={profile}
+                      playerB={selectedPairing.opponent}
+                    />
                   </div>
                 )}
               </div>
-
-              {selectedPairing && (
-                <div className="animate-in fade-in duration-200">
-                  <MatchChat 
-                    matchId={selectedPairing.id} 
-                    playerA={profile} 
-                    playerB={selectedPairing.opponent} 
-                  />
-                </div>
-              )}
-            </div>
+            ) : (
+              <UnverifiedGuard feature="Match Chats & Pairings" />
+            )
           )}
 
           {activeTab === 'messages' && (
-            <DirectChat />
+            user.email_confirmed_at ? (
+              <DirectChat />
+            ) : (
+              <UnverifiedGuard feature="Direct Messages" />
+            )
           )}
 
           {activeTab === 'announcements' && (
@@ -385,7 +622,7 @@ export default function DashboardPage() {
           )}
 
           {activeTab === 'awards' && (
-            <div className="bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-sm">
+            <div className="varsity-card p-6 sm:p-8">
               <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-6">Trophy Case</h3>
               {awards.length === 0 ? (
                 <div className="text-center py-10">

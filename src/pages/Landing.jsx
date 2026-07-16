@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import { AnimatePresence, motion as Motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { supabase } from "../supabase";
 import Button from "../components/Button";
-import Input from "../components/Input";
-import StudentSignupModal from "../components/StudentSignupModal";
+import AuthGate from "../components/auth/AuthGate";
 import { toast } from "react-toastify";
 import mockPlayers from "../data/playersWithRatings.json";
+import { MatchResult } from "../components/chess/MatchResult";
+import { PlayerProfile } from "../components/chess/PlayerProfile";
+import { Hero } from "../components/Hero";
+import { fetchCompletePlayerData } from "../utils/chessService";
+
 
 // Vector SVG Icons
 const AnnouncementIcon = () => (
@@ -45,30 +50,104 @@ const SchoolIcon = () => (
   </svg>
 );
 
+const CheckIcon = () => (
+  <svg className="w-4 h-4 shrink-0 text-current" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+  </svg>
+);
+
+// Chess Visual Board Graphic Component
+const ChessVisual = () => (
+  <div className="relative w-full aspect-square max-w-[280px] md:max-w-[320px] mx-auto bg-white border border-m3-outline-variant rounded-3xl p-4 shadow-sm select-none">
+    <div className="grid grid-cols-4 grid-rows-4 h-full w-full rounded-2xl overflow-hidden border border-m3-outline-variant">
+      {[...Array(16)].map((_, i) => {
+        const row = Math.floor(i / 4);
+        const col = i % 4;
+        const isDark = (row + col) % 2 === 1;
+        return (
+          <div
+            key={i}
+            className={`w-full h-full relative flex items-center justify-center text-3xl ${
+              isDark ? "bg-[#FAF8F4]" : "bg-m3-surface-variant"
+            }`}
+          >
+            {i === 5 && (
+              <span className="text-brand-primary animate-pulse">♞</span>
+            )}
+            {i === 10 && (
+              <span className="text-brand-accent drop-shadow-sm">👑</span>
+            )}
+            {i === 3 && (
+              <span className="text-brand-accent/25">♟</span>
+            )}
+            {i === 12 && (
+              <span className="text-brand-primary/25">♜</span>
+            )}
+          </div>
+        );
+      })}
+    </div>
+    {/* Visual Accent Badge */}
+    <div className="absolute -top-3 -right-2 bg-brand-accent text-white px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-md">
+      Live Standings
+    </div>
+  </div>
+);
+
 export default function LandingPage() {
   const navigate = useNavigate();
   const { user, profile } = useAuth();
   const [activeFilter, setActiveFilter] = useState("all");
   const [leaderboardTab, setLeaderboardTab] = useState("players");
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [selectedDivision, setSelectedDivision] = useState("A"); // "A", "Fork", "Pin"
   const [dbAnnouncements, setDbAnnouncements] = useState([]);
   const [dbMatches, setDbMatches] = useState([]);
-  const [leaderboardPlayers, setLeaderboardPlayers] = useState([]);
+  const [allPlayers, setAllPlayers] = useState([]);
   const [leaderboardSchools, setLeaderboardSchools] = useState([]);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [loadingFeed, setLoadingFeed] = useState(true);
+  const [newsSlideIdx, setNewsSlideIdx] = useState(0);
+  const [matchSlideIdx, setMatchSlideIdx] = useState(0);
 
-  // 1. Load data from Supabase
+  // Preloading States
+  const [isPreloading, setIsPreloading] = useState(true);
+  const [preloadProgress, setPreloadProgress] = useState(0);
+  const [preloadStatus, setPreloadStatus] = useState("Loading Arena...");
+
+  // 1. Load data from Supabase / SessionStorage Cache
   useEffect(() => {
-    const loadData = async () => {
+    const isCached = sessionStorage.getItem('ss4_landing_preloaded_v2');
+    if (isCached) {
       try {
+        const cached = JSON.parse(isCached);
+        setDbAnnouncements(cached.dbAnnouncements || []);
+        setDbMatches(cached.dbMatches || []);
+        setAllPlayers(cached.allPlayers || []);
+        setLeaderboardSchools(cached.leaderboardSchools || []);
+        setIsPreloading(false);
+        setLoadingFeed(false);
+        return;
+      } catch (e) {
+        // Cache corrupted or disabled, fetch fresh
+      }
+    }
+
+    const loadAndPreload = async () => {
+      try {
+        setPreloadStatus("Connecting to Supabase...");
+        setPreloadProgress(10);
+        
         // Fetch announcements
         const { data: ann } = await supabase
           .from("announcements")
           .select("*, sender:profiles(name)")
           .order("created_at", { ascending: false });
-        setDbAnnouncements(ann || []);
+        const finalAnn = ann || [];
+        setDbAnnouncements(finalAnn);
+        setPreloadProgress(25);
 
-        // Fetch matches from active/completed tournaments
+        // Fetch tournaments
+        setPreloadStatus("Retrieving match history...");
         const { data: tournaments } = await supabase
           .from("tournaments")
           .select("*");
@@ -77,13 +156,15 @@ export default function LandingPage() {
         (tournaments || []).forEach(t => {
           (t.rounds || []).forEach(r => {
             (r.games || []).forEach(g => {
-              if (g.winner) {
+              const isP1Bye = g.p1?.username?.toLowerCase() === 'bye' || g.p1?.name?.toUpperCase() === 'BYE';
+              const isP2Bye = g.p2?.username?.toLowerCase() === 'bye' || g.p2?.name?.toUpperCase() === 'BYE';
+              if (g.winner && !isP1Bye && !isP2Bye) {
                 extractedMatches.push({
                   id: `${t.id}_${r.name}_${g.id}`,
                   tournamentName: t.name,
                   roundName: r.name,
-                  white: g.white,
-                  black: g.black,
+                  white: g.p1 || g.white,
+                  black: g.p2 || g.black,
                   winner: g.winner,
                   gameLink: g.gameLink || "",
                   date: t.month_year
@@ -92,18 +173,19 @@ export default function LandingPage() {
             });
           });
         });
-        setDbMatches(extractedMatches.slice(0, 8));
+        const finalMatches = extractedMatches.slice(0, 8);
+        setDbMatches(finalMatches);
+        setPreloadProgress(45);
 
-        // Fetch top registered players from profiles table
+        // Fetch profiles
+        setPreloadStatus("Loading player records...");
         const { data: profs } = await supabase
           .from("profiles")
           .select("name, university, chess_username, lichess_username, chess_rating, lichess_rating")
-          .order("chess_rating", { ascending: false })
-          .limit(8);
+          .order("chess_rating", { ascending: false });
 
-        // Merge with mock players if db is sparse
         const mergedPlayers = [...(profs || [])];
-        mockPlayers.slice(0, 10).forEach(m => {
+        mockPlayers.forEach(m => {
           if (!mergedPlayers.find(p => p.chess_username?.toLowerCase() === m.username.toLowerCase())) {
             mergedPlayers.push({
               name: m.name,
@@ -113,7 +195,8 @@ export default function LandingPage() {
             });
           }
         });
-        setLeaderboardPlayers(mergedPlayers.sort((a, b) => (b.chess_rating || 0) - (a.chess_rating || 0)).slice(0, 6));
+        setAllPlayers(mergedPlayers);
+        setPreloadProgress(60);
 
         // Aggregate top universities
         const schoolMap = {};
@@ -135,52 +218,107 @@ export default function LandingPage() {
           .sort((a, b) => b.avgRating - a.avgRating)
           .slice(0, 5);
         setLeaderboardSchools(schools);
+        setPreloadProgress(70);
+
+        // Preload profiles & avatar pictures
+        setPreloadStatus("Caching active profiles & avatar pictures...");
+        const activeUsernames = new Set(["Kontor_001"]);
+        
+        // 1. Preload top 6 players on high ELO leaderboard
+        mergedPlayers
+          .filter(p => (p.chess_rating || 0) >= 1800)
+          .slice(0, 6)
+          .forEach(p => { if (p.chess_username) activeUsernames.add(p.chess_username); });
+
+        // 2. Preload players involved in results carousel
+        finalMatches.forEach(m => {
+          if (m.white?.username) activeUsernames.add(m.white.username);
+          if (m.black?.username) activeUsernames.add(m.black.username);
+        });
+
+        const listToFetch = Array.from(activeUsernames);
+        const batchSize = 5;
+        
+        for (let idx = 0; idx < listToFetch.length; idx += batchSize) {
+          const batch = listToFetch.slice(idx, idx + batchSize);
+          setPreloadStatus(`Caching player data (${idx}/${listToFetch.length})...`);
+          
+          await Promise.all(batch.map(async (uname) => {
+            const player = mergedPlayers.find(p => p.chess_username === uname);
+            const platform = player?.lichess_username && !player?.username ? 'lichess' : 'chess.com';
+            
+            // fetchCompletePlayerData checks and writes to sessionStorage
+            const details = await fetchCompletePlayerData(uname, platform);
+            
+            // If details returns an avatar URL, load in browser memory
+            if (details?.avatar) {
+              await new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                img.src = details.avatar;
+              });
+            }
+          }));
+
+          const progressStep = 70 + Math.round((idx / listToFetch.length) * 25);
+          setPreloadProgress(progressStep);
+        }
+
+        // Save preloaded layout states to sessionStorage
+        const cachedPayload = {
+          dbAnnouncements: finalAnn,
+          dbMatches: finalMatches,
+          allPlayers: mergedPlayers,
+          leaderboardSchools: schools
+        };
+        sessionStorage.setItem('ss4_landing_preloaded_v2', JSON.stringify(cachedPayload));
+        
+        setPreloadProgress(100);
+        setPreloadStatus("Ready!");
+
+        setTimeout(() => {
+          setIsPreloading(false);
+          setLoadingFeed(false);
+        }, 500);
 
       } catch (err) {
-        console.error("Error fetching landing feed:", err);
-      } finally {
+        console.error("Error preloading feed data:", err);
+        setIsPreloading(false);
         setLoadingFeed(false);
       }
     };
 
-    loadData();
+    loadAndPreload();
   }, []);
 
-  // 2. Mix content into a unified social feed
-  const buildFeedItems = () => {
-    const feed = [];
+  const leaderboardPlayers = useMemo(() => {
+    return allPlayers
+      .filter(p => {
+        const rating = p.chess_rating || 0;
+        if (selectedDivision === "A") return rating >= 1800;
+        if (selectedDivision === "Fork") return rating >= 1000 && rating < 1800;
+        return rating < 1000;
+      })
+      .sort((a, b) => (b.chess_rating || 0) - (a.chess_rating || 0))
+      .slice(0, 6);
+  }, [allPlayers, selectedDivision]);
 
-    // Add Live Announcements
-    dbAnnouncements.forEach(a => {
-      feed.push({
+  // Decoupled Announcements & Milestones (sorted by date)
+  const feedAnnouncements = useMemo(() => {
+    const list = [];
+    (dbAnnouncements || []).forEach(a => {
+      list.push({
         id: `ann_${a.id}`,
         type: "announcement",
         title: a.title,
         content: a.content,
         author: a.sender?.name || "SS4 Admin",
         date: new Date(a.created_at).toLocaleDateString([], { month: "short", day: "numeric" }),
-        timestamp: new Date(a.created_at).getTime()
+        timestamp: new Date(a.created_at).getTime() || Date.now()
       });
     });
 
-    // Add Live Match Results
-    dbMatches.forEach(m => {
-      const winnerName = typeof m.winner === "object" ? m.winner.name : m.winner;
-      feed.push({
-        id: `match_${m.id}`,
-        type: "match",
-        tournamentName: m.tournamentName,
-        roundName: m.roundName,
-        white: m.white,
-        black: m.black,
-        winner: winnerName,
-        gameLink: m.gameLink,
-        date: m.date,
-        timestamp: new Date(`${m.date}-01`).getTime()
-      });
-    });
-
-    // Static community items to populate feed
     const staticPosts = [
       {
         id: "comm_1",
@@ -211,127 +349,211 @@ export default function LandingPage() {
       }
     ];
 
-    feed.push(...staticPosts);
+    list.push(...staticPosts);
+    return list.sort((a, b) => b.timestamp - a.timestamp);
+  }, [dbAnnouncements]);
 
-    // Sort feed items by newest timestamp
-    const sortedFeed = feed.sort((a, b) => b.timestamp - a.timestamp);
+  // Decoupled Match Results
+  const feedMatches = useMemo(() => {
+    return (dbMatches || []).map(m => {
+      const winnerName = typeof m.winner === "object" ? m.winner.name : m.winner;
+      // parse date or fallback to now
+      const parsedTimestamp = m.date ? Date.parse(`${m.date}-01`) : NaN;
+      return {
+        id: `match_${m.id}`,
+        type: "match",
+        tournamentName: m.tournamentName,
+        roundName: m.roundName,
+        white: m.white,
+        black: m.black,
+        winner: winnerName,
+        gameLink: m.gameLink,
+        date: m.date,
+        timestamp: isNaN(parsedTimestamp) ? Date.now() : parsedTimestamp
+      };
+    });
+  }, [dbMatches]);
 
-    // Apply filters
-    if (activeFilter === "announcements") {
-      return sortedFeed.filter(item => item.type === "announcement");
-    }
-    if (activeFilter === "results") {
-      return sortedFeed.filter(item => item.type === "match");
-    }
-    if (activeFilter === "community") {
-      return sortedFeed.filter(item => item.type === "community");
-    }
-    return sortedFeed;
-  };
+  const newsSafeIdx = feedAnnouncements.length ? newsSlideIdx % feedAnnouncements.length : 0;
+  const matchSafeIdx = feedMatches.length ? matchSlideIdx % feedMatches.length : 0;
 
-  const feedItems = buildFeedItems();
+  // Auto-advance news slideshow
+  useEffect(() => {
+    if (feedAnnouncements.length < 2) return;
+    const t = setInterval(() =>
+      setNewsSlideIdx(p => (p + 1) % feedAnnouncements.length), 5000);
+    return () => clearInterval(t);
+  }, [feedAnnouncements.length]);
+
+  // Auto-advance match slideshow
+  useEffect(() => {
+    if (feedMatches.length < 2) return;
+    const t = setInterval(() =>
+      setMatchSlideIdx(p => (p + 1) % feedMatches.length), 6000);
+    return () => clearInterval(t);
+  }, [feedMatches.length]);
+
+  if (isPreloading) {
+    return (
+      <div className="fixed inset-0 bg-[#FAF8F4] z-[9999] flex flex-col items-center justify-center p-6 text-center">
+        {/* Animated Varsity Shield */}
+        <div className="relative mb-8">
+          <div className="w-20 h-20 bg-brand-primary rounded-3xl flex items-center justify-center shadow-lg animate-bounce">
+            <span className="text-white text-5xl font-black font-space select-none">S</span>
+          </div>
+          <div className="absolute -top-2 -right-2 w-7 h-7 bg-brand-accent rounded-full flex items-center justify-center shadow-md">
+            <span className="text-white text-xs select-none">👑</span>
+          </div>
+        </div>
+        
+        {/* Text Details */}
+        <h2 className="text-lg font-black text-brand-text-dark font-space uppercase tracking-widest mb-2">
+          SS4 League Arena
+        </h2>
+        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-6 animate-pulse">
+          {preloadStatus}
+        </p>
+        
+        {/* Progress Bar */}
+        <div className="w-64 h-2 bg-gray-250 rounded-full overflow-hidden border border-gray-300/40">
+          <div 
+            className="h-full bg-brand-accent transition-all duration-300 rounded-full"
+            style={{ width: `${preloadProgress}%` }}
+          />
+        </div>
+        <span className="text-[10px] font-black text-brand-primary mt-2.5 uppercase tracking-widest">
+          {preloadProgress}% Preloaded
+        </span>
+      </div>
+    );
+  }
 
   return (
     <>
-      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-8">
-        
-        {/* Main Grid: 3 Columns */}
+      <Hero />
+
+      {/* 2. Main Social/Dashboard Grid: 3 Columns */}
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           
-          {/* Column 1: Left Navigation & Profile Widget (25%) */}
+          {/* Column 1: Profile Widget & Left Filters (25%) */}
           <div className="lg:col-span-1 space-y-6">
             
-            {/* Session Card */}
+            {/* Session Card (M3 Outlined Layout) */}
             {user ? (
-              <div className="bg-white border border-gray-150 rounded-2xl p-5 shadow-sm">
+              <div className="varsity-card p-5 text-left">
                 <div className="flex items-center gap-3.5">
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-lg flex items-center justify-center shadow-sm">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-lg flex items-center justify-center shadow-sm shrink-0">
                     {profile?.name?.charAt(0) || "P"}
                   </div>
-                  <div>
-                    <h3 className="text-xs font-black text-brand-text-dark leading-tight">{profile?.name || "Player Profile"}</h3>
-                    <p className="text-[10px] font-bold text-gray-400 mt-0.5">{profile?.university || "SS4 Member"}</p>
+                  <div className="min-w-0">
+                    <h3 className="text-sm font-black text-brand-text-dark truncate leading-tight">
+                      {profile?.name || "Player Profile"}
+                    </h3>
+                    <p className="text-xs font-semibold text-gray-650 truncate mt-0.5">
+                      {profile?.university || "SS4 Member"}
+                    </p>
                   </div>
                 </div>
-                <div className="mt-4 pt-3.5 border-t border-gray-100 flex items-center justify-between text-xs">
+                
+                {/* Rating Badge Tonal Chip */}
+                <div className="mt-4 pt-3.5 border-t border-m3-outline-variant flex items-center justify-between text-sm">
                   <div>
-                    <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block">Chess Rating</span>
-                    <span className="font-bold text-brand-primary mt-0.5 block">{profile?.chess_rating || 1200}</span>
+                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Chess Rating</span>
+                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
+                      {profile?.chess_rating || 1200} ELO
+                    </span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block">Role</span>
-                    <span className="font-bold text-brand-accent uppercase mt-0.5 block">{profile?.role || "Player"}</span>
+                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Role</span>
+                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1 uppercase">
+                      {profile?.role || "Player"}
+                    </span>
                   </div>
                 </div>
+                
                 <div className="mt-4">
                   <Button 
                     onClick={() => navigate("/dashboard")} 
                     variant="primary" 
-                    className="w-full text-[10px] py-2 rounded-full uppercase tracking-wider font-black shadow-sm"
+                    className="w-full uppercase tracking-wider text-xs py-2.5 font-black shadow-sm"
                   >
                     My Dashboard
                   </Button>
                 </div>
               </div>
             ) : (
-              <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-5 shadow-sm relative overflow-hidden">
+              <div className="bg-white border border-m3-outline-variant rounded-3xl p-5 shadow-sm relative overflow-hidden text-left">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-brand-primary/5 rounded-full blur-xl"></div>
-                <h3 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-wider">Academic League</h3>
-                <p className="text-xs font-semibold text-gray-600 mt-2 leading-relaxed">
-                  Join a connected community of students competing, chatting, and striving for excellence.
+                <h3 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                  Academic League
+                </h3>
+                <p className="text-sm font-medium text-gray-700 mt-2 leading-relaxed">
+                  Join a connected community of student chess players competing, tracking ELO, and striving for excellence.
                 </p>
-                <div className="mt-4">
-                  <Button 
-                    onClick={() => setIsAuthModalOpen(true)} 
-                    variant="primary" 
-                    className="w-full text-[10px] py-2 rounded-full uppercase tracking-wider font-black shadow-md"
-                  >
-                    Join SS4 League
-                  </Button>
+                <div className="mt-5">
+                  <AuthGate reason="join the SS4 League" onAction={() => navigate('/dashboard')}>
+                    <Button
+                      variant="primary"
+                      className="w-full uppercase tracking-wider text-xs py-2.5 font-black shadow-sm"
+                    >
+                      Join SS4 League
+                    </Button>
+                  </AuthGate>
                 </div>
               </div>
             )}
 
-            {/* Feed Filters */}
-            <div className="bg-white border border-gray-150 rounded-2xl p-4 shadow-sm space-y-1">
-              <span className="block text-[10px] font-black text-gray-400 uppercase tracking-widest px-2 mb-2">Feed Filter</span>
+            {/* M3 Filter Chips - Stacked (Proximity & Grouping compliant) */}
+            <div className="varsity-card p-4 space-y-1.5 text-left">
+              <span className="block text-xs font-black text-gray-500 uppercase tracking-widest px-2 mb-2">
+                Feed Filter
+              </span>
               {[
                 { id: "all", label: "All Updates", icon: <CommunityIcon /> },
                 { id: "announcements", label: "Announcements", icon: <AnnouncementIcon /> },
                 { id: "results", label: "Match Results", icon: <MatchIcon /> },
-                { id: "community", label: "Community Milestones", icon: <TrophyIcon /> }
+                { id: "community", label: "Milestones", icon: <TrophyIcon /> }
               ].map(f => (
                 <button
                   key={f.id}
                   onClick={() => setActiveFilter(f.id)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-bold transition-all text-left cursor-pointer ${
+                  className={`m3-filter-chip w-full justify-start text-sm font-bold py-3 min-h-[44px] ${
                     activeFilter === f.id 
-                      ? "bg-brand-primary text-white" 
-                      : "text-gray-600 hover:bg-brand-bg-cream"
+                      ? "active-primary" 
+                      : ""
                   }`}
                 >
-                  <span className={activeFilter === f.id ? "text-white" : "text-gray-400"}>{f.icon}</span>
-                  {f.label}
+                  <span className="flex items-center gap-2">
+                    {activeFilter === f.id ? <CheckIcon /> : <span className="text-gray-600 shrink-0">{f.icon}</span>}
+                    {f.label}
+                  </span>
                 </button>
               ))}
             </div>
 
-            {/* Calendar & Upcoming Events Widget */}
-            <div className="bg-white border border-gray-150 rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
+            {/* Calendar & Upcoming Events Widget (M3 Outlined Card) */}
+            <div className="varsity-card p-5 text-left">
+              <div className="flex items-center gap-2.5 mb-4">
                 <span className="text-brand-accent"><CalendarIcon /></span>
-                <h4 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-wider">League Calendar</h4>
+                <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                  League Calendar
+                </h4>
               </div>
-              <div className="space-y-3.5 text-xs">
-                <div className="p-3 bg-brand-bg-cream/40 rounded-xl border border-gray-100">
-                  <span className="text-[9px] font-black text-brand-accent uppercase tracking-widest block">Next Tournament</span>
-                  <span className="font-bold text-brand-text-dark block mt-1">July 2026 Monthly Cup</span>
-                  <span className="text-[10px] font-semibold text-gray-400 block mt-0.5">Starts last 7 days of the month</span>
+              <div className="space-y-3">
+                <div className="p-3.5 bg-[#FAF8F4] rounded-xl border border-m3-outline-variant">
+                  <span className="text-[10px] font-black text-brand-accent uppercase tracking-widest block">Next Tournament</span>
+                  <a href="/chess-league" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
+                    July 2026 Monthly Tournament
+                  </a>
+                  <span className="text-xs font-semibold text-gray-700 block mt-0.5">
+                    Starts <span className="font-black text-xs text-brand-primary">July 25</span> | Secure your bracket
+                  </span>
                 </div>
-                <div className="p-3 bg-brand-bg-cream/40 rounded-xl border border-gray-100">
-                  <span className="text-[9px] font-black text-brand-primary uppercase tracking-widest block">Daily Fixtures</span>
-                  <span className="font-bold text-brand-text-dark block mt-1">League Matches</span>
-                  <span className="text-[10px] font-semibold text-gray-400 block mt-0.5">Every 2 days (continuous)</span>
+                <div className="p-3.5 bg-[#FAF8F4] rounded-xl border border-m3-outline-variant">
+                  <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest block">Daily Fixtures</span>
+                  <span className="text-sm font-bold text-brand-text-dark block mt-1">League Matches</span>
+                  <span className="text-xs font-semibold text-gray-700 block mt-0.5">Every 2 days (continuous)</span>
                 </div>
               </div>
             </div>
@@ -339,172 +561,173 @@ export default function LandingPage() {
           </div>
 
           {/* Column 2: Feed Stream (50%) */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-6 text-left">
             
             {/* Header Feed Title */}
-            <div className="flex items-center justify-between pb-3.5 border-b border-gray-150">
-              <h2 className="text-sm font-black font-space text-brand-text-dark uppercase tracking-widest">
+            <div className="flex items-center justify-between pb-3.5 border-b border-m3-outline-variant">
+              <h2 className="text-base font-black font-space text-brand-text-dark uppercase tracking-widest">
                 League Feed
               </h2>
-              <span className="text-[10px] font-black bg-brand-accent/10 text-brand-accent px-3 py-1 rounded-full uppercase tracking-wider">
+              <span className="text-xs font-black bg-brand-accent/10 text-brand-accent px-3.5 py-1 rounded-full uppercase tracking-wider">
                 Live updates
               </span>
             </div>
 
-            {/* Main Feed Content */}
-            {loadingFeed ? (
-              <div className="py-20 text-center text-xs font-semibold text-gray-400 italic">
-                Loading community feed...
-              </div>
-            ) : feedItems.length === 0 ? (
-              <div className="py-20 text-center">
-                <p className="text-xs font-semibold text-gray-400 italic">No posts found matching the filter criteria.</p>
-              </div>
-            ) : (
-              <div className="space-y-6 divide-y divide-gray-150">
-                {feedItems.map((item, index) => {
-                  const paddingClass = index === 0 ? "" : "pt-6";
-                  
-                  // Feed Card types
-                  if (item.type === "announcement") {
-                    return (
-                      <div key={item.id} className={`${paddingClass} flex gap-4 items-start`}>
-                        <div className="w-9 h-9 rounded-full bg-brand-accent/10 text-brand-accent flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
-                          <AnnouncementIcon />
-                        </div>
-                        <div className="flex-grow">
-                          <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5">
-                            <h3 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-wider">
-                              {item.title}
-                            </h3>
-                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                              {item.date}
-                            </span>
-                          </div>
-                          <p className="text-xs font-semibold text-gray-600 mt-2 leading-relaxed">
-                            {item.content}
-                          </p>
-                          <div className="flex items-center gap-1 mt-3">
-                            <span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span>
-                            <span className="text-[9px] font-black text-brand-accent uppercase tracking-widest">
-                              Broadcast by {item.author}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  }
-
-                  if (item.type === "match") {
-                    const whiteName = item.white?.name || "Player White";
-                    const blackName = item.black?.name || "Player Black";
-                    
-                    return (
-                      <div key={item.id} className={`${paddingClass} flex gap-4 items-start`}>
-                        <div className="w-9 h-9 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
-                          <MatchIcon />
-                        </div>
-                        <div className="flex-grow">
-                          <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 mb-1.5">
-                            <h3 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-wider">
-                              Match Result
-                            </h3>
-                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                              {item.roundName}
-                            </span>
-                          </div>
-                          
-                          {/* Visual match pairing output */}
-                          <div className="bg-brand-bg-cream/45 border border-gray-100 rounded-2xl p-4 flex items-center justify-between gap-4">
-                            <div className="flex-1 flex flex-col items-center text-center">
-                              <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1.5">White</span>
-                              <h4 className="text-xs font-black text-brand-text-dark truncate max-w-full">{whiteName}</h4>
-                              <span className="text-[9px] font-semibold text-gray-400 mt-0.5">@{item.white?.username}</span>
-                            </div>
-                            
-                            <div className="text-center font-black font-space text-xs text-gray-400 px-3 py-1 bg-white border border-gray-100 rounded-full select-none shadow-sm">
-                              VS
-                            </div>
-
-                            <div className="flex-1 flex flex-col items-center text-center">
-                              <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Black</span>
-                              <h4 className="text-xs font-black text-brand-text-dark truncate max-w-full">{blackName}</h4>
-                              <span className="text-[9px] font-semibold text-gray-400 mt-0.5">@{item.black?.username}</span>
-                            </div>
-                          </div>
-
-                          <div className="flex flex-wrap items-center justify-between mt-3 gap-2.5">
-                            <p className="text-[10px] font-black text-brand-primary uppercase tracking-widest">
-                              🏆 Winner: {item.winner || "Draw"}
-                            </p>
-                            {item.gameLink && (
-                              <a 
-                                href={item.gameLink} 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                className="text-[10px] font-black text-brand-accent hover:underline uppercase tracking-wider"
-                              >
-                                View game on board &rarr;
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  }
-
-                  // Default community milestone type
-                  return (
-                    <div key={item.id} className={`${paddingClass} flex gap-4 items-start`}>
-                      <div className="w-9 h-9 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
-                        <CommunityIcon />
-                      </div>
-                      <div className="flex-grow">
-                        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5">
-                          <h3 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-wider">
-                            {item.title}
-                          </h3>
-                          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                            {item.date}
-                          </span>
-                        </div>
-                        <p className="text-xs font-semibold text-gray-600 mt-2 leading-relaxed">
-                          {item.content}
-                        </p>
-                        <p className="text-[9px] font-black text-brand-primary uppercase tracking-widest mt-2">
-                          &bull; Published by {item.author}
-                        </p>
-                      </div>
+            {/* News / Announcements Auto-Sliding Card */}
+            {feedAnnouncements.length > 0 && (() => {
+              const item = feedAnnouncements[newsSafeIdx];
+              return (
+                <div className="varsity-card p-5 bg-white overflow-hidden relative">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="w-8 h-8 rounded-full bg-brand-accent/10 text-brand-accent flex items-center justify-center shrink-0">
+                        <AnnouncementIcon />
+                      </span>
+                      <span className="text-xs font-black text-brand-text-dark uppercase tracking-widest">Announcements</span>
                     </div>
-                  );
-                })}
-              </div>
-            )}
+                    {feedAnnouncements.length > 1 && (
+                      <div className="flex items-center gap-1.5">
+                        {feedAnnouncements.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setNewsSlideIdx(idx)}
+                            aria-label={`Announcement ${idx + 1}`}
+                            className={`w-1.5 h-1.5 rounded-full transition-all cursor-pointer ${
+                              idx === newsSafeIdx ? "bg-brand-accent scale-125" : "bg-brand-accent/30 hover:bg-brand-accent/60"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="relative min-h-[72px]">
+                    <AnimatePresence mode="wait" initial={false}>
+                      <Motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.35, ease: "easeInOut" }}
+                      >
+                        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 mb-1.5">
+                          <h3 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">{item.title}</h3>
+                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{item.date}</span>
+                        </div>
+                        <p className="text-sm font-medium text-gray-700 leading-relaxed">{item.content}</p>
+                        <div className="flex items-center gap-1.5 mt-2.5">
+                          <span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span>
+                          <span className="text-[10px] font-black text-brand-accent uppercase tracking-widest">Broadcast by {item.author}</span>
+                        </div>
+                      </Motion.div>
+                    </AnimatePresence>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Match Results Sliding Card */}
+            {feedMatches.length === 0 ? null : (() => {
+              const item = feedMatches[matchSafeIdx];
+              const wLabel = `${item.white?.name || ''} (${item.white?.username || ''})`;
+              const bLabel = `${item.black?.name || ''} (${item.black?.username || ''})`;
+              const resValue = item.winner === item.white?.name ? 'white'
+                : item.winner === item.black?.name ? 'black'
+                : (item.winner === 'Draw' || item.winner === 'draw') ? 'draw'
+                : null;
+              return (
+                <div className="varsity-card p-5 bg-white space-y-4 overflow-hidden">
+                  {/* Header */}
+                  <div className="flex items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0 shadow-inner">
+                        <span className="material-symbols-outlined text-[16px] select-none">sports_esports</span>
+                      </div>
+                      <h3 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">Match Results</h3>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      {feedMatches.length > 1 && (
+                        <div className="flex items-center gap-1.5">
+                          {feedMatches.map((_, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => setMatchSlideIdx(idx)}
+                              aria-label={`Match ${idx + 1}`}
+                              className={`w-1.5 h-1.5 rounded-full transition-all cursor-pointer ${
+                                idx === matchSafeIdx ? "bg-brand-primary scale-125" : "bg-brand-primary/30 hover:bg-brand-primary/60"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      <span className="text-xs font-bold text-gray-650 bg-m3-surface-variant px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                        {item.roundName}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Sliding content */}
+                  <AnimatePresence mode="wait" initial={false}>
+                    <Motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.35, ease: "easeInOut" }}
+                    >
+                      <MatchResult
+                        w={wLabel}
+                        b={bLabel}
+                        res={resValue}
+                        date={item.date}
+                        round={item.roundName}
+                        division={{ players: allPlayers }}
+                        onPlayerSelect={(p) => setSelectedPlayer(p)}
+                        isAdmin={false}
+                      />
+                      {item.gameLink && (
+                        <div className="flex justify-end pt-1">
+                          <a
+                            href={item.gameLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-black text-brand-primary hover:text-brand-accent uppercase tracking-wider inline-flex items-center gap-0.5"
+                          >
+                            View Game Board <span className="material-symbols-outlined text-[12px]">open_in_new</span>
+                          </a>
+                        </div>
+                      )}
+                    </Motion.div>
+                  </AnimatePresence>
+                </div>
+              );
+            })()}
 
           </div>
 
-          {/* Column 3: Right Spotlights & Leaderboards Widget (25%) */}
-          <div className="lg:col-span-1 space-y-6">
+          {/* Column 3: Spotlights & Leaderboards Widget (25%) */}
+          <div className="lg:col-span-1 space-y-6 text-left">
             
-            {/* Dynamic Tabbed Leaderboard */}
-            <div className="bg-white border border-gray-150 rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center justify-between pb-3.5 border-b border-gray-100 mb-4">
-                <h4 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-widest">
+            {/* Leaderboard Card (M3 Outlined container) */}
+            <div className="varsity-card p-5">
+              <div className="flex items-center justify-between pb-3.5 border-b border-m3-outline-variant mb-4">
+                <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-widest">
                   Leaderboards
                 </h4>
-                <div className="flex bg-brand-bg-cream rounded-full p-0.5 border border-gray-100">
+                
+                {/* Segmented Button (Players vs Schools) - 48px compliant spacing */}
+                <div className="m3-segmented-container">
                   <button
                     onClick={() => setLeaderboardTab("players")}
-                    className={`text-[8.5px] font-black uppercase tracking-wider px-2 py-1 rounded-full cursor-pointer focus:outline-none transition-all ${
-                      leaderboardTab === "players" ? "bg-brand-primary text-white shadow-sm" : "text-gray-400"
+                    className={`m3-segmented-item px-3 ${
+                      leaderboardTab === "players" ? "active" : ""
                     }`}
                   >
                     Players
                   </button>
                   <button
                     onClick={() => setLeaderboardTab("schools")}
-                    className={`text-[8.5px] font-black uppercase tracking-wider px-2 py-1 rounded-full cursor-pointer focus:outline-none transition-all ${
-                      leaderboardTab === "schools" ? "bg-brand-primary text-white shadow-sm" : "text-gray-400"
+                    className={`m3-segmented-item px-3 ${
+                      leaderboardTab === "schools" ? "active" : ""
                     }`}
                   >
                     Schools
@@ -512,92 +735,148 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              {leaderboardTab === "players" ? (
-                <div className="space-y-3.5">
-                  {leaderboardPlayers.map((p, i) => (
-                    <div key={i} className="flex items-center justify-between text-xs gap-3">
-                      <div className="flex items-center gap-2.5 truncate">
-                        <span className="w-5 h-5 bg-brand-bg-cream text-[10px] font-black text-brand-text-dark rounded-full flex items-center justify-center flex-shrink-0">
-                          {i + 1}
-                        </span>
-                        <div className="truncate">
-                          <p className="font-bold text-brand-text-dark truncate leading-tight">{p.name}</p>
-                          <p className="text-[9px] font-bold text-gray-400 truncate mt-0.5">{p.university}</p>
-                        </div>
-                      </div>
-                      <span className="font-black text-brand-primary font-space flex-shrink-0">
-                        {p.chess_rating}
-                      </span>
-                    </div>
+              {/* Sub-segmented Tab Menu for player divisions */}
+              {leaderboardTab === "players" && (
+                <div className="flex bg-m3-surface-variant border border-m3-outline-variant rounded-xl p-1 mb-4">
+                  {[
+                    { id: "A", label: "A (1800+)" },
+                    { id: "Fork", label: "Fork (1k-1.8k)" },
+                    { id: "Pin", label: "Pin (<1k)" }
+                  ].map(tab => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setSelectedDivision(tab.id)}
+                      className={`flex-grow py-2 rounded-lg text-[10px] font-black uppercase tracking-wider text-center transition-all cursor-pointer min-h-[32px] ${
+                        selectedDivision === tab.id 
+                          ? 'bg-white text-brand-primary shadow-sm border border-m3-outline/20' 
+                          : 'text-gray-600 hover:text-gray-800'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
                   ))}
                 </div>
-              ) : (
-                <div className="space-y-3.5">
-                  {leaderboardSchools.map((s, i) => (
-                    <div key={i} className="flex items-center justify-between text-xs gap-3">
-                      <div className="flex items-center gap-2.5 truncate">
-                        <span className="w-5 h-5 bg-brand-bg-cream text-[10px] font-black text-brand-text-dark rounded-full flex items-center justify-center flex-shrink-0">
-                          {i + 1}
-                        </span>
-                        <div className="truncate">
-                          <p className="font-bold text-brand-text-dark truncate leading-tight">{s.name}</p>
-                          <p className="text-[9px] font-bold text-gray-400 mt-0.5">{s.count} registered players</p>
+              )}
+
+              {/* Leaderboards List */}
+              {leaderboardTab === "players" ? (
+                <div className="space-y-4">
+                  {leaderboardPlayers.map((p, i) => {
+                    // M3/Von Restorff Colored Circle Badges for Top Positions
+                    const badgeColors = 
+                      i === 0 ? "bg-[#FFD700] text-gray-900 font-black" : // Gold
+                      i === 1 ? "bg-[#C0C0C0] text-gray-900 font-black" : // Silver
+                      i === 2 ? "bg-[#CD7F32] text-white font-black" :    // Bronze
+                      "bg-m3-surface-variant text-gray-750 font-bold";
+
+                    return (
+                      <div key={i} className="flex items-center justify-between text-sm gap-3">
+                        <div className="flex items-center gap-2.5 truncate">
+                          <span className={`w-5.5 h-5.5 rounded-full flex items-center justify-center shrink-0 text-[10px] ${badgeColors}`}>
+                            {i + 1}
+                          </span>
+                          <div className="truncate">
+                            <p className="font-bold text-brand-text-dark truncate leading-tight">{p.name}</p>
+                            <p className="text-[10px] font-semibold text-gray-600 truncate mt-0.5">{p.university}</p>
+                          </div>
                         </div>
+                        <span className="font-black text-brand-primary font-space shrink-0">
+                          {p.chess_rating}
+                        </span>
                       </div>
-                      <span className="font-black text-brand-accent font-space flex-shrink-0">
-                        {s.avgRating}
-                      </span>
-                    </div>
-                  ))}
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {leaderboardSchools.map((s, i) => {
+                    const badgeColors = 
+                      i === 0 ? "bg-[#FFD700] text-gray-900 font-black" : 
+                      i === 1 ? "bg-[#C0C0C0] text-gray-900 font-black" : 
+                      i === 2 ? "bg-[#CD7F32] text-white font-black" : 
+                      "bg-m3-surface-variant text-gray-750 font-bold";
+
+                    return (
+                      <div key={i} className="flex items-center justify-between text-sm gap-3">
+                        <div className="flex items-center gap-2.5 truncate">
+                          <span className={`w-5.5 h-5.5 rounded-full flex items-center justify-center shrink-0 text-[10px] ${badgeColors}`}>
+                            {i + 1}
+                          </span>
+                          <div className="truncate">
+                            <p className="font-bold text-brand-text-dark truncate leading-tight">{s.name}</p>
+                            <p className="text-[10px] font-semibold text-gray-600 mt-0.5 truncate">{s.count} competitors</p>
+                          </div>
+                        </div>
+                        <span className="font-black text-brand-accent font-space shrink-0">
+                          {s.avgRating}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
 
-            {/* Featured Player Spotlight */}
-            <div className="bg-white border border-gray-150 rounded-2xl p-5 shadow-sm relative overflow-hidden">
+            {/* Featured Player Spotlight (M3 Filled Card style) */}
+            <div className="varsity-card p-5 bg-[#FAF8F4] relative overflow-hidden border-none shadow-none">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-brand-accent"><TrophyIcon /></span>
-                <h4 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-wider">Player Spotlight</h4>
+                <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                  Player Spotlight
+                </h4>
               </div>
               <div className="flex items-start gap-3 mt-4">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-accent to-yellow-400 text-white font-black text-lg flex items-center justify-center shadow-sm flex-shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-accent to-yellow-400 text-white font-black text-lg flex items-center justify-center shrink-0 shadow-sm">
                   K
                 </div>
-                <div>
-                  <h4 className="text-xs font-black text-brand-text-dark leading-tight">Kingsley Ekpo</h4>
-                  <p className="text-[9px] font-semibold text-gray-400 mt-0.5">Computer Science &bull; UniUyo</p>
+                <div className="min-w-0">
+                  <h4 className="text-sm font-black text-brand-text-dark truncate leading-tight">Kingsley Ekpo</h4>
+                  <p className="text-[10px] font-semibold text-gray-600 truncate mt-0.5">Computer Science &bull; UniUyo</p>
                 </div>
               </div>
-              <div className="mt-4 pt-3.5 border-t border-gray-100 flex items-center justify-between text-xs">
+              
+              <div className="mt-4 pt-3.5 border-t border-m3-outline-variant/60 flex items-center justify-between text-sm">
                 <div>
-                  <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block">Win Streak</span>
-                  <span className="font-bold text-brand-accent mt-0.5 block">6 wins</span>
+                  <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Win Streak</span>
+                  <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1">
+                    6 wins
+                  </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block">Rating (Rapid)</span>
-                  <span className="font-bold text-brand-primary mt-0.5 block">1945 ELO</span>
+                  <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Rating (Rapid)</span>
+                  <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
+                    1945 ELO
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Featured Institution Spotlight */}
-            <div className="bg-white border border-gray-150 rounded-2xl p-5 shadow-sm">
+            {/* Featured Institution Spotlight (M3 Filled Card style) */}
+            <div className="varsity-card p-5 bg-[#FAF8F4] border-none shadow-none">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-brand-primary"><SchoolIcon /></span>
-                <h4 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-wider">Top Institution</h4>
+                <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                  Top Institution
+                </h4>
               </div>
               <div>
-                <h4 className="text-xs font-black text-brand-text-dark leading-tight mt-3">Bells University of Technology</h4>
-                <p className="text-[9px] font-semibold text-gray-400 mt-1">Ota, Ogun State &bull; Mechatronics & CS hubs</p>
+                <h4 className="text-sm font-black text-brand-text-dark leading-tight mt-3">
+                  Bells University of Technology
+                </h4>
+                <p className="text-[10px] font-semibold text-gray-600 mt-1">Ota, Ogun State &bull; Mechatronics hub</p>
               </div>
-              <div className="mt-4 pt-3.5 border-t border-gray-100 flex items-center justify-between text-xs">
+              <div className="mt-4 pt-3.5 border-t border-m3-outline-variant/60 flex items-center justify-between text-sm">
                 <div>
-                  <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block">Registrations</span>
-                  <span className="font-bold text-brand-primary mt-0.5 block">45 students</span>
+                  <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Registrations</span>
+                  <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
+                    45 students
+                  </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block">Avg ELO</span>
-                  <span className="font-bold text-brand-accent mt-0.5 block">1540</span>
+                  <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Avg ELO</span>
+                  <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1">
+                    1540
+                  </span>
                 </div>
               </div>
             </div>
@@ -605,12 +884,12 @@ export default function LandingPage() {
           </div>
 
         </div>
-
       </div>
-
-      {/* Render Authentication Modal if clicked */}
-      {isAuthModalOpen && (
-        <StudentSignupModal onClose={() => setIsAuthModalOpen(false)} />
+      {selectedPlayer && (
+        <PlayerProfile 
+          player={selectedPlayer} 
+          onClose={() => setSelectedPlayer(null)} 
+        />
       )}
     </>
   );

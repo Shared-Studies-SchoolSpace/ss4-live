@@ -90,7 +90,6 @@ export default function AnnouncementBanner() {
                 </span>
               </div>
               <p className="text-xs font-semibold text-gray-600 mt-1.5 leading-relaxed">{a.content}</p>
-              <p className="text-[10px] font-black text-brand-primary uppercase tracking-widest mt-2">&bull; Published by {a.sender?.name || 'Administrator'}</p>
             </div>
           </div>
         ))}

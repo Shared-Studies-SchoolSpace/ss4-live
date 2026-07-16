@@ -141,7 +141,7 @@ export const tournamentPlayers = [
   },
   {
     "name": "Ugbani Onyekachi Favour",
-    "username": "r2snyp",
+    "username": "r2_snyp",
     "department": "Mathematics",
     "school": "Nnamdi Azikiwe University",
     "contact": "08122126954"

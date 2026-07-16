@@ -231,6 +231,10 @@ export function getCountdownTarget(tournament) {
     return { date: new Date(`${dates[0]}T20:00:00+01:00`), label: 'Tournament begins in' };
   }
   if (tournament.status === 'active') {
+    const latestRound = tournament.rounds && tournament.rounds[tournament.rounds.length - 1];
+    if (latestRound && latestRound.next_round_start) {
+      return { date: new Date(latestRound.next_round_start), label: 'Next round begins in' };
+    }
     const pending = tournament.rounds.find(r => r.games.some(g => !g.winner));
     if (pending) return { date: new Date(`${pending.date}T20:00:00+01:00`), label: `${pending.name} starts in` };
   }

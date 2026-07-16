@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { SplitBracketVisualizer } from './SplitBracketVisualizer';
 
 function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
   const isBye = (p) => p?.username === 'bye';
@@ -131,6 +132,12 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
   const [activeRound, setActiveRound] = useState(1);
   const [loggingGame, setLoggingGame] = useState(null);
   const [gameLinkInput, setGameLinkInput] = useState('');
+  const [viewMode, setViewMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768 ? 'list' : 'tree';
+    }
+    return 'list';
+  });
 
   useEffect(() => {
     if (tournament?.rounds?.length) {
@@ -180,34 +187,68 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
       </div>
 
       {/* Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
-        <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
-          {tournament.rounds.map(r => (
-            <button key={r.roundNum} onClick={() => { setActiveRound(r.roundNum); }}
-              className={`text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors ${activeRound === r.roundNum ? 'bg-brand-primary text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}>
-              {r.name}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
+        <div className="flex flex-wrap items-center gap-3">
+          {/* View Mode Toggle */}
+          <div className="flex bg-gray-50 border border-gray-200/50 p-1 rounded-xl shrink-0">
+            <button
+              onClick={() => setViewMode('list')}
+              className={`px-3 py-1.5 text-xs font-black rounded-lg transition-all cursor-pointer ${
+                viewMode === 'list' ? 'bg-white text-brand-primary shadow-sm border border-gray-100' : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              List View
             </button>
-          ))}
+            <button
+              onClick={() => setViewMode('tree')}
+              className={`px-3 py-1.5 text-xs font-black rounded-lg transition-all cursor-pointer ${
+                viewMode === 'tree' ? 'bg-white text-brand-primary shadow-sm border border-gray-100' : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              Interactive Tree
+            </button>
+          </div>
+
+          {viewMode === 'list' && (
+            <>
+              <div className="h-4 w-px bg-gray-200 hidden sm:block" />
+              <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
+                {tournament.rounds.map(r => (
+                  <button key={r.roundNum} onClick={() => { setActiveRound(r.roundNum); }}
+                    className={`text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors ${activeRound === r.roundNum ? 'bg-brand-primary text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}>
+                    {r.name}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
         </div>
+        
         {/* Advance round — only when last round is fully complete */}
         {isAdmin && allLastRoundDone && lastRound.games.length > 1 && (
           <button onClick={onAdvanceRound}
-            className="text-sm font-bold bg-brand-accent text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-brand-accent/90 transition-colors shrink-0">
+            className="text-sm font-bold bg-brand-accent text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-brand-accent/90 transition-colors shrink-0 w-full sm:w-auto text-center">
             Generate {lastRound.roundNum === 5 ? 'Final' : 'Next Round'} →
           </button>
         )}
       </div>
 
-      {/* Round grid */}
-      {round && (
-        <div>
-          <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date} @ 6:00 PM</p>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {round.games.map((g, i) => (
-              <MatchCard key={g.id} game={g} idx={i} isAdmin={isAdmin} onClick={openModal} onPlayerClick={onPlayerClick} />
-            ))}
-          </div>
+      {/* Round layout */}
+      {viewMode === 'tree' ? (
+        <div className="bg-white border border-gray-100 rounded-3xl p-2 sm:p-6 shadow-sm overflow-hidden">
+          <SplitBracketVisualizer tournament={tournament} onPlayerClick={onPlayerClick} />
         </div>
+      ) : (
+        round && (
+          <div>
+            <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date} @ 6:00 PM</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              {round.games.map((g, i) => (
+                <MatchCard key={g.id} game={g} idx={i} isAdmin={isAdmin} onClick={openModal} onPlayerClick={onPlayerClick} />
+              ))}
+            </div>
+          </div>
+        )
       )}
 
       {/* Log result modal */}

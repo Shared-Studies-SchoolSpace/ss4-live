@@ -33,6 +33,28 @@ export default function AdminBroadcastPanel() {
 
       if (error) throw error;
 
+      // Broadcast notifications to all users
+      try {
+        const { data: profiles } = await supabase.from('profiles').select('id');
+        if (profiles && profiles.length > 0) {
+          const notifs = profiles.map(p => ({
+            user_id: p.id,
+            type: 'announcement',
+            title: `New Announcement! 📢`,
+            message: title.trim(),
+            link: '/news'
+          }));
+
+          // Batch insert
+          const batchSize = 100;
+          for (let i = 0; i < notifs.length; i += batchSize) {
+            await supabase.from('notifications').insert(notifs.slice(i, i + batchSize));
+          }
+        }
+      } catch (notifErr) {
+        console.warn('Failed to broadcast announcement notifications:', notifErr.message);
+      }
+
       toast.success('Announcement broadcasted successfully!');
       setTitle('');
       setContent('');

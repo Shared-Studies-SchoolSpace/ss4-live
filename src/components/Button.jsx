@@ -1,14 +1,14 @@
-export default function Button({ children, variant = "primary", ...props }) {
+export default function Button({ children, variant = "primary", className = "", ...props }) {
   const variants = {
     primary:
-      "bg-brand-primary text-white font-bold px-8 py-3 rounded-full shadow-md hover:bg-brand-accent transition-colors",
+      "varsity-btn-primary text-sm tracking-wide select-none active:scale-[0.98] outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2",
     secondary:
-      "bg-white text-[#111111] font-bold px-8 py-3 rounded-full shadow-sm border border-gray-200 hover:bg-brand-bg-cream transition-colors",
+      "varsity-btn-secondary text-sm tracking-wide select-none active:scale-[0.98] outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2",
     minimal:
-      "text-[#111111] font-bold hover:text-brand-primary",
+      "inline-flex items-center justify-center min-h-[48px] px-4 text-[#111111] font-bold hover:text-brand-primary transition-colors cursor-pointer select-none outline-none focus-visible:underline",
   };
   return (
-    <button className={variants[variant]} {...props}>
+    <button className={`${variants[variant]} ${className}`} {...props}>
       {children}
     </button>
   );

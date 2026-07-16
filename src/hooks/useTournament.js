@@ -47,6 +47,9 @@ export function useTournament(monthYear) {
   const [isDbFallback, setIsDbFallback] = useState(false);
 
   const save = async (t) => {
+    const oldStatus = tournament?.status;
+    const newStatus = t.status;
+    
     setTournamentState(t);
     localStorage.setItem(LS_KEY(t.month_year), JSON.stringify(t));
     try {
@@ -57,7 +60,49 @@ export function useTournament(monthYear) {
       if (error) throw error;
       setIsDbFallback(false);
       toast.success('Saved to Database!', { autoClose: 1000 });
+
+      // Trigger SCL global notification alerts on status change
+      if (oldStatus && oldStatus !== newStatus) {
+        let notifType = '';
+        let notifTitle = '';
+        let notifMsg = '';
+
+        if (newStatus === 'active') {
+          notifType = 'tournament_begin';
+          notifTitle = 'Tournament Begun! 🏆';
+          notifMsg = `The ${t.name} has officially started! Check your pairings and schedule your matches.`;
+        } else if (newStatus === 'completed') {
+          const champName = typeof t.winner === 'object' ? t.winner?.name : t.winner;
+          notifType = 'tournament_complete';
+          notifTitle = 'Tournament Completed! 🏆';
+          notifMsg = `The ${t.name} is complete. Congratulations to the Champion: ${champName || 'None'}!`;
+        } else if (newStatus === 'upcoming') {
+          notifType = 'registration_open';
+          notifTitle = 'Registration Open! 🏆';
+          notifMsg = `Registration is now open for the ${t.name}. Visit the Dashboard to register.`;
+        }
+
+        if (notifType) {
+          const { data: profiles } = await supabase.from('profiles').select('id');
+          if (profiles && profiles.length > 0) {
+            const notifs = profiles.map(p => ({
+              user_id: p.id,
+              type: notifType,
+              title: notifTitle,
+              message: notifMsg,
+              link: '/chess-league/tournament'
+            }));
+
+            // Batch insert
+            const batchSize = 100;
+            for (let i = 0; i < notifs.length; i += batchSize) {
+              await supabase.from('notifications').insert(notifs.slice(i, i + batchSize));
+            }
+          }
+        }
+      }
     } catch (e) {
+      console.warn('Tournament status notification save error:', e.message);
       setIsDbFallback(true);
       toast.info('Saved locally (offline)');
     }
@@ -166,5 +211,15 @@ export function useTournament(monthYear) {
     fetchHistory();
   };
 
-  return { tournament, history, isDbFallback, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks };
+  const updateNextRoundStart = (dateTimeStr) => {
+    if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return;
+    const updatedRounds = [...tournament.rounds];
+    updatedRounds[updatedRounds.length - 1] = {
+      ...updatedRounds[updatedRounds.length - 1],
+      next_round_start: dateTimeStr
+    };
+    save({ ...tournament, rounds: updatedRounds });
+  };
+
+  return { tournament, history, isDbFallback, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart };
 }

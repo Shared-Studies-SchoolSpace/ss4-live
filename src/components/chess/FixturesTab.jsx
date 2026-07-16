@@ -3,8 +3,9 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { toast } from 'react-toastify';
 import { getPlayerDisplay, gameKey } from '../../utils/chessUtils';
+import { MatchFixture } from './MatchFixture';
 
-export const FixturesTab = ({ currentDivision, gameResults, currentRound, setCurrentRound }) => {
+export const FixturesTab = ({ currentDivision, gameResults, currentRound, setCurrentRound, onPlayerSelect }) => {
   const [showModal, setShowModal] = useState(false);
   const [exportType, setExportType] = useState(null); // 'image' | 'pdf'
 
@@ -381,111 +382,26 @@ export const FixturesTab = ({ currentDivision, gameResults, currentRound, setCur
       )}
 
       {/* Fixtures List (Single Tabbed Round) */}
-      <div id="fixtures-list" className="space-y-8 bg-transparent">
+      <div id="fixtures-list" className="space-y-8 bg-transparent max-w-2xl mx-auto">
         {activeRoundData && (
-          <div id={`fixture-round-${activeRoundData.round}`} className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm animate-in fade-in duration-300">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-50 mb-4">
-              <span className="text-lg font-black font-space text-[#111111]">Round {activeRoundData.round}</span>
-              <span className="text-xs font-black text-brand-primary uppercase tracking-widest bg-brand-primary/5 px-3 py-1.5 rounded-full">{activeRoundData.date}</span>
+          <div id={`fixture-round-${activeRoundData.round}`} className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-m3-outline-variant animate-in fade-in duration-300">
+            <div className="flex items-center justify-between mb-8 px-2">
+              <h2 className="text-xl font-bold text-brand-text-dark font-space tracking-tight">Round {activeRoundData.round} Fixtures</h2>
+              <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest border border-m3-outline-variant px-3.5 py-1.5 rounded-full">{activeRoundData.date}</span>
             </div>
             
-            <div className="divide-y divide-gray-50">
-              {activeRoundData.games.map(([w, b]) => {
-                const isBye = w === 'BYE' || b === 'BYE';
-                const res = gameResults[gameKey(currentDivision.id, activeRoundData.round, w, b)];
-                const wP = getPlayerDisplay(w);
-                const bP = getPlayerDisplay(b);
-                
-                return (
-                  <div 
-                    key={`${activeRoundData.round}_${w}_${b}`} 
-                    className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-4 ${
-                      res || isBye ? 'opacity-90' : ''
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <span className="w-6 h-6 rounded-md bg-gray-100 text-[#111111] border border-gray-200 text-[10px] font-black flex items-center justify-center flex-shrink-0 select-none" title="Plays White">W</span>
-                      <div className="truncate">
-                        <span className={`text-sm block truncate ${
-                          isBye ? (
-                            w === 'BYE' ? 'text-gray-300 font-medium' : 'text-green-600 font-extrabold'
-                          ) : res ? (
-                            res === 'white' 
-                              ? 'text-green-600 font-extrabold' 
-                              : res === 'draw' 
-                                ? 'text-gray-500 font-semibold' 
-                                : 'text-red-500 font-semibold'
-                          ) : 'text-[#111111] font-bold'
-                        }`}>{wP.name}</span>
-                        {wP.username && (
-                          <a 
-                            href={`https://www.chess.com/member/${wP.username}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[10px] font-semibold text-gray-400 hover:text-brand-primary transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            @{wP.username}
-                          </a>
-                        )}
-                      </div>
-                    </div>
-
-                    <span className="text-xs font-black text-gray-300 uppercase tracking-widest sm:px-2 select-none self-center">vs</span>
-
-                    <div className="flex items-center justify-end gap-3 flex-1 min-w-0 text-right">
-                      <div className="truncate">
-                        <span className={`text-sm block truncate ${
-                          isBye ? (
-                            b === 'BYE' ? 'text-gray-300 font-medium' : 'text-green-600 font-extrabold'
-                          ) : res ? (
-                            res === 'black' 
-                              ? 'text-green-600 font-extrabold' 
-                              : res === 'draw' 
-                                ? 'text-gray-500 font-semibold' 
-                                : 'text-red-500 font-semibold'
-                          ) : 'text-[#111111] font-bold'
-                        }`}>{bP.name}</span>
-                        {bP.username && (
-                          <a 
-                            href={`https://www.chess.com/member/${bP.username}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[10px] font-semibold text-gray-400 hover:text-brand-primary transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            @{bP.username}
-                          </a>
-                        )}
-                      </div>
-                      <span className="w-6 h-6 rounded-md bg-[#111111] text-white text-[10px] font-black flex items-center justify-center flex-shrink-0 select-none" title="Plays Black">B</span>
-                    </div>
-
-                    {/* Results Badge */}
-                    <div className="flex items-center justify-start sm:justify-end min-w-[120px]">
-                      {isBye ? (
-                        <span className="text-[10px] font-bold bg-green-50 text-green-700 border border-green-200/60 px-3 py-1 rounded-full uppercase tracking-wider select-none">
-                          BYE Win
-                        </span>
-                      ) : res ? (
-                        <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider select-none border ${
-                          res === 'white' || res === 'black'
-                            ? 'bg-green-50 text-green-700 border-green-200/60' 
-                            : 'bg-gray-100 text-gray-500 border-gray-200'
-                        }`}>
-                          {res === 'white' && `Winner: ${wP.name.split(' ')[0]}`}
-                          {res === 'black' && `Winner: ${bP.name.split(' ')[0]}`}
-                          {res === 'draw' && "Match Draw"}
-                        </span>
-                      ) : (
-                        <span className="text-[10px] font-bold bg-gray-50 text-gray-400 border border-gray-100 px-3 py-1 rounded-full uppercase tracking-wider select-none">
-                          Scheduled
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="flex flex-col gap-4">
+              {activeRoundData.games.map(([w, b]) => (
+                <MatchFixture 
+                  key={`${activeRoundData.round}_${w}_${b}`}
+                  w={w}
+                  b={b}
+                  date={activeRoundData.date}
+                  round={activeRoundData.round}
+                  division={currentDivision}
+                  onPlayerSelect={onPlayerSelect}
+                />
+              ))}
             </div>
           </div>
         )}

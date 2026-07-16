@@ -31,7 +31,7 @@ export default function SasPage() {
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4 pb-16">
                     {mockSubjects.map((subj, idx) => (
-                        <div key={idx} className="bg-white rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col relative group">
+                        <div key={idx} className="varsity-card overflow-hidden flex flex-col relative group">
                             <div className="relative h-56 overflow-hidden">
                                 <img src={subj.image} alt={subj.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>

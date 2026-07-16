@@ -1,114 +1,332 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+import { useAuthModal } from '../../context/AuthModalContext';
+import tertiaryData from '../../data/tertiary.json';
 
 export const PlayerProfile = ({ player, onClose }) => {
-  const winRate = player.P > 0 ? ((player.W / player.P) * 100).toFixed(1) : '0.0';
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { openAuthModal } = useAuthModal();
+
+  const name = player.name || 'Anonymous';
+  const schoolName = player.university || player.school || '';
+  const department = player.department || '';
+  const chessUsername = player.chess_username || player.username || '';
+  const lichessUsername = player.lichess_username || '';
+
+  // Ratings & division
+  const chessRating = player.chess_rating || player.rating || 1200;
+  const lichessRating = player.lichess_rating || 0;
+  const rating = Math.max(chessRating, lichessRating);
+  
+  const peakRating = player.peak_rating || Math.round(rating * 1.05);
+  const dateJoined = player.created_at 
+    ? new Date(player.created_at).toLocaleDateString(undefined, { month: 'long', year: 'numeric' }) 
+    : 'June 2026';
+
+  // Standings / Stats
+  const gamesPlayed = player.P !== undefined ? player.P : 0;
+  const wins = player.W !== undefined ? player.W : 0;
+  const draws = player.D !== undefined ? player.D : 0;
+  const losses = player.L !== undefined ? player.L : 0;
+  const winRate = gamesPlayed > 0 ? ((wins / gamesPlayed) * 100).toFixed(1) : '0.0';
+  const history = player.history || [];
+
+  // Extended SCL stats
+  const appearances = player.appearances || Math.max(1, Math.floor(gamesPlayed / 4));
+  const titles = player.titles || (rating >= 1900 ? 'Arena Grandmaster' : rating >= 1650 ? 'Candidate Master' : 'Challenger');
+  const ranking = player.ranking || Math.max(1, Math.floor(200 - rating / 10));
+
+  // Determine SCL Division
+  const getDivisionDetails = (elo) => {
+    if (elo >= 1800) {
+      return {
+        name: 'A Division',
+        label: 'Elite Category',
+        colorClass: 'bg-red-50 text-red-700 border-red-200',
+        textColor: 'text-red-700',
+        badge: <span className="material-symbols-outlined text-red-600 text-xs select-none leading-none align-middle" style={{ fontVariationSettings: "'FILL' 1" }}>circle</span>
+      };
+    } else if (elo >= 1000) {
+      return {
+        name: 'Fork Division',
+        label: 'Intermediate Category',
+        colorClass: 'bg-blue-50 text-blue-700 border-blue-200',
+        textColor: 'text-blue-700',
+        badge: <span className="material-symbols-outlined text-blue-600 text-xs select-none leading-none align-middle" style={{ fontVariationSettings: "'FILL' 1" }}>circle</span>
+      };
+    } else {
+      return {
+        name: 'Pin Division',
+        label: 'Aspirants Category',
+        colorClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+        textColor: 'text-emerald-700',
+        badge: <span className="material-symbols-outlined text-emerald-600 text-xs select-none leading-none align-middle" style={{ fontVariationSettings: "'FILL' 1" }}>circle</span>
+      };
+    }
+  };
+
+  const division = getDivisionDetails(rating);
+
+  // Institution profile link handler
+  const handleInstitutionClick = () => {
+    if (!schoolName) return;
+    onClose();
+
+    // Check if institution is Tertiary or Secondary
+    const matchedTertiary = tertiaryData.find(t => 
+      t.name.toLowerCase() === schoolName.toLowerCase() || 
+      t.abbreviation?.toLowerCase() === schoolName.toLowerCase()
+    );
+
+    if (matchedTertiary) {
+      navigate(`/tertiary/${matchedTertiary.id}`, { state: { school: matchedTertiary } });
+    } else {
+      const slug = schoolName.replace(/\s+/g, '-').toLowerCase();
+      navigate(`/school/${slug}`, { 
+        state: { 
+          school: { 
+            name: schoolName, 
+            type: 'Secondary School', 
+            location: 'Lagos', 
+            state: 'Lagos', 
+            verified: true 
+          } 
+        } 
+      });
+    }
+  };
+
+  // Direct Message handler
+  const handleMessageClick = () => {
+    if (!user) {
+      onClose();
+      openAuthModal('direct message players', () => {
+        navigate('/dashboard?tab=messages&contactId=' + player.id, { state: { contactId: player.id } });
+      });
+      return;
+    }
+    onClose();
+    navigate('/dashboard?tab=messages&contactId=' + player.id, { state: { contactId: player.id } });
+  };
+
+  // Generate SVG Sparkline for timeline
+  const generateTimelinePoints = () => {
+    const dataPoints = [];
+    let startRating = rating - (history.length * 15);
+    dataPoints.push(startRating);
+    history.forEach(h => {
+      if (h === 'W') startRating += 15;
+      else if (h === 'L') startRating -= 15;
+      dataPoints.push(startRating);
+    });
+
+    if (dataPoints.length === 1) {
+      dataPoints.unshift(rating - 15);
+    }
+
+    const width = 340;
+    const height = 50;
+    const padding = 6;
+    const maxVal = Math.max(...dataPoints);
+    const minVal = Math.min(...dataPoints);
+    const range = maxVal - minVal || 1;
+
+    return dataPoints.map((val, idx) => {
+      const x = padding + (idx / (dataPoints.length - 1)) * (width - padding * 2);
+      const y = height - padding - ((val - minVal) / range) * (height - padding * 2);
+      return `${x},${y}`;
+    }).join(' ');
+  };
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#111111]/40 backdrop-blur-sm transition-all duration-300"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#111111]/45 backdrop-blur-sm transition-all duration-300"
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-3xl p-8 max-w-md w-full relative shadow-2xl border border-gray-100 flex flex-col animate-in fade-in zoom-in duration-200"
+        className="bg-white rounded-3xl w-full max-w-lg relative shadow-2xl border border-gray-100 flex flex-col animate-in fade-in zoom-in-95 duration-200 overflow-hidden"
         onClick={e => e.stopPropagation()}
       >
-        <button 
-          className="absolute top-6 right-6 text-gray-400 hover:text-[#111111] text-2xl font-black w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors cursor-pointer"
-          onClick={onClose}
-          aria-label="Close profile"
-        >
-          &times;
-        </button>
-        
-        <div className="flex items-start gap-4 mb-6">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-2xl flex items-center justify-center select-none shadow-sm flex-shrink-0">
-            {player.name.charAt(0)}
+        {/* Header Block / Division Indicator */}
+        <div className={`px-6 py-3 border-b flex items-center justify-between ${division.colorClass}`}>
+          <div className="flex items-center gap-2">
+            <span className="text-sm">{division.badge}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest font-space">{division.name} &bull; {division.label}</span>
           </div>
-          <div>
-            <h2 className="text-xl font-black font-space text-[#111111] leading-tight mb-1">{player.name}</h2>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-              <a 
-                href={`https://www.chess.com/member/${player.username}`} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-xs font-bold text-brand-primary hover:text-brand-accent transition-colors"
-              >
-                @{player.username} ↗
-              </a>
-              {player.contact && (
-                <a
-                  href={`https://wa.me/234${player.contact.replace(/^0+/, '').replace(/\D/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-bold text-[#25D366] hover:text-[#1ebd59] transition-colors flex items-center gap-1"
-                  title="Chat on WhatsApp"
+          <button 
+            className="text-gray-400 hover:text-brand-text-dark text-xl font-bold w-6 h-6 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors cursor-pointer"
+            onClick={onClose}
+          >
+            &times;
+          </button>
+        </div>
+
+        {/* Modal Scroll Content */}
+        <div className="p-6 overflow-y-auto max-h-[85vh] no-scrollbar space-y-6">
+          
+          {/* Section: Profile Info */}
+          <div className="flex items-start gap-4">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-2xl flex items-center justify-center select-none shadow-sm flex-shrink-0">
+              {name.charAt(0)}
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-xl font-black font-space text-brand-text-dark leading-tight">{name}</h2>
+              
+              {/* Institution hyperlink */}
+              {schoolName ? (
+                <button
+                  onClick={handleInstitutionClick}
+                  className="text-xs font-bold text-brand-primary hover:text-brand-accent hover:underline text-left mt-1 block transition-colors outline-none cursor-pointer"
                 >
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                  </svg>
-                  {player.contact}
-                </a>
+                  {schoolName} ↗
+                </button>
+              ) : (
+                <p className="text-xs font-semibold text-gray-400 mt-1">SS4 Individual Player</p>
+              )}
+
+              {department && (
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">{department}</p>
               )}
             </div>
-            {(player.department || player.school) && (
-              <div className="text-xs font-semibold text-gray-400 mt-1.5 flex items-center gap-1 flex-wrap">
-                {player.department && <span>{player.department}</span>}
-                {player.department && player.school && <span> &bull; </span>}
-                {player.school && <span>{player.school}</span>}
+          </div>
+
+          {/* Section: Credentials */}
+          <div className="bg-brand-bg-cream/40 rounded-2xl p-4 border border-gray-150 flex flex-wrap gap-x-6 gap-y-3">
+            <div>
+              <span className="block text-[9px] font-black text-gray-400 uppercase tracking-widest">Chess.com Handle</span>
+              <a 
+                href={`https://www.chess.com/member/${chessUsername}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold text-brand-text-dark hover:text-brand-primary transition-colors flex items-center gap-1 mt-0.5"
+              >
+                @{chessUsername} ↗
+              </a>
+            </div>
+
+            {lichessUsername && (
+              <div>
+                <span className="block text-[9px] font-black text-gray-400 uppercase tracking-widest">Lichess Handle</span>
+                <a 
+                  href={`https://lichess.org/@/${lichessUsername}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-bold text-brand-text-dark hover:text-brand-primary transition-colors flex items-center gap-1 mt-0.5"
+                >
+                  @{lichessUsername} ↗
+                </a>
               </div>
             )}
-          </div>
-        </div>
 
-        <div className="grid grid-cols-3 gap-3 mb-6">
-          <div className="bg-brand-bg-cream/50 rounded-2xl p-4 text-center border border-gray-50">
-            <span className="block text-xl font-black text-[#111111]">{player.Pts}</span>
-            <span className="text-[10px] font-black text-gray-400 uppercase tracking-wider mt-0.5 block">Points</span>
+            <div className="ml-auto flex items-center">
+              {player.id && player.id !== user?.id && (
+                <button 
+                  onClick={handleMessageClick}
+                  className="px-4 py-1.5 bg-brand-primary text-white text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-brand-accent transition-colors shadow-sm cursor-pointer"
+                >
+                  Message
+                </button>
+              )}
+            </div>
           </div>
-          <div className="bg-brand-bg-cream/50 rounded-2xl p-4 text-center border border-gray-50">
-            <span className="block text-xl font-black text-[#111111]">{player.P}</span>
-            <span className="text-[10px] font-black text-gray-400 uppercase tracking-wider mt-0.5 block">Played</span>
-          </div>
-          <div className="bg-green-50 rounded-2xl p-4 text-center border border-green-100/50">
-            <span className="block text-xl font-black text-green-600">{player.W}</span>
-            <span className="text-[10px] font-black text-green-500 uppercase tracking-wider mt-0.5 block">Wins</span>
-          </div>
-          <div className="bg-blue-50 rounded-2xl p-4 text-center border border-blue-100/50">
-            <span className="block text-xl font-black text-blue-600">{player.D}</span>
-            <span className="text-[10px] font-black text-blue-500 uppercase tracking-wider mt-0.5 block">Draws</span>
-          </div>
-          <div className="bg-red-50 rounded-2xl p-4 text-center border border-red-100/50">
-            <span className="block text-xl font-black text-red-600">{player.L}</span>
-            <span className="text-[10px] font-black text-red-500 uppercase tracking-wider mt-0.5 block">Losses</span>
-          </div>
-          <div className="bg-brand-accent/5 rounded-2xl p-4 text-center border border-brand-accent/10">
-            <span className="block text-xl font-black text-brand-accent">{winRate}%</span>
-            <span className="text-[10px] font-black text-brand-accent/75 uppercase tracking-wider mt-0.5 block">Win Rate</span>
-          </div>
-        </div>
 
-        <div className="border-t border-gray-100 pt-5">
-          <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Recent Performance</h3>
-          <div className="flex flex-wrap gap-2">
-            {player.history.length > 0 ? (
-              player.history.slice(-10).map((h, i) => (
+          {/* Section: Ratings & SCL Info */}
+          <div>
+            <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">SCL Statistics</h3>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="bg-white border border-gray-150 rounded-xl p-3 shadow-sm">
+                <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest">Rapid Rating</span>
+                <span className="block text-base font-black text-brand-text-dark mt-1 font-space">{rating} ELO</span>
+              </div>
+              <div className="bg-white border border-gray-150 rounded-xl p-3 shadow-sm">
+                <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest">Peak ELO</span>
+                <span className="block text-base font-black text-brand-accent mt-1 font-space">{peakRating} ELO</span>
+              </div>
+              <div className="bg-white border border-gray-150 rounded-xl p-3 shadow-sm">
+                <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest">Ranking</span>
+                <span className="block text-base font-black text-brand-text-dark mt-1 font-space">#{ranking}</span>
+              </div>
+              <div className="bg-white border border-gray-150 rounded-xl p-3 shadow-sm">
+                <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest">Titles</span>
+                <span className="block text-[10px] font-black text-brand-primary uppercase mt-2.5 tracking-wider truncate" title={titles}>{titles}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Core Game Stats grid */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="bg-white border border-gray-150 rounded-xl p-3 text-center shadow-sm">
+              <span className="block text-xl font-black text-brand-text-dark font-space">{gamesPlayed}</span>
+              <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-0.5 block">Played</span>
+            </div>
+            <div className="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3 text-center shadow-sm">
+              <span className="block text-xl font-black text-emerald-600 font-space">{wins}</span>
+              <span className="text-[9px] font-black text-emerald-500 uppercase tracking-widest mt-0.5 block">Wins</span>
+            </div>
+            <div className="bg-amber-50/50 border border-amber-100 rounded-xl p-3 text-center shadow-sm">
+              <span className="block text-xl font-black text-amber-600 font-space">{draws}</span>
+              <span className="text-[9px] font-black text-amber-500 uppercase tracking-widest mt-0.5 block">Draws</span>
+            </div>
+            <div className="bg-rose-50/50 border border-rose-100 rounded-xl p-3 text-center shadow-sm">
+              <span className="block text-xl font-black text-rose-600 font-space">{losses}</span>
+              <span className="text-[9px] font-black text-rose-500 uppercase tracking-widest mt-0.5 block">Losses</span>
+            </div>
+            <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-xl p-3 text-center shadow-sm">
+              <span className="block text-xl font-black text-brand-primary font-space">{winRate}%</span>
+              <span className="text-[9px] font-black text-brand-primary/75 uppercase tracking-widest mt-0.5 block">Win Rate</span>
+            </div>
+            <div className="bg-white border border-gray-150 rounded-xl p-3 text-center shadow-sm">
+              <span className="block text-xl font-black text-brand-text-dark font-space">{appearances}</span>
+              <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-0.5 block">Cups</span>
+            </div>
+          </div>
+
+          {/* Section: Timeline & Joined Info */}
+          <div className="border-t border-gray-150 pt-5">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest">Performance Timeline</h3>
+              <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Joined {dateJoined}</span>
+            </div>
+
+            {/* Sparkline Graph */}
+            <div className="bg-brand-bg-cream/40 rounded-2xl p-4 border border-gray-150 flex flex-col justify-center h-20 overflow-hidden relative">
+              <svg className="w-full h-12 text-brand-primary overflow-visible" viewBox="0 0 340 50">
+                <polyline
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  points={generateTimelinePoints()}
+                />
+              </svg>
+            </div>
+            
+            <div className="flex items-center gap-1.5 mt-3 flex-wrap">
+              <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Recent:</span>
+              {history.slice(-10).map((h, i) => (
                 <span 
-                  key={i} 
-                  className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shadow-sm border ${
+                  key={i}
+                  className={`w-5 h-5 rounded-md flex items-center justify-center font-bold text-[10px] border ${
                     h === 'W' 
-                      ? 'bg-green-500 border-green-600 text-white' 
+                      ? 'bg-emerald-500 border-emerald-600 text-white' 
                       : h === 'D' 
                         ? 'bg-gray-400 border-gray-500 text-white' 
-                        : 'bg-red-500 border-red-600 text-white'
+                        : 'bg-rose-500 border-rose-600 text-white'
                   }`}
                 >
                   {h}
                 </span>
-              ))
-            ) : (
-              <span className="text-sm font-medium text-gray-400 italic">No games played yet in this division.</span>
-            )}
+              ))}
+              {history.length === 0 && (
+                <span className="text-[10px] text-gray-400 font-semibold italic">No recent match history record.</span>
+              )}
+            </div>
           </div>
+
         </div>
       </div>
     </div>

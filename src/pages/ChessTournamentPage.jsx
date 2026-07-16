@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useTournament } from '../hooks/useTournament';
 import { tournamentPlayers } from '../data/tournamentPlayers';
-import { getTournamentDates } from '../utils/tournament';
+import { getTournamentDates, getCountdownTarget } from '../utils/tournament';
 import { TournamentHero } from '../components/tournament/TournamentHero';
 import { BracketTab } from '../components/tournament/BracketTab';
 import { TournamentPlayerModal } from '../components/tournament/TournamentPlayerModal';
+import AuthGate from '../components/auth/AuthGate';
+import { useAuth } from '../hooks/useAuth';
+import { useAuthModal } from '../context/AuthModalContext';
+import { supabase } from '../supabase';
 
 const ADMIN_PIN = '1926';
 
@@ -50,7 +55,7 @@ function AdminMatchRow({ game, onSave }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all">
+    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 varsity-card">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
           <span className="text-[10px] font-black text-brand-primary bg-brand-primary/5 px-2 py-0.5 rounded-full uppercase tracking-wider">
@@ -76,8 +81,8 @@ function AdminMatchRow({ game, onSave }) {
         </div>
       </div>
       
-      <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
-        <div className="flex-1 md:flex-initial min-w-[220px]">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+        <div className="w-full sm:w-[220px]">
           <input
             type="url"
             placeholder="Chess.com Game Link"
@@ -87,7 +92,7 @@ function AdminMatchRow({ game, onSave }) {
           />
         </div>
 
-        <div className="min-w-[160px]">
+        <div className="w-full sm:w-[160px]">
           <select
             value={winnerUsername}
             onChange={(e) => setWinnerUsername(e.target.value)}
@@ -103,7 +108,7 @@ function AdminMatchRow({ game, onSave }) {
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="bg-brand-primary text-white text-xs font-black px-5 py-2.5 rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all disabled:opacity-50 cursor-pointer shrink-0 shadow-sm"
+          className="bg-brand-primary text-white text-xs font-black px-5 py-2.5 rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all disabled:opacity-50 cursor-pointer w-full sm:w-auto text-center shrink-0 shadow-sm"
         >
           {isSaving ? 'Saving...' : 'Save'}
         </button>
@@ -113,12 +118,15 @@ function AdminMatchRow({ game, onSave }) {
 }
 
 export default function ChessTournamentPage() {
+  const navigate = useNavigate();
   const [selectedMonthYear, setSelectedMonthYear] = useState('2026-06');
+
   const [activeTab, setActiveTab]   = useState('bracket');
   const [isAdmin, setIsAdmin]       = useState(false);
   const [pinModal, setPinModal]     = useState(false);
   const [pinInput, setPinInput]     = useState('');
   const [pinErr, setPinErr]         = useState('');
+  const [showPin, setShowPin]       = useState(false);
   const [selectedPlayerForModal, setSelectedPlayerForModal] = useState(null);
   const [adminRoundNum, setAdminRoundNum] = useState(1);
   const [adminSubView, setAdminSubView] = useState('main'); // 'main' | 'generate-r1' | 'generate-next'
@@ -169,7 +177,242 @@ export default function ChessTournamentPage() {
     return last.games.map(g => g.winner).filter(w => w && w.username !== 'forfeit');
   };
 
-  const { tournament, history, isDbFallback, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks } = useTournament(selectedMonthYear);
+  const { tournament, history, isDbFallback, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
+
+  const { user, profile } = useAuth();
+  const { openAuthModal } = useAuthModal();
+
+  const [nextRoundStartInput, setNextRoundStartInput] = useState('');
+  const [showPastWinnersModal, setShowPastWinnersModal] = useState(false);
+  const [showRulesModal, setShowRulesModal] = useState(false);
+
+  // Upcoming tournament states
+  const [upcomingTournament, setUpcomingTournament] = useState(null);
+  const [loadingReg, setLoadingReg] = useState(false);
+
+  // Fetch upcoming tournament
+  useEffect(() => {
+    const fetchUpcoming = async () => {
+      try {
+        let { data, error } = await supabase
+          .from('tournaments')
+          .select('*')
+          .eq('status', 'upcoming')
+          .maybeSingle();
+        
+        if (error) throw error;
+        
+        if (!data) {
+          const targetMY = '2026-08';
+          const targetName = 'August 2026 SCL Tournament';
+          const newT = {
+            id: targetMY,
+            name: targetName,
+            month_year: targetMY,
+            status: 'upcoming',
+            players: [],
+            rounds: [],
+            winner: null
+          };
+          
+          const { data: upsertedData } = await supabase
+            .from('tournaments')
+            .upsert(newT)
+            .select()
+            .single();
+            
+          data = upsertedData;
+        }
+        setUpcomingTournament(data);
+      } catch (err) {
+        console.error('Error fetching upcoming tournament:', err);
+      }
+    };
+    fetchUpcoming();
+  }, []);
+
+  const isUserRegisteredForUpcoming = React.useMemo(() => {
+    if (!user || !upcomingTournament || !upcomingTournament.players) return false;
+    return upcomingTournament.players.some(p => 
+      p.id === user.id || 
+      (p.username && profile?.chess_username && p.username.toLowerCase() === profile.chess_username.toLowerCase())
+    );
+  }, [user, upcomingTournament, profile]);
+
+  const handleJoinTournament = async () => {
+    // If not logged in, trigger modal and auto-run this function after successful auth
+    if (!user) {
+      openAuthModal('join the next tournament', () => {
+        handleJoinTournamentAfterAuth();
+      }, 'register');
+      return;
+    }
+    
+    if (!profile) {
+      toast.error('Player profile not found. Please complete your profile in the Dashboard.');
+      return;
+    }
+
+    await executeRegistration(user, profile);
+  };
+
+  const handleJoinTournamentAfterAuth = async () => {
+    try {
+      const { data: { user: newUser } } = await supabase.auth.getUser();
+      if (!newUser) {
+        toast.error('Authentication failed.');
+        return;
+      }
+      const { data: newProfile } = await supabase.from('profiles').select('*').eq('id', newUser.id).single();
+      if (!newProfile) {
+        toast.error('Registration successful, but profile could not be loaded. Please configure it in the Dashboard.');
+        return;
+      }
+      await executeRegistration(newUser, newProfile);
+    } catch (err) {
+      console.error('Registration after auth failed:', err);
+    }
+  };
+
+  const executeRegistration = async (targetUser, targetProfile) => {
+    setLoadingReg(true);
+    try {
+      const { data: freshT } = await supabase
+        .from('tournaments')
+        .select('*')
+        .eq('status', 'upcoming')
+        .maybeSingle();
+
+      const currentT = freshT || upcomingTournament;
+      if (!currentT) {
+        toast.error('Upcoming tournament not found.');
+        return;
+      }
+
+      const regPlayer = {
+        id: targetUser.id,
+        name: targetProfile.name,
+        username: targetProfile.chess_username || targetProfile.lichess_username || targetUser.email.split('@')[0],
+        rating: Math.max(targetProfile.chess_rating || 0, targetProfile.lichess_rating || 0) || 1200,
+        school: targetProfile.university || 'SS4 Member',
+        department: targetProfile.department || ''
+      };
+      
+      const updatedPlayers = [
+        ...(currentT.players || []).filter(p => p.id !== targetUser.id),
+        regPlayer
+      ];
+      
+      const { error } = await supabase
+        .from('tournaments')
+        .update({ players: updatedPlayers })
+        .eq('id', currentT.id);
+        
+      if (error) throw error;
+      
+      setUpcomingTournament({ ...currentT, players: updatedPlayers });
+      toast.success("Ready! You have joined the next tournament.");
+    } catch (err) {
+      console.error('Registration failed:', err);
+      toast.error('Registration failed: ' + err.message);
+    } finally {
+      setLoadingReg(false);
+    }
+  };
+
+  // Countdown state for non-active screen
+  const [{ days, hours, mins, secs, label }, setClock] = useState({ days: 0, hours: 0, mins: 0, secs: 0, label: '' });
+
+  // Detect timezone abbreviation (e.g. WAT, BST, EST)
+  const tzAbbr = React.useMemo(() => {
+    try {
+      const parts = new Intl.DateTimeFormat('en', { timeZoneName: 'short' }).formatToParts(new Date());
+      return parts.find(p => p.type === 'timeZoneName')?.value ?? '';
+    } catch { return ''; }
+  }, []);
+
+  useEffect(() => {
+    const tick = () => {
+      const targetT = (tournament?.status === 'active') ? tournament : (upcomingTournament || tournament);
+      const { date, label: targetLabel } = getCountdownTarget(targetT);
+      const diff = Math.max(0, date - new Date());
+      setClock({
+        days:  Math.floor(diff / 864e5),
+        hours: Math.floor(diff / 36e5) % 24,
+        mins:  Math.floor(diff / 6e4) % 60,
+        secs:  Math.floor(diff / 1e3) % 60,
+        label: targetLabel
+      });
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [tournament, upcomingTournament]);
+
+  useEffect(() => {
+    if (tournament) {
+      const latestRound = tournament.rounds && tournament.rounds[tournament.rounds.length - 1];
+      if (latestRound && latestRound.next_round_start) {
+        try {
+          const d = new Date(latestRound.next_round_start);
+          const offset = d.getTimezoneOffset();
+          const localTime = new Date(d.getTime() - offset * 60 * 1000);
+          setNextRoundStartInput(localTime.toISOString().slice(0, 16));
+        } catch {
+          setNextRoundStartInput('');
+        }
+      } else {
+        setNextRoundStartInput('');
+      }
+    }
+  }, [tournament]);
+
+  const formattedTargetTime = React.useMemo(() => {
+    try {
+      const { date } = getCountdownTarget(tournament);
+      return `${date.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit', hour12: false })} ${tzAbbr}`;
+    } catch {
+      return `18:00 ${tzAbbr}`;
+    }
+  }, [tournament, tzAbbr]);
+
+  const googleCalendarUrl = React.useMemo(() => {
+    try {
+      const { date } = getCountdownTarget(tournament);
+      const startStr = date.toISOString().replace(/-|:|\.\d\d\d/g, "");
+      const endStr = new Date(date.getTime() + 2 * 3600 * 1000).toISOString().replace(/-|:|\.\d\d\d/g, "");
+      return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + 
+        encodeURIComponent("SCL Monthly Chess Tournament") + 
+        "&dates=" + startStr + "/" + endStr + 
+        "&details=" + encodeURIComponent("Join the monthly SCL Chess Tournament. Single elimination, WAT 18:00 start.");
+    } catch {
+      return "#";
+    }
+  }, [tournament]);
+
+  const handleSaveNextRoundStart = async () => {
+    if (!nextRoundStartInput) {
+      toast.error('Please select a valid date and time.');
+      return;
+    }
+    try {
+      const isoStr = new Date(nextRoundStartInput).toISOString();
+      await updateNextRoundStart(isoStr);
+      toast.success('Next round start time updated!');
+    } catch (e) {
+      toast.error('Error updating next round start time.');
+    }
+  };
+
+  const handleClearNextRoundStart = async () => {
+    try {
+      await updateNextRoundStart(null);
+      setNextRoundStartInput('');
+      toast.success('Next round start time cleared (using default round date).');
+    } catch (e) {
+      toast.error('Error clearing next round start time.');
+    }
+  };
 
   useEffect(() => {
     if (tournament?.rounds?.length) {
@@ -191,41 +434,196 @@ export default function ChessTournamentPage() {
     ...(isAdmin ? [{ id: 'admin', label: 'Admin' }] : []),
   ];
 
+  const isTournamentActive = tournament?.status === 'active';
+
   return (
     <div className="min-h-screen bg-[#F6F4F0]">
       <ToastContainer position="bottom-right" />
 
-      <TournamentHero
-        tournament={tournament}
-        selectedMonthYear={selectedMonthYear}
-        history={history}
-        onMonthChange={setSelectedMonthYear}
-        onTitleDoubleClick={() => { setPinInput(''); setPinErr(''); setPinModal(true); }}
-      />
+      {!isTournamentActive && !isAdmin ? (
+        /* Non-Active View: Big Ass Countdown */
+        <div 
+          className="relative text-white px-4 sm:px-6 md:px-12 lg:px-16 py-16 sm:py-24 min-h-[85vh] flex flex-col justify-center overflow-hidden"
+          style={{ background: 'linear-gradient(135deg, #0B193C 0%, #1E1B4B 55%, #431407 100%)' }}
+        >
+          {/* Ambient glow blobs */}
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full opacity-30"
+              style={{ background: 'radial-gradient(circle, #fb923c 0%, transparent 70%)' }} />
+            <div className="absolute -bottom-32 -left-20 w-[400px] h-[400px] rounded-full opacity-20"
+              style={{ background: 'radial-gradient(circle, #6366f1 0%, transparent 70%)' }} />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px opacity-10"
+              style={{ background: 'linear-gradient(90deg, transparent, #fdba74, transparent)' }} />
+          </div>
 
-      {/* Tab bar */}
-      <div className="bg-white border-b border-gray-200 px-6 md:px-12 lg:px-16">
-        <div className="max-w-5xl mx-auto flex gap-6 overflow-x-auto no-scrollbar">
-          {TABS.map(t => (
-            <button key={t.id} onClick={() => setActiveTab(t.id)}
-              className={`py-4 text-sm font-black whitespace-nowrap border-b-2 transition-colors cursor-pointer ${
-                activeTab === t.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-400 hover:text-[#111111]'
-              }`}>
-              {t.label}
-            </button>
-          ))}
+          <div className="max-w-4xl mx-auto w-full text-center relative z-10 space-y-10 animate-in fade-in zoom-in-95 duration-300">
+            <div>
+              <p className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-white/50 uppercase mb-4">SS4 Chess Network</p>
+              <h1
+                onDoubleClick={() => { setPinInput(''); setPinErr(''); setShowPin(false); setPinModal(true); }}
+                className="font-space font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-[1.05] mb-4 cursor-pointer select-none"
+              >
+                SCL Monthly<br />
+                <span
+                  className="font-black"
+                  style={{ background: 'linear-gradient(90deg, #fdba74, #fb923c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+                >Tournament</span>
+              </h1>
+              <p className="text-white/60 text-sm sm:text-base font-medium max-w-md mx-auto leading-relaxed">
+                Single elimination. Last 7 days of the month. One champion claims the prize.
+              </p>
+            </div>
+
+            {/* Big Ass Countdown */}
+            <div className="space-y-4">
+              <p className="text-brand-primary font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">
+                {label} &bull; <span className="text-white/50">{formattedTargetTime}</span>
+              </p>
+              
+              <div className="flex gap-4 sm:gap-6 justify-center flex-wrap max-w-xl mx-auto">
+                <div className="flex flex-col items-center">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-4xl sm:text-6xl w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg">
+                    {String(days).padStart(2, '0')}
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-2">Days</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-4xl sm:text-6xl w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg">
+                    {String(hours).padStart(2, '0')}
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-2">Hours</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-4xl sm:text-6xl w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg">
+                    {String(mins).padStart(2, '0')}
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-2">Minutes</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-4xl sm:text-6xl w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg text-brand-primary animate-pulse">
+                    {String(secs).padStart(2, '0')}
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-2">Seconds</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+              {isUserRegisteredForUpcoming ? (
+                <div className="px-8 py-3.5 bg-emerald-600 border border-emerald-500 text-white text-xs sm:text-sm font-black rounded-xl flex items-center gap-2 shadow-md select-none">
+                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                  </svg>
+                  You have Joined! 🚀
+                </div>
+              ) : (
+                <button
+                  onClick={handleJoinTournament}
+                  disabled={loadingReg}
+                  className="px-8 py-3.5 bg-gradient-to-r from-brand-primary to-brand-accent hover:from-brand-accent hover:to-brand-primary text-white text-xs sm:text-sm font-black rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                >
+                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                  </svg>
+                  {loadingReg ? "Joining..." : "Join the next Tournament"}
+                </button>
+              )}
+
+              <a 
+                href={googleCalendarUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="px-6 py-3.5 bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-black rounded-xl border border-white/10 transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Add to Calendar
+              </a>
+              <button 
+                onClick={() => setShowPastWinnersModal(true)} 
+                className="px-6 py-3.5 bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-black rounded-xl border border-white/10 transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+                View Past Winners
+              </button>
+              <button 
+                onClick={() => setShowRulesModal(true)} 
+                className="px-6 py-3.5 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white text-xs sm:text-sm font-black rounded-xl border border-white/5 transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                Rules & Schedule
+              </button>
+            </div>
+
+            {/* Registered Players List */}
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 max-w-2xl mx-auto text-left space-y-4 mt-6">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <h3 className="font-space font-black text-lg text-white">Registered Participants</h3>
+                <span className="bg-brand-primary text-white text-xs font-black px-2.5 py-1 rounded-full">
+                  {upcomingTournament?.players ? upcomingTournament.players.length : 0} Joined
+                </span>
+              </div>
+              
+              {!upcomingTournament?.players || upcomingTournament.players.length === 0 ? (
+                <p className="text-gray-400 text-sm italic py-4 text-center">No participants registered yet. Be the first to join!</p>
+              ) : (
+                <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-1">
+                  {upcomingTournament.players.map((p, idx) => (
+                    <div key={p.id || idx} className="bg-white/5 border border-white/10 rounded-xl p-3.5 flex items-center justify-between gap-3 hover:bg-white/10 transition-colors">
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-white truncate">{p.name}</p>
+                        <p className="text-[10px] text-gray-400 truncate">{p.school}</p>
+                      </div>
+                      <div className="bg-brand-primary/10 border border-brand-primary/20 px-2 py-1 rounded-lg shrink-0">
+                        <span className="text-[10px] font-black text-brand-primary">{p.rating} ELO</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      ) : (
+        /* Regular Tournament View (Hero + Tab Layout) */
+        <>
+          <TournamentHero
+            tournament={tournament}
+            selectedMonthYear={selectedMonthYear}
+            history={history}
+            onMonthChange={setSelectedMonthYear}
+            onTitleDoubleClick={() => { setPinInput(''); setPinErr(''); setShowPin(false); setPinModal(true); }}
+          />
 
-      {/* DB status pill */}
-      {isDbFallback && (
-        <div className="bg-amber-50 border-b border-amber-100 text-center py-2 px-4">
-          <p className="text-[10px] font-bold text-amber-600 uppercase tracking-wider">Offline — changes stored locally</p>
-        </div>
-      )}
+          {/* Tab bar */}
+          <div className="bg-white border-b border-gray-200 px-6 md:px-12 lg:px-16">
+            <div className="max-w-5xl mx-auto flex gap-6 overflow-x-auto no-scrollbar">
+              {TABS.map(t => (
+                <button key={t.id} onClick={() => setActiveTab(t.id)}
+                  className={`py-4 text-sm font-black whitespace-nowrap border-b-2 transition-colors cursor-pointer ${
+                    activeTab === t.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-400 hover:text-[#111111]'
+                  }`}>
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
-      {/* Tab content */}
-      <div className="max-w-5xl mx-auto px-6 md:px-12 lg:px-0 py-10">
+          {/* DB status pill */}
+          {isDbFallback && (
+            <div className="bg-amber-50 border-b border-amber-100 text-center py-2 px-4">
+              <p className="text-[10px] font-bold text-amber-600 uppercase tracking-wider">Offline &mdash; changes stored locally</p>
+            </div>
+          )}
+
+          {/* Tab content wrapper */}
+          <div className="max-w-5xl mx-auto px-6 md:px-12 lg:px-0 py-10">
 
         {/* BRACKET */}
         {activeTab === 'bracket' && (
@@ -244,7 +642,7 @@ export default function ChessTournamentPage() {
         {activeTab === 'results' && (
           <div className="space-y-6">
             {!tournament ? (
-              <div className="bg-white border border-gray-100 rounded-2xl p-12 text-center shadow-sm">
+              <div className="varsity-card p-12 text-center">
                 <p className="text-gray-400 py-10 text-base font-bold">No tournament results available.</p>
               </div>
             ) : (() => {
@@ -255,14 +653,14 @@ export default function ChessTournamentPage() {
 
               if (roundsWithResults.length === 0) {
                 return (
-                  <div className="bg-white border border-gray-100 rounded-2xl p-12 text-center shadow-sm">
+                  <div className="varsity-card p-12 text-center">
                     <p className="text-gray-400 py-10 text-base font-bold">No matches have been completed yet.</p>
                   </div>
                 );
               }
 
               return roundsWithResults.map(r => (
-                <div key={r.roundNum} className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                <div key={r.roundNum} className="varsity-card p-6">
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-50">
                     <h3 className="font-space font-black text-lg text-[#111111]">{r.name}</h3>
                     <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full">
@@ -275,77 +673,84 @@ export default function ChessTournamentPage() {
                       const isP2Winner = g.winner?.username === g.p2?.username;
                       const isForfeit = g.winner?.username === 'forfeit';
                       return (
-                        <div key={g.id} className="py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                          <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                            {/* Player 1 */}
-                            <div className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${
-                              isP1Winner ? 'bg-emerald-50/40 border-emerald-100' :
-                              isForfeit ? 'bg-red-50/40 border-red-100' :
-                              'bg-gray-50/50 border-gray-100'
-                            }`}>
-                              <div className="min-w-0 flex-1">
-                                <button
-                                  onClick={() => setSelectedPlayerForModal(g.p1)}
-                                  className="text-sm font-black text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none block"
-                                >
-                                  {g.p1?.name}
-                                </button>
-                                <span className="text-[10px] font-bold text-gray-400 block truncate">
-                                  {g.p1?.school} {g.p1?.rating ? `(${g.p1.rating})` : ''}
-                                </span>
+                        <div key={g.id} className="py-4">
+                          <div className="bg-gray-50/30 border border-gray-100 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div className="flex-1 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full">
+                              {/* Player 1 */}
+                              <div className={`flex-1 p-3 rounded-xl border flex items-center justify-between transition-colors w-full ${
+                                isP1Winner ? 'bg-emerald-50/40 border-emerald-100' :
+                                isForfeit ? 'bg-red-50/40 border-red-100' :
+                                'bg-gray-50/50 border-gray-100'
+                              }`}>
+                                <div className="min-w-0 flex-1">
+                                  <button
+                                    onClick={() => setSelectedPlayerForModal(g.p1)}
+                                    className="text-sm font-black text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none block"
+                                  >
+                                    {g.p1?.name}
+                                  </button>
+                                  <span className="text-[10px] font-bold text-gray-400 block truncate">
+                                    {g.p1?.school} {g.p1?.rating ? `(${g.p1.rating})` : ''}
+                                  </span>
+                                </div>
+                                {isP1Winner && (
+                                  <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2 py-1 rounded shrink-0 ml-2">
+                                    Winner
+                                  </span>
+                                )}
+                                {isForfeit && (
+                                  <span className="text-[10px] font-black uppercase text-red-700 bg-red-100 px-2 py-1 rounded shrink-0 ml-2">
+                                    Forfeit
+                                  </span>
+                                )}
                               </div>
-                              {isP1Winner && (
-                                <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2 py-1 rounded shrink-0 ml-2">
-                                  Winner
-                                </span>
-                              )}
-                              {isForfeit && (
-                                <span className="text-[10px] font-black uppercase text-red-700 bg-red-100 px-2 py-1 rounded shrink-0 ml-2">
-                                  Forfeit
-                                </span>
-                              )}
+
+                              {/* VS Badge */}
+                              <span className="text-[10px] font-black text-brand-accent uppercase tracking-wider shrink-0 select-none bg-brand-primary/5 px-2.5 py-1 rounded-full sm:self-center">
+                                VS
+                              </span>
+
+                              {/* Player 2 */}
+                              <div className={`flex-1 p-3 rounded-xl border flex items-center justify-between transition-colors w-full ${
+                                isP2Winner ? 'bg-emerald-50/40 border-emerald-100' :
+                                isForfeit ? 'bg-red-50/40 border-red-100' :
+                                'bg-gray-50/50 border-gray-100'
+                              }`}>
+                                <div className="min-w-0 flex-1">
+                                  <button
+                                    onClick={() => setSelectedPlayerForModal(g.p2)}
+                                    className="text-sm font-black text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none block"
+                                  >
+                                    {g.p2?.name}
+                                  </button>
+                                  <span className="text-[10px] font-bold text-gray-400 block truncate">
+                                    {g.p2?.school} {g.p2?.rating ? `(${g.p2.rating})` : ''}
+                                  </span>
+                                </div>
+                                {isP2Winner && (
+                                  <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2 py-1 rounded shrink-0 ml-2">
+                                    Winner
+                                  </span>
+                                )}
+                                {isForfeit && (
+                                  <span className="text-[10px] font-black uppercase text-red-700 bg-red-100 px-2 py-1 rounded shrink-0 ml-2">
+                                    Forfeit
+                                  </span>
+                                )}
+                              </div>
                             </div>
 
-                            {/* Player 2 */}
-                            <div className={`p-3 rounded-xl border flex items-center justify-between transition-colors ${
-                              isP2Winner ? 'bg-emerald-50/40 border-emerald-100' :
-                              isForfeit ? 'bg-red-50/40 border-red-100' :
-                              'bg-gray-50/50 border-gray-100'
-                            }`}>
-                              <div className="min-w-0 flex-1">
-                                <button
-                                  onClick={() => setSelectedPlayerForModal(g.p2)}
-                                  className="text-sm font-black text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none block"
-                                >
-                                  {g.p2?.name}
-                                </button>
-                                <span className="text-[10px] font-bold text-gray-400 block truncate">
-                                  {g.p2?.school} {g.p2?.rating ? `(${g.p2.rating})` : ''}
-                                </span>
-                              </div>
-                              {isP2Winner && (
-                                <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2 py-1 rounded shrink-0 ml-2">
-                                  Winner
-                                </span>
-                              )}
-                              {isForfeit && (
-                                <span className="text-[10px] font-black uppercase text-red-700 bg-red-100 px-2 py-1 rounded shrink-0 ml-2">
-                                  Forfeit
-                                </span>
-                              )}
-                            </div>
+                            {g.gameLink && (
+                              <a
+                                href={g.gameLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs font-black text-brand-primary bg-brand-primary/5 hover:bg-brand-primary/10 px-4 py-2.5 rounded-xl transition-colors text-center shrink-0 border border-brand-primary/10 w-full md:w-auto"
+                              >
+                                View Game
+                              </a>
+                            )}
                           </div>
-
-                          {g.gameLink && (
-                            <a
-                              href={g.gameLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-xs font-black text-brand-primary bg-brand-primary/5 hover:bg-brand-primary/10 px-4 py-2.5 rounded-xl transition-colors text-center shrink-0 border border-brand-primary/10"
-                            >
-                              View Game
-                            </a>
-                          )}
                         </div>
                       );
                     })}
@@ -366,7 +771,7 @@ export default function ChessTournamentPage() {
               return (
                 <>
                   {/* Round Selector Tabs */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 bg-white border border-gray-100 rounded-2xl p-3 shadow-sm">
+                  <div className="flex flex-wrap items-center justify-between gap-3 varsity-card p-3">
                     <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
                       {tournament.rounds.map(r => (
                         <button key={r.roundNum} onClick={() => { setActiveFixtureRound(r.roundNum); }}
@@ -380,7 +785,7 @@ export default function ChessTournamentPage() {
                   </div>
 
                   {/* Games for the selected round */}
-                  <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                  <div className="varsity-card p-6">
                     <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-50">
                       <h3 className="font-space font-black text-lg text-[#111111]">{currentRound.name}</h3>
                       <span className="text-xs font-bold text-brand-primary bg-brand-primary/5 px-3 py-1.5 rounded-full">
@@ -393,26 +798,40 @@ export default function ChessTournamentPage() {
                     ) : (
                       <div className="divide-y divide-gray-50">
                         {activeGames.map((g, i) => (
-                          <div key={g.id} className="py-4 flex items-center justify-between gap-4">
-                            <div className="flex items-center gap-3 flex-1 min-w-0">
-                              <button
-                                onClick={() => setSelectedPlayerForModal(g.p1)}
-                                className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none"
-                              >
-                                {g.p1?.name}
-                              </button>
-                              <span className="text-xs font-black text-brand-accent shrink-0 select-none">VS</span>
-                              <button
-                                onClick={() => setSelectedPlayerForModal(g.p2)}
-                                className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none"
-                              >
-                                {g.p2?.name}
-                              </button>
+                          <div key={g.id} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 flex-1 min-w-0 w-full">
+                              <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+                                <button
+                                  onClick={() => setSelectedPlayerForModal(g.p1)}
+                                  className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none flex-1 sm:flex-none"
+                                >
+                                  {g.p1?.name}
+                                </button>
+                                <span className="text-[10px] font-black text-gray-400 shrink-0 select-none bg-gray-100 px-1.5 py-0.5 rounded sm:hidden">
+                                  @{g.p1?.username}
+                                </span>
+                              </div>
+                              
+                              <span className="text-[10px] sm:text-xs font-black text-brand-accent shrink-0 select-none self-center sm:self-auto my-0.5 sm:my-0">VS</span>
+                              
+                              <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+                                <button
+                                  onClick={() => setSelectedPlayerForModal(g.p2)}
+                                  className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none flex-1 sm:flex-none"
+                                >
+                                  {g.p2?.name}
+                                </button>
+                                <span className="text-[10px] font-black text-gray-400 shrink-0 select-none bg-gray-100 px-1.5 py-0.5 rounded sm:hidden">
+                                  @{g.p2?.username}
+                                </span>
+                              </div>
                             </div>
-                            {g.winner
-                              ? <span className="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-lg shrink-0">Won: {g.winner.name}</span>
-                              : <span className="text-xs bg-amber-50 text-amber-600 font-bold px-3 py-1.5 rounded-lg shrink-0">Pending</span>
-                            }
+                            <div className="w-full sm:w-auto flex justify-end shrink-0 mt-1 sm:mt-0">
+                              {g.winner
+                                ? <span className="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-lg w-full sm:w-auto text-center">Won: {g.winner.name}</span>
+                                : <span className="text-xs bg-amber-50 text-amber-600 font-bold px-3 py-1.5 rounded-lg w-full sm:w-auto text-center">Pending</span>
+                              }
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -428,7 +847,7 @@ export default function ChessTournamentPage() {
         {activeTab === 'rules' && (
           <div className="grid lg:grid-cols-3 gap-8 items-start">
             {/* Left/Middle Column: Scrollable Rulebook */}
-            <div className="lg:col-span-2 bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-sm max-h-[800px] overflow-y-auto no-scrollbar space-y-6">
+            <div className="lg:col-span-2 varsity-card p-6 md:p-8 lg:max-h-[800px] lg:overflow-y-auto no-scrollbar space-y-6">
               <div>
                 <p className="text-xs font-bold tracking-[0.25em] text-brand-accent uppercase mb-1">Official Rulebook</p>
                 <h2 className="font-space font-black text-3xl text-[#111111] mb-2 uppercase">SCL Tournament Rules</h2>
@@ -584,7 +1003,7 @@ export default function ChessTournamentPage() {
 
             {/* Right Column: Schedule & Support Panel */}
             <div className="space-y-6">
-              <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+              <div className="varsity-card p-6">
                 <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-2">June 2026</p>
                 <h2 className="font-space font-black text-xl text-[#111111] mb-4">Daily Schedule</h2>
                 <div className="space-y-2.5">
@@ -598,6 +1017,23 @@ export default function ChessTournamentPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Registration CTA — auth-gated */}
+              <div className="varsity-card p-6">
+                <p className="text-xs font-bold tracking-[0.2em] text-brand-primary uppercase mb-2">Join the Tournament</p>
+                <h3 className="font-space font-black text-lg text-[#111111] mb-1.5">Ready to Compete?</h3>
+                <p className="text-sm text-gray-500 mb-4">
+                  Sign in to your SS4 player account to register for the next tournament and access your pairings.
+                </p>
+                <AuthGate
+                  reason="register for this tournament"
+                  onAction={() => navigate('/dashboard')}
+                >
+                  <button className="w-full bg-brand-primary text-white text-sm font-bold px-6 py-3.5 rounded-full hover:bg-brand-accent transition-all shadow-md cursor-pointer">
+                    Register for Tournament
+                  </button>
+                </AuthGate>
               </div>
 
               <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-6 text-center">
@@ -618,7 +1054,7 @@ export default function ChessTournamentPage() {
 
         {/* ADMIN */}
         {activeTab === 'admin' && isAdmin && adminSubView === 'main' && (
-          <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm space-y-8">
+          <div className="varsity-card p-8 space-y-8">
             <div className="flex items-center justify-between pb-4 border-b border-gray-100">
               <h2 className="font-space font-black text-2xl text-[#111111]">Admin Panel</h2>
               <span className="text-xs font-bold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">Unlocked</span>
@@ -645,6 +1081,38 @@ export default function ChessTournamentPage() {
                 <button onClick={() => { if (window.confirm('Reset? This cannot be undone.')) reset(); }} className="bg-red-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-red-500 transition-colors">
                   Reset Tournament
                 </button>
+              </div>
+            </div>
+
+            {/* Manage Next Round Start Time */}
+            <div className="bg-[#FAF9F5] border border-brand-primary/10 rounded-2xl p-6 space-y-4">
+              <h3 className="font-space font-black text-lg text-[#111111]">Manage Next Round Start Time</h3>
+              <p className="text-xs text-gray-400">Set the target date and time when the next round is scheduled to begin. This dynamically updates the countdown timer shown to players on this page.</p>
+              
+              <div className="flex flex-col sm:flex-row items-end gap-4">
+                <div className="flex-1 w-full">
+                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Next Round Start Date & Time</label>
+                  <input
+                    type="datetime-local"
+                    value={nextRoundStartInput}
+                    onChange={(e) => setNextRoundStartInput(e.target.value)}
+                    className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                  />
+                </div>
+                <div className="flex gap-2 w-full sm:w-auto shrink-0">
+                  <button
+                    onClick={handleSaveNextRoundStart}
+                    className="bg-brand-primary text-white text-xs font-black px-5 py-2.5 rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all cursor-pointer flex-1 sm:flex-initial text-center shadow-sm"
+                  >
+                    Save Time
+                  </button>
+                  <button
+                    onClick={handleClearNextRoundStart}
+                    className="bg-gray-100 text-gray-650 text-xs font-black px-4 py-2.5 rounded-xl hover:bg-gray-200 transition-all cursor-pointer flex-1 sm:flex-initial text-center"
+                  >
+                    Clear
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -713,7 +1181,7 @@ export default function ChessTournamentPage() {
 
         {/* ADMIN GENERATE R1 VIEW */}
         {activeTab === 'admin' && isAdmin && adminSubView === 'generate-r1' && (
-          <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm space-y-6">
+          <div className="varsity-card p-8 space-y-6">
             <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
               <button 
                 onClick={() => setAdminSubView('main')}
@@ -837,7 +1305,7 @@ export default function ChessTournamentPage() {
 
         {/* ADMIN GENERATE NEXT VIEW */}
         {activeTab === 'admin' && isAdmin && adminSubView === 'generate-next' && (
-          <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm space-y-6">
+          <div className="varsity-card p-8 space-y-6">
             <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
               <button 
                 onClick={() => setAdminSubView('main')}
@@ -927,22 +1395,140 @@ export default function ChessTournamentPage() {
             </div>
           </div>
         )}
-      </div>
+          </div>
+        </>
+      )}
+
+      {/* Past Winners Modal */}
+      {showPastWinnersModal && (
+        <div className="fixed inset-0 bg-[#111111]/75 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in fade-in duration-200" onClick={() => setShowPastWinnersModal(false)}>
+          <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl border border-gray-100 relative max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <h3 className="font-space font-black text-2xl text-[#111111] mb-5 flex items-center gap-2">🏆 Past Champions</h3>
+            
+            <div className="space-y-3">
+              {history.filter(h => h.status === 'completed').length === 0 ? (
+                <p className="text-sm text-gray-500 italic py-4 text-center">No completed tournaments found yet.</p>
+              ) : (
+                history.filter(h => h.status === 'completed').map(h => (
+                  <div key={h.month_year} className="flex justify-between items-center p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-wider">{h.month_year}</p>
+                      <p className="text-sm font-black text-brand-text-dark mt-0.5 truncate">{h.name.replace(" SCL Tournament", "")}</p>
+                    </div>
+                    <div className="bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-100 shrink-0">
+                      <span className="text-xs font-black text-emerald-700">🏆 {typeof h.winner === 'object' ? h.winner?.name : h.winner || 'None'}</span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+            
+            <button 
+              onClick={() => setShowPastWinnersModal(false)}
+              className="mt-6 w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all cursor-pointer"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Rules Modal */}
+      {showRulesModal && (
+        <div className="fixed inset-0 bg-[#111111]/75 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in fade-in duration-200" onClick={() => setShowRulesModal(false)}>
+          <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-2xl shadow-2xl border border-gray-100 relative max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between pb-4 border-b border-gray-100 shrink-0">
+              <h3 className="font-space font-black text-2xl text-[#111111]">📖 SCL Tournament Rules</h3>
+              <button 
+                onClick={() => setShowRulesModal(false)}
+                className="text-gray-400 hover:text-[#111111] transition-colors cursor-pointer"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="overflow-y-auto py-6 pr-2 flex-grow space-y-6 text-sm text-gray-600 leading-relaxed">
+              <div>
+                <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 1: General Rules</h3>
+                <ul className="space-y-1.5 list-disc pl-4">
+                  <li><strong>1.1</strong> By participating, you agree to all rules listed herein.</li>
+                  <li><strong>1.2</strong> Cheating, engine usage, and bad conduct will result in disqualification.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 2: Eligibility &amp; Registration</h3>
+                <ul className="space-y-1.5 list-disc pl-4">
+                  <li><strong>2.1</strong> Open to students of any institution. Register via the official Google Form before the deadline.</li>
+                  <li><strong>2.2</strong> You must provide a valid, active Chess.com username.</li>
+                  <li><strong>2.6</strong> By registering, you confirm availability to play June 24–30, 6 PM – 10 PM daily.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 4: Match Rules</h3>
+                <ul className="space-y-1.5 list-disc pl-4">
+                  <li><strong>4.1</strong> All games on Chess.com with your registered username only.</li>
+                  <li><strong>4.2</strong> Time control: 10+0 Rapid (10 minutes, no increment).</li>
+                  <li><strong>4.3</strong> Colours: White = left side of pairing message &bull; Black = right side.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 6: Scheduling &amp; Grace Period</h3>
+                <ul className="space-y-1.5 list-disc pl-4">
+                  <li><strong>6.1</strong> Every round starts at 8:00 PM WAT on its assigned date.</li>
+                  <li><strong>6.2</strong> When pairings are posted, immediately contact your opponent to agree on a start time.</li>
+                  <li><strong>6.3</strong> Grace period closes at 11:00 PM WAT. Both players must be ready.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 8: Fair Play &amp; Conduct</h3>
+                <ul className="space-y-1.5 list-disc pl-4">
+                  <li><strong>8.1</strong> Engine use is strictly forbidden. No computer assistance or analysis tools.</li>
+                  <li><strong>8.2</strong> Chess.com Fair Play system monitors all games. If flagged: Immediate disqualification and permanent ban.</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="pt-4 border-t border-gray-100 shrink-0">
+              <button 
+                onClick={() => setShowRulesModal(false)}
+                className="w-full py-3 bg-brand-primary hover:bg-brand-accent text-white font-bold rounded-xl transition-all cursor-pointer"
+              >
+                I Understand
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
 
 
       {/* PIN modal */}
       {pinModal && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" onClick={() => setPinModal(false)}>
-          <div className="bg-white rounded-2xl p-8 max-w-xs w-full shadow-2xl text-center" onClick={e => e.stopPropagation()}>
+          <div className="bg-white rounded-2xl p-8 max-w-xs w-full shadow-2xl text-center relative" onClick={e => e.stopPropagation()}>
             <p className="font-space font-black text-lg text-[#111111] mb-1">Admin Login</p>
             <p className="text-xs text-gray-400 mb-6">Enter your 4-digit PIN</p>
-            <input type="password" inputMode="numeric" maxLength={8} autoFocus
-              value={pinInput} onChange={e => { setPinInput(e.target.value); setPinErr(''); }}
-              onKeyDown={e => e.key === 'Enter' && submitPin()}
-              className={`w-36 text-center px-4 py-3 text-xl font-black tracking-[0.4em] bg-gray-50 border rounded-2xl outline-none focus:ring-2 focus:ring-brand-primary mb-2 ${pinErr ? 'border-red-300' : 'border-gray-200'}`}
-              placeholder="····"
-            />
+            <div className="relative flex items-center justify-center w-full">
+              <input type={showPin ? "text" : "password"} inputMode="numeric" maxLength={8} autoFocus
+                value={pinInput} onChange={e => { setPinInput(e.target.value); setPinErr(''); }}
+                onKeyDown={e => e.key === 'Enter' && submitPin()}
+                className={`w-36 text-center pl-8 pr-10 py-3 text-xl font-black tracking-[0.4em] bg-gray-50 border rounded-2xl outline-none focus:ring-2 focus:ring-brand-primary mb-2 ${pinErr ? 'border-red-300' : 'border-gray-200'}`}
+                placeholder="····"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPin(!showPin)}
+                className="absolute text-gray-400 hover:text-gray-650 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
+                style={{ right: 'calc(50% - 66px)', top: '14px' }}
+                aria-label={showPin ? "Hide PIN" : "Show PIN"}
+              >
+                <span className="material-symbols-outlined text-[18px]">
+                  {showPin ? "visibility_off" : "visibility"}
+                </span>
+              </button>
+            </div>
             {pinErr && <p className="text-xs text-red-500 mb-3">{pinErr}</p>}
             <div className="flex gap-2 mt-4">
               <button onClick={() => setPinModal(false)} className="flex-1 text-xs font-bold py-2.5 bg-gray-100 text-gray-500 rounded-xl cursor-pointer hover:bg-gray-200">Cancel</button>

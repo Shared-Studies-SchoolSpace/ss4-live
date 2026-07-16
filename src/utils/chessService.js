@@ -17,13 +17,11 @@ export async function fetchChessComStats(username) {
     const data = await res.json();
     
     const rapid = data.chess_rapid || {};
-    const blitz = data.chess_blitz || {};
-    const bullet = data.chess_bullet || {};
-
-    const rating = rapid.last?.rating || blitz.last?.rating || bullet.last?.rating || 1200;
-    const wins = (rapid.record?.win || 0) + (blitz.record?.win || 0);
-    const losses = (rapid.record?.loss || 0) + (blitz.record?.loss || 0);
-    const draws = (rapid.record?.draw || 0) + (blitz.record?.draw || 0);
+    const rating = rapid.last?.rating || 1200;
+    
+    const wins = rapid.record?.win || 0;
+    const losses = rapid.record?.loss || 0;
+    const draws = rapid.record?.draw || 0;
 
     return { rating, wins, losses, draws, error: null };
   } catch (err) {
@@ -45,10 +43,10 @@ export async function fetchLichessStats(username) {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
 
-    const rapid = data.perfs?.rapid?.rating || 0;
-    const blitz = data.perfs?.blitz?.rating || 0;
-    const rating = rapid || blitz || 1500; // Lichess starts ratings at 1500
+    const rapid = data.perfs?.rapid?.rating || 1500;
+    const rating = rapid;
 
+    // Fetch game stats
     const count = data.count || {};
     const wins = count.win || 0;
     const losses = count.loss || 0;
@@ -175,3 +173,78 @@ export async function searchMutualGames(profileA, profileB) {
   }
   return chessComMatch || lichessMatch || null;
 }
+
+const playerApiCache = {};
+
+/**
+ * Fetches player profile details (avatar) and rating from the platform APIs
+ */
+export async function fetchCompletePlayerData(username, platform = 'chess.com') {
+  if (!username) return null;
+  const cleanUser = username.trim().toLowerCase();
+  const cacheKey = `${platform}:${cleanUser}`;
+  
+  if (playerApiCache[cacheKey]) {
+    return playerApiCache[cacheKey];
+  }
+  
+  try {
+    const cached = sessionStorage.getItem(`chess_player:${cacheKey}`);
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      playerApiCache[cacheKey] = parsed;
+      return parsed;
+    }
+  } catch (e) {
+    // Ignore sessionStorage error
+  }
+
+  const result = {
+    username,
+    platform,
+    avatar: null,
+    rating: null,
+    title: null,
+    error: null
+  };
+
+  try {
+    if (platform === 'chess.com') {
+      const profilePromise = fetch(`https://api.chess.com/pub/player/${encodeURIComponent(cleanUser)}`)
+        .then(r => r.ok ? r.json() : null);
+
+      const statsPromise = fetch(`https://api.chess.com/pub/player/${encodeURIComponent(cleanUser)}/stats`)
+        .then(r => r.ok ? r.json() : null);
+
+      const [profile, stats] = await Promise.all([profilePromise, statsPromise]);
+      if (profile) {
+        result.avatar = profile.avatar || null;
+        result.title = profile.title || null;
+      }
+      if (stats) {
+        const rapid = stats.chess_rapid || {};
+        result.rating = rapid.last?.rating || stats.chess_blitz?.last?.rating || 1200;
+      }
+    } else {
+      // Lichess API
+      const res = await fetch(`https://lichess.org/api/user/${encodeURIComponent(cleanUser)}`);
+      if (res.ok) {
+        const data = await res.json();
+        result.rating = data.perfs?.rapid?.rating || data.perfs?.blitz?.rating || 1500;
+        result.title = data.title || null;
+      }
+    }
+
+    playerApiCache[cacheKey] = result;
+    try {
+      sessionStorage.setItem(`chess_player:${cacheKey}`, JSON.stringify(result));
+    } catch (e) {}
+
+    return result;
+  } catch (err) {
+    console.error('Error in fetchCompletePlayerData:', err);
+    result.error = err.message;
+    return result;
+  }
+}
+

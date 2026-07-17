@@ -6,7 +6,7 @@ function pad(n) { return String(n).padStart(2, '0'); }
 function CountdownCell({ value, label }) {
   return (
     <div className="flex flex-col items-center min-w-[48px] sm:min-w-[56px] flex-1 sm:flex-initial">
-      <div className="bg-white/15 border border-white/20 text-white font-space font-black text-xl sm:text-2xl md:text-3xl w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center backdrop-blur-sm">
+      <div className="bg-white/15 border border-white/20 text-white font-space font-black text-xl sm:text-2xl md:text-3xl w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center shadow-sm">
         {pad(value)}
       </div>
       <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1 sm:mt-1.5">{label}</span>
@@ -52,7 +52,11 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
     return () => clearInterval(id);
   }, [tournament]);
 
-  const statusColors = { upcoming: 'bg-amber-100 text-amber-700', active: 'bg-emerald-100 text-emerald-700', completed: 'bg-gray-100 text-gray-500' };
+  const statusColors = {
+    upcoming: 'bg-m3-secondary-container text-m3-on-secondary-container',
+    active:   'bg-success-container text-on-success-container',
+    completed: 'bg-m3-surface-variant text-m3-on-surface-variant'
+  };
   const status = tournament?.status ?? 'upcoming';
 
   return (
@@ -65,9 +69,9 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
         {/* Top-right orange bloom */}
         <div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full opacity-30"
           style={{ background: 'radial-gradient(circle, #fb923c 0%, transparent 70%)' }} />
-        {/* Bottom-left indigo bloom */}
+        {/* Bottom-left brand-primary dark bloom */}
         <div className="absolute -bottom-32 -left-20 w-[400px] h-[400px] rounded-full opacity-20"
-          style={{ background: 'radial-gradient(circle, #6366f1 0%, transparent 70%)' }} />
+          style={{ background: 'radial-gradient(circle, #0A2A6A 0%, transparent 70%)' }} />
         {/* Center accent streak */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px opacity-10"
           style={{ background: 'linear-gradient(90deg, transparent, #fdba74, transparent)' }} />
@@ -90,10 +94,7 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
               className="font-space font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-[1.1] sm:leading-[1.05] mb-3 sm:mb-4 cursor-pointer select-none"
             >
               SCL Monthly<br />
-              <span
-                className="font-black"
-                style={{ background: 'linear-gradient(90deg, #fdba74, #fb923c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-              >Tournament</span>
+              <span className="font-black text-brand-accent-on-dark">Tournament</span>
             </h1>
             <p className="text-white/60 text-sm sm:text-base font-medium max-w-sm mb-6 sm:mb-8 leading-relaxed">
               Single elimination. Last 7 days of the month. One champion claims the prize.

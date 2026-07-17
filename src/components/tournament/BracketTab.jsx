@@ -15,63 +15,80 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
     const clickable = p && !isBye(p);
     const bye = isBye(p);
 
+    const handleRowAction = (e) => {
+      if (clickable && onPlayerClick) {
+        e.stopPropagation();
+        onPlayerClick(p);
+      }
+    };
+
     return (
-      <div
-        onClick={(e) => {
-          if (clickable && onPlayerClick) {
-            e.stopPropagation();
-            onPlayerClick(p);
+      <button
+        type="button"
+        onClick={handleRowAction}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleRowAction(e);
           }
         }}
-        className={`relative flex items-center gap-2.5 px-3 py-2.5 transition-all duration-150 ${
-          clickable ? 'cursor-pointer group/row' : ''
+        disabled={!clickable}
+        role="button"
+        tabIndex={clickable ? 0 : -1}
+        className={`w-full text-left relative flex items-center gap-2.5 px-3 py-2.5 transition-all duration-150 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-1 outline-none border-none ${
+          clickable ? 'cursor-pointer group/row' : 'cursor-default'
         } ${
           isWon
-            ? 'bg-brand-primary text-white'
+            ? 'bg-emerald-50 text-emerald-800'
             : isLost
-            ? 'opacity-40'
-            : 'hover:bg-gray-50'
+            ? 'opacity-40 bg-white'
+            : 'hover:bg-gray-50 bg-white'
         }`}
       >
         {/* Winner checkmark */}
         {isWon && (
           <span className="shrink-0">
-            <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-white/80">
+            <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-emerald-600">
               <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
             </svg>
           </span>
         )}
         
         <div className="min-w-0 flex-1">
-          <p className={`text-sm leading-tight truncate font-bold ${
-            isWon ? 'font-black text-white' : bye ? 'text-gray-400 italic' : 'text-[#111111]'
-          } ${clickable ? 'group-hover/row:underline' : ''}`}>
+          <p 
+            title={p ? (bye ? 'BYE' : p.name) : 'TBD'} 
+            className={`text-sm leading-tight truncate font-bold ${
+              isWon ? 'font-black text-emerald-800' : bye ? 'text-gray-400 italic' : 'text-[#111111]'
+            } ${clickable ? 'group-hover/row:underline' : ''}`}
+          >
             {p ? (bye ? 'BYE' : p.name) : 'TBD'}
           </p>
           {p && !bye && (
-            <p className={`text-xs truncate mt-0.5 ${isWon ? 'text-white/70' : 'text-gray-400'}`}>
+            <p 
+              title={p.school} 
+              className={`text-xs truncate mt-0.5 ${isWon ? 'text-emerald-600' : 'text-gray-400'}`}
+            >
               {p.school}{p.rating ? ` · ${p.rating}` : ''}
             </p>
           )}
         </div>
 
         {p && !bye && (
-          <span className={`text-xs font-bold shrink-0 ${isWon ? 'text-white/80' : 'text-brand-primary/50'}`}>
+          <span className={`text-xs font-bold shrink-0 ${isWon ? 'text-emerald-700' : 'text-brand-primary/50'}`}>
             @{p.username}
           </span>
         )}
-      </div>
+      </button>
     );
   };
 
   return (
     <div
-      onClick={() => isAdmin && game.p1 && game.p2 && !isByeMatch && onClick(game)}
       className={`bg-white rounded-2xl overflow-hidden shadow-sm border transition-all duration-200 ${
         isMatchDone
           ? 'border-transparent shadow-md'
           : 'border-brand-primary/15'
-      } ${isAdmin && !isByeMatch ? 'cursor-pointer hover:shadow-lg hover:-translate-y-0.5' : ''}`}
+      }`}
     >
       {/* Card header bar */}
       <div className={`flex items-center justify-between px-3 py-2 ${
@@ -84,6 +101,18 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
           </span>
         </div>
         <div className="flex items-center gap-2">
+          {isAdmin && !isByeMatch && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClick(game);
+              }}
+              className="text-[10px] font-black px-2 py-1 rounded bg-brand-primary text-white hover:bg-brand-primary/95 transition-all focus-visible:ring-1 focus-visible:ring-brand-primary focus-visible:ring-offset-1 outline-none cursor-pointer border-none"
+            >
+              {isMatchDone ? 'EDIT RESULT' : 'LOG RESULT'}
+            </button>
+          )}
           {isMatchDone && !isByeMatch && (
             <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${
               game.winner?.username === 'forfeit' ? 'text-red-600 bg-red-100' : 'text-emerald-600 bg-emerald-100'
@@ -241,7 +270,7 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
       ) : (
         round && (
           <div>
-            <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date} @ 6:00 PM</p>
+            <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date} @ 8:00 PM WAT</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {round.games.map((g, i) => (
                 <MatchCard key={g.id} game={g} idx={i} isAdmin={isAdmin} onClick={openModal} onPlayerClick={onPlayerClick} />

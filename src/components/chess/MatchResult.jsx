@@ -2,7 +2,7 @@ import React from 'react';
 import { getPlayerDisplay } from '../../utils/chessUtils';
 import { PlayerCardSide } from './MatchCardHelper';
 
-export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, isAdmin, handleSetResult, gameKeyStr }) => {
+export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, isAdmin, handleSetResult, gameKeyStr, disableHover = false }) => {
   const wP = getPlayerDisplay(w);
   const bP = getPlayerDisplay(b);
   const isBye = w === 'BYE' || b === 'BYE';
@@ -72,7 +72,7 @@ export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, 
   return (
     <div className="flex flex-col gap-2 w-full">
       <div 
-        className="varsity-card p-4 md:p-5 flex items-center group"
+        className={`varsity-card p-4 md:p-5 flex items-center group ${disableHover ? 'no-hover-effects' : ''}`}
       >
         {/* White Player (Left) */}
         <div 
@@ -81,7 +81,9 @@ export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, 
           tabIndex={0}
           role="button"
           aria-label={`View ${wP.name} profile`}
-          className={`w-[40%] flex justify-end shrink-0 cursor-pointer hover:bg-brand-bg-cream/40 rounded-xl p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary ${
+          className={`w-[40%] flex justify-end shrink-0 cursor-pointer ${
+            disableHover ? '' : 'hover:bg-brand-bg-cream/40'
+          } rounded-xl p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary ${
             res === 'black' ? 'opacity-40' : ''
           } transition-opacity duration-300`}
         >
@@ -113,7 +115,9 @@ export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, 
           tabIndex={0}
           role="button"
           aria-label={`View ${bP.name} profile`}
-          className={`w-[40%] flex justify-start shrink-0 cursor-pointer hover:bg-brand-bg-cream/40 rounded-xl p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary ${
+          className={`w-[40%] flex justify-start shrink-0 cursor-pointer ${
+            disableHover ? '' : 'hover:bg-brand-bg-cream/40'
+          } rounded-xl p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary ${
             res === 'white' ? 'opacity-40' : ''
           } transition-opacity duration-300`}
         >

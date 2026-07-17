@@ -552,7 +552,7 @@ export default function DashboardPage() {
           )}
 
           {activeTab === 'pairings' && (
-            user.email_confirmed_at ? (
+            user ? (
               <div className="space-y-6">
                 <div className="varsity-card p-6">
                   <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Active Pairings</h3>
@@ -605,7 +605,7 @@ export default function DashboardPage() {
           )}
 
           {activeTab === 'messages' && (
-            user.email_confirmed_at ? (
+            user ? (
               <DirectChat />
             ) : (
               <UnverifiedGuard feature="Direct Messages" />

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
 import { useAuthModal } from '../context/AuthModalContext';
+import TournamentCountdownBanner from './announcements/TournamentCountdownBanner';
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -68,6 +69,8 @@ export const Header = () => {
 
   return (
     <>
+      {/* Tournament countdown — sits above the sticky nav bar */}
+      <TournamentCountdownBanner />
       <header className="sticky top-0 z-50 w-full bg-white/75 backdrop-blur-lg border-b border-white/40 shadow-sm">
         <div className="container mx-auto px-6 md:px-12 lg:px-16 h-16 lg:h-20 flex items-center justify-between">
           <div className="flex items-center gap-10">

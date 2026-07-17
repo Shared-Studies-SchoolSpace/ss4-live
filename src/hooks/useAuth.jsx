@@ -48,11 +48,20 @@ export function AuthProvider({ children }) {
           setProfile(data);
         } else if (sessionData.session?.user) {
           // ponytail: self-healing fallback if profile row was blocked during signup RLS misconfigurations
+          const meta = sessionData.session.user.user_metadata || {};
           const fallbackProfile = {
             id: uid,
             email: sessionData.session.user.email,
-            name: sessionData.session.user.user_metadata?.name || sessionData.session.user.email.split('@')[0],
-            role: 'player'
+            name: meta.name || sessionData.session.user.email.split('@')[0],
+            university: meta.university || '',
+            faculty: meta.faculty || '',
+            department: meta.department || '',
+            level: meta.level || '',
+            chess_username: meta.chess_username || '',
+            lichess_username: meta.lichess_username || '',
+            chess_rating: meta.chess_rating || 0,
+            lichess_rating: meta.lichess_rating || 0,
+            role: meta.role || 'player'
           };
           const { data: newProfile, error: createErr } = await supabase
             .from('profiles')
@@ -62,6 +71,20 @@ export function AuthProvider({ children }) {
           
           if (!createErr) {
             setProfile(newProfile);
+            try {
+              const createdProfile = {
+                name: fallbackProfile.name,
+                chess_username: fallbackProfile.chess_username,
+                lichess_username: fallbackProfile.lichess_username,
+                email: fallbackProfile.email,
+                department: fallbackProfile.department,
+                university: fallbackProfile.university
+              };
+              const maxRating = Math.max(fallbackProfile.chess_rating || 0, fallbackProfile.lichess_rating || 0);
+              await updatePlayerDivision(createdProfile, maxRating);
+            } catch (divErr) {
+              console.warn('Fallback division auto-assignment failed:', divErr.message);
+            }
           } else {
             console.error('Fallback profile creation failed:', createErr);
           }
@@ -393,7 +416,21 @@ export function AuthProvider({ children }) {
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
-        password
+        password,
+        options: {
+          data: {
+            name: profileData.name,
+            university: profileData.university || '',
+            faculty: profileData.faculty || '',
+            department: profileData.department || '',
+            level: profileData.level || '',
+            chess_username: profileData.chess_username || '',
+            lichess_username: profileData.lichess_username || '',
+            chess_rating: profileData.chess_rating || 0,
+            lichess_rating: profileData.lichess_rating || 0,
+            role: 'player'
+          }
+        }
       });
 
       if (error) throw error;
@@ -459,6 +496,7 @@ export function AuthProvider({ children }) {
     }
   };
 
+
   const signOut = async () => {
     setLoading(true);
     try {
@@ -496,7 +534,7 @@ export function AuthProvider({ children }) {
       signUp, 
       signIn, 
       signOut, 
-      refreshProfile 
+      refreshProfile
     }}>
       {children}
     </AuthContext.Provider>

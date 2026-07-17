@@ -251,15 +251,10 @@ export default function ChessTournamentPage() {
   }, [user, upcomingTournament, profile]);
 
   const handleJoinTournament = async () => {
-    if (!user) {
-      setJoinModalMode('gate');
-      setShowJoinModal(true);
-      return;
-    }
+    if (!user) return;
 
     if (isUserRegisteredForUpcoming) {
-      setJoinModalMode('already-in');
-      setShowJoinModal(true);
+      toast.info("You're already registered for this tournament.");
       return;
     }
 
@@ -347,8 +342,7 @@ export default function ChessTournamentPage() {
       if (error) throw error;
       
       setUpcomingTournament({ ...currentT, players: updatedPlayers });
-      setJoinModalMode('success');
-      setShowJoinModal(true);
+      toast.success("Your spot is locked in! The board awaits. 🏆");
     } catch (err) {
       console.error('Registration failed:', err);
       toast.error('Registration failed: ' + err.message);
@@ -552,19 +546,21 @@ export default function ChessTournamentPage() {
                   You have Joined! 🚀
                 </div>
               ) : (
-                <Button
-                  onClick={handleJoinTournament}
-                  loading={loadingReg}
-                  size="lg"
-                  variant="primary"
-                  icon={
-                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                    </svg>
-                  }
-                >
-                  Join the next Tournament
-                </Button>
+                <AuthGate reason="join the next tournament" onAction={handleJoinTournamentAfterAuth}>
+                  <Button
+                    onClick={handleJoinTournament}
+                    loading={loadingReg}
+                    size="lg"
+                    variant="primary"
+                    icon={
+                      <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                      </svg>
+                    }
+                  >
+                    Join the next Tournament
+                  </Button>
+                </AuthGate>
               )}
 
               <Button
@@ -1620,22 +1616,7 @@ export default function ChessTournamentPage() {
           </div>
         </div>
       )}
-      {/* Join Tournament modal */}
-      {showJoinModal && (
-        <JoinModal
-          mode={joinModalMode}
-          onClose={() => setShowJoinModal(false)}
-          onSignIn={() => {
-            setShowJoinModal(false);
-            openAuthModal('join the next tournament', handleJoinTournamentAfterAuth, 'login');
-          }}
-          onRegister={() => {
-            setShowJoinModal(false);
-            openAuthModal('join the next tournament', handleJoinTournamentAfterAuth, 'register');
-          }}
-          clock={{ days, hours, mins, secs }}
-        />
-      )}
+
       {/* Player details modal */}
       {selectedPlayerForModal && (
         <TournamentPlayerModal 

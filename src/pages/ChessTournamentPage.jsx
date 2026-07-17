@@ -26,6 +26,12 @@ const SCHEDULE = [
   { label: 'Day 7', desc: 'Final',        date: 'June 30' },
 ];
 
+const TrophySvg = ({ className = "w-5 h-5" }) => (
+  <svg className={className} viewBox="0 -960 960 960" fill="currentColor">
+    <path d="M280-120v-80h160v-116q-111-8-185.5-84.5T180-590v-90h80v-80h440v80h80v90q0 113-74.5 189.5T520-316v116h160v80H280Zm0-550h-20v90q0 73 47.5 125T420-402v-268H280Zm260 133q65-5 112.5-57t47.5-125v-90H540v272Z" />
+  </svg>
+);
+
 // ponytail: inline — only ever used in this page
 function JoinModal({ mode, onClose, onSignIn, onRegister, clock }) {
   const { days, hours, mins, secs } = clock;
@@ -1536,7 +1542,9 @@ export default function ChessTournamentPage() {
       {showPastWinnersModal && (
         <div className="fixed inset-0 bg-[#111111]/75 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in fade-in duration-200" onClick={() => setShowPastWinnersModal(false)}>
           <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl border border-gray-100 relative max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-            <h3 className="font-space font-black text-2xl text-[#111111] mb-5 flex items-center gap-2">🏆 Past Champions</h3>
+            <h3 className="font-space font-black text-2xl text-[#111111] mb-5 flex items-center gap-2">
+              <TrophySvg className="w-7 h-7 text-brand-primary shrink-0" /> Past Champions
+            </h3>
             
             <div className="space-y-3">
               {history.filter(h => h.status === 'completed').length === 0 ? (
@@ -1562,7 +1570,8 @@ export default function ChessTournamentPage() {
                         }}
                         className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 hover:border-emerald-300 px-3 py-1.5 rounded-xl text-emerald-700 font-space font-black text-xs transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0"
                       >
-                        🏆 {typeof h.winner === 'object' ? h.winner?.name : h.winner}
+                        <TrophySvg className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span>{typeof h.winner === 'object' ? h.winner?.name : h.winner}</span>
                       </button>
                     ) : (
                       <div className="bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 shrink-0 text-xs font-bold text-gray-400">

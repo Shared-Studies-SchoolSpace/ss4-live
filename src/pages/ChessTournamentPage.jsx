@@ -13,6 +13,7 @@ import AuthGate from '../components/auth/AuthGate';
 import { useAuth } from '../hooks/useAuth';
 import { useAuthModal } from '../context/AuthModalContext';
 import { supabase } from '../supabase';
+import Button from '../components/Button';
 
 const ADMIN_PIN = '1926';
 
@@ -32,98 +33,7 @@ const TrophySvg = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-// ponytail: inline — only ever used in this page
-function JoinModal({ mode, onClose, onSignIn, onRegister, clock }) {
-  const { days, hours, mins, secs } = clock;
-  const CountdownTile = ({ val, unit }) => (
-    <div className="flex flex-col items-center">
-      <span className="text-2xl font-black text-brand-primary font-space tabular-nums w-14 text-center bg-brand-primary/5 border border-brand-primary/20 rounded-xl py-2">
-        {String(val).padStart(2, '0')}
-      </span>
-      <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-1">{unit}</span>
-    </div>
-  );
 
-  const backdropClick = (e) => { if (e.target === e.currentTarget) onClose(); };
-
-  return (
-    <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-      onClick={backdropClick}
-    >
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6" role="dialog" aria-modal="true">
-        {/* X close */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 transition-colors cursor-pointer"
-          aria-label="Close"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
-        {mode === 'gate' && (
-          <>
-            <div className="text-3xl mb-3">🏆</div>
-            <h2 className="text-lg font-black text-brand-text-dark mb-1">Ready to compete?</h2>
-            <p className="text-sm text-gray-500 mb-6">Sign in to secure your spot in the next SCL Tournament.</p>
-            <div className="flex flex-col gap-3">
-              <button
-                onClick={onRegister}
-                className="w-full py-3 bg-brand-primary text-white font-black text-sm rounded-xl hover:bg-brand-primary/90 transition-colors cursor-pointer"
-              >
-                Create Account
-              </button>
-              <button
-                onClick={onSignIn}
-                className="w-full py-3 bg-transparent text-brand-primary font-black text-sm rounded-xl border border-brand-primary/30 hover:bg-brand-primary/5 transition-colors cursor-pointer"
-              >
-                Sign In
-              </button>
-            </div>
-          </>
-        )}
-
-        {mode === 'success' && (
-          <>
-            <div className="text-3xl mb-3">🎉</div>
-            <h2 className="text-lg font-black text-brand-text-dark mb-1">You're in!</h2>
-            <p className="text-sm text-gray-500 mb-5">Your spot is confirmed. The board awaits.</p>
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Tournament starts in</p>
-            <div className="flex items-start justify-center gap-2 mb-6">
-              <CountdownTile val={days} unit="Days" />
-              <CountdownTile val={hours} unit="Hrs" />
-              <CountdownTile val={mins} unit="Mins" />
-              <CountdownTile val={secs} unit="Secs" />
-            </div>
-            <button onClick={onClose} className="w-full py-3 bg-emerald-600 text-white font-black text-sm rounded-xl hover:bg-emerald-700 transition-colors cursor-pointer">
-              Let's Go
-            </button>
-          </>
-        )}
-
-        {mode === 'already-in' && (
-          <>
-            <div className="text-3xl mb-3">✅</div>
-            <h2 className="text-lg font-black text-brand-text-dark mb-1">Your spot is locked in.</h2>
-            <p className="text-sm text-gray-500 mb-5">You're already registered. Champions don't queue twice.</p>
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Tournament starts in</p>
-            <div className="flex items-start justify-center gap-2 mb-6">
-              <CountdownTile val={days} unit="Days" />
-              <CountdownTile val={hours} unit="Hrs" />
-              <CountdownTile val={mins} unit="Mins" />
-              <CountdownTile val={secs} unit="Secs" />
-            </div>
-            <button onClick={onClose} className="w-full py-3 bg-brand-primary/10 text-brand-primary font-black text-sm rounded-xl hover:bg-brand-primary/15 transition-colors cursor-pointer">
-              Close
-            </button>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
 
 function AdminMatchRow({ game, onSave }) {
   const [winnerUsername, setWinnerUsername] = useState(game.winner?.username || '');
@@ -289,9 +199,7 @@ export default function ChessTournamentPage() {
   const [upcomingTournament, setUpcomingTournament] = useState(null);
   const [loadingReg, setLoadingReg] = useState(false);
 
-  // Join modal state — 'gate' | 'success' | 'already-in'
-  const [showJoinModal, setShowJoinModal] = useState(false);
-  const [joinModalMode, setJoinModalMode] = useState('gate');
+
 
   // Fetch upcoming tournament
   useEffect(() => {
@@ -563,13 +471,13 @@ export default function ChessTournamentPage() {
     ...(isAdmin ? [{ id: 'admin', label: 'Admin' }] : []),
   ];
 
-  const isTournamentActive = tournament?.status === 'active';
+  const isUpcoming = !tournament || tournament.status === 'upcoming';
 
   return (
     <div className="min-h-screen bg-[#F6F4F0]">
       <ToastContainer position="bottom-right" />
 
-      {!isTournamentActive && !isAdmin ? (
+      {isUpcoming && !isAdmin ? (
         /* Non-Active View: Big Ass Countdown */
         <div 
           className="relative text-white px-4 sm:px-6 md:px-12 lg:px-16 py-12 sm:py-16 md:py-24 min-h-[85vh] flex flex-col justify-center overflow-hidden"
@@ -644,54 +552,66 @@ export default function ChessTournamentPage() {
                   You have Joined! 🚀
                 </div>
               ) : (
-                <button
+                <Button
                   onClick={handleJoinTournament}
-                  disabled={loadingReg}
-                  className="px-8 py-3.5 bg-brand-primary hover:bg-brand-primary/90 text-white text-xs sm:text-sm font-black rounded-xl transition-all shadow-sm hover:shadow-md flex items-center gap-2 cursor-pointer active:scale-[0.98] disabled:opacity-50"
+                  loading={loadingReg}
+                  size="lg"
+                  variant="primary"
+                  icon={
+                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                  }
                 >
-                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                  </svg>
-                  {loadingReg ? "Joining..." : "Join the next Tournament"}
-                </button>
+                  Join the next Tournament
+                </Button>
               )}
 
-              <a 
-                href={googleCalendarUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="px-6 py-3.5 bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-black rounded-xl border border-white/10 transition-all flex items-center gap-2 cursor-pointer"
+              <Button
+                href={googleCalendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="white-outline"
+                size="lg"
+                icon={
+                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                }
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
                 Add to Calendar
-              </a>
-              <button 
-                onClick={() => setShowPastWinnersModal(true)} 
-                className="px-6 py-3.5 bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-black rounded-xl border border-white/10 transition-all flex items-center gap-2 cursor-pointer"
+              </Button>
+              <Button
+                onClick={() => setShowPastWinnersModal(true)}
+                variant="white-outline"
+                size="lg"
+                icon={
+                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                }
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
                 View Past Winners
-              </button>
-              <button 
-                onClick={() => setShowRulesModal(true)} 
-                className="px-6 py-3.5 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white text-xs sm:text-sm font-black rounded-xl border border-white/5 transition-all flex items-center gap-2 cursor-pointer"
+              </Button>
+              <Button
+                onClick={() => setShowRulesModal(true)}
+                variant="white-outline"
+                size="lg"
+                icon={
+                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                }
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
                 Rules & Schedule
-              </button>
+              </Button>
             </div>
 
           {/* Registered Players List */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-4 sm:p-6 sm:p-8 max-w-2xl mx-auto text-left space-y-4 mt-6">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <h3 className="font-space font-black text-lg text-white">Registered Participants</h3>
-                <span className="bg-brand-primary text-white text-xs font-black px-2.5 py-1 rounded-full">
+                <span className="bg-brand-primary text-white text-xs font-black px-2.5 py-1 rounded-xl">
                   {upcomingTournament?.players ? upcomingTournament.players.length : 0} Joined
                 </span>
               </div>
@@ -706,8 +626,8 @@ export default function ChessTournamentPage() {
                         <p className="text-xs font-bold text-white truncate">{p.name}</p>
                         <p className="text-[10px] text-gray-500 truncate">{p.school}</p>
                       </div>
-                      <div className="bg-brand-primary/10 border border-brand-primary/20 px-2 py-1 rounded-lg shrink-0">
-                        <span className="text-[10px] font-black text-brand-primary">{p.rating} ELO</span>
+                      <div className="bg-white/10 border border-white/15 px-2.5 py-1 rounded-xl shrink-0">
+                        <span className="text-[10px] font-black text-blue-200">{p.rating} ELO</span>
                       </div>
                     </div>
                   ))}
@@ -1563,16 +1483,17 @@ export default function ChessTournamentPage() {
                       <p className="text-base font-black font-space text-brand-text-dark mt-0.5 truncate group-hover:text-brand-primary transition-colors">{h.name.replace(" SCL Tournament", "")}</p>
                     </div>
                     {h.winner && h.winner !== 'None' ? (
-                      <button
+                      <Button
                         onClick={() => {
                           const playerObj = typeof h.winner === 'object' ? h.winner : tournamentPlayers.find(p => p.name.toLowerCase() === String(h.winner).toLowerCase()) || { name: h.winner, username: String(h.winner).toLowerCase().replace(/\s+/g, '') };
                           setSelectedPlayerForModal(playerObj);
                         }}
-                        className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 hover:border-emerald-300 px-3 py-1.5 rounded-xl text-emerald-700 font-space font-black text-xs transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0"
+                        variant="success"
+                        size="sm"
+                        icon={<TrophySvg className="w-3.5 h-3.5 text-white shrink-0" />}
                       >
-                        <TrophySvg className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span>{typeof h.winner === 'object' ? h.winner?.name : h.winner}</span>
-                      </button>
+                        {typeof h.winner === 'object' ? h.winner?.name : h.winner}
+                      </Button>
                     ) : (
                       <div className="bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 shrink-0 text-xs font-bold text-gray-400">
                         None
@@ -1583,12 +1504,13 @@ export default function ChessTournamentPage() {
               )}
             </div>
             
-            <button 
+            <Button 
               onClick={() => setShowPastWinnersModal(false)}
-              className="mt-6 w-full py-3 bg-brand-primary hover:bg-[#1545A2] text-white font-bold rounded-xl transition-all cursor-pointer shadow-sm hover:shadow text-sm uppercase tracking-wider font-space font-black"
+              variant="primary"
+              className="mt-6 w-full text-sm uppercase tracking-wider font-space font-black"
             >
               Close
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -1651,12 +1573,13 @@ export default function ChessTournamentPage() {
             </div>
             
             <div className="pt-4 border-t border-gray-100 shrink-0">
-              <button 
+              <Button 
                 onClick={() => setShowRulesModal(false)}
-                className="w-full py-3 bg-brand-primary hover:bg-brand-accent text-white font-bold rounded-xl transition-all cursor-pointer"
+                variant="primary"
+                className="w-full"
               >
                 I Understand
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -1691,8 +1614,8 @@ export default function ChessTournamentPage() {
             </div>
             {pinErr && <p className="text-xs text-red-500 mb-3">{pinErr}</p>}
             <div className="flex gap-2 mt-4">
-              <button onClick={() => setPinModal(false)} className="flex-1 text-xs font-bold py-2.5 bg-gray-100 text-gray-500 rounded-xl cursor-pointer hover:bg-gray-200">Cancel</button>
-              <button onClick={submitPin} className="flex-1 text-xs font-bold py-2.5 bg-brand-primary text-white rounded-xl cursor-pointer hover:bg-brand-primary/90">Unlock</button>
+              <Button onClick={() => setPinModal(false)} variant="secondary" size="sm" className="flex-1 text-gray-500 border-gray-200 hover:bg-gray-50">Cancel</Button>
+              <Button onClick={submitPin} variant="primary" size="sm" className="flex-1">Unlock</Button>
             </div>
           </div>
         </div>

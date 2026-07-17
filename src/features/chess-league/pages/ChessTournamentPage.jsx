@@ -217,8 +217,26 @@ export default function ChessTournamentPage() {
         if (error) throw error;
         
         if (!data) {
-          const targetMY = '2026-08';
-          const targetName = 'August 2026 SCL Tournament';
+          const nowObj = new Date();
+          const curY = nowObj.getFullYear();
+          const curM = nowObj.getMonth() + 1;
+          const datesThisMonth = getTournamentDates(curY, curM);
+          const startThisMonth = new Date(`${datesThisMonth[0]}T18:00:00+01:00`);
+          
+          let targetY = curY;
+          let targetM = curM;
+          if (startThisMonth <= nowObj) {
+            targetM = curM === 12 ? 1 : curM + 1;
+            targetY = curM === 12 ? curY + 1 : curY;
+          }
+          
+          const targetMY = `${targetY}-${String(targetM).padStart(2, '0')}`;
+          const MONTH_NAMES = [
+            '', 'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+          ];
+          const targetName = `${MONTH_NAMES[targetM]} ${targetY} SCL Tournament`;
+
           const newT = {
             id: targetMY,
             name: targetName,
@@ -608,11 +626,13 @@ export default function ChessTournamentPage() {
 
           {/* Registered Players List */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-4 sm:p-6 sm:p-8 max-w-2xl mx-auto text-left space-y-4 mt-6">
-              <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 className="font-space font-black text-lg text-white">Registered Participants</h3>
-                <span className="bg-brand-primary text-white text-xs font-black px-2.5 py-1 rounded-xl">
-                  {upcomingTournament?.players ? upcomingTournament.players.length : 0} Joined
-                </span>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <h3 className="font-space font-black text-base sm:text-lg text-white">Registered Participants</h3>
+                  <span className="bg-white/10 border border-white/10 text-gray-300 text-xs font-black px-2 py-0.5 rounded-lg shrink-0">
+                    {upcomingTournament?.players ? upcomingTournament.players.length : 0}
+                  </span>
+                </div>
               </div>
               
               {!upcomingTournament?.players || upcomingTournament.players.length === 0 ? (

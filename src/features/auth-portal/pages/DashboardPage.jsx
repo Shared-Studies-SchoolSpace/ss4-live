@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useAuthModal } from '../context/AuthModalContext';
 import { supabase } from '../../../supabase';
+import { getTournamentDates } from '../../chess-league/utils/tournament';
 
 import { fetchChessComStats, fetchLichessStats, searchMutualGames } from '../../chess-league/utils/chessService';
 import MatchChat from '../../chess-league/components/MatchChat';
@@ -69,10 +70,28 @@ export default function DashboardPage() {
         
         if (error) throw error;
         
-        // ponytail: auto-create August 2026 tournament row if missing
+        // ponytail: auto-create tournament row if missing
         if (!data) {
-          const targetMY = '2026-08';
-          const targetName = 'August 2026 SCL Tournament';
+          const nowObj = new Date();
+          const curY = nowObj.getFullYear();
+          const curM = nowObj.getMonth() + 1;
+          const datesThisMonth = getTournamentDates(curY, curM);
+          const startThisMonth = new Date(`${datesThisMonth[0]}T18:00:00+01:00`);
+          
+          let targetY = curY;
+          let targetM = curM;
+          if (startThisMonth <= nowObj) {
+            targetM = curM === 12 ? 1 : curM + 1;
+            targetY = curM === 12 ? curY + 1 : curY;
+          }
+          
+          const targetMY = `${targetY}-${String(targetM).padStart(2, '0')}`;
+          const MONTH_NAMES = [
+            '', 'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+          ];
+          const targetName = `${MONTH_NAMES[targetM]} ${targetY} SCL Tournament`;
+
           const newT = {
             id: targetMY,
             name: targetName,

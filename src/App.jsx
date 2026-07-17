@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { ToastContainer } from 'react-toastify';
@@ -44,6 +44,8 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/chess-league" element={<ChessLeaguePage />} />
             <Route path="/chess-league/tournament" element={<ChessTournamentPage />} />
+            <Route path="/tournaments/register" element={<Navigate to="/chess-league/tournament" replace />} />
+            <Route path="/tournament/register" element={<Navigate to="/chess-league/tournament" replace />} />
             <Route path="/tertiary" element={<TertiaryPage />} />
             <Route path="/tertiary/:id" element={<TertiaryDetailPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />

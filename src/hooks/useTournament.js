@@ -20,7 +20,7 @@ export const MOCK_HISTORY = [
   ...['2026-05'].map(my => ({
     id: my, month_year: my,
     name: 'May 2026 SCL Tournament',
-    status: 'completed', winner: 'Player Alpha',
+    status: 'completed', winner: 'Destiny Chilaka',
     players: [], rounds: []
   }))
 ];

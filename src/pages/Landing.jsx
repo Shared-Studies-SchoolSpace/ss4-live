@@ -12,6 +12,100 @@ import { PlayerProfile } from "../components/chess/PlayerProfile";
 import { Hero } from "../components/Hero";
 import { fetchCompletePlayerData } from "../utils/chessService";
 
+// Fallback results for Daily Friendlies (since start on July 13, 2026)
+const FALLBACK_DAILY_FRIENDLIES = [
+  // July 13, 2026
+  { tournament_date: '2026-07-13', player_username: 'HAKAI026', points: 30, performance: 1981, is_winner: true },
+  { tournament_date: '2026-07-13', player_username: 'Tyrannt', points: 14, performance: 1693, is_winner: false },
+  { tournament_date: '2026-07-13', player_username: 'Act1ve_001', points: 13, performance: 1668, is_winner: false },
+  { tournament_date: '2026-07-13', player_username: 'Robert_plays_chess', points: 8, performance: 1420, is_winner: false },
+  { tournament_date: '2026-07-13', player_username: 'karyptus', points: 6, performance: 1487, is_winner: false },
+  { tournament_date: '2026-07-13', player_username: 'Veek_Austin01', points: 4, performance: 1708, is_winner: false },
+  { tournament_date: '2026-07-13', player_username: 'iyanamubongabasi', points: 2, performance: 1455, is_winner: false },
+  { tournament_date: '2026-07-13', player_username: 'Yaribem05', points: 2, performance: 1404, is_winner: false },
+
+  // July 14, 2026
+  { tournament_date: '2026-07-14', player_username: 'oblivion14', points: 22, performance: 2029, is_winner: true },
+  { tournament_date: '2026-07-14', player_username: 'Act1ve_001', points: 6, performance: 1584, is_winner: false },
+  { tournament_date: '2026-07-14', player_username: 'Veek_Austin01', points: 14, performance: 1832, is_winner: false },
+  { tournament_date: '2026-07-14', player_username: 'Glorrreeeyy', points: 16, performance: 1868, is_winner: false },
+  { tournament_date: '2026-07-14', player_username: 'simon25', points: 14, performance: 1570, is_winner: false },
+  { tournament_date: '2026-07-14', player_username: 'Robert_plays_chess', points: 4, performance: 1446, is_winner: false },
+  { tournament_date: '2026-07-14', player_username: 'Laka2142', points: 10, performance: 1663, is_winner: false },
+  { tournament_date: '2026-07-14', player_username: 'Power_101', points: 8, performance: 1611, is_winner: false },
+  { tournament_date: '2026-07-14', player_username: 'iyanamubongabasi', points: 6, performance: 1547, is_winner: false },
+  { tournament_date: '2026-07-14', player_username: 'Jhudex', points: 5, performance: 1366, is_winner: false },
+
+  // July 15, 2026
+  { tournament_date: '2026-07-15', player_username: 'simon25', points: 31, performance: 1802, is_winner: true },
+  { tournament_date: '2026-07-15', player_username: 'Act1ve_001', points: 5, performance: 1555, is_winner: false },
+  { tournament_date: '2026-07-15', player_username: 'Robert_plays_chess', points: 4, performance: 1456, is_winner: false },
+  { tournament_date: '2026-07-15', player_username: 'Tyrannt', points: 1, performance: 1580, is_winner: false },
+  { tournament_date: '2026-07-15', player_username: 'Weehfhi_Plays', points: 14, performance: 1630, is_winner: false },
+  { tournament_date: '2026-07-15', player_username: 'Praisehans', points: 12, performance: 1896, is_winner: false },
+  { tournament_date: '2026-07-15', player_username: 'Klaus-Michael', points: 12, performance: 1815, is_winner: false },
+
+  // July 16, 2026
+  { tournament_date: '2026-07-16', player_username: 'simon25', points: 1, performance: 1674, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'Veek_Austin01', points: 12, performance: 1834, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'Act1ve_001', points: 6, performance: 1532, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'oblivion14', points: 4, performance: 1927, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'Laka2142', points: 12, performance: 1885, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'Robert_plays_chess', points: 6, performance: 1444, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'Weehfhi_Plays', points: 6, performance: 1620, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'Jhudex', points: 14, performance: 1365, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'Power_101', points: 8, performance: 1724, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'Klaus-Michael', points: 4, performance: 1647, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'Gmpeerless', points: 14, performance: 1905, is_winner: true },
+  { tournament_date: '2026-07-16', player_username: 'KeseneNicholas', points: 12, performance: 1786, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'Davidbarakaii', points: 8, performance: 1615, is_winner: false },
+  { tournament_date: '2026-07-16', player_username: 'iyanamubongabasi', points: 2, performance: 1568, is_winner: false }
+];
+
+const spotlightPlayers = [
+  {
+    name: "Simon (simon25)",
+    school: "University of Lagos",
+    detail: "Economics • July 15 Arena Champion",
+    metric1Label: "Pts Scored",
+    metric1Value: "31 pts",
+    metric2Label: "Performance",
+    metric2Value: "1802",
+    avatarInitial: "S"
+  },
+  {
+    name: "HAKAI026",
+    school: "Lichess Competitor",
+    detail: "July 13 Arena Champion",
+    metric1Label: "Pts Scored",
+    metric1Value: "30 pts",
+    metric2Label: "Performance",
+    metric2Value: "1981",
+    avatarInitial: "H"
+  },
+  {
+    name: "oblivion14",
+    school: "Bells University of Technology",
+    detail: "Mechatronics • July 14 Arena Champion",
+    metric1Label: "Pts Scored",
+    metric1Value: "22 pts",
+    metric2Label: "Performance",
+    metric2Value: "2029",
+    avatarInitial: "O"
+  },
+  {
+    name: "Gmpeerless",
+    school: "University of Ibadan",
+    detail: "Mathematics • July 16 Arena Champion",
+    metric1Label: "Pts Scored",
+    metric1Value: "14 pts",
+    metric2Label: "Performance",
+    metric2Value: "1905",
+    avatarInitial: "G"
+  }
+];
+
+
 
 // Vector SVG Icons
 const AnnouncementIcon = () => (
@@ -104,6 +198,7 @@ export default function LandingPage() {
   const [dbMatches, setDbMatches] = useState([]);
   const [allPlayers, setAllPlayers] = useState([]);
   const [leaderboardSchools, setLeaderboardSchools] = useState([]);
+  const [dailyFriendlies, setDailyFriendlies] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [loadingFeed, setLoadingFeed] = useState(true);
   const [newsSlideIdx, setNewsSlideIdx] = useState(0);
@@ -124,6 +219,7 @@ export default function LandingPage() {
         setDbMatches(cached.dbMatches || []);
         setAllPlayers(cached.allPlayers || []);
         setLeaderboardSchools(cached.leaderboardSchools || []);
+        setDailyFriendlies(cached.dailyFriendlies || []);
         setIsPreloading(false);
         setLoadingFeed(false);
         return;
@@ -134,7 +230,7 @@ export default function LandingPage() {
 
     const loadAndPreload = async () => {
       try {
-        setPreloadStatus("Connecting to Supabase...");
+        setPreloadStatus("Loading Arena...");
         setPreloadProgress(10);
         
         // Fetch announcements
@@ -196,6 +292,22 @@ export default function LandingPage() {
           }
         });
         setAllPlayers(mergedPlayers);
+        setPreloadProgress(55);
+
+        // Fetch daily friendly results from Supabase if table is created
+        let finalFriendlies = [];
+        try {
+          const { data: friendlies, error: friendliesErr } = await supabase
+            .from("daily_friendlies")
+            .select("*")
+            .order("tournament_date", { ascending: true });
+          if (!friendliesErr && friendlies) {
+            finalFriendlies = friendlies;
+          }
+        } catch (e) {
+          console.warn("Could not load daily friendlies from Supabase:", e);
+        }
+        setDailyFriendlies(finalFriendlies);
         setPreloadProgress(60);
 
         // Aggregate top universities
@@ -270,7 +382,8 @@ export default function LandingPage() {
           dbAnnouncements: finalAnn,
           dbMatches: finalMatches,
           allPlayers: mergedPlayers,
-          leaderboardSchools: schools
+          leaderboardSchools: schools,
+          dailyFriendlies: finalFriendlies
         };
         sessionStorage.setItem('ss4_landing_preloaded_v2', JSON.stringify(cachedPayload));
         
@@ -303,6 +416,73 @@ export default function LandingPage() {
       .sort((a, b) => (b.chess_rating || 0) - (a.chess_rating || 0))
       .slice(0, 6);
   }, [allPlayers, selectedDivision]);
+
+  // Cumulative Daily Friendlies standings
+  const dailyFriendliesLeaderboard = useMemo(() => {
+    const data = dailyFriendlies.length > 0 ? dailyFriendlies : FALLBACK_DAILY_FRIENDLIES;
+    
+    const playerMap = {};
+    data.forEach(item => {
+      const username = item.player_username;
+      if (!playerMap[username]) {
+        playerMap[username] = {
+          username: username,
+          pts: 0,
+          perf: 0,
+          wins: 0,
+          count: 0
+        };
+      }
+      playerMap[username].pts += item.points;
+      playerMap[username].perf = item.performance;
+      if (item.is_winner) {
+        playerMap[username].wins += 1;
+      }
+      playerMap[username].count += 1;
+    });
+
+    return Object.values(playerMap)
+      .sort((a, b) => b.pts - a.pts || b.perf - a.perf)
+      .map(p => {
+        const details = allPlayers.find(
+          player => player.chess_username?.toLowerCase() === p.username.toLowerCase() ||
+                    player.lichess_username?.toLowerCase() === p.username.toLowerCase()
+        );
+        return {
+          ...p,
+          name: details?.name || p.username,
+          university: details?.university || "Lichess Competitor"
+        };
+      });
+  }, [dailyFriendlies, allPlayers]);
+
+  // Dynamic daily spotlight (changes every calendar day)
+  const dailySpotlightPlayer = useMemo(() => {
+    const day = new Date().getDate();
+    return spotlightPlayers[day % spotlightPlayers.length];
+  }, []);
+
+  const handlePlayerClick = (username) => {
+    const player = allPlayers.find(
+      ap => ap.chess_username?.toLowerCase() === username.toLowerCase() ||
+            ap.lichess_username?.toLowerCase() === username.toLowerCase()
+    ) || {
+      name: username,
+      university: "Lichess Competitor",
+      chess_username: username,
+      chess_rating: 1500
+    };
+    setSelectedPlayer(player);
+  };
+
+  const isCurrentUser = (p) => {
+    if (!profile) return false;
+    const pUname = p.chess_username?.toLowerCase() || p.player_username?.toLowerCase() || p.username?.toLowerCase();
+    const myUname = profile.chess_username?.toLowerCase() || profile.lichess_username?.toLowerCase();
+    return pUname && myUname && pUname === myUname;
+  };
+
+
 
   // Decoupled Announcements & Milestones (sorted by date)
   const feedAnnouncements = useMemo(() => {
@@ -374,56 +554,66 @@ export default function LandingPage() {
     });
   }, [dbMatches]);
 
-  const newsSafeIdx = feedAnnouncements.length ? newsSlideIdx % feedAnnouncements.length : 0;
-  const matchSafeIdx = feedMatches.length ? matchSlideIdx % feedMatches.length : 0;
+  // Track hover states for slideshow pausing
+  const [isNewsHovered, setIsNewsHovered] = useState(false);
+  const [isMatchHovered, setIsMatchHovered] = useState(false);
 
-  // Auto-advance news slideshow
-  useEffect(() => {
-    if (feedAnnouncements.length < 2) return;
-    const t = setInterval(() =>
-      setNewsSlideIdx(p => (p + 1) % feedAnnouncements.length), 5000);
-    return () => clearInterval(t);
-  }, [feedAnnouncements.length]);
+  // Filtered lists based on activeFilter
+  const filteredAnnouncements = useMemo(() => {
+    if (activeFilter === "results") return [];
+    return feedAnnouncements;
+  }, [feedAnnouncements, activeFilter]);
 
-  // Auto-advance match slideshow
+  const filteredMatches = useMemo(() => {
+    if (activeFilter === "all" || activeFilter === "results") return feedMatches;
+    return [];
+  }, [feedMatches, activeFilter]);
+
+  // Reset slide indices when filter changes to prevent out-of-bounds errors or flashing
   useEffect(() => {
-    if (feedMatches.length < 2) return;
+    setNewsSlideIdx(0);
+    setMatchSlideIdx(0);
+  }, [activeFilter]);
+
+  const newsSafeIdx = filteredAnnouncements.length ? newsSlideIdx % filteredAnnouncements.length : 0;
+  const matchSafeIdx = filteredMatches.length ? matchSlideIdx % filteredMatches.length : 0;
+
+  // Auto-advance news slideshow (paused when hovered)
+  useEffect(() => {
+    if (filteredAnnouncements.length < 2 || isNewsHovered) return;
     const t = setInterval(() =>
-      setMatchSlideIdx(p => (p + 1) % feedMatches.length), 6000);
+      setNewsSlideIdx(p => (p + 1) % filteredAnnouncements.length), 5000);
     return () => clearInterval(t);
-  }, [feedMatches.length]);
+  }, [filteredAnnouncements.length, isNewsHovered]);
+
+  // Auto-advance match slideshow (paused when hovered)
+  useEffect(() => {
+    if (filteredMatches.length < 2 || isMatchHovered) return;
+    const t = setInterval(() =>
+      setMatchSlideIdx(p => (p + 1) % filteredMatches.length), 6000);
+    return () => clearInterval(t);
+  }, [filteredMatches.length, isMatchHovered]);
+
 
   if (isPreloading) {
     return (
-      <div className="fixed inset-0 bg-[#FAF8F4] z-[9999] flex flex-col items-center justify-center p-6 text-center">
-        {/* Animated Varsity Shield */}
-        <div className="relative mb-8">
-          <div className="w-20 h-20 bg-brand-primary rounded-3xl flex items-center justify-center shadow-lg animate-bounce">
-            <span className="text-white text-5xl font-black font-space select-none">S</span>
+      <div className="fixed inset-0 bg-white z-[9999] flex items-center justify-center font-nunito selection:bg-gray-200">
+        <div className="flex flex-col items-center">
+          {/* Logo Mark */}
+          <div className="flex items-baseline space-x-1 mb-2">
+            <span className="load-item text-8xl font-black text-[#155baa] tracking-tighter animate-wave" style={{ animationDelay: '0ms' }}>S</span>
+            <span className="load-item text-8xl font-black text-[#155baa] tracking-tighter animate-wave" style={{ animationDelay: '120ms' }}>S</span>
+            <span className="load-item text-8xl font-black text-[#ce5313] tracking-tighter animate-wave" style={{ animationDelay: '240ms' }}>4</span>
           </div>
-          <div className="absolute -top-2 -right-2 w-7 h-7 bg-brand-accent rounded-full flex items-center justify-center shadow-md">
-            <span className="text-white text-xs select-none">👑</span>
+
+          {/* Tagline */}
+          <div className="flex space-x-1.5 text-xl font-semibold">
+            <span className="load-item text-[#ce5313] animate-wave" style={{ animationDelay: '360ms' }}>Shared</span>
+            <span className="load-item text-[#ce5313] animate-wave" style={{ animationDelay: '480ms' }}>Study</span>
+            <span className="load-item text-[#155baa] ml-2 animate-wave" style={{ animationDelay: '600ms' }}>School</span>
+            <span className="load-item text-[#155baa] animate-wave" style={{ animationDelay: '720ms' }}>Space</span>
           </div>
         </div>
-        
-        {/* Text Details */}
-        <h2 className="text-lg font-black text-brand-text-dark font-space uppercase tracking-widest mb-2">
-          SS4 League Arena
-        </h2>
-        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-6 animate-pulse">
-          {preloadStatus}
-        </p>
-        
-        {/* Progress Bar */}
-        <div className="w-64 h-2 bg-gray-250 rounded-full overflow-hidden border border-gray-300/40">
-          <div 
-            className="h-full bg-brand-accent transition-all duration-300 rounded-full"
-            style={{ width: `${preloadProgress}%` }}
-          />
-        </div>
-        <span className="text-[10px] font-black text-brand-primary mt-2.5 uppercase tracking-widest">
-          {preloadProgress}% Preloaded
-        </span>
       </div>
     );
   }
@@ -512,8 +702,7 @@ export default function LandingPage() {
               {[
                 { id: "all", label: "All Updates", icon: <CommunityIcon /> },
                 { id: "announcements", label: "Announcements", icon: <AnnouncementIcon /> },
-                { id: "results", label: "Match Results", icon: <MatchIcon /> },
-                { id: "community", label: "Milestones", icon: <TrophyIcon /> }
+                { id: "results", label: "Match Results", icon: <MatchIcon /> }
               ].map(f => (
                 <button
                   key={f.id}
@@ -551,9 +740,9 @@ export default function LandingPage() {
                   </span>
                 </div>
                 <div className="p-3.5 bg-[#FAF8F4] rounded-xl border border-m3-outline-variant">
-                  <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest block">Daily Fixtures</span>
-                  <span className="text-sm font-bold text-brand-text-dark block mt-1">League Matches</span>
-                  <span className="text-xs font-semibold text-gray-700 block mt-0.5">Every 2 days (continuous)</span>
+                  <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest block">Daily Friendlies</span>
+                  <span className="text-sm font-bold text-brand-text-dark block mt-1">Lichess Tournament</span>
+                  <span className="text-xs font-semibold text-gray-700 block mt-0.5">Every night at 8 PM</span>
                 </div>
               </div>
             </div>
@@ -574,10 +763,17 @@ export default function LandingPage() {
             </div>
 
             {/* News / Announcements Auto-Sliding Card */}
-            {feedAnnouncements.length > 0 && (() => {
-              const item = feedAnnouncements[newsSafeIdx];
+            {filteredAnnouncements.length > 0 && (() => {
+              const item = filteredAnnouncements[newsSafeIdx];
               return (
-                <div className="varsity-card p-5 bg-white overflow-hidden relative">
+                <Motion.div
+                  onMouseEnter={() => setIsNewsHovered(true)}
+                  onMouseLeave={() => setIsNewsHovered(false)}
+                  whileHover={{ rotate: -1.5, scale: 1.01 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  style={{ originX: 0.5, originY: 0.5 }}
+                  className="varsity-card no-hover-effects p-5 bg-white overflow-hidden relative"
+                >
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <span className="w-8 h-8 rounded-full bg-brand-accent/10 text-brand-accent flex items-center justify-center shrink-0">
@@ -585,9 +781,9 @@ export default function LandingPage() {
                       </span>
                       <span className="text-xs font-black text-brand-text-dark uppercase tracking-widest">Announcements</span>
                     </div>
-                    {feedAnnouncements.length > 1 && (
+                    {filteredAnnouncements.length > 1 && (
                       <div className="flex items-center gap-1.5">
-                        {feedAnnouncements.map((_, idx) => (
+                        {filteredAnnouncements.map((_, idx) => (
                           <button
                             key={idx}
                             onClick={() => setNewsSlideIdx(idx)}
@@ -621,13 +817,13 @@ export default function LandingPage() {
                       </Motion.div>
                     </AnimatePresence>
                   </div>
-                </div>
+                </Motion.div>
               );
             })()}
 
             {/* Match Results Sliding Card */}
-            {feedMatches.length === 0 ? null : (() => {
-              const item = feedMatches[matchSafeIdx];
+            {filteredMatches.length === 0 ? null : (() => {
+              const item = filteredMatches[matchSafeIdx];
               const wLabel = `${item.white?.name || ''} (${item.white?.username || ''})`;
               const bLabel = `${item.black?.name || ''} (${item.black?.username || ''})`;
               const resValue = item.winner === item.white?.name ? 'white'
@@ -635,7 +831,14 @@ export default function LandingPage() {
                 : (item.winner === 'Draw' || item.winner === 'draw') ? 'draw'
                 : null;
               return (
-                <div className="varsity-card p-5 bg-white space-y-4 overflow-hidden">
+                <Motion.div
+                  onMouseEnter={() => setIsMatchHovered(true)}
+                  onMouseLeave={() => setIsMatchHovered(false)}
+                  whileHover={{ rotate: 1.5, scale: 1.01 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  style={{ originX: 0.5, originY: 0.5 }}
+                  className="varsity-card no-hover-effects p-5 bg-white space-y-4 overflow-hidden"
+                >
                   {/* Header */}
                   <div className="flex items-center justify-between gap-2.5">
                     <div className="flex items-center gap-2">
@@ -645,9 +848,9 @@ export default function LandingPage() {
                       <h3 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">Match Results</h3>
                     </div>
                     <div className="flex items-center gap-3">
-                      {feedMatches.length > 1 && (
+                      {filteredMatches.length > 1 && (
                         <div className="flex items-center gap-1.5">
-                          {feedMatches.map((_, idx) => (
+                          {filteredMatches.map((_, idx) => (
                             <button
                               key={idx}
                               onClick={() => setMatchSlideIdx(idx)}
@@ -683,6 +886,7 @@ export default function LandingPage() {
                         division={{ players: allPlayers }}
                         onPlayerSelect={(p) => setSelectedPlayer(p)}
                         isAdmin={false}
+                        disableHover={true}
                       />
                       {item.gameLink && (
                         <div className="flex justify-end pt-1">
@@ -698,41 +902,116 @@ export default function LandingPage() {
                       )}
                     </Motion.div>
                   </AnimatePresence>
-                </div>
+                </Motion.div>
               );
             })()}
 
+            {/* Spotlights Sub-Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+              {/* Featured Player Spotlight (M3 Filled Card style) */}
+              <div className="varsity-card p-5 bg-[#FAF8F4] relative overflow-hidden border-none shadow-none text-left">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-brand-accent"><TrophyIcon /></span>
+                  <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                    Player Spotlight
+                  </h4>
+                </div>
+                <div className="flex items-start gap-3 mt-4">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-accent to-yellow-400 text-white font-black text-lg flex items-center justify-center shrink-0 shadow-sm">
+                    {dailySpotlightPlayer.avatarInitial}
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="text-sm font-black text-brand-text-dark truncate leading-tight">{dailySpotlightPlayer.name}</h4>
+                    <p className="text-[10px] font-semibold text-gray-650 truncate mt-0.5">{dailySpotlightPlayer.detail}</p>
+                  </div>
+                </div>
+                
+                <div className="mt-4 pt-3.5 border-t border-m3-outline-variant/60 flex items-center justify-between text-sm">
+                  <div>
+                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">{dailySpotlightPlayer.metric1Label}</span>
+                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1">
+                      {dailySpotlightPlayer.metric1Value}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">{dailySpotlightPlayer.metric2Label}</span>
+                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
+                      {dailySpotlightPlayer.metric2Value} ELO
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Featured Institution Spotlight (M3 Filled Card style) */}
+              <div className="varsity-card p-5 bg-[#FAF8F4] border-none shadow-none text-left">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-brand-primary"><SchoolIcon /></span>
+                  <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                    Top Institution
+                  </h4>
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-brand-text-dark leading-tight mt-3">
+                    Bells University of Technology
+                  </h4>
+                  <p className="text-[10px] font-semibold text-gray-600 mt-1">Ota, Ogun State &bull; Mechatronics hub</p>
+                </div>
+                <div className="mt-4 pt-3.5 border-t border-m3-outline-variant/60 flex items-center justify-between text-sm">
+                  <div>
+                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Registrations</span>
+                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
+                      45 students
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Avg ELO</span>
+                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1">
+                      1540
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          {/* Column 3: Spotlights & Leaderboards Widget (25%) — hidden on small mobile, visible from md */}
-          <div className="lg:col-span-1 space-y-6 text-left order-3 hidden md:block lg:block">
+          {/* Column 3: Leaderboards Widget (25%) — stacked on mobile, sidebar on large screens */}
+          <div className="lg:col-span-1 space-y-6 text-left order-3 block">
             
             {/* Leaderboard Card (M3 Outlined container) */}
             <div className="varsity-card p-5">
-              <div className="flex items-center justify-between pb-3.5 border-b border-m3-outline-variant mb-4">
+              <div className="pb-3 border-b border-m3-outline-variant mb-4">
                 <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-widest">
                   Leaderboards
                 </h4>
-                
-                {/* Segmented Button (Players vs Schools) - 48px compliant spacing */}
-                <div className="m3-segmented-container">
-                  <button
-                    onClick={() => setLeaderboardTab("players")}
-                    className={`m3-segmented-item px-3 ${
-                      leaderboardTab === "players" ? "active" : ""
-                    }`}
-                  >
-                    Players
-                  </button>
-                  <button
-                    onClick={() => setLeaderboardTab("schools")}
-                    className={`m3-segmented-item px-3 ${
-                      leaderboardTab === "schools" ? "active" : ""
-                    }`}
-                  >
-                    Schools
-                  </button>
-                </div>
+              </div>
+              
+              {/* Segmented Button (Players vs Friendlies vs Schools) - 48px compliant spacing */}
+              <div className="m3-segmented-container w-full mb-4">
+                <button
+                  onClick={() => setLeaderboardTab("players")}
+                  className={`m3-segmented-item ${
+                    leaderboardTab === "players" ? "active" : ""
+                  }`}
+                >
+                  Players
+                </button>
+                <button
+                  onClick={() => setLeaderboardTab("friendlies")}
+                  className={`m3-segmented-item ${
+                    leaderboardTab === "friendlies" ? "active" : ""
+                  }`}
+                >
+                  Friendlies
+                </button>
+                <button
+                  onClick={() => setLeaderboardTab("schools")}
+                  className={`m3-segmented-item ${
+                    leaderboardTab === "schools" ? "active" : ""
+                  }`}
+                >
+                  Schools
+                </button>
               </div>
 
               {/* Sub-segmented Tab Menu for player divisions */}
@@ -760,51 +1039,92 @@ export default function LandingPage() {
 
               {/* Leaderboards List */}
               {leaderboardTab === "players" ? (
-                <div className="space-y-4">
+                <div className="space-y-2">
                   {leaderboardPlayers.map((p, i) => {
                     // M3/Von Restorff Colored Circle Badges for Top Positions
                     const badgeColors = 
                       i === 0 ? "bg-[#FFD700] text-gray-900 font-black" : // Gold
                       i === 1 ? "bg-[#C0C0C0] text-gray-900 font-black" : // Silver
-                      i === 2 ? "bg-[#CD7F32] text-white font-black" :    // Bronze
-                      "bg-m3-surface-variant text-gray-750 font-bold";
+                      i === 2 ? "bg-[#CD7F32] text-gray-900 font-black" : // Bronze
+                      "bg-m3-surface-variant text-gray-800 font-bold";
 
                     return (
-                      <div key={i} className="flex items-center justify-between text-sm gap-3">
+                      <button
+                        key={i}
+                        onClick={() => setSelectedPlayer(p)}
+                        className={`w-full flex items-center justify-between text-sm gap-3 p-2 rounded-xl text-left hover:bg-m3-surface-variant transition-colors duration-50 cursor-default will-change-[background-color] focus-visible:outline-2 focus-visible:outline-brand-primary focus-visible:outline-offset-2 ${
+                          isCurrentUser(p) ? "bg-brand-primary/10 border border-brand-primary/30" : ""
+                        }`}
+                      >
                         <div className="flex items-center gap-2.5 truncate">
                           <span className={`w-5.5 h-5.5 rounded-full flex items-center justify-center shrink-0 text-[10px] ${badgeColors}`}>
                             {i + 1}
                           </span>
                           <div className="truncate">
-                            <p className="font-bold text-brand-text-dark truncate leading-tight">{p.name}</p>
-                            <p className="text-[10px] font-semibold text-gray-600 truncate mt-0.5">{p.university}</p>
+                            <p className="font-bold text-brand-text-dark truncate leading-tight" title={p.name}>{p.name}</p>
+                            <p className="text-[10px] font-semibold text-gray-600 truncate mt-0.5" title={p.university}>{p.university}</p>
                           </div>
                         </div>
                         <span className="font-black text-brand-primary font-space shrink-0">
                           {p.chess_rating}
                         </span>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  {leaderboardSchools.map((s, i) => {
+              ) : leaderboardTab === "friendlies" ? (
+                <div className="space-y-2">
+                  {dailyFriendliesLeaderboard.slice(0, 6).map((p, i) => {
                     const badgeColors = 
-                      i === 0 ? "bg-[#FFD700] text-gray-900 font-black" : 
-                      i === 1 ? "bg-[#C0C0C0] text-gray-900 font-black" : 
-                      i === 2 ? "bg-[#CD7F32] text-white font-black" : 
-                      "bg-m3-surface-variant text-gray-750 font-bold";
+                      i === 0 ? "bg-[#FFD700] text-gray-900 font-black" : // Gold
+                      i === 1 ? "bg-[#C0C0C0] text-gray-900 font-black" : // Silver
+                      i === 2 ? "bg-[#CD7F32] text-gray-900 font-black" : // Bronze
+                      "bg-m3-surface-variant text-gray-800 font-bold";
 
                     return (
-                      <div key={i} className="flex items-center justify-between text-sm gap-3">
+                      <button
+                        key={i}
+                        onClick={() => handlePlayerClick(p.username)}
+                        className={`w-full flex items-center justify-between text-sm gap-3 p-2 rounded-xl text-left hover:bg-m3-surface-variant transition-colors duration-50 cursor-default will-change-[background-color] focus-visible:outline-2 focus-visible:outline-brand-primary focus-visible:outline-offset-2 ${
+                          isCurrentUser(p) ? "bg-brand-primary/10 border border-brand-primary/30" : ""
+                        }`}
+                      >
                         <div className="flex items-center gap-2.5 truncate">
                           <span className={`w-5.5 h-5.5 rounded-full flex items-center justify-center shrink-0 text-[10px] ${badgeColors}`}>
                             {i + 1}
                           </span>
                           <div className="truncate">
-                            <p className="font-bold text-brand-text-dark truncate leading-tight">{s.name}</p>
-                            <p className="text-[10px] font-semibold text-gray-600 mt-0.5 truncate">{s.count} competitors</p>
+                            <p className="font-bold text-brand-text-dark truncate leading-tight" title={p.name}>{p.name}</p>
+                            <p className="text-[10px] font-semibold text-gray-600 mt-0.5 truncate" title={p.university}>
+                              {p.university} &bull; {p.wins > 0 ? `🏆 ${p.wins} Arena Win${p.wins > 1 ? 's' : ''}` : 'Active'}
+                            </p>
+                          </div>
+                        </div>
+                        <span className="font-black text-brand-accent font-space shrink-0">
+                          {p.pts} pts
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {leaderboardSchools.map((s, i) => {
+                    const badgeColors = 
+                      i === 0 ? "bg-[#FFD700] text-gray-900 font-black" : 
+                      i === 1 ? "bg-[#C0C0C0] text-gray-900 font-black" : 
+                      i === 2 ? "bg-[#CD7F32] text-gray-900 font-black" : 
+                      "bg-m3-surface-variant text-gray-800 font-bold";
+
+                    return (
+                      <div key={i} className="flex items-center justify-between text-sm gap-3 p-2 rounded-xl">
+                        <div className="flex items-center gap-2.5 truncate">
+                          <span className={`w-5.5 h-5.5 rounded-full flex items-center justify-center shrink-0 text-[10px] ${badgeColors}`}>
+                            {i + 1}
+                          </span>
+                          <div className="truncate">
+                            <p className="font-bold text-brand-text-dark truncate leading-tight" title={s.name}>{s.name}</p>
+                            <p className="text-[10px] font-semibold text-gray-600 mt-0.5 truncate" title={s.name}>{s.count} competitors</p>
                           </div>
                         </div>
                         <span className="font-black text-brand-accent font-space shrink-0">
@@ -815,70 +1135,6 @@ export default function LandingPage() {
                   })}
                 </div>
               )}
-            </div>
-
-            {/* Featured Player Spotlight (M3 Filled Card style) */}
-            <div className="varsity-card p-5 bg-[#FAF8F4] relative overflow-hidden border-none shadow-none">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-brand-accent"><TrophyIcon /></span>
-                <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
-                  Player Spotlight
-                </h4>
-              </div>
-              <div className="flex items-start gap-3 mt-4">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-accent to-yellow-400 text-white font-black text-lg flex items-center justify-center shrink-0 shadow-sm">
-                  K
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-sm font-black text-brand-text-dark truncate leading-tight">Kingsley Ekpo</h4>
-                  <p className="text-[10px] font-semibold text-gray-600 truncate mt-0.5">Computer Science &bull; UniUyo</p>
-                </div>
-              </div>
-              
-              <div className="mt-4 pt-3.5 border-t border-m3-outline-variant/60 flex items-center justify-between text-sm">
-                <div>
-                  <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Win Streak</span>
-                  <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1">
-                    6 wins
-                  </span>
-                </div>
-                <div className="text-right">
-                  <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Rating (Rapid)</span>
-                  <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
-                    1945 ELO
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Featured Institution Spotlight (M3 Filled Card style) */}
-            <div className="varsity-card p-5 bg-[#FAF8F4] border-none shadow-none">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-brand-primary"><SchoolIcon /></span>
-                <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
-                  Top Institution
-                </h4>
-              </div>
-              <div>
-                <h4 className="text-sm font-black text-brand-text-dark leading-tight mt-3">
-                  Bells University of Technology
-                </h4>
-                <p className="text-[10px] font-semibold text-gray-600 mt-1">Ota, Ogun State &bull; Mechatronics hub</p>
-              </div>
-              <div className="mt-4 pt-3.5 border-t border-m3-outline-variant/60 flex items-center justify-between text-sm">
-                <div>
-                  <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Registrations</span>
-                  <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
-                    45 students
-                  </span>
-                </div>
-                <div className="text-right">
-                  <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Avg ELO</span>
-                  <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1">
-                    1540
-                  </span>
-                </div>
-              </div>
             </div>
 
           </div>

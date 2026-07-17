@@ -296,11 +296,13 @@ export default function StudentSignupModal({ onClose, onAuthSuccess, initialIsLo
 
         {/* Close Button */}
         <button
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 text-gray-400 hover:text-brand-text-dark text-2xl font-black w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 text-gray-400 hover:text-brand-text-dark w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors cursor-pointer"
           onClick={onClose}
           aria-label="Close"
         >
-          &times;
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
 
         <div className="text-center mb-6">

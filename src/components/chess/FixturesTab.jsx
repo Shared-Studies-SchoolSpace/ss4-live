@@ -520,10 +520,13 @@ export const FixturesTab = ({ currentDivision, gameResults, currentRound, setCur
             onClick={e => e.stopPropagation()}
           >
             <button 
-              className="absolute top-6 right-6 text-gray-400 hover:text-[#111111] text-2xl font-black w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors cursor-pointer"
+              className="absolute top-6 right-6 text-gray-400 hover:text-[#111111] w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors cursor-pointer"
               onClick={() => setShowModal(false)}
+              aria-label="Close"
             >
-              &times;
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
 
             <h3 className="font-space text-lg font-black text-[#111111] mb-2">Export Round Fixtures</h3>

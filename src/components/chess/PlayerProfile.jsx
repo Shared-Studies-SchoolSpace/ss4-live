@@ -156,10 +156,13 @@ export const PlayerProfile = ({ player, onClose }) => {
             <span className="text-[10px] font-black uppercase tracking-widest font-space">{division.name} &bull; {division.label}</span>
           </div>
           <button 
-            className="text-gray-400 hover:text-brand-text-dark text-xl font-bold w-6 h-6 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors cursor-pointer"
+            className="text-gray-400 hover:text-brand-text-dark w-6 h-6 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors cursor-pointer"
             onClick={onClose}
+            aria-label="Close"
           >
-            &times;
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
 

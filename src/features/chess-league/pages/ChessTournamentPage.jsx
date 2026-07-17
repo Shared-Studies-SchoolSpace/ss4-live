@@ -204,58 +204,30 @@ export default function ChessTournamentPage() {
 
 
 
-  // Fetch upcoming tournament
+  // Fetch upcoming tournament — admin creates rows, we just read the soonest one.
+  // Also purge any stale future-month upcoming rows that were auto-created in the past.
   useEffect(() => {
     const fetchUpcoming = async () => {
       try {
-        let { data, error } = await supabase
+        const nowObj = new Date();
+        const curMY = `${nowObj.getFullYear()}-${String(nowObj.getMonth() + 1).padStart(2, '0')}`;
+
+        // Delete stale upcoming rows that are strictly beyond the current month
+        await supabase
+          .from('tournaments')
+          .delete()
+          .eq('status', 'upcoming')
+          .gt('month_year', curMY);
+
+        const { data: rows, error } = await supabase
           .from('tournaments')
           .select('*')
           .eq('status', 'upcoming')
-          .maybeSingle();
-        
-        if (error) throw error;
-        
-        if (!data) {
-          const nowObj = new Date();
-          const curY = nowObj.getFullYear();
-          const curM = nowObj.getMonth() + 1;
-          const datesThisMonth = getTournamentDates(curY, curM);
-          const startThisMonth = new Date(`${datesThisMonth[0]}T18:00:00+01:00`);
-          
-          let targetY = curY;
-          let targetM = curM;
-          if (startThisMonth <= nowObj) {
-            targetM = curM === 12 ? 1 : curM + 1;
-            targetY = curM === 12 ? curY + 1 : curY;
-          }
-          
-          const targetMY = `${targetY}-${String(targetM).padStart(2, '0')}`;
-          const MONTH_NAMES = [
-            '', 'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-          ];
-          const targetName = `${MONTH_NAMES[targetM]} ${targetY} SCL Tournament`;
+          .order('month_year', { ascending: true })
+          .limit(1);
 
-          const newT = {
-            id: targetMY,
-            name: targetName,
-            month_year: targetMY,
-            status: 'upcoming',
-            players: [],
-            rounds: [],
-            winner: null
-          };
-          
-          const { data: upsertedData } = await supabase
-            .from('tournaments')
-            .upsert(newT)
-            .select()
-            .single();
-            
-          data = upsertedData;
-        }
-        setUpcomingTournament(data);
+        if (error) throw error;
+        setUpcomingTournament(rows?.[0] ?? null);
       } catch (err) {
         console.error('Error fetching upcoming tournament:', err);
       }
@@ -385,7 +357,7 @@ export default function ChessTournamentPage() {
 
   useEffect(() => {
     const tick = () => {
-      const targetT = (tournament?.status === 'active') ? tournament : (upcomingTournament || tournament);
+      const targetT = tournament || upcomingTournament;
       const { date, label: targetLabel } = getCountdownTarget(targetT);
       const diff = Math.max(0, date - new Date());
       setClock({

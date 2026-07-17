@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useAuthModal } from '../context/AuthModalContext';
 import { supabase } from '../../../supabase';
-import { getTournamentDates } from '../../chess-league/utils/tournament';
 
 import { fetchChessComStats, fetchLichessStats, searchMutualGames } from '../../chess-league/utils/chessService';
 import MatchChat from '../../chess-league/components/MatchChat';
@@ -57,65 +56,37 @@ export default function DashboardPage() {
   const [isRegistered, setIsRegistered] = useState(false);
   const [loadingReg, setLoadingReg] = useState(false);
 
-  // Fetch upcoming tournament to handle single-click registration
+  // Fetch upcoming tournament to handle single-click registration.
+  // Admin creates tournament rows — we never auto-generate them.
   useEffect(() => {
     if (!user) return;
     const fetchUpcoming = async () => {
       try {
-        let { data, error } = await supabase
+        const nowObj = new Date();
+        const curMY = `${nowObj.getFullYear()}-${String(nowObj.getMonth() + 1).padStart(2, '0')}`;
+
+        // Delete stale upcoming rows beyond the current month (cleanup for old auto-created rows)
+        await supabase
+          .from('tournaments')
+          .delete()
+          .eq('status', 'upcoming')
+          .gt('month_year', curMY);
+
+        const { data: rows, error } = await supabase
           .from('tournaments')
           .select('*')
           .eq('status', 'upcoming')
-          .maybeSingle();
-        
-        if (error) throw error;
-        
-        // ponytail: auto-create tournament row if missing
-        if (!data) {
-          const nowObj = new Date();
-          const curY = nowObj.getFullYear();
-          const curM = nowObj.getMonth() + 1;
-          const datesThisMonth = getTournamentDates(curY, curM);
-          const startThisMonth = new Date(`${datesThisMonth[0]}T18:00:00+01:00`);
-          
-          let targetY = curY;
-          let targetM = curM;
-          if (startThisMonth <= nowObj) {
-            targetM = curM === 12 ? 1 : curM + 1;
-            targetY = curM === 12 ? curY + 1 : curY;
-          }
-          
-          const targetMY = `${targetY}-${String(targetM).padStart(2, '0')}`;
-          const MONTH_NAMES = [
-            '', 'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-          ];
-          const targetName = `${MONTH_NAMES[targetM]} ${targetY} SCL Tournament`;
+          .order('month_year', { ascending: true })
+          .limit(1);
 
-          const newT = {
-            id: targetMY,
-            name: targetName,
-            month_year: targetMY,
-            status: 'upcoming',
-            players: [],
-            rounds: [],
-            winner: null
-          };
-          
-          const { data: upsertedData } = await supabase
-            .from('tournaments')
-            .upsert(newT)
-            .select()
-            .single();
-            
-          data = upsertedData;
-        }
+        if (error) throw error;
+        const data = rows?.[0] ?? null;
 
         setUpcomingTournament(data);
-        
+
         if (data && data.players) {
-          const registered = data.players.some(p => 
-            p.id === user.id || 
+          const registered = data.players.some(p =>
+            p.id === user.id ||
             (p.username && profile?.chess_username && p.username.toLowerCase() === profile.chess_username.toLowerCase())
           );
           setIsRegistered(registered);
@@ -124,7 +95,7 @@ export default function DashboardPage() {
         console.error('Error loading SCL tournament registration:', err);
       }
     };
-    
+
     fetchUpcoming();
   }, [user, profile]);
 

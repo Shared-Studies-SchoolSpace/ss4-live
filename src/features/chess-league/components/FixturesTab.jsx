@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
 import { toast } from 'react-toastify';
 import { getPlayerDisplay, gameKey } from '../utils/chessUtils';
 import { MatchFixture } from './MatchFixture';
@@ -73,6 +71,7 @@ export const FixturesTab = ({ currentDivision, gameResults, currentRound, setCur
         element.style.background = '#FFFFFF';
       }
       
+      const html2canvas = (await import('html2canvas')).default;
       const canvas = await html2canvas(element, {
         backgroundColor: '#FFFFFF', 
         scale: 2, 
@@ -117,6 +116,7 @@ export const FixturesTab = ({ currentDivision, gameResults, currentRound, setCur
     );
 
     try {
+      const { jsPDF } = await import('jspdf');
       const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
       const logoImg = await loadLogo();
 

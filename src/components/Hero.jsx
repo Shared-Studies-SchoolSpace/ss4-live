@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import AuthGate from './auth/AuthGate';
+import AuthGate from '../features/auth-portal/components/AuthGate';
 import Button from './Button';
 
 const IMAGES = ['/scholastic_chess_hero.jpg', '/bglg.png'];

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { supabase } from "../../supabase";
-import { useAuth } from "../../hooks/useAuth";
-import { useAuthModal } from "../../context/AuthModalContext";
-import Input from "../Input";
-import Button from "../Button";
+import { supabase } from '../../supabase';
+import { useAuth } from '../../features/auth-portal/hooks/useAuth';
+import { useAuthModal } from '../../features/auth-portal/context/AuthModalContext';
+import Input from '../Input';
+import Button from '../Button';
 import { toast } from "react-toastify";
 
 export default function DirectChat() {

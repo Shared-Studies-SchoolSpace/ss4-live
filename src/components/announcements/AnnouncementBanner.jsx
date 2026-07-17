@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../supabase';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../features/auth-portal/hooks/useAuth';
 
 export default function AnnouncementBanner() {
   const { user } = useAuth();

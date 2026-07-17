@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { AnimatePresence, motion as Motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import { supabase } from "../supabase";
-import Button from "../components/Button";
-import AuthGate from "../components/auth/AuthGate";
+import { useAuth } from '../features/auth-portal/hooks/useAuth';
+import { supabase } from '../supabase';
+import Button from '../components/Button';
+import AuthGate from '../features/auth-portal/components/AuthGate';
 import { toast } from "react-toastify";
-import mockPlayers from "../data/playersWithRatings.json";
-import { MatchResult } from "../components/chess/MatchResult";
-import { PlayerProfile } from "../components/chess/PlayerProfile";
-import { Hero } from "../components/Hero";
-import { fetchCompletePlayerData } from "../utils/chessService";
+import mockPlayers from '../features/chess-league/data/playersWithRatings.json';
+import { MatchResult } from '../features/chess-league/components/MatchResult';
+import { PlayerProfile } from '../features/chess-league/components/PlayerProfile';
+import { Hero } from '../components/Hero';
+import { fetchCompletePlayerData } from '../features/chess-league/utils/chessService';
 
 // Fallback results for Daily Friendlies (since start on July 13, 2026)
 const FALLBACK_DAILY_FRIENDLIES = [

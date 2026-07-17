@@ -7,22 +7,22 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // Pages
 import LandingPage from './pages/Landing';
-import SchoolsPage from './pages/SchoolsPage';
-import UniversityPage from './pages/UniversityPage';
-import CreateUniversityPage from './pages/CreateUniversityPage';
+import SchoolsPage from './features/schools/pages/SchoolsPage';
+import UniversityPage from './features/tertiary-admissions/pages/UniversityPage';
+import CreateUniversityPage from './features/tertiary-admissions/pages/CreateUniversityPage';
 import SasPage from './pages/SasPage';
 import AspirantsAwardPage from './pages/AspirantsAwardPage';
 import NewsPage from './pages/NewsPage';
 import AboutPage from './pages/AboutPage';
-import ChessLeaguePage from './pages/ChessLeaguePage';
-import ChessTournamentPage from './pages/ChessTournamentPage';
-import TertiaryPage from './pages/TertiaryPage';
-import TertiaryDetailPage from './pages/TertiaryDetailPage';
-import DashboardPage from './pages/DashboardPage';
+import ChessLeaguePage from './features/chess-league/pages/ChessLeaguePage';
+import ChessTournamentPage from './features/chess-league/pages/ChessTournamentPage';
+import TertiaryPage from './features/tertiary-admissions/pages/TertiaryPage';
+import TertiaryDetailPage from './features/tertiary-admissions/pages/TertiaryDetailPage';
+import DashboardPage from './features/auth-portal/pages/DashboardPage';
 
 import BackToTop from './components/BackToTop';
 import ScrollToTop from './components/ScrollToTop';
-import { AuthModalProvider } from './context/AuthModalContext';
+import { AuthModalProvider } from './features/auth-portal/context/AuthModalContext';
 
 
 function App() {

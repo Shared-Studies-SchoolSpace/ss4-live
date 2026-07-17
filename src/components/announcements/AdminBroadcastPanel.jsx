@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../../supabase';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../features/auth-portal/hooks/useAuth';
 import Button from '../Button';
 import Input from '../Input';
 import { toast } from 'react-toastify';

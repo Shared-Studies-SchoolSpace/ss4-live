@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import 'material-symbols/outlined.css'
 import App from './App.jsx'
-import { AuthProvider } from './hooks/useAuth.jsx'
+import { AuthProvider } from './features/auth-portal/hooks/useAuth.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

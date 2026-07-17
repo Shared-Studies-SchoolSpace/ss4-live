@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAuth } from '../hooks/useAuth';
-import { useAuthModal } from '../context/AuthModalContext';
-import TournamentCountdownBanner from './announcements/TournamentCountdownBanner';
+import { useAuth } from '../features/auth-portal/hooks/useAuth';
+import { useAuthModal } from '../features/auth-portal/context/AuthModalContext';
+import TournamentCountdownBanner from '../features/chess-league/components/TournamentCountdownBanner';
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -111,7 +111,7 @@ export const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="hidden md:block px-5 py-2 border border-[#E8640A] text-[#E8640A] font-bold text-sm rounded-full hover:bg-[#E8640A]/5 transition-colors cursor-pointer" onClick={() => window.location.href='/partner'}>
+            <button className="hidden md:block px-5 py-2 border border-[#E8640A] text-[#E8640A] font-bold text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer" onClick={() => window.location.href='/partner'}>
               Partner With Us
             </button>
 
@@ -266,7 +266,7 @@ export const Header = () => {
                 </AnimatePresence>
               </div>
             ) : (
-              <div className="flex items-center gap-3">
+              <div className="hidden lg:flex items-center gap-3">
                 <button
                   onClick={() => openAuthModal('', null, 'login')}
                   className="px-5 py-2 text-brand-primary hover:text-brand-accent font-bold text-sm transition-colors cursor-pointer"
@@ -275,7 +275,7 @@ export const Header = () => {
                 </button>
                 <button
                   onClick={() => openAuthModal('', null, 'register')}
-                  className="px-6 py-2 bg-brand-primary text-white font-bold text-sm rounded-full hover:bg-brand-accent transition-colors shadow-md hover:shadow-lg cursor-pointer"
+                  className="px-6 py-2 bg-brand-primary text-white font-bold text-sm rounded-xl hover:bg-brand-accent transition-colors shadow-md hover:shadow-lg cursor-pointer"
                 >
                   Sign Up
                 </button>
@@ -367,7 +367,7 @@ export const Header = () => {
                       setIsMobileMenuOpen(false);
                       openAuthModal('', null, 'login');
                     }}
-                    className="py-3 border border-brand-primary/30 text-brand-primary font-bold rounded-full hover:bg-brand-primary/5 text-center cursor-pointer bg-transparent"
+                    className="py-3 border border-brand-primary/30 text-brand-primary font-bold rounded-xl hover:bg-brand-primary/5 text-center cursor-pointer bg-transparent"
                   >
                     Sign In
                   </button>
@@ -376,7 +376,7 @@ export const Header = () => {
                       setIsMobileMenuOpen(false);
                       openAuthModal('', null, 'register');
                     }}
-                    className="py-3 bg-brand-primary text-white font-bold rounded-full hover:bg-brand-accent shadow-md text-center cursor-pointer border-none"
+                    className="py-3 bg-brand-primary text-white font-bold rounded-xl hover:bg-brand-accent shadow-md text-center cursor-pointer border-none"
                   >
                     Sign Up
                   </button>

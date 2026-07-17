@@ -433,11 +433,11 @@ export default function LandingPage() {
       <Hero />
 
       {/* 2. Main Social/Dashboard Grid: 3 Columns */}
-      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-3 sm:px-6 md:px-12 lg:px-16 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           
-          {/* Column 1: Profile Widget & Left Filters (25%) */}
-          <div className="lg:col-span-1 space-y-6">
+          {/* Column 1: Profile Widget & Left Filters (25%) — moved below feed on mobile */}
+          <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
             
             {/* Session Card (M3 Outlined Layout) */}
             {user ? (
@@ -560,8 +560,8 @@ export default function LandingPage() {
 
           </div>
 
-          {/* Column 2: Feed Stream (50%) */}
-          <div className="lg:col-span-2 space-y-6 text-left">
+          {/* Column 2: Feed Stream (50%) — first on mobile */}
+          <div className="lg:col-span-2 space-y-6 text-left order-1 lg:order-2">
             
             {/* Header Feed Title */}
             <div className="flex items-center justify-between pb-3.5 border-b border-m3-outline-variant">
@@ -704,8 +704,8 @@ export default function LandingPage() {
 
           </div>
 
-          {/* Column 3: Spotlights & Leaderboards Widget (25%) */}
-          <div className="lg:col-span-1 space-y-6 text-left">
+          {/* Column 3: Spotlights & Leaderboards Widget (25%) — hidden on small mobile, visible from md */}
+          <div className="lg:col-span-1 space-y-6 text-left order-3 hidden md:block lg:block">
             
             {/* Leaderboard Card (M3 Outlined container) */}
             <div className="varsity-card p-5">
@@ -737,16 +737,16 @@ export default function LandingPage() {
 
               {/* Sub-segmented Tab Menu for player divisions */}
               {leaderboardTab === "players" && (
-                <div className="flex bg-m3-surface-variant border border-m3-outline-variant rounded-xl p-1 mb-4">
+                <div className="flex bg-m3-surface-variant border border-m3-outline-variant rounded-xl p-1 mb-4 overflow-x-auto no-scrollbar">
                   {[
                     { id: "A", label: "A (1800+)" },
-                    { id: "Fork", label: "Fork (1k-1.8k)" },
-                    { id: "Pin", label: "Pin (<1k)" }
+                    { id: "Fork", label: "Fork" },
+                    { id: "Pin", label: "Pin" }
                   ].map(tab => (
                     <button
                       key={tab.id}
                       onClick={() => setSelectedDivision(tab.id)}
-                      className={`flex-grow py-2 rounded-lg text-[10px] font-black uppercase tracking-wider text-center transition-all cursor-pointer min-h-[32px] ${
+                      className={`flex-grow py-2 rounded-lg text-[10px] font-black uppercase tracking-wider text-center transition-all cursor-pointer min-h-[32px] whitespace-nowrap px-1 ${
                         selectedDivision === tab.id 
                           ? 'bg-white text-brand-primary shadow-sm border border-m3-outline/20' 
                           : 'text-gray-600 hover:text-gray-800'

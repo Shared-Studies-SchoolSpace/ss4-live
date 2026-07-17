@@ -18,9 +18,9 @@ export const Hero = () => {
   }, []);
 
   return (
-    <section className="relative flex flex-col lg:flex-row min-h-[600px] bg-brand-primary overflow-hidden mb-8 lg:mb-12">
+    <section className="relative flex flex-col lg:flex-row min-h-[520px] lg:min-h-[600px] bg-brand-primary overflow-hidden mb-8 lg:mb-12">
       {/* Left Side: Image Carousel Container */}
-      <div className="relative w-full lg:w-1/2 h-[350px] lg:h-auto overflow-hidden">
+      <div className="relative w-full lg:w-1/2 h-[240px] sm:h-[300px] lg:h-auto overflow-hidden">
         <AnimatePresence initial={false}>
           <Motion.img
             key={currentIdx}
@@ -53,31 +53,31 @@ export const Hero = () => {
       </div>
 
       {/* Right Side: Content */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-20 text-white">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-5 sm:p-8 lg:p-20 text-white">
         <Motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-lg"
         >
-          <h2 className="text-xs lg:text-sm font-space font-bold tracking-[0.2em] mb-6 opacity-90 uppercase">
+          <h2 className="text-[10px] sm:text-xs lg:text-sm font-space font-bold tracking-[0.2em] mb-4 sm:mb-6 opacity-90 uppercase">
             An Institution for Secondary Education Excellence
           </h2>
-          <h1 className="text-4xl lg:text-6xl font-space font-black leading-tight mb-8 uppercase">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-space font-black leading-tight mb-5 sm:mb-8 uppercase">
             A Haven for Institutions
           </h1>
           
           <div className="w-24 h-1 bg-brand-accent mb-8 rounded-full" />
           
-          <p className="text-white text-lg lg:text-xl font-medium mb-10 max-w-lg drop-shadow-md leading-relaxed">
-            SS4 connects schools, tertiary institutions, departments, and students into one shared space where they compete, collaborate , and build together. Before SS4, institutions were islands. Now they are one continent.
+          <p className="text-white text-sm sm:text-lg lg:text-xl font-medium mb-7 sm:mb-10 max-w-lg drop-shadow-md leading-relaxed">
+            SS4 connects schools, tertiary institutions, departments, and students into one shared space where they compete, collaborate, and build together. Before SS4, institutions were islands. Now they are one continent.
           </p>
 
           <div className="space-y-6">
             <h3 className="text-xs font-bold tracking-widest uppercase opacity-80">
               Get Started
             </h3>
-            <div className="flex flex-wrap items-center gap-4 mb-6">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6">
               <AuthGate reason="join the SS4 League" onAction={() => navigate('/dashboard')}>
                 <Button 
                   variant="primary" 

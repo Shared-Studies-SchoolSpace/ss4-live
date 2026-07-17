@@ -443,7 +443,7 @@ export default function ChessTournamentPage() {
       {!isTournamentActive && !isAdmin ? (
         /* Non-Active View: Big Ass Countdown */
         <div 
-          className="relative text-white px-4 sm:px-6 md:px-12 lg:px-16 py-16 sm:py-24 min-h-[85vh] flex flex-col justify-center overflow-hidden"
+          className="relative text-white px-4 sm:px-6 md:px-12 lg:px-16 py-12 sm:py-16 md:py-24 min-h-[85vh] flex flex-col justify-center overflow-hidden"
           style={{ background: 'linear-gradient(135deg, #0B193C 0%, #1E1B4B 55%, #431407 100%)' }}
         >
           {/* Ambient glow blobs */}
@@ -480,30 +480,30 @@ export default function ChessTournamentPage() {
                 {label} &bull; <span className="text-white/50">{formattedTargetTime}</span>
               </p>
               
-              <div className="flex gap-4 sm:gap-6 justify-center flex-wrap max-w-xl mx-auto">
-                <div className="flex flex-col items-center">
-                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-4xl sm:text-6xl w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg">
+              <div className="flex gap-2 sm:gap-4 md:gap-6 justify-center max-w-xl mx-auto">
+                <div className="flex flex-col items-center flex-1">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg">
                     {String(days).padStart(2, '0')}
                   </div>
-                  <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-2">Days</span>
+                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Days</span>
                 </div>
-                <div className="flex flex-col items-center">
-                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-4xl sm:text-6xl w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg">
+                <div className="flex flex-col items-center flex-1">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg">
                     {String(hours).padStart(2, '0')}
                   </div>
-                  <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-2">Hours</span>
+                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Hours</span>
                 </div>
-                <div className="flex flex-col items-center">
-                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-4xl sm:text-6xl w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg">
+                <div className="flex flex-col items-center flex-1">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg">
                     {String(mins).padStart(2, '0')}
                   </div>
-                  <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-2">Minutes</span>
+                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Mins</span>
                 </div>
-                <div className="flex flex-col items-center">
-                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-4xl sm:text-6xl w-20 h-20 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg text-brand-primary animate-pulse">
+                <div className="flex flex-col items-center flex-1">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center backdrop-blur-md shadow-lg text-brand-primary animate-pulse">
                     {String(secs).padStart(2, '0')}
                   </div>
-                  <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-2">Seconds</span>
+                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Secs</span>
                 </div>
               </div>
             </div>
@@ -561,8 +561,8 @@ export default function ChessTournamentPage() {
               </button>
             </div>
 
-            {/* Registered Players List */}
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 max-w-2xl mx-auto text-left space-y-4 mt-6">
+          {/* Registered Players List */}
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-4 sm:p-6 sm:p-8 max-w-2xl mx-auto text-left space-y-4 mt-6">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <h3 className="font-space font-black text-lg text-white">Registered Participants</h3>
                 <span className="bg-brand-primary text-white text-xs font-black px-2.5 py-1 rounded-full">
@@ -602,8 +602,8 @@ export default function ChessTournamentPage() {
           />
 
           {/* Tab bar */}
-          <div className="bg-white border-b border-gray-200 px-6 md:px-12 lg:px-16">
-            <div className="max-w-5xl mx-auto flex gap-6 overflow-x-auto no-scrollbar">
+          <div className="bg-white border-b border-gray-200 px-3 sm:px-6 md:px-12 lg:px-16">
+            <div className="max-w-5xl mx-auto flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar">
               {TABS.map(t => (
                 <button key={t.id} onClick={() => setActiveTab(t.id)}
                   className={`py-4 text-sm font-black whitespace-nowrap border-b-2 transition-colors cursor-pointer ${
@@ -623,7 +623,7 @@ export default function ChessTournamentPage() {
           )}
 
           {/* Tab content wrapper */}
-          <div className="max-w-5xl mx-auto px-6 md:px-12 lg:px-0 py-10">
+          <div className="max-w-5xl mx-auto px-3 sm:px-6 md:px-8 lg:px-0 py-6 sm:py-10">
 
         {/* BRACKET */}
         {activeTab === 'bracket' && (

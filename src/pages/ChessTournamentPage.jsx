@@ -1543,16 +1543,16 @@ export default function ChessTournamentPage() {
                 <p className="text-sm text-gray-500 italic py-4 text-center">No completed tournaments found yet.</p>
               ) : (
                 history.filter(h => h.status === 'completed').map(h => (
-                  <div key={h.month_year} className="flex justify-between items-center p-4 rounded-2xl bg-gray-50 border border-gray-100 gap-4">
+                  <div key={h.month_year} className="flex justify-between items-center p-4 rounded-2xl bg-white border border-gray-100 hover:border-brand-primary/30 hover:shadow-[0_4px_12px_rgba(0,0,0,0.015)] transition-all duration-200 gap-4">
                     <div 
                       onClick={() => {
                         setSelectedMonthYear(h.month_year);
                         setShowPastWinnersModal(false);
                       }}
-                      className="min-w-0 flex-1 cursor-pointer hover:opacity-80 group text-left"
+                      className="min-w-0 flex-1 cursor-pointer group text-left"
                     >
-                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-wider group-hover:text-brand-primary transition-colors">{h.month_year}</p>
-                      <p className="text-sm font-black text-brand-text-dark mt-0.5 truncate group-hover:text-brand-primary transition-colors">{h.name.replace(" SCL Tournament", "")}</p>
+                      <p className="text-[10px] font-black text-brand-accent uppercase tracking-wider transition-colors">{h.month_year}</p>
+                      <p className="text-base font-black font-space text-brand-text-dark mt-0.5 truncate group-hover:text-brand-primary transition-colors">{h.name.replace(" SCL Tournament", "")}</p>
                     </div>
                     {h.winner && h.winner !== 'None' ? (
                       <button
@@ -1560,7 +1560,7 @@ export default function ChessTournamentPage() {
                           const playerObj = typeof h.winner === 'object' ? h.winner : tournamentPlayers.find(p => p.name.toLowerCase() === String(h.winner).toLowerCase()) || { name: h.winner, username: String(h.winner).toLowerCase().replace(/\s+/g, '') };
                           setSelectedPlayerForModal(playerObj);
                         }}
-                        className="bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-xl border border-emerald-100 hover:border-emerald-200 shrink-0 cursor-pointer transition-all active:scale-95 text-xs font-black text-emerald-700"
+                        className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 hover:border-emerald-300 px-3 py-1.5 rounded-xl text-emerald-700 font-space font-black text-xs transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0"
                       >
                         🏆 {typeof h.winner === 'object' ? h.winner?.name : h.winner}
                       </button>
@@ -1576,7 +1576,7 @@ export default function ChessTournamentPage() {
             
             <button 
               onClick={() => setShowPastWinnersModal(false)}
-              className="mt-6 w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all cursor-pointer"
+              className="mt-6 w-full py-3 bg-brand-primary hover:bg-[#1545A2] text-white font-bold rounded-xl transition-all cursor-pointer shadow-sm hover:shadow text-sm uppercase tracking-wider font-space font-black"
             >
               Close
             </button>

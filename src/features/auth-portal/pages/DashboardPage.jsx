@@ -83,21 +83,20 @@ export default function DashboardPage() {
         const data = rows?.[0] ?? null;
 
         setUpcomingTournament(data);
-
-        if (data && data.players) {
-          const registered = data.players.some(p =>
-            p.id === user.id ||
-            (p.username && profile?.chess_username && p.username.toLowerCase() === profile.chess_username.toLowerCase())
-          );
-          setIsRegistered(registered);
-        }
       } catch (err) {
         console.error('Error loading SCL tournament registration:', err);
       }
     };
 
     fetchUpcoming();
-  }, [user, profile]);
+  }, [user]);
+
+  // Set isRegistered status based on profiles table registration (Logic B)
+  useEffect(() => {
+    if (profile) {
+      setIsRegistered(!!(profile.chess_username || profile.lichess_username));
+    }
+  }, [profile]);
 
   const handleRegisterReady = async () => {
     if (!upcomingTournament || !profile) return;

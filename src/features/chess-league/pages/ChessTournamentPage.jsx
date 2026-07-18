@@ -201,6 +201,9 @@ export default function ChessTournamentPage() {
   // Upcoming tournament states
   const [upcomingTournament, setUpcomingTournament] = useState(null);
   const [loadingReg, setLoadingReg] = useState(false);
+  const [registeredPlayers, setRegisteredPlayers] = useState([]);
+  const [refetchTrigger, setRefetchTrigger] = useState(0);
+  const [loadingRegisteredPlayers, setLoadingRegisteredPlayers] = useState(true);
 
 
 
@@ -235,13 +238,40 @@ export default function ChessTournamentPage() {
     fetchUpcoming();
   }, []);
 
+  // Fetch registered players from Supabase profiles table (Logic B)
+  useEffect(() => {
+    const fetchRegisteredPlayers = async () => {
+      setLoadingRegisteredPlayers(true);
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('*');
+        if (error) throw error;
+
+        const mapped = (data || [])
+          .filter(p => p.chess_username || p.lichess_username)
+          .map(p => ({
+            id: p.id,
+            name: p.name,
+            username: p.chess_username || p.lichess_username,
+            rating: Math.max(p.chess_rating || 0, p.lichess_rating || 0) || 1200,
+            school: p.university || 'SS4 Member',
+            department: p.department || ''
+          }));
+        setRegisteredPlayers(mapped);
+      } catch (err) {
+        console.error('Error fetching registered players:', err);
+      } finally {
+        setLoadingRegisteredPlayers(false);
+      }
+    };
+    fetchRegisteredPlayers();
+  }, [profile, refetchTrigger]);
+
   const isUserRegisteredForUpcoming = React.useMemo(() => {
-    if (!user || !upcomingTournament || !upcomingTournament.players) return false;
-    return upcomingTournament.players.some(p => 
-      p.id === user.id || 
-      (p.username && profile?.chess_username && p.username.toLowerCase() === profile.chess_username.toLowerCase())
-    );
-  }, [user, upcomingTournament, profile]);
+    if (!user) return false;
+    return registeredPlayers.some(p => p.id === user.id);
+  }, [user, registeredPlayers]);
 
   const handleJoinTournament = async () => {
     if (!user) return;
@@ -287,10 +317,6 @@ export default function ChessTournamentPage() {
         .maybeSingle();
 
       const currentT = freshT || upcomingTournament;
-      if (!currentT) {
-        toast.error('Upcoming tournament not found.');
-        return;
-      }
 
       let chessUsername = targetProfile.chess_username;
       if (!chessUsername) {
@@ -308,33 +334,39 @@ export default function ChessTournamentPage() {
         
         if (profileUpdateError) {
           console.error("Failed to update profile chess_username:", profileUpdateError);
+          toast.error("Failed to update Chess.com username.");
+          return;
         } else {
           targetProfile.chess_username = chessUsername;
         }
       }
 
-      const regPlayer = {
-        id: targetUser.id,
-        name: targetProfile.name,
-        username: chessUsername,
-        rating: Math.max(targetProfile.chess_rating || 0, targetProfile.lichess_rating || 0) || 1200,
-        school: targetProfile.university || 'SS4 Member',
-        department: targetProfile.department || ''
-      };
-      
-      const updatedPlayers = [
-        ...(currentT.players || []).filter(p => p.id !== targetUser.id),
-        regPlayer
-      ];
-      
-      const { error } = await supabase
-        .from('tournaments')
-        .update({ players: updatedPlayers })
-        .eq('id', currentT.id);
+      if (currentT) {
+        const regPlayer = {
+          id: targetUser.id,
+          name: targetProfile.name,
+          username: chessUsername,
+          rating: Math.max(targetProfile.chess_rating || 0, targetProfile.lichess_rating || 0) || 1200,
+          school: targetProfile.university || 'SS4 Member',
+          department: targetProfile.department || ''
+        };
         
-      if (error) throw error;
-      
-      setUpcomingTournament({ ...currentT, players: updatedPlayers });
+        const updatedPlayers = [
+          ...(currentT.players || []).filter(p => p.id !== targetUser.id),
+          regPlayer
+        ];
+        
+        const { error } = await supabase
+          .from('tournaments')
+          .update({ players: updatedPlayers })
+          .eq('id', currentT.id);
+          
+        if (error) throw error;
+        
+        setUpcomingTournament({ ...currentT, players: updatedPlayers });
+      }
+
+      setRefetchTrigger(prev => prev + 1);
       toast.success("Your spot is locked in! The board awaits. 🏆");
     } catch (err) {
       console.error('Registration failed:', err);
@@ -602,16 +634,21 @@ export default function ChessTournamentPage() {
                 <div className="flex items-center gap-2">
                   <h3 className="font-space font-black text-base sm:text-lg text-white">Registered Participants</h3>
                   <span className="bg-white/10 border border-white/10 text-gray-300 text-xs font-black px-2 py-0.5 rounded-lg shrink-0">
-                    {upcomingTournament?.players ? upcomingTournament.players.length : 0}
+                    {registeredPlayers.length}
                   </span>
                 </div>
               </div>
               
-              {!upcomingTournament?.players || upcomingTournament.players.length === 0 ? (
+              {loadingRegisteredPlayers ? (
+                <div className="flex flex-col items-center justify-center py-8 gap-3">
+                  <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                  <p className="text-gray-400 text-xs font-bold animate-pulse">Loading registered players...</p>
+                </div>
+              ) : registeredPlayers.length === 0 ? (
                 <p className="text-gray-500 text-sm italic py-4 text-center">No participants registered yet. Be the first to join!</p>
               ) : (
                 <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-1">
-                  {upcomingTournament.players.map((p, idx) => (
+                  {registeredPlayers.map((p, idx) => (
                     <div key={p.id || idx} className="bg-white/5 border border-white/10 rounded-xl p-3.5 flex items-center justify-between gap-3 hover:bg-white/10 transition-colors">
                       <div className="min-w-0">
                         <p className="text-xs font-bold text-white truncate">{p.name}</p>

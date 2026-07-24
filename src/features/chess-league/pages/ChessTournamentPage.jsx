@@ -14,6 +14,9 @@ import { useAuth } from '../../auth-portal/hooks/useAuth';
 import { useAuthModal } from '../../auth-portal/context/AuthModalContext';
 import { supabase } from '../../../supabase';
 import Button from '../../../components/Button';
+import Input from '../../../components/Input';
+import { fetchCompletePlayerData } from '../utils/chessService';
+import AdminBroadcastPanel from '../../../components/announcements/AdminBroadcastPanel';
 
 const ADMIN_PIN = '1926';
 
@@ -147,6 +150,13 @@ export default function ChessTournamentPage() {
   const [paramSchoolPenalty, setParamSchoolPenalty] = useState(150);
   const [paramCustomDate, setParamCustomDate] = useState('');
 
+  // Missing handle prompt modal states
+  const [showUsernamePromptModal, setShowUsernamePromptModal] = useState(false);
+  const [promptUsername, setPromptUsername] = useState('');
+  const [verifyingPromptUsername, setVerifyingPromptUsername] = useState(false);
+  const [promptError, setPromptError] = useState('');
+  const [pendingRegData, setPendingRegData] = useState(null);
+
   const handleOpenR1Gen = () => {
     const [y, m] = selectedMonthYear.split('-').map(Number);
     const dates = getTournamentDates(y, m);
@@ -191,8 +201,67 @@ export default function ChessTournamentPage() {
 
   const { tournament, history, isDbFallback, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
 
-  const { user, profile } = useAuth();
+  const { user, profile, updatePlayerDivision } = useAuth();
   const { openAuthModal } = useAuthModal();
+
+  const handleVerifyAndJoin = async () => {
+    if (!promptUsername.trim()) {
+      setPromptError('Chess.com username is required');
+      return;
+    }
+    setVerifyingPromptUsername(true);
+    setPromptError('');
+    try {
+      const data = await fetchCompletePlayerData(promptUsername.trim(), 'chess.com');
+      if (data.error || !data.rating) {
+        setPromptError('Chess.com username not found. Please try again.');
+        setVerifyingPromptUsername(false);
+        return;
+      }
+
+      // Update profile
+      const { error: profileUpdateError } = await supabase
+        .from('profiles')
+        .update({ 
+          chess_username: promptUsername.trim(),
+          chess_rating: data.rating
+        })
+        .eq('id', pendingRegData.user.id);
+
+      if (profileUpdateError) {
+        setPromptError('Failed to update profile. Please try again.');
+        setVerifyingPromptUsername(false);
+        return;
+      }
+
+      // Sync division
+      try {
+        const updatedProfile = { 
+          ...pendingRegData.profile, 
+          chess_username: promptUsername.trim(),
+          chess_rating: data.rating
+        };
+        const maxRating = Math.max(updatedProfile.chess_rating || 0, updatedProfile.lichess_rating || 0);
+        await updatePlayerDivision(updatedProfile, maxRating);
+      } catch (divErr) {
+        console.warn('Division sync failed on modal registration:', divErr.message);
+      }
+
+      setShowUsernamePromptModal(false);
+      
+      const updatedProfile = { 
+        ...pendingRegData.profile, 
+        chess_username: promptUsername.trim(),
+        chess_rating: data.rating
+      };
+      
+      setLoadingReg(true);
+      await executeRegistration(pendingRegData.user, updatedProfile);
+    } catch (err) {
+      setPromptError('Verification failed: ' + err.message);
+      setVerifyingPromptUsername(false);
+    }
+  };
 
   const [nextRoundStartInput, setNextRoundStartInput] = useState('');
   const [showPastWinnersModal, setShowPastWinnersModal] = useState(false);
@@ -320,25 +389,13 @@ export default function ChessTournamentPage() {
 
       let chessUsername = targetProfile.chess_username;
       if (!chessUsername) {
-        const userInput = window.prompt("To join the tournament, please enter your Chess.com username (required):");
-        if (!userInput || !userInput.trim()) {
-          toast.error("Chess.com username is required to join the tournament.");
-          setLoadingReg(false);
-          return;
-        }
-        chessUsername = userInput.trim();
-        const { error: profileUpdateError } = await supabase
-          .from('profiles')
-          .update({ chess_username: chessUsername })
-          .eq('id', targetUser.id);
-        
-        if (profileUpdateError) {
-          console.error("Failed to update profile chess_username:", profileUpdateError);
-          toast.error("Failed to update Chess.com username.");
-          return;
-        } else {
-          targetProfile.chess_username = chessUsername;
-        }
+        setPendingRegData({ user: targetUser, profile: targetProfile });
+        setPromptUsername('');
+        setPromptError('');
+        setVerifyingPromptUsername(false);
+        setShowUsernamePromptModal(true);
+        setLoadingReg(false);
+        return;
       }
 
       if (currentT) {
@@ -1130,11 +1187,13 @@ export default function ChessTournamentPage() {
 
         {/* ADMIN */}
         {activeTab === 'admin' && isAdmin && adminSubView === 'main' && (
-          <div className="varsity-card p-8 space-y-8">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-              <h2 className="font-space font-black text-2xl text-[#111111]">Admin Panel</h2>
-              <span className="text-xs font-bold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">Unlocked</span>
-            </div>
+          <div className="space-y-8">
+            <AdminBroadcastPanel />
+            <div className="varsity-card p-8 space-y-8">
+              <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+                <h2 className="font-space font-black text-2xl text-[#111111]">Admin Panel</h2>
+                <span className="text-xs font-bold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">Unlocked</span>
+              </div>
             <div className="grid sm:grid-cols-3 gap-6">
               <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-6 space-y-3">
                 <p className="font-space font-black text-base text-[#111111]">Initialize Bracket</p>
@@ -1264,6 +1323,7 @@ export default function ChessTournamentPage() {
               </div>
             </div>
           </div>
+        </div>
         )}
 
         {/* ADMIN GENERATE R1 VIEW */}
@@ -1655,6 +1715,49 @@ export default function ChessTournamentPage() {
           player={selectedPlayerForModal} 
           onClose={() => setSelectedPlayerForModal(null)} 
         />
+      )}
+
+      {/* Missing Chess.com Username Prompt Modal */}
+      {showUsernamePromptModal && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative border border-gray-150 animate-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
+            <h3 className="text-lg font-black text-brand-text-dark font-space uppercase tracking-wider mb-2">Chess.com Username Required</h3>
+            <p className="text-xs text-gray-500 font-semibold mb-4 leading-relaxed">
+              To complete your registration, you must link a valid Chess.com handle. We will fetch your current rating to place you in the correct SCL Division.
+            </p>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Chess.com Username</label>
+                <Input
+                  placeholder="e.g. MagnusCarlsen"
+                  value={promptUsername}
+                  onChange={e => {
+                    setPromptUsername(e.target.value);
+                    setPromptError('');
+                  }}
+                />
+                {promptError && <p className="text-[10px] font-bold text-brand-accent mt-1">{promptError}</p>}
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <Button
+                  variant="secondary"
+                  onClick={() => setShowUsernamePromptModal(false)}
+                  className="flex-1 text-xs cursor-pointer"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleVerifyAndJoin}
+                  disabled={verifyingPromptUsername}
+                  className="flex-1 bg-brand-primary hover:bg-brand-accent text-white text-xs font-bold cursor-pointer"
+                >
+                  {verifyingPromptUsername ? 'Verifying...' : 'Verify & Register'}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

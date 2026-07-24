@@ -115,9 +115,11 @@ export default function DashboardPage() {
     user, 
     profile, 
     refreshProfile, 
+    setProfile,
     unreadMessages = [], 
     updatePlayerDivision,
     isRecoverySession,
+    setIsRecoverySession,
     updatePassword,
     deleteAccount
   } = useAuth();
@@ -297,8 +299,11 @@ export default function DashboardPage() {
       return;
     }
     setChessVerifyStatus('verifying');
+    // ponytail: 10s timeout so a hung platform API can't lock the form permanently
+    const timeout = setTimeout(() => setChessVerifyStatus('idle'), 10000);
     try {
       const data = await fetchCompletePlayerData(trimmed, 'chess.com');
+      clearTimeout(timeout);
       if (data.error || !data.rating) {
         setChessVerifyStatus('invalid');
         setSettingsErrors(prev => ({ ...prev, chess_username: 'Chess.com username not found' }));
@@ -308,6 +313,7 @@ export default function DashboardPage() {
         setSettingsErrors(prev => ({ ...prev, chess_username: '' }));
       }
     } catch {
+      clearTimeout(timeout);
       setChessVerifyStatus('invalid');
     }
   };
@@ -325,8 +331,11 @@ export default function DashboardPage() {
       return;
     }
     setLichessVerifyStatus('verifying');
+    // ponytail: 10s timeout so a hung platform API can't lock the form permanently
+    const timeout = setTimeout(() => setLichessVerifyStatus('idle'), 10000);
     try {
       const data = await fetchCompletePlayerData(trimmed, 'lichess');
+      clearTimeout(timeout);
       if (data.error || !data.rating) {
         setLichessVerifyStatus('invalid');
         setSettingsErrors(prev => ({ ...prev, lichess_username: 'Lichess username not found' }));
@@ -336,37 +345,46 @@ export default function DashboardPage() {
         setSettingsErrors(prev => ({ ...prev, lichess_username: '' }));
       }
     } catch {
+      clearTimeout(timeout);
       setLichessVerifyStatus('invalid');
     }
   };
 
   const handleSaveSettings = async (e) => {
     e.preventDefault();
+    console.log("[Profile Update] Save Settings clicked.");
     if (!settingsForm.name?.trim()) {
+      console.warn("[Profile Update] Validation failed: Name is required.");
       setSettingsErrors(prev => ({ ...prev, name: 'Full name is required' }));
       return;
     }
     if (!settingsForm.chess_username?.trim() && !settingsForm.lichess_username?.trim()) {
+      console.warn("[Profile Update] Validation failed: No chess platform username linked.");
       toast.error('You must link at least one Chess.com or Lichess account');
       return;
     }
     if (chessVerifyStatus === 'verifying' || lichessVerifyStatus === 'verifying') {
+      console.warn("[Profile Update] Verification in progress.");
       toast.error('Please wait for username verification to complete before saving');
       return;
     }
     if (chessVerifyStatus === 'invalid' || lichessVerifyStatus === 'invalid') {
+      console.warn("[Profile Update] Invalid username status present.");
       toast.error('Please resolve invalid usernames before saving');
       return;
     }
 
     setSavingSettings(true);
+    console.log("[Profile Update] Sending request to save settings...");
     try {
       let finalChessRating = verifiedChessRating;
       let finalLichessRating = verifiedLichessRating;
 
       if (settingsForm.chess_username?.trim() && chessVerifyStatus !== 'valid') {
+        console.log("[Profile Update] Verifying Chess.com handle...");
         const data = await fetchCompletePlayerData(settingsForm.chess_username.trim(), 'chess.com');
         if (data.error || !data.rating) {
+          console.warn("[Profile Update] Chess.com username not found on submit.");
           setChessVerifyStatus('invalid');
           setSavingSettings(false);
           toast.error('Invalid Chess.com username');
@@ -378,8 +396,10 @@ export default function DashboardPage() {
       }
 
       if (settingsForm.lichess_username?.trim() && lichessVerifyStatus !== 'valid') {
+        console.log("[Profile Update] Verifying Lichess handle...");
         const data = await fetchCompletePlayerData(settingsForm.lichess_username.trim(), 'lichess');
         if (data.error || !data.rating) {
+          console.warn("[Profile Update] Lichess username not found on submit.");
           setLichessVerifyStatus('invalid');
           setSavingSettings(false);
           toast.error('Invalid Lichess username');
@@ -405,51 +425,70 @@ export default function DashboardPage() {
         lichess_rating: finalLichessRating
       };
 
+      console.log("[Profile Update] Updating database profile row:", updatedProfile);
       const { error } = await supabase
         .from('profiles')
         .update(updatedProfile)
         .eq('id', user.id);
 
       if (error) throw error;
+      console.log("[Profile Update] Database row updated successfully.");
 
       const maxRating = Math.max(finalChessRating, finalLichessRating);
       const profileWithDetails = {
         ...profile,
         ...updatedProfile
       };
+      
+      // Optimistically/instantly update the local context profile state (ponytail)
+      setProfile(profileWithDetails);
+
+      console.log("[Profile Update] Syncing division assignment...");
       await updatePlayerDivision(profileWithDetails, maxRating);
 
+      console.log("[Profile Update] Triggering background refreshProfile.");
       await refreshProfile();
       toast.success('Profile details saved successfully!');
     } catch (err) {
+      console.error("[Profile Update] Save settings failed:", err);
       toast.error('Failed to save settings: ' + err.message);
     } finally {
+      console.log("[Profile Update] Flow finished.");
       setSavingSettings(false);
     }
   };
 
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
+    console.log("[Password Update] Submit button clicked.");
     if (!newPassword || newPassword.length < 8) {
+      console.warn("[Password Update] Validation failed: Password is too short.");
       toast.error('Password must be at least 8 characters long');
       return;
     }
     if (newPassword !== confirmPassword) {
+      console.warn("[Password Update] Validation failed: Passwords do not match.");
       toast.error('Passwords do not match');
       return;
     }
     setUpdatingPasswordState(true);
+    console.log("[Password Update] Sending request to update password...");
     try {
       const { error } = await updatePassword(newPassword);
       if (error) throw error;
+      console.log("[Password Update] Request completed successfully.");
       toast.success('Password updated successfully!');
       setNewPassword('');
       setConfirmPassword('');
       setShowNewPassword(false);
       setShowConfirmPassword(false);
+      setIsRecoverySession(false); // ponytail: clear recovery session state instantly on successful password change
+      sessionStorage.removeItem('ss4_recovery_session');
     } catch (err) {
+      console.error("[Password Update] Request failed with error:", err);
       toast.error('Failed to update password: ' + err.message);
     } finally {
+      console.log("[Password Update] Flow finished.");
       setUpdatingPasswordState(false);
     }
   };

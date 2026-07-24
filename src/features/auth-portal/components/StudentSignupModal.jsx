@@ -5,16 +5,44 @@ import { useAuth } from '../hooks/useAuth';
 import { fetchChessComStats, fetchLichessStats, fetchCompletePlayerData } from '../../chess-league/utils/chessService';
 import { toast } from "react-toastify";
 
-export default function StudentSignupModal({ onClose, onAuthSuccess, initialIsLogin = false }) {
-  const { signUp, signIn } = useAuth();
+export default function StudentSignupModal({ 
+  onClose, 
+  onAuthSuccess, 
+  initialIsLogin = false, 
+  initialFlowType = 'student',
+  onBackToChoice 
+}) {
+  const { signUp, signIn, sendPasswordReset } = useAuth();
 
   const [isLogin, setIsLogin] = useState(initialIsLogin);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [resetEmailSent, setResetEmailSent] = useState(false);
+  const [flowType, setFlowType] = useState(initialFlowType);
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [progressWidth, setProgressWidth] = useState('0%');
+
+  const handleForgotPasswordSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.email) {
+      setErrors({ email: "Email is required to reset password" });
+      return;
+    }
+    setLoading(true);
+    try {
+      const { error } = await sendPasswordReset(form.email);
+      if (error) throw error;
+      setResetEmailSent(true);
+      toast.success("Reset link sent!");
+    } catch (err) {
+      toast.error(`Error sending reset link: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (signupSuccess) {
@@ -135,6 +163,7 @@ export default function StudentSignupModal({ onClose, onAuthSuccess, initialIsLo
         newErrors.lichess_username = "At least one Chess.com or Lichess username is required";
       }
     }
+    // Educational fields (university, faculty, department, level) are strictly non-mandatory (optional)
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -216,14 +245,16 @@ export default function StudentSignupModal({ onClose, onAuthSuccess, initialIsLo
       setLoading(true);
       const profileData = {
         name: form.name,
-        university: form.university,
-        faculty: form.faculty,
-        department: form.department,
-        level: form.level,
-        chess_username: form.chess_username,
-        lichess_username: form.lichess_username,
+        university: form.university || '',
+        faculty: form.faculty || '',
+        department: form.department || '',
+        level: form.level || '',
+        chess_username: form.chess_username || '',
+        lichess_username: form.lichess_username || '',
         chess_rating: verifiedChessRating,
-        lichess_rating: verifiedLichessRating
+        lichess_rating: verifiedLichessRating,
+        user_type: flowType,
+        is_student: flowType === 'student'
       };
 
       const { error } = await signUp(form.email, form.password, profileData);
@@ -308,176 +339,290 @@ export default function StudentSignupModal({ onClose, onAuthSuccess, initialIsLo
         <div className="text-center mb-6">
           <img src="/ss4_logo.jpg" alt="SS4 Logo" className="h-10 mx-auto mb-3" />
           <h2 className="text-2xl font-black font-space text-brand-text-dark leading-tight">
-            {isLogin ? "Welcome Back" : "Student Registration"}
+            {isForgotPassword 
+              ? "Reset Password" 
+              : (isLogin ? "Welcome Back" : (flowType === 'student' ? "Student Registration" : "General Registration"))}
           </h2>
           <p className="text-xs font-semibold text-gray-400 mt-1.5">
-            {isLogin ? "Log in to access pairings and chat" : "Join the SS4 Chess League & Tournaments"}
+            {isForgotPassword 
+              ? "We'll send a password recovery link to your email" 
+              : (isLogin ? "Log in to access pairings and chat" : (flowType === 'student' ? "Join the SS4 Chess League & Tournaments as a Student" : "Join the SS4 Chess League & Tournaments"))}
           </p>
         </div>
 
-        {/* Segmented Mode Selector */}
-        <div className="flex bg-gray-100/70 border border-gray-200/60 rounded-2xl p-1 mb-6 max-w-xs mx-auto">
-          <button
-            type="button"
-            onClick={() => {
-              setIsLogin(true);
-              setErrors({});
-              setShowPassword(false);
-              setShowConfirm(false);
-            }}
-            className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none ${
-              isLogin
-                ? "bg-white text-brand-primary shadow-sm"
-                : "text-gray-400 hover:text-gray-600 bg-transparent"
-            }`}
-          >
-            Sign In
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setIsLogin(false);
-              setErrors({});
-              setShowPassword(false);
-              setShowConfirm(false);
-            }}
-            className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none ${
-              !isLogin
-                ? "bg-white text-brand-primary shadow-sm"
-                : "text-gray-400 hover:text-gray-600 bg-transparent"
-            }`}
-          >
-            Register
-          </button>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4 max-h-[60vh] overflow-y-auto pr-1 no-scrollbar">
-
-          {!isLogin && (
-            <>
-              <div>
-                <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Full Name</label>
-                <Input
-                  placeholder="e.g. John Doe"
-                  value={form.name}
-                  onChange={(e) => update("name", e.target.value)}
-                />
-                {errors.name && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.name}</p>}
-              </div>
-            </>
-          )}
-
-          <div>
-            <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
-            <Input
-              type="email"
-              placeholder="e.g. john@university.edu"
-              value={form.email}
-              onChange={(e) => update("email", e.target.value)}
-            />
-            {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
+        {/* Flow Type Switcher when Registering */}
+        {!isLogin && !isForgotPassword && (
+          <div className="flex items-center justify-between bg-gray-50 border border-gray-150 rounded-2xl px-4 py-2 mb-5 text-xs font-semibold text-gray-600">
+            <span>Registration Flow: <strong className="text-brand-primary uppercase font-bold">{flowType === 'student' ? 'Student' : 'General / Open'}</strong></span>
+            {onBackToChoice && (
+              <button
+                type="button"
+                onClick={onBackToChoice}
+                className="text-brand-primary text-[11px] font-bold hover:underline cursor-pointer bg-transparent border-none"
+              >
+                Change Flow
+              </button>
+            )}
           </div>
+        )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Password</label>
-              <div className="relative flex items-center">
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Min. 8 characters"
-                  value={form.password}
-                  onChange={(e) => update("password", e.target.value)}
-                  className="pr-10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  <span className="material-symbols-outlined text-[20px]">
-                    {showPassword ? "visibility_off" : "visibility"}
-                  </span>
-                </button>
+        {/* Segmented Mode Selector */}
+        {!isForgotPassword && (
+          <div className="flex bg-gray-100/70 border border-gray-200/60 rounded-2xl p-1 mb-6 max-w-xs mx-auto">
+            <button
+              type="button"
+              onClick={() => {
+                setIsLogin(true);
+                setErrors({});
+                setShowPassword(false);
+                setShowConfirm(false);
+              }}
+              className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none ${
+                isLogin
+                  ? "bg-white text-brand-primary shadow-sm"
+                  : "text-gray-400 hover:text-gray-600 bg-transparent"
+              }`}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setIsLogin(false);
+                setErrors({});
+                setShowPassword(false);
+                setShowConfirm(false);
+              }}
+              className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none ${
+                !isLogin
+                  ? "bg-white text-brand-primary shadow-sm"
+                  : "text-gray-400 hover:text-gray-600 bg-transparent"
+              }`}
+            >
+              Register
+            </button>
+          </div>
+        )}
+
+        {isForgotPassword ? (
+          <form onSubmit={handleForgotPasswordSubmit} className="space-y-4">
+            {resetEmailSent ? (
+              <div className="text-center py-6 space-y-3">
+                <span className="text-4xl block mb-2">✉️</span>
+                <h3 className="text-sm font-black text-brand-text-dark uppercase tracking-wider">Reset Link Sent</h3>
+                <p className="text-xs font-semibold text-gray-500 max-w-xs mx-auto leading-relaxed">
+                  We've sent a password reset link to <strong className="text-brand-primary font-bold">{form.email}</strong>. Please check your inbox.
+                </p>
+                <div className="pt-4">
+                  <Button
+                    type="button"
+                    variant="primary"
+                    onClick={() => {
+                      setIsForgotPassword(false);
+                      setResetEmailSent(false);
+                    }}
+                    className="w-full py-2.5 text-xs font-bold rounded-full cursor-pointer"
+                  >
+                    Back to Sign In
+                  </Button>
+                </div>
               </div>
-              {errors.password && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.password}</p>}
-            </div>
+            ) : (
+              <>
+                <div>
+                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
+                  <Input
+                    type="email"
+                    placeholder="e.g. john@university.edu"
+                    value={form.email}
+                    onChange={(e) => update("email", e.target.value)}
+                  />
+                  {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
+                </div>
+                
+                <div className="pt-2">
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    disabled={loading}
+                    className="w-full flex items-center justify-center gap-2 py-3 bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer"
+                  >
+                    {loading ? (
+                      <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    ) : (
+                      "Send Reset Link"
+                    )}
+                  </Button>
+                </div>
+
+                <div className="text-center pt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsForgotPassword(false);
+                      setErrors({});
+                    }}
+                    className="text-brand-primary text-xs font-bold hover:underline cursor-pointer bg-transparent border-none focus:outline-none"
+                  >
+                    Back to Sign In
+                  </button>
+                </div>
+              </>
+            )}
+          </form>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4 max-h-[60vh] overflow-y-auto pr-1 no-scrollbar animate-in fade-in duration-150">
 
             {!isLogin && (
+              <>
+                <div>
+                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Full Name</label>
+                  <Input
+                    placeholder="e.g. John Doe"
+                    value={form.name}
+                    onChange={(e) => update("name", e.target.value)}
+                  />
+                  {errors.name && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.name}</p>}
+                </div>
+              </>
+            )}
+
+            <div>
+              <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
+              <Input
+                type="email"
+                placeholder="e.g. john@university.edu"
+                value={form.email}
+                onChange={(e) => update("email", e.target.value)}
+              />
+              {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
+            </div>
+
+            <div className={`${isLogin ? 'block' : 'grid grid-cols-1 sm:grid-cols-2 gap-4'}`}>
               <div>
-                <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Confirm Password</label>
+                <div className="flex justify-between items-center mb-1.5">
+                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest">Password</label>
+                  {isLogin && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsForgotPassword(true);
+                        setErrors({});
+                      }}
+                      className="text-brand-primary text-[10px] font-bold hover:underline cursor-pointer bg-transparent border-none focus:outline-none"
+                    >
+                      Forgot Password?
+                    </button>
+                  )}
+                </div>
                 <div className="relative flex items-center">
                   <Input
-                    type={showConfirm ? "text" : "password"}
-                    placeholder="Re-enter password"
-                    value={form.confirm}
-                    onChange={(e) => update("confirm", e.target.value)}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Min. 8 characters"
+                    value={form.password}
+                    onChange={(e) => update("password", e.target.value)}
                     className="pr-10"
                   />
                   <button
                     type="button"
-                    onClick={() => setShowConfirm(!showConfirm)}
+                    onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
-                    aria-label={showConfirm ? "Hide password" : "Show password"}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     <span className="material-symbols-outlined text-[20px]">
-                      {showConfirm ? "visibility_off" : "visibility"}
+                      {showPassword ? "visibility_off" : "visibility"}
                     </span>
                   </button>
                 </div>
-                {errors.confirm && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.confirm}</p>}
+                {errors.password && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.password}</p>}
               </div>
-            )}
-          </div>
 
-          {!isLogin && (
-            <>
-              <div className="border-t border-gray-100 pt-4 mt-2">
-                <h3 className="text-xs font-black text-brand-primary uppercase tracking-widest mb-3">Academic Info</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">University</label>
+              {!isLogin && (
+                <div>
+                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Confirm Password</label>
+                  <div className="relative flex items-center">
                     <Input
-                      placeholder="e.g. University of Uyo"
-                      value={form.university}
-                      onChange={(e) => update("university", e.target.value)}
+                      type={showConfirm ? "text" : "password"}
+                      placeholder="Re-enter password"
+                      value={form.confirm}
+                      onChange={(e) => update("confirm", e.target.value)}
+                      className="pr-10"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Faculty</label>
-                    <Input
-                      placeholder="e.g. Engineering"
-                      value={form.faculty}
-                      onChange={(e) => update("faculty", e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Department</label>
-                    <Input
-                      placeholder="e.g. Computer Science"
-                      value={form.department}
-                      onChange={(e) => update("department", e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Level</label>
-                    <select
-                      value={form.level}
-                      onChange={(e) => update("level", e.target.value)}
-                      className="w-full bg-white border border-[#E8640A] rounded-xl px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#E8640A]/40"
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirm(!showConfirm)}
+                      className="absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
+                      aria-label={showConfirm ? "Hide password" : "Show password"}
                     >
-                      <option value="">Select Level</option>
-                      {[100, 200, 300, 400, 500].map(l => (
-                        <option key={l} value={`${l}`}>{l} Level</option>
-                      ))}
-                    </select>
+                      <span className="material-symbols-outlined text-[20px]">
+                        {showConfirm ? "visibility_off" : "visibility"}
+                      </span>
+                    </button>
                   </div>
+                  {errors.confirm && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.confirm}</p>}
+                </div>
+              )}
+            </div>
+
+          {!isLogin && flowType === 'student' && (
+            <div className="border-t border-gray-100 pt-4 mt-2">
+              <h3 className="text-xs font-black text-brand-primary uppercase tracking-widest mb-3">
+                Academic Info <span className="text-gray-400 font-semibold lowercase">(optional)</span>
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                    University / School <span className="text-[10px] font-normal lowercase text-gray-400">(optional)</span>
+                  </label>
+                  <Input
+                    placeholder="e.g. University of Uyo"
+                    value={form.university}
+                    onChange={(e) => update("university", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                    Faculty <span className="text-[10px] font-normal lowercase text-gray-400">(optional)</span>
+                  </label>
+                  <Input
+                    placeholder="e.g. Engineering"
+                    value={form.faculty}
+                    onChange={(e) => update("faculty", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                    Department <span className="text-[10px] font-normal lowercase text-gray-400">(optional)</span>
+                  </label>
+                  <Input
+                    placeholder="e.g. Computer Science"
+                    value={form.department}
+                    onChange={(e) => update("department", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                    Level <span className="text-[10px] font-normal lowercase text-gray-400">(optional)</span>
+                  </label>
+                  <select
+                    value={form.level}
+                    onChange={(e) => update("level", e.target.value)}
+                    className="w-full bg-white border border-[#E8640A] rounded-xl px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#E8640A]/40"
+                  >
+                    <option value="">Select Level (Optional)</option>
+                    {[100, 200, 300, 400, 500].map(l => (
+                      <option key={l} value={`${l}`}>{l} Level</option>
+                    ))}
+                  </select>
                 </div>
               </div>
+            </div>
+          )}
 
-              <div className="border-t border-gray-100 pt-4 mt-2">
-                <h3 className="text-xs font-black text-brand-accent uppercase tracking-widest mb-1">Chess Credentials</h3>
-                <p className="text-[10px] text-gray-400 mb-3 font-semibold">Enter your username on at least one platform to sync your ratings.</p>
+          {!isLogin && (
+            <div className="border-t border-gray-100 pt-4 mt-2">
+              <h3 className="text-xs font-black text-brand-accent uppercase tracking-widest mb-1">Chess Credentials</h3>
+              <p className="text-[10px] text-gray-400 mb-3 font-semibold">Enter your username on at least one platform to sync your ratings.</p>
 
                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -548,7 +693,6 @@ export default function StudentSignupModal({ onClose, onAuthSuccess, initialIsLo
                   </div>
                 </div>
               </div>
-            </>
           )}
 
           {/* Remember Me */}
@@ -584,22 +728,25 @@ export default function StudentSignupModal({ onClose, onAuthSuccess, initialIsLo
               )}
             </Button>
           </div>
-        </form>
+          </form>
+        )}
 
-        <div className="text-center mt-6 pt-4 border-t border-gray-100">
-          <p className="text-xs font-semibold text-gray-500">
-            {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-            <button
-              onClick={() => {
-                setIsLogin(!isLogin);
-                setErrors({});
-              }}
-              className="text-brand-primary font-bold hover:underline ml-1 cursor-pointer focus:outline-none"
-            >
-              {isLogin ? "Register here" : "Sign in here"}
-            </button>
-          </p>
-        </div>
+        {!isForgotPassword && (
+          <div className="text-center mt-6 pt-4 border-t border-gray-100">
+            <p className="text-xs font-semibold text-gray-500">
+              {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+              <button
+                onClick={() => {
+                  setIsLogin(!isLogin);
+                  setErrors({});
+                }}
+                className="text-brand-primary font-bold hover:underline ml-1 cursor-pointer focus:outline-none"
+              >
+                {isLogin ? "Register here" : "Sign in here"}
+              </button>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

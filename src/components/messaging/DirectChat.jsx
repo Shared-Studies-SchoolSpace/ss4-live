@@ -29,7 +29,7 @@ export default function DirectChat() {
   const chatEndRef = useRef(null);
   const isVerified = user?.email_confirmed_at !== undefined;
 
-  // 1. Fetch directory of players
+  // 1. Fetch directory of players and subscribe to profile updates (for last_seen presence)
   useEffect(() => {
     if (!user) return;
 
@@ -49,7 +49,28 @@ export default function DirectChat() {
     };
 
     fetchProfiles();
-  }, [user]);
+
+    const profilesChannel = supabase
+      .channel('dm-profiles-presence')
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'profiles' },
+        (payload) => {
+          const updatedProf = payload.new;
+          setProfiles((prev) =>
+            prev.map((p) => (p.id === updatedProf.id ? { ...p, ...updatedProf } : p))
+          );
+          if (activeContact?.id === updatedProf.id) {
+            setActiveContact((prev) => (prev ? { ...prev, ...updatedProf } : prev));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(profilesChannel);
+    };
+  }, [user, activeContact?.id]);
 
   // Auto-select contact based on location search/state params
   useEffect(() => {
@@ -94,17 +115,25 @@ export default function DirectChat() {
 
     const markAsRead = async () => {
       try {
+        const nowIso = new Date().toISOString();
         const { error } = await supabase
           .from("direct_messages")
-          .update({ read_at: new Date().toISOString() })
+          .update({ read_at: nowIso })
           .eq("sender_id", activeContact.id)
           .eq("receiver_id", user.id)
           .is("read_at", null);
 
         if (error) throw error;
         
-        // Remove locally from global unreads list
+        // Remove locally from global unreads list and update messages state
         setUnreadMessages((prev) => prev.filter(m => m.sender_id !== activeContact.id));
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.sender_id === activeContact.id && m.receiver_id === user.id && !m.read_at
+              ? { ...m, read_at: nowIso }
+              : m
+          )
+        );
       } catch (err) {
         console.error("Failed to mark messages as read:", err);
       }
@@ -140,16 +169,19 @@ export default function DirectChat() {
             const isToActive = newMsg.sender_id === user.id && newMsg.receiver_id === activeContact.id;
 
             if (isFromActive || isToActive) {
+              const nowIso = new Date().toISOString();
+              const msgToAdd = isFromActive ? { ...newMsg, read_at: nowIso } : newMsg;
+
               setMessages((prev) => {
                 if (prev.find(m => m.id === newMsg.id)) return prev;
-                return [...prev, newMsg];
+                return [...prev, msgToAdd];
               });
 
               // Mark as read immediately since the user is in this active conversation
               if (isFromActive) {
                 supabase
                   .from("direct_messages")
-                  .update({ read_at: new Date().toISOString() })
+                  .update({ read_at: nowIso })
                   .eq("id", newMsg.id)
                   .then();
               }

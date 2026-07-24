@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { supabase } from '../../../supabase';
 import { playerLabel } from '../utils/chessUtils';
+import AdminBroadcastPanel from '../../../components/announcements/AdminBroadcastPanel';
 
 export const AdminTab = ({
   isAdmin,
@@ -154,6 +155,9 @@ export const AdminTab = ({
 
   return (
     <div className="w-full space-y-8">
+      
+      {/* ── Universal Admin Broadcast Surface ── */}
+      <AdminBroadcastPanel />
       
       {/* ── Manage Players ── */}
       <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">

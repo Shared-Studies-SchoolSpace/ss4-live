@@ -1,12 +1,12 @@
-# BRIEFING — 2026-07-12T19:25:36+01:00
+# BRIEFING — 2026-07-21T13:17:00Z
 
 ## Mission
-Initialize the project, spawn the Project Orchestrator to implement real-time DM system, and monitor its progress.
+Initialize the project, spawn the Project Orchestrator to implement real-time DM system, fixture broadcasts, notifications, persistent auth, signup pre-flow, and 3-persona dashboard synthesis, and monitor progress.
 
 ## 🔒 My Identity
 - Archetype: sentinel
 - Working directory: /home/kami/Desktop/codebase/ss4/.agents/sentinel
-- Orchestrator: d24bace0-1877-4b77-8392-446cbacdbce2
+- Orchestrator: b530d59a-4ceb-45f1-86b4-1d2b57971f1e
 - Victory Auditor: to be spawned on victory claim
 
 ## 🔒 Key Constraints
@@ -14,12 +14,12 @@ Initialize the project, spawn the Project Orchestrator to implement real-time DM
 - Victory Audit is MANDATORY before reporting completion
 
 ## User Context
-- **Last user request**: Real-time direct messaging system for SCL including scheduling tournament matches, presence, read receipts, and notifications.
+- **Last user request**: SS4 Chess League — Real-time Messaging, Automated Fixture Broadcasts, Notifications System, Persistent Auth, Student Signup Pre-flow, and 3-Persona Player Dashboard Synthesis.
 - **Pending clarifications**: none
 - **Delivered results**: none
 
 ## Project Status
-- **Phase**: in progress
+- **Phase**: in progress (Milestone 3 Active: Real-Time DM & Admin Broadcast)
 
 ## Victory Audit Status
 - **Triggered**: no

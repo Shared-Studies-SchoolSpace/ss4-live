@@ -3,28 +3,28 @@ import { useState } from "react";
 import SignupChoiceModal from './SignupChoiceModal';
 import StudentSignupModal from './StudentSignupModal';
 
-export default function SignupFlowController() {
-  const [stage, setStage] = useState(null); 
-  // null = no modal, "choice" = first modal, "student" = second modal
+export default function SignupFlowController({ onAuthSuccess, initialStage = null }) {
+  const [stage, setStage] = useState(initialStage); 
+  // null = no modal, "choice" = pre-flow modal, "student" = student signup, "general" = general signup, "login" = sign in
 
   return (
     <>
-      <button onClick={() => setStage("choice")}>Signup</button>
-
       {stage === "choice" && (
         <SignupChoiceModal
           onClose={() => setStage(null)}
-          onGuest={() => {
-            setStage(null);
-            // redirect to home
-          }}
           onStudent={() => setStage("student")}
+          onGeneral={() => setStage("general")}
+          onSignIn={() => setStage("login")}
         />
       )}
 
-      {stage === "student" && (
+      {(stage === "student" || stage === "general" || stage === "login") && (
         <StudentSignupModal
           onClose={() => setStage(null)}
+          onAuthSuccess={onAuthSuccess}
+          initialIsLogin={stage === "login"}
+          initialFlowType={stage === "general" ? "general" : "student"}
+          onBackToChoice={() => setStage("choice")}
         />
       )}
     </>

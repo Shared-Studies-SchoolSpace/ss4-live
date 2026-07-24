@@ -3,11 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../features/auth-portal/hooks/useAuth';
 import { useAuthModal } from '../features/auth-portal/context/AuthModalContext';
 import TournamentCountdownBanner from '../features/chess-league/components/TournamentCountdownBanner';
+import AdminDrawer from './admin/AdminDrawer';
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const [isAdminDrawerOpen, setIsAdminDrawerOpen] = useState(false);
 
   const { 
     user, 
@@ -69,20 +71,24 @@ export const Header = () => {
 
   return (
     <>
+      {/* Universal Admin Broadcast Drawer */}
+      <AdminDrawer isOpen={isAdminDrawerOpen} onClose={() => setIsAdminDrawerOpen(false)} />
+
       {/* Tournament countdown — sits above the sticky nav bar */}
       <TournamentCountdownBanner />
       <header className="sticky top-0 z-50 w-full bg-white/75 backdrop-blur-lg border-b border-white/40 shadow-sm">
-        <div className="container mx-auto px-6 md:px-12 lg:px-16 h-16 lg:h-20 flex items-center justify-between">
-          <div className="flex items-center gap-10">
-            <a href="/" className="flex items-center">
-              <img src="/ss4_logo.jpg" alt="SS4" className="h-10 lg:h-12" />
+        <div className="container mx-auto px-3 sm:px-6 md:px-8 lg:px-12 xl:px-16 h-16 lg:h-20 flex items-center justify-between">
+          <div className="flex items-center gap-4 lg:gap-6 xl:gap-8">
+            <a href="/" className="flex items-center shrink-0 pr-2">
+              <img src="/ss4_logo.jpg" alt="SS4" className="h-8 sm:h-9 md:h-10 lg:h-12 w-auto object-contain" />
             </a>
             
-            <nav className="hidden lg:flex items-center gap-8">
-              <div className="relative group py-2">
-                <button className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer">
+            {/* Primary Navigation Group - Equal spacing & hitboxes */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+              <div className="relative group">
+                <button className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer whitespace-nowrap">
                   Schools
-                  <svg className="w-3.5 h-3.5 transition-transform duration-250 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3.5 h-3.5 transition-transform duration-250 group-hover:rotate-180 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
@@ -91,10 +97,10 @@ export const Header = () => {
                   <a href="/tertiary" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">Tertiary Institutions</a>
                 </div>
               </div>
-              <div className="relative group py-2">
-                <button className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer">
+              <div className="relative group">
+                <button className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer whitespace-nowrap">
                   Chess League
-                  <svg className="w-3.5 h-3.5 transition-transform duration-250 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-3.5 h-3.5 transition-transform duration-250 group-hover:rotate-180 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
@@ -103,27 +109,40 @@ export const Header = () => {
                   <a href="/chess-league/tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">Monthly Tournament</a>
                 </div>
               </div>
-              <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Assessment Series</a>
-              <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">Aspirants Award</a>
-              <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">News</a>
-              <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors">About</a>
+              <a href="/sas" className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap">Assessment Series</a>
+              <a href="/award" className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap">Aspirants Award</a>
+              <a href="/news" className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap">News</a>
+              <a href="/about" className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap">About</a>
             </nav>
           </div>
 
-          <div className="flex items-center gap-4">
-            <button className="hidden md:block px-5 py-2 border border-[#E8640A] text-[#E8640A] font-bold text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer" onClick={() => window.location.href='/partner'}>
+          {/* Action & Utility Group - Equal heights & gap spacing */}
+          <div className="flex items-center gap-2 sm:gap-2.5 lg:gap-3 shrink-0">
+            <button className="hidden xl:inline-flex items-center h-9 sm:h-10 px-4 xl:px-5 border border-[#E8640A] text-[#E8640A] font-bold text-xs xl:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer whitespace-nowrap" onClick={() => window.location.href='/partner'}>
               Partner With Us
             </button>
 
+            {/* Admin Quick Broadcast Button in Navbar */}
+            {profile?.role === 'admin' && (
+              <button
+                onClick={() => setIsAdminDrawerOpen(true)}
+                className="hidden sm:inline-flex items-center h-9 sm:h-10 gap-1.5 px-3.5 bg-brand-accent text-white text-xs font-black rounded-full hover:bg-brand-accent/90 transition-colors shadow-sm cursor-pointer uppercase tracking-wider whitespace-nowrap"
+                title="Open Admin Broadcast Drawer"
+              >
+                <span>📢</span>
+                <span className="hidden md:inline">Broadcast</span>
+              </button>
+            )}
+
             {/* Notifications Bell Dropdown */}
             {user && (
-              <div className="relative" ref={notifRef}>
+              <div className="relative flex items-center" ref={notifRef}>
                 <button
                   onClick={() => {
                     setIsNotifOpen(!isNotifOpen);
                     setIsDropdownOpen(false);
                   }}
-                  className="p-2 rounded-full hover:bg-gray-50 border border-gray-100 transition-colors cursor-pointer relative focus:outline-none flex items-center justify-center"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-gray-100/80 border border-gray-150 transition-colors cursor-pointer relative focus:outline-none flex items-center justify-center shrink-0"
                   aria-label="Notifications"
                 >
                   <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -140,7 +159,7 @@ export const Header = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-[-60px] md:right-0 mt-2 w-80 bg-white border border-gray-150 rounded-2xl shadow-xl z-50 py-2 overflow-hidden text-left"
+                      className="fixed inset-x-3 sm:inset-auto sm:right-0 top-16 sm:top-full sm:mt-2 w-auto sm:w-80 max-w-sm bg-white border border-gray-150 rounded-2xl shadow-xl z-50 py-2 overflow-hidden text-left mx-auto sm:mx-0"
                     >
                       <div className="px-4 py-2 border-b border-gray-100 flex items-center justify-between mb-1.5">
                         <p className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Notifications</p>
@@ -204,13 +223,13 @@ export const Header = () => {
 
             {/* Auth Dropdown or Sign In Button */}
             {user ? (
-              <div className="relative" ref={dropdownRef}>
+              <div className="relative flex items-center" ref={dropdownRef}>
                 <button 
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-gray-50 border border-gray-100 transition-colors cursor-pointer focus:outline-none"
+                  className="h-9 sm:h-10 flex items-center gap-2 px-2.5 sm:px-3 rounded-full hover:bg-gray-100/80 border border-gray-150 transition-colors cursor-pointer focus:outline-none shrink-0"
                 >
                   <div className="relative">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-sm flex items-center justify-center shadow-sm">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-xs sm:text-sm flex items-center justify-center shadow-sm">
                       {profile?.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
                     </div>
                     {unreadMessages.length > 0 && (
@@ -219,7 +238,7 @@ export const Header = () => {
                       </span>
                     )}
                   </div>
-                  <span className="hidden sm:block text-xs font-black text-brand-text-dark max-w-[100px] truncate">
+                  <span className="hidden xl:block text-xs font-black text-brand-text-dark max-w-[100px] truncate">
                     {profile?.name || "Player"}
                   </span>
                   <svg className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -233,7 +252,7 @@ export const Header = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-0 mt-2 w-56 bg-white border border-gray-150 rounded-2xl shadow-xl z-50 py-2 overflow-hidden"
+                      className="absolute right-0 mt-2 w-56 max-w-[calc(100vw-24px)] bg-white border border-gray-150 rounded-2xl shadow-xl z-50 py-2 overflow-hidden"
                     >
                       <div className="px-4 py-2 border-b border-gray-100 mb-1.5">
                         <p className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Signed In As</p>
@@ -254,6 +273,19 @@ export const Header = () => {
                           </span>
                         )}
                       </a>
+
+                      {profile?.role === 'admin' && (
+                        <button
+                          onClick={() => {
+                            setIsDropdownOpen(false);
+                            setIsAdminDrawerOpen(true);
+                          }}
+                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brand-accent hover:bg-orange-50 transition-colors text-left cursor-pointer border-none bg-transparent"
+                        >
+                          <span className="text-sm">📢</span>
+                          Admin Broadcast Panel
+                        </button>
+                      )}
                       
                       <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brand-accent hover:bg-red-50 transition-colors text-left cursor-pointer border-none bg-transparent">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -266,16 +298,16 @@ export const Header = () => {
                 </AnimatePresence>
               </div>
             ) : (
-              <div className="hidden lg:flex items-center gap-3">
+              <div className="hidden lg:flex items-center gap-2.5">
                 <button
                   onClick={() => openAuthModal('', null, 'login')}
-                  className="px-5 py-2 text-brand-primary hover:text-brand-accent font-bold text-sm transition-colors cursor-pointer"
+                  className="h-9 sm:h-10 px-4 xl:px-5 flex items-center justify-center text-brand-primary hover:text-brand-accent font-bold text-xs xl:text-sm transition-colors cursor-pointer whitespace-nowrap"
                 >
                   Sign In
                 </button>
                 <button
                   onClick={() => openAuthModal('', null, 'register')}
-                  className="px-6 py-2 bg-brand-primary text-white font-bold text-sm rounded-xl hover:bg-brand-accent transition-colors shadow-md hover:shadow-lg cursor-pointer"
+                  className="h-9 sm:h-10 px-5 xl:px-6 flex items-center justify-center bg-brand-primary text-white font-bold text-xs xl:text-sm rounded-xl hover:bg-brand-accent transition-colors shadow-md hover:shadow-lg cursor-pointer whitespace-nowrap"
                 >
                   Sign Up
                 </button>
@@ -285,13 +317,13 @@ export const Header = () => {
             {/* Mobile menu toggle */}
             <button 
               id="mobile-menu-toggle"
-              className="lg:hidden p-2 text-brand-primary focus:outline-none"
+              className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl hover:bg-gray-100/80 text-brand-primary focus:outline-none shrink-0"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              <div className="w-6 h-5 relative flex flex-col justify-between">
+              <div className="w-5 h-4 sm:w-6 sm:h-5 relative flex flex-col justify-between">
                 <motion.span
-                  animate={isMobileMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+                  animate={isMobileMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
                   className="w-full h-0.5 bg-current rounded-full origin-center"
                 />
                 <motion.span
@@ -299,7 +331,7 @@ export const Header = () => {
                   className="w-full h-0.5 bg-current rounded-full"
                 />
                 <motion.span
-                  animate={isMobileMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                  animate={isMobileMenuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
                   className="w-full h-0.5 bg-current rounded-full origin-center"
                 />
               </div>
@@ -315,40 +347,48 @@ export const Header = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="lg:hidden absolute top-[100%] left-0 w-full bg-white border-b border-gray-100 shadow-xl p-6 flex flex-col gap-4 z-40 text-left"
+              className="lg:hidden absolute top-[100%] left-0 w-full bg-white border-b border-gray-100 shadow-xl p-4 sm:p-6 flex flex-col gap-4 z-40 text-left max-h-[calc(100vh-4.5rem)] overflow-y-auto no-scrollbar"
             >
               {user && (
-                <div className="bg-[#F6F4F0] p-4 rounded-2xl mb-2 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-lg flex items-center justify-center">
+                <div className="bg-[#F6F4F0] p-3.5 sm:p-4 rounded-2xl mb-1 flex items-center gap-3">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-base sm:text-lg flex items-center justify-center shrink-0">
                     {profile?.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
                   </div>
-                  <div>
-                    <h4 className="text-sm font-black text-brand-text-dark leading-tight">{profile?.name || "Player"}</h4>
-                    <p className="text-[10px] font-semibold text-gray-400 mt-0.5">{user.email}</p>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs sm:text-sm font-black text-brand-text-dark leading-tight truncate">{profile?.name || "Player"}</h4>
+                    <p className="text-[10px] font-semibold text-gray-400 mt-0.5 truncate">{user.email}</p>
                   </div>
                 </div>
               )}
               
               <div className="flex flex-col gap-2">
                 <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Schools Directory</span>
-                <a href="/schools" className="pl-4 text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Secondary Schools</a>
-                <a href="/tertiary" className="pl-4 text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Institutions</a>
+                <a href="/schools" className="pl-4 text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Secondary Schools</a>
+                <a href="/tertiary" className="pl-4 text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Institutions</a>
               </div>
               <div className="flex flex-col gap-2">
                 <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Chess League</span>
-                <a href="/chess-league" className="pl-4 text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>League Divisions</a>
-                <a href="/chess-league/tournament" className="pl-4 text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournament</a>
+                <a href="/chess-league" className="pl-4 text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>League Divisions</a>
+                <a href="/chess-league/tournament" className="pl-4 text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournament</a>
               </div>
-              <a href="/sas" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Assessment Series</a>
-              <a href="/award" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</a>
-              <a href="/news" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>News</a>
-              <a href="/about" className="text-[14px] font-bold text-gray-700 hover:text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>About</a>
+              <a href="/sas" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Assessment Series</a>
+              <a href="/award" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</a>
+              <a href="/news" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>News</a>
+              <a href="/about" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>About</a>
               
-              <hr className="my-2 border-gray-100" />
+              <a 
+                href="/partner" 
+                className="py-2.5 px-4 border border-[#E8640A] text-[#E8640A] font-bold text-xs sm:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors text-center inline-block my-1" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Partner With Us
+              </a>
+
+              <hr className="my-1 border-gray-100" />
               
               {user ? (
                 <>
-                  <a href="/dashboard" className="py-2.5 text-[14px] font-bold text-gray-700 hover:text-brand-primary flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
+                  <a href="/dashboard" className="py-2 text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
                     <span>My Dashboard & Profile</span>
                     {unreadMessages.length > 0 && (
                       <span className="bg-[#E8640A] text-white text-[10px] font-black px-2 py-0.5 rounded-full shrink-0">
@@ -356,18 +396,18 @@ export const Header = () => {
                       </span>
                     )}
                   </a>
-                  <button onClick={handleLogout} className="py-2.5 text-[14px] font-bold text-brand-accent text-left cursor-pointer border-none bg-transparent">
+                  <button onClick={handleLogout} className="py-2 text-[13px] sm:text-[14px] font-bold text-brand-accent text-left cursor-pointer border-none bg-transparent">
                     Sign Out
                   </button>
                 </>
               ) : (
-                <div className="flex flex-col gap-2.5 mt-2">
+                <div className="flex flex-col gap-2.5 mt-1">
                   <button
                     onClick={() => {
                       setIsMobileMenuOpen(false);
                       openAuthModal('', null, 'login');
                     }}
-                    className="py-3 border border-brand-primary/30 text-brand-primary font-bold rounded-xl hover:bg-brand-primary/5 text-center cursor-pointer bg-transparent"
+                    className="py-2.5 sm:py-3 border border-brand-primary/30 text-brand-primary font-bold text-xs sm:text-sm rounded-xl hover:bg-brand-primary/5 text-center cursor-pointer bg-transparent"
                   >
                     Sign In
                   </button>
@@ -376,7 +416,7 @@ export const Header = () => {
                       setIsMobileMenuOpen(false);
                       openAuthModal('', null, 'register');
                     }}
-                    className="py-3 bg-brand-primary text-white font-bold rounded-xl hover:bg-brand-accent shadow-md text-center cursor-pointer border-none"
+                    className="py-2.5 sm:py-3 bg-brand-primary text-white font-bold text-xs sm:text-sm rounded-xl hover:bg-brand-accent shadow-md text-center cursor-pointer border-none"
                   >
                     Sign Up
                   </button>

@@ -61,6 +61,74 @@ export function useTournament(monthYear) {
       setIsDbFallback(false);
       toast.success('Saved to Database!', { autoClose: 1000 });
 
+      // ── R2 & R7: Check if a new round has been generated/added ──
+      const oldRoundsCount = tournament?.rounds?.length || 0;
+      const newRoundsCount = t.rounds?.length || 0;
+
+      if (newRoundsCount > oldRoundsCount) {
+        const newRound = t.rounds[newRoundsCount - 1];
+        const roundName = newRound.name || `Round ${newRound.roundNum}`;
+
+        // Get current admin user ID to associate with the announcement
+        let adminId = null;
+        try {
+          const { data: { user: currentAuthUser } } = await supabase.auth.getUser();
+          adminId = currentAuthUser?.id;
+        } catch (e) {
+          console.warn('Could not retrieve current admin ID for announcement:', e.message);
+        }
+
+        // 1. Post a global announcement in public.announcements
+        if (adminId) {
+          await supabase.from('announcements').insert({
+            title: `${roundName} Matchups Released! ♟️`,
+            content: `${roundName} pairings for the ${t.name} are now live. Head over to the tournament screen to view your opponent.`,
+            created_by: adminId,
+            author_id: adminId,
+            is_global: true
+          }).then();
+        }
+
+        // 2. Dispatch targeted opponent notifications to each matched player
+        const notifications = [];
+        newRound.games.forEach(g => {
+          if (!g.p1 || !g.p2 || g.p1.username === 'bye' || g.p2.username === 'bye') return;
+
+          const matchLink = `/chess-league/tournament?tab=fixtures&gameId=${g.id}`;
+
+          // Notification for Player 1
+          if (g.p1.id && g.p1.id.length === 36) {
+            notifications.push({
+              user_id: g.p1.id,
+              type: 'opponent_assigned',
+              title: `Opponent Assigned: ${roundName}`,
+              message: `You are playing against ${g.p2.name} (@${g.p2.username}) in ${roundName}. Scheduled Time: ${newRound.date || 'TBD'}.`,
+              link: matchLink,
+              metadata: { opponent: g.p2.name, round: roundName, date: newRound.date }
+            });
+          }
+
+          // Notification for Player 2
+          if (g.p2.id && g.p2.id.length === 36) {
+            notifications.push({
+              user_id: g.p2.id,
+              type: 'opponent_assigned',
+              title: `Opponent Assigned: ${roundName}`,
+              message: `You are playing against ${g.p1.name} (@${g.p1.username}) in ${roundName}. Scheduled Time: ${newRound.date || 'TBD'}.`,
+              link: matchLink,
+              metadata: { opponent: g.p1.name, round: roundName, date: newRound.date }
+            });
+          }
+        });
+
+        if (notifications.length > 0) {
+          const batchSize = 100;
+          for (let i = 0; i < notifications.length; i += batchSize) {
+            await supabase.from('notifications').insert(notifications.slice(i, i + batchSize)).then();
+          }
+        }
+      }
+
       // Trigger SCL global notification alerts on status change
       if (oldStatus && oldStatus !== newStatus) {
         let notifType = '';
@@ -71,6 +139,27 @@ export function useTournament(monthYear) {
           notifType = 'tournament_begin';
           notifTitle = 'Tournament Begun! 🏆';
           notifMsg = `The ${t.name} has officially started! Check your pairings and schedule your matches.`;
+          
+          // Also broadcast that registration is closed
+          try {
+            const { data: profiles } = await supabase.from('profiles').select('id');
+            if (profiles && profiles.length > 0) {
+              const regClosedNotifs = profiles.map(p => ({
+                user_id: p.id,
+                type: 'registration_closed',
+                title: 'Registration Closed 🔒',
+                message: `Registration for the ${t.name} is now closed. Matches are underway!`,
+                link: '/chess-league/tournament'
+              }));
+              const batchSize = 100;
+              for (let i = 0; i < regClosedNotifs.length; i += batchSize) {
+                await supabase.from('notifications').insert(regClosedNotifs.slice(i, i + batchSize)).then();
+              }
+            }
+          } catch (regClosedErr) {
+            console.warn('Could not dispatch registration_closed notification:', regClosedErr.message);
+          }
+
         } else if (newStatus === 'completed') {
           const champName = typeof t.winner === 'object' ? t.winner?.name : t.winner;
           notifType = 'tournament_complete';

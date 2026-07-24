@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
 import { supabase } from '../../../supabase';
 import { toast } from 'react-toastify';
 
@@ -8,18 +8,20 @@ const AuthContext = createContext({
   loading: true,
   onlineUsers: [],
   unreadMessages: [],
-  setUnreadMessages: () => {},
   activeChatContactId: null,
   setActiveChatContactId: () => {},
   notifications: [],
   setNotifications: () => {},
-  markNotificationAsRead: async () => {},
-  markAllNotificationsAsRead: async () => {},
-  updatePlayerDivision: async () => {},
-  signUp: async () => {},
+  isRecoverySession: false,
+  setIsRecoverySession: () => {},
   signIn: async () => {},
+  signUp: async () => {},
   signOut: async () => {},
-  refreshProfile: async () => {}
+  updateProfile: async () => {},
+  updatePassword: async () => {},
+  sendPasswordReset: async () => {},
+  refreshProfile: async () => {},
+  markNotificationsAsRead: async () => {}
 });
 
 export function AuthProvider({ children }) {
@@ -30,8 +32,18 @@ export function AuthProvider({ children }) {
   const [unreadMessages, setUnreadMessages] = useState([]);
   const [activeChatContactId, setActiveChatContactId] = useState(null);
   const [notifications, setNotifications] = useState([]);
+  const [isRecoverySession, setIsRecoverySession] = useState(false);
+  const activeUserIdRef = useRef(null);
+  const fetchingUidRef = useRef(null);
 
   const fetchProfile = async (uid) => {
+    // If profile is already loaded for this user, do not fetch again
+    if (profile && profile.id === uid) return;
+
+    // Deduplicate in-flight fetches for the same user
+    if (fetchingUidRef.current === uid) return;
+    fetchingUidRef.current = uid;
+
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -41,66 +53,83 @@ export function AuthProvider({ children }) {
 
       if (error) throw error;
 
-      // Verify that this uid is still the currently logged-in user before committing to state
-      const { data: sessionData } = await supabase.auth.getSession();
-      if (sessionData?.session?.user?.id === uid) {
+      // Synchronously verify this is still the active user using refs (zero network requests)
+      if (activeUserIdRef.current === uid) {
         if (data) {
           setProfile(data);
-        } else if (sessionData.session?.user) {
+        } else if (activeUserIdRef.current === uid) {
           // ponytail: self-healing fallback if profile row was blocked during signup RLS misconfigurations
-          const meta = sessionData.session.user.user_metadata || {};
-          const fallbackProfile = {
-            id: uid,
-            email: sessionData.session.user.email,
-            name: meta.name || sessionData.session.user.email.split('@')[0],
-            university: meta.university || '',
-            faculty: meta.faculty || '',
-            department: meta.department || '',
-            level: meta.level || '',
-            chess_username: meta.chess_username || '',
-            lichess_username: meta.lichess_username || '',
-            chess_rating: meta.chess_rating || 0,
-            lichess_rating: meta.lichess_rating || 0,
-            role: meta.role || 'player'
-          };
-          const { data: newProfile, error: createErr } = await supabase
-            .from('profiles')
-            .upsert(fallbackProfile)
-            .select()
-            .single();
-          
-          if (!createErr) {
-            setProfile(newProfile);
-            try {
-              const createdProfile = {
-                name: fallbackProfile.name,
-                chess_username: fallbackProfile.chess_username,
-                lichess_username: fallbackProfile.lichess_username,
-                email: fallbackProfile.email,
-                department: fallbackProfile.department,
-                university: fallbackProfile.university
-              };
-              const maxRating = Math.max(fallbackProfile.chess_rating || 0, fallbackProfile.lichess_rating || 0);
-              await updatePlayerDivision(createdProfile, maxRating);
-            } catch (divErr) {
-              console.warn('Fallback division auto-assignment failed:', divErr.message);
+          const { data: sessionData } = await supabase.auth.getSession();
+          if (sessionData?.session?.user?.id === uid) {
+            const meta = sessionData.session.user.user_metadata || {};
+            const fallbackProfile = {
+              id: uid,
+              email: sessionData.session.user.email,
+              name: meta.name || sessionData.session.user.email.split('@')[0],
+              university: meta.university || '',
+              faculty: meta.faculty || '',
+              department: meta.department || '',
+              level: meta.level || '',
+              chess_username: meta.chess_username || '',
+              lichess_username: meta.lichess_username || '',
+              chess_rating: meta.chess_rating || 0,
+              lichess_rating: meta.lichess_rating || 0,
+              role: meta.role || 'player'
+            };
+            const { data: newProfile, error: createErr } = await supabase
+              .from('profiles')
+              .upsert(fallbackProfile)
+              .select()
+              .single();
+            
+            if (!createErr) {
+              setProfile(newProfile);
+              try {
+                const createdProfile = {
+                  name: fallbackProfile.name,
+                  chess_username: fallbackProfile.chess_username,
+                  lichess_username: fallbackProfile.lichess_username,
+                  email: fallbackProfile.email,
+                  department: fallbackProfile.department,
+                  university: fallbackProfile.university
+                };
+                const maxRating = Math.max(fallbackProfile.chess_rating || 0, fallbackProfile.lichess_rating || 0);
+                await updatePlayerDivision(createdProfile, maxRating);
+              } catch (divErr) {
+                console.warn('Fallback division auto-assignment failed:', divErr.message);
+              }
+            } else {
+              console.error('Fallback profile creation failed:', createErr);
             }
-          } else {
-            console.error('Fallback profile creation failed:', createErr);
           }
         }
       }
     } catch (err) {
       console.error('Error fetching profile:', err);
+    } finally {
+      if (fetchingUidRef.current === uid) {
+        fetchingUidRef.current = null;
+      }
     }
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     // Check active sessions
     supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        await fetchProfile(session.user.id);
+      if (!isMounted) return;
+      const u = session?.user ?? null;
+      setUser(u);
+      activeUserIdRef.current = u?.id;
+
+      if (u) {
+        // Restore recovery state from sessionStorage if it survives page refresh
+        const isRecovery = sessionStorage.getItem('ss4_recovery_session') === 'true';
+        if (isRecovery) {
+          setIsRecoverySession(true);
+        }
+        await fetchProfile(u.id);
       } else {
         setProfile(null);
       }
@@ -108,17 +137,31 @@ export function AuthProvider({ children }) {
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        await fetchProfile(session.user.id);
+    // ponytail: callback must NOT be async — GoTrue holds AuthLock for its duration,
+    // so awaiting anything inside it deadlocks all subsequent auth calls (updateUser, etc.)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!isMounted) return;
+      const u = session?.user ?? null;
+      setUser(u);
+      activeUserIdRef.current = u?.id;
+
+      if (event === 'PASSWORD_RECOVERY') {
+        setIsRecoverySession(true);
+        sessionStorage.setItem('ss4_recovery_session', 'true');
+      }
+
+      if (u) {
+        fetchProfile(u.id); // fire-and-forget, do NOT await here
       } else {
         setProfile(null);
+        setIsRecoverySession(false);
+        sessionStorage.removeItem('ss4_recovery_session');
       }
       setLoading(false);
     });
 
     return () => {
+      isMounted = false;
       subscription.unsubscribe();
     };
   }, []);
@@ -395,6 +438,29 @@ export function AuthProvider({ children }) {
             };
             const nextList = [...playersList, addedPlayer];
             return supabase.from('divisions').update({ players: nextList }).eq('id', d.id);
+          } else {
+            let detailChanged = false;
+            const nextList = playersList.map(p => {
+              const isMatch = matchingUsernames.includes(p.username?.toLowerCase()) ||
+                              matchingUsernames.includes(p.name?.toLowerCase());
+              if (isMatch) {
+                const updatedP = {
+                  ...p,
+                  name: profileObj.name,
+                  username: profileObj.chess_username || profileObj.lichess_username || profileObj.email,
+                  department: profileObj.department || 'Student Player',
+                  school: profileObj.university || 'SS4 Member'
+                };
+                if (JSON.stringify(p) !== JSON.stringify(updatedP)) {
+                  detailChanged = true;
+                  return updatedP;
+                }
+              }
+              return p;
+            });
+            if (detailChanged) {
+              return supabase.from('divisions').update({ players: nextList }).eq('id', d.id);
+            }
           }
         } else if (found) {
           const nextList = playersList.filter(p => 
@@ -408,6 +474,32 @@ export function AuthProvider({ children }) {
       await Promise.all(updatePromises);
     } catch (err) {
       console.warn('Could not update player division assignment:', err.message);
+    }
+  };
+
+  const updatePassword = async (newPassword) => {
+    return await supabase.auth.updateUser({ password: newPassword });
+  };
+
+  const sendPasswordReset = async (email) => {
+    return await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/dashboard?tab=settings',
+    });
+  };
+
+  const deleteAccount = async () => {
+    if (!user) return;
+    try {
+      const { error: rpcError } = await supabase.rpc('delete_user_account');
+      if (rpcError) {
+        console.warn('RPC deletion failed, falling back to profile deletion:', rpcError.message);
+        const { error: profError } = await supabase.from('profiles').delete().eq('id', user.id);
+        if (profError) throw profError;
+      }
+      await signOut();
+    } catch (err) {
+      console.error('Error deleting account:', err);
+      throw err;
     }
   };
 
@@ -534,7 +626,13 @@ export function AuthProvider({ children }) {
       signUp, 
       signIn, 
       signOut, 
-      refreshProfile
+      refreshProfile,
+      setProfile,
+      isRecoverySession,
+      setIsRecoverySession,
+      updatePassword,
+      sendPasswordReset,
+      deleteAccount
     }}>
       {children}
     </AuthContext.Provider>

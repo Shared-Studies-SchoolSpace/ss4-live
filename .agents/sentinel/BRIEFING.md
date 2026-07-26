@@ -1,12 +1,12 @@
-# BRIEFING — 2026-07-21T13:17:00Z
+# BRIEFING — 2026-07-26T12:32:00Z
 
 ## Mission
-Initialize the project, spawn the Project Orchestrator to implement real-time DM system, fixture broadcasts, notifications, persistent auth, signup pre-flow, and 3-persona dashboard synthesis, and monitor progress.
+Initialize the mobile optimization project, spawn the Project Orchestrator to optimize the Chess League Tournament website across 320px-768px viewports, and monitor progress via crons.
 
 ## 🔒 My Identity
 - Archetype: sentinel
 - Working directory: /home/kami/Desktop/codebase/ss4/.agents/sentinel
-- Orchestrator: b530d59a-4ceb-45f1-86b4-1d2b57971f1e
+- Orchestrator: 6ec43c0f-3f09-4f41-943f-b93676663c07
 - Victory Auditor: to be spawned on victory claim
 
 ## 🔒 Key Constraints
@@ -14,12 +14,12 @@ Initialize the project, spawn the Project Orchestrator to implement real-time DM
 - Victory Audit is MANDATORY before reporting completion
 
 ## User Context
-- **Last user request**: SS4 Chess League — Real-time Messaging, Automated Fixture Broadcasts, Notifications System, Persistent Auth, Student Signup Pre-flow, and 3-Persona Player Dashboard Synthesis.
+- **Last user request**: Optimize the Chess League Tournament website for mobile devices across all viewports (320px – 768px), ensuring mobile-first responsive layout, Fitts's Law touch targets (≥48px), intuitive gestures/navigation, zero horizontal overflow bugs, and flawless visual polish.
 - **Pending clarifications**: none
 - **Delivered results**: none
 
 ## Project Status
-- **Phase**: in progress (Milestone 3 Active: Real-Time DM & Admin Broadcast)
+- **Phase**: in progress (Spawning Orchestrator)
 
 ## Victory Audit Status
 - **Triggered**: no

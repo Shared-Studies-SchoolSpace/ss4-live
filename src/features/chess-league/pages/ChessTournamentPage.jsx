@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -8,7 +8,9 @@ import { tournamentPlayers } from '../data/tournamentPlayers';
 import { getTournamentDates, getCountdownTarget } from '../utils/tournament';
 import { TournamentHero } from '../components/TournamentHero';
 import { BracketTab } from '../components/BracketTab';
+import { GroupStageTable } from '../components/GroupStageTable';
 import { TournamentPlayerModal } from '../components/TournamentPlayerModal';
+import { PlayerCardSide } from '../components/MatchCardHelper';
 import AuthGate from '../../auth-portal/components/AuthGate';
 import { useAuth } from '../../auth-portal/hooks/useAuth';
 import { useAuthModal } from '../../auth-portal/context/AuthModalContext';
@@ -131,12 +133,24 @@ function AdminMatchRow({ game, onSave }) {
 
 export default function ChessTournamentPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedMonthYear, setSelectedMonthYear] = useState(() => {
     const now = new Date();
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
   });
 
-  const [activeTab, setActiveTab]   = useState('bracket');
+  const [activeTab, setActiveTab] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('tab') || 'table';
+  });
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tabParam = params.get('tab');
+    if (tabParam) {
+      setActiveTab(tabParam);
+    }
+  }, [location.search]);
   const [isAdmin, setIsAdmin]       = useState(false);
   const [pinModal, setPinModal]     = useState(false);
   const [pinInput, setPinInput]     = useState('');
@@ -199,10 +213,25 @@ export default function ChessTournamentPage() {
     return last.games.map(g => g.winner).filter(w => w && w.username !== 'forfeit');
   };
 
-  const { tournament, history, isDbFallback, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
+  const { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
 
   const { user, profile, updatePlayerDivision } = useAuth();
   const { openAuthModal } = useAuthModal();
+
+  // Keyboard shortcut (Ctrl+Shift+A or Cmd+Shift+A) for admin access (M6: Jakob's Law fix)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        setPinInput('');
+        setPinErr('');
+        setShowPin(false);
+        setPinModal(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleVerifyAndJoin = async () => {
     if (!promptUsername.trim()) {
@@ -276,7 +305,7 @@ export default function ChessTournamentPage() {
 
 
 
-  // Fetch upcoming tournament — admin creates rows, we just read the soonest one.
+  // Fetch upcoming tournament  admin creates rows, we just read the soonest one.
   // Also purge any stale future-month upcoming rows that were auto-created in the past.
   useEffect(() => {
     const fetchUpcoming = async () => {
@@ -424,7 +453,7 @@ export default function ChessTournamentPage() {
       }
 
       setRefetchTrigger(prev => prev + 1);
-      toast.success("Your spot is locked in! The board awaits. 🏆");
+      toast.success("Your spot is locked in! The board awaits.");
     } catch (err) {
       console.error('Registration failed:', err);
       toast.error('Registration failed: ' + err.message);
@@ -539,12 +568,72 @@ export default function ChessTournamentPage() {
     else { setPinErr('Wrong PIN'); setPinInput(''); }
   };
 
+  // M2: Pin current user to the top of registered players list
+  const sortedRegisteredPlayers = React.useMemo(() => {
+    if (!user) return registeredPlayers;
+    return [...registeredPlayers].sort((a, b) => {
+      if (a.id === user.id) return -1;
+      if (b.id === user.id) return 1;
+      return 0;
+    });
+  }, [user, registeredPlayers]);
+
+  // M1: Differentiate primary 'Bracket' & 'Table' tabs visually
   const TABS = [
-    { id: 'bracket',    label: 'Bracket'   },
-    { id: 'results',    label: 'Results'   },
-    { id: 'fixtures',   label: 'Fixtures'  },
-    { id: 'rules',      label: 'Rules & Schedule' },
-    ...(isAdmin ? [{ id: 'admin', label: 'Admin' }] : []),
+    { 
+      id: 'table', 
+      label: 'Table', 
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M3 14h18M9 4v16M15 4v16M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z" />
+        </svg>
+      ) 
+    },
+    { 
+      id: 'fixtures', 
+      label: 'Fixtures', 
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      ) 
+    },
+    { 
+      id: 'bracket', 
+      label: 'Knockout Bracket', 
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+      ) 
+    },
+    { 
+      id: 'results', 
+      label: 'Results',
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )
+    },
+    { 
+      id: 'rules', 
+      label: 'Rules & Schedule',
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      )
+    },
+    ...(isAdmin ? [{ 
+      id: 'admin', 
+      label: 'Admin',
+      icon: (
+         <svg className="w-4 h-4 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        </svg>
+      )
+    }] : []),
   ];
 
   const isUpcoming = !tournament || tournament.status === 'upcoming';
@@ -553,20 +642,36 @@ export default function ChessTournamentPage() {
     <div className="min-h-screen bg-[#F6F4F0]">
       <ToastContainer position="bottom-right" />
 
-      {isUpcoming && !isAdmin ? (
+      {isLoading ? (
+        /* Skeleton Loading View (H3: Doherty Threshold Fix) */
+        <div className="relative text-white px-4 sm:px-6 md:px-12 py-16 min-h-[70vh] flex flex-col justify-center bg-slate-900 animate-pulse">
+          <div className="max-w-4xl mx-auto w-full text-center space-y-8">
+            <div className="h-4 bg-white/10 rounded w-32 mx-auto"></div>
+            <div className="h-16 bg-white/10 rounded-2xl w-3/4 mx-auto"></div>
+            <div className="h-6 bg-white/10 rounded w-1/2 mx-auto"></div>
+            <div className="flex justify-center gap-4 max-w-md mx-auto">
+              <div className="h-20 bg-white/10 rounded-2xl flex-1"></div>
+              <div className="h-20 bg-white/10 rounded-2xl flex-1"></div>
+              <div className="h-20 bg-white/10 rounded-2xl flex-1"></div>
+              <div className="h-20 bg-white/10 rounded-2xl flex-1"></div>
+            </div>
+            <div className="h-12 bg-white/10 rounded-xl w-48 mx-auto"></div>
+          </div>
+        </div>
+      ) : isUpcoming && !isAdmin ? (
         /* Non-Active View: Big Ass Countdown */
         <div 
           className="relative text-white px-4 sm:px-6 md:px-12 lg:px-16 py-12 sm:py-16 md:py-24 min-h-[85vh] flex flex-col justify-center overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #0B193C 0%, #1E1B4B 55%, #431407 100%)' }}
+          style={{ background: 'linear-gradient(135deg, #0B193C 0%, #102A6A 55%, #0C1E54 100%)' }}
         >
           {/* Ambient glow blobs */}
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full opacity-30"
-              style={{ background: 'radial-gradient(circle, #fb923c 0%, transparent 70%)' }} />
+              style={{ background: 'radial-gradient(circle, #3B82F6 0%, transparent 70%)' }} />
             <div className="absolute -bottom-32 -left-20 w-[400px] h-[400px] rounded-full opacity-20"
-              style={{ background: 'radial-gradient(circle, #6366f1 0%, transparent 70%)' }} />
+              style={{ background: 'radial-gradient(circle, #0A2A6A 0%, transparent 70%)' }} />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px opacity-10"
-              style={{ background: 'linear-gradient(90deg, transparent, #fdba74, transparent)' }} />
+              style={{ background: 'linear-gradient(90deg, transparent, #60A5FA, transparent)' }} />
           </div>
 
           <div className="max-w-4xl mx-auto w-full text-center relative z-10 space-y-10 animate-in fade-in zoom-in-95 duration-300">
@@ -610,7 +715,7 @@ export default function ChessTournamentPage() {
                   <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Mins</span>
                 </div>
                 <div className="flex flex-col items-center flex-1">
-                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg text-brand-primary animate-pulse">
+                  <div className={`bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg text-brand-primary ${days === 0 && hours < 24 ? 'animate-pulse' : ''}`}>
                     {String(secs).padStart(2, '0')}
                   </div>
                   <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Secs</span>
@@ -618,82 +723,84 @@ export default function ChessTournamentPage() {
               </div>
             </div>
 
-            {/* Buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-              {isUserRegisteredForUpcoming ? (
-                <div className="px-8 py-3.5 bg-emerald-600 border border-emerald-500 text-white text-xs sm:text-sm font-black rounded-xl flex items-center gap-2 shadow-md select-none">
-                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                  </svg>
-                  You have Joined! 🚀
-                </div>
-              ) : (
-                <AuthGate reason="join the next tournament" onAction={handleJoinTournamentAfterAuth}>
-                  <Button
-                    onClick={handleJoinTournament}
-                    loading={loadingReg}
-                    size="lg"
-                    variant="primary"
-                    icon={
-                      <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                      </svg>
-                    }
-                  >
-                    Join the next Tournament
-                  </Button>
-                </AuthGate>
-              )}
+            {/* Structured CTAs (H2: Hick's Law Fix  1 Primary, 1 Secondary, Tertiary Links) */}
+            <div className="flex flex-col items-center gap-4 pt-2 max-w-md mx-auto">
+              <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-3">
+                {isUserRegisteredForUpcoming ? (
+                  <div className="w-full sm:w-auto px-8 py-3.5 bg-emerald-600 border border-emerald-500 text-white text-xs sm:text-sm font-black rounded-xl flex items-center justify-center gap-2 shadow-md select-none">
+                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                    You have Joined!
+                  </div>
+                ) : (
+                  <AuthGate reason="join the next tournament" onAction={handleJoinTournamentAfterAuth}>
+                    <Button
+                      onClick={handleJoinTournament}
+                      loading={loadingReg}
+                      size="lg"
+                      variant="primary"
+                      className="w-full sm:w-auto"
+                      icon={
+                        <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                        </svg>
+                      }
+                    >
+                      Join the next Tournament
+                    </Button>
+                  </AuthGate>
+                )}
 
-              <Button
-                href={googleCalendarUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="white-outline"
-                size="lg"
-                icon={
-                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                }
-              >
-                Add to Calendar
-              </Button>
-              <Button
-                onClick={() => setShowPastWinnersModal(true)}
-                variant="white-outline"
-                size="lg"
-                icon={
-                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                }
-              >
-                View Past Winners
-              </Button>
-              <Button
-                onClick={() => setShowRulesModal(true)}
-                variant="white-outline"
-                size="lg"
-                icon={
-                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                }
-              >
-                Rules & Schedule
-              </Button>
+                <Button
+                  href={googleCalendarUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="white-outline"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                  icon={
+                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  }
+                >
+                  Add to Calendar
+                </Button>
+              </div>
+
+              {/* Tertiary Links */}
+              <div className="flex items-center gap-6 text-xs text-white/60 pt-1">
+                <button
+                  onClick={() => setShowPastWinnersModal(true)}
+                  className="hover:text-white underline underline-offset-4 cursor-pointer transition-colors inline-flex items-center gap-1.5"
+                >
+                  <TrophySvg className="w-3.5 h-3.5 text-blue-400" />
+                  <span>View Past Winners</span>
+                </button>
+                <span>&bull;</span>
+                <button
+                  onClick={() => setShowRulesModal(true)}
+                  className="hover:text-white underline underline-offset-4 cursor-pointer transition-colors inline-flex items-center gap-1.5"
+                >
+                  <svg className="w-3.5 h-3.5 text-white/80" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                  <span>Rules &amp; Schedule</span>
+                </button>
+              </div>
             </div>
 
-          {/* Registered Players List */}
+            {/* Registered Players List (M2: Pinned User, M3: Visible Scroll Affordance) */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-4 sm:p-6 sm:p-8 max-w-2xl mx-auto text-left space-y-4 mt-6">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-3">
                 <div className="flex items-center gap-2">
                   <h3 className="font-space font-black text-base sm:text-lg text-white">Registered Participants</h3>
                   <span className="bg-white/10 border border-white/10 text-gray-300 text-xs font-black px-2 py-0.5 rounded-lg shrink-0">
-                    {registeredPlayers.length}
+                    {sortedRegisteredPlayers.length}
                   </span>
                 </div>
+                {sortedRegisteredPlayers.length > 8 && (
+                  <span className="text-[10px] text-white/50 italic">Scroll to view all participants</span>
+                )}
               </div>
               
               {loadingRegisteredPlayers ? (
@@ -701,21 +808,38 @@ export default function ChessTournamentPage() {
                   <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                   <p className="text-gray-400 text-xs font-bold animate-pulse">Loading registered players...</p>
                 </div>
-              ) : registeredPlayers.length === 0 ? (
+              ) : sortedRegisteredPlayers.length === 0 ? (
                 <p className="text-gray-500 text-sm italic py-4 text-center">No participants registered yet. Be the first to join!</p>
               ) : (
-                <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-1">
-                  {registeredPlayers.map((p, idx) => (
-                    <div key={p.id || idx} className="bg-white/5 border border-white/10 rounded-xl p-3.5 flex items-center justify-between gap-3 hover:bg-white/10 transition-colors">
-                      <div className="min-w-0">
-                        <p className="text-xs font-bold text-white truncate">{p.name}</p>
-                        <p className="text-[10px] text-gray-500 truncate">{p.school}</p>
+                <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                  {sortedRegisteredPlayers.map((p, idx) => {
+                    const isSelf = user && user.id === p.id;
+                    return (
+                      <div 
+                        key={p.id || idx} 
+                        className={`border rounded-xl p-3.5 flex items-center justify-between gap-3 transition-colors ${
+                          isSelf 
+                            ? 'bg-emerald-500/15 border-emerald-500/40 ring-1 ring-emerald-500/30' 
+                            : 'bg-white/5 border-white/10 hover:bg-white/10'
+                        }`}
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-bold text-white truncate flex items-center gap-1.5">
+                            {p.name}
+                            {isSelf && (
+                              <span className="text-[9px] font-black uppercase text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-1.5 py-0.2 rounded shrink-0">
+                                You
+                              </span>
+                            )}
+                          </p>
+                          <p className="text-[10px] text-gray-400 truncate">{p.school}</p>
+                        </div>
+                        <div className="bg-white/10 border border-white/15 px-2.5 py-1 rounded-xl shrink-0">
+                          <span className="text-[10px] font-black text-blue-200">{p.rating} ELO</span>
+                        </div>
                       </div>
-                      <div className="bg-white/10 border border-white/15 px-2.5 py-1 rounded-xl shrink-0">
-                        <span className="text-[10px] font-black text-blue-200">{p.rating} ELO</span>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -732,29 +856,49 @@ export default function ChessTournamentPage() {
             onTitleDoubleClick={() => { setPinInput(''); setPinErr(''); setShowPin(false); setPinModal(true); }}
           />
 
-          {/* Tab bar */}
-          <div className="bg-white border-b border-gray-200 px-3 sm:px-6 md:px-12 lg:px-16">
-            <div className="max-w-5xl mx-auto flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar">
-              {TABS.map(t => (
-                <button key={t.id} onClick={() => setActiveTab(t.id)}
-                  className={`py-4 text-sm font-black whitespace-nowrap border-b-2 transition-colors cursor-pointer ${
-                    activeTab === t.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-400 hover:text-[#111111]'
-                  }`}>
-                  {t.label}
-                </button>
-              ))}
+          {/* Sticky Mobile-First Tab Bar (Fitts's Law & Hick's Law Fix) */}
+          <div className="sticky top-14 z-30 bg-white/95 backdrop-blur-md border-b border-gray-200/90 px-3 sm:px-6 md:px-12 lg:px-16 shadow-xs">
+            <div className="max-w-5xl mx-auto flex gap-2 sm:gap-6 overflow-x-auto no-scrollbar touch-pan-x py-1">
+              {TABS.map(t => {
+                const isPrimary = t.id === 'bracket';
+                const isActive = activeTab === t.id;
+                return (
+                  <button 
+                    key={t.id} 
+                    onClick={() => setActiveTab(t.id)}
+                    className={`min-h-[48px] px-3.5 py-3 font-black whitespace-nowrap border-b-2 transition-all cursor-pointer flex items-center gap-2 text-sm sm:text-base outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-t-xl ${
+                      isActive 
+                        ? 'border-brand-primary text-brand-primary bg-brand-primary/5' 
+                        : 'border-transparent text-gray-500 hover:text-[#111111] hover:bg-gray-50/50'
+                    }`}
+                  >
+                    {t.icon && <span className={isActive ? 'text-brand-primary' : 'text-gray-400'}>{t.icon}</span>}
+                    <span>{t.label}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {/* DB status pill */}
           {isDbFallback && (
-            <div className="bg-amber-50 border-b border-amber-100 text-center py-2 px-4">
-              <p className="text-[10px] font-bold text-amber-600 uppercase tracking-wider">Offline &mdash; changes stored locally</p>
+            <div className="bg-blue-50 border-b border-blue-100 text-center py-2 px-4">
+              <p className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">Offline: changes stored locally</p>
             </div>
           )}
 
           {/* Tab content wrapper */}
-          <div className="max-w-5xl mx-auto px-3 sm:px-6 md:px-8 lg:px-0 py-6 sm:py-10">
+          <div className={`${activeTab === 'table' ? 'max-w-7xl' : 'max-w-5xl'} mx-auto px-3 sm:px-6 md:px-8 lg:px-0 py-6 sm:py-10 transition-all duration-300`}>
+
+        {/* TABLE (GROUP STANDINGS) */}
+        {activeTab === 'table' && (
+          <GroupStageTable
+            tournament={tournament}
+            currentUser={user}
+            onPlayerSelect={setSelectedPlayerForModal}
+            onSwitchTab={(t) => setActiveTab(t)}
+          />
+        )}
 
         {/* BRACKET */}
         {activeTab === 'bracket' && (
@@ -895,82 +1039,186 @@ export default function ChessTournamentPage() {
         )}
         {/* FIXTURES */}
         {activeTab === 'fixtures' && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {!tournament || !tournament.rounds?.length ? (
-              <p className="text-center text-gray-500 py-20 text-base font-bold">No fixtures generated yet.</p>
+              <div className="varsity-card p-12 text-center">
+                <div className="w-16 h-16 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mx-auto text-brand-primary mb-4">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="font-space font-black text-xl text-[#111111] mb-2">No Fixtures Generated Yet</h3>
+                <p className="text-sm text-gray-500 max-w-md mx-auto leading-relaxed">
+                  Fixtures will appear here automatically as rounds are generated by tournament administration.
+                </p>
+              </div>
             ) : (() => {
               const currentRound = tournament.rounds.find(r => r.roundNum === activeFixtureRound) || tournament.rounds[tournament.rounds.length - 1];
-              const activeGames = currentRound.games.filter(g => g.p1 && g.p2 && g.p2.username !== 'bye');
+              const activeGames = (currentRound.games || []).filter(g => g.p1 && g.p2 && g.p2.username !== 'bye');
+              
               return (
-                <>
-                  {/* Round Selector Tabs */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 varsity-card p-3">
-                    <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
-                      {tournament.rounds.map(r => (
-                        <button key={r.roundNum} onClick={() => { setActiveFixtureRound(r.roundNum); }}
-                          className={`text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors ${
-                            activeFixtureRound === r.roundNum ? 'bg-brand-primary text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'
-                          }`}>
-                          {r.name}
-                        </button>
-                      ))}
+                <div className="space-y-6">
+                  {/* Round Selector Bar */}
+                  <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto py-0.5">
+                      {tournament.rounds.map(r => {
+                        const isActive = activeFixtureRound === r.roundNum;
+                        return (
+                          <button 
+                            key={r.roundNum} 
+                            onClick={() => setActiveFixtureRound(r.roundNum)}
+                            className={`text-xs font-black px-4 py-2 rounded-xl whitespace-nowrap cursor-pointer transition-all flex items-center gap-2 ${
+                              isActive 
+                                ? 'bg-brand-primary text-white shadow-sm' 
+                                : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200/60'
+                            }`}
+                          >
+                            <svg className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span>{r.name}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold px-3.5 py-1.5 rounded-full shrink-0 flex items-center gap-1.5">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{currentRound.date || 'TBD'} @ 8:00 PM WAT</span>
                     </div>
                   </div>
 
-                  {/* Games for the selected round */}
-                  <div className="varsity-card p-6">
-                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-50">
-                      <h3 className="font-space font-black text-lg text-[#111111]">{currentRound.name}</h3>
-                      <span className="text-xs font-bold text-brand-primary bg-brand-primary/5 px-3 py-1.5 rounded-full">
-                        {currentRound.date} @ 8:00 PM WAT
-                      </span>
+                  {/* Header Summary */}
+                  <div className="flex items-center justify-between px-2">
+                    <h3 className="font-space font-black text-xl text-[#111111] flex items-center gap-2">
+                      <span>{currentRound.name} Pairings</span>
+                    </h3>
+                    <span className="text-xs font-bold text-gray-500 bg-white border border-gray-200/60 px-3 py-1 rounded-full shadow-2xs">
+                      {activeGames.length} {activeGames.length === 1 ? 'Match' : 'Matches'}
+                    </span>
+                  </div>
+
+                  {/* Individual Fixture Cards Grid */}
+                  {!activeGames.length ? (
+                    <div className="varsity-card p-12 text-center">
+                      <p className="text-sm text-gray-500 italic py-4">No active matches in this round (all BYEs / auto-advances).</p>
                     </div>
-                    
-                    {!activeGames.length ? (
-                      <p className="text-sm text-gray-500 italic py-4 text-center">No active matches in this round (all BYEs / auto-advances).</p>
-                    ) : (
-                      <div className="divide-y divide-gray-50">
-                        {activeGames.map((g, i) => (
-                          <div key={g.id} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 flex-1 min-w-0 w-full">
-                              <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
-                                <button
-                                  onClick={() => setSelectedPlayerForModal(g.p1)}
-                                  className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none flex-1 sm:flex-none"
-                                >
-                                  {g.p1?.name}
-                                </button>
-                                <span className="text-[10px] font-black text-gray-400 shrink-0 select-none bg-gray-100 px-1.5 py-0.5 rounded sm:hidden">
-                                  @{g.p1?.username}
+                  ) : (
+                    <div className="grid grid-cols-1 gap-4">
+                      {activeGames.map((g, gameIdx) => {
+                        const isP1Winner = g.winner && (g.winner.username === g.p1?.username || g.winner.id === g.p1?.id);
+                        const isP2Winner = g.winner && (g.winner.username === g.p2?.username || g.winner.id === g.p2?.id);
+                        const isForfeit = g.winner && (g.winner.username === 'forfeit' || g.winner.name === 'Forfeit');
+                        const isDraw = g.winner && (g.winner.username === 'draw' || g.winner.name === 'Draw');
+                        const isMatchDone = !!g.winner;
+                        const groupLabel = g.groupLabel || (currentRound.isGroupStage ? String.fromCharCode(65 + (gameIdx % 4)) : null);
+
+                        const isUserGame = user && (
+                          user.id === g.p1?.id || user.id === g.p2?.id ||
+                          user.email?.split('@')[0] === g.p1?.username || user.email?.split('@')[0] === g.p2?.username
+                        );
+
+                        return (
+                          <div 
+                            key={g.id || gameIdx}
+                            className={`bg-white rounded-3xl border shadow-xs hover:shadow-md transition-all overflow-hidden ${
+                              isUserGame 
+                                ? 'border-brand-primary/80 ring-2 ring-brand-primary/20 shadow-blue-50/50' 
+                                : 'border-gray-100'
+                            }`}
+                          >
+                            {/* Card Header Bar */}
+                            <div className="bg-brand-bg-cream/40 border-b border-gray-100 px-5 py-3 flex items-center justify-between gap-2 flex-wrap">
+                              <div className="flex items-center gap-2">
+                                {groupLabel && (
+                                  <span className="bg-[#0B193C] text-blue-300 border border-blue-400/30 font-space font-black text-[11px] px-3 py-1 rounded-lg uppercase tracking-wider shadow-2xs">
+                                    Group {groupLabel}
+                                  </span>
+                                )}
+                                <span className="text-xs font-bold text-gray-500">
+                                  Match #{gameIdx + 1}
                                 </span>
+                                {isUserGame && (
+                                  <span className="bg-blue-100 border border-blue-300 text-brand-primary text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1">
+                                    <span>YOUR MATCH</span>
+                                  </span>
+                                )}
                               </div>
-                              
-                              <span className="text-[10px] sm:text-xs font-black text-brand-accent shrink-0 select-none self-center sm:self-auto my-0.5 sm:my-0">VS</span>
-                              
-                              <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
-                                <button
-                                  onClick={() => setSelectedPlayerForModal(g.p2)}
-                                  className="text-sm md:text-base font-bold text-[#111111] hover:text-brand-primary hover:underline truncate text-left cursor-pointer outline-none flex-1 sm:flex-none"
-                                >
-                                  {g.p2?.name}
-                                </button>
-                                <span className="text-[10px] font-black text-gray-400 shrink-0 select-none bg-gray-100 px-1.5 py-0.5 rounded sm:hidden">
-                                  @{g.p2?.username}
-                                </span>
+
+                              {/* Status Badge */}
+                              <div>
+                                {isMatchDone ? (
+                                  <span className={`text-[11px] font-black px-3 py-1 rounded-full border ${
+                                    isForfeit 
+                                      ? 'bg-red-50 text-red-700 border-red-200' 
+                                      : isDraw 
+                                      ? 'bg-blue-50 text-blue-800 border-blue-200' 
+                                      : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                  }`}>
+                                    {isForfeit ? 'Double Forfeit' : isDraw ? 'Match Drawn' : `Won by ${g.winner.name}`}
+                                  </span>
+                                ) : (
+                                  <span className="text-[11px] font-black bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full flex items-center gap-1.5">
+                                    <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                                    <span>Scheduled</span>
+                                  </span>
+                                )}
                               </div>
                             </div>
-                            <div className="w-full sm:w-auto flex justify-end shrink-0 mt-1 sm:mt-0">
-                              {g.winner
-                                ? <span className="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-lg w-full sm:w-auto text-center">Won: {g.winner.name}</span>
-                                : <span className="text-xs bg-amber-50 text-amber-600 font-bold px-3 py-1.5 rounded-lg w-full sm:w-auto text-center">Pending</span>
-                              }
+
+                            {/* Card Content: Single Line Flex Row (Even on Mobile) */}
+                            <div className="p-3 sm:p-5 flex items-center justify-between gap-1.5 sm:gap-4 min-w-0">
+                              
+                              {/* Player 1 Card (Left 43%) */}
+                              <div 
+                                onClick={() => setSelectedPlayerForModal(g.p1)}
+                                className={`w-[43%] shrink-0 min-w-0 border rounded-xl sm:rounded-2xl p-2.5 sm:p-4 transition-all cursor-pointer hover:bg-gray-50/60 ${
+                                  isP1Winner 
+                                    ? 'bg-emerald-50/50 border-emerald-200/80 ring-1 ring-emerald-300/50' 
+                                    : 'bg-white border-gray-100'
+                                }`}
+                              >
+                                <PlayerCardSide 
+                                  name={g.p1?.name || 'TBD'} 
+                                  username={g.p1?.username || ''} 
+                                  playerObj={g.p1} 
+                                  align="left" 
+                                  isWinner={isP1Winner}
+                                />
+                              </div>
+
+                              {/* VS Center Badge (Center 14%) */}
+                              <div className="w-[14%] shrink-0 flex flex-col items-center justify-center select-none py-1">
+                                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary font-black text-[10px] sm:text-xs flex items-center justify-center shadow-2xs">
+                                  VS
+                                </div>
+                              </div>
+
+                              {/* Player 2 Card (Right 43%) */}
+                              <div 
+                                onClick={() => setSelectedPlayerForModal(g.p2)}
+                                className={`w-[43%] shrink-0 min-w-0 border rounded-xl sm:rounded-2xl p-2.5 sm:p-4 transition-all cursor-pointer hover:bg-gray-50/60 ${
+                                  isP2Winner 
+                                    ? 'bg-emerald-50/50 border-emerald-200/80 ring-1 ring-emerald-300/50' 
+                                    : 'bg-white border-gray-100'
+                                }`}
+                              >
+                                <PlayerCardSide 
+                                  name={g.p2?.name || 'TBD'} 
+                                  username={g.p2?.username || ''} 
+                                  playerObj={g.p2} 
+                                  align="right" 
+                                  isWinner={isP2Winner}
+                                />
+                              </div>
                             </div>
                           </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               );
             })()}
           </div>
@@ -980,11 +1228,27 @@ export default function ChessTournamentPage() {
         {activeTab === 'rules' && (
           <div className="grid lg:grid-cols-3 gap-8 items-start">
             {/* Left/Middle Column: Scrollable Rulebook */}
-            <div className="lg:col-span-2 varsity-card p-6 md:p-8 lg:max-h-[800px] lg:overflow-y-auto no-scrollbar space-y-6">
+            <div className="lg:col-span-2 varsity-card p-6 md:p-8 lg:max-h-[800px] lg:overflow-y-auto space-y-6">
               <div>
                 <p className="text-xs font-bold tracking-[0.25em] text-brand-accent uppercase mb-1">Official Rulebook</p>
                 <h2 className="font-space font-black text-3xl text-[#111111] mb-2 uppercase">SCL Tournament Rules</h2>
-                <p className="text-sm text-gray-500 italic">Read carefully. Ignorance of these rules is not an excuse, but honest mistakes have a fair appeal window.</p>
+                <p className="text-sm text-gray-500 italic mb-4">Read carefully. Ignorance of these rules is not an excuse, but honest mistakes have a fair appeal window.</p>
+                
+                {/* M5: Miller's Law / Chunking Category Anchor Pills */}
+                <div className="flex flex-wrap gap-2 pt-2 pb-4 border-b border-gray-100">
+                  <a href="#rules-gameplay" className="text-xs font-bold px-3 py-1.5 rounded-lg bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors inline-flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M19 22H5v-2h14v2zm-2-3H7v-2h10v1.5zm-5-17a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm2.8 7.3A4.5 4.5 0 0 0 12 8a4.5 4.5 0 0 0-2.8 1.3C8.1 10.6 7.5 12.7 7.5 15h9c0-2.3-.6-4.4-1.7-5.7z"/></svg>
+                    <span>Gameplay &amp; Match Rules</span>
+                  </a>
+                  <a href="#rules-fairplay" className="text-xs font-bold px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors inline-flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    <span>Fair Play &amp; Forfeits</span>
+                  </a>
+                  <a href="#rules-prizes" className="text-xs font-bold px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 hover:bg-emerald-600 hover:text-white transition-colors inline-flex items-center gap-1.5">
+                    <TrophySvg className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Prizes &amp; Leaderboard</span>
+                  </a>
+                </div>
               </div>
 
               <div className="space-y-6 divide-y divide-gray-100 text-sm text-gray-600 leading-relaxed">
@@ -1027,7 +1291,7 @@ export default function ChessTournamentPage() {
                 </div>
 
                 {/* SECTION 4 */}
-                <div className="pt-5">
+                <div id="rules-gameplay" className="pt-5 scroll-mt-6">
                   <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 4: Match Rules</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>4.1</strong> All games on Chess.com with your registered username only.</li>
@@ -1075,7 +1339,7 @@ export default function ChessTournamentPage() {
                 </div>
 
                 {/* SECTION 8 */}
-                <div className="pt-5">
+                <div id="rules-fairplay" className="pt-5 scroll-mt-6">
                   <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 8: Fair Play &amp; Conduct</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>8.1</strong> Engine use is strictly forbidden. No computer assistance, databases, or analysis tools during games.</li>
@@ -1100,7 +1364,7 @@ export default function ChessTournamentPage() {
                 </div>
 
                 {/* SECTION 10 */}
-                <div className="pt-5">
+                <div id="rules-prizes" className="pt-5 scroll-mt-6">
                   <h3 className="font-space font-black text-base text-[#111111] uppercase mb-2">Section 10: Prizes</h3>
                   <ul className="space-y-1.5 list-disc pl-4">
                     <li><strong>10.1</strong> Champion: Chess.com Diamond Premium (1 month), Official SCL Champion title, permanent spot on SCL leaderboard.</li>
@@ -1152,7 +1416,7 @@ export default function ChessTournamentPage() {
                 </div>
               </div>
 
-              {/* Registration CTA — auth-gated */}
+              {/* Registration CTA  auth-gated */}
               <div className="varsity-card p-6">
                 <p className="text-xs font-bold tracking-[0.2em] text-brand-primary uppercase mb-2">Join the Tournament</p>
                 <h3 className="font-space font-black text-lg text-[#111111] mb-1.5">Ready to Compete?</h3>
@@ -1309,13 +1573,13 @@ export default function ChessTournamentPage() {
               })()}
             </div>
 
-            {/* Test cleanup — user requested */}
-            <div className="border border-dashed border-amber-200 bg-amber-50/30 rounded-2xl p-5 space-y-3">
-              <p className="font-space font-black text-base text-amber-900">Test Data Cleanup</p>
-              <p className="text-sm text-amber-700">Removes April &amp; May 2026 mock archives from local storage after testing.</p>
+            {/* Test cleanup  user requested */}
+            <div className="border border-dashed border-blue-200 bg-blue-50/30 rounded-2xl p-5 space-y-3">
+              <p className="font-space font-black text-base text-blue-900">Test Data Cleanup</p>
+              <p className="text-sm text-blue-700">Removes April &amp; May 2026 mock archives from local storage after testing.</p>
               <div className="flex flex-wrap gap-3">
-                <button onClick={clearMocks} className="text-sm font-bold bg-amber-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-amber-500 transition-colors">
-                  Clear Mock History
+                <button onClick={clearMocks} className="text-sm font-bold bg-blue-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-blue-500 transition-colors">
+                   Clear Mock History
                 </button>
                 <button onClick={() => { setIsAdmin(false); toast.info('Admin locked'); }} className="text-sm font-bold bg-gray-200 text-gray-600 px-4 py-2 rounded-xl cursor-pointer hover:bg-gray-300 transition-colors">
                   Lock Panel
@@ -1383,19 +1647,19 @@ export default function ChessTournamentPage() {
                 return (
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* BYEs */}
-                    <div className="border border-amber-100 bg-amber-50/20 rounded-2xl p-5 space-y-3">
-                      <div className="flex items-center justify-between pb-2 border-b border-amber-100/50">
-                        <span className="font-space font-black text-sm text-amber-900">BYE Seeding ({byes.length})</span>
-                        <span className="text-[10px] font-black text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full uppercase">Auto-Advance</span>
+                    <div className="border border-blue-100 bg-blue-50/20 rounded-2xl p-5 space-y-3">
+                      <div className="flex items-center justify-between pb-2 border-b border-blue-100/50">
+                        <span className="font-space font-black text-sm text-blue-900">BYE Seeding ({byes.length})</span>
+                        <span className="text-[10px] font-black text-blue-700 bg-blue-100 px-2 py-0.5 rounded-full uppercase">Auto-Advance</span>
                       </div>
                       <div className="space-y-2 max-h-[250px] overflow-y-auto pr-1">
                         {byes.map(p => (
-                          <div key={p.username} className="flex justify-between items-center text-xs p-2 bg-white rounded-lg border border-amber-100/50">
+                          <div key={p.username} className="flex justify-between items-center text-xs p-2 bg-white rounded-lg border border-blue-100/50">
                             <div>
-                              <p className="font-bold text-amber-950">{p.name}</p>
+                              <p className="font-bold text-blue-950">{p.name}</p>
                               <p className="text-gray-400 text-[10px]">{p.school} &bull; @{p.username}</p>
                             </div>
-                            <span className="font-black text-amber-700">{p.rating} ELO</span>
+                            <span className="font-black text-blue-700">{p.rating} ELO</span>
                           </div>
                         ))}
                       </div>
@@ -1608,7 +1872,10 @@ export default function ChessTournamentPage() {
         <div className="fixed inset-0 bg-[#111111]/75 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in fade-in duration-200" onClick={() => setShowRulesModal(false)}>
           <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-2xl shadow-2xl border border-gray-100 relative max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between pb-4 border-b border-gray-100 shrink-0">
-              <h3 className="font-space font-black text-2xl text-[#111111]">📖 SCL Tournament Rules</h3>
+              <div className="flex items-center gap-2.5">
+                <svg className="w-6 h-6 text-brand-primary" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                <h3 className="font-space font-black text-2xl text-[#111111]">SCL Tournament Rules</h3>
+              </div>
               <button 
                 onClick={() => setShowRulesModal(false)}
                 className="text-gray-400 hover:text-[#111111] transition-colors cursor-pointer"

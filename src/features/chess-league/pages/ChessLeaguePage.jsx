@@ -288,7 +288,7 @@ export default function ChessLeaguePage() {
           notificationsToInsert.push({
             user_id: whiteProfile.id,
             type: 'opponent_assigned',
-            title: 'Opponent Assigned! ♟',
+            title: 'Opponent Assigned!',
             message: `Opponent: ${blackProfile ? blackProfile.name : bUser}. Round: ${roundName}. Match Link: /dashboard?tab=pairings. Scheduled time: To be agreed in Match Chat.`,
             link: '/dashboard?tab=pairings'
           });
@@ -298,7 +298,7 @@ export default function ChessLeaguePage() {
           notificationsToInsert.push({
             user_id: blackProfile.id,
             type: 'opponent_assigned',
-            title: 'Opponent Assigned! ♟',
+            title: 'Opponent Assigned!',
             message: `Opponent: ${whiteProfile ? whiteProfile.name : wUser}. Round: ${roundName}. Match Link: /dashboard?tab=pairings. Scheduled time: To be agreed in Match Chat.`,
             link: '/dashboard?tab=pairings'
           });

@@ -85,7 +85,9 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
   return (
     <div
       className={`bg-white rounded-2xl overflow-hidden shadow-sm border transition-all duration-200 ${
-        isMatchDone
+        isByeMatch
+          ? 'opacity-65 border-dashed border-gray-300'
+          : isMatchDone
           ? 'border-transparent shadow-md'
           : 'border-brand-primary/15'
       }`}
@@ -95,7 +97,7 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
         isMatchDone ? 'bg-brand-primary/5' : 'bg-gray-50/80'
       }`}>
         <div className="flex items-center gap-1.5">
-          <span className={`text-xs ${isMatchDone ? 'text-brand-primary' : 'text-gray-300'}`}>♟</span>
+          <svg className={`w-3.5 h-3.5 ${isMatchDone ? 'text-brand-primary' : 'text-gray-300'}`} viewBox="0 0 24 24" fill="currentColor"><path d="M19 22H5v-2h14v2zm-2-3H7v-2h10v1.5zm-5-17a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm2.8 7.3A4.5 4.5 0 0 0 12 8a4.5 4.5 0 0 0-2.8 1.3C8.1 10.6 7.5 12.7 7.5 15h9c0-2.3-.6-4.4-1.7-5.7z"/></svg>
           <span className={`text-xs font-black uppercase tracking-widest ${isMatchDone ? 'text-brand-primary' : 'text-gray-300'}`}>
             Match {idx + 1}
           </span>
@@ -121,7 +123,7 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
             </span>
           )}
           {isByeMatch && (
-            <span className="text-[10px] font-black text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-black text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-full">
               AUTO-ADVANCE
             </span>
           )}
@@ -147,9 +149,9 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
       
       {/* VS divider */}
       <div className="relative flex items-center">
-        <div className="flex-1 h-px bg-gray-100" />
-        <span className="text-xs font-black text-gray-300 px-2 shrink-0">VS</span>
-        <div className="flex-1 h-px bg-gray-100" />
+        <div className="flex-1 h-px bg-gray-200" />
+        <span className="text-[10px] font-black text-brand-accent bg-brand-accent/10 px-2 py-0.5 rounded-full shrink-0 uppercase tracking-widest select-none">VS</span>
+        <div className="flex-1 h-px bg-gray-200" />
       </div>
 
       {playerRow(game.p2, 'bottom')}
@@ -178,16 +180,34 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
   const closeModal = () => { setLoggingGame(null); setGameLinkInput(''); };
 
   if (!tournament || !tournament.rounds?.length) return (
-    <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-10 h-10 text-gray-300 mx-auto mb-4">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <p className="font-space font-black text-lg text-[#111111] mb-2">Round 1 Not Yet Generated</p>
-      <p className="text-sm text-gray-400 mb-6 max-w-xs mx-auto">
-        The admin generates Round 1 pairings once. They are permanent and cannot be re-shuffled.
-      </p>
+    <div className="text-center py-16 px-6 bg-white rounded-3xl border border-gray-100 shadow-sm space-y-6">
+      <div className="w-16 h-16 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mx-auto text-brand-primary">
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 22H5v-2h14v2zm-1.5-4H6.5l.8-2h9.4l.8 2zm-1.1-4H7.6l.8-2h7.2l.8 2zM12 2a3.5 3.5 0 00-3.5 3.5c0 1.25.66 2.35 1.65 2.96L9.5 10h5l-.65-1.54A3.49 3.49 0 0015.5 5.5 3.5 3.5 0 0012 2z"/>
+        </svg>
+      </div>
+      <div>
+        <p className="font-space font-black text-xl text-[#111111] mb-1">Bracket Pairings Pending</p>
+        <p className="text-sm text-gray-500 max-w-md mx-auto leading-relaxed">
+          Round 1 pairings will be officially seeded and published once registration closes.
+        </p>
+      </div>
+
+      {/* Teaser Bracket Skeleton (L2: Peak-End Empty State Teaser) */}
+      <div className="max-w-lg mx-auto p-4 bg-gray-50/70 border border-dashed border-gray-200 rounded-2xl space-y-3 opacity-60">
+        <div className="flex items-center justify-between text-xs font-bold text-gray-400 border-b pb-2">
+          <span>SAMPLE ROUND 1 PAIRING</span>
+          <span>10+0 RAPID</span>
+        </div>
+        <div className="flex justify-between items-center bg-white p-3 rounded-xl border border-gray-100">
+          <div className="h-4 bg-gray-200 rounded w-28"></div>
+          <span className="text-[10px] font-black text-gray-300">VS</span>
+          <div className="h-4 bg-gray-200 rounded w-28"></div>
+        </div>
+      </div>
+
       {isAdmin && (
-        <button onClick={onInitialize} className="bg-brand-primary text-white font-bold text-xs px-6 py-3 rounded-full shadow-md hover:bg-brand-primary/90 transition-colors cursor-pointer">
+        <button onClick={onInitialize} className="bg-brand-primary text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md hover:bg-brand-primary/95 transition-all cursor-pointer">
           Generate Round 1 Fixtures
         </button>
       )}
@@ -253,7 +273,7 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
           )}
         </div>
         
-        {/* Advance round — only when last round is fully complete */}
+        {/* Advance round  only when last round is fully complete */}
         {isAdmin && allLastRoundDone && lastRound.games.length > 1 && (
           <button onClick={onAdvanceRound}
             className="text-sm font-bold bg-brand-accent text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-brand-accent/90 transition-colors shrink-0 w-full sm:w-auto text-center">
@@ -271,11 +291,70 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
         round && (
           <div>
             <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date} @ 8:00 PM WAT</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {round.games.map((g, i) => (
-                <MatchCard key={g.id} game={g} idx={i} isAdmin={isAdmin} onClick={openModal} onPlayerClick={onPlayerClick} />
-              ))}
-            </div>
+
+            {/* Group stage: cluster matches by group with styled headers */}
+            {round.isGroupStage && round.games.some(g => g.groupLabel) ? (
+              <div className="space-y-6">
+                {(() => {
+                  // Collect unique group labels in order of first appearance
+                  const seen = new Set();
+                  const groupOrder = [];
+                  round.games.forEach(g => {
+                    if (g.groupLabel && !seen.has(g.groupLabel)) {
+                      seen.add(g.groupLabel);
+                      groupOrder.push(g.groupLabel);
+                    }
+                  });
+
+                  return groupOrder.map(label => {
+                    const groupGames = round.games.filter(g => g.groupLabel === label);
+                    const completedCount = groupGames.filter(g => g.winner).length;
+                    const allDone = completedCount === groupGames.length;
+
+                    return (
+                      <div key={label} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                        {/* Group header */}
+                        <div className="bg-brand-primary px-4 sm:px-5 py-3 flex items-center justify-between">
+                          <div className="flex items-center gap-2.5">
+                            <span className="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center text-xs font-black text-white">
+                              {label}
+                            </span>
+                            <h3 className="text-sm sm:text-base font-black text-white tracking-wide">
+                              Group {label}
+                            </h3>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className={`text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider ${
+                              allDone
+                                ? 'bg-emerald-400/20 text-emerald-200'
+                                : 'bg-white/10 text-white/60'
+                            }`}>
+                              {completedCount}/{groupGames.length} played
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Group matches */}
+                        <div className="p-3 sm:p-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            {groupGames.map((g, i) => (
+                              <MatchCard key={g.id} game={g} idx={i} isAdmin={isAdmin} onClick={openModal} onPlayerClick={onPlayerClick} />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  });
+                })()}
+              </div>
+            ) : (
+              /* Non-group-stage: flat grid (knockout rounds) */
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {round.games.map((g, i) => (
+                  <MatchCard key={g.id} game={g} idx={i} isAdmin={isAdmin} onClick={openModal} onPlayerClick={onPlayerClick} />
+                ))}
+              </div>
+            )}
           </div>
         )
       )}
@@ -284,7 +363,7 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
       {loggingGame && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" onClick={closeModal}>
           <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl" onClick={e => e.stopPropagation()}>
-            <p className="font-space font-black text-lg text-[#111111] mb-1">Log Match — {loggingGame.id}</p>
+            <p className="font-space font-black text-lg text-[#111111] mb-1">Log Match - {loggingGame.id}</p>
             <p className="text-sm text-gray-400 mb-5">Paste the Chess.com game link and select the winner.</p>
 
             {/* Game link */}

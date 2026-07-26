@@ -3,10 +3,10 @@ import { getCountdownTarget } from '../utils/tournament';
 
 function pad(n) { return String(n).padStart(2, '0'); }
 
-function CountdownCell({ value, label }) {
+function CountdownCell({ value, label, isPulse = false }) {
   return (
     <div className="flex flex-col items-center min-w-[48px] sm:min-w-[56px] flex-1 sm:flex-initial">
-      <div className="bg-white/15 border border-white/20 text-white font-space font-black text-xl sm:text-2xl md:text-3xl w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center shadow-sm">
+      <div className={`bg-white/15 border border-white/20 text-white font-space font-black text-xl sm:text-2xl md:text-3xl w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center shadow-sm ${isPulse ? 'animate-pulse text-brand-accent-on-dark' : ''}`}>
         {pad(value)}
       </div>
       <span className="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1 sm:mt-1.5">{label}</span>
@@ -62,19 +62,19 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
   return (
     <section
       className="relative text-white px-4 sm:px-6 md:px-12 lg:px-16 py-10 sm:py-16 md:py-24 overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #0B193C 0%, #1E1B4B 55%, #431407 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #0B193C 0%, #1A56C4 55%, #0C1E54 100%)' }}
     >
       {/* Ambient glow blobs */}
       <div className="pointer-events-none absolute inset-0">
-        {/* Top-right orange bloom */}
+        {/* Top-right royal blue bloom */}
         <div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full opacity-30"
-          style={{ background: 'radial-gradient(circle, #fb923c 0%, transparent 70%)' }} />
+          style={{ background: 'radial-gradient(circle, #3B82F6 0%, transparent 70%)' }} />
         {/* Bottom-left brand-primary dark bloom */}
         <div className="absolute -bottom-32 -left-20 w-[400px] h-[400px] rounded-full opacity-20"
           style={{ background: 'radial-gradient(circle, #0A2A6A 0%, transparent 70%)' }} />
         {/* Center accent streak */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px opacity-10"
-          style={{ background: 'linear-gradient(90deg, transparent, #fdba74, transparent)' }} />
+          style={{ background: 'linear-gradient(90deg, transparent, #60A5FA, transparent)' }} />
       </div>
       <div className="max-w-5xl mx-auto">
         {/* Overline row */}
@@ -108,7 +108,7 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
               <CountdownCell value={days}  label="Days" />
               <CountdownCell value={hours} label="Hrs" />
               <CountdownCell value={mins}  label="Min" />
-              <CountdownCell value={secs}  label="Sec" />
+              <CountdownCell value={secs}  label="Sec" isPulse={days === 0 && hours < 24} />
             </div>
           </div>
 
@@ -117,7 +117,12 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
             {/* Champion or Prize Card */}
             {status === 'completed' ? (
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4 sm:p-6 shadow-sm">
-                <p className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-emerald-400 uppercase mb-2.5 sm:mb-3">🏆 Champion</p>
+                <p className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-emerald-400 uppercase mb-2.5 sm:mb-3 flex items-center gap-1.5">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 text-blue-400">
+                    <path d="M19 5H17V3C17 2.45 16.55 2 16 2H8C7.45 2 7 2.45 7 3V5H5C3.9 5 3 5.9 3 7V9C3 10.87 4.31 12.43 6.07 12.87C6.77 14.73 8.39 16.14 10.4 16.44C10.74 17.3 11.33 18.03 12.09 18.52V20H9C8.45 20 8 20.45 8 21C8 21.55 8.45 22 9 22H15C15.55 22 16 21.55 16 21C16 20.45 15.55 20 15 20H12.09V18.52C12.85 18.03 13.43 17.3 13.78 16.44C15.78 16.14 17.41 14.73 18.11 12.87C19.87 12.43 21 10.87 21 9V7C21 5.9 20.1 5 19 5ZM5 9V7H7V10.24C5.81 9.87 5 9.02 5 9ZM19 9C19 9.02 18.19 9.87 17 10.24V7H19V9Z"/>
+                  </svg>
+                  <span>Champion</span>
+                </p>
                 <div className="flex items-center gap-3 sm:gap-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center flex-shrink-0 animate-pulse">
                     <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6 text-brand-accent">

@@ -73,7 +73,9 @@ function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
             <span className="text-[9px] font-black text-emerald-600 bg-emerald-100 px-1 py-0.5 rounded">W</span>
           )}
           {isChamp && (
-            <span title="Champion" className="text-amber-500 text-xs select-none">👑</span>
+            <span title="Champion" className="inline-flex items-center text-blue-500 select-none">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
+            </span>
           )}
         </div>
       </div>
@@ -84,12 +86,16 @@ function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
     ((game.p1 && game.p1.username === activeChampUsername) || 
      (game.p2 && game.p2.username === activeChampUsername));
 
+  const isByeMatch = isBye(game.p1) || isBye(game.p2);
+
   return (
     <div 
       data-game-id={game.id}
       className={`bg-white border rounded-lg overflow-hidden shadow-sm transition-all duration-200 relative z-10 ${
-        isGameOnChampPath 
-          ? 'border-amber-400 ring-1 ring-amber-300 shadow-amber-100' 
+        isByeMatch
+          ? 'opacity-65 border-dashed border-gray-300'
+          : isGameOnChampPath 
+          ? 'border-blue-400 ring-1 ring-blue-300 shadow-blue-100' 
           : game.winner 
             ? 'border-gray-100' 
             : 'border-brand-primary/25'
@@ -335,7 +341,7 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
     try {
       const html2canvas = (await import('html2canvas')).default;
 
-      // Read actual dimensions from the inner canvas div — these match the computed TOTAL_W/TOTAL_H
+      // Read actual dimensions from the inner canvas div  these match the computed TOTAL_W/TOTAL_H
       const fullWidth = parentRef.current.scrollWidth;
       const fullHeight = parentRef.current.scrollHeight;
 
@@ -505,7 +511,7 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
                   <path 
                     d={path1} 
                     fill="none" 
-                    stroke={champPath1 ? '#F59E0B' : '#E5E7EB'} 
+                    stroke={champPath1 ? '#3B82F6' : '#E5E7EB'} 
                     strokeWidth={champPath1 ? '3' : '1.5'} 
                     strokeOpacity={champPath1 ? '1' : '0.8'}
                     strokeDasharray={champPath1 ? 'none' : '0'}
@@ -513,7 +519,7 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
                   <path 
                     d={path2} 
                     fill="none" 
-                    stroke={champPath2 ? '#F59E0B' : '#E5E7EB'} 
+                    stroke={champPath2 ? '#3B82F6' : '#E5E7EB'} 
                     strokeWidth={champPath2 ? '3' : '1.5'} 
                     strokeOpacity={champPath2 ? '1' : '0.8'}
                     strokeDasharray={champPath2 ? 'none' : '0'}
@@ -590,31 +596,31 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
             {/* Bottom: Trophy & Champion Display */}
             <div className="w-full flex flex-col items-center gap-4">
               {champion ? (
-                <div className="bg-gradient-to-tr from-amber-500 to-yellow-400 text-white rounded-2xl p-4 shadow-md border border-amber-300 w-full">
-                  <span className="text-[10px] font-black uppercase tracking-[0.25em] block text-amber-100">Champion</span>
+                <div className="bg-gradient-to-tr from-[#0B193C] to-[#1A56C4] text-white rounded-2xl p-4 shadow-md border border-blue-300 w-full">
+                  <span className="text-[10px] font-black uppercase tracking-[0.25em] block text-blue-200">Champion</span>
                   <p 
                     onClick={() => onPlayerClick(champion)}
                     className="text-base font-black font-space mt-1 hover:underline cursor-pointer truncate"
                   >
                     {champion.name}
                   </p>
-                  <p className="text-xs font-bold text-amber-50 truncate mt-0.5">{champion.school}</p>
+                  <p className="text-xs font-bold text-blue-100 truncate mt-0.5">{champion.school}</p>
                   <span className="inline-block mt-2 bg-white/20 text-[10px] font-black px-2 py-0.5 rounded-full">
                     Rating: {champion.rating}
                   </span>
                 </div>
               ) : (
-                <div className="bg-gray-50 border border-gray-100 text-gray-400 rounded-2xl py-4 px-3 text-xs font-semibold select-none w-full">
-                  Winner receives the SCL Champion Cup & 👑 status
+                <div className="bg-gray-50 border border-gray-100 text-gray-400 rounded-2xl py-4 px-3 text-xs font-semibold select-none w-full flex items-center justify-center gap-1">
+                  Winner receives the SCL Champion Cup & <svg className="w-4 h-4 text-blue-500 inline-block align-text-bottom" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg> status
                 </div>
               )}
 
               {/* Smaller compact trophy */}
               <div className="relative group">
-                <div className="absolute inset-0 bg-amber-400/10 blur-2xl rounded-full scale-75" />
+                <div className="absolute inset-0 bg-blue-400/10 blur-2xl rounded-full scale-75" />
                 <svg 
                    viewBox="0 0 24 24" 
-                   className={`w-20 h-20 relative transition-transform duration-500 group-hover:scale-105 ${champion ? 'text-amber-500 drop-shadow-[0_4px_12px_rgba(245,158,11,0.4)]' : 'text-gray-200'}`}
+                   className={`w-20 h-20 relative transition-transform duration-500 group-hover:scale-105 ${champion ? 'text-blue-500 drop-shadow-[0_4px_12px_rgba(59,130,246,0.4)]' : 'text-gray-200'}`}
                    fill="currentColor"
                 >
                   <path d="M19 5H17V3C17 2.45 16.55 2 16 2H8C7.45 2 7 2.45 7 3V5H5C3.9 5 3 5.9 3 7V9C3 10.87 4.31 12.43 6.07 12.87C6.77 14.73 8.39 16.14 10.4 16.44C10.74 17.3 11.33 18.03 12.09 18.52V20H9C8.45 20 8 20.45 8 21C8 21.55 8.45 22 9 22H15C15.55 22 16 21.55 16 21C16 20.45 15.55 20 15 20H12.09V18.52C12.85 18.03 13.43 17.3 13.78 16.44C15.78 16.14 17.41 14.73 18.11 12.87C19.87 12.43 21 10.87 21 9V7C21 5.9 20.1 5 19 5ZM5 9V7H7V10.24C5.81 9.87 5 9.02 5 9ZM19 9C19 9.02 18.19 9.87 17 10.24V7H19V9Z"/>

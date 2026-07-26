@@ -6,7 +6,7 @@ import { useAuthModal } from '../context/AuthModalContext';
  * AuthGate
  *
  * Wraps any interactive child element. If the current visitor is a guest
- * (not signed in), clicking the child is intercepted — the auth modal opens
+ * (not signed in), clicking the child is intercepted  the auth modal opens
  * instead, with the original action queued as a post-login callback.
  *
  * Once the user signs in, the callback fires automatically and the action

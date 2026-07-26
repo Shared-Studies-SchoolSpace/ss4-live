@@ -6,14 +6,14 @@ import { getTournamentDates } from '../utils/tournament';
  * TournamentCountdownBanner
  *
  * Laws of UX applied:
- * - Von Restorff:      One distinct strip — nothing else on-page pulses amber.
+ * - Von Restorff:      One distinct strip  nothing else on-page pulses amber.
  * - Zeigarnik Effect: Live countdown ticks = incomplete task the brain wants to resolve.
  * - Goal-Gradient:    As days shrink the urgency message escalates.
  * - Fitts's Law:      44 px-min CTA, full-height dismiss area.
  * - Hick's Law:       Exactly one action: "Register Now".
  * - Occam's Razor:    Strip, not modal. Catchiness over space.
  * - Parkinson's Law:  Hard deadline shown explicitly to constrain deliberation.
- * - Peak-End Rule:    Dismiss is smooth/frictionless — no guilt, no friction.
+ * - Peak-End Rule:    Dismiss is smooth/frictionless  no guilt, no friction.
  */
 
 const SHOW_DAYS_BEFORE = 14;
@@ -26,7 +26,7 @@ function getNextTournamentStart() {
   const m = now.getMonth() + 1;
 
   const datesThisMonth = getTournamentDates(y, m);
-  const startThisMonth = new Date(`${datesThisMonth[0]}T18:00:00+01:00`);
+  const startThisMonth = new Date(`${datesThisMonth[0]}T20:00:00+01:00`);
 
   if (startThisMonth > now) {
     return { date: startThisMonth, month: m, year: y };
@@ -35,7 +35,7 @@ function getNextTournamentStart() {
   const nm = m === 12 ? 1 : m + 1;
   const ny = m === 12 ? y + 1 : y;
   const datesNextMonth = getTournamentDates(ny, nm);
-  return { date: new Date(`${datesNextMonth[0]}T18:00:00+01:00`), month: nm, year: ny };
+  return { date: new Date(`${datesNextMonth[0]}T20:00:00+01:00`), month: nm, year: ny };
 }
 
 function useCountdown(targetDate) {
@@ -129,8 +129,8 @@ export default function TournamentCountdownBanner() {
   const monthName = tournament ? MONTH_NAMES[tournament.month] : '';
 
   const headline = isUrgent
-    ? `Last chance — tournament starts in ${days}d ${hours}h!`
-    : `${monthName} Chess Tournament is ${days} day${days !== 1 ? 's' : ''} away — secure your spot!`;
+    ? `Last chance! Tournament starts in ${days}d ${hours}h!`
+    : `${monthName} Chess Tournament is ${days} day${days !== 1 ? 's' : ''} away. Secure your spot!`;
 
   return (
     <AnimatePresence>
@@ -187,13 +187,13 @@ export default function TournamentCountdownBanner() {
               <p className="text-white font-bold text-[11px] sm:text-xs leading-tight truncate" style={{ margin: 0 }}>
                 <span
                   className="font-black mr-1"
-                  style={{ color: isUrgent ? '#F59E0B' : '#A5C8FF', fontSize: '12px' }}
+                  style={{ color: isUrgent ? '#93C5FD' : '#A5C8FF', fontSize: '12px' }}
                 >
                   SCL Monthly Tournament.
                 </span>
                 <span className="hidden sm:inline">{headline}</span>
                 <span className="inline sm:hidden">
-                  {days}d {hours}h left — join now!
+                  {days}d {hours}h left: join now!
                 </span>
               </p>
             </div>
@@ -225,11 +225,11 @@ export default function TournamentCountdownBanner() {
                   whiteSpace: 'nowrap',
                   textDecoration: 'none',
                   background: isUrgent
-                    ? 'linear-gradient(135deg, #E8640A, #F59E0B)'
+                    ? 'linear-gradient(135deg, #1A56C4, #3B82F6)'
                     : 'rgba(255,255,255,0.15)',
                   color: '#fff',
                   border: isUrgent ? 'none' : '1px solid rgba(255,255,255,0.3)',
-                  boxShadow: isUrgent ? '0 2px 12px rgba(232,100,10,0.45)' : 'none',
+                  boxShadow: isUrgent ? '0 2px 12px rgba(26,86,196,0.45)' : 'none',
                   backdropFilter: 'blur(4px)',
                 }}
               >

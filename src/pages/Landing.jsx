@@ -248,28 +248,44 @@ export default function LandingPage() {
           .from("tournaments")
           .select("*");
         
+        const now = new Date();
+        const currentMonthYear = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
         const extractedMatches = [];
         (tournaments || []).forEach(t => {
+          const isCurrent = t.month_year === currentMonthYear;
           (t.rounds || []).forEach(r => {
             (r.games || []).forEach(g => {
               const isP1Bye = g.p1?.username?.toLowerCase() === 'bye' || g.p1?.name?.toUpperCase() === 'BYE';
               const isP2Bye = g.p2?.username?.toLowerCase() === 'bye' || g.p2?.name?.toUpperCase() === 'BYE';
-              if (g.winner && !isP1Bye && !isP2Bye) {
-                extractedMatches.push({
-                  id: `${t.id}_${r.name}_${g.id}`,
-                  tournamentName: t.name,
-                  roundName: r.name,
-                  white: g.p1 || g.white,
-                  black: g.p2 || g.black,
-                  winner: g.winner,
-                  gameLink: g.gameLink || "",
-                  date: t.month_year
-                });
-              }
+              if (isP1Bye || isP2Bye) return;
+              // For past months: completed results only. For current month: all pairings.
+              if (!isCurrent && !g.winner) return;
+              extractedMatches.push({
+                id: `${t.id}_${r.roundNum || r.name}_${g.id}`,
+                tournamentName: t.name,
+                roundName: r.name,
+                groupLabel: g.groupLabel || null,
+                isGroupStage: r.isGroupStage || false,
+                white: g.p1 || g.white,
+                black: g.p2 || g.black,
+                winner: g.winner || null,
+                gameLink: g.gameLink || "",
+                date: t.month_year,
+                isPending: !g.winner
+              });
             });
           });
         });
-        const finalMatches = extractedMatches.slice(0, 8);
+
+        // Sort: current month first, within same month completed before pending
+        extractedMatches.sort((a, b) => {
+          if (a.date !== b.date) return b.date.localeCompare(a.date);
+          if (a.isPending !== b.isPending) return a.isPending ? 1 : -1;
+          return 0;
+        });
+
+        const finalMatches = extractedMatches.slice(0, 16);
         setDbMatches(finalMatches);
         setPreloadProgress(45);
 
@@ -536,19 +552,21 @@ export default function LandingPage() {
   // Decoupled Match Results
   const feedMatches = useMemo(() => {
     return (dbMatches || []).map(m => {
-      const winnerName = typeof m.winner === "object" ? m.winner.name : m.winner;
-      // parse date or fallback to now
+      const winnerName = typeof m.winner === "object" ? m.winner?.name : m.winner;
       const parsedTimestamp = m.date ? Date.parse(`${m.date}-01`) : NaN;
       return {
         id: `match_${m.id}`,
         type: "match",
         tournamentName: m.tournamentName,
         roundName: m.roundName,
+        groupLabel: m.groupLabel || null,
+        isGroupStage: m.isGroupStage || false,
         white: m.white,
         black: m.black,
-        winner: winnerName,
+        winner: winnerName || null,
         gameLink: m.gameLink,
         date: m.date,
+        isPending: m.isPending || false,
         timestamp: isNaN(parsedTimestamp) ? Date.now() : parsedTimestamp
       };
     });
@@ -626,7 +644,7 @@ export default function LandingPage() {
       <div className="container mx-auto px-3 sm:px-6 md:px-12 lg:px-16 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           
-          {/* Column 1: Profile Widget & Left Filters (25%) — moved below feed on mobile */}
+          {/* Column 1: Profile Widget & Left Filters (25%)  moved below feed on mobile */}
           <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
             
             {/* Session Card (M3 Outlined Layout) */}
@@ -749,7 +767,7 @@ export default function LandingPage() {
 
           </div>
 
-          {/* Column 2: Feed Stream (50%) — first on mobile */}
+          {/* Column 2: Feed Stream (50%)  first on mobile */}
           <div className="lg:col-span-2 space-y-6 text-left order-1 lg:order-2">
             
             {/* Header Feed Title */}
@@ -847,7 +865,7 @@ export default function LandingPage() {
                       </div>
                       <h3 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">Match Results</h3>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
                       {filteredMatches.length > 1 && (
                         <div className="flex items-center gap-1.5">
                           {filteredMatches.map((_, idx) => (
@@ -862,9 +880,22 @@ export default function LandingPage() {
                           ))}
                         </div>
                       )}
-                      <span className="text-xs font-bold text-gray-650 bg-m3-surface-variant px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                        {item.roundName}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        {item.groupLabel && (
+                          <span className="text-[10px] font-black bg-[#0B193C] text-amber-300 border border-amber-400/30 px-2.5 py-0.5 rounded-md uppercase tracking-wider shadow-2xs">
+                            Group {item.groupLabel}
+                          </span>
+                        )}
+                        {item.isPending ? (
+                          <span className="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            Upcoming
+                          </span>
+                        ) : (
+                          <span className="text-xs font-bold text-gray-650 bg-m3-surface-variant px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                            {item.roundName}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -877,26 +908,55 @@ export default function LandingPage() {
                       exit={{ opacity: 0, y: -8 }}
                       transition={{ duration: 0.35, ease: "easeInOut" }}
                     >
-                      <MatchResult
-                        w={wLabel}
-                        b={bLabel}
-                        res={resValue}
-                        date={item.date}
-                        round={item.roundName}
-                        division={{ players: allPlayers }}
-                        onPlayerSelect={(p) => setSelectedPlayer(p)}
-                        isAdmin={false}
-                        disableHover={true}
-                      />
+                      {item.isPending ? (
+                        /* Pending pairing  show VS layout */
+                        <div className="flex items-center gap-3 py-1">
+                          <div className="flex-1 text-center">
+                            <p className="text-sm font-black text-brand-text-dark leading-tight">{item.white?.name || '-'}</p>
+                            <p className="text-[10px] font-bold text-gray-500 mt-0.5">@{item.white?.username}</p>
+                            {item.white?.rating && (
+                              <span className="inline-block mt-1.5 text-[10px] font-black bg-brand-primary/10 text-brand-primary px-2 py-0.5 rounded-full">
+                                {item.white.rating} ELO
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex flex-col items-center gap-1 shrink-0">
+                            <span className="text-base font-black text-brand-accent">VS</span>
+                            <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Pending</span>
+                          </div>
+                          <div className="flex-1 text-center">
+                            <p className="text-sm font-black text-brand-text-dark leading-tight">{item.black?.name || '-'}</p>
+                            <p className="text-[10px] font-bold text-gray-500 mt-0.5">@{item.black?.username}</p>
+                            {item.black?.rating && (
+                              <span className="inline-block mt-1.5 text-[10px] font-black bg-brand-primary/10 text-brand-primary px-2 py-0.5 rounded-full">
+                                {item.black.rating} ELO
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        /* Completed game  existing MatchResult component */
+                        <MatchResult
+                          w={wLabel}
+                          b={bLabel}
+                          res={resValue}
+                          date={item.date}
+                          round={item.roundName}
+                          division={{ players: allPlayers }}
+                          onPlayerSelect={(p) => setSelectedPlayer(p)}
+                          isAdmin={false}
+                          disableHover={true}
+                        />
+                      )}
                       {item.gameLink && (
                         <div className="flex justify-end pt-1">
                           <a
                             href={item.gameLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs font-black text-brand-primary hover:text-brand-accent uppercase tracking-wider inline-flex items-center gap-0.5"
+                            className="text-xs font-black text-brand-primary hover:text-brand-accent uppercase tracking-wider inline-flex items-center gap-0.5 transition-colors"
                           >
-                            View Game Board <span className="material-symbols-outlined text-[12px]">open_in_new</span>
+                            Watch the game <span className="material-symbols-outlined text-[12px]">open_in_new</span>
                           </a>
                         </div>
                       )}
@@ -975,7 +1035,7 @@ export default function LandingPage() {
 
           </div>
 
-          {/* Column 3: Leaderboards Widget (25%) — stacked on mobile, sidebar on large screens */}
+          {/* Column 3: Leaderboards Widget (25%)  stacked on mobile, sidebar on large screens */}
           <div className="lg:col-span-1 space-y-6 text-left order-3 block">
             
             {/* Leaderboard Card (M3 Outlined container) */}

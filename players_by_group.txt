@@ -1,0 +1,383 @@
+================================================================================
+                    SCL TOURNAMENT - PLAYERS GROUPED BY GROUPS
+================================================================================
+Tournament Name : July 2026 SCL Tournament
+Tournament ID   : 2026-07
+Total Groups    : 14 (Group A to Group N)
+Total Players   : 56
+Date Generated  : July 26, 2026
+
+================================================================================
+GROUP A (4 Players)
+================================================================================
+1. Best James
+   Chess.com Username : Bestmvh
+   Institution        : University of Calabar
+   Department         : Medicine and surgery
+   Rating             : 2251
+
+2. Joseph Chukwumaeze
+   Chess.com Username : joeblaq104
+   Institution        : University of Nigeria Nsukka
+   Department         : Mechatronics
+   Rating             : 1106
+
+3. Teniola
+   Chess.com Username : D_Resign_Gambit
+   Institution        : Bells University
+   Department         : Mechatronics Engineering
+   Rating             : 1361
+
+4. ETIMBUK PAUL THOMPSON
+   Chess.com Username : Bayron-sage7
+   Institution        : Federal University of Technology Ikot Abasi
+   Department         : Mechanical engineering
+   Rating             : 1610
+
+================================================================================
+GROUP B (4 Players)
+================================================================================
+1. Isuekevbo Uduehi 
+   Chess.com Username : MaouTanner
+   Institution        : Bells University
+   Department         : Mechatronics
+   Rating             : 2185
+
+2. Udoh, Ephraim 
+   Chess.com Username : Udohephraim
+   Institution        : University of Uyo
+   Department         : Elect Elect Engineering
+   Rating             : 1023
+
+3. Enoch Isaac
+   Chess.com Username : 21stPhenom
+   Institution        : University Of Nigeria Nsukka
+   Department         : Mechatronics Engineering
+   Rating             : 1242
+
+4. Idorenyin Emmanuel 
+   Chess.com Username : Emmaculate
+   Institution        : University of uyo
+   Department         : Architecture
+   Rating             : 1609
+
+================================================================================
+GROUP C (4 Players)
+================================================================================
+1. Ade
+   Chess.com Username : Strav1k
+   Institution        : Unknown
+   Rating             : 2286
+
+2. Raphael Anyorikyo
+   Chess.com Username : milly_2872
+   Institution        : University of Uyo
+   Department         : Cyber Security
+   Rating             : 1083
+
+3. David
+   Chess.com Username : Davidbarakaii
+   Institution        : Federal university of technology, ikot abasi
+   Department         : Software engineering
+   Rating             : 1500
+
+4. Kingsley Ekpo
+   Chess.com Username : Kontor001
+   Institution        : University of Uyo
+   Department         : Computer Science
+   Rating             : 1524
+
+================================================================================
+GROUP D (4 Players)
+================================================================================
+1. Iyanam!
+   Chess.com Username : kingiyanam 
+   Institution        : University of Uyo
+   Department         : Law
+   Rating             : 1802
+
+2. Victor Martin Umoren
+   Chess.com Username : Martin_The
+   Institution        : University of Uyo
+   Department         : Computer Science
+   Rating             : 929
+
+3. Edidiong Okoro
+   Chess.com Username : Imblesseddy 
+   Institution        : University of Uyo
+   Department         : Microbiology
+   Rating             : 1200
+
+4. Gloria Okoro 
+   Chess.com Username : Gloria0726
+   Institution        : Unical
+   Department         : Nursing science
+   Rating             : 1765
+
+================================================================================
+GROUP E (4 Players)
+================================================================================
+1. Duke Ndifreke Etim 
+   Chess.com Username : Duke-001
+   Institution        : AKWAIBOM STATE UNIVERSITY
+   Department         : Electrical electronics engineering
+   Rating             : 2003
+
+2. Blossom AMAETOR 
+   Chess.com Username : Blozisom1
+   Institution        : University of uyo
+   Department         : Architecture
+   Rating             : 737
+
+3. Alex Richard 
+   Chess.com Username : Alexrichy19
+   Institution        : University of auyo
+   Department         : Microbiology
+   Rating             : 1210
+
+4. Edara-Abasi Nnyanga Akpan
+   Chess.com Username : Dara-veldora
+   Institution        : University of Uyo
+   Department         : Law
+   Rating             : 1722
+
+================================================================================
+GROUP F (4 Players)
+================================================================================
+1. Okoli Tochukwu 
+   Chess.com Username : HAKAI_026
+   Institution        : University of Nigeria Nsukka
+   Department         : Mechanical engineering
+   Rating             : 2016
+
+2. Pickle Rick 
+   Chess.com Username : Picklerick-24 
+   Institution        : Unknown
+   Rating             : 930
+
+3. Robert Victor Imo 
+   Chess.com Username : Kidd9h
+   Institution        : University of Uyo
+   Department         : Computer Science
+   Rating             : 1337
+
+4. Olatunjijeremiah 
+   Chess.com Username : olatunjijeremiah 
+   Institution        : Unknown
+   Rating             : 1524
+
+================================================================================
+GROUP G (4 Players)
+================================================================================
+1. Emmanuel Michael
+   Chess.com Username : Ikbeast1
+   Institution        : Federal University of Technology, Ikotabasi
+   Department         : Aerospace
+   Rating             : 2199
+
+2. Victor Ani-Joseph 
+   Chess.com Username : ajv1510
+   Institution        : Unknown
+   Rating             : 538
+
+3. Vincent Clement Effiong 
+   Chess.com Username : scorpiochicago1 
+   Institution        : University of Uyo
+   Department         : Computer science
+   Rating             : 1500
+
+4. Jarvis
+   Chess.com Username : NobbieFF 
+   Institution        : UNICAL
+   Department         : Pharm
+   Rating             : 1637
+
+================================================================================
+GROUP H (4 Players)
+================================================================================
+1. Sunny 
+   Chess.com Username : WS-MIC-HAEL 
+   Institution        : University of Uyo
+   Department         : Mechanical engineering
+   Rating             : 1809
+
+2. Prince Betiang
+   Chess.com Username : Master
+   Institution        : University of uyo
+   Department         : Computer science
+   Rating             : 350
+
+3. Goodness Mbakara
+   Chess.com Username : Goodnessmbakara 
+   Institution        : Uniuyo
+   Department         : Computer Science
+   Rating             : 1480
+
+4. Covenant Udobia 
+   Chess.com Username : Anonix_01 
+   Institution        : Federal University of Technology, Ikot Abasi
+   Department         : Electrical Electronics Engineering
+   Rating             : 1559
+
+================================================================================
+GROUP I (4 Players)
+================================================================================
+1. Daniel Richard 
+   Chess.com Username : danielrich69
+   Institution        : University of Uyo
+   Department         : Computer Engineering
+   Rating             : 1890
+
+2. Favour Nnenji
+   Chess.com Username : Sprky124
+   Institution        : University of Uyo
+   Department         : Electrical Electronics
+   Rating             : 761
+
+3. Robert Samuel 
+   Chess.com Username : Unclesam34e 
+   Institution        : University of uyo
+   Department         : Chemical engineering
+   Rating             : 1328
+
+4. Samuel Nkereuwem 
+   Chess.com Username : Fulgent47 
+   Institution        : University of Uyo
+   Department         : Computer Engineering
+   Rating             : 1708
+
+================================================================================
+GROUP J (4 Players)
+================================================================================
+1. Inimfon Akpan
+   Chess.com Username : Inimfon_67
+   Institution        : University of Uyo
+   Department         : Medicine and Surgery
+   Rating             : 1900
+
+2. Ugwu Praise Chinwuba 
+   Chess.com Username : PraiseChinwuba 
+   Institution        : University of Nigeria Nsukka
+   Department         : Computer science
+   Rating             : 612
+
+3. Anietie Ben
+   Chess.com Username : Jude_Ben
+   Institution        : Bells University of Technology
+   Department         : Electrical Electronics Engineering
+   Rating             : 1492
+
+4. Ches sing
+   Chess.com Username : Checkmate
+   Institution        : University of Uyo
+   Department         : Cyber Security
+   Rating             : 1654
+
+================================================================================
+GROUP K (4 Players)
+================================================================================
+1. Sanusi Inioluwa 
+   Chess.com Username : chesskiller090
+   Institution        : Bells university
+   Department         : Mechatronics Engineering
+   Rating             : 1866
+
+2. José Akpan 
+   Chess.com Username : Zilla065
+   Institution        : University of Uyo
+   Department         : Computer Science
+   Rating             : 822
+
+3. Godwin Akaiso
+   Chess.com Username : gallfather
+   Institution        : University of uyo
+   Department         : Computer engineering
+   Rating             : 1464
+
+4. Chris Emmanuel Etim 
+   Chess.com Username : Karyptus
+   Institution        : University of Uyo
+   Department         : Medicine and surgery
+   Rating             : 1604
+
+================================================================================
+GROUP L (4 Players)
+================================================================================
+1. Oyebode Samuel 
+   Chess.com Username : TheWeehfhi
+   Institution        : Bells university of technology
+   Department         : Management sciences
+   Rating             : 1997
+
+2. Faith Uko 
+   Chess.com Username : Kg_flames
+   Institution        : University of Uyo
+   Department         : Radiography
+   Rating             : 652
+
+3. Raphael wisdom 
+   Chess.com Username : Yoyo1513
+   Institution        : AFIT
+   Department         : Aerospace engineering
+   Rating             : 1462
+
+4. Saviour Ibok 
+   Chess.com Username : Savlast
+   Institution        : University of Uyo
+   Department         : Computer Engineering
+   Rating             : 1567
+
+================================================================================
+GROUP M (4 Players)
+================================================================================
+1. Destiny Chilaka
+   Chess.com Username : chilax333
+   Institution        : University of Uyo
+   Department         : Computer Engineering
+   Rating             : 1787
+
+2. Iniubong Wilson Udofia
+   Chess.com Username : Zavvy23
+   Institution        : Federal University of Technology Ikot Abasi
+   Department         : Aerospace
+   Rating             : 934
+
+3. Ado Bolouaweri Samuel 
+   Chess.com Username : Bolouaweri 
+   Institution        : University of Uyo
+   Department         : Computer engineering
+   Rating             : 1451
+
+4. Jonathan Victor
+   Chess.com Username : jonzing200
+   Institution        : University of UYO
+   Department         : Computer science
+   Rating             : 1579
+
+================================================================================
+GROUP N (4 Players)
+================================================================================
+1. Edem, Jesse Gregory 
+   Chess.com Username : Jesse70256
+   Institution        : University of uyo
+   Department         : Biochemistry
+   Rating             : 2052
+
+2. Shazanny Black 
+   Chess.com Username : Shazanny-112
+   Institution        : Akwa ibom state University
+   Department         : Civil engineering
+   Rating             : 234
+
+3. Adeoye Daniel
+   Chess.com Username : Ay_ano_koji123444562
+   Institution        : Bells University of Technology, Ota
+   Department         : Mechatronics engineering
+   Rating             : 1274
+
+4. Victor Augustine 
+   Chess.com Username : victoraugustine 
+   Institution        : University of Uyo
+   Department         : Electrical/Electronics Engineering
+   Rating             : 1769
+

@@ -28,21 +28,25 @@ export function propagateWinners(rounds) {
 
 const ROUND_NAMES = ['Round 1', 'Round 2', 'Round 3', 'Quarterfinals', 'Semifinals', 'Final'];
 
-// Helper to extract school for separation logic (Rule 3.4)
-const getSchool = (p) => {
-  if (!p || !p.school) return '';
-  return p.school.toLowerCase().trim()
-    .replace(/university of /g, "")
-    .replace(/nnamdi azikiwe university\(unizik\)/g, "unizik")
-    .replace(/nnamdi azikiwe university awka/g, "unizik")
-    .replace(/nnandi azikiwe university\(unizik\)/g, "unizik")
-    .replace(/bells university of technology/g, "bells")
-    .replace(/bells university/g, "bells")
-    .replace(/uniuyo/g, "uyo")
-    .replace(/university of uyo/g, "uyo");
+// Helper to extract a normalised school key for separation logic (Rule 3.4).
+// Handles all real-world variants found in the Supabase profiles table.
+export const getSchool = (p) => {
+  if (!p) return 'unknown';
+  const raw = (p.school || p.university || '').toLowerCase().trim().replace(/\s+/g, ' ');
+  if (!raw) return 'unknown';
+  if (/university of uyo|uniuyo|uni uyo|university of auyo/.test(raw)) return 'uniuyo';
+  if (/university of calabar|\bunical\b/.test(raw)) return 'unical';
+  if (/bells university/.test(raw)) return 'bells';
+  if (/federal university of technology.*ikot|futa.*ikot|ikot abasi/.test(raw)) return 'futi';
+  if (/university of nigeria|\bunn\b/.test(raw)) return 'unn';
+  if (/akwa ibom state university|akwaibom state university|\baksu\b/.test(raw)) return 'aksu';
+  if (/air force institute|\bafit\b/.test(raw)) return 'afit';
+  if (/nnamdi azikiwe|nnandi azikiwe|\bunizik\b/.test(raw)) return 'unizik';
+  if (/mohawk college/.test(raw)) return 'mohawk';
+  return raw.substring(0, 20); // fallback: first 20 chars of name as key
 };
 
-// Generate only Round 1 — permanent, called once by admin
+// Generate only Round 1  permanent, called once by admin
 export function generateRound1(players, year, month, options = {}) {
   const targetEloGap = options.targetEloGap ?? 400;
   const schoolPenalty = options.schoolPenalty ?? 150;
@@ -131,7 +135,7 @@ export function generateRound1(players, year, month, options = {}) {
   return { roundNum: 1, name: ROUND_NAMES[0], date: roundDate, games: [...byeGames, ...pairedGames] };
 }
 
-// Generate next round from winners of the last round — called by admin after logging all results
+// Generate next round from winners of the last round  called by admin after logging all results
 export function generateNextRound(rounds, year, month, options = {}) {
   const last = rounds[rounds.length - 1];
   const winners = last.games.map(g => g.winner).filter(w => w && w.username !== 'forfeit');
@@ -226,7 +230,9 @@ export function generateNextRound(rounds, year, month, options = {}) {
 export function getCountdownTarget(tournament) {
   const now = new Date();
   let y = now.getFullYear(), m = now.getMonth() + 1;
-  
+  const todayStr = `${y}-${String(m).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const today8pm = new Date(`${todayStr}T20:00:00+01:00`);
+
   if (tournament && tournament.month_year) {
     const parts = tournament.month_year.split('-');
     if (parts.length === 2) {
@@ -236,18 +242,259 @@ export function getCountdownTarget(tournament) {
   }
 
   if (!tournament || tournament.status === 'upcoming') {
+    if (today8pm > now) {
+      return { date: today8pm, label: 'Round 1 starts in' };
+    }
     const dates = getTournamentDates(y, m);
-    return { date: new Date(`${dates[0]}T18:00:00+01:00`), label: 'Tournament begins in' };
+    return { date: new Date(`${dates[0]}T20:00:00+01:00`), label: 'Round 1 starts in' };
   }
+
   if (tournament.status === 'active') {
     const latestRound = tournament.rounds && tournament.rounds[tournament.rounds.length - 1];
     if (latestRound && latestRound.next_round_start) {
       return { date: new Date(latestRound.next_round_start), label: 'Next round begins in' };
     }
     const pending = tournament.rounds.find(r => r.games.some(g => !g.winner));
-    if (pending) return { date: new Date(`${pending.date}T18:00:00+01:00`), label: `${pending.name} starts in` };
+    if (pending) {
+      if (today8pm > now) {
+        return { date: today8pm, label: `${pending.name || 'Round 1'} starts in` };
+      }
+      return { date: new Date(`${pending.date || dates[0]}T20:00:00+01:00`), label: `${pending.name || 'Round 1'} starts in` };
+    }
   }
-  // completed — next month's first tournament day
+
+  if (today8pm > now) {
+    return { date: today8pm, label: "Round 1 starts in" };
+  }
+
   const nm = m === 12 ? 1 : m + 1, ny = m === 12 ? y + 1 : y;
-  return { date: new Date(`${getTournamentDates(ny, nm)[0]}T18:00:00+01:00`), label: "Next tournament in" };
+  return { date: new Date(`${getTournamentDates(ny, nm)[0]}T20:00:00+01:00`), label: "Next tournament in" };
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// WORLD CUP GROUP-STAGE FIXTURE GENERATOR
+// ─────────────────────────────────────────────────────────────────────────────
+
+const WC_GROUP_LABELS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const MAX_ELO_SPREAD = 800;   // hard cap on intra-group spread
+const MAX_SWAP_ATTEMPTS = 50; // guard against infinite swap loops
+
+/**
+ * Fisher-Yates shuffle  returns a new array.
+ */
+function fyShuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/**
+ * Round-robin fixture list for an array of players.
+ * Returns: [{ roundIndex, white, black }]
+ */
+function buildRoundRobin(players, groupLabel) {
+  const pool = [...players];
+  if (pool.length % 2 !== 0) pool.push(null); // phantom bye
+  const n = pool.length;
+  const fixtures = [];
+
+  for (let r = 0; r < n - 1; r++) {
+    for (let i = 0; i < n / 2; i++) {
+      const p1 = pool[i];
+      const p2 = pool[n - 1 - i];
+      if (!p1 || !p2) continue; // skip phantom bye slots
+      const white = (r + i) % 2 === 0 ? p1 : p2;
+      const black = white === p1 ? p2 : p1;
+      fixtures.push({ roundIndex: r, groupLabel, white, black });
+    }
+    // Rotate all except first
+    pool.splice(1, 0, pool.pop());
+  }
+  return fixtures;
+}
+
+/**
+ * generateWorldCupFixtures(players, year, month, options)
+ *
+ * Produces a World Cup-style group stage for the given player list:
+ *   - Pot-seeded draw (one player per pot per group)
+ *   - 800-Elo intra-group spread cap (best-effort swap)
+ *   - School separation: hard = same dept, soft = same university
+ *   - Round-robin within each group (3 rounds for groups of 4)
+ *   - Wildcard-ready: groups metadata stored for UI rendering
+ *
+ * Returns: { rounds, groups }
+ *   rounds  – array of round objects matching existing tournament schema
+ *   groups  – array of group metadata objects for UI/standings
+ */
+export function generateWorldCupFixtures(players, year, month, options = {}) {
+  const customDates = options.dates || null;
+  const dates = getTournamentDates(year, month); // last 8 days of month
+
+  // ── 1. Sort: rated desc, then provisionals alphabetically ──────────────────
+  const rated = players.filter(p => !p.isProvisional).sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  const prov  = players.filter(p =>  p.isProvisional).sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  const sorted = [...rated, ...prov];
+  sorted.forEach((p, i) => { p._seed = i + 1; });
+
+  const N = sorted.length;
+  if (N < 4) throw new Error('Not enough players for group stage (need ≥ 4)');
+
+  // ── 2. Group / pot sizing ──────────────────────────────────────────────────
+  const G = Math.floor(N / 4);         // number of groups
+  const numPots = 4;                    // always 4 pots
+  // Remainder players get distributed into the first `rem` groups as a 5th slot
+  const rem = N % 4;
+  // groupSizes[g] = 4 or 5
+  const groupSizes = Array.from({ length: G }, (_, g) => g < rem ? 5 : 4);
+
+  // ── 3. Build pots ─────────────────────────────────────────────────────────
+  // Pot p contains players whose index falls in the p-th "row" of the grid
+  // (snake distribution would equalise averages  we build this then shuffle)
+  const pots = [];
+  let cursor = 0;
+  for (let p = 0; p < numPots; p++) {
+    const potSize = groupSizes.filter(sz => sz > p).length;
+    pots.push(sorted.slice(cursor, cursor + potSize));
+    cursor += potSize;
+  }
+  // 5th-player overflow pot (only exists when rem > 0)
+  if (rem > 0 && cursor < sorted.length) {
+    pots.push(sorted.slice(cursor));
+  }
+
+  // ── 4. Initialise empty groups ────────────────────────────────────────────
+  /** @type {Array<Array<Object>>} groups[g] = list of players in Group g */
+  const groups = Array.from({ length: G }, () => []);
+
+  // ── 5. Assign each pot with shuffle + school separation + spread cap ───────
+  const activePots = pots.filter(pot => pot.length > 0);
+  activePots.forEach((pot, potIdx) => {
+    const shuffled = fyShuffle(pot);
+    // Which group indices need a slot from this pot?
+    const eligible = fyShuffle(
+      groups.map((_, gi) => gi).filter(gi => groups[gi].length === potIdx)
+    );
+
+    // Assign players to groups
+    shuffled.forEach((player, i) => {
+      groups[eligible[i]].push(player);
+    });
+
+    // ── School separation swap (soft constraint) ──────────────────────────
+    let swaps = 0;
+    let madeSwap = true;
+    while (madeSwap && swaps < MAX_SWAP_ATTEMPTS) {
+      madeSwap = false;
+      for (let gi = 0; gi < G; gi++) {
+        const slot = groups[gi][potIdx];
+        if (!slot) continue;
+        const slotSchool = getSchool(slot);
+        const conflict = groups[gi].slice(0, potIdx).some(
+          earlier => getSchool(earlier) === slotSchool && slotSchool !== 'unknown'
+        );
+        if (!conflict) continue;
+        // Try to swap with another group's same-pot player
+        for (let gj = gi + 1; gj < G; gj++) {
+          const other = groups[gj][potIdx];
+          if (!other) continue;
+          const otherSchool = getSchool(other);
+          const newConflictGi = groups[gi].slice(0, potIdx).some(
+            e => getSchool(e) === otherSchool && otherSchool !== 'unknown'
+          );
+          const newConflictGj = groups[gj].slice(0, potIdx).some(
+            e => getSchool(e) === slotSchool && slotSchool !== 'unknown'
+          );
+          if (!newConflictGi && !newConflictGj) {
+            groups[gi][potIdx] = other;
+            groups[gj][potIdx] = slot;
+            madeSwap = true;
+            swaps++;
+            break;
+          }
+        }
+        if (madeSwap) break;
+      }
+    }
+
+    // ── Elo spread cap swap (hard constraint, best-effort) ────────────────
+    if (potIdx >= 1) { // spread only measurable once ≥2 players assigned
+      for (let gi = 0; gi < G; gi++) {
+        const grp = groups[gi].filter(Boolean);
+        const ratedGrp = grp.filter(p => !p.isProvisional);
+        if (ratedGrp.length < 2) continue;
+        const hi = Math.max(...ratedGrp.map(p => p.rating || 0));
+        const lo = Math.min(...ratedGrp.map(p => p.rating || 0));
+        if (hi - lo <= MAX_ELO_SPREAD) continue;
+        // Spread exceeded  try swapping the newest addition (potIdx slot) with another group
+        const culprit = groups[gi][potIdx];
+        for (let gj = gi + 1; gj < G; gj++) {
+          const candidate = groups[gj][potIdx];
+          if (!candidate) continue;
+          // Simulate swap
+          const grpAfter = [...grp.slice(0, -1), candidate].filter(p => !p.isProvisional);
+          const newHi = Math.max(...grpAfter.map(p => p.rating || 0));
+          const newLo = Math.min(...grpAfter.map(p => p.rating || 0));
+          if (newHi - newLo < hi - lo) { // strictly better spread
+            groups[gi][potIdx] = candidate;
+            groups[gj][potIdx] = culprit;
+            break;
+          }
+        }
+      }
+    }
+  });
+
+  // ── 6. Build all round-robin fixtures across groups ───────────────────────
+  // Collect per-round fixtures: roundFixtures[r] = [{groupLabel, white, black}]
+  const NUM_RR_ROUNDS = 3; // max round-robins for groups of 4
+  const roundFixtures = Array.from({ length: NUM_RR_ROUNDS }, () => []);
+
+  groups.forEach((group, gi) => {
+    const label = WC_GROUP_LABELS[gi];
+    const fixtures = buildRoundRobin(group, label);
+    fixtures.forEach(({ roundIndex, groupLabel, white, black }) => {
+      if (roundIndex < NUM_RR_ROUNDS) {
+        roundFixtures[roundIndex].push({ groupLabel, white, black });
+      }
+    });
+  });
+
+  // ── 7. Convert to tournament round objects ────────────────────────────────
+  const rounds = roundFixtures.map((fixtures, ri) => {
+    const roundNum = ri + 1;
+    const roundDate = customDates?.[ri] || dates[ri] || dates[dates.length - 1];
+    let gameCounter = 1;
+    const games = fixtures.map(({ groupLabel, white, black }) => ({
+      id: `G${groupLabel}_R${roundNum}_G${gameCounter++}`,
+      groupLabel,
+      p1: white,
+      p2: black,
+      winner: null,
+      gameLink: ''
+    }));
+    return {
+      roundNum,
+      name: `Group Stage - Round ${roundNum}`,
+      date: roundDate,
+      isGroupStage: true,
+      games
+    };
+  });
+
+  // ── 8. Build group metadata objects for UI/standings ──────────────────────
+  const groupsMeta = groups.map((players, gi) => ({
+    label: WC_GROUP_LABELS[gi],
+    players: players.filter(Boolean),
+    avgRating: (() => {
+      const rp = players.filter(p => p && !p.isProvisional);
+      return rp.length ? Math.round(rp.reduce((s, p) => s + (p.rating || 0), 0) / rp.length) : null;
+    })()
+  }));
+
+  return { rounds, groups: groupsMeta };
 }

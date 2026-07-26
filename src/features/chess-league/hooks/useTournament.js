@@ -45,6 +45,7 @@ export function useTournament(monthYear) {
   const setTournamentState = (t) => setTournamentStateRaw(normalizeRoundNames(t));
   const [history, setHistory] = useState([]);
   const [isDbFallback, setIsDbFallback] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const save = async (t) => {
     const oldStatus = tournament?.status;
@@ -78,14 +79,21 @@ export function useTournament(monthYear) {
           console.warn('Could not retrieve current admin ID for announcement:', e.message);
         }
 
+        if (!adminId) {
+          try {
+            const { data: adminProf } = await supabase.from('profiles').select('id').limit(1).maybeSingle();
+            adminId = adminProf?.id;
+          } catch (profErr) {
+            console.warn('Could not fetch fallback admin profile ID:', profErr.message);
+          }
+        }
+
         // 1. Post a global announcement in public.announcements
         if (adminId) {
           await supabase.from('announcements').insert({
-            title: `${roundName} Matchups Released! ♟️`,
-            content: `${roundName} pairings for the ${t.name} are now live. Head over to the tournament screen to view your opponent.`,
-            created_by: adminId,
-            author_id: adminId,
-            is_global: true
+            title: `${roundName} Matchups Released!`,
+            content: `${roundName} pairings for ${t.name} are now live. Head over to the tournament screen to view your opponent.`,
+            created_by: adminId
           }).then();
         }
 
@@ -137,7 +145,7 @@ export function useTournament(monthYear) {
 
         if (newStatus === 'active') {
           notifType = 'tournament_begin';
-          notifTitle = 'Tournament Begun! 🏆';
+          notifTitle = 'Tournament Begun!';
           notifMsg = `The ${t.name} has officially started! Check your pairings and schedule your matches.`;
           
           // Also broadcast that registration is closed
@@ -147,7 +155,7 @@ export function useTournament(monthYear) {
               const regClosedNotifs = profiles.map(p => ({
                 user_id: p.id,
                 type: 'registration_closed',
-                title: 'Registration Closed 🔒',
+                title: 'Registration Closed',
                 message: `Registration for the ${t.name} is now closed. Matches are underway!`,
                 link: '/chess-league/tournament'
               }));
@@ -163,15 +171,39 @@ export function useTournament(monthYear) {
         } else if (newStatus === 'completed') {
           const champName = typeof t.winner === 'object' ? t.winner?.name : t.winner;
           notifType = 'tournament_complete';
-          notifTitle = 'Tournament Completed! 🏆';
+          notifTitle = 'Tournament Completed!';
           notifMsg = `The ${t.name} is complete. Congratulations to the Champion: ${champName || 'None'}!`;
         } else if (newStatus === 'upcoming') {
           notifType = 'registration_open';
-          notifTitle = 'Registration Open! 🏆';
+          notifTitle = 'Registration Open!';
           notifMsg = `Registration is now open for the ${t.name}. Visit the Dashboard to register.`;
         }
 
         if (notifType) {
+          // Get admin ID or fallback for announcement creation
+          let broadcastAdminId = null;
+          try {
+            const { data: { user: currentAuthUser } } = await supabase.auth.getUser();
+            broadcastAdminId = currentAuthUser?.id;
+          } catch (e) {
+            console.warn('Could not retrieve current admin ID for status announcement:', e.message);
+          }
+          if (!broadcastAdminId) {
+            try {
+              const { data: adminProf } = await supabase.from('profiles').select('id').limit(1).maybeSingle();
+              broadcastAdminId = adminProf?.id;
+            } catch { /* ignore fallback error */ }
+          }
+
+          // Insert into global announcements table
+          if (broadcastAdminId) {
+            await supabase.from('announcements').insert({
+              title: notifTitle,
+              content: notifMsg,
+              created_by: broadcastAdminId
+            }).then();
+          }
+
           const { data: profiles } = await supabase.from('profiles').select('id');
           if (profiles && profiles.length > 0) {
             const notifs = profiles.map(p => ({
@@ -224,21 +256,23 @@ export function useTournament(monthYear) {
 
   useEffect(() => {
     const load = async () => {
+      setIsLoading(true);
       try {
         const { data, error } = await supabase.from('tournaments').select('*').eq('month_year', monthYear).maybeSingle();
         if (error) throw error;
-        if (data) { setTournamentState(data); setIsDbFallback(false); return; }
+        if (data) { setTournamentState(data); setIsDbFallback(false); setIsLoading(false); return; }
       } catch { setIsDbFallback(true); }
       const local = localStorage.getItem(LS_KEY(monthYear));
-      if (local) { setTournamentState(JSON.parse(local)); return; }
+      if (local) { setTournamentState(JSON.parse(local)); setIsLoading(false); return; }
       const mock = MOCK_HISTORY.find(m => m.month_year === monthYear);
       setTournamentState(mock || null);
-      // ponytail: no auto-init — admin explicitly seeds Round 1
+      setIsLoading(false);
+      // ponytail: no auto-init  admin explicitly seeds Round 1
     };
     load();
   }, [monthYear]);
 
-  // Seed Round 1 permanently — called once by admin
+  // Seed Round 1 permanently  called once by admin
   const initialize = (options = {}) => {
     const [y, m] = monthYear.split('-').map(Number);
     const round1 = generateRound1(tournamentPlayers, y, m, options);
@@ -278,13 +312,13 @@ export function useTournament(monthYear) {
     save({ ...tournament, rounds: updated });
   };
 
-  // Generate next round from current winners — admin calls after all results are logged
+  // Generate next round from current winners  admin calls after all results are logged
   const advanceRound = (options = {}) => {
     const [y, m] = monthYear.split('-').map(Number);
     const last = tournament.rounds[tournament.rounds.length - 1];
     const allDone = last.games.every(g => g.winner);
     if (!allDone) { toast.error('Log all match results before generating the next round.'); return; }
-    if (last.games.length === 1) { toast.info('Tournament complete — no more rounds.'); return; }
+    if (last.games.length === 1) { toast.info('Tournament complete. No more rounds.'); return; }
     const nextRound = generateNextRound(tournament.rounds, y, m, options);
     save({ ...tournament, rounds: [...tournament.rounds, nextRound] });
   };
@@ -310,5 +344,5 @@ export function useTournament(monthYear) {
     save({ ...tournament, rounds: updatedRounds });
   };
 
-  return { tournament, history, isDbFallback, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart };
+  return { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart };
 }

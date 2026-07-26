@@ -74,7 +74,7 @@ export const Header = () => {
       {/* Universal Admin Broadcast Drawer */}
       <AdminDrawer isOpen={isAdminDrawerOpen} onClose={() => setIsAdminDrawerOpen(false)} />
 
-      {/* Tournament countdown — sits above the sticky nav bar */}
+      {/* Tournament countdown  sits above the sticky nav bar */}
       <TournamentCountdownBanner />
       <header className="sticky top-0 z-50 w-full bg-white/75 backdrop-blur-lg border-b border-white/40 shadow-sm">
         <div className="container mx-auto px-3 sm:px-6 md:px-8 lg:px-12 xl:px-16 h-16 lg:h-20 flex items-center justify-between">
@@ -228,9 +228,17 @@ export const Header = () => {
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="h-9 sm:h-10 flex items-center gap-2 px-2.5 sm:px-3 rounded-full hover:bg-gray-100/80 border border-gray-150 transition-colors cursor-pointer focus:outline-none shrink-0"
                 >
-                  <div className="relative">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-xs sm:text-sm flex items-center justify-center shadow-sm">
-                      {profile?.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
+                  <div className="relative shrink-0">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-[#0B193C] to-brand-primary text-white font-black text-xs sm:text-sm flex items-center justify-center overflow-hidden shadow-2xs">
+                      {profile?.avatar || profile?.chess_avatar || profile?.avatar_url ? (
+                        <img 
+                          src={profile.avatar || profile.chess_avatar || profile.avatar_url} 
+                          alt={profile?.name || 'User Avatar'} 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        profile?.name?.charAt(0) || user.email.charAt(0).toUpperCase()
+                      )}
                     </div>
                     {unreadMessages.length > 0 && (
                       <span className="absolute -top-1 -right-1 block h-4 w-4 bg-[#E8640A] text-white text-[8px] font-black rounded-full border-2 border-white flex items-center justify-center">
@@ -252,23 +260,36 @@ export const Header = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-0 mt-2 w-56 max-w-[calc(100vw-24px)] bg-white border border-gray-150 rounded-2xl shadow-xl z-50 py-2 overflow-hidden"
+                      className="absolute right-0 mt-2 w-64 max-w-[calc(100vw-24px)] bg-white border border-gray-150 rounded-2xl shadow-xl z-50 py-2.5 overflow-hidden"
                     >
-                      <div className="px-4 py-2 border-b border-gray-100 mb-1.5">
-                        <p className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Signed In As</p>
-                        <p className="text-xs font-black text-brand-text-dark truncate mt-0.5">{profile?.name || user.email}</p>
-                        <p className="text-[10px] font-semibold text-gray-400 truncate">{user.email}</p>
+                      <div className="px-4 py-2.5 border-b border-gray-100 mb-1 flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#0B193C] to-brand-primary text-white font-black text-xs flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+                          {profile?.avatar || profile?.chess_avatar || profile?.avatar_url ? (
+                            <img 
+                              src={profile.avatar || profile.chess_avatar || profile.avatar_url} 
+                              alt={profile?.name} 
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            profile?.name?.charAt(0) || user.email.charAt(0).toUpperCase()
+                          )}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Signed In As</p>
+                          <p className="text-xs font-bold font-space text-[#111111] truncate">{profile?.name || "Player"}</p>
+                          <p className="text-[10px] font-medium text-gray-500 truncate">{user.email}</p>
+                        </div>
                       </div>
                       
                       <a href="/dashboard" className="flex items-center justify-between px-4 py-2.5 text-xs font-bold text-gray-700 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">
                         <div className="flex items-center gap-2.5">
-                          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                           </svg>
-                          Dashboard & Profile
+                          <span>Dashboard & Profile</span>
                         </div>
                         {unreadMessages.length > 0 && (
-                          <span className="bg-[#E8640A] text-white text-[8.5px] font-black px-2 py-0.5 rounded-full shrink-0">
+                          <span className="bg-[#E8640A] text-white text-[9px] font-black px-2 py-0.5 rounded-full shrink-0">
                             {unreadMessages.length} unread
                           </span>
                         )}
@@ -280,98 +301,71 @@ export const Header = () => {
                             setIsDropdownOpen(false);
                             setIsAdminDrawerOpen(true);
                           }}
-                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brand-accent hover:bg-orange-50 transition-colors text-left cursor-pointer border-none bg-transparent"
+                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-amber-700 hover:bg-amber-50 transition-colors text-left cursor-pointer border-none bg-transparent"
                         >
                           <span className="text-sm">📢</span>
-                          Admin Broadcast Panel
+                          <span>Admin Broadcast Panel</span>
                         </button>
                       )}
                       
-                      <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brand-accent hover:bg-red-50 transition-colors text-left cursor-pointer border-none bg-transparent">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 transition-colors text-left cursor-pointer border-none bg-transparent">
+                        <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
-                        Sign Out
+                        <span>Sign Out</span>
                       </button>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
             ) : (
-              <div className="hidden lg:flex items-center gap-2.5">
+              <div className="hidden sm:flex items-center gap-2">
                 <button
                   onClick={() => openAuthModal('', null, 'login')}
-                  className="h-9 sm:h-10 px-4 xl:px-5 flex items-center justify-center text-brand-primary hover:text-brand-accent font-bold text-xs xl:text-sm transition-colors cursor-pointer whitespace-nowrap"
+                  className="px-4 py-2 text-xs font-bold text-brand-primary hover:text-brand-accent transition-colors cursor-pointer bg-transparent border-none"
                 >
                   Sign In
                 </button>
                 <button
                   onClick={() => openAuthModal('', null, 'register')}
-                  className="h-9 sm:h-10 px-5 xl:px-6 flex items-center justify-center bg-brand-primary text-white font-bold text-xs xl:text-sm rounded-xl hover:bg-brand-accent transition-colors shadow-md hover:shadow-lg cursor-pointer whitespace-nowrap"
+                  className="px-4 py-2 bg-brand-primary text-white text-xs font-bold rounded-full hover:bg-brand-accent transition-colors shadow-sm cursor-pointer border-none"
                 >
                   Sign Up
                 </button>
               </div>
             )}
             
-            {/* Mobile menu toggle */}
+            {/* Mobile Hamburger Menu Toggle */}
             <button 
               id="mobile-menu-toggle"
-              className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl hover:bg-gray-100/80 text-brand-primary focus:outline-none shrink-0"
+              className="lg:hidden p-2 text-gray-600 hover:text-brand-primary transition-colors cursor-pointer"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label="Toggle navigation menu"
             >
-              <div className="w-5 h-4 sm:w-6 sm:h-5 relative flex flex-col justify-between">
-                <motion.span
-                  animate={isMobileMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-                  className="w-full h-0.5 bg-current rounded-full origin-center"
-                />
-                <motion.span
-                  animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                  className="w-full h-0.5 bg-current rounded-full"
-                />
-                <motion.span
-                  animate={isMobileMenuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-                  className="w-full h-0.5 bg-current rounded-full origin-center"
-                />
-              </div>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown */}
+        {/* Mobile Navigation Drawer */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div 
               ref={menuRef}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="lg:hidden absolute top-[100%] left-0 w-full bg-white border-b border-gray-100 shadow-xl p-4 sm:p-6 flex flex-col gap-4 z-40 text-left max-h-[calc(100vh-4.5rem)] overflow-y-auto no-scrollbar"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 flex flex-col gap-2.5 overflow-hidden shadow-lg"
             >
-              {user && (
-                <div className="bg-[#F6F4F0] p-3.5 sm:p-4 rounded-2xl mb-1 flex items-center gap-3">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-brand-primary to-brand-accent text-white font-black text-base sm:text-lg flex items-center justify-center shrink-0">
-                    {profile?.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h4 className="text-xs sm:text-sm font-black text-brand-text-dark leading-tight truncate">{profile?.name || "Player"}</h4>
-                    <p className="text-[10px] font-semibold text-gray-400 mt-0.5 truncate">{user.email}</p>
-                  </div>
-                </div>
-              )}
-              
-              <div className="flex flex-col gap-2">
-                <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Schools Directory</span>
-                <a href="/schools" className="pl-4 text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Secondary Schools</a>
-                <a href="/tertiary" className="pl-4 text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Institutions</a>
-              </div>
-              <div className="flex flex-col gap-2">
-                <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Chess League</span>
-                <a href="/chess-league" className="pl-4 text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>League Divisions</a>
-                <a href="/chess-league/tournament" className="pl-4 text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournament</a>
-              </div>
-              <a href="/sas" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Assessment Series</a>
+              <a href="/" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Home</a>
+              <a href="/chess-league/tournament" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournament</a>
+              <a href="/tertiary/admission" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Admission</a>
               <a href="/award" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</a>
               <a href="/news" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>News</a>
               <a href="/about" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>About</a>
@@ -387,19 +381,71 @@ export const Header = () => {
               <hr className="my-1 border-gray-100" />
               
               {user ? (
-                <>
-                  <a href="/dashboard" className="py-2 text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
-                    <span>My Dashboard & Profile</span>
-                    {unreadMessages.length > 0 && (
-                      <span className="bg-[#E8640A] text-white text-[10px] font-black px-2 py-0.5 rounded-full shrink-0">
-                        {unreadMessages.length} unread
-                      </span>
+                <div className="bg-brand-bg-cream/80 border border-gray-200/80 rounded-2xl p-3.5 my-1 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0B193C] to-brand-primary text-white font-black text-sm flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+                      {profile?.avatar || profile?.chess_avatar || profile?.avatar_url ? (
+                        <img 
+                          src={profile.avatar || profile.chess_avatar || profile.avatar_url} 
+                          alt={profile?.name} 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        profile?.name?.charAt(0) || user.email.charAt(0).toUpperCase()
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-bold font-space text-[#111111] truncate">{profile?.name || "Player"}</p>
+                      <p className="text-[10px] font-medium text-gray-500 truncate">{user.email}</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-2 pt-1 border-t border-gray-200/60">
+                    <a 
+                      href="/dashboard" 
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold hover:bg-[#1545A2] transition-all shadow-2xs cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <span>Dashboard & Profile</span>
+                      </div>
+                      {unreadMessages.length > 0 && (
+                        <span className="bg-[#E8640A] text-white text-[9px] font-black px-2 py-0.5 rounded-full shrink-0">
+                          {unreadMessages.length} unread
+                        </span>
+                      )}
+                    </a>
+
+                    {profile?.role === 'admin' && (
+                      <button
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          setIsAdminDrawerOpen(true);
+                        }}
+                        className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-amber-500/10 text-amber-700 border border-amber-500/20 text-xs font-bold hover:bg-amber-500/20 transition-all text-left cursor-pointer"
+                      >
+                        <span className="text-sm">📢</span>
+                        <span>Admin Broadcast Panel</span>
+                      </button>
                     )}
-                  </a>
-                  <button onClick={handleLogout} className="py-2 text-[13px] sm:text-[14px] font-bold text-brand-accent text-left cursor-pointer border-none bg-transparent">
-                    Sign Out
-                  </button>
-                </>
+
+                    <button 
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        handleLogout();
+                      }} 
+                      className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-red-50 text-red-600 border border-red-200/60 text-xs font-bold hover:bg-red-100 transition-all text-left cursor-pointer"
+                    >
+                      <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
               ) : (
                 <div className="flex flex-col gap-2.5 mt-1">
                   <button

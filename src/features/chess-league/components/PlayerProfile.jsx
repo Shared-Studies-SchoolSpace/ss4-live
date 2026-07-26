@@ -183,7 +183,10 @@ export const PlayerProfile = ({ player, onClose }) => {
                   onClick={handleInstitutionClick}
                   className="text-xs font-bold text-brand-primary hover:text-brand-accent hover:underline text-left mt-1 block transition-colors outline-none cursor-pointer"
                 >
-                  {schoolName} ↗
+                  <span className="inline-flex items-center gap-1">
+                    {schoolName}
+                    <svg className="w-3 h-3 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </span>
                 </button>
               ) : (
                 <p className="text-xs font-semibold text-gray-400 mt-1">SS4 Individual Player</p>
@@ -205,7 +208,10 @@ export const PlayerProfile = ({ player, onClose }) => {
                 rel="noopener noreferrer"
                 className="text-xs font-bold text-brand-text-dark hover:text-brand-primary transition-colors flex items-center gap-1 mt-0.5"
               >
-                @{chessUsername} ↗
+                <span className="inline-flex items-center gap-1">
+                  @{chessUsername}
+                  <svg className="w-3 h-3 text-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </span>
               </a>
             </div>
 
@@ -218,7 +224,10 @@ export const PlayerProfile = ({ player, onClose }) => {
                   rel="noopener noreferrer"
                   className="text-xs font-bold text-brand-text-dark hover:text-brand-primary transition-colors flex items-center gap-1 mt-0.5"
                 >
-                  @{lichessUsername} ↗
+                  <span className="inline-flex items-center gap-1">
+                    @{lichessUsername}
+                    <svg className="w-3 h-3 text-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </span>
                 </a>
               </div>
             )}

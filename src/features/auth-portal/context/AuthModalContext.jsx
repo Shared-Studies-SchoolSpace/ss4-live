@@ -50,7 +50,7 @@ export function AuthModalProvider({ children }) {
 
   const handleClose = useCallback(() => {
     setStage(null);
-    // Do NOT invoke the callback on cancel — only on successful auth
+    // Do NOT invoke the callback on cancel  only on successful auth
     pendingCallbackRef.current = null;
     setPendingSuccess(false);
   }, []);

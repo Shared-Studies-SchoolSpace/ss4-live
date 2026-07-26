@@ -137,7 +137,7 @@ export function AuthProvider({ children }) {
     });
 
     // Listen for auth changes
-    // ponytail: callback must NOT be async — GoTrue holds AuthLock for its duration,
+    // ponytail: callback must NOT be async  GoTrue holds AuthLock for its duration,
     // so awaiting anything inside it deadlocks all subsequent auth calls (updateUser, etc.)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!isMounted) return;

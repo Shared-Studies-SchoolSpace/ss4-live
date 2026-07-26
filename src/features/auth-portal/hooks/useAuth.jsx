@@ -70,6 +70,7 @@ export function AuthProvider({ children }) {
               faculty: meta.faculty || '',
               department: meta.department || '',
               level: meta.level || '',
+              phone: meta.phone || meta.whatsapp || '',
               chess_username: meta.chess_username || '',
               lichess_username: meta.lichess_username || '',
               chess_rating: meta.chess_rating || 0,
@@ -405,6 +406,77 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // Global Announcements Tracking & Real-time Subscription
+  const [announcements, setAnnouncements] = useState([]);
+  const [lastSeenAnnouncementTime, setLastSeenAnnouncementTime] = useState(() => {
+    try {
+      return localStorage.getItem('ss4_last_seen_announcements') || null;
+    } catch {
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    const fetchAnnouncements = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('announcements')
+          .select('*, sender:profiles(name)')
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        if (!error && data) {
+          setAnnouncements(data);
+        }
+      } catch (err) {
+        console.warn('Could not fetch announcements in useAuth:', err);
+      }
+    };
+
+    fetchAnnouncements();
+
+    const annSub = supabase
+      .channel('useauth-announcements')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'announcements' },
+        async (payload) => {
+          const { data } = await supabase
+            .from('profiles')
+            .select('name')
+            .eq('id', payload.new.created_by)
+            .maybeSingle();
+
+          const item = { ...payload.new, sender: data || { name: 'Admin' } };
+          setAnnouncements(prev => [item, ...prev]);
+
+          toast.info(`📢 ${payload.new.title}`, {
+            position: 'bottom-right',
+            autoClose: 6000
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(annSub);
+    };
+  }, []);
+
+  const markAnnouncementsAsRead = () => {
+    const nowIso = new Date().toISOString();
+    try {
+      localStorage.setItem('ss4_last_seen_announcements', nowIso);
+    } catch {}
+    setLastSeenAnnouncementTime(nowIso);
+  };
+
+  const unreadNotificationsCount = notifications.filter(n => !n.read_at).length;
+  const unreadAnnouncementsCount = announcements.filter(a => {
+    if (!lastSeenAnnouncementTime) return true;
+    return new Date(a.created_at) > new Date(lastSeenAnnouncementTime);
+  }).length;
+
   const updatePlayerDivision = async (profileObj, ratingVal) => {
     try {
       let targetDivId = 'pin';
@@ -516,6 +588,7 @@ export function AuthProvider({ children }) {
             faculty: profileData.faculty || '',
             department: profileData.department || '',
             level: profileData.level || '',
+            phone: profileData.phone || profileData.whatsapp || '',
             chess_username: profileData.chess_username || '',
             lichess_username: profileData.lichess_username || '',
             chess_rating: profileData.chess_rating || 0,
@@ -537,6 +610,7 @@ export function AuthProvider({ children }) {
             faculty: profileData.faculty || '',
             department: profileData.department || '',
             level: profileData.level || '',
+            phone: profileData.phone || profileData.whatsapp || '',
             chess_username: profileData.chess_username || '',
             lichess_username: profileData.lichess_username || '',
             chess_rating: profileData.chess_rating || 0,
@@ -615,13 +689,18 @@ export function AuthProvider({ children }) {
       loading, 
       onlineUsers, 
       unreadMessages, 
+      unreadMessagesCount: unreadMessages.length,
       setUnreadMessages,
       activeChatContactId,
       setActiveChatContactId,
       notifications,
+      unreadNotificationsCount,
       setNotifications,
       markNotificationAsRead,
       markAllNotificationsAsRead,
+      announcements,
+      unreadAnnouncementsCount,
+      markAnnouncementsAsRead,
       updatePlayerDivision,
       signUp, 
       signIn, 

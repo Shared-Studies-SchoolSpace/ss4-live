@@ -32,6 +32,19 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
   const [selectedGroupFilter, setSelectedGroupFilter] = useState('ALL');
   const [viewMode, setViewMode] = useState('table'); // 'table' | 'fixtures'
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeLegend, setActiveLegend] = useState(null);
+
+  const legendDetails = {
+    MP: "Matches Played — Total matches completed in the group stage",
+    W: "Wins — Total matches won (1 point per win)",
+    D: "Draws — Total matches drawn (0.5 points per draw)",
+    L: "Losses — Total matches lost (0 points)",
+    PTS: "Points — Total accumulated points (Wins × 1 + Draws × 0.5)"
+  };
+
+  const handleHeaderClick = (key) => {
+    setActiveLegend(prev => prev === key ? null : key);
+  };
 
   // Extract or compute group structures and statistics
   const { groupsData, userGroupLabel } = useMemo(() => {
@@ -132,8 +145,9 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
           }
         });
 
-        // User rule: Win = 1 pt, Draw = 1 pt to both, Loss = 0 pts
-        const Pts = (W * 1) + (D * 1);
+        // Points Calculation Logic: Win = 1 point, Draw = 0.5 points (or precomputed pts if present)
+        const computedPts = (W * 1) + (D * 0.5);
+        const Pts = typeof p.pts === 'number' ? p.pts : typeof p.Pts === 'number' ? p.Pts : computedPts;
 
         const isUser = currentUser && (currentUser.id === p.id || currentUser.email?.split('@')[0] === p.username);
         if (isUser) {
@@ -147,13 +161,19 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
           D,
           L,
           Pts,
+          pts: Pts,
           history,
           isUser
         };
       });
 
-      // Sort group standings alphabetically by name
-      standings.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      // Sort group standings: Points (Pts) descending, Wins (W) descending, Matches Played (P) descending, then Name
+      standings.sort((a, b) => {
+        if ((b.Pts || 0) !== (a.Pts || 0)) return (b.Pts || 0) - (a.Pts || 0);
+        if ((b.W || 0) !== (a.W || 0)) return (b.W || 0) - (a.W || 0);
+        if ((b.P || 0) !== (a.P || 0)) return (b.P || 0) - (a.P || 0);
+        return (a.name || '').localeCompare(b.name || '');
+      });
 
       return {
         label: groupLabel,
@@ -452,18 +472,35 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                   )}
                 </div>
 
+                {/* Mobile Touch Tooltip Hint Animation (Mobile only) */}
+                <div className="sm:hidden px-4 pt-2 pb-1 flex items-center justify-between gap-2 text-[10px] font-bold text-brand-primary bg-blue-50/50 border-y border-blue-100">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <span className="inline-block animate-bounce shrink-0">👆</span>
+                    <span className="truncate">Tap any header (MP, W, D, L, PTS) to find out what it means</span>
+                  </div>
+                  <span className="text-[9px] font-black uppercase text-blue-400 shrink-0">Mobile Tip</span>
+                </div>
+
+                {/* Mobile Tap Legend Explanation Popover Banner */}
+                {activeLegend && (
+                  <div className="mx-4 my-2 p-2.5 bg-blue-600 text-white rounded-xl text-xs font-semibold flex items-center justify-between shadow-md animate-in fade-in duration-150">
+                    <span>💡 <strong>{activeLegend}</strong>: {legendDetails[activeLegend]}</span>
+                    <button onClick={() => setActiveLegend(null)} className="text-white/80 hover:text-white font-bold ml-2">✕</button>
+                  </div>
+                )}
+
                 {/* Group Standings Table List (No horizontal scroll needed on mobile) */}
                 <div className="w-full overflow-hidden flex-1">
                   <table className="w-full text-left border-collapse text-xs table-fixed">
                     <thead>
                       <tr className="bg-gray-50/60 border-b border-gray-100 text-[9px] font-black text-gray-400 uppercase tracking-wider">
-                        <th className="py-2.5 px-1 sm:px-2 w-[28px] sm:w-[36px] text-center">#</th>
-                        <th className="py-2.5 px-1 sm:px-2">Player</th>
-                        <th className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title="Matches Played">MP</th>
-                        <th className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title="Wins">W</th>
-                        <th className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title="Draws">D</th>
-                        <th className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title="Losses">L</th>
-                        <th className="py-2.5 px-1 sm:px-2 text-center w-[28px] sm:w-[36px] text-brand-primary font-black" title="Points">Pts</th>
+                        <th className="py-2.5 px-1 sm:px-2 w-[28px] sm:w-[36px] text-center" title="Group Position / Rank">#</th>
+                        <th className="py-2.5 px-1 sm:px-2" title="Player Name & Username">Player</th>
+                        <th onClick={() => handleHeaderClick('MP')} className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title={legendDetails.MP}>MP</th>
+                        <th onClick={() => handleHeaderClick('W')} className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title={legendDetails.W}>W</th>
+                        <th onClick={() => handleHeaderClick('D')} className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title={legendDetails.D}>D</th>
+                        <th onClick={() => handleHeaderClick('L')} className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title={legendDetails.L}>L</th>
+                        <th onClick={() => handleHeaderClick('PTS')} className="py-2.5 px-1 sm:px-2 text-center w-[28px] sm:w-[36px] text-brand-primary font-black" title={legendDetails.PTS}>PTS</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
@@ -526,7 +563,12 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                                       </span>
                                     )}
                                   </div>
-                                  <div className="text-[10px] text-gray-400 truncate">
+                                  {p.rating && (
+                                    <div className="text-[10px] font-semibold text-gray-500 leading-none mt-0.5">
+                                      {p.rating}
+                                    </div>
+                                  )}
+                                  <div className="text-[10px] text-gray-400 truncate mt-0.5">
                                     <button
                                       onClick={() => onPlayerSelect && onPlayerSelect(p)}
                                       className="hover:text-brand-accent transition-colors truncate"
@@ -539,28 +581,28 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                             </td>
 
                             {/* MP */}
-                            <td className="py-2.5 px-0.5 text-center font-bold text-gray-600 text-[11px] sm:text-xs">
+                            <td className="py-2.5 px-0.5 text-center font-bold text-gray-600 text-[11px] sm:text-xs" title={`Matches Played: ${p.P}`}>
                               {p.P}
                             </td>
 
                             {/* W */}
-                            <td className="py-2.5 px-0.5 text-center font-bold text-emerald-600 text-[11px] sm:text-xs">
+                            <td className="py-2.5 px-0.5 text-center font-bold text-emerald-600 text-[11px] sm:text-xs" title={`Wins: ${p.W} (+${p.W * 1} pts)`}>
                               {p.W}
                             </td>
 
                             {/* D */}
-                            <td className="py-2.5 px-0.5 text-center font-bold text-blue-600 text-[11px] sm:text-xs">
+                            <td className="py-2.5 px-0.5 text-center font-bold text-blue-600 text-[11px] sm:text-xs" title={`Draws: ${p.D} (+${p.D * 0.5} pts)`}>
                               {p.D}
                             </td>
 
                             {/* L */}
-                            <td className="py-2.5 px-0.5 text-center font-bold text-gray-400 text-[11px] sm:text-xs">
+                            <td className="py-2.5 px-0.5 text-center font-bold text-gray-400 text-[11px] sm:text-xs" title={`Losses: ${p.L} (0 pts)`}>
                               {p.L}
                             </td>
 
-                            {/* Pts */}
-                            <td className="py-2.5 px-0.5 sm:px-1 text-center font-black text-brand-primary text-[11px] sm:text-xs">
-                              {p.pts}
+                            {/* PTS */}
+                            <td className="py-2.5 px-0.5 sm:px-1 text-center font-black text-brand-primary text-[11px] sm:text-xs" title={`Total Points: ${p.Pts}`}>
+                              {p.Pts}
                             </td>
                           </tr>
                         );

@@ -23,6 +23,7 @@ import DashboardPage from './features/auth-portal/pages/DashboardPage';
 import BackToTop from './components/BackToTop';
 import ScrollToTop from './components/ScrollToTop';
 import { AuthModalProvider } from './features/auth-portal/context/AuthModalContext';
+import WhatsAppPromptNotification from './features/auth-portal/components/WhatsAppPromptNotification';
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
 
         <Footer />
         <BackToTop />
+        <WhatsAppPromptNotification />
         <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} />
         </div>
       </Router>

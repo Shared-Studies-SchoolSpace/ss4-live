@@ -606,7 +606,7 @@ export default function ChessLeaguePage() {
         )}
 
         {/* Tab Controls */}
-        <div className="flex border-b border-gray-200/80 gap-6 mb-8 overflow-x-auto select-none">
+        <div className="sticky top-16 lg:top-20 z-40 bg-white/95 backdrop-blur-md pt-2 flex border-b border-gray-200/80 gap-6 mb-8 overflow-x-auto select-none no-scrollbar">
           <button 
             className={`pb-4 px-2 text-sm font-black uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
               activeTab === 'standings' && !searchResults

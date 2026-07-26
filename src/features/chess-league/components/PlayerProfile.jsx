@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAuth } from '../../auth-portal/hooks/useAuth';
 import { useAuthModal } from '../../auth-portal/context/AuthModalContext';
 import tertiaryData from '../../tertiary-admissions/data/tertiary.json';
+import { getWhatsAppUrl } from './TournamentPlayerModal';
 
 export const PlayerProfile = ({ player, onClose }) => {
   const navigate = useNavigate();
@@ -14,6 +16,16 @@ export const PlayerProfile = ({ player, onClose }) => {
   const department = player.department || '';
   const chessUsername = player.chess_username || player.username || '';
   const lichessUsername = player.lichess_username || '';
+
+  const playerPhone = player.phone || player.whatsapp || player.whatsapp_number;
+  const whatsappUrl = getWhatsAppUrl(playerPhone);
+
+  const handleWhatsAppClick = (e) => {
+    if (!whatsappUrl) {
+      e.preventDefault();
+      toast.info(`@${name} has not added their WhatsApp number yet.`);
+    }
+  };
 
   // Ratings & division
   const chessRating = player.chess_rating || player.rating || 1200;
@@ -140,6 +152,12 @@ export const PlayerProfile = ({ player, onClose }) => {
     }).join(' ');
   };
 
+  const primaryChessHandle = chessUsername || lichessUsername;
+  const primaryChessUrl = chessUsername 
+    ? `https://www.chess.com/member/${chessUsername}` 
+    : `https://lichess.org/@/${lichessUsername}`;
+  const primaryChessLabel = chessUsername ? 'Chess.com' : 'Lichess';
+
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#111111]/45 backdrop-blur-sm transition-all duration-300"
@@ -198,50 +216,46 @@ export const PlayerProfile = ({ player, onClose }) => {
             </div>
           </div>
 
-          {/* Section: Credentials */}
-          <div className="bg-brand-bg-cream/40 rounded-2xl p-4 border border-gray-150 flex flex-wrap gap-x-6 gap-y-3">
-            <div>
-              <span className="block text-[9px] font-black text-gray-400 uppercase tracking-widest">Chess.com Handle</span>
-              <a 
-                href={`https://www.chess.com/member/${chessUsername}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-bold text-brand-text-dark hover:text-brand-primary transition-colors flex items-center gap-1 mt-0.5"
-              >
-                <span className="inline-flex items-center gap-1">
-                  @{chessUsername}
-                  <svg className="w-3 h-3 text-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                </span>
-              </a>
-            </div>
+          {/* Section: Action Buttons Grid (Message, Chess*, Whatsapp) */}
+          <div className="grid grid-cols-3 gap-2 p-3 bg-brand-bg-cream/40 rounded-2xl border border-gray-150">
+            <button 
+              onClick={handleMessageClick}
+              className="w-full flex items-center justify-center gap-1.5 bg-brand-primary hover:bg-brand-accent text-white font-bold text-xs py-2.5 px-2 rounded-xl transition-all shadow-xs cursor-pointer min-h-[44px]"
+            >
+              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              <span>Message</span>
+            </button>
 
-            {lichessUsername && (
-              <div>
-                <span className="block text-[9px] font-black text-gray-400 uppercase tracking-widest">Lichess Handle</span>
-                <a 
-                  href={`https://lichess.org/@/${lichessUsername}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-bold text-brand-text-dark hover:text-brand-primary transition-colors flex items-center gap-1 mt-0.5"
-                >
-                  <span className="inline-flex items-center gap-1">
-                    @{lichessUsername}
-                    <svg className="w-3 h-3 text-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                  </span>
-                </a>
-              </div>
-            )}
+            <a
+              href={primaryChessUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-1 bg-white hover:bg-gray-50 text-brand-text-dark font-bold text-xs py-2.5 px-2 rounded-xl transition-all border border-gray-200 text-center cursor-pointer min-h-[44px]"
+            >
+              <span className="truncate">{primaryChessLabel}</span>
+              <svg className="w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
 
-            <div className="ml-auto flex items-center">
-              {player.id && player.id !== user?.id && (
-                <button 
-                  onClick={handleMessageClick}
-                  className="px-4 py-1.5 bg-brand-primary text-white text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-brand-accent transition-colors shadow-sm cursor-pointer"
-                >
-                  Message
-                </button>
-              )}
-            </div>
+            <a
+              href={whatsappUrl || '#'}
+              target={whatsappUrl ? "_blank" : "_self"}
+              rel="noopener noreferrer"
+              onClick={handleWhatsAppClick}
+              className={`w-full flex items-center justify-center gap-1.5 font-bold text-xs py-2.5 px-2 rounded-xl transition-all text-center cursor-pointer min-h-[44px] ${
+                whatsappUrl 
+                  ? 'bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xs' 
+                  : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200'
+              }`}
+            >
+              <svg className="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+              </svg>
+              <span>Whatsapp</span>
+            </a>
           </div>
 
           {/* Section: Ratings & SCL Info */}

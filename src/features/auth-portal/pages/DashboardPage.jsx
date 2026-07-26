@@ -116,7 +116,13 @@ export default function DashboardPage() {
     profile, 
     refreshProfile, 
     setProfile,
-    unreadMessages = [], 
+    unreadMessages = [],
+    notifications = [],
+    unreadNotificationsCount = 0,
+    unreadAnnouncementsCount = 0,
+    markAnnouncementsAsRead,
+    markNotificationAsRead,
+    markAllNotificationsAsRead,
     updatePlayerDivision,
     isRecoverySession,
     setIsRecoverySession,
@@ -127,6 +133,13 @@ export default function DashboardPage() {
   const location = useLocation();
 
   const [activeTab, setActiveTab] = useState('profile');
+
+  // Mark announcements as read when viewing announcements tab
+  useEffect(() => {
+    if (activeTab === 'announcements' && markAnnouncementsAsRead) {
+      markAnnouncementsAsRead();
+    }
+  }, [activeTab, markAnnouncementsAsRead]);
   const [loadingSync, setLoadingSync] = useState(false);
   const [activePairings, setActivePairings] = useState([]);
   const [selectedPairing, setSelectedPairing] = useState(null);
@@ -140,6 +153,7 @@ export default function DashboardPage() {
     faculty: '',
     department: '',
     level: '',
+    phone: '',
     chess_username: '',
     lichess_username: ''
   });
@@ -223,7 +237,8 @@ export default function DashboardPage() {
         username: activeProfile.chess_username || activeProfile.lichess_username || user.email.split('@')[0],
         rating: Math.max(activeProfile.chess_rating || 0, activeProfile.lichess_rating || 0) || 1200,
         school: activeProfile.university || 'SS4 Member',
-        department: activeProfile.department || ''
+        department: activeProfile.department || '',
+        phone: activeProfile.phone || activeProfile.whatsapp || ''
       };
       
       const updatedPlayers = [
@@ -270,6 +285,7 @@ export default function DashboardPage() {
         faculty: profile.faculty || '',
         department: profile.department || '',
         level: profile.level || '',
+        phone: profile.phone || profile.whatsapp || profile.whatsapp_number || '',
         chess_username: profile.chess_username || '',
         lichess_username: profile.lichess_username || ''
       });
@@ -420,6 +436,7 @@ export default function DashboardPage() {
         faculty: settingsForm.faculty.trim(),
         department: settingsForm.department.trim(),
         level: settingsForm.level,
+        phone: settingsForm.phone.trim(),
         chess_username: settingsForm.chess_username.trim(),
         lichess_username: settingsForm.lichess_username.trim(),
         chess_rating: finalChessRating,
@@ -786,40 +803,85 @@ export default function DashboardPage() {
   return (
     <div className="container mx-auto px-6 md:px-12 lg:px-16 py-10">
       
-      {/* Header Profile Summary */}
-      <div className="varsity-card p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-white border border-gray-150">
-        <div className="flex items-center gap-5">
-          <CollegiateCrest profile={profile} user={user} onClick={() => setIsTranscriptOpen(true)} />
-          <div className="min-w-0">
-            <h2 className="text-xl font-black font-space text-brand-text-dark leading-tight truncate">{profile?.name || 'Player'}</h2>
-            <p className="text-xs font-semibold text-gray-500 mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 truncate">
-              <span>{profile?.university || 'SS4 Member'}</span>
-              {profile?.department && (
-                <>
-                  <span>&bull;</span>
-                  <span>{profile.department}</span>
-                </>
-              )}
-            </p>
-          </div>
-        </div>
+      {/* Header Profile Summary Hero */}
+      {(() => {
+        const maxElo = Math.max(profile?.chess_rating || 0, profile?.lichess_rating || 0);
+        const divisionTag = maxElo >= 1800 ? 'A Division • Elite Category' : maxElo >= 1000 ? 'Fork Division • Intermediate' : 'Pin Division • Aspirants';
+        const divisionBadgeClass = maxElo >= 1800 ? 'bg-red-500/20 text-red-300 border-red-500/40' : maxElo >= 1000 ? 'bg-blue-500/20 text-blue-300 border-blue-500/40' : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
 
-        <div className="flex flex-wrap items-center gap-3">
-          <Button 
-            variant="secondary" 
-            onClick={handleSyncRatings} 
-            disabled={loadingSync || savingSettings}
-            className="text-xs"
-          >
-            {loadingSync ? 'Syncing...' : 'Sync Chess Ratings'}
-          </Button>
-          {profile?.role === 'admin' && (
-            <span className="bg-brand-accent text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-sm">
-              Administrator
-            </span>
-          )}
-        </div>
-      </div>
+        return (
+          <div className="relative rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-gradient-to-r from-[#0B193C] via-[#153472] to-[#1A56C4] text-white shadow-xl border border-white/10 overflow-hidden">
+            {/* Background Radial Pattern Accent */}
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:12px_12px] pointer-events-none" />
+            <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-primary/30 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative z-10 flex items-center gap-5">
+              <CollegiateCrest profile={profile} user={user} onClick={() => setIsTranscriptOpen(true)} />
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <span className={`text-[10px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full border ${divisionBadgeClass}`}>
+                    {divisionTag}
+                  </span>
+                  {profile?.role === 'admin' && (
+                    <span className="bg-[#E8640A] text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full shadow-2xs">
+                      Administrator
+                    </span>
+                  )}
+                </div>
+
+                <h2 className="text-2xl font-bold font-space text-white leading-tight truncate">
+                  {profile?.name || 'Player'}
+                </h2>
+                
+                <p className="text-xs font-medium text-blue-100/80 mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 truncate">
+                  <span>{profile?.university || 'SS4 Member'}</span>
+                  {profile?.department && (
+                    <>
+                      <span>&bull;</span>
+                      <span>{profile.department}</span>
+                    </>
+                  )}
+                  {profile?.level && (
+                    <>
+                      <span>&bull;</span>
+                      <span>{profile.level} Level</span>
+                    </>
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className="relative z-10 flex flex-wrap items-center gap-3">
+              <button 
+                onClick={handleSyncRatings} 
+                disabled={loadingSync || savingSettings}
+                className="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl transition-all border border-white/20 flex items-center gap-2 cursor-pointer backdrop-blur-sm min-h-[44px]"
+              >
+                {loadingSync ? (
+                  <>
+                    <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Syncing...</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>Sync Chess Ratings</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={() => setIsTranscriptOpen(true)}
+                className="px-4 py-2.5 bg-[#E8640A] hover:bg-[#d05707] text-white font-bold text-xs rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer min-h-[44px]"
+              >
+                <span>📜 Digital ID Card</span>
+              </button>
+            </div>
+          </div>
+        );
+      })()}
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         
@@ -828,10 +890,11 @@ export default function DashboardPage() {
           {[
             { id: 'profile', label: 'My Statistics', notation: 'A1', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
             { id: 'pairings', label: 'Match Chats', notation: 'B2', icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' },
-            { id: 'messages', label: 'Messages', notation: 'C3', icon: 'M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z' },
-            { id: 'announcements', label: 'Announcements', notation: 'D4', icon: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9' },
-            { id: 'awards', label: 'Trophies & Badges', notation: 'E5', icon: 'M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5a2 2 0 10-2 2h2zm-2 4h4M8 21h8a2 2 0 002-2v-1.5a2.5 2.5 0 00-2.5-2.5h-7A2.5 2.5 0 004 17.5V19a2 2 0 002 2z' },
-            { id: 'settings', label: 'Settings', notation: 'F6', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' }
+            { id: 'messages', label: 'Messages', notation: 'C3', icon: 'M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z', count: unreadMessages.length },
+            { id: 'notifications', label: 'Notifications', notation: 'D4', icon: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9', count: unreadNotificationsCount },
+            { id: 'announcements', label: 'Announcements', notation: 'E5', icon: 'M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.684A1.001 1.001 0 014.5 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.5c.38 0 .732.214.904.553L8.2 13h-2.764z', count: unreadAnnouncementsCount },
+            { id: 'awards', label: 'Trophies & Badges', notation: 'F6', icon: 'M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5a2 2 0 10-2 2h2zm-2 4h4M8 21h8a2 2 0 002-2v-1.5a2.5 2.5 0 00-2.5-2.5h-7A2.5 2.5 0 004 17.5V19a2 2 0 002 2z' },
+            { id: 'settings', label: 'Settings', notation: 'G7', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' }
           ].map(tab => (
             <button
               key={tab.id}
@@ -849,11 +912,11 @@ export default function DashboardPage() {
                 {tab.label}
               </div>
               <div className="flex items-center gap-2">
-                {tab.id === 'messages' && unreadMessages.length > 0 && (
+                {tab.count > 0 && (
                   <span className={`text-[9px] font-black px-2 py-0.5 rounded-full shrink-0 shadow-sm ${
-                    activeTab === 'messages' ? 'bg-white text-brand-primary' : 'bg-brand-primary text-white'
+                    activeTab === tab.id ? 'bg-white text-brand-primary' : 'bg-[#E8640A] text-white'
                   }`}>
-                    {unreadMessages.length}
+                    {tab.count}
                   </span>
                 )}
                 <span className={`text-[8px] font-mono opacity-40 ${activeTab === tab.id ? 'text-white' : 'text-gray-500'}`}>
@@ -921,60 +984,97 @@ export default function DashboardPage() {
 
               {/* Ratings Summary */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="varsity-card p-6 flex items-center justify-between relative overflow-hidden bg-white border border-gray-150">
-                  <div className="absolute inset-0 bg-radial-grid opacity-[0.03] pointer-events-none" />
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-50/20 rounded-full blur-2xl pointer-events-none" />
-                  <div className="relative z-10">
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Chess.com Rating Certification</span>
-                    <span className="text-3xl font-black text-brand-text-dark font-mono block mt-1.5">
-                      {profile?.chess_username ? `[ ${profile.chess_rating || '0000'} ]` : 'NOT LINKED'}
-                    </span>
-                    {profile?.chess_username && (
-                      <span className="text-[10px] font-bold text-emerald-700 block mt-1.5">@{profile.chess_username}</span>
-                    )}
+                {/* Chess.com Certification Card */}
+                <div className="p-6 rounded-3xl relative overflow-hidden bg-gradient-to-br from-white via-emerald-50/20 to-white border border-emerald-200/60 shadow-sm transition-all hover:shadow-md">
+                  <div className="absolute top-0 right-0 w-28 h-28 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+                  <div className="flex items-start justify-between relative z-10 mb-3">
+                    <div>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="text-[10px] font-black text-emerald-800 uppercase tracking-widest">Chess.com Certified</span>
+                      </div>
+                      <h4 className="text-3xl font-black text-brand-text-dark font-mono mt-1 tracking-tight">
+                        {profile?.chess_username ? `[ ${profile.chess_rating || '0000'} ]` : 'NOT LINKED'}
+                      </h4>
+                    </div>
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-xl font-bold shadow-md shrink-0">
+                      ♟
+                    </div>
                   </div>
-                  <div className="w-12 h-12 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 font-bold text-lg relative z-10 select-none">
-                    ♟
+                  
+                  <div className="pt-3 border-t border-emerald-100/80 flex items-center justify-between text-xs relative z-10">
+                    <span className="font-semibold text-emerald-900">
+                      {profile?.chess_username ? `@${profile.chess_username}` : 'Link in Settings'}
+                    </span>
+                    <span className="text-[9px] font-mono font-bold text-emerald-600 bg-emerald-100/80 px-2 py-0.5 rounded-md uppercase">
+                      {profile?.chess_username ? 'Rapid Elo' : 'Uncertified'}
+                    </span>
                   </div>
                 </div>
 
-                <div className="varsity-card p-6 flex items-center justify-between relative overflow-hidden bg-white border border-gray-150">
-                  <div className="absolute inset-0 bg-radial-grid opacity-[0.03] pointer-events-none" />
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-orange-50/20 rounded-full blur-2xl pointer-events-none" />
-                  <div className="relative z-10">
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Lichess Rating Certification</span>
-                    <span className="text-3xl font-black text-brand-text-dark font-mono block mt-1.5">
-                      {profile?.lichess_username ? `[ ${profile.lichess_rating || '0000'} ]` : 'NOT LINKED'}
-                    </span>
-                    {profile?.lichess_username && (
-                      <span className="text-[10px] font-bold text-orange-700 block mt-1.5">@{profile.lichess_username}</span>
-                    )}
+                {/* Lichess Certification Card */}
+                <div className="p-6 rounded-3xl relative overflow-hidden bg-gradient-to-br from-white via-orange-50/20 to-white border border-orange-200/60 shadow-sm transition-all hover:shadow-md">
+                  <div className="absolute top-0 right-0 w-28 h-28 bg-orange-500/10 rounded-full blur-2xl pointer-events-none" />
+                  <div className="flex items-start justify-between relative z-10 mb-3">
+                    <div>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+                        <span className="text-[10px] font-black text-orange-800 uppercase tracking-widest">Lichess Certified</span>
+                      </div>
+                      <h4 className="text-3xl font-black text-brand-text-dark font-mono mt-1 tracking-tight">
+                        {profile?.lichess_username ? `[ ${profile.lichess_rating || '0000'} ]` : 'NOT LINKED'}
+                      </h4>
+                    </div>
+                    <div className="w-12 h-12 rounded-2xl bg-[#E8640A] text-white flex items-center justify-center text-xl font-bold shadow-md shrink-0">
+                      ♞
+                    </div>
                   </div>
-                  <div className="w-12 h-12 bg-orange-50 border border-orange-100 rounded-2xl flex items-center justify-center text-orange-600 font-bold text-lg relative z-10 select-none">
-                    ♞
+                  
+                  <div className="pt-3 border-t border-orange-100/80 flex items-center justify-between text-xs relative z-10">
+                    <span className="font-semibold text-orange-900">
+                      {profile?.lichess_username ? `@${profile.lichess_username}` : 'Link in Settings'}
+                    </span>
+                    <span className="text-[9px] font-mono font-bold text-orange-600 bg-orange-100/80 px-2 py-0.5 rounded-md uppercase">
+                      {profile?.lichess_username ? 'Classical Elo' : 'Uncertified'}
+                    </span>
                   </div>
                 </div>
               </div>
 
-              {/* Account Details */}
-              <div className="varsity-card p-6 sm:p-8 bg-white border border-gray-150">
-                <h3 className="text-xs font-black text-gray-600 uppercase tracking-widest mb-4">Academic & Profile Details</h3>
-                <div className="grid grid-cols-2 gap-y-4 gap-x-6 text-xs">
-                  <div>
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">University</span>
-                    <span className="font-semibold text-brand-text-dark mt-1 block truncate" title={profile?.university}>{profile?.university || '-'}</span>
+              {/* Academic & Player Information Grid */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-gray-150 shadow-xs">
+                <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-6">
+                  <h3 className="text-xs font-black text-gray-700 uppercase tracking-widest flex items-center gap-2">
+                    <svg className="w-4 h-4 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                    </svg>
+                    Academic & Collegiate Information
+                  </h3>
+                  <button
+                    onClick={() => setActiveTab('settings')}
+                    className="text-[10px] font-bold text-brand-primary uppercase hover:underline cursor-pointer"
+                  >
+                    Edit Details
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-xs">
+                  <div className="p-3.5 rounded-2xl bg-gray-50/70 border border-gray-100">
+                    <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">University</span>
+                    <span className="font-bold text-brand-text-dark block truncate" title={profile?.university}>{profile?.university || '-'}</span>
                   </div>
-                  <div>
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Faculty</span>
-                    <span className="font-semibold text-brand-text-dark mt-1 block truncate" title={profile?.faculty}>{profile?.faculty || '-'}</span>
+                  <div className="p-3.5 rounded-2xl bg-gray-50/70 border border-gray-100">
+                    <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">Faculty</span>
+                    <span className="font-bold text-brand-text-dark block truncate" title={profile?.faculty}>{profile?.faculty || '-'}</span>
                   </div>
-                  <div>
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Department</span>
-                    <span className="font-semibold text-brand-text-dark mt-1 block truncate" title={profile?.department}>{profile?.department || '-'}</span>
+                  <div className="p-3.5 rounded-2xl bg-gray-50/70 border border-gray-100">
+                    <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">Department</span>
+                    <span className="font-bold text-brand-text-dark block truncate" title={profile?.department}>{profile?.department || '-'}</span>
                   </div>
-                  <div>
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Level</span>
-                    <span className="font-semibold text-brand-text-dark mt-1 block">{profile?.level || '-'}</span>
+                  <div className="p-3.5 rounded-2xl bg-gray-50/70 border border-gray-100">
+                    <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">Academic Level</span>
+                    <span className="font-bold text-brand-text-dark block">{profile?.level ? `${profile.level} Level` : '-'}</span>
                   </div>
                 </div>
               </div>
@@ -1050,6 +1150,79 @@ export default function DashboardPage() {
             ) : (
               <UnverifiedGuard feature="Messages" />
             )
+          )}
+
+          {activeTab === 'notifications' && (
+            <div className="space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-150 pb-4">
+                <div>
+                  <h3 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                    Notifications ({notifications.length})
+                  </h3>
+                  <p className="text-xs font-semibold text-gray-400 mt-0.5">
+                    Match updates, rating certifications, and system notifications.
+                  </p>
+                </div>
+                {unreadNotificationsCount > 0 && (
+                  <button
+                    onClick={markAllNotificationsAsRead}
+                    className="px-4 py-1.5 bg-brand-primary/10 hover:bg-brand-primary text-brand-primary hover:text-white font-bold text-xs rounded-full transition-colors cursor-pointer"
+                  >
+                    Mark All Read ({unreadNotificationsCount})
+                  </button>
+                )}
+              </div>
+
+              {notifications.length === 0 ? (
+                <div className="bg-white border border-gray-100 rounded-3xl p-10 text-center shadow-xs">
+                  <div className="w-12 h-12 bg-blue-50 rounded-2xl text-brand-primary flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-wider">All Caught Up!</h3>
+                  <p className="text-xs font-semibold text-gray-400 mt-1 max-w-xs mx-auto">
+                    You have no unread notifications at this time.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {notifications.map((n) => {
+                    const isUnread = !n.read_at;
+                    return (
+                      <div
+                        key={n.id}
+                        onClick={() => {
+                          if (isUnread && markNotificationAsRead) markNotificationAsRead(n.id);
+                          if (n.link) window.location.href = n.link;
+                        }}
+                        className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-4 ${
+                          isUnread
+                            ? 'bg-blue-50/40 border-brand-primary/30 shadow-xs'
+                            : 'bg-white border-gray-150 hover:bg-gray-50'
+                        }`}
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-base shrink-0 shadow-2xs">
+                          {n.type === 'opponent_assigned' ? '♟' : n.type === 'rating_update' ? '📊' : n.type === 'reminder' ? '⏰' : '🔔'}
+                        </div>
+                        <div className="flex-grow min-w-0">
+                          <div className="flex items-center justify-between gap-2 mb-1">
+                            <h4 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-wider">{n.title}</h4>
+                            <span className="text-[9px] font-mono text-gray-400">
+                              {new Date(n.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          </div>
+                          <p className="text-xs font-medium text-gray-600 leading-relaxed">{n.message}</p>
+                        </div>
+                        {isUnread && (
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#E8640A] shrink-0 mt-1.5 animate-pulse" />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           )}
 
           {activeTab === 'announcements' && (
@@ -1158,6 +1331,15 @@ export default function DashboardPage() {
                           <option key={l} value={`${l}`}>{l} Level</option>
                         ))}
                       </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">WhatsApp Phone Number</label>
+                      <Input
+                        placeholder="e.g. 08012345678 or +234..."
+                        value={settingsForm.phone}
+                        onChange={e => setSettingsForm(prev => ({ ...prev, phone: e.target.value }))}
+                      />
                     </div>
                   </div>
 

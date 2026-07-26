@@ -41,12 +41,23 @@ const TrophySvg = ({ className = "w-5 h-5" }) => (
 
 
 function AdminMatchRow({ game, onSave }) {
-  const [winnerUsername, setWinnerUsername] = useState(game.winner?.username || '');
+  const getInitialWinner = (w) => {
+    if (!w) return '';
+    if (typeof w === 'object') {
+      if (w.username === 'draw' || w.name === 'Draw') return 'draw';
+      if (w.username === 'forfeit' || w.name === 'Double Forfeit') return 'forfeit';
+      return w.username || '';
+    }
+    if (w === 'draw') return 'draw';
+    return String(w);
+  };
+
+  const [winnerUsername, setWinnerUsername] = useState(() => getInitialWinner(game.winner));
   const [gameLink, setGameLink] = useState(game.gameLink || '');
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    setWinnerUsername(game.winner?.username || '');
+    setWinnerUsername(getInitialWinner(game.winner));
     setGameLink(game.gameLink || '');
   }, [game]);
 
@@ -57,9 +68,11 @@ function AdminMatchRow({ game, onSave }) {
         ? game.p1 
         : winnerUsername === game.p2?.username 
           ? game.p2 
-          : winnerUsername === 'forfeit'
-            ? { username: 'forfeit', name: 'Double Forfeit', rating: 0, school: '' }
-            : null;
+          : winnerUsername === 'draw'
+            ? { username: 'draw', name: 'Draw', rating: 0, school: '' }
+            : winnerUsername === 'forfeit'
+              ? { username: 'forfeit', name: 'Double Forfeit', rating: 0, school: '' }
+              : null;
       await onSave(selectedWinner, gameLink);
     } catch (e) {
       toast.error('Failed to save match result');
@@ -67,6 +80,9 @@ function AdminMatchRow({ game, onSave }) {
       setIsSaving(false);
     }
   };
+
+  const isDraw = winnerUsername === 'draw';
+  const isForfeit = winnerUsername === 'forfeit';
 
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 varsity-card">
@@ -76,8 +92,10 @@ function AdminMatchRow({ game, onSave }) {
             {game.id}
           </span>
           {game.winner && (
-            <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full uppercase tracking-wider">
-              Completed
+            <span className={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider ${
+              isDraw ? 'text-blue-600 bg-blue-50' : isForfeit ? 'text-red-600 bg-red-50' : 'text-emerald-600 bg-emerald-50'
+            }`}>
+              {isDraw ? '🤝 Draw' : isForfeit ? 'Double Forfeit' : 'Completed'}
             </span>
           )}
         </div>
@@ -106,15 +124,16 @@ function AdminMatchRow({ game, onSave }) {
           />
         </div>
 
-        <div className="w-full sm:w-[160px]">
+        <div className="w-full sm:w-[170px]">
           <select
             value={winnerUsername}
             onChange={(e) => setWinnerUsername(e.target.value)}
-            className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] transition-all"
+            className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] transition-all cursor-pointer"
           >
-            <option value="">-- Select Winner --</option>
+            <option value="">-- Select Result --</option>
             <option value={game.p1?.username}>Winner: {game.p1?.name}</option>
             <option value={game.p2?.username}>Winner: {game.p2?.name}</option>
+            <option value="draw">🤝 Draw (0.5 Pts Each)</option>
             <option value="forfeit">Double Forfeit (Both Removed)</option>
           </select>
         </div>
@@ -160,6 +179,8 @@ export default function ChessTournamentPage() {
   const [adminRoundNum, setAdminRoundNum] = useState(1);
   const [adminSubView, setAdminSubView] = useState('main'); // 'main' | 'generate-r1' | 'generate-next'
   const [activeFixtureRound, setActiveFixtureRound] = useState(1);
+  const [activeGroupFilter, setActiveGroupFilter] = useState('ALL');
+  useEffect(() => { setActiveGroupFilter('ALL'); }, [activeFixtureRound]);
   const [paramTargetElo, setParamTargetElo] = useState(400);
   const [paramSchoolPenalty, setParamSchoolPenalty] = useState(150);
   const [paramCustomDate, setParamCustomDate] = useState('');
@@ -374,6 +395,20 @@ export default function ChessTournamentPage() {
   };
 
   const [nextRoundStartInput, setNextRoundStartInput] = useState('');
+  const [nextRoundLabelInput, setNextRoundLabelInput] = useState('Group Stage Round 2 starts in');
+  const [labelDropdownEnabled, setLabelDropdownEnabled] = useState(false);
+
+  const ROUND_LABEL_OPTIONS = [
+    'Group Stage Round 1 starts in',
+    'Group Stage Round 2 starts in',
+    'Group Stage Round 3 starts in',
+    'Group Stage Round 4 starts in',
+    'Group Stage Round 5 starts in',
+    'Round of 16 starts in',
+    'Quarterfinals start in',
+    'Semifinals start in',
+    'The Final starts in',
+  ];
   const [showPastWinnersModal, setShowPastWinnersModal] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
 
@@ -587,6 +622,9 @@ export default function ChessTournamentPage() {
       } else {
         setNextRoundStartInput('');
       }
+      if (latestRound?.next_round_label) {
+        setNextRoundLabelInput(latestRound.next_round_label);
+      }
     }
   }, [tournament]);
 
@@ -620,18 +658,18 @@ export default function ChessTournamentPage() {
     }
     try {
       const isoStr = new Date(nextRoundStartInput).toISOString();
-      await updateNextRoundStart(isoStr);
-      toast.success('Next round start time updated!');
+      await updateNextRoundStart(isoStr, nextRoundLabelInput);
+      toast.success('Countdown updated!');
     } catch (e) {
-      toast.error('Error updating next round start time.');
+      toast.error('Error updating countdown.');
     }
   };
 
   const handleClearNextRoundStart = async () => {
     try {
-      await updateNextRoundStart(null);
+      await updateNextRoundStart(null, undefined);
       setNextRoundStartInput('');
-      toast.success('Next round start time cleared (using default round date).');
+      toast.success('Next round start time cleared.');
     } catch (e) {
       toast.error('Error clearing next round start time.');
     }
@@ -938,7 +976,7 @@ export default function ChessTournamentPage() {
           />
 
           {/* Sticky Mobile-First Tab Bar (Fitts's Law & Hick's Law Fix) */}
-          <div className="sticky top-14 z-30 bg-white/95 backdrop-blur-md border-b border-gray-200/90 px-3 sm:px-6 md:px-12 lg:px-16 shadow-xs">
+          <div className="sticky top-16 lg:top-20 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/90 px-3 sm:px-6 md:px-12 lg:px-16 shadow-xs">
             <div className="max-w-5xl mx-auto flex gap-2 sm:gap-6 overflow-x-auto no-scrollbar touch-pan-x py-1">
               {TABS.map(t => {
                 const isPrimary = t.id === 'bracket';
@@ -1135,7 +1173,22 @@ export default function ChessTournamentPage() {
               </div>
             ) : (() => {
               const currentRound = tournament.rounds.find(r => r.roundNum === activeFixtureRound) || tournament.rounds[tournament.rounds.length - 1];
-              const activeGames = (currentRound.games || []).filter(g => g.p1 && g.p2 && g.p2.username !== 'bye');
+              const allActiveGames = (currentRound.games || []).filter(g => g.p1 && g.p2 && g.p2.username !== 'bye');
+
+              // Collect all distinct group labels in this round for the filter tabs
+              const groupLabels = Array.from(new Set(allActiveGames.map(g => g.groupLabel).filter(Boolean))).sort();
+
+              const activeGames = activeGroupFilter === 'ALL'
+                ? allActiveGames
+                : allActiveGames.filter(g => g.groupLabel === activeGroupFilter);
+
+              // Detect user's game in this round
+              const userGame = user && allActiveGames.find(g =>
+                user.id === g.p1?.id || user.id === g.p2?.id ||
+                user.email?.split('@')[0] === g.p1?.username || user.email?.split('@')[0] === g.p2?.username
+              );
+              const userIsP1 = userGame && (user.id === userGame.p1?.id || user.email?.split('@')[0] === userGame.p1?.username);
+              const opponent = userGame ? (userIsP1 ? userGame.p2 : userGame.p1) : null;
               
               return (
                 <div className="space-y-6">
@@ -1164,10 +1217,99 @@ export default function ChessTournamentPage() {
                     </div>
                   </div>
 
+                  {/* "Who is My Opponent?" Banner (logged-in users only) */}
+                  {user && (
+                    <div className={`rounded-2xl border p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 animate-in fade-in duration-300 ${
+                      userGame
+                        ? 'bg-brand-primary/5 border-brand-primary/30 ring-1 ring-brand-primary/10'
+                        : 'bg-gray-50 border-gray-200'
+                    }`}>
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                        userGame ? 'bg-brand-primary text-white shadow-sm' : 'bg-gray-200 text-gray-500'
+                      }`}>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-0.5">Who is my opponent?</p>
+                        {userGame ? (
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                            <p className="text-sm font-black text-[#111111]">
+                              You face <span className="text-brand-primary">{opponent?.name}</span>
+                              {userGame.groupLabel && <span className="text-gray-400 font-semibold"> · Group {userGame.groupLabel}</span>}
+                            </p>
+                            {opponent?.username && (
+                              <span className="text-xs font-semibold text-gray-400">@{opponent.username}</span>
+                            )}
+                          </div>
+                        ) : (
+                          <p className="text-sm font-semibold text-gray-500">You have no match scheduled in this round.</p>
+                        )}
+                      </div>
+                      {userGame?.gameLink && (
+                        <a
+                          href={userGame.gameLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="shrink-0 text-xs font-black bg-brand-primary text-white px-4 py-2 rounded-xl hover:bg-brand-primary/90 transition-colors shadow-sm"
+                        >
+                          Watch Game
+                        </a>
+                      )}
+                      {userGame && !userGame.gameLink && (
+                        <button
+                          onClick={() => {
+                            setActiveGroupFilter(userGame.groupLabel || 'ALL');
+                            setTimeout(() => {
+                              const el = document.getElementById(`fixture-card-${userGame.id}`);
+                              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 100);
+                          }}
+                          className="shrink-0 text-xs font-black bg-white border border-brand-primary text-brand-primary px-4 py-2 rounded-xl hover:bg-brand-primary/5 transition-colors"
+                        >
+                          Find My Match
+                        </button>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Group Filter Tabs */}
+                  {groupLabels.length > 1 && (
+                    <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                      <button
+                        onClick={() => setActiveGroupFilter('ALL')}
+                        className={`text-xs font-bold px-3 py-1.5 rounded-xl whitespace-nowrap transition-all cursor-pointer shrink-0 ${
+                          activeGroupFilter === 'ALL'
+                            ? 'bg-brand-primary text-white shadow-xs font-black'
+                            : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200/60'
+                        }`}
+                      >
+                        All Groups
+                      </button>
+                      {groupLabels.map(label => (
+                        <button
+                          key={label}
+                          onClick={() => setActiveGroupFilter(label)}
+                          className={`text-xs font-bold px-3 py-1.5 rounded-xl whitespace-nowrap transition-all cursor-pointer shrink-0 ${
+                            activeGroupFilter === label
+                              ? 'bg-brand-primary text-white shadow-xs font-black'
+                              : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200/60'
+                          }`}
+                        >
+                          Group {label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
                   {/* Header Summary */}
                   <div className="flex items-center justify-between px-2">
                     <h3 className="font-space font-black text-xl text-[#111111] flex items-center gap-2">
                       <span>{currentRound.name} Pairings</span>
+                      {activeGroupFilter !== 'ALL' && (
+                        <span className="bg-[#0B193C] text-blue-300 border border-blue-400/30 font-space font-black text-xs px-2.5 py-1 rounded-lg uppercase tracking-wider">Group {activeGroupFilter}</span>
+                      )}
                     </h3>
                     <span className="text-xs font-bold text-gray-500 bg-white border border-gray-200/60 px-3 py-1 rounded-full shadow-2xs">
                       {activeGames.length} {activeGames.length === 1 ? 'Match' : 'Matches'}
@@ -1177,7 +1319,7 @@ export default function ChessTournamentPage() {
                   {/* Individual Fixture Cards Grid */}
                   {!activeGames.length ? (
                     <div className="varsity-card p-12 text-center">
-                      <p className="text-sm text-gray-500 italic py-4">No active matches in this round (all BYEs / auto-advances).</p>
+                      <p className="text-sm text-gray-500 italic py-4">No matches in Group {activeGroupFilter} for this round.</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 gap-4">
@@ -1196,6 +1338,7 @@ export default function ChessTournamentPage() {
 
                         return (
                           <div 
+                            id={`fixture-card-${g.id}`}
                             key={g.id || gameIdx}
                             className={`bg-white rounded-3xl border shadow-xs hover:shadow-md transition-all overflow-hidden ${
                               isUserGame 
@@ -1593,11 +1736,55 @@ export default function ChessTournamentPage() {
               </div>
             )}
 
-            {/* Manage Next Round Start Time */}
+            {/* Manage Next Round Countdown */}
             <div className="bg-[#FAF9F5] border border-brand-primary/10 rounded-2xl p-6 space-y-4">
-              <h3 className="font-space font-black text-lg text-[#111111]">Manage Next Round Start Time</h3>
-              <p className="text-xs text-gray-400">Set the target date and time when the next round is scheduled to begin. This dynamically updates the countdown timer shown to players on this page.</p>
-              
+              <div className="flex items-start justify-between gap-3 flex-wrap">
+                <div>
+                  <h3 className="font-space font-black text-lg text-[#111111]">Manage Countdown</h3>
+                  <p className="text-xs text-gray-400 mt-0.5">Controls the live countdown timer and its label shown to all players.</p>
+                </div>
+              </div>
+
+              {/* Countdown Label Row */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Countdown Label</label>
+                  {/* Toggle switch to enable/disable the dropdown */}
+                  <button
+                    onClick={() => setLabelDropdownEnabled(v => !v)}
+                    className={`relative inline-flex items-center w-10 h-5 rounded-full transition-colors cursor-pointer shrink-0 ${
+                      labelDropdownEnabled ? 'bg-brand-primary' : 'bg-gray-300'
+                    }`}
+                    title={labelDropdownEnabled ? 'Disable label editing' : 'Enable label editing'}
+                    aria-label="Toggle label dropdown"
+                    role="switch"
+                    aria-checked={labelDropdownEnabled}
+                  >
+                    <span className={`absolute w-3.5 h-3.5 bg-white rounded-full shadow transition-transform ${
+                      labelDropdownEnabled ? 'translate-x-5' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+
+                {labelDropdownEnabled ? (
+                  <select
+                    value={nextRoundLabelInput}
+                    onChange={(e) => setNextRoundLabelInput(e.target.value)}
+                    className="w-full text-xs font-bold px-3 py-2.5 border border-brand-primary/40 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] cursor-pointer"
+                  >
+                    {ROUND_LABEL_OPTIONS.map(opt => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                ) : (
+                  <div className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-gray-500 select-none">
+                    {nextRoundLabelInput}
+                    <span className="ml-2 text-[10px] text-gray-400">(enable toggle to change)</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Date + Time Row */}
               <div className="flex flex-col sm:flex-row items-end gap-4">
                 <div className="flex-1 w-full">
                   <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Next Round Start Date & Time</label>
@@ -1613,7 +1800,7 @@ export default function ChessTournamentPage() {
                     onClick={handleSaveNextRoundStart}
                     className="bg-brand-primary text-white text-xs font-black px-5 py-2.5 rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all cursor-pointer flex-1 sm:flex-initial text-center shadow-sm"
                   >
-                    Save Time
+                    Save
                   </button>
                   <button
                     onClick={handleClearNextRoundStart}

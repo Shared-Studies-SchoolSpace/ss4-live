@@ -83,12 +83,13 @@ export default function DirectChat() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [loadingChats, setLoadingChats] = useState(false);
+  const [latestMessageMap, setLatestMessageMap] = useState({});
 
   const messagesContainerRef = useRef(null);
   const hasAutoSelectedRef = useRef(null);
   const isVerified = user?.email_confirmed_at !== undefined;
 
-  // 1. Fetch directory of players and subscribe to profile updates
+  // 1. Fetch directory of players and recent message timestamps
   useEffect(() => {
     if (!user) return;
 
@@ -107,7 +108,31 @@ export default function DirectChat() {
       }
     };
 
+    const fetchRecentTimestamps = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("direct_messages")
+          .select("sender_id, receiver_id, created_at")
+          .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`)
+          .order("created_at", { ascending: false });
+
+        if (!error && data) {
+          const map = {};
+          data.forEach(m => {
+            const otherId = m.sender_id === user.id ? m.receiver_id : m.sender_id;
+            if (!map[otherId]) {
+              map[otherId] = m.created_at;
+            }
+          });
+          setLatestMessageMap(map);
+        }
+      } catch (err) {
+        console.error("Error fetching message timestamps:", err);
+      }
+    };
+
     fetchProfiles();
+    fetchRecentTimestamps();
 
     const profilesChannel = supabase
       .channel('dm-profiles-presence')
@@ -126,8 +151,27 @@ export default function DirectChat() {
       )
       .subscribe();
 
+    const dmGlobalListener = supabase
+      .channel(`dm-sorting:${user.id}`)
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'direct_messages' },
+        (payload) => {
+          const msg = payload.new;
+          const otherId = msg.sender_id === user.id ? msg.receiver_id : msg.sender_id;
+          if (otherId) {
+            setLatestMessageMap(prev => ({
+              ...prev,
+              [otherId]: msg.created_at
+            }));
+          }
+        }
+      )
+      .subscribe();
+
     return () => {
       supabase.removeChannel(profilesChannel);
+      supabase.removeChannel(dmGlobalListener);
     };
   }, [user, activeContact?.id]);
 
@@ -319,10 +363,30 @@ export default function DirectChat() {
     return `Last active ${new Date(timestamp).toLocaleDateString()}`;
   };
 
-  const filteredContacts = profiles.filter(c => 
-    c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (c.email && c.email.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredContacts = profiles
+    .filter(c => 
+      (c.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (c.email && c.email.toLowerCase().includes(searchQuery.toLowerCase()))
+    )
+    .sort((a, b) => {
+      const unreadA = unreadMessages.filter(m => m.sender_id === a.id).length;
+      const unreadB = unreadMessages.filter(m => m.sender_id === b.id).length;
+
+      // 1. Unread messages priority: contacts with unread messages shoot to top
+      if (unreadA !== unreadB) {
+        return unreadB - unreadA;
+      }
+
+      // 2. Latest message timestamp priority: contacts with newest messages shoot to top
+      const timeA = latestMessageMap[a.id] ? new Date(latestMessageMap[a.id]).getTime() : 0;
+      const timeB = latestMessageMap[b.id] ? new Date(latestMessageMap[b.id]).getTime() : 0;
+
+      if (timeA !== timeB) {
+        return timeB - timeA;
+      }
+
+      return (a.name || '').localeCompare(b.name || '');
+    });
 
   // Guest View
   if (!user) {

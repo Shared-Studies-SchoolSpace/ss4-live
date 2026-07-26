@@ -19,18 +19,27 @@ export default function AdminBroadcastPanel({ onClose }) {
   const [loading, setLoading] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(false);
 
+  const sanitizeLink = (rawLink) => {
+    const trimmed = (rawLink || '').trim();
+    if (!trimmed) return '/news';
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+  };
+
   // Load user profiles for targeted broadcast
   useEffect(() => {
     if (!user) return;
     const fetchProfiles = async () => {
       try {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('profiles')
           .select('id, name, email, role')
           .order('name', { ascending: true });
+        if (error) throw error;
         setProfiles(data || []);
       } catch (err) {
         console.error('Error loading profiles for broadcast panel:', err);
+        toast.error('Could not load player profiles for targeted broadcast.');
       }
     };
     fetchProfiles();
@@ -40,11 +49,12 @@ export default function AdminBroadcastPanel({ onClose }) {
   const fetchRecentBroadcasts = async () => {
     setLoadingHistory(true);
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('announcements')
         .select('*')
         .order('created_at', { ascending: false })
         .limit(5);
+      if (error) throw error;
       setRecentBroadcasts(data || []);
     } catch (err) {
       console.error('Error fetching recent broadcasts:', err);
@@ -74,6 +84,8 @@ export default function AdminBroadcastPanel({ onClose }) {
     setLoading(true);
 
     try {
+      const sanitizedLink = sanitizeLink(customLink);
+
       // 1. Post to announcements table if mode includes announcement
       if (broadcastMode === 'announcement_and_notif') {
         const { error: annErr } = await supabase
@@ -81,7 +93,9 @@ export default function AdminBroadcastPanel({ onClose }) {
           .insert({
             title: title.trim(),
             content: content.trim(),
-            created_by: user.id
+            created_by: user.id,
+            author_id: user.id,
+            is_global: targetType === 'all'
           });
 
         if (annErr) throw annErr;
@@ -90,7 +104,8 @@ export default function AdminBroadcastPanel({ onClose }) {
       // 2. Dispatch targeted/broadcast notifications table
       let targetUserIds = [];
       if (targetType === 'all') {
-        const { data: allProfs } = await supabase.from('profiles').select('id');
+        const { data: allProfs, error: profErr } = await supabase.from('profiles').select('id');
+        if (profErr) throw profErr;
         targetUserIds = (allProfs || []).map(p => p.id);
       } else {
         targetUserIds = [selectedUserId];
@@ -102,13 +117,14 @@ export default function AdminBroadcastPanel({ onClose }) {
           type: notifType,
           title: title.trim(),
           message: content.trim(),
-          link: customLink.trim() || '/news'
+          link: sanitizedLink
         }));
 
         // Batch insert in chunks of 100
         const batchSize = 100;
         for (let i = 0; i < notifs.length; i += batchSize) {
-          await supabase.from('notifications').insert(notifs.slice(i, i + batchSize));
+          const { error: notifBatchErr } = await supabase.from('notifications').insert(notifs.slice(i, i + batchSize));
+          if (notifBatchErr) throw notifBatchErr;
         }
       }
 

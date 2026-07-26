@@ -241,26 +241,42 @@ export function getCountdownTarget(tournament) {
     }
   }
 
+  const dates = getTournamentDates(y, m);
+
   if (!tournament || tournament.status === 'upcoming') {
     if (today8pm > now) {
       return { date: today8pm, label: 'Round 1 starts in' };
     }
-    const dates = getTournamentDates(y, m);
     return { date: new Date(`${dates[0]}T20:00:00+01:00`), label: 'Round 1 starts in' };
   }
 
   if (tournament.status === 'active') {
-    const latestRound = tournament.rounds && tournament.rounds[tournament.rounds.length - 1];
+    const rounds = tournament.rounds || [];
+    const latestRound = rounds.length > 0 ? rounds[rounds.length - 1] : null;
+    const currentNum = latestRound ? (latestRound.roundNum || rounds.length) : 1;
+    const nextNum = currentNum + 1;
+
+    // Admin panel override stored in DB takes priority
     if (latestRound && latestRound.next_round_start) {
-      return { date: new Date(latestRound.next_round_start), label: 'Next round begins in' };
+      const customLabel = latestRound.next_round_label || `Round ${nextNum} starts in`;
+      return { 
+        date: new Date(latestRound.next_round_start), 
+        label: customLabel
+      };
     }
-    const pending = tournament.rounds.find(r => r.games.some(g => !g.winner));
-    if (pending) {
-      if (today8pm > now) {
-        return { date: today8pm, label: `${pending.name || 'Round 1'} starts in` };
-      }
-      return { date: new Date(`${pending.date || dates[0]}T20:00:00+01:00`), label: `${pending.name || 'Round 1'} starts in` };
-    }
+
+    // Default to previous round start time + 24 hours or next date in sequence
+    const prevDateStr = latestRound?.date || dates[Math.min(currentNum - 1, dates.length - 1)];
+    const prevDateObj = new Date(prevDateStr.includes('T') ? prevDateStr : `${prevDateStr}T20:00:00+01:00`);
+    const nextDate = !isNaN(prevDateObj.getTime())
+      ? new Date(prevDateObj.getTime() + 24 * 60 * 60 * 1000)
+      : new Date(`${dates[Math.min(nextNum - 1, dates.length - 1)]}T20:00:00+01:00`);
+
+    const defaultLabel = latestRound?.next_round_label || `Round ${nextNum} starts in`;
+    return { 
+      date: nextDate, 
+      label: defaultLabel
+    };
   }
 
   if (today8pm > now) {

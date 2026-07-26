@@ -334,12 +334,14 @@ export function useTournament(monthYear) {
     fetchHistory();
   };
 
-  const updateNextRoundStart = (dateTimeStr) => {
+  const updateNextRoundStart = (dateTimeStr, nextRoundLabel) => {
     if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return;
     const updatedRounds = [...tournament.rounds];
+    const lastRound = updatedRounds[updatedRounds.length - 1];
     updatedRounds[updatedRounds.length - 1] = {
-      ...updatedRounds[updatedRounds.length - 1],
-      next_round_start: dateTimeStr
+      ...lastRound,
+      next_round_start: dateTimeStr,
+      ...(nextRoundLabel !== undefined ? { next_round_label: nextRoundLabel } : {})
     };
     save({ ...tournament, rounds: updatedRounds });
   };

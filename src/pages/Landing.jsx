@@ -211,20 +211,17 @@ export default function LandingPage() {
 
   // 1. Load data from Supabase / SessionStorage Cache
   useEffect(() => {
+    // Only use cached announcements/schools for instant paint, but always fetch fresh tournament matches
     const isCached = sessionStorage.getItem('ss4_landing_preloaded_v2');
     if (isCached) {
       try {
         const cached = JSON.parse(isCached);
         setDbAnnouncements(cached.dbAnnouncements || []);
-        setDbMatches(cached.dbMatches || []);
         setAllPlayers(cached.allPlayers || []);
         setLeaderboardSchools(cached.leaderboardSchools || []);
         setDailyFriendlies(cached.dailyFriendlies || []);
-        setIsPreloading(false);
-        setLoadingFeed(false);
-        return;
       } catch (e) {
-        // Cache corrupted or disabled, fetch fresh
+        // Cache corrupted or disabled
       }
     }
 
@@ -412,13 +409,69 @@ export default function LandingPage() {
         }, 500);
 
       } catch (err) {
-        console.error("Error preloading feed data:", err);
+        console.error("Error preloading landing data:", err);
         setIsPreloading(false);
         setLoadingFeed(false);
       }
     };
 
     loadAndPreload();
+
+    // Realtime subscription for tournaments update
+    const tourneyTopic = `landing-tournaments-${Date.now()}`;
+    const tourneySub = supabase
+      .channel(tourneyTopic)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'tournaments' },
+        async () => {
+          try {
+            const { data: updatedTourneys } = await supabase.from('tournaments').select('*');
+            if (updatedTourneys) {
+              const freshMatches = [];
+              const n = new Date();
+              const cMY = `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}`;
+              updatedTourneys.forEach(t => {
+                const isCurr = t.month_year === cMY;
+                (t.rounds || []).forEach(r => {
+                  (r.games || []).forEach(g => {
+                    const isP1Bye = g.p1?.username?.toLowerCase() === 'bye' || g.p1?.name?.toUpperCase() === 'BYE';
+                    const isP2Bye = g.p2?.username?.toLowerCase() === 'bye' || g.p2?.name?.toUpperCase() === 'BYE';
+                    if (isP1Bye || isP2Bye) return;
+                    if (!isCurr && !g.winner) return;
+                    freshMatches.push({
+                      id: `${t.id}_${r.roundNum || r.name}_${g.id}`,
+                      tournamentName: t.name,
+                      roundName: r.name,
+                      groupLabel: g.groupLabel || null,
+                      isGroupStage: r.isGroupStage || false,
+                      white: g.p1 || g.white,
+                      black: g.p2 || g.black,
+                      winner: g.winner || null,
+                      gameLink: g.gameLink || '',
+                      date: t.month_year,
+                      isPending: !g.winner
+                    });
+                  });
+                });
+              });
+              freshMatches.sort((a, b) => {
+                if (a.date !== b.date) return b.date.localeCompare(a.date);
+                if (a.isPending !== b.isPending) return a.isPending ? 1 : -1;
+                return 0;
+              });
+              setDbMatches(freshMatches.slice(0, 16));
+            }
+          } catch (e) {
+            console.error('Error refreshing tournaments on realtime change:', e);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(tourneySub);
+    };
   }, []);
 
   const leaderboardPlayers = useMemo(() => {

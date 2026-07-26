@@ -216,8 +216,8 @@ async function main() {
       name: p.name || p.chess_username || p.lichess_username,
       username: p.chess_username || p.lichess_username,
       rating: Math.max(p.chess_rating || 0, p.lichess_rating || 0) || null,
-      school: p.university || p.school || 'Unknown',
-      department: p.department || '',
+      school: (p.email === 'ekpeetengeabasi@gmail.com' || p.chess_username === 'Power_101') ? 'University of Uyo' : (p.university || p.school || 'Unknown'),
+      department: (p.email === 'ekpeetengeabasi@gmail.com' || p.chess_username === 'Power_101') ? 'Electrical Engineering' : (p.department || ''),
       contact: p.contact || '',
       isProvisional: !p.chess_rating && !p.lichess_rating
     }));

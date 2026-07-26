@@ -17,7 +17,7 @@ import { useAuthModal } from '../../auth-portal/context/AuthModalContext';
 import { supabase } from '../../../supabase';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
-import { fetchCompletePlayerData } from '../utils/chessService';
+import { fetchCompletePlayerData, searchMutualGames } from '../utils/chessService';
 import AdminBroadcastPanel from '../../../components/announcements/AdminBroadcastPanel';
 
 const ADMIN_PIN = '1926';
@@ -170,6 +170,87 @@ export default function ChessTournamentPage() {
   const [verifyingPromptUsername, setVerifyingPromptUsername] = useState(false);
   const [promptError, setPromptError] = useState('');
   const [pendingRegData, setPendingRegData] = useState(null);
+
+  const [isScouring, setIsScouring] = useState(false);
+  const [scourProgress, setScourProgress] = useState(null);
+
+  const handleAutoUpdateResults = async () => {
+    if (!tournament || !tournament.rounds || tournament.rounds.length === 0) {
+      toast.error("No active tournament initialized.");
+      return;
+    }
+
+    setIsScouring(true);
+    setScourProgress("Initializing game history scour...");
+    let matchesScoured = 0;
+    let resultsUpdated = 0;
+
+    try {
+      // Collect all active (uncompleted) matches across all rounds
+      const pendingGames = [];
+      tournament.rounds.forEach(round => {
+        (round.games || []).forEach(game => {
+          if (!game.winner && game.p1 && game.p2 && game.p1.username !== 'bye' && game.p2.username !== 'bye') {
+            pendingGames.push({ round, game });
+          }
+        });
+      });
+
+      if (pendingGames.length === 0) {
+        toast.info("No pending matches found to scour.");
+        setIsScouring(false);
+        setScourProgress(null);
+        return;
+      }
+
+      toast.info(`Scouring last 10 matches for ${pendingGames.length} active games...`);
+
+      for (let i = 0; i < pendingGames.length; i++) {
+        const { game } = pendingGames[i];
+        const p1 = game.p1;
+        const p2 = game.p2;
+
+        matchesScoured++;
+        setScourProgress(`Checking Match ${i + 1}/${pendingGames.length}: ${p1.name} vs ${p2.name}...`);
+
+        // Scour last 10 games of home player p1 vs away player p2
+        const matchData = await searchMutualGames(p1, p2);
+
+        if (matchData && matchData.winner) {
+          let winnerObj = null;
+          const cleanWinner = String(matchData.winner).toLowerCase().trim();
+          const cleanP1User = (p1.username || '').toLowerCase().trim();
+          const cleanP1Chess = (p1.chess_username || '').toLowerCase().trim();
+          const cleanP1Lichess = (p1.lichess_username || '').toLowerCase().trim();
+          const cleanP2User = (p2.username || '').toLowerCase().trim();
+          const cleanP2Chess = (p2.chess_username || '').toLowerCase().trim();
+          const cleanP2Lichess = (p2.lichess_username || '').toLowerCase().trim();
+
+          if (cleanWinner === cleanP1User || cleanWinner === cleanP1Chess || cleanWinner === cleanP1Lichess) {
+            winnerObj = p1;
+          } else if (cleanWinner === cleanP2User || cleanWinner === cleanP2Chess || cleanWinner === cleanP2Lichess) {
+            winnerObj = p2;
+          } else if (cleanWinner === 'draw' || cleanWinner === 'tie') {
+            winnerObj = { username: 'draw', name: 'Draw' };
+          }
+
+          if (winnerObj) {
+            await logResult(game.id, winnerObj, matchData.url);
+            resultsUpdated++;
+            toast.success(`Auto-updated match ${p1.name} vs ${p2.name}: Winner ${winnerObj.name || winnerObj.username}`);
+          }
+        }
+      }
+
+      toast.success(`Auto update complete! Scoured ${matchesScoured} matches, updated ${resultsUpdated} results.`);
+    } catch (err) {
+      console.error("Error during auto-update scour:", err);
+      toast.error("Auto update failed: " + err.message);
+    } finally {
+      setIsScouring(false);
+      setScourProgress(null);
+    }
+  };
 
   const handleOpenR1Gen = () => {
     const [y, m] = selectedMonthYear.split('-').map(Number);
@@ -1059,8 +1140,8 @@ export default function ChessTournamentPage() {
               return (
                 <div className="space-y-6">
                   {/* Round Selector Bar */}
-                  <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto py-0.5">
+                  <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-5 shadow-sm flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full py-0.5">
                       {tournament.rounds.map(r => {
                         const isActive = activeFixtureRound === r.roundNum;
                         return (
@@ -1080,12 +1161,6 @@ export default function ChessTournamentPage() {
                           </button>
                         );
                       })}
-                    </div>
-                    <div className="bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold px-3.5 py-1.5 rounded-full shrink-0 flex items-center gap-1.5">
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span>{currentRound.date || 'TBD'} @ 8:00 PM WAT</span>
                     </div>
                   </div>
 
@@ -1129,26 +1204,26 @@ export default function ChessTournamentPage() {
                             }`}
                           >
                             {/* Card Header Bar */}
-                            <div className="bg-brand-bg-cream/40 border-b border-gray-100 px-5 py-3 flex items-center justify-between gap-2 flex-wrap">
-                              <div className="flex items-center gap-2">
+                            <div className="bg-brand-bg-cream/40 border-b border-gray-100 px-3 sm:px-5 py-2.5 sm:py-3 flex flex-wrap items-center justify-between gap-2">
+                              <div className="flex items-center gap-1.5 flex-wrap min-w-0 max-w-full">
                                 {groupLabel && (
-                                  <span className="bg-[#0B193C] text-blue-300 border border-blue-400/30 font-space font-black text-[11px] px-3 py-1 rounded-lg uppercase tracking-wider shadow-2xs">
+                                  <span className="bg-[#0B193C] text-blue-300 border border-blue-400/30 font-space font-black text-[10px] sm:text-[11px] px-2.5 py-0.5 sm:py-1 rounded-lg uppercase tracking-wider shadow-2xs shrink-0">
                                     Group {groupLabel}
                                   </span>
                                 )}
-                                <span className="text-xs font-bold text-gray-500">
+                                <span className="text-[11px] sm:text-xs font-bold text-gray-500 shrink-0">
                                   Match #{gameIdx + 1}
                                 </span>
                                 {isUserGame && (
-                                  <span className="bg-blue-100 border border-blue-300 text-brand-primary text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1">
+                                  <span className="bg-blue-100 border border-blue-300 text-brand-primary text-[9px] sm:text-[10px] font-black px-2 py-0.5 rounded-full shrink-0 flex items-center gap-1">
                                     <span>YOUR MATCH</span>
                                   </span>
                                 )}
                               </div>
 
                               {/* Status Badge */}
-                              <div>
-                                {isMatchDone ? (
+                              <div className="shrink-0 ml-auto">
+                                {isMatchDone && (
                                   <span className={`text-[11px] font-black px-3 py-1 rounded-full border ${
                                     isForfeit 
                                       ? 'bg-red-50 text-red-700 border-red-200' 
@@ -1157,11 +1232,6 @@ export default function ChessTournamentPage() {
                                       : 'bg-emerald-50 text-emerald-800 border-emerald-200'
                                   }`}>
                                     {isForfeit ? 'Double Forfeit' : isDraw ? 'Match Drawn' : `Won by ${g.winner.name}`}
-                                  </span>
-                                ) : (
-                                  <span className="text-[11px] font-black bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full flex items-center gap-1.5">
-                                    <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                                    <span>Scheduled</span>
                                   </span>
                                 )}
                               </div>
@@ -1458,7 +1528,7 @@ export default function ChessTournamentPage() {
                 <h2 className="font-space font-black text-2xl text-[#111111]">Admin Panel</h2>
                 <span className="text-xs font-bold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">Unlocked</span>
               </div>
-            <div className="grid sm:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-6 space-y-3">
                 <p className="font-space font-black text-base text-[#111111]">Initialize Bracket</p>
                 <p className="text-sm text-gray-500">Seed {selectedMonthYear} tournament with 53 registered players.</p>
@@ -1472,6 +1542,26 @@ export default function ChessTournamentPage() {
                 <p className="text-sm text-gray-500">Generate next round fixtures from current winners.</p>
                 <button onClick={handleOpenNextGen} className="bg-emerald-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-emerald-500 transition-colors">
                   Generate Next Round
+                </button>
+              </div>
+              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 space-y-3">
+                <p className="font-space font-black text-base text-[#111111]">Auto Update Results</p>
+                <p className="text-sm text-gray-500">Scour last 10 matches of home players for games vs away players & update DB.</p>
+                <button 
+                  onClick={handleAutoUpdateResults} 
+                  disabled={isScouring}
+                  className="bg-brand-primary text-white text-sm font-bold px-4 py-2.5 rounded-xl cursor-pointer hover:bg-brand-accent transition-colors flex items-center justify-center gap-2 w-full disabled:opacity-50"
+                >
+                  {isScouring ? (
+                    <>
+                      <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
+                      <span>Scouring...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>⚡ Auto Update</span>
+                    </>
+                  )}
                 </button>
               </div>
               <div className="bg-red-50 border border-red-100 rounded-2xl p-6 space-y-3">
@@ -1493,6 +1583,15 @@ export default function ChessTournamentPage() {
                 </button>
               </div>
             </div>
+
+            {scourProgress && (
+              <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 flex items-center justify-between gap-3 text-xs font-bold text-brand-primary shadow-2xs">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-3 h-3 rounded-full bg-brand-primary animate-ping shrink-0"></span>
+                  <span>{scourProgress}</span>
+                </div>
+              </div>
+            )}
 
             {/* Manage Next Round Start Time */}
             <div className="bg-[#FAF9F5] border border-brand-primary/10 rounded-2xl p-6 space-y-4">
@@ -1533,17 +1632,35 @@ export default function ChessTournamentPage() {
                   <h3 className="font-space font-black text-lg text-[#111111]">Update Match Results</h3>
                   <p className="text-xs text-gray-400">Select a winner and game link for any active match, then click Save to sync directly to Supabase.</p>
                 </div>
-                {tournament?.rounds && (
-                  <select
-                    value={adminRoundNum}
-                    onChange={(e) => setAdminRoundNum(Number(e.target.value))}
-                    className="text-xs font-bold px-3 py-1.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer"
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    onClick={handleAutoUpdateResults}
+                    disabled={isScouring}
+                    className="bg-brand-primary text-white text-xs font-black px-3.5 py-1.5 rounded-xl hover:bg-brand-accent transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs disabled:opacity-50"
                   >
-                    {tournament.rounds.map(r => (
-                      <option key={r.roundNum} value={r.roundNum}>{r.name}</option>
-                    ))}
-                  </select>
-                )}
+                    {isScouring ? (
+                      <>
+                        <span className="w-3 h-3 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
+                        <span>Scouring...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>⚡ Auto Update</span>
+                      </>
+                    )}
+                  </button>
+                  {tournament?.rounds && (
+                    <select
+                      value={adminRoundNum}
+                      onChange={(e) => setAdminRoundNum(Number(e.target.value))}
+                      className="text-xs font-bold px-3 py-1.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer"
+                    >
+                      {tournament.rounds.map(r => (
+                        <option key={r.roundNum} value={r.roundNum}>{r.name}</option>
+                      ))}
+                    </select>
+                  )}
+                </div>
               </div>
               
               {!tournament || !tournament.rounds || tournament.rounds.length === 0 ? (

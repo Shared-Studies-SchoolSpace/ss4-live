@@ -552,10 +552,9 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
 
           {/* CENTER TROPHY COLUMN */}
           <div className="w-[300px] flex flex-col justify-between items-center py-8 px-4 bg-white rounded-3xl border border-gray-100 text-center shrink-0 mx-4 shadow-xl relative z-20">
-            {/* Top: Title & Date */}
+            {/* Top: Title */}
             <div className="space-y-1">
               <h4 className="text-xs font-black text-brand-accent uppercase tracking-widest">SCL Cup Final</h4>
-              <p className="text-[10px] text-gray-400 font-bold">June 30th · 8:00 PM WAT</p>
             </div>
 
             {/* Middle: Grand Final Matchup Box (Centered Vertically) */}

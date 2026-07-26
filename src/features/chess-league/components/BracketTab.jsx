@@ -290,7 +290,7 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
       ) : (
         round && (
           <div>
-            <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name} · {round.date} @ 8:00 PM WAT</p>
+            <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-3">{round.name}</p>
 
             {/* Group stage: cluster matches by group with styled headers */}
             {round.isGroupStage && round.games.some(g => g.groupLabel) ? (

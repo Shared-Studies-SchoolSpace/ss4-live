@@ -494,11 +494,7 @@ export const FixturesTab = ({ currentDivision, gameResults, currentRound, setCur
                             {res === 'black' && `Winner: ${bP.name.split(' ')[0]}`}
                             {res === 'draw' && "Match Draw"}
                           </span>
-                        ) : (
-                          <span className="text-[10px] font-bold bg-gray-50 text-gray-400 border border-gray-100 px-3 py-1 rounded-full uppercase tracking-wider select-none">
-                            Scheduled
-                          </span>
-                        )}
+                        ) : null}
                       </div>
                     </div>
                   );

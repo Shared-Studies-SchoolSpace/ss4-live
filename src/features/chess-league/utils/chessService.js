@@ -60,118 +60,117 @@ export async function fetchLichessStats(username) {
 }
 
 /**
- * Searches for the latest match between two Chess.com users
+ * Scours the last 10 games of a player on Chess.com or Lichess looking for a game with opponent
  */
-async function searchChessComMutual(userA, userB) {
-  const cleanA = userA.toLowerCase().trim();
-  const cleanB = userB.toLowerCase().trim();
-  
-  try {
-    // Get archives index
-    const listRes = await fetch(`https://api.chess.com/pub/player/${encodeURIComponent(cleanA)}/games/archives`);
-    if (!listRes.ok) return null;
-    const listData = await listRes.json();
-    const archives = listData.archives || [];
-    if (archives.length === 0) return null;
+export async function searchPlayerLast10GamesVsOpponent(playerUser, opponentUser, platform = 'chess.com') {
+  const cleanA = (playerUser || '').toLowerCase().trim();
+  const cleanB = (opponentUser || '').toLowerCase().trim();
+  if (!cleanA || !cleanB) return null;
 
-    // Scan the most recent archives (last 2 months maximum)
-    const recentArchives = archives.slice(-2).reverse();
-    for (const archiveUrl of recentArchives) {
-      const archiveRes = await fetch(archiveUrl);
-      if (!archiveRes.ok) continue;
+  try {
+    if (platform === 'chess.com') {
+      const listRes = await fetch(`https://api.chess.com/pub/player/${encodeURIComponent(cleanA)}/games/archives`);
+      if (!listRes.ok) return null;
+      const listData = await listRes.json();
+      const archives = listData.archives || [];
+      if (archives.length === 0) return null;
+
+      // Fetch the latest month archive
+      const latestArchiveUrl = archives[archives.length - 1];
+      const archiveRes = await fetch(latestArchiveUrl);
+      if (!archiveRes.ok) return null;
       const archiveData = await archiveRes.json();
-      const games = archiveData.games || [];
+      const allGames = archiveData.games || [];
       
-      // Find matches where opponent is userB
-      const mutualGames = games.filter(g => {
-        const white = g.white.username.toLowerCase();
-        const black = g.black.username.toLowerCase();
+      // Get last 10 games of home player A
+      const last10 = allGames.slice(-10).reverse();
+
+      // Find match vs opponent B
+      const match = last10.find(g => {
+        const white = (g.white.username || '').toLowerCase();
+        const black = (g.black.username || '').toLowerCase();
         return (white === cleanA && black === cleanB) || (white === cleanB && black === cleanA);
       });
 
-      if (mutualGames.length > 0) {
-        // Return latest match
-        const latest = mutualGames[mutualGames.length - 1];
-        const isWhite = latest.white.username.toLowerCase() === cleanA;
-        const result = isWhite ? latest.white.result : latest.black.result;
-        
+      if (match) {
+        const isWhite = match.white.username.toLowerCase() === cleanA;
+        const res = isWhite ? match.white.result : match.black.result;
         let winner = null;
-        if (result === 'win') {
-          winner = isWhite ? userA : userB;
-        } else if (latest.white.result === 'win' || latest.black.result === 'win') {
-          winner = isWhite ? userB : userA;
+        if (res === 'win') {
+          winner = playerUser;
+        } else if (match.white.result === 'win' || match.black.result === 'win') {
+          winner = opponentUser;
+        } else if (['agreed', 'repetition', 'stalemate', 'insufficient', '50move', 'time-vs-insufficient'].includes(res)) {
+          winner = 'draw';
         }
 
         return {
           platform: 'chess.com',
-          url: latest.url,
+          url: match.url,
           winner,
-          date: new Date(latest.end_time * 1000).toISOString()
+          date: new Date(match.end_time * 1000).toISOString()
         };
+      }
+    } else {
+      // Lichess API - fetch last 10 games of user A
+      const url = `https://lichess.org/api/games/user/${encodeURIComponent(cleanA)}?max=10&moves=false`;
+      const res = await fetch(url, { headers: { 'Accept': 'application/x-ndjson' } });
+      if (!res.ok) return null;
+      const text = await res.text();
+      if (!text.trim()) return null;
+
+      const lines = text.trim().split('\n').filter(Boolean);
+      for (const line of lines) {
+        try {
+          const game = JSON.parse(line);
+          const white = (game.players?.white?.user?.name || '').toLowerCase();
+          const black = (game.players?.black?.user?.name || '').toLowerCase();
+          if ((white === cleanA && black === cleanB) || (white === cleanB && black === cleanA)) {
+            let winner = null;
+            if (game.winner) {
+              winner = game.winner === 'white' ? (game.players.white.user.name || playerUser) : (game.players.black.user.name || opponentUser);
+            } else if (game.status === 'draw') {
+              winner = 'draw';
+            }
+            return {
+              platform: 'lichess',
+              url: `https://lichess.org/${game.id}`,
+              winner,
+              date: new Date(game.createdAt).toISOString()
+            };
+          }
+        } catch (e) {}
       }
     }
   } catch (err) {
-    console.error('Error searching Chess.com mutual games:', err);
+    console.error('Error searching player last 10 games vs opponent:', err);
   }
   return null;
 }
 
 /**
- * Searches for the latest match between two Lichess users
- */
-async function searchLichessMutual(userA, userB) {
-  const cleanA = userA.toLowerCase().trim();
-  const cleanB = userB.toLowerCase().trim();
-
-  try {
-    const url = `https://lichess.org/api/games/user/${encodeURIComponent(cleanA)}?vs=${encodeURIComponent(cleanB)}&max=1&moves=false`;
-    const res = await fetch(url, {
-      headers: { 'Accept': 'application/x-ndjson' }
-    });
-    if (!res.ok) return null;
-    const text = await res.text();
-    if (!text.trim()) return null;
-
-    // Lichess returns NDJSON (newline-delimited JSON)
-    const game = JSON.parse(text.split('\n')[0]);
-    
-    let winner = null;
-    if (game.winner) {
-      winner = game.winner === 'white' ? game.players.white.user.name : game.players.black.user.name;
-    }
-
-    return {
-      platform: 'lichess',
-      url: `https://lichess.org/${game.id}`,
-      winner,
-      date: new Date(game.createdAt).toISOString()
-    };
-  } catch (err) {
-    console.error('Error searching Lichess mutual games:', err);
-  }
-  return null;
-}
-
-/**
- * Dynamically search the external platforms for mutual games between two players
+ * Dynamically search external platforms for mutual games between two players
  */
 export async function searchMutualGames(profileA, profileB) {
-  let chessComMatch = null;
-  let lichessMatch = null;
+  if (!profileA || !profileB) return null;
 
-  if (profileA.chess_username && profileB.chess_username) {
-    chessComMatch = await searchChessComMutual(profileA.chess_username, profileB.chess_username);
+  // Try Chess.com first
+  const userA_Chess = profileA.chess_username || profileA.username;
+  const userB_Chess = profileB.chess_username || profileB.username;
+  if (userA_Chess && userB_Chess) {
+    const match = await searchPlayerLast10GamesVsOpponent(userA_Chess, userB_Chess, 'chess.com');
+    if (match) return match;
   }
 
-  if (profileA.lichess_username && profileB.lichess_username) {
-    lichessMatch = await searchLichessMutual(profileA.lichess_username, profileB.lichess_username);
+  // Try Lichess
+  const userA_Lichess = profileA.lichess_username || profileA.username;
+  const userB_Lichess = profileB.lichess_username || profileB.username;
+  if (userA_Lichess && userB_Lichess) {
+    const match = await searchPlayerLast10GamesVsOpponent(userA_Lichess, userB_Lichess, 'lichess');
+    if (match) return match;
   }
 
-  if (chessComMatch && lichessMatch) {
-    // Return the more recent one
-    return new Date(chessComMatch.date) > new Date(lichessMatch.date) ? chessComMatch : lichessMatch;
-  }
-  return chessComMatch || lichessMatch || null;
+  return null;
 }
 
 const playerApiCache = {};

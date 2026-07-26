@@ -225,9 +225,6 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
             <h2 className="font-space font-black text-2xl text-[#111111] uppercase tracking-wide">
               Group Stage Table
             </h2>
-            <span className="bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-black px-2.5 py-0.5 rounded-full">
-              World Cup Format
-            </span>
           </div>
           <p className="text-xs text-gray-500 mt-1 font-medium">
             Top 2 players in each group advance to the Knockout Stage. Scoring: <strong className="text-[#111111]">Win = 1 pt</strong> &bull; <strong className="text-[#111111]">Draw = 1 pt</strong> &bull; <strong className="text-[#111111]">Loss = 0 pts</strong>.
@@ -455,18 +452,18 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                   )}
                 </div>
 
-                {/* Group Standings Table List */}
-                <div className="overflow-x-auto flex-1">
-                  <table className="w-full text-left border-collapse text-xs">
+                {/* Group Standings Table List (No horizontal scroll needed on mobile) */}
+                <div className="w-full overflow-hidden flex-1">
+                  <table className="w-full text-left border-collapse text-xs table-fixed">
                     <thead>
                       <tr className="bg-gray-50/60 border-b border-gray-100 text-[9px] font-black text-gray-400 uppercase tracking-wider">
-                        <th className="py-2.5 px-3 w-[36px] text-center">#</th>
-                        <th className="py-2.5 px-3">Player</th>
-                        <th className="py-2.5 px-1.5 text-center w-[32px]" title="Matches Played">MP</th>
-                        <th className="py-2.5 px-1.5 text-center w-[32px]" title="Wins">W</th>
-                        <th className="py-2.5 px-1.5 text-center w-[32px]" title="Draws">D</th>
-                        <th className="py-2.5 px-1.5 text-center w-[32px]" title="Losses">L</th>
-                        <th className="py-2.5 px-3 text-center w-[44px] text-brand-primary font-black" title="Points">Pts</th>
+                        <th className="py-2.5 px-1 sm:px-2 w-[28px] sm:w-[36px] text-center">#</th>
+                        <th className="py-2.5 px-1 sm:px-2">Player</th>
+                        <th className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title="Matches Played">MP</th>
+                        <th className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title="Wins">W</th>
+                        <th className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title="Draws">D</th>
+                        <th className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title="Losses">L</th>
+                        <th className="py-2.5 px-1 sm:px-2 text-center w-[28px] sm:w-[36px] text-brand-primary font-black" title="Points">Pts</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
@@ -487,9 +484,9 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                             }`}
                           >
                             {/* Rank Column */}
-                            <td className="py-3 px-2 text-center">
+                            <td className="py-2.5 px-0.5 sm:px-1 text-center">
                               <span 
-                                className={`w-6 h-6 rounded-full border text-[10px] font-black inline-flex items-center justify-center ${
+                                className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border text-[9px] sm:text-[10px] font-black inline-flex items-center justify-center ${
                                   isQualifying 
                                     ? 'bg-emerald-100 text-emerald-800 border-emerald-300 shadow-2xs' 
                                     : 'bg-gray-100 text-gray-500 border-gray-200'
@@ -501,21 +498,21 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                             </td>
 
                             {/* Player / Institution Column */}
-                            <td className="py-3 px-2 min-w-0">
-                              <div className="flex items-center gap-2 min-w-0">
+                            <td className="py-2.5 px-1 sm:px-2 min-w-0">
+                              <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
                                 <PlayerAvatar player={p} />
                                 <div className="min-w-0 flex-1">
                                   <div className="flex items-center gap-1 min-w-0 flex-wrap">
                                     <button
                                       onClick={() => onPlayerSelect && onPlayerSelect(p)}
-                                      className="font-bold text-[#111111] group-hover:text-brand-primary transition-colors cursor-pointer text-xs truncate text-left hover:underline"
+                                      className="font-bold text-[#111111] group-hover:text-brand-primary transition-colors cursor-pointer text-xs truncate text-left hover:underline max-w-[85px] xs:max-w-[120px] sm:max-w-none"
                                       title={p.name}
                                     >
                                       {p.name}
                                     </button>
                                     {isSearchMatch && (
-                                      <span className="text-[9px] font-black uppercase text-blue-300 bg-[#0B193C] border border-blue-400/40 px-2 py-0.5 rounded-full shrink-0 flex items-center gap-1 shadow-2xs font-space">
-                                        <span>MATCH FOUND</span>
+                                      <span className="text-[8px] font-black uppercase text-blue-300 bg-[#0B193C] border border-blue-400/40 px-1 py-0.5 rounded-full shrink-0 flex items-center shadow-2xs font-space" title="Match Found">
+                                        🔍
                                       </span>
                                     )}
                                     {p.isUser && !isSearchMatch && (
@@ -542,28 +539,28 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                             </td>
 
                             {/* MP */}
-                            <td className="py-3 px-1.5 text-center font-bold text-gray-600 text-xs">
+                            <td className="py-2.5 px-0.5 text-center font-bold text-gray-600 text-[11px] sm:text-xs">
                               {p.P}
                             </td>
 
                             {/* W */}
-                            <td className="py-3 px-1.5 text-center font-bold text-emerald-600 text-xs">
+                            <td className="py-2.5 px-0.5 text-center font-bold text-emerald-600 text-[11px] sm:text-xs">
                               {p.W}
                             </td>
 
                             {/* D */}
-                            <td className="py-3 px-1.5 text-center font-bold text-blue-600 text-xs">
+                            <td className="py-2.5 px-0.5 text-center font-bold text-blue-600 text-[11px] sm:text-xs">
                               {p.D}
                             </td>
 
                             {/* L */}
-                            <td className="py-3 px-1.5 text-center font-bold text-gray-400 text-xs">
+                            <td className="py-2.5 px-0.5 text-center font-bold text-gray-400 text-[11px] sm:text-xs">
                               {p.L}
                             </td>
 
                             {/* Pts */}
-                            <td className="py-3 px-3 text-center font-black text-brand-primary text-sm">
-                              {p.Pts}
+                            <td className="py-2.5 px-0.5 sm:px-1 text-center font-black text-brand-primary text-[11px] sm:text-xs">
+                              {p.pts}
                             </td>
                           </tr>
                         );

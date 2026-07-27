@@ -80,10 +80,6 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
         {/* Overline row */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
           <p className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-white/70 uppercase">SS4 Chess Network</p>
-          <span className="text-white/30 text-xs sm:text-sm">·</span>
-          <span className={`text-[10px] sm:text-xs font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full uppercase tracking-wider ${statusColors[status]}`}>
-            {status}
-          </span>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">

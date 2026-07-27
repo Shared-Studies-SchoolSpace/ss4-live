@@ -4,7 +4,7 @@ import { supabase } from '../../../supabase';
 import { toast } from 'react-toastify';
 
 export default function WhatsAppPromptNotification() {
-  const { user, profile, setProfile, refreshProfile } = useAuth();
+  const { user, profile, updateUserPhoneInDivisions } = useAuth();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [saving, setSaving] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -19,7 +19,7 @@ export default function WhatsAppPromptNotification() {
   }, []);
 
   // Only show if user is logged in, profile exists, phone number is missing, and prompt not dismissed
-  const hasPhone = Boolean(profile?.phone || profile?.whatsapp || profile?.whatsapp_number);
+  const hasPhone = Boolean(profile?.phone || profile?.whatsapp || profile?.whatsapp_number || profile?.contact);
   if (!user || !profile || hasPhone || dismissed) {
     return null;
   }
@@ -55,22 +55,9 @@ export default function WhatsAppPromptNotification() {
         cleanPhone = '234' + cleanPhone;
       }
 
-      console.log('[WhatsApp Notification] Saving phone number to profile:', cleanPhone);
-      const { error: updateErr } = await supabase
-        .from('profiles')
-        .update({ phone: cleanPhone, whatsapp: cleanPhone })
-        .eq('id', user.id);
+      console.log('[WhatsApp Notification] Saving phone number to divisions table:', cleanPhone);
+      await updateUserPhoneInDivisions(profile, cleanPhone);
 
-      if (updateErr) throw updateErr;
-
-      // Optimistically update local profile context
-      setProfile(prev => ({
-        ...prev,
-        phone: cleanPhone,
-        whatsapp: cleanPhone
-      }));
-
-      await refreshProfile();
       toast.success('WhatsApp number updated successfully! Direct invites enabled.');
     } catch (err) {
       console.error('[WhatsApp Notification] Save failed:', err);

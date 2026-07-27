@@ -120,7 +120,7 @@ export const Header = () => {
 
           {/* Action & Utility Group - Equal heights & gap spacing */}
           <div className="flex items-center gap-2 sm:gap-2.5 lg:gap-3 shrink-0">
-            <button className="hidden xl:inline-flex items-center h-9 sm:h-10 px-4 xl:px-5 border border-[#E8640A] text-[#E8640A] font-bold text-xs xl:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer whitespace-nowrap" onClick={() => window.location.href='/partner'}>
+            <button className="hidden lg:inline-flex items-center h-9 sm:h-10 px-3 lg:px-4 xl:px-5 border border-[#E8640A] text-[#E8640A] font-bold text-xs xl:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer whitespace-nowrap" onClick={() => window.location.href='/partner'}>
               Partner With Us
             </button>
 

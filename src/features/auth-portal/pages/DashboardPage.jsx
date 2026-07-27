@@ -124,6 +124,7 @@ export default function DashboardPage() {
     markNotificationAsRead,
     markAllNotificationsAsRead,
     updatePlayerDivision,
+    updateUserPhoneInDivisions,
     isRecoverySession,
     setIsRecoverySession,
     updatePassword,
@@ -436,7 +437,6 @@ export default function DashboardPage() {
         faculty: settingsForm.faculty.trim(),
         department: settingsForm.department.trim(),
         level: settingsForm.level,
-        phone: settingsForm.phone.trim(),
         chess_username: settingsForm.chess_username.trim(),
         lichess_username: settingsForm.lichess_username.trim(),
         chess_rating: finalChessRating,
@@ -455,8 +455,16 @@ export default function DashboardPage() {
       const maxRating = Math.max(finalChessRating, finalLichessRating);
       const profileWithDetails = {
         ...profile,
-        ...updatedProfile
+        ...updatedProfile,
+        phone: settingsForm.phone.trim(),
+        whatsapp: settingsForm.phone.trim(),
+        contact: settingsForm.phone.trim()
       };
+
+      if (settingsForm.phone.trim()) {
+        console.log("[Profile Update] Updating phone contact in divisions table...");
+        await updateUserPhoneInDivisions(profileWithDetails, settingsForm.phone.trim());
+      }
       
       // Optimistically/instantly update the local context profile state (ponytail)
       setProfile(profileWithDetails);

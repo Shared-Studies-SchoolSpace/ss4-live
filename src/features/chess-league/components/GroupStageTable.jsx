@@ -82,6 +82,24 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
             players: Array.from(playersInGroup.values())
           };
         });
+
+        // Collect any tournament players not assigned to any game-based group yet into their own dedicated group
+        const assignedUsernames = new Set();
+        groupsMeta.forEach(g => {
+          (g.players || []).forEach(p => {
+            if (p.username) assignedUsernames.add(p.username.toLowerCase());
+          });
+        });
+
+        const unassignedPlayers = rawPlayers.filter(p => p.username && !assignedUsernames.has(p.username.toLowerCase()));
+        if (unassignedPlayers.length > 0) {
+          const lastLabel = sortedLabels[sortedLabels.length - 1] || 'N';
+          const nextLabelChar = String.fromCharCode(lastLabel.charCodeAt(0) + 1);
+          groupsMeta.push({
+            label: nextLabelChar,
+            players: unassignedPlayers
+          });
+        }
       }
     }
 

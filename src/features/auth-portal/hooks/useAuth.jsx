@@ -21,7 +21,9 @@ const AuthContext = createContext({
   updatePassword: async () => {},
   sendPasswordReset: async () => {},
   refreshProfile: async () => {},
-  markNotificationsAsRead: async () => {}
+  markNotificationsAsRead: async () => {},
+  updatePlayerDivision: async () => {},
+  updateUserPhoneInDivisions: async () => {}
 });
 
 export function AuthProvider({ children }) {
@@ -56,7 +58,43 @@ export function AuthProvider({ children }) {
       // Synchronously verify this is still the active user using refs (zero network requests)
       if (activeUserIdRef.current === uid) {
         if (data) {
-          setProfile(data);
+          // Resolve phone number from user metadata or divisions table contact field
+          let userPhone = '';
+          const { data: sessionData } = await supabase.auth.getSession();
+          const meta = sessionData?.session?.user?.user_metadata || {};
+          userPhone = meta.phone || meta.whatsapp || '';
+
+          try {
+            const { data: divisions } = await supabase.from('divisions').select('players');
+            if (divisions) {
+              const matchTerms = [
+                data.chess_username?.toLowerCase(),
+                data.lichess_username?.toLowerCase(),
+                data.email?.toLowerCase(),
+                data.name?.toLowerCase()
+              ].filter(Boolean);
+
+              for (const d of divisions) {
+                const found = (d.players || []).find(p =>
+                  matchTerms.includes(p.username?.toLowerCase()) ||
+                  matchTerms.includes(p.name?.toLowerCase())
+                );
+                if (found && (found.contact || found.phone || found.whatsapp)) {
+                  userPhone = found.contact || found.phone || found.whatsapp;
+                  break;
+                }
+              }
+            }
+          } catch (divErr) {
+            console.warn('Failed resolving phone from divisions:', divErr);
+          }
+
+          setProfile({
+            ...data,
+            phone: userPhone,
+            whatsapp: userPhone,
+            contact: userPhone
+          });
         } else if (activeUserIdRef.current === uid) {
           // ponytail: self-healing fallback if profile row was blocked during signup RLS misconfigurations
           const { data: sessionData } = await supabase.auth.getSession();
@@ -506,7 +544,8 @@ export function AuthProvider({ children }) {
               name: profileObj.name,
               username: profileObj.chess_username || profileObj.lichess_username || profileObj.email,
               department: profileObj.department || 'Student Player',
-              school: profileObj.university || 'SS4 Member'
+              school: profileObj.university || 'SS4 Member',
+              contact: profileObj.phone || profileObj.whatsapp || profileObj.contact || ''
             };
             const nextList = [...playersList, addedPlayer];
             return supabase.from('divisions').update({ players: nextList }).eq('id', d.id);
@@ -521,7 +560,8 @@ export function AuthProvider({ children }) {
                   name: profileObj.name,
                   username: profileObj.chess_username || profileObj.lichess_username || profileObj.email,
                   department: profileObj.department || 'Student Player',
-                  school: profileObj.university || 'SS4 Member'
+                  school: profileObj.university || 'SS4 Member',
+                  contact: profileObj.phone || profileObj.whatsapp || profileObj.contact || p.contact || ''
                 };
                 if (JSON.stringify(p) !== JSON.stringify(updatedP)) {
                   detailChanged = true;
@@ -546,6 +586,59 @@ export function AuthProvider({ children }) {
       await Promise.all(updatePromises);
     } catch (err) {
       console.warn('Could not update player division assignment:', err.message);
+    }
+  };
+
+  const updateUserPhoneInDivisions = async (profileObj, phoneNum) => {
+    try {
+      const matchTerms = [
+        profileObj?.chess_username?.toLowerCase(),
+        profileObj?.lichess_username?.toLowerCase(),
+        profileObj?.email?.toLowerCase(),
+        profileObj?.name?.toLowerCase()
+      ].filter(Boolean);
+
+      const { data: currentDivs } = await supabase.from('divisions').select('*');
+      if (currentDivs) {
+        const updatePromises = currentDivs.map(async (d) => {
+          let changed = false;
+          const nextPlayers = (d.players || []).map(p => {
+            const isMatch = matchTerms.includes(p.username?.toLowerCase()) ||
+                            matchTerms.includes(p.name?.toLowerCase());
+            if (isMatch) {
+              changed = true;
+              return {
+                ...p,
+                contact: phoneNum,
+                phone: phoneNum,
+                whatsapp: phoneNum
+              };
+            }
+            return p;
+          });
+
+          if (changed) {
+            return supabase.from('divisions').update({ players: nextPlayers }).eq('id', d.id);
+          }
+        });
+        await Promise.all(updatePromises);
+      }
+
+      // Sync auth user metadata
+      await supabase.auth.updateUser({
+        data: { phone: phoneNum, whatsapp: phoneNum }
+      });
+
+      // Update local profile state
+      setProfile(prev => prev ? ({
+        ...prev,
+        phone: phoneNum,
+        whatsapp: phoneNum,
+        contact: phoneNum
+      }) : null);
+    } catch (err) {
+      console.error('Failed updating phone in divisions:', err);
+      throw err;
     }
   };
 
@@ -702,6 +795,7 @@ export function AuthProvider({ children }) {
       unreadAnnouncementsCount,
       markAnnouncementsAsRead,
       updatePlayerDivision,
+      updateUserPhoneInDivisions,
       signUp, 
       signIn, 
       signOut, 

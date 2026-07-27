@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -177,6 +177,8 @@ export default function ChessTournamentPage() {
   const [showPin, setShowPin]       = useState(false);
   const [selectedPlayerForModal, setSelectedPlayerForModal] = useState(null);
   const [adminRoundNum, setAdminRoundNum] = useState(1);
+  const [adminGroupFilter, setAdminGroupFilter] = useState('ALL');
+  const adminRoundInitializedRef = useRef(false);
   const [adminSubView, setAdminSubView] = useState('main'); // 'main' | 'generate-r1' | 'generate-next'
   const [activeFixtureRound, setActiveFixtureRound] = useState(1);
   const [activeGroupFilter, setActiveGroupFilter] = useState('ALL');
@@ -676,9 +678,10 @@ export default function ChessTournamentPage() {
   };
 
   useEffect(() => {
-    if (tournament?.rounds?.length) {
-      setAdminRoundNum(tournament.rounds.length);
-      setActiveFixtureRound(tournament.rounds.length);
+    if (tournament?.rounds?.length && !adminRoundInitializedRef.current) {
+      adminRoundInitializedRef.current = true;
+      setAdminRoundNum(1);
+      setActiveFixtureRound(1);
     }
   }, [tournament]);
 
@@ -1837,15 +1840,35 @@ export default function ChessTournamentPage() {
                     )}
                   </button>
                   {tournament?.rounds && (
-                    <select
-                      value={adminRoundNum}
-                      onChange={(e) => setAdminRoundNum(Number(e.target.value))}
-                      className="text-xs font-bold px-3 py-1.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer"
-                    >
-                      {tournament.rounds.map(r => (
-                        <option key={r.roundNum} value={r.roundNum}>{r.name}</option>
-                      ))}
-                    </select>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <select
+                        value={adminRoundNum}
+                        onChange={(e) => setAdminRoundNum(Number(e.target.value))}
+                        className="text-xs font-bold px-3 py-1.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer"
+                      >
+                        {tournament.rounds.map(r => (
+                          <option key={r.roundNum} value={r.roundNum}>{r.name}</option>
+                        ))}
+                      </select>
+
+                      {(() => {
+                        const currentAdminRound = tournament.rounds.find(r => r.roundNum === adminRoundNum);
+                        const groupsInRound = [...new Set((currentAdminRound?.games || []).map(g => g.groupLabel).filter(Boolean))].sort();
+                        if (!groupsInRound.length) return null;
+                        return (
+                          <select
+                            value={adminGroupFilter}
+                            onChange={(e) => setAdminGroupFilter(e.target.value)}
+                            className="text-xs font-bold px-3 py-1.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer"
+                          >
+                            <option value="ALL">All Groups</option>
+                            {groupsInRound.map(grp => (
+                              <option key={grp} value={grp}>Group {grp}</option>
+                            ))}
+                          </select>
+                        );
+                      })()}
+                    </div>
                   )}
                 </div>
               </div>
@@ -1857,9 +1880,12 @@ export default function ChessTournamentPage() {
                 if (!currentAdminRound || !currentAdminRound.games || !currentAdminRound.games.length) {
                   return <p className="text-sm text-gray-400 italic py-4">No matches in this round.</p>;
                 }
-                const gamesToShow = currentAdminRound.games.filter(g => g.p1 && g.p2 && g.p1.username !== 'bye' && g.p2.username !== 'bye');
+                let gamesToShow = currentAdminRound.games.filter(g => g.p1 && g.p2 && g.p1.username !== 'bye' && g.p2.username !== 'bye');
+                if (adminGroupFilter !== 'ALL') {
+                  gamesToShow = gamesToShow.filter(g => g.groupLabel === adminGroupFilter);
+                }
                 if (gamesToShow.length === 0) {
-                  return <p className="text-sm text-gray-400 italic py-4">All matches in this round are BYEs / auto-advances.</p>;
+                  return <p className="text-sm text-gray-400 italic py-4">No matches in this selection.</p>;
                 }
                 return (
                   <div className="space-y-3 max-h-[450px] overflow-y-auto pr-1">

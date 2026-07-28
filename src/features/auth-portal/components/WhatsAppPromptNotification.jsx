@@ -48,22 +48,12 @@ export default function WhatsAppPromptNotification() {
     setSaving(true);
 
     try {
-      // Normalise to international format.
-      // If already E.164 (≥12 digits or first digit is non-zero) leave as-is.
-      let cleanPhone = digits;
-      if (cleanPhone.length >= 12 || (cleanPhone.length > 0 && cleanPhone[0] !== '0')) {
-        // already international   use as-is
-      } else if (cleanPhone.length === 11 && cleanPhone.startsWith('0')) {
-        // Nigerian local: 0XXXXXXXXXX → 234XXXXXXXXX
-        cleanPhone = '234' + cleanPhone.slice(1);
-      } else if (cleanPhone.length === 10 && ['80', '81', '90', '70', '91', '71'].some(p => cleanPhone.startsWith(p))) {
-        // Nigerian short local: 10 digits
-        cleanPhone = '234' + cleanPhone;
-      }
-      // Any other format: store as-is
+      // Store digits as entered (supports local formats starting with 0 like 08139732276)
+      // getWhatsAppUrl will automatically detect and strip leading 0s when launching WhatsApp
+      const savedPhone = digits;
 
-      console.log('[WhatsApp Notification] Saving phone number to divisions table:', cleanPhone);
-      await updateUserPhoneInDivisions(profile, cleanPhone);
+      console.log('[WhatsApp Notification] Saving phone number to divisions table:', savedPhone);
+      await updateUserPhoneInDivisions(profile, savedPhone);
 
       toast.success('WhatsApp number updated successfully! Direct invites enabled.');
     } catch (err) {

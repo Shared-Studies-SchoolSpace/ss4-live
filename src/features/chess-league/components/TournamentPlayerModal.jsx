@@ -1,36 +1,115 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthGate from '../../auth-portal/components/AuthGate';
+import { useAuth } from '../../auth-portal/hooks/useAuth';
 import { usePlayerDetails } from './MatchCardHelper';
+import { tournamentPlayers } from '../data/tournamentPlayers';
+import { players as initialPlayers } from '../data/chessData';
+import { supabase } from '../../../supabase';
 
 export const getWhatsAppUrl = (phone) => {
   if (!phone) return null;
   let digits = String(phone).replace(/\D/g, '');
   if (!digits) return null;
 
-  // Already a full international number (E.164 without leading +)
-  // Numbers ≥ 12 digits or starting with a non-zero digit (i.e. already has country code)
-  if (digits.length >= 12 || (digits.length > 0 && digits[0] !== '0')) {
+  // 1. Full E.164 with international country code (≥ 12 digits, e.g. 2348139732276)
+  if (digits.length >= 12) {
     return `https://wa.me/${digits}`;
   }
 
-  // Nigerian local format: 0XXXXXXXXXX (11 digits, starts with 0)
+  // 2. Nigerian local format with leading zero (11 digits starting with 0)
   if (digits.length === 11 && digits.startsWith('0')) {
     digits = '234' + digits.slice(1);
     return `https://wa.me/${digits}`;
   }
 
-  // Nigerian short local format: 10 digits starting with known network prefixes
-  const nigerianPrefixes = ['80', '81', '90', '70', '91', '70', '71', '80', '81', '90', '91'];
+  // 3. Nigerian short local format without leading zero (10 digits starting with 7, 8, 9)
+  const nigerianPrefixes = ['70', '71', '80', '81', '90', '91'];
   if (digits.length === 10 && nigerianPrefixes.some(p => digits.startsWith(p))) {
     digits = '234' + digits;
     return `https://wa.me/${digits}`;
   }
 
-  // Anything else: pass through as-is (let WhatsApp handle it)
+  // 4. Fallback pass through
   return `https://wa.me/${digits}`;
 };
+
+export function useResolvedPlayerPhone(player) {
+  const { user, profile: authProfile } = useAuth();
+  const [phone, setPhone] = useState(() =>
+    player?.phone || player?.whatsapp || player?.whatsapp_number || player?.contact || null
+  );
+
+  useEffect(() => {
+    const direct = player?.phone || player?.whatsapp || player?.whatsapp_number || player?.contact;
+    if (direct) {
+      setPhone(direct);
+      return;
+    }
+
+    const usernameKey = player?.username?.toLowerCase() || player?.chess_username?.toLowerCase();
+    const nameKey = player?.name?.toLowerCase();
+    const playerId = player?.id;
+
+    // 1. Match logged-in user profile
+    const isCurrentUser =
+      (user && (
+        (playerId && user.id === playerId) ||
+        (usernameKey && user.email?.split('@')[0]?.toLowerCase() === usernameKey)
+      )) ||
+      (authProfile && (
+        (playerId && authProfile.id === playerId) ||
+        (usernameKey && authProfile.chess_username?.toLowerCase() === usernameKey) ||
+        (nameKey && authProfile.name?.toLowerCase() === nameKey)
+      ));
+
+    if (isCurrentUser) {
+      const userPhone = authProfile?.phone || authProfile?.whatsapp || authProfile?.contact || user?.user_metadata?.phone || user?.user_metadata?.whatsapp;
+      if (userPhone) {
+        setPhone(userPhone);
+        return;
+      }
+    }
+
+    // 2. Static dataset lookups
+    const staticMatch =
+      (tournamentPlayers || []).find(p => (usernameKey && p.username?.toLowerCase() === usernameKey) || (nameKey && p.name?.toLowerCase() === nameKey)) ||
+      (initialPlayers || []).find(p => (usernameKey && p.username?.toLowerCase() === usernameKey) || (nameKey && p.name?.toLowerCase() === nameKey));
+
+    if (staticMatch?.contact || staticMatch?.phone || staticMatch?.whatsapp) {
+      setPhone(staticMatch.contact || staticMatch.phone || staticMatch.whatsapp);
+      return;
+    }
+
+    // 3. Supabase divisions table lookup
+    let isMounted = true;
+    async function fetchFromDivisions() {
+      try {
+        const { data: divData } = await supabase.from('divisions').select('players');
+        if (divData && isMounted) {
+          for (const d of divData) {
+            const match = (d.players || []).find(p =>
+              (usernameKey && p.username?.toLowerCase() === usernameKey) ||
+              (nameKey && p.name?.toLowerCase() === nameKey)
+            );
+            if (match && (match.contact || match.phone || match.whatsapp)) {
+              setPhone(match.contact || match.phone || match.whatsapp);
+              return;
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Divisions phone lookup failed:', err);
+      }
+    }
+
+    fetchFromDivisions();
+    return () => { isMounted = false; };
+  }, [player, user, authProfile]);
+
+  return phone;
+}
 
 export function TournamentPlayerModal({ player, onClose }) {
   const navigate = useNavigate();
@@ -38,6 +117,7 @@ export function TournamentPlayerModal({ player, onClose }) {
 
   // Load avatar and extended details from platform
   const details = usePlayerDetails(player?.username, player);
+  const playerPhone = useResolvedPlayerPhone(player);
 
   if (!player) return null;
 
@@ -50,7 +130,6 @@ export function TournamentPlayerModal({ player, onClose }) {
     ? `https://www.chess.com/member/${encodeURIComponent(player.username)}`
     : `https://lichess.org/@/${encodeURIComponent(player.username)}`;
 
-  const playerPhone = player.phone || player.whatsapp || player.whatsapp_number || player.contact;
   const whatsappUrl = getWhatsAppUrl(playerPhone);
 
   const monogram = (player.name || '?')
@@ -206,18 +285,18 @@ export function TournamentPlayerModal({ player, onClose }) {
             </div>
           </div>
 
-          {/* 3 Action Buttons: Message, Chess*, Whatsapp */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+          {/* 3 Action Buttons Card: Message | Chess.com | WhatsApp (Redesigned for Mobile) */}
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-gray-50/80 rounded-2xl border border-gray-200/80 shadow-2xs my-4">
             <AuthGate reason="message this player directly" onAction={handleMessagePlayer}>
               <button
                 type="button"
                 onClick={handleMessagePlayer}
-                className="w-full flex items-center justify-center gap-1.5 bg-brand-primary hover:bg-[#1545A2] text-white font-bold text-xs py-2.5 px-2 rounded-xl transition-all shadow-xs cursor-pointer whitespace-nowrap min-h-[44px]"
+                className="w-full flex items-center justify-center gap-1 sm:gap-1.5 bg-brand-primary hover:bg-[#1545A2] text-white font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all shadow-2xs cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98]"
               >
-                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
-                <span>Message</span>
+                <span className="truncate">Message</span>
               </button>
             </AuthGate>
 
@@ -225,10 +304,10 @@ export function TournamentPlayerModal({ player, onClose }) {
               href={platformProfileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-[#111111] font-bold text-xs py-2.5 px-2 rounded-xl transition-all border border-gray-200 text-center cursor-pointer whitespace-nowrap min-h-[44px]"
+              className="w-full flex items-center justify-center gap-1 sm:gap-1.5 bg-white hover:bg-gray-100 text-[#111111] font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all border border-gray-200/90 text-center cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98] shadow-2xs"
             >
-              <span>{platformName}</span>
-              <svg className="w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="truncate">{platformName}</span>
+              <svg className="w-3 h-3 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </a>
@@ -238,16 +317,16 @@ export function TournamentPlayerModal({ player, onClose }) {
               target={whatsappUrl ? "_blank" : "_self"}
               rel="noopener noreferrer"
               onClick={handleWhatsAppClick}
-              className={`w-full flex items-center justify-center gap-1.5 font-bold text-xs py-2.5 px-2 rounded-xl transition-all text-center cursor-pointer whitespace-nowrap min-h-[44px] ${
+              className={`w-full flex items-center justify-center gap-1 sm:gap-1.5 font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all text-center cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98] ${
                 whatsappUrl 
-                  ? 'bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xs' 
-                  : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200'
+                  ? 'bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-2xs' 
+                  : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200'
               }`}
             >
-              <svg className="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24">
+              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 fill-current" viewBox="0 0 24 24">
                 <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
               </svg>
-              <span>Whatsapp</span>
+              <span className="truncate">WhatsApp</span>
             </a>
           </div>
         </div>

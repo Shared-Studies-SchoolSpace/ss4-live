@@ -361,7 +361,7 @@ export function generateWorldCupFixtures(players, year, month, options = {}) {
   if (N < 4) throw new Error('Not enough players for group stage (need ≥ 4)');
 
   // ── 2. Group / pot sizing ──────────────────────────────────────────────────
-  const G = Math.floor(N / 4);         // number of groups
+  const G = Math.ceil(N / 4);          // number of groups (ceil ensures Group O & remainder groups get created)
   const numPots = 4;                    // always 4 pots
   // Remainder players get distributed into the first `rem` groups as a 5th slot
   const rem = N % 4;

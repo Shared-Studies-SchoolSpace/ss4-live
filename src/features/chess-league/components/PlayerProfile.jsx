@@ -17,7 +17,7 @@ export const PlayerProfile = ({ player, onClose }) => {
   const chessUsername = player.chess_username || player.username || '';
   const lichessUsername = player.lichess_username || '';
 
-  const playerPhone = player.phone || player.whatsapp || player.whatsapp_number;
+  const playerPhone = player.phone || player.whatsapp || player.whatsapp_number || player.contact;
   const whatsappUrl = getWhatsAppUrl(playerPhone);
 
   const handleWhatsAppClick = (e) => {

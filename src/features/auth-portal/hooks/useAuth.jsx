@@ -91,9 +91,9 @@ export function AuthProvider({ children }) {
 
           setProfile({
             ...data,
+            // phone/whatsapp are virtual fields resolved from divisions   not stored in profiles table
             phone: userPhone,
             whatsapp: userPhone,
-            contact: userPhone
           });
         } else if (activeUserIdRef.current === uid) {
           // ponytail: self-healing fallback if profile row was blocked during signup RLS misconfigurations
@@ -598,43 +598,49 @@ export function AuthProvider({ children }) {
         profileObj?.name?.toLowerCase()
       ].filter(Boolean);
 
-      const { data: currentDivs } = await supabase.from('divisions').select('*');
-      if (currentDivs) {
-        const updatePromises = currentDivs.map(async (d) => {
+      // Fetch only the IDs first so we know which divisions to touch
+      const { data: divList } = await supabase.from('divisions').select('id');
+      if (divList) {
+        // Process each division independently   fresh read per division minimises
+        // the race window where a concurrent admin/match-score update gets clobbered
+        await Promise.all(divList.map(async ({ id }) => {
+          const { data: div } = await supabase
+            .from('divisions')
+            .select('players')
+            .eq('id', id)
+            .single();
+
+          if (!div) return;
+
           let changed = false;
-          const nextPlayers = (d.players || []).map(p => {
-            const isMatch = matchTerms.includes(p.username?.toLowerCase()) ||
-                            matchTerms.includes(p.name?.toLowerCase());
+          const nextPlayers = (div.players || []).map(p => {
+            const isMatch =
+              matchTerms.includes(p.username?.toLowerCase()) ||
+              matchTerms.includes(p.name?.toLowerCase());
             if (isMatch) {
               changed = true;
-              return {
-                ...p,
-                contact: phoneNum,
-                phone: phoneNum,
-                whatsapp: phoneNum
-              };
+              return { ...p, contact: phoneNum, phone: phoneNum, whatsapp: phoneNum };
             }
             return p;
           });
 
           if (changed) {
-            return supabase.from('divisions').update({ players: nextPlayers }).eq('id', d.id);
+            await supabase.from('divisions').update({ players: nextPlayers }).eq('id', id);
           }
-        });
-        await Promise.all(updatePromises);
+        }));
       }
 
-      // Sync auth user metadata
+      // Sync auth user metadata (source of truth for re-login hydration)
       await supabase.auth.updateUser({
         data: { phone: phoneNum, whatsapp: phoneNum }
       });
 
-      // Update local profile state
+      // Update local profile state   phone/whatsapp are virtual fields resolved
+      // from divisions; profiles table has no contact/phone column
       setProfile(prev => prev ? ({
         ...prev,
         phone: phoneNum,
         whatsapp: phoneNum,
-        contact: phoneNum
       }) : null);
     } catch (err) {
       console.error('Failed updating phone in divisions:', err);

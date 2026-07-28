@@ -35,11 +35,11 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
   const [activeLegend, setActiveLegend] = useState(null);
 
   const legendDetails = {
-    MP: "Matches Played — Total matches completed in the group stage",
-    W: "Wins — Total matches won (1 point per win)",
-    D: "Draws — Total matches drawn (0.5 points per draw)",
-    L: "Losses — Total matches lost (0 points)",
-    PTS: "Points — Total accumulated points (Wins × 1 + Draws × 0.5)"
+    MP: "Matches Played   Total matches completed in the group stage",
+    W: "Wins   Total matches won (1 point per win)",
+    D: "Draws   Total matches drawn (0.5 points per draw)",
+    L: "Losses   Total matches lost (0 points)",
+    PTS: "Points   Total accumulated points (Wins × 1 + Draws × 0.5)"
   };
 
   const handleHeaderClick = (key) => {
@@ -106,7 +106,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
     // Fallback: If still no groups (e.g. pre-seeded or standard list), divide players into 4-player groups
     if (!groupsMeta.length && rawPlayers.length >= 4) {
       const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      const G = Math.floor(rawPlayers.length / 4);
+      const G = Math.ceil(rawPlayers.length / 4);
       groupsMeta = Array.from({ length: G }, (_, i) => ({
         label: labels[i % labels.length],
         players: rawPlayers.slice(i * 4, i * 4 + 4)
@@ -119,6 +119,53 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
       (r.games || []).forEach(g => {
         allGames.push(g);
       });
+    });
+
+    // Synthesize round-robin fixtures for any group (e.g. Group O) that has players but no games in allGames
+    groupsMeta.forEach(grp => {
+      const groupLabel = grp.label;
+      const existingGames = allGames.filter(g => g.groupLabel === groupLabel);
+      if (existingGames.length === 0 && grp.players && grp.players.length >= 2) {
+        const pool = [...grp.players];
+        if (pool.length % 2 !== 0) pool.push({ username: 'bye', name: 'BYE', school: '' });
+        const n = pool.length;
+        const synthesizedGames = [];
+        let gameCounter = 1;
+
+        for (let r = 0; r < Math.min(n - 1, 3); r++) {
+          for (let i = 0; i < n / 2; i++) {
+            const p1 = pool[i];
+            const p2 = pool[n - 1 - i];
+            if (!p1 || !p2 || p1.username === 'bye' || p2.username === 'bye') continue;
+            const white = (r + i) % 2 === 0 ? p1 : p2;
+            const black = white === p1 ? p2 : p1;
+            synthesizedGames.push({
+              id: `G${groupLabel}_R${r + 1}_G${gameCounter++}`,
+              groupLabel,
+              p1: white,
+              p2: black,
+              winner: null,
+              gameLink: ''
+            });
+          }
+          pool.splice(1, 0, pool.pop());
+        }
+
+        allGames.push(...synthesizedGames);
+
+        // Also inject into tournament.rounds so that Fixtures tab and Results tab display Group O games
+        if (tournament.rounds && tournament.rounds.length > 0) {
+          synthesizedGames.forEach(g => {
+            const rNum = parseInt(g.id.split('_R')[1]?.split('_G')[0] || '1', 10);
+            const targetRound = tournament.rounds.find(r => r.roundNum === rNum) || tournament.rounds[0];
+            if (targetRound && targetRound.games) {
+              if (!targetRound.games.some(existing => existing.id === g.id)) {
+                targetRound.games.push(g);
+              }
+            }
+          });
+        }
+      }
     });
 
     let currentUserGroup = null;

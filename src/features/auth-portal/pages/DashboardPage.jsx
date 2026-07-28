@@ -453,20 +453,22 @@ export default function DashboardPage() {
       console.log("[Profile Update] Database row updated successfully.");
 
       const maxRating = Math.max(finalChessRating, finalLichessRating);
+      // phone/whatsapp are virtual fields resolved from divisions   profiles has no phone column
       const profileWithDetails = {
         ...profile,
         ...updatedProfile,
         phone: settingsForm.phone.trim(),
         whatsapp: settingsForm.phone.trim(),
-        contact: settingsForm.phone.trim()
       };
 
+      // Always sync division contact whenever a phone is present   even if value hasn't
+      // changed, a username update may have created a new division player entry that needs it
       if (settingsForm.phone.trim()) {
         console.log("[Profile Update] Updating phone contact in divisions table...");
         await updateUserPhoneInDivisions(profileWithDetails, settingsForm.phone.trim());
       }
       
-      // Optimistically/instantly update the local context profile state (ponytail)
+      // Optimistically update local context profile state (ponytail)
       setProfile(profileWithDetails);
 
       console.log("[Profile Update] Syncing division assignment...");

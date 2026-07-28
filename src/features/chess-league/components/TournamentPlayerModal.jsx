@@ -8,11 +8,27 @@ export const getWhatsAppUrl = (phone) => {
   if (!phone) return null;
   let digits = String(phone).replace(/\D/g, '');
   if (!digits) return null;
+
+  // Already a full international number (E.164 without leading +)
+  // Numbers ≥ 12 digits or starting with a non-zero digit (i.e. already has country code)
+  if (digits.length >= 12 || (digits.length > 0 && digits[0] !== '0')) {
+    return `https://wa.me/${digits}`;
+  }
+
+  // Nigerian local format: 0XXXXXXXXXX (11 digits, starts with 0)
   if (digits.length === 11 && digits.startsWith('0')) {
     digits = '234' + digits.slice(1);
-  } else if (digits.length === 10 && (digits.startsWith('80') || digits.startsWith('81') || digits.startsWith('90') || digits.startsWith('70') || digits.startsWith('91'))) {
-    digits = '234' + digits;
+    return `https://wa.me/${digits}`;
   }
+
+  // Nigerian short local format: 10 digits starting with known network prefixes
+  const nigerianPrefixes = ['80', '81', '90', '70', '91', '70', '71', '80', '81', '90', '91'];
+  if (digits.length === 10 && nigerianPrefixes.some(p => digits.startsWith(p))) {
+    digits = '234' + digits;
+    return `https://wa.me/${digits}`;
+  }
+
+  // Anything else: pass through as-is (let WhatsApp handle it)
   return `https://wa.me/${digits}`;
 };
 
@@ -34,7 +50,7 @@ export function TournamentPlayerModal({ player, onClose }) {
     ? `https://www.chess.com/member/${encodeURIComponent(player.username)}`
     : `https://lichess.org/@/${encodeURIComponent(player.username)}`;
 
-  const playerPhone = player.phone || player.whatsapp || player.whatsapp_number;
+  const playerPhone = player.phone || player.whatsapp || player.whatsapp_number || player.contact;
   const whatsappUrl = getWhatsAppUrl(playerPhone);
 
   const monogram = (player.name || '?')

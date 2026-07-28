@@ -10,13 +10,12 @@ export default function WhatsAppPromptNotification() {
   const [dismissed, setDismissed] = useState(false);
   const [error, setError] = useState('');
 
-  // Check if session dismiss flag was set
+  // Check if session dismiss flag was set   scoped to user.id to support multi-account usage
   useEffect(() => {
-    const isDismissed = sessionStorage.getItem('ss4_whatsapp_prompt_dismissed') === 'true';
-    if (isDismissed) {
-      setDismissed(true);
-    }
-  }, []);
+    if (!user?.id) return;
+    const isDismissed = sessionStorage.getItem(`ss4_whatsapp_prompt_dismissed_${user.id}`) === 'true';
+    setDismissed(isDismissed);
+  }, [user?.id]);
 
   // Only show if user is logged in, profile exists, phone number is missing, and prompt not dismissed
   const hasPhone = Boolean(profile?.phone || profile?.whatsapp || profile?.whatsapp_number || profile?.contact);
@@ -26,7 +25,9 @@ export default function WhatsAppPromptNotification() {
 
   const handleDismiss = () => {
     setDismissed(true);
-    sessionStorage.setItem('ss4_whatsapp_prompt_dismissed', 'true');
+    if (user?.id) {
+      sessionStorage.setItem(`ss4_whatsapp_prompt_dismissed_${user.id}`, 'true');
+    }
   };
 
   const handleSave = async (e) => {
@@ -47,13 +48,19 @@ export default function WhatsAppPromptNotification() {
     setSaving(true);
 
     try {
-      // Clean phone format (e.g. 080... to 23480...)
+      // Normalise to international format.
+      // If already E.164 (≥12 digits or first digit is non-zero) leave as-is.
       let cleanPhone = digits;
-      if (cleanPhone.length === 11 && cleanPhone.startsWith('0')) {
+      if (cleanPhone.length >= 12 || (cleanPhone.length > 0 && cleanPhone[0] !== '0')) {
+        // already international   use as-is
+      } else if (cleanPhone.length === 11 && cleanPhone.startsWith('0')) {
+        // Nigerian local: 0XXXXXXXXXX → 234XXXXXXXXX
         cleanPhone = '234' + cleanPhone.slice(1);
-      } else if (cleanPhone.length === 10 && (cleanPhone.startsWith('80') || cleanPhone.startsWith('81') || cleanPhone.startsWith('90') || cleanPhone.startsWith('70') || cleanPhone.startsWith('91'))) {
+      } else if (cleanPhone.length === 10 && ['80', '81', '90', '70', '91', '71'].some(p => cleanPhone.startsWith(p))) {
+        // Nigerian short local: 10 digits
         cleanPhone = '234' + cleanPhone;
       }
+      // Any other format: store as-is
 
       console.log('[WhatsApp Notification] Saving phone number to divisions table:', cleanPhone);
       await updateUserPhoneInDivisions(profile, cleanPhone);

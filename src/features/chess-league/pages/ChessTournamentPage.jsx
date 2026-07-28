@@ -10,7 +10,7 @@ import { TournamentHero } from '../components/TournamentHero';
 import { BracketTab } from '../components/BracketTab';
 import { GroupStageTable } from '../components/GroupStageTable';
 import { TournamentPlayerModal } from '../components/TournamentPlayerModal';
-import { PlayerCardSide } from '../components/MatchCardHelper';
+import { PlayerCardSide, usePlayerDetails } from '../components/MatchCardHelper';
 import AuthGate from '../../auth-portal/components/AuthGate';
 import { useAuth } from '../../auth-portal/hooks/useAuth';
 import { useAuthModal } from '../../auth-portal/context/AuthModalContext';
@@ -146,6 +146,139 @@ function AdminMatchRow({ game, onSave }) {
           {isSaving ? 'Saving...' : 'Save'}
         </button>
       </div>
+    </div>
+  );
+}
+
+function ResultFixtureCard({ game, roundName, onSelectPlayer }) {
+  const p1Details = usePlayerDetails(game.p1?.username, game.p1);
+  const p2Details = usePlayerDetails(game.p2?.username, game.p2);
+
+  const isP1Winner = game.winner?.username === game.p1?.username;
+  const isP2Winner = game.winner?.username === game.p2?.username;
+  const isDraw = game.winner?.username === 'draw' || game.winner?.name === 'Draw';
+  const isForfeit = game.winner?.username === 'forfeit';
+
+  let p1Score = '0';
+  let p2Score = '0';
+  if (isP1Winner) {
+    p1Score = '1';
+    p2Score = '0';
+  } else if (isP2Winner) {
+    p1Score = '0';
+    p2Score = '1';
+  } else if (isDraw) {
+    p1Score = '½';
+    p2Score = '½';
+  } else if (isForfeit) {
+    p1Score = '0';
+    p2Score = '0';
+  } else if (game.p1Score !== undefined && game.p2Score !== undefined) {
+    p1Score = String(game.p1Score);
+    p2Score = String(game.p2Score);
+  }
+
+  const p1Avatar = game.p1?.avatar || game.p1?.image || p1Details?.avatar;
+  const p2Avatar = game.p2?.avatar || game.p2?.image || p2Details?.avatar;
+
+  const p1Initials = (game.p1?.name || '?')
+    .trim()
+    .split(/\s+/)
+    .map(n => n[0])
+    .join('')
+    .substring(0, 2)
+    .toUpperCase();
+
+  const p2Initials = (game.p2?.name || '?')
+    .trim()
+    .split(/\s+/)
+    .map(n => n[0])
+    .join('')
+    .substring(0, 2)
+    .toUpperCase();
+
+  return (
+    <div className="relative w-full max-w-[780px] mx-auto bg-white border-2 border-brand-primary/20 hover:border-brand-primary/50 rounded-2xl flex items-center justify-between px-3 sm:px-6 py-3 shadow-2xs hover:shadow-xs transition-all duration-200 group my-6 sm:my-8">
+      {/* Player 1 Team Block */}
+      <button
+        type="button"
+        onClick={() => onSelectPlayer && onSelectPlayer(game.p1)}
+        className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0 focus:outline-none cursor-pointer group/p1 text-left"
+      >
+        <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-brand-primary/10 border border-brand-primary/30 overflow-hidden flex items-center justify-center shrink-0 shadow-2xs group-hover/p1:border-brand-primary transition-colors">
+          {p1Avatar ? (
+            <img src={p1Avatar} alt={game.p1?.name} className="w-full h-full object-cover" />
+          ) : (
+            <span className="font-space font-black text-xs sm:text-sm text-brand-primary tracking-wider">
+              {p1Initials}
+            </span>
+          )}
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="text-[#111111] font-black text-xs sm:text-sm tracking-tight uppercase leading-tight group-hover/p1:text-brand-primary transition-colors truncate">
+            {game.p1?.name || 'Player 1'}
+          </div>
+          {game.p1?.school && (
+            <div className="text-[10px] font-bold text-gray-400 truncate mt-0.5">
+              {game.p1.school}
+            </div>
+          )}
+        </div>
+      </button>
+
+      {/* Reduced-Width Center Score Box - SS4 Brand Primary Blue (#1A56C4) */}
+      <div className="shrink-0 w-24 sm:w-32 bg-brand-primary text-white rounded-xl flex items-center justify-center gap-3 sm:gap-4 py-1.5 sm:py-2 px-2 mx-3 sm:mx-6 shadow-2xs">
+        <span className={`text-xl sm:text-2xl font-black leading-none ${isP1Winner ? 'text-amber-300 drop-shadow-2xs' : 'text-white'}`}>
+          {p1Score}
+        </span>
+        <span className="w-[2px] h-4 sm:h-5 bg-white/40 rounded-full shrink-0" />
+        <span className={`text-xl sm:text-2xl font-black leading-none ${isP2Winner ? 'text-amber-300 drop-shadow-2xs' : 'text-white'}`}>
+          {p2Score}
+        </span>
+      </div>
+
+      {/* Player 2 Team Block */}
+      <button
+        type="button"
+        onClick={() => onSelectPlayer && onSelectPlayer(game.p2)}
+        className="flex items-center justify-end gap-2 sm:gap-3 flex-1 min-w-0 focus:outline-none cursor-pointer group/p2 text-right"
+      >
+        <div className="min-w-0 flex-1">
+          <div className="text-[#111111] font-black text-xs sm:text-sm tracking-tight uppercase leading-tight group-hover/p2:text-brand-primary transition-colors truncate">
+            {game.p2?.name || 'Player 2'}
+          </div>
+          {game.p2?.school && (
+            <div className="text-[10px] font-bold text-gray-400 truncate mt-0.5">
+              {game.p2.school}
+            </div>
+          )}
+        </div>
+        <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-brand-primary/10 border border-brand-primary/30 overflow-hidden flex items-center justify-center shrink-0 shadow-2xs group-hover/p2:border-brand-primary transition-colors">
+          {p2Avatar ? (
+            <img src={p2Avatar} alt={game.p2?.name} className="w-full h-full object-cover" />
+          ) : (
+            <span className="font-space font-black text-xs sm:text-sm text-brand-primary tracking-wider">
+              {p2Initials}
+            </span>
+          )}
+        </div>
+      </button>
+
+      {/* View Game Link Badge if available */}
+      {game.gameLink && (
+        <a
+          href={game.gameLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="absolute left-1/2 -translate-x-1/2 -bottom-2.5 bg-white border border-brand-primary/20 text-brand-primary hover:bg-brand-primary/5 text-[9px] font-black px-2.5 py-0.5 rounded-full shadow-2xs transition-all flex items-center gap-1 z-10"
+        >
+          <span>View Game</span>
+          <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      )}
     </div>
   );
 }
@@ -1057,102 +1190,22 @@ export default function ChessTournamentPage() {
               }
 
               return roundsWithResults.map(r => (
-                <div key={r.roundNum} className="varsity-card p-6">
-                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-50">
-                    <h3 className="font-space font-black text-lg text-[#111111]">{r.name}</h3>
-                    <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full">
+                <div key={r.roundNum} className="varsity-card p-6 sm:p-8 space-y-6">
+                  <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+                    <h3 className="font-space font-black text-lg sm:text-xl text-[#111111]">{r.name}</h3>
+                    <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100">
                       {r.completedGames.length} Completed
                     </span>
                   </div>
-                  <div className="divide-y divide-gray-50">
-                    {r.completedGames.map((g) => {
-                      const isP1Winner = g.winner?.username === g.p1?.username;
-                      const isP2Winner = g.winner?.username === g.p2?.username;
-                      const isForfeit = g.winner?.username === 'forfeit';
-                      return (
-                        <div key={g.id} className="py-2">
-                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-4 border-b border-gray-100 last:border-b-0">
-                            <div className="flex-1 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full">
-                              {/* Player 1 */}
-                              <button
-                                type="button"
-                                onClick={() => setSelectedPlayerForModal(g.p1)}
-                                className={`flex-1 p-3 rounded-xl border flex items-center justify-between transition-colors w-full text-left focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-1 outline-none ${
-                                  isP1Winner ? 'bg-emerald-50/40 border-emerald-100' :
-                                  isForfeit ? 'bg-red-50/40 border-red-100' :
-                                  'bg-gray-50/50 border-gray-100'
-                                }`}
-                              >
-                                <div className="min-w-0 flex-1">
-                                  <p title={g.p1?.name} className="text-sm font-black text-[#111111] hover:underline truncate">
-                                    {g.p1?.name}
-                                  </p>
-                                  <span title={g.p1?.school} className="text-[10px] font-bold text-gray-500 block truncate mt-0.5">
-                                    {g.p1?.school} {g.p1?.rating ? `(${g.p1.rating})` : ''}
-                                  </span>
-                                </div>
-                                {isP1Winner && (
-                                  <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2 py-1 rounded shrink-0 ml-2">
-                                    Winner
-                                  </span>
-                                )}
-                                {isForfeit && (
-                                  <span className="text-[10px] font-black uppercase text-red-700 bg-red-100 px-2 py-1 rounded shrink-0 ml-2">
-                                    Forfeit
-                                  </span>
-                                )}
-                              </button>
-
-                              {/* VS Badge */}
-                              <span className="text-[10px] font-black text-brand-accent uppercase tracking-wider shrink-0 select-none bg-brand-primary/5 px-2.5 py-1 rounded-full sm:self-center">
-                                VS
-                              </span>
-
-                              {/* Player 2 */}
-                              <button
-                                type="button"
-                                onClick={() => setSelectedPlayerForModal(g.p2)}
-                                className={`flex-1 p-3 rounded-xl border flex items-center justify-between transition-colors w-full text-left focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-1 outline-none ${
-                                  isP2Winner ? 'bg-emerald-50/40 border-emerald-100' :
-                                  isForfeit ? 'bg-red-50/40 border-red-100' :
-                                  'bg-gray-50/50 border-gray-100'
-                                }`}
-                              >
-                                <div className="min-w-0 flex-1">
-                                  <p title={g.p2?.name} className="text-sm font-black text-[#111111] hover:underline truncate">
-                                    {g.p2?.name}
-                                  </p>
-                                  <span title={g.p2?.school} className="text-[10px] font-bold text-gray-500 block truncate mt-0.5">
-                                    {g.p2?.school} {g.p2?.rating ? `(${g.p2.rating})` : ''}
-                                  </span>
-                                </div>
-                                {isP2Winner && (
-                                  <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2 py-1 rounded shrink-0 ml-2">
-                                    Winner
-                                  </span>
-                                )}
-                                {isForfeit && (
-                                  <span className="text-[10px] font-black uppercase text-red-700 bg-red-100 px-2 py-1 rounded shrink-0 ml-2">
-                                    Forfeit
-                                  </span>
-                                )}
-                              </button>
-                            </div>
-
-                            {g.gameLink && (
-                              <a
-                                href={g.gameLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-xs font-black text-brand-primary bg-brand-primary/5 hover:bg-brand-primary/10 px-4 py-2.5 rounded-xl transition-colors text-center shrink-0 border border-brand-primary/10 w-full md:w-auto"
-                              >
-                                View Game
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
+                  <div className="space-y-6 sm:space-y-8 pt-3">
+                    {r.completedGames.map((g) => (
+                      <ResultFixtureCard
+                        key={g.id}
+                        game={g}
+                        roundName={r.name}
+                        onSelectPlayer={setSelectedPlayerForModal}
+                      />
+                    ))}
                   </div>
                 </div>
               ));

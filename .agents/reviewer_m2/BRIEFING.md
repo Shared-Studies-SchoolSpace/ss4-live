@@ -1,4 +1,4 @@
-# BRIEFING — 2026-07-21T12:43:00Z
+# BRIEFING   2026-07-21T12:43:00Z
 
 ## Mission
 Review Milestone 2: Persistent Auth & Flexible Signup Pre-flow (R5, R6) implemented by worker_m2.
@@ -12,8 +12,8 @@ Review Milestone 2: Persistent Auth & Flexible Signup Pre-flow (R5, R6) implemen
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
-- Code-only network mode — no external requests
+- Review-only   do NOT modify implementation code
+- Code-only network mode   no external requests
 - Check for integrity violations (hardcoded test results, facade implementations, bypassed tasks)
 
 ## Current Parent
@@ -40,7 +40,7 @@ Review Milestone 2: Persistent Auth & Flexible Signup Pre-flow (R5, R6) implemen
 - Issued PASS verdict.
 
 ## Artifact Index
-- `/home/kami/Desktop/codebase/ss4/.agents/reviewer_m2/ORIGINAL_REQUEST.md` — Original request log
-- `/home/kami/Desktop/codebase/ss4/.agents/reviewer_m2/BRIEFING.md` — Agent briefing & state
-- `/home/kami/Desktop/codebase/ss4/.agents/reviewer_m2/progress.md` — Agent progress log
-- `/home/kami/Desktop/codebase/ss4/.agents/reviewer_m2/handoff.md` — Handoff report with PASS verdict
+- `/home/kami/Desktop/codebase/ss4/.agents/reviewer_m2/ORIGINAL_REQUEST.md`   Original request log
+- `/home/kami/Desktop/codebase/ss4/.agents/reviewer_m2/BRIEFING.md`   Agent briefing & state
+- `/home/kami/Desktop/codebase/ss4/.agents/reviewer_m2/progress.md`   Agent progress log
+- `/home/kami/Desktop/codebase/ss4/.agents/reviewer_m2/handoff.md`   Handoff report with PASS verdict

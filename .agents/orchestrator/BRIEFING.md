@@ -1,4 +1,4 @@
-# BRIEFING — 2026-07-26T13:33:00Z
+# BRIEFING   2026-07-26T13:33:00Z
 
 ## Mission
 Orchestrate and execute full Mobile Optimization & Touch UX Hardening for SS4 Chess League Tournament website across viewports 320px–768px (Requirements R1, R2, R3).
@@ -58,6 +58,6 @@ Orchestrate and execute full Mobile Optimization & Touch UX Hardening for SS4 Ch
 - Safety timer: none
 
 ## Artifact Index
-- /home/kami/Desktop/codebase/ss4/.agents/orchestrator/PROJECT.md — Global index, architecture, milestones, interfaces
-- /home/kami/Desktop/codebase/ss4/.agents/orchestrator/ORIGINAL_REQUEST.md — Verbatim user request
-- /home/kami/Desktop/codebase/ss4/.agents/orchestrator/progress.md — Internal orchestrator progress heartbeat
+- /home/kami/Desktop/codebase/ss4/.agents/orchestrator/PROJECT.md   Global index, architecture, milestones, interfaces
+- /home/kami/Desktop/codebase/ss4/.agents/orchestrator/ORIGINAL_REQUEST.md   Verbatim user request
+- /home/kami/Desktop/codebase/ss4/.agents/orchestrator/progress.md   Internal orchestrator progress heartbeat

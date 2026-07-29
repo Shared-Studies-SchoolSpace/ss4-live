@@ -1,4 +1,4 @@
-# Handoff Report — reviewer_m2 (Milestone 2 Review)
+# Handoff Report   reviewer_m2 (Milestone 2 Review)
 
 ## 1. Observation
 - `src/supabase.js` exports `rememberMeStorage` proxy engine:

@@ -1,4 +1,4 @@
-# Handoff Report — worker_m2 (Milestone 2: Persistent Auth & Flexible Signup Pre-flow)
+# Handoff Report   worker_m2 (Milestone 2: Persistent Auth & Flexible Signup Pre-flow)
 
 ## 1. Observation
 - `src/supabase.js` configures the Supabase client options with `persistSession: true` and `autoRefreshToken: true`. It uses `rememberMeStorage` proxy engine which inspects `localStorage.getItem('ss4_remember_me') === 'true'`.

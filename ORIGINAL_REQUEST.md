@@ -1,6 +1,6 @@
 # Original User Request
 
-## Initial Request — 2026-07-12T19:25:36+01:00
+## Initial Request   2026-07-12T19:25:36+01:00
 
 SCL real-time direct messaging system for scheduling tournament matches, displaying online status, last seen, read receipts, and system notifications.
 

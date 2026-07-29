@@ -1,4 +1,4 @@
-# BRIEFING — 2026-07-21T12:08:00Z
+# BRIEFING   2026-07-21T12:08:00Z
 
 ## Mission
 Forensic integrity audit of Milestone 1: Database Schema Execution & Verification (R1).
@@ -11,8 +11,8 @@ Forensic integrity audit of Milestone 1: Database Schema Execution & Verificatio
 - Target: Milestone 1
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only   do NOT modify implementation code
+- Trust NOTHING   verify everything independently
 
 ## Current Parent
 - Conversation ID: 07d05d7b-82ca-4202-95a5-bb11e9afed3d
@@ -27,7 +27,7 @@ Forensic integrity audit of Milestone 1: Database Schema Execution & Verificatio
 - **Phase**: reporting
 - **Checks completed**: Phase 1 Source Code Analysis (Hardcoded output check, Facade detection, Pre-populated artifact check), Phase 2 Behavioral & Code Integrity Verification (Static DDL Analysis, Regex Match Evaluation)
 - **Checks remaining**: None
-- **Findings so far**: CLEAN — No integrity violations found. All SQL scripts and verification scripts are genuine, complete, and robust.
+- **Findings so far**: CLEAN   No integrity violations found. All SQL scripts and verification scripts are genuine, complete, and robust.
 
 ## Key Decisions Made
 - Confirmed that `01_schema_r1.sql` and `db_schema.sql` contain complete canonical DDL definitions.
@@ -46,6 +46,6 @@ Forensic integrity audit of Milestone 1: Database Schema Execution & Verificatio
 - None
 
 ## Artifact Index
-- `.agents/auditor_m1_1/ORIGINAL_REQUEST.md` — User request log
-- `.agents/auditor_m1_1/BRIEFING.md` — Working state
-- `.agents/auditor_m1_1/handoff.md` — Final forensic audit report
+- `.agents/auditor_m1_1/ORIGINAL_REQUEST.md`   User request log
+- `.agents/auditor_m1_1/BRIEFING.md`   Working state
+- `.agents/auditor_m1_1/handoff.md`   Final forensic audit report

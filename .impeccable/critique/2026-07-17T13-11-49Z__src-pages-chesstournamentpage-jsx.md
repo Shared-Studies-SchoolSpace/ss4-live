@@ -41,7 +41,7 @@ The automated detector (`detect.mjs`) flagged **17 issues** across the main page
   - *Disagreements / False Positives:* The warning at `TournamentHero.jsx:L55` is a false positive because the classes `bg-amber-100` and `text-gray-500` are defined in a configuration dictionary for different states (`upcoming` and `completed` respectively) and are never combined on the same element at runtime.
 
 ## Overall Impression
-The SCL Tournament page successfully creates an engaging, high-contrast varsity athletic environment. However, this is undermined by severe usability conflicts—chiefly the timezone contradiction, a hidden admin panel, auto-registration failures, and bracket card horizontal overflows. Fixing these structural items is the primary lever to establish a high-trust, production-ready experience.
+The SCL Tournament page successfully creates an engaging, high-contrast varsity athletic environment. However, this is undermined by severe usability conflicts chiefly the timezone contradiction, a hidden admin panel, auto-registration failures, and bracket card horizontal overflows. Fixing these structural items is the primary lever to establish a high-trust, production-ready experience.
 
 ## What's Working
 1. **Interactive Tree Snap Navigation:** The mobile buttons ("Left", "Final", "Right") are a brilliant mobile UX pattern to ease horizontal scrolling of the bracket tree.

@@ -1,11 +1,11 @@
 /**
- * seed_july_2026.js — One-shot script to generate and upload July 2026 fixtures.
+ * seed_july_2026.js   One-shot script to generate and upload July 2026 fixtures.
  *
  * Generates a World Cup-style group stage (14 groups of 4) from all current
  * registered players and upserts the tournament row to Supabase.
  *
  * Usage: node --input-type=module < scratch/seed_july_2026.js
- * Safe to re-run — upsert is idempotent.
+ * Safe to re-run   upsert is idempotent.
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -174,7 +174,7 @@ function generateWorldCupFixtures(players, year, month) {
     let gc = 1;
     return {
       roundNum,
-      name: `Group Stage — Round ${roundNum}`,
+      name: `Group Stage   Round ${roundNum}`,
       date: dates[ri] || dates[dates.length - 1],
       isGroupStage: true,
       games: fixtures.map(({ groupLabel, white, black }) => ({
@@ -202,7 +202,7 @@ function generateWorldCupFixtures(players, year, month) {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
-  console.log('🏆 July 2026 SCL Tournament — World Cup Fixture Generator');
+  console.log('🏆 July 2026 SCL Tournament   World Cup Fixture Generator');
   console.log('─'.repeat(60));
 
   // 1. Fetch players
@@ -247,13 +247,13 @@ async function main() {
   if (existing && existing.rounds && existing.rounds.length > 0) {
     const hasResults = existing.rounds.some(r => r.games?.some(g => g.winner));
     if (hasResults) {
-      console.error('\n⚠️  July 2026 tournament already has logged results — aborting to prevent data loss.');
+      console.error('\n⚠️  July 2026 tournament already has logged results   aborting to prevent data loss.');
       console.error('   Delete the row manually in Supabase first if you want to regenerate.');
       process.exit(1);
     }
-    console.log('\n⚠️  July 2026 tournament exists but has no results — overwriting fixtures...');
+    console.log('\n⚠️  July 2026 tournament exists but has no results   overwriting fixtures...');
   } else {
-    console.log('\n🆕 No existing July 2026 tournament — creating fresh...');
+    console.log('\n🆕 No existing July 2026 tournament   creating fresh...');
   }
 
   // 5. Upsert to Supabase
@@ -273,7 +273,7 @@ async function main() {
     .upsert(tournamentRow);
 
   if (upsertErr) {
-    // groups column may not exist yet — try without it
+    // groups column may not exist yet   try without it
     console.warn('⚠️  Upsert with groups column failed, trying without groups field...');
     console.warn('   Error:', upsertErr.message);
     const { error: upsertErr2 } = await supabase
@@ -283,7 +283,7 @@ async function main() {
       console.error('❌ Upsert failed:', upsertErr2);
       process.exit(1);
     }
-    console.log('\n✅ Uploaded (without groups column — add it to the table if needed).');
+    console.log('\n✅ Uploaded (without groups column   add it to the table if needed).');
   } else {
     console.log('\n✅ Successfully uploaded to Supabase!');
   }

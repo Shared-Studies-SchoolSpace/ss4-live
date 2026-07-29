@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { useTournament } from '../hooks/useTournament';
 import { tournamentPlayers } from '../data/tournamentPlayers';
-import { getTournamentDates, getCountdownTarget } from '../utils/tournament';
+import { getTournamentDates, getCountdownTarget, getSurvivingPlayers } from '../utils/tournament';
 import { TournamentHero } from '../components/TournamentHero';
 import { BracketTab } from '../components/BracketTab';
 import { GroupStageTable } from '../components/GroupStageTable';
@@ -319,6 +319,25 @@ export default function ChessTournamentPage() {
   const [paramTargetElo, setParamTargetElo] = useState(400);
   const [paramSchoolPenalty, setParamSchoolPenalty] = useState(150);
   const [paramCustomDate, setParamCustomDate] = useState('');
+  const [paramRoundName, setParamRoundName] = useState('Group Stage Round 2');
+  const [paramUseCustomRoundName, setParamUseCustomRoundName] = useState(false);
+  const [paramManualSelection, setParamManualSelection] = useState(false);
+  const [selectedSurvivingUsernames, setSelectedSurvivingUsernames] = useState([]);
+  const [manualPlayerSearch, setManualPlayerSearch] = useState('');
+  const [showSurvivalLogicTooltip, setShowSurvivalLogicTooltip] = useState(false);
+
+  const ASSUMED_NEXT_ROUNDS = [
+    'Group Stage Round 1',
+    'Group Stage Round 2',
+    'Group Stage Round 3',
+    'Round of 32',
+    'Round of 16',
+    'Quarterfinals',
+    'Semifinals',
+    'Final',
+    'Group Stage Round 4',
+    'Group Stage Round 5'
+  ];
 
   // Missing handle prompt modal states
   const [showUsernamePromptModal, setShowUsernamePromptModal] = useState(false);
@@ -425,6 +444,15 @@ export default function ChessTournamentPage() {
     setParamCustomDate(dates[dateIdx]);
     setParamTargetElo(400);
     setParamSchoolPenalty(150);
+    const defaultRoundName = ASSUMED_NEXT_ROUNDS[nextNum - 1] || `Round ${nextNum}`;
+    setParamRoundName(defaultRoundName);
+    setParamUseCustomRoundName(false);
+    
+    // Auto-populate surviving usernames by default
+    const autoQualifiers = getSurvivingPlayers(tournament);
+    setSelectedSurvivingUsernames(autoQualifiers.map(p => p.username));
+    setParamManualSelection(false);
+    setManualPlayerSearch('');
     setAdminSubView('generate-next');
   };
 
@@ -446,8 +474,7 @@ export default function ChessTournamentPage() {
 
   const getSeededPlayersNext = () => {
     if (!tournament?.rounds?.length) return [];
-    const last = tournament.rounds[tournament.rounds.length - 1];
-    return last.games.map(g => g.winner).filter(w => w && w.username !== 'forfeit');
+    return getSurvivingPlayers(tournament);
   };
 
   const { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
@@ -537,12 +564,13 @@ export default function ChessTournamentPage() {
     'Group Stage Round 1 starts in',
     'Group Stage Round 2 starts in',
     'Group Stage Round 3 starts in',
-    'Group Stage Round 4 starts in',
-    'Group Stage Round 5 starts in',
+    'Round of 32 starts in',
     'Round of 16 starts in',
     'Quarterfinals start in',
     'Semifinals start in',
     'The Final starts in',
+    'Group Stage Round 4 starts in',
+    'Group Stage Round 5 starts in',
   ];
   const [showPastWinnersModal, setShowPastWinnersModal] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
@@ -2146,22 +2174,288 @@ export default function ChessTournamentPage() {
               </div>
             </div>
 
-            {/* Surviving Players preview */}
-            <div className="space-y-3">
-              <h3 className="font-space font-black text-lg text-[#111111]">Surviving Players Seeding ({getSeededPlayersNext().length})</h3>
-              <div className="border border-brand-accent/10 bg-brand-accent/5 rounded-2xl p-5">
-                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[250px] overflow-y-auto pr-1">
-                  {getSeededPlayersNext().map(p => (
-                    <div key={p.username} className="flex justify-between items-center text-xs p-2.5 bg-white rounded-lg border border-gray-100">
-                      <div>
-                        <p className="font-bold text-[#111111]">{p.name}</p>
-                        <p className="text-gray-400 text-[10px]">{p.school} &bull; @{p.username}</p>
-                      </div>
-                      <span className="font-black text-brand-accent shrink-0 ml-2">{p.rating} ELO</span>
-                    </div>
-                  ))}
+            {/* Round Name Selection & Custom Entry Controls */}
+            <div className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-xs space-y-4">
+              <div className="flex items-center justify-between gap-4 flex-wrap pb-3 border-b border-gray-100">
+                <div>
+                  <h4 className="font-space font-black text-sm text-[#111111]">Round Name Parameter</h4>
+                  <p className="text-xs text-gray-400">Select an assumed next round from the dropdown or disable the dropdown to type a custom name.</p>
+                </div>
+                {/* Switch to disable dropdown & enable custom text input */}
+                <div className="flex items-center gap-2.5 bg-gray-50 border border-gray-200/80 px-3 py-1.5 rounded-xl">
+                  <span className="text-xs font-bold text-gray-600">Custom Mode (Disable Dropdown)</span>
+                  <button
+                    type="button"
+                    onClick={() => setParamUseCustomRoundName(v => !v)}
+                    className={`relative inline-flex items-center w-10 h-5 rounded-full transition-colors cursor-pointer shrink-0 ${
+                      paramUseCustomRoundName ? 'bg-brand-primary' : 'bg-gray-300'
+                    }`}
+                    title={paramUseCustomRoundName ? 'Enable dropdown mode' : 'Disable dropdown and enable custom text entry'}
+                    role="switch"
+                    aria-checked={paramUseCustomRoundName}
+                  >
+                    <span className={`absolute w-3.5 h-3.5 bg-white rounded-full shadow transition-transform ${
+                      paramUseCustomRoundName ? 'translate-x-5' : 'translate-x-1'
+                    }`} />
+                  </button>
                 </div>
               </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                {/* Dropdown for assumed next round */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
+                    <span>Assumed Next Round Dropdown</span>
+                    {!paramUseCustomRoundName && <span className="text-[10px] text-brand-primary font-bold">(Active)</span>}
+                  </label>
+                  <select
+                    value={paramRoundName}
+                    disabled={paramUseCustomRoundName}
+                    onChange={(e) => setParamRoundName(e.target.value)}
+                    className={`w-full text-sm font-bold px-3 py-2.5 border rounded-xl outline-none transition-all ${
+                      !paramUseCustomRoundName
+                        ? 'bg-white border-brand-primary/40 focus:ring-2 focus:ring-brand-primary/20 text-[#111111] cursor-pointer'
+                        : 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed'
+                    }`}
+                  >
+                    {ASSUMED_NEXT_ROUNDS.map(r => (
+                      <option key={r} value={r}>{r}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Editable Text Field for Custom Round Name */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
+                    <span>Editable Custom Round Name Field</span>
+                    {paramUseCustomRoundName && <span className="text-[10px] text-brand-primary font-bold">(Active)</span>}
+                  </label>
+                  <input
+                    type="text"
+                    value={paramRoundName}
+                    disabled={!paramUseCustomRoundName}
+                    onChange={(e) => setParamRoundName(e.target.value)}
+                    placeholder="Enter custom round name..."
+                    className={`w-full text-sm font-bold px-3 py-2.5 border rounded-xl outline-none transition-all ${
+                      paramUseCustomRoundName
+                        ? 'bg-white border-brand-primary/40 focus:ring-2 focus:ring-brand-primary/20 text-[#111111]'
+                        : 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed'
+                    }`}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Retrieve Next Players / Surviving Players Control Block */}
+            <div className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-xs space-y-4">
+              <div className="flex items-center justify-between gap-4 flex-wrap pb-3 border-b border-gray-100">
+                <div>
+                  <h3 className="font-space font-black text-lg text-[#111111] flex items-center gap-2">
+                    <span>Retrieve Next Players</span>
+                    <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2.5 py-0.5 rounded-full">
+                      {paramManualSelection ? `${selectedSurvivingUsernames.length} Manually Selected` : `${getSeededPlayersNext().length} Auto-Retrieved`}
+                    </span>
+                  </h3>
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    {paramManualSelection 
+                      ? 'Manual Selection Mode: Admin manually selects players who advance into the next round.'
+                      : 'Auto-Retrieve Mode: System survival logic automatically determines qualifiers.'}
+                  </p>
+                </div>
+
+                {/* Switch for Auto vs Manual Selection */}
+                <div className="flex items-center gap-2.5 bg-gray-50 border border-gray-200/80 px-3.5 py-2 rounded-xl shrink-0">
+                  <span className="text-xs font-bold text-gray-700">Manual Selection Mode</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!paramManualSelection) {
+                        if (selectedSurvivingUsernames.length === 0) {
+                          setSelectedSurvivingUsernames(getSeededPlayersNext().map(p => p.username));
+                        }
+                      }
+                      setParamManualSelection(v => !v);
+                    }}
+                    className={`relative inline-flex items-center w-11 h-6 rounded-full transition-colors cursor-pointer shrink-0 ${
+                      paramManualSelection ? 'bg-brand-primary' : 'bg-gray-300'
+                    }`}
+                    title={paramManualSelection ? 'Switch to Auto-Retrieve Mode' : 'Switch to Manual Selection Mode'}
+                    role="switch"
+                    aria-checked={paramManualSelection}
+                  >
+                    <span className={`absolute w-4 h-4 bg-white rounded-full shadow transition-transform ${
+                      paramManualSelection ? 'translate-x-6' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Mode Content */}
+              {!paramManualSelection ? (
+                /* Auto-Retrieve View (Read Only Cards) */
+                <div className="border border-brand-accent/10 bg-brand-accent/5 rounded-2xl p-5 space-y-3">
+                  <div className="flex items-center justify-between text-xs font-bold text-gray-500">
+                    <span>Auto-Retrieved Qualifiers ({getSeededPlayersNext().length} Players)</span>
+                    
+                    {/* Clickable System Survival Logic Badge & Tooltip */}
+                    <div className="relative inline-block">
+                      <button
+                        type="button"
+                        onClick={() => setShowSurvivalLogicTooltip(v => !v)}
+                        className="text-brand-primary text-[10px] uppercase font-black hover:underline cursor-pointer flex items-center gap-1 bg-brand-primary/10 hover:bg-brand-primary/20 px-2.5 py-1 rounded-full transition-colors border-none"
+                        title="Click to view how players are retrieved"
+                      >
+                        <span>System Survival Logic</span>
+                        <svg className="w-3 h-3 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </button>
+
+                      {showSurvivalLogicTooltip && (
+                        <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 bg-[#0B193C] text-white p-4 rounded-2xl shadow-2xl z-50 text-left border border-blue-400/30 text-xs animate-in fade-in duration-150">
+                          <div className="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
+                            <span className="font-space font-black text-xs text-blue-300 uppercase tracking-wider flex items-center gap-1.5">
+                              <span>⚙ System Survival Logic</span>
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => setShowSurvivalLogicTooltip(false)}
+                              className="text-gray-400 hover:text-white text-sm font-bold border-none bg-transparent cursor-pointer"
+                            >
+                              ✕
+                            </button>
+                          </div>
+
+                          <div className="space-y-2 text-white/90 leading-relaxed text-[11px]">
+                            <p className="font-bold text-white">How Players Are Retrieved:</p>
+                            <ul className="list-disc list-inside space-y-1.5 text-white/80">
+                              <li>
+                                <strong className="text-blue-200">Group Stage (Rounds 1–3):</strong> Top 2 players from each group standings table (ranked by Points $\rightarrow$ Wins $\rightarrow$ Matches Played $\rightarrow$ Name) automatically advance.
+                              </li>
+                              <li>
+                                <strong className="text-blue-200">Wild-Card Fill (Round of 32):</strong> If 30 players qualify from 15 groups, the top 2 best 3rd-place finishers across all groups are added to complete a 32-player bracket.
+                              </li>
+                              <li>
+                                <strong className="text-blue-200">Knockout Stage:</strong> Match winners from the preceding single-elimination round automatically advance.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[260px] overflow-y-auto pr-1">
+                    {getSeededPlayersNext().map(p => (
+                      <div key={p.username} className="flex justify-between items-center text-xs p-2.5 bg-white rounded-lg border border-gray-100 shadow-2xs">
+                        <div className="min-w-0 flex-1 pr-2">
+                          <p className="font-bold text-[#111111] truncate">{p.name}</p>
+                          <p className="text-gray-400 text-[10px] truncate">{p.school || p.department} &bull; @{p.username}</p>
+                        </div>
+                        <span className="font-black text-brand-accent shrink-0 text-right">{p.rating} ELO</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                /* Manual Selection View */
+                <div className="space-y-4">
+                  {/* Controls Toolbar: Search & Action Buttons */}
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                    <div className="relative flex-1">
+                      <input
+                        type="text"
+                        value={manualPlayerSearch}
+                        onChange={(e) => setManualPlayerSearch(e.target.value)}
+                        placeholder="Search player name, school, or @username..."
+                        className="w-full text-xs font-bold pl-9 pr-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:bg-white focus:border-brand-primary text-[#111111]"
+                      />
+                      <svg className="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const autoQuals = getSeededPlayersNext();
+                          setSelectedSurvivingUsernames(autoQuals.map(p => p.username));
+                        }}
+                        className="text-xs font-bold px-3 py-2 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-xl transition-colors cursor-pointer"
+                      >
+                        Reset to Auto-Qualifiers
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const allUsers = (tournamentPlayers || []).map(p => p.username);
+                          setSelectedSurvivingUsernames(allUsers);
+                        }}
+                        className="text-xs font-bold px-3 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl transition-colors cursor-pointer"
+                      >
+                        Select All
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedSurvivingUsernames([])}
+                        className="text-xs font-bold px-3 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition-colors cursor-pointer"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Selectable Players Grid */}
+                  <div className="border border-gray-200 bg-gray-50/50 rounded-2xl p-4 max-h-[300px] overflow-y-auto">
+                    {(() => {
+                      const query = manualPlayerSearch.trim().toLowerCase();
+                      const allPlayers = tournamentPlayers || [];
+                      const filtered = query
+                        ? allPlayers.filter(p => (p.name || '').toLowerCase().includes(query) || (p.username || '').toLowerCase().includes(query) || (p.school || '').toLowerCase().includes(query))
+                        : allPlayers;
+
+                      if (filtered.length === 0) {
+                        return <p className="text-xs text-gray-400 text-center py-6">No players match "{manualPlayerSearch}"</p>;
+                      }
+
+                      return (
+                        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+                          {filtered.map(p => {
+                            const isSelected = selectedSurvivingUsernames.includes(p.username);
+                            return (
+                              <button
+                                key={p.username}
+                                type="button"
+                                onClick={() => {
+                                  if (isSelected) {
+                                    setSelectedSurvivingUsernames(prev => prev.filter(u => u !== p.username));
+                                  } else {
+                                    setSelectedSurvivingUsernames(prev => [...prev, p.username]);
+                                  }
+                                }}
+                                className={`flex items-center justify-between text-left text-xs p-2.5 rounded-xl border transition-all cursor-pointer select-none ${
+                                  isSelected
+                                    ? 'bg-emerald-50/80 border-emerald-300 text-emerald-900 ring-1 ring-emerald-400/50 shadow-2xs font-bold'
+                                    : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-100/80'
+                                }`}
+                              >
+                                <div className="min-w-0 flex-1 pr-2">
+                                  <p className="truncate font-bold text-[#111111]">{p.name}</p>
+                                  <p className="text-[10px] text-gray-400 truncate">@{p.username}</p>
+                                </div>
+                                <div className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-black shrink-0 ${
+                                  isSelected ? 'bg-emerald-600 text-white' : 'border border-gray-300 text-transparent'
+                                }`}>
+                                  ✓
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      );
+                    })()}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Actions */}
@@ -2174,13 +2468,20 @@ export default function ChessTournamentPage() {
               </button>
               <button 
                 onClick={() => {
+                  const manualSelectedObjs = paramManualSelection
+                    ? (tournamentPlayers || []).filter(p => selectedSurvivingUsernames.includes(p.username))
+                    : null;
+
                   advanceRound({
                     targetEloGap: paramTargetElo,
                     schoolPenalty: paramSchoolPenalty,
-                    customDate: paramCustomDate
+                    customDate: paramCustomDate,
+                    roundName: paramRoundName,
+                    tournament: tournament,
+                    selectedPlayers: manualSelectedObjs
                   });
                   setAdminSubView('main');
-                  toast.success('Next round fixtures generated successfully!');
+                  toast.success(`Next round (${paramRoundName}) fixtures generated successfully!`);
                 }}
                 className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold cursor-pointer transition-colors"
               >

@@ -78,17 +78,17 @@ export const Header = () => {
 
       {/* Tournament countdown  sits above the sticky nav bar */}
       <TournamentCountdownBanner />
-      <header className="sticky top-0 z-50 w-full bg-white/75 backdrop-blur-lg border-b border-white/40 shadow-sm">
-        <div className="container mx-auto px-3 sm:px-6 md:px-8 lg:px-12 xl:px-16 h-16 lg:h-20 flex items-center justify-between">
-          <div className="flex items-center gap-4 lg:gap-6 xl:gap-8">
-            <a href="/" className="flex items-center shrink-0 pr-2">
-              <img src="/ss4_logo.jpg" alt="SS4" className="h-8 sm:h-9 md:h-10 lg:h-12 w-auto object-contain" />
+      <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-lg border-b border-white/40 shadow-sm">
+        <div className="container mx-auto px-3 sm:px-6 md:px-8 lg:px-10 xl:px-16 h-16 lg:h-20 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 lg:gap-3 xl:gap-6 min-w-0">
+            <a href="/" className="flex items-center shrink-0 pr-1 sm:pr-2">
+              <img src="/ss4_logo.jpg" alt="SS4" className="h-8 sm:h-9 md:h-10 lg:h-11 w-auto object-contain shrink-0" />
             </a>
             
-            {/* Primary Navigation Group - Equal spacing & hitboxes */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-              <div className="relative group">
-                <button className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer whitespace-nowrap">
+            {/* Primary Navigation Group - Responsive hitboxes & font sizes */}
+            <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 shrink-1">
+              <div className="relative group shrink-0">
+                <button className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer whitespace-nowrap">
                   Schools
                   <svg className="w-3.5 h-3.5 transition-transform duration-250 group-hover:rotate-180 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
@@ -99,8 +99,8 @@ export const Header = () => {
                   <a href="/tertiary" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">Tertiary Institutions</a>
                 </div>
               </div>
-              <div className="relative group">
-                <button className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer whitespace-nowrap">
+              <div className="relative group shrink-0">
+                <button className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer whitespace-nowrap">
                   Chess League
                   <svg className="w-3.5 h-3.5 transition-transform duration-250 group-hover:rotate-180 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
@@ -111,16 +111,16 @@ export const Header = () => {
                   <a href="/chess-league/tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">Monthly Tournament</a>
                 </div>
               </div>
-              <a href="/sas" className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap">Assessment Series</a>
-              <a href="/award" className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap">Aspirants Award</a>
-              <a href="/news" className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap">News</a>
-              <a href="/about" className="px-3 py-2 rounded-xl hover:bg-black/[0.04] text-[13px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap">About</a>
+              <a href="/sas" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Assessment Series</a>
+              <a href="/award" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Aspirants Award</a>
+              <a href="/news" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">News</a>
+              <a href="/about" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">About</a>
             </nav>
           </div>
 
           {/* Action & Utility Group - Equal heights & gap spacing */}
-          <div className="flex items-center gap-2 sm:gap-2.5 lg:gap-3 shrink-0">
-            <button className="hidden lg:inline-flex items-center h-9 sm:h-10 px-3 lg:px-4 xl:px-5 border border-[#E8640A] text-[#E8640A] font-bold text-xs xl:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer whitespace-nowrap" onClick={() => window.location.href='/partner'}>
+          <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 xl:gap-3 shrink-0">
+            <button className="hidden xl:inline-flex items-center h-9 sm:h-10 px-3 xl:px-4 border border-[#E8640A] text-[#E8640A] font-bold text-xs xl:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer whitespace-nowrap shrink-0" onClick={() => window.location.href='/partner'}>
               Partner With Us
             </button>
 
@@ -264,7 +264,7 @@ export const Header = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-0 mt-2 w-64 max-w-[calc(100vw-24px)] bg-white border border-gray-150 rounded-2xl shadow-xl z-50 py-2.5 overflow-hidden"
+                      className="absolute top-full right-0 mt-2 w-64 max-w-[calc(100vw-24px)] bg-white border border-gray-150 rounded-2xl shadow-xl z-50 py-2.5 overflow-hidden text-left"
                     >
                       <div className="px-4 py-2.5 border-b border-gray-100 mb-1 flex items-center gap-3">
                         <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#0B193C] to-brand-primary text-white font-black text-xs flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">

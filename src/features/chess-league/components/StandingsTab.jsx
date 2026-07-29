@@ -4,11 +4,11 @@ export const StandingsTab = ({ standings, onPlayerSelect }) => {
   const [activeLegend, setActiveLegend] = useState(null);
 
   const legendDetails = {
-    MP: "Matches Played — Total matches completed by the player",
-    W: "Wins — Total matches won (1 point per win)",
-    D: "Draws — Total matches drawn (0.5 points per draw)",
-    L: "Losses — Total matches lost (0 points)",
-    PTS: "Points — Total accumulated score (Wins × 1 + Draws × 0.5)"
+    MP: "Matches Played   Total matches completed by the player",
+    W: "Wins   Total matches won (1 point per win)",
+    D: "Draws   Total matches drawn (0.5 points per draw)",
+    L: "Losses   Total matches lost (0 points)",
+    PTS: "Points   Total accumulated score (Wins × 1 + Draws × 0.5)"
   };
 
   const handleHeaderClick = (key) => {

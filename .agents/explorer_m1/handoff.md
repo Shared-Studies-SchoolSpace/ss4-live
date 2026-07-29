@@ -12,12 +12,12 @@
 Direct observations from static analysis of source files:
 
 1. **Root Containers & Layout**:
-   - `src/App.jsx:33`: `<div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white flex flex-col">` — lacks `overflow-x-hidden` or `max-w-full overflow-x-hidden`.
-   - `src/layouts/Layout.jsx:6`: `<div className="min-h-screen flex flex-col bg-[#F6F4F0] font-sans text-[#111111]">` — lacks `max-w-full overflow-x-hidden`.
-   - `src/components/PageContainer.jsx:3`: `<div className="container mx-auto px-6">` — fixed `px-6` (24px padding on each side, total 48px), leaving only 272px space on a 320px screen.
+   - `src/App.jsx:33`: `<div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white flex flex-col">`   lacks `overflow-x-hidden` or `max-w-full overflow-x-hidden`.
+   - `src/layouts/Layout.jsx:6`: `<div className="min-h-screen flex flex-col bg-[#F6F4F0] font-sans text-[#111111]">`   lacks `max-w-full overflow-x-hidden`.
+   - `src/components/PageContainer.jsx:3`: `<div className="container mx-auto px-6">`   fixed `px-6` (24px padding on each side, total 48px), leaving only 272px space on a 320px screen.
 
 2. **Tab Navigation Bar**:
-   - `src/features/chess-league/pages/ChessTournamentPage.jsx:847`: `<div className="bg-white border-b border-gray-200 px-3 sm:px-6 md:px-12 lg:px-16">` — tab container is static, not sticky on mobile viewports (`sticky top-16 z-40 bg-white/95 backdrop-blur-md`).
+   - `src/features/chess-league/pages/ChessTournamentPage.jsx:847`: `<div className="bg-white border-b border-gray-200 px-3 sm:px-6 md:px-12 lg:px-16">`   tab container is static, not sticky on mobile viewports (`sticky top-16 z-40 bg-white/95 backdrop-blur-md`).
 
 3. **Touch Target Acquisition (<48px min height)**:
    - `src/components/Header.jsx:140`: Notification bell toggle button `w-9 h-9 sm:w-10 sm:h-10` (36px x 36px on mobile).

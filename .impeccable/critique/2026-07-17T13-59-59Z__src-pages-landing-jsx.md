@@ -27,7 +27,7 @@ slug: src-pages-landing-jsx
 ### Anti-Patterns Verdict
 
 **LLM assessment**:
-- **Verdict**: Fail — clear AI slop indicators present.
+- **Verdict**: Fail   clear AI slop indicators present.
 - **Tells**:
   - **Say-Do Gap**: The code comment explicitly claims a "48px compliant spacing" segmented button, but the style `height: 38px` defined in `index.css` contradicts this.
   - **Hallucinated CSS**: Uses non-existent Tailwind utility classes `text-gray-750` and `text-gray-650` which fall back to browser default black/dark-gray or style anomalies.

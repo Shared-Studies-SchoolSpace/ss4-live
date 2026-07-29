@@ -1,6 +1,6 @@
 -- SCL Auth Patch: Auto-confirm email on signup
 -- Run once in the Supabase SQL Editor.
--- This removes the email-verification step entirely — users can sign up
+-- This removes the email-verification step entirely   users can sign up
 -- and sign in immediately with no inbox check.
 
 create or replace function public.auto_confirm_user()

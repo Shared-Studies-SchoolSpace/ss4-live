@@ -1,4 +1,4 @@
-# BRIEFING — 2026-07-26T12:32:00Z
+# BRIEFING   2026-07-26T12:32:00Z
 
 ## Mission
 Initialize the mobile optimization project, spawn the Project Orchestrator to optimize the Chess League Tournament website across 320px-768px viewports, and monitor progress via crons.
@@ -10,7 +10,7 @@ Initialize the mobile optimization project, spawn the Project Orchestrator to op
 - Victory Auditor: to be spawned on victory claim
 
 ## 🔒 Key Constraints
-- No technical decisions — relay only
+- No technical decisions   relay only
 - Victory Audit is MANDATORY before reporting completion
 
 ## User Context
@@ -27,5 +27,5 @@ Initialize the mobile optimization project, spawn the Project Orchestrator to op
 - **Retry count**: 0
 
 ## Artifact Index
-- ORIGINAL_REQUEST.md — Verbatim user requirements
-- .agents/sentinel/BRIEFING.md — Sentinel persistent memory
+- ORIGINAL_REQUEST.md   Verbatim user requirements
+- .agents/sentinel/BRIEFING.md   Sentinel persistent memory

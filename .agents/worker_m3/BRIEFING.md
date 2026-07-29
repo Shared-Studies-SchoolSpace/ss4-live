@@ -1,4 +1,4 @@
-# BRIEFING — 2026-07-21T12:47:25Z
+# BRIEFING   2026-07-21T12:47:25Z
 
 ## Mission
 Milestone 3: Real-Time DM & Universal Admin Broadcast (R3)
@@ -43,6 +43,6 @@ Milestone 3: Real-Time DM & Universal Admin Broadcast (R3)
 - None loaded yet
 
 ## Artifact Index
-- `.agents/worker_m3/ORIGINAL_REQUEST.md` — Original prompt request
-- `.agents/worker_m3/BRIEFING.md` — Briefing document
-- `.agents/worker_m3/progress.md` — Progress tracker
+- `.agents/worker_m3/ORIGINAL_REQUEST.md`   Original prompt request
+- `.agents/worker_m3/BRIEFING.md`   Briefing document
+- `.agents/worker_m3/progress.md`   Progress tracker

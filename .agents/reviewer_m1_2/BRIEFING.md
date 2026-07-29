@@ -1,4 +1,4 @@
-# BRIEFING — 2026-07-21T12:24:15Z
+# BRIEFING   2026-07-21T12:24:15Z
 
 ## Mission
 Complete review and adversarial audit for Milestone 1: Database Schema Execution & Verification (R1).
@@ -12,7 +12,7 @@ Complete review and adversarial audit for Milestone 1: Database Schema Execution
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only   do NOT modify implementation code
 - Review docs/migrations/01_schema_r1.sql, docs/db_schema.sql, scripts/verify_schema_r1.cjs
 - Run verify script and build to confirm zero failures and integrity
 
@@ -41,7 +41,7 @@ Complete review and adversarial audit for Milestone 1: Database Schema Execution
 - Final Verdict: APPROVE.
 
 ## Artifact Index
-- ORIGINAL_REQUEST.md — Initial request description
-- BRIEFING.md — Working briefing & persistent context
-- progress.md — Liveness heartbeat and step tracking
-- handoff.md — Final review report
+- ORIGINAL_REQUEST.md   Initial request description
+- BRIEFING.md   Working briefing & persistent context
+- progress.md   Liveness heartbeat and step tracking
+- handoff.md   Final review report

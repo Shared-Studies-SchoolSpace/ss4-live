@@ -1,5 +1,5 @@
 /**
- * World Cup Style Fixture Generator — Analysis Script (READ-ONLY, no Supabase writes)
+ * World Cup Style Fixture Generator   Analysis Script (READ-ONLY, no Supabase writes)
  *
  * Algorithm:
  *  1. Fetch all registered players (those with a chess/lichess username) from Supabase
@@ -112,8 +112,8 @@ function applySameSchoolSwap(groups, potIndex, G) {
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
   console.log('═'.repeat(70));
-  console.log('  SCL WORLD CUP-STYLE FIXTURE GENERATOR — ANALYSIS RUN');
-  console.log('  (READ-ONLY — no data written to Supabase)');
+  console.log('  SCL WORLD CUP-STYLE FIXTURE GENERATOR   ANALYSIS RUN');
+  console.log('  (READ-ONLY   no data written to Supabase)');
   console.log('═'.repeat(70));
 
   // 1. Fetch players
@@ -295,7 +295,7 @@ async function main() {
     const rounds = roundRobinFixtures(group);
     const matchCount = rounds.reduce((s, r) => s + r.length, 0);
     totalMatches += matchCount;
-    console.log(`\n  GROUP ${label} — ${matchCount} matches (${rounds.length} rounds):`);
+    console.log(`\n  GROUP ${label}   ${matchCount} matches (${rounds.length} rounds):`);
     rounds.forEach((round, ri) => {
       console.log(`    Round ${ri + 1}:`);
       round.forEach(m => {
@@ -325,7 +325,7 @@ async function main() {
   console.log(`  GRAND TOTAL matches (max)   : ${totalMatches + koMatches}`);
 
   console.log('\n' + '═'.repeat(70));
-  console.log('  END OF ANALYSIS — No data was written to Supabase.');
+  console.log('  END OF ANALYSIS   No data was written to Supabase.');
   console.log('═'.repeat(70) + '\n');
 }
 

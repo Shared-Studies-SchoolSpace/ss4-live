@@ -1,4 +1,4 @@
-# BRIEFING — 2026-07-21T13:23:00Z
+# BRIEFING   2026-07-21T13:23:00Z
 
 ## Mission
 Review Milestone 1: Database Schema Execution & Verification (R1) against specs and verify integrity and build.
@@ -12,7 +12,7 @@ Review Milestone 1: Database Schema Execution & Verification (R1) against specs 
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only   do NOT modify implementation code
 - Actively check for integrity violations: hardcoded test results, facade implementations, shortcuts bypassing task, fabricated verification outputs, self-certifying work without genuine independent verification.
 - Output PASS/FAIL verdict with rationale in handoff.md.
 
@@ -32,7 +32,7 @@ Review Milestone 1: Database Schema Execution & Verification (R1) against specs 
 - Issued PASS verdict in `.agents/reviewer_m1_1/handoff.md`.
 
 ## Artifact Index
-- `/home/kami/Desktop/codebase/ss4/.agents/reviewer_m1_1/handoff.md` — Final review report with PASS verdict.
+- `/home/kami/Desktop/codebase/ss4/.agents/reviewer_m1_1/handoff.md`   Final review report with PASS verdict.
 
 ## Review Checklist
 - **Items reviewed**: `docs/migrations/01_schema_r1.sql`, `docs/db_schema.sql`, `scripts/verify_schema_r1.cjs`, `worker_m1/handoff.md`

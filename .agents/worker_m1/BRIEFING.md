@@ -1,4 +1,4 @@
-# BRIEFING — 2026-07-21T12:04:15Z
+# BRIEFING   2026-07-21T12:04:15Z
 
 ## Mission
 Database Schema Execution & Verification (R1) - Create complete SQL migration and schema definition files for direct_messages, announcements, notifications, profiles.last_seen, indexes, and RLS policies.
@@ -48,7 +48,7 @@ Database Schema Execution & Verification (R1) - Create complete SQL migration an
 - Configured fine-grained Row-Level Security (RLS) policies according to specification.
 
 ## Artifact Index
-- ORIGINAL_REQUEST.md — Original task prompt
-- BRIEFING.md — Agent briefing and persistent context
-- progress.md — Progress log and heartbeat
-- handoff.md — Mandatory Handoff Report for Milestone 1
+- ORIGINAL_REQUEST.md   Original task prompt
+- BRIEFING.md   Agent briefing and persistent context
+- progress.md   Progress log and heartbeat
+- handoff.md   Mandatory Handoff Report for Milestone 1

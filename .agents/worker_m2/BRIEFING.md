@@ -1,4 +1,4 @@
-# BRIEFING — 2026-07-21T13:23:19Z
+# BRIEFING   2026-07-21T13:23:19Z
 
 ## Mission
 Milestone 2: Persistent Auth & Flexible Signup Pre-flow (R5, R6)
@@ -32,10 +32,10 @@ Milestone 2: Persistent Auth & Flexible Signup Pre-flow (R5, R6)
 - Ensured educational fields (`university`, `faculty`, `department`, `level`) are labeled optional and strictly non-mandatory in `StudentSignupModal.jsx`.
 
 ## Artifact Index
-- `.agents/worker_m2/ORIGINAL_REQUEST.md` — Original request prompt
-- `.agents/worker_m2/BRIEFING.md` — Briefing document
-- `.agents/worker_m2/progress.md` — Progress tracker
-- `.agents/worker_m2/handoff.md` — Handoff report
+- `.agents/worker_m2/ORIGINAL_REQUEST.md`   Original request prompt
+- `.agents/worker_m2/BRIEFING.md`   Briefing document
+- `.agents/worker_m2/progress.md`   Progress tracker
+- `.agents/worker_m2/handoff.md`   Handoff report
 
 ## Change Tracker
 - **Files modified**:

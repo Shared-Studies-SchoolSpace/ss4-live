@@ -472,10 +472,10 @@ export default function ChessTournamentPage() {
     return { byes, active };
   };
 
-  const getSeededPlayersNext = () => {
+  const seededPlayersNext = React.useMemo(() => {
     if (!tournament?.rounds?.length) return [];
     return getSurvivingPlayers(tournament);
-  };
+  }, [tournament]);
 
   const { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
 
@@ -2253,7 +2253,7 @@ export default function ChessTournamentPage() {
                   <h3 className="font-space font-black text-lg text-[#111111] flex items-center gap-2">
                     <span>Retrieve Next Players</span>
                     <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2.5 py-0.5 rounded-full">
-                      {paramManualSelection ? `${selectedSurvivingUsernames.length} Manually Selected` : `${getSeededPlayersNext().length} Auto-Retrieved`}
+                      {paramManualSelection ? `${selectedSurvivingUsernames.length} Manually Selected` : `${seededPlayersNext.length} Auto-Retrieved`}
                     </span>
                   </h3>
                   <p className="text-xs text-gray-400 mt-0.5">
@@ -2271,7 +2271,7 @@ export default function ChessTournamentPage() {
                     onClick={() => {
                       if (!paramManualSelection) {
                         if (selectedSurvivingUsernames.length === 0) {
-                          setSelectedSurvivingUsernames(getSeededPlayersNext().map(p => p.username));
+                          setSelectedSurvivingUsernames(seededPlayersNext.map(p => p.username));
                         }
                       }
                       setParamManualSelection(v => !v);
@@ -2295,7 +2295,7 @@ export default function ChessTournamentPage() {
                 /* Auto-Retrieve View (Read Only Cards) */
                 <div className="border border-brand-accent/10 bg-brand-accent/5 rounded-2xl p-5 space-y-3">
                   <div className="flex items-center justify-between text-xs font-bold text-gray-500">
-                    <span>Auto-Retrieved Qualifiers ({getSeededPlayersNext().length} Players)</span>
+                    <span>Auto-Retrieved Qualifiers ({seededPlayersNext.length} Players)</span>
                     
                     {/* Clickable System Survival Logic Badge & Tooltip */}
                     <div className="relative inline-block">
@@ -2345,7 +2345,7 @@ export default function ChessTournamentPage() {
                     </div>
                   </div>
                   <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[260px] overflow-y-auto pr-1">
-                    {getSeededPlayersNext().map(p => (
+                    {seededPlayersNext.map(p => (
                       <div key={p.username} className="flex justify-between items-center text-xs p-2.5 bg-white rounded-lg border border-gray-100 shadow-2xs">
                         <div className="min-w-0 flex-1 pr-2">
                           <p className="font-bold text-[#111111] truncate">{p.name}</p>
@@ -2377,8 +2377,7 @@ export default function ChessTournamentPage() {
                       <button
                         type="button"
                         onClick={() => {
-                          const autoQuals = getSeededPlayersNext();
-                          setSelectedSurvivingUsernames(autoQuals.map(p => p.username));
+                          setSelectedSurvivingUsernames(seededPlayersNext.map(p => p.username));
                         }}
                         className="text-xs font-bold px-3 py-2 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-xl transition-colors cursor-pointer"
                       >

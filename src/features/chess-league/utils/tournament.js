@@ -221,6 +221,7 @@ export function getSurvivingPlayers(tournament) {
         if (b.Pts !== a.Pts) return b.Pts - a.Pts;
         if (b.W !== a.W) return b.W - a.W;
         if (b.P !== a.P) return b.P - a.P;
+        if ((b.rating || 0) !== (a.rating || 0)) return (b.rating || 0) - (a.rating || 0);
         return (a.name || '').localeCompare(b.name || '');
       });
 
@@ -349,7 +350,9 @@ export function generateNextRound(rounds, year, month, options = {}) {
   }
   const roundDate = customDate || dates[dateIdx];
   const roundName = options.roundName || (ROUND_NAMES[nextNum - 1] ?? `Round ${nextNum}`);
-  return { roundNum: nextNum, name: roundName, date: roundDate, games };
+  const isGroupStage = roundName.toLowerCase().includes('group');
+  const isKnockout = !isGroupStage;
+  return { roundNum: nextNum, name: roundName, date: roundDate, isGroupStage, isKnockout, games };
 }
 
 

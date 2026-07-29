@@ -314,11 +314,14 @@ export function useTournament(monthYear) {
 
   // Generate next round from current winners  admin calls after all results are logged
   const advanceRound = (options = {}) => {
+    if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return;
     const [y, m] = monthYear.split('-').map(Number);
     const last = tournament.rounds[tournament.rounds.length - 1];
-    const allDone = last.games.every(g => g.winner);
-    if (!allDone) { toast.error('Log all match results before generating the next round.'); return; }
-    if (last.games.length === 1) { toast.info('Tournament complete. No more rounds.'); return; }
+    const isManual = options.selectedPlayers && options.selectedPlayers.length > 0;
+    const games = last?.games || [];
+    const allDone = games.length > 0 && games.every(g => g.winner);
+    if (!allDone && !isManual) { toast.error('Log all match results or enable Manual Selection Mode before generating the next round.'); return; }
+    if (games.length === 1 && !isManual) { toast.info('Tournament complete. No more rounds.'); return; }
     const nextRound = generateNextRound(tournament.rounds, y, m, options);
     save({ ...tournament, rounds: [...tournament.rounds, nextRound] });
   };

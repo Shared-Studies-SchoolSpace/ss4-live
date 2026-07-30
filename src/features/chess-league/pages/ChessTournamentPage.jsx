@@ -291,6 +291,8 @@ export default function ChessTournamentPage() {
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
   });
 
+  const { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
+
   const [activeTab, setActiveTab] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('tab') || 'table';
@@ -476,8 +478,6 @@ export default function ChessTournamentPage() {
     if (!tournament?.rounds?.length) return [];
     return getSurvivingPlayers(tournament);
   }, [tournament]);
-
-  const { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
 
   const { user, profile, updatePlayerDivision } = useAuth();
   const { openAuthModal } = useAuthModal();

@@ -861,7 +861,7 @@ export default function ChessTournamentPage() {
       toast.error('Fixtures element not found');
       return;
     }
-    const toastId = toast.loading('Generating fixtures image...');
+    const toastId = toast.loading('Generating ultra-HD fixtures image...');
     setIsDownloadingFixturesImage(true);
 
     const originalGetComputedStyle = window.getComputedStyle;
@@ -910,30 +910,45 @@ export default function ChessTournamentPage() {
     };
 
     try {
-      const originalStyle = element.getAttribute('style') || '';
-      element.style.background = '#FFFFFF';
-      element.style.padding = '24px';
-      element.style.borderRadius = '24px';
-
       const html2canvas = (await import('html2canvas')).default;
       const canvas = await html2canvas(element, {
         backgroundColor: '#FFFFFF',
-        scale: 2,
+        scale: 4, // 4x ultra high-definition scaling (vector-sharp on zoom)
         logging: false,
-        useCORS: true
-      });
+        useCORS: true,
+        allowTaint: true,
+        windowWidth: 1200,
+        onclone: (clonedDoc) => {
+          const clonedEl = clonedDoc.getElementById('fixtures-export-container');
+          if (clonedEl) {
+            clonedEl.style.width = '1200px';
+            clonedEl.style.padding = '32px';
+            clonedEl.style.background = '#FFFFFF';
+            clonedEl.style.borderRadius = '24px';
+            clonedEl.style.fontSmoothing = 'antialiased';
+            clonedEl.style.webkitFontSmoothing = 'antialiased';
+            clonedEl.style.textRendering = 'optimizeLegibility';
 
-      element.setAttribute('style', originalStyle);
+            // Format match cards grid into 2 columns for optimal aspect ratio & legibility
+            const gridEl = clonedEl.querySelector('.grid');
+            if (gridEl) {
+              gridEl.style.display = 'grid';
+              gridEl.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
+              gridEl.style.gap = '16px';
+            }
+          }
+        }
+      });
 
       const dataUrl = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       const formattedRoundName = (roundName || 'Round').replace(/\s+/g, '_');
-      link.download = `SCL_Fixtures_${formattedRoundName}.png`;
+      link.download = `SCL_Fixtures_${formattedRoundName}_UltraHD.png`;
       link.href = dataUrl;
       link.click();
 
       toast.update(toastId, {
-        render: 'Fixtures image downloaded!',
+        render: 'Ultra-HD Fixtures image downloaded!',
         type: 'success',
         isLoading: false,
         autoClose: 2000
@@ -1544,7 +1559,7 @@ export default function ChessTournamentPage() {
                       <p className="text-sm text-gray-500 italic py-4">No matches in Group {activeGroupFilter} for this round.</p>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {activeGames.map((g, gameIdx) => {
                         const isP1Winner = g.winner && (g.winner.username === g.p1?.username || g.winner.id === g.p1?.id);
                         const isP2Winner = g.winner && (g.winner.username === g.p2?.username || g.winner.id === g.p2?.id);

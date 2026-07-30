@@ -861,7 +861,7 @@ export default function ChessTournamentPage() {
       toast.error('Fixtures element not found');
       return;
     }
-    const toastId = toast.loading('Generating ultra-HD fixtures image...');
+    const toastId = toast.loading('Generating HD fixtures image...');
     setIsDownloadingFixturesImage(true);
 
     const originalGetComputedStyle = window.getComputedStyle;
@@ -911,44 +911,30 @@ export default function ChessTournamentPage() {
 
     try {
       const html2canvas = (await import('html2canvas')).default;
+      const width = element.offsetWidth || element.scrollWidth;
+      const height = element.offsetHeight || element.scrollHeight;
+
       const canvas = await html2canvas(element, {
         backgroundColor: '#FFFFFF',
-        scale: 4, // 4x ultra high-definition scaling (vector-sharp on zoom)
+        scale: 3, // High resolution (3x) for crystal-clear text without distortion
         logging: false,
         useCORS: true,
         allowTaint: true,
-        windowWidth: 1200,
-        onclone: (clonedDoc) => {
-          const clonedEl = clonedDoc.getElementById('fixtures-export-container');
-          if (clonedEl) {
-            clonedEl.style.width = '1200px';
-            clonedEl.style.padding = '32px';
-            clonedEl.style.background = '#FFFFFF';
-            clonedEl.style.borderRadius = '24px';
-            clonedEl.style.fontSmoothing = 'antialiased';
-            clonedEl.style.webkitFontSmoothing = 'antialiased';
-            clonedEl.style.textRendering = 'optimizeLegibility';
-
-            // Format match cards grid into 2 columns for optimal aspect ratio & legibility
-            const gridEl = clonedEl.querySelector('.grid');
-            if (gridEl) {
-              gridEl.style.display = 'grid';
-              gridEl.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-              gridEl.style.gap = '16px';
-            }
-          }
-        }
+        width: width,
+        height: height,
+        scrollX: 0,
+        scrollY: 0
       });
 
       const dataUrl = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       const formattedRoundName = (roundName || 'Round').replace(/\s+/g, '_');
-      link.download = `SCL_Fixtures_${formattedRoundName}_UltraHD.png`;
+      link.download = `SCL_Fixtures_${formattedRoundName}.png`;
       link.href = dataUrl;
       link.click();
 
       toast.update(toastId, {
-        render: 'Ultra-HD Fixtures image downloaded!',
+        render: 'Fixtures image downloaded!',
         type: 'success',
         isLoading: false,
         autoClose: 2000

@@ -864,25 +864,56 @@ export default function ChessTournamentPage() {
     const toastId = toast.loading('Generating fixtures image...');
     setIsDownloadingFixturesImage(true);
 
+    const originalGetComputedStyle = window.getComputedStyle;
+    
+    // Patch window.getComputedStyle safely during html2canvas lifecycle to convert oklch/oklab colors
+    window.getComputedStyle = function(el, pseudo) {
+      const style = originalGetComputedStyle.call(this, el, pseudo);
+      return new Proxy(style, {
+        get(target, prop) {
+          const val = target[prop];
+          if (prop === 'cssText' && typeof val === 'string') {
+            return val.replace(/oklch\([^)]+\)/g, '#1A56C4').replace(/oklab\([^)]+\)/g, '#1A56C4');
+          }
+          if (typeof val === 'string' && (val.includes('oklch') || val.includes('oklab'))) {
+            let fallback = '#1A56C4';
+            const propStr = prop.toString().toLowerCase();
+            if (propStr.includes('background') || propStr.includes('bg')) {
+              fallback = '#FFFFFF';
+            } else if (propStr.includes('border') || propStr.includes('gray') || propStr.includes('neutral') || propStr.includes('slate') || propStr.includes('ring')) {
+              fallback = '#E5E7EB';
+            }
+            return val.replace(/oklch\([^)]+\)/g, fallback).replace(/oklab\([^)]+\)/g, fallback);
+          }
+          if (typeof val === 'function') {
+            if (prop === 'getPropertyValue') {
+              return function(styleProp) {
+                const rawVal = target.getPropertyValue(styleProp);
+                if (typeof rawVal === 'string' && (rawVal.includes('oklch') || rawVal.includes('oklab'))) {
+                  let fallback = '#1A56C4';
+                  const stylePropStr = styleProp.toLowerCase();
+                  if (stylePropStr.includes('background') || stylePropStr.includes('bg')) {
+                    fallback = '#FFFFFF';
+                  } else if (stylePropStr.includes('border') || stylePropStr.includes('gray') || stylePropStr.includes('neutral') || stylePropStr.includes('slate') || stylePropStr.includes('ring')) {
+                    fallback = '#E5E7EB';
+                  }
+                  return rawVal.replace(/oklch\([^)]+\)/g, fallback).replace(/oklab\([^)]+\)/g, fallback);
+                }
+                return rawVal;
+              };
+            }
+            return val.bind(target);
+          }
+          return val;
+        }
+      });
+    };
+
     try {
       const originalStyle = element.getAttribute('style') || '';
       element.style.background = '#FFFFFF';
       element.style.padding = '24px';
       element.style.borderRadius = '24px';
-
-      const originalGetComputedStyle = window.getComputedStyle;
-      window.getComputedStyle = function(el, pseudoElt) {
-        const style = originalGetComputedStyle.call(this, el, pseudoElt);
-        return new Proxy(style, {
-          get(target, prop) {
-            const val = target[prop];
-            if (typeof val === 'string' && (val.includes('oklch') || val.includes('oklab'))) {
-              return '#1A56C4';
-            }
-            return val;
-          }
-        });
-      };
 
       const html2canvas = (await import('html2canvas')).default;
       const canvas = await html2canvas(element, {
@@ -892,7 +923,6 @@ export default function ChessTournamentPage() {
         useCORS: true
       });
 
-      window.getComputedStyle = originalGetComputedStyle;
       element.setAttribute('style', originalStyle);
 
       const dataUrl = canvas.toDataURL('image/png');
@@ -917,6 +947,7 @@ export default function ChessTournamentPage() {
         autoClose: 3000
       });
     } finally {
+      window.getComputedStyle = originalGetComputedStyle;
       setIsDownloadingFixturesImage(false);
     }
   };

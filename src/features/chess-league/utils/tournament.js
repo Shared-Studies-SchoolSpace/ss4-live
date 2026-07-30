@@ -417,62 +417,39 @@ export function generateNextRound(rounds, year, month, options = {}) {
 
 export function getCountdownTarget(tournament) {
   const now = new Date();
-  let y = now.getFullYear(), m = now.getMonth() + 1;
+  const y = now.getFullYear();
+  const m = now.getMonth() + 1;
   const todayStr = `${y}-${String(m).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   const today8pm = new Date(`${todayStr}T20:00:00+01:00`);
 
-  if (tournament && tournament.month_year) {
-    const parts = tournament.month_year.split('-');
-    if (parts.length === 2) {
-      y = parseInt(parts[0], 10);
-      m = parseInt(parts[1], 10);
-    }
-  }
-
-  const dates = getTournamentDates(y, m);
-
   if (!tournament || tournament.status === 'upcoming') {
-    if (today8pm > now) {
-      return { date: today8pm, label: 'Round of 32 starts in' };
-    }
-    return { date: new Date(`${dates[0]}T20:00:00+01:00`), label: 'Round of 32 starts in' };
+    return { date: today8pm, label: 'Round of 32 starts in' };
   }
 
   if (tournament.status === 'active') {
     const rounds = tournament.rounds || [];
     const latestRound = rounds.length > 0 ? rounds[rounds.length - 1] : null;
-    const currentNum = latestRound ? (latestRound.roundNum || rounds.length) : 1;
-    const nextNum = currentNum + 1;
 
-    // Admin panel override stored in DB takes priority
+    // Admin panel override stored in DB takes priority if it's set and in the future
     if (latestRound && latestRound.next_round_start) {
-      const customLabel = latestRound.next_round_label || (nextNum === 4 ? 'Round of 32 starts in' : `Round ${nextNum} starts in`);
-      return { 
-        date: new Date(latestRound.next_round_start), 
-        label: customLabel
-      };
+      const customDate = new Date(latestRound.next_round_start);
+      if (!isNaN(customDate.getTime()) && customDate > now) {
+        const customLabel = latestRound.next_round_label || 'Round of 32 starts in';
+        return { 
+          date: customDate, 
+          label: customLabel
+        };
+      }
     }
-
-    // Default to previous round start time + 24 hours or next date in sequence
-    const prevDateStr = latestRound?.date || dates[Math.min(currentNum - 1, dates.length - 1)];
-    const prevDateObj = new Date(prevDateStr.includes('T') ? prevDateStr : `${prevDateStr}T20:00:00+01:00`);
-    const nextDate = !isNaN(prevDateObj.getTime())
-      ? new Date(prevDateObj.getTime() + 24 * 60 * 60 * 1000)
-      : new Date(`${dates[Math.min(nextNum - 1, dates.length - 1)]}T20:00:00+01:00`);
 
     const defaultLabel = latestRound?.next_round_label || 'Round of 32 starts in';
     return { 
-      date: nextDate, 
+      date: today8pm, 
       label: defaultLabel
     };
   }
 
-  if (today8pm > now) {
-    return { date: today8pm, label: "Round of 32 starts in" };
-  }
-
-  const nm = m === 12 ? 1 : m + 1, ny = m === 12 ? y + 1 : y;
-  return { date: new Date(`${getTournamentDates(ny, nm)[0]}T20:00:00+01:00`), label: "Round of 32 starts in" };
+  return { date: today8pm, label: 'Round of 32 starts in' };
 }
 
 

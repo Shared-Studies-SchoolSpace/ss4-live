@@ -855,10 +855,15 @@ export default function ChessTournamentPage() {
   };
 
   useEffect(() => {
-    if (tournament?.rounds?.length && !adminRoundInitializedRef.current) {
-      adminRoundInitializedRef.current = true;
-      setAdminRoundNum(1);
-      setActiveFixtureRound(1);
+    if (tournament?.rounds?.length) {
+      const latestRoundNum = tournament.rounds[tournament.rounds.length - 1].roundNum;
+      if (!adminRoundInitializedRef.current) {
+        adminRoundInitializedRef.current = true;
+        setAdminRoundNum(latestRoundNum);
+        setActiveFixtureRound(latestRoundNum);
+      } else {
+        setActiveFixtureRound(latestRoundNum);
+      }
     }
   }, [tournament]);
 
@@ -1295,8 +1300,11 @@ export default function ChessTournamentPage() {
                   {/* Round Selector Bar */}
                   <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-5 shadow-sm flex items-center justify-between gap-4">
                     <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full py-0.5">
-                      {tournament.rounds.map(r => {
+                      {[...tournament.rounds].reverse().map(r => {
                         const isActive = activeFixtureRound === r.roundNum;
+                        const formattedName = (r.name || `Round ${r.roundNum}`)
+                          .replace(/Group Stage Round /i, 'Group stage ')
+                          .replace(/Group Stage /i, 'Group stage ');
                         return (
                           <button 
                             key={r.roundNum} 
@@ -1310,7 +1318,7 @@ export default function ChessTournamentPage() {
                             <svg className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            <span>{r.name}</span>
+                            <span>{formattedName}</span>
                           </button>
                         );
                       })}

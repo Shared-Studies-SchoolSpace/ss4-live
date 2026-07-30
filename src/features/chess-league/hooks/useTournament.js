@@ -27,14 +27,9 @@ export const MOCK_HISTORY = [
 
 const normalizeRoundNames = (t) => {
   if (!t || !t.rounds) return t;
-  const nameMapping = {
-    'Round of 64': 'Round 1',
-    'Round of 32': 'Round 2',
-    'Round of 16': 'Round 3'
-  };
   t.rounds.forEach(r => {
-    if (nameMapping[r.name]) {
-      r.name = nameMapping[r.name];
+    if (r.name === 'Round 2' && (r.roundNum === 4 || r.isKnockout)) {
+      r.name = 'Round of 32';
     }
   });
   return t;

@@ -390,7 +390,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
           </p>
         </div>
 
-        {/* Sub-tab Toggle: Table | Knockout Matrix | Fixtures */}
+        {/* Sub-tab Toggle: Tables | Knockout Matrix | Fixtures */}
         <div className="flex items-center bg-gray-100 p-1.5 rounded-2xl shrink-0 self-start sm:self-auto border border-gray-200/60 flex-wrap gap-1">
           <button
             onClick={() => setViewMode('table')}
@@ -403,7 +403,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M3 14h18M9 4v16M15 4v16M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z" />
             </svg>
-            <span>Table</span>
+            <span>Tables</span>
           </button>
           
           {isKnockoutActive && (
@@ -411,11 +411,14 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
               onClick={() => setViewMode('matrix')}
               className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
                 viewMode === 'matrix' 
-                  ? 'bg-[#0B193C] text-white shadow-sm' 
-                  : 'text-gray-600 hover:text-[#111111] bg-emerald-50 text-emerald-800 border border-emerald-200'
+                  ? 'bg-white text-brand-primary shadow-sm' 
+                  : 'text-gray-500 hover:text-[#111111]'
               }`}
             >
-              <span>⚔️ Knockout Matrix</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+              </svg>
+              <span>Knockout Matrix</span>
             </button>
           )}
 
@@ -438,24 +441,21 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
         </div>
       </div>
 
-      {/* Knockout Stage Active Banner (Laws of UX: Jakob's Law & Common Region) */}
+      {/* Knockout Stage Active Banner */}
       {isKnockoutActive && (
-        <div className="bg-gradient-to-r from-[#0B193C] via-[#112456] to-brand-primary text-white p-5 rounded-3xl shadow-md border border-blue-400/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-in fade-in duration-300">
-          <div className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-xl shrink-0 shadow-inner">
-              ⚔️
+        <div className="bg-[#0B193C] text-white p-5 rounded-3xl shadow-sm border border-[#1E295B] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-in fade-in duration-300">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0 text-white/90">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
             </div>
             <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="font-space font-black text-sm uppercase tracking-wider text-blue-200">
-                  Knockout Stage Active ({knockoutMatrixData.currentKnockoutRoundName})
-                </h3>
-                <span className="bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                  Live Phase
-                </span>
-              </div>
-              <p className="text-xs text-white/80 mt-1 max-w-2xl leading-relaxed">
-                The Group Stage has concluded. Group tables below are preserved as historical standings. Switch to the <strong>Knockout Matrix</strong> sub-tab or open the <strong>Bracket View</strong> to follow active survival standings.
+              <h3 className="font-space font-black text-sm uppercase tracking-wider text-white">
+                Knockout Stage Active ({knockoutMatrixData.currentKnockoutRoundName})
+              </h3>
+              <p className="text-xs text-gray-300 mt-1 max-w-2xl leading-relaxed font-medium">
+                The Group Stage has concluded. Group tables below are preserved as historical standings. Switch to the <strong>Knockout Matrix</strong> or open the <strong>Bracket View</strong> to follow qualified contenders.
               </p>
             </div>
           </div>
@@ -473,7 +473,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
             </button>
             <button
               onClick={() => onSwitchTab && onSwitchTab('bracket')}
-              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm flex items-center gap-1.5"
+              className="px-4 py-2 bg-brand-primary hover:bg-brand-primary/90 text-white rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm flex items-center gap-1.5"
             >
               <span>View Bracket</span>
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -542,18 +542,20 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
         </div>
       </div>
 
-      {/* Knockout Survival Matrix View (Laws of UX: Miller's Law & Von Restorff Effect) */}
+      {/* Knockout Survival Matrix View */}
       {viewMode === 'matrix' && (
         <div className="space-y-6 animate-in fade-in duration-200">
           <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-gray-100">
               <div>
-                <h3 className="font-space font-black text-xl text-[#111111] uppercase tracking-wide flex items-center gap-2">
-                  <span>⚔️ Knockout Survival Matrix</span>
-                  <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-0.5 rounded-full font-sans">
-                    {knockoutMatrixData.survivors.filter(p => p.isAlive).length} Active Contenders
+                <div className="flex flex-wrap items-center gap-3">
+                  <h3 className="font-space font-black text-xl text-[#111111] uppercase tracking-wide">
+                    Knockout Matrix
+                  </h3>
+                  <span className="text-xs font-bold text-[#0B193C] bg-[#0B193C]/5 border border-[#0B193C]/10 px-3.5 py-1 rounded-xl font-space">
+                    {knockoutMatrixData.survivors.length} Contenders
                   </span>
-                </h3>
+                </div>
                 <p className="text-xs text-gray-500 mt-1 font-medium">
                   Chunked view of all {knockoutMatrixData.survivors.length} qualifiers advancing from Group Stage through Knockout rounds.
                 </p>
@@ -580,7 +582,6 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                     <th className="py-3 px-2 text-right">Rating</th>
                     <th className="py-3 px-3 text-center">Group Stage Pts</th>
                     <th className="py-3 px-3">Highest Stage</th>
-                    <th className="py-3 px-3 text-right">Survival Status</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
@@ -621,18 +622,6 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                           <span className="text-xs font-bold text-gray-800 bg-gray-100 px-2.5 py-1 rounded-lg border border-gray-200/70 inline-block">
                             {p.highestRound}
                           </span>
-                        </td>
-                        <td className="py-3 px-3 text-right">
-                          {p.isAlive ? (
-                            <span className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 font-black text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full border border-emerald-300">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                              Active in Bracket
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-500 font-bold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full border border-gray-200">
-                              Eliminated ({p.eliminatedIn || 'Knockout'})
-                            </span>
-                          )}
                         </td>
                       </tr>
                     );

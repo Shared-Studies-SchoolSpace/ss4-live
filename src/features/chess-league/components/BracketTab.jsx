@@ -214,9 +214,13 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
     </div>
   );
 
-  const lastRound = tournament.rounds[tournament.rounds.length - 1];
-  const allLastRoundDone = lastRound.games.every(g => g.winner);
-  const round = tournament.rounds.find(r => r.roundNum === activeRound) ?? lastRound;
+  const knockoutRounds = (tournament.rounds || []).filter(
+    r => r.isKnockout || (r.name && !r.name.toLowerCase().includes('group'))
+  );
+  const displayRounds = knockoutRounds.length > 0 ? knockoutRounds : [];
+  const lastRound = displayRounds.length > 0 ? displayRounds[displayRounds.length - 1] : tournament.rounds[tournament.rounds.length - 1];
+  const allLastRoundDone = lastRound?.games ? lastRound.games.every(g => g.winner) : false;
+  const round = displayRounds.find(r => r.roundNum === activeRound) ?? lastRound;
 
   return (
     <div className="space-y-4">
@@ -230,7 +234,7 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
         <div className="space-y-1">
           <p className="text-xs font-black text-brand-primary uppercase tracking-wider">Tournament Note: What is a "BYE"?</p>
           <p className="text-[11px] text-gray-500 leading-relaxed font-medium">
-            A <strong className="text-brand-primary">BYE</strong> is awarded to a competitor when there is an uneven bracket pairing (e.g., 51 players in a 64-player template). In SCL, BYEs are seeded to the top 13 highest-rated non-provisional players, allowing them to automatically advance to <strong className="text-[#111111]">Round 2</strong> without playing a match.
+            A <strong className="text-brand-primary">BYE</strong> is awarded to a competitor when there is an uneven bracket pairing (e.g., 30 qualifiers in a Round of 32 bracket). BYEs allow players to automatically advance to <strong className="text-[#111111]">Round of 16</strong> without playing a match.
           </p>
         </div>
       </div>
@@ -258,11 +262,11 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
             </button>
           </div>
 
-          {viewMode === 'list' && (
+          {viewMode === 'list' && displayRounds.length > 0 && (
             <>
               <div className="h-4 w-px bg-gray-200 hidden sm:block" />
               <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
-                {tournament.rounds.map(r => (
+                {displayRounds.map(r => (
                   <button key={r.roundNum} onClick={() => { setActiveRound(r.roundNum); }}
                     className={`text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors ${activeRound === r.roundNum ? 'bg-brand-primary text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}>
                     {r.name}

@@ -24,18 +24,10 @@ function getNextTournamentStart() {
   const now = new Date();
   const y = now.getFullYear();
   const m = now.getMonth() + 1;
+  const todayStr = `${y}-${String(m).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const today8pm = new Date(`${todayStr}T20:00:00+01:00`);
 
-  const datesThisMonth = getTournamentDates(y, m);
-  const startThisMonth = new Date(`${datesThisMonth[0]}T20:00:00+01:00`);
-
-  if (startThisMonth > now) {
-    return { date: startThisMonth, month: m, year: y };
-  }
-
-  const nm = m === 12 ? 1 : m + 1;
-  const ny = m === 12 ? y + 1 : y;
-  const datesNextMonth = getTournamentDates(ny, nm);
-  return { date: new Date(`${datesNextMonth[0]}T20:00:00+01:00`), month: nm, year: ny };
+  return { date: today8pm, month: m, year: y };
 }
 
 function useCountdown(targetDate) {
@@ -129,8 +121,8 @@ export default function TournamentCountdownBanner() {
   const monthName = tournament ? MONTH_NAMES[tournament.month] : '';
 
   const headline = isUrgent
-    ? `Last chance! Round of 32 starts in ${days}d ${hours}h!`
-    : `SCL Round of 32 is ${days} day${days !== 1 ? 's' : ''} away (8:00 PM WAT). Get ready!`;
+    ? `Knockout Action! Round of 32 starts in ${hours}h ${mins}m!`
+    : `SCL Round of 32 matches begin tonight at 8:00 PM WAT. Get ready!`;
 
   return (
     <AnimatePresence>
@@ -143,7 +135,7 @@ export default function TournamentCountdownBanner() {
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           style={{ overflow: 'hidden', position: 'relative', zIndex: 60 }}
           role="banner"
-          aria-label="Tournament registration announcement"
+          aria-label="Tournament schedule announcement"
         >
           <div
             className="relative w-full flex items-center justify-between gap-3 px-4 sm:px-6 py-2.5 overflow-hidden select-none"
@@ -193,7 +185,7 @@ export default function TournamentCountdownBanner() {
                 </span>
                 <span className="hidden sm:inline">{headline}</span>
                 <span className="inline sm:hidden">
-                  {days}d {hours}h left: Round of 32!
+                  {hours}h {mins}m left: Round of 32!
                 </span>
               </p>
             </div>
@@ -233,7 +225,7 @@ export default function TournamentCountdownBanner() {
                   backdropFilter: 'blur(4px)',
                 }}
               >
-                Register Now
+                View Tournament
                 <svg
                   style={{ width: '11px', height: '11px' }}
                   fill="none"

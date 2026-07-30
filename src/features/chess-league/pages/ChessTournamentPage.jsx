@@ -317,6 +317,7 @@ export default function ChessTournamentPage() {
   const [adminSubView, setAdminSubView] = useState('main'); // 'main' | 'generate-r1' | 'generate-next'
   const [activeFixtureRound, setActiveFixtureRound] = useState(1);
   const [activeGroupFilter, setActiveGroupFilter] = useState('ALL');
+  const [isDownloadingFixturesImage, setIsDownloadingFixturesImage] = useState(false);
   useEffect(() => { setActiveGroupFilter('ALL'); }, [activeFixtureRound]);
   const [paramTargetElo, setParamTargetElo] = useState(400);
   const [paramSchoolPenalty, setParamSchoolPenalty] = useState(150);
@@ -851,6 +852,72 @@ export default function ChessTournamentPage() {
       toast.success('Next round start time cleared.');
     } catch (e) {
       toast.error('Error clearing next round start time.');
+    }
+  };
+
+  const handleDownloadFixturesImage = async (roundName) => {
+    const element = document.getElementById('fixtures-export-container');
+    if (!element) {
+      toast.error('Fixtures element not found');
+      return;
+    }
+    const toastId = toast.loading('Generating fixtures image...');
+    setIsDownloadingFixturesImage(true);
+
+    try {
+      const originalStyle = element.getAttribute('style') || '';
+      element.style.background = '#FFFFFF';
+      element.style.padding = '24px';
+      element.style.borderRadius = '24px';
+
+      const originalGetComputedStyle = window.getComputedStyle;
+      window.getComputedStyle = function(el, pseudoElt) {
+        const style = originalGetComputedStyle.call(this, el, pseudoElt);
+        return new Proxy(style, {
+          get(target, prop) {
+            const val = target[prop];
+            if (typeof val === 'string' && (val.includes('oklch') || val.includes('oklab'))) {
+              return '#1A56C4';
+            }
+            return val;
+          }
+        });
+      };
+
+      const html2canvas = (await import('html2canvas')).default;
+      const canvas = await html2canvas(element, {
+        backgroundColor: '#FFFFFF',
+        scale: 2,
+        logging: false,
+        useCORS: true
+      });
+
+      window.getComputedStyle = originalGetComputedStyle;
+      element.setAttribute('style', originalStyle);
+
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      const formattedRoundName = (roundName || 'Round').replace(/\s+/g, '_');
+      link.download = `SCL_Fixtures_${formattedRoundName}.png`;
+      link.href = dataUrl;
+      link.click();
+
+      toast.update(toastId, {
+        render: 'Fixtures image downloaded!',
+        type: 'success',
+        isLoading: false,
+        autoClose: 2000
+      });
+    } catch (err) {
+      console.error('Download error:', err);
+      toast.update(toastId, {
+        render: 'Failed to generate fixtures image',
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000
+      });
+    } finally {
+      setIsDownloadingFixturesImage(false);
     }
   };
 
@@ -1411,18 +1478,34 @@ export default function ChessTournamentPage() {
                     </div>
                   )}
 
-                  {/* Header Summary */}
-                  <div className="flex items-center justify-between px-2">
+                  {/* Header Summary & Download Action */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-2">
                     <h3 className="font-space font-black text-xl text-[#111111] flex items-center gap-2">
                       <span>{currentRound.name} Pairings</span>
                       {activeGroupFilter !== 'ALL' && (
                         <span className="bg-[#0B193C] text-blue-300 border border-blue-400/30 font-space font-black text-xs px-2.5 py-1 rounded-lg uppercase tracking-wider">Group {activeGroupFilter}</span>
                       )}
                     </h3>
-                    <span className="text-xs font-bold text-gray-500 bg-white border border-gray-200/60 px-3 py-1 rounded-full shadow-2xs">
-                      {activeGames.length} {activeGames.length === 1 ? 'Match' : 'Matches'}
-                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-xs font-bold text-gray-500 bg-white border border-gray-200/60 px-3 py-1.5 rounded-full shadow-2xs">
+                        {activeGames.length} {activeGames.length === 1 ? 'Match' : 'Matches'}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleDownloadFixturesImage(currentRound?.name)}
+                        disabled={isDownloadingFixturesImage}
+                        className="inline-flex items-center gap-1.5 text-xs font-black bg-brand-primary hover:bg-brand-primary/95 text-white px-3.5 py-1.5 rounded-full transition-all cursor-pointer shadow-2xs shrink-0 disabled:opacity-50"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                        <span>{isDownloadingFixturesImage ? 'Exporting...' : 'Download Image'}</span>
+                      </button>
+                    </div>
                   </div>
+
+                  {/* Exportable Fixtures Grid Container */}
+                  <div id="fixtures-export-container">
 
                   {/* Individual Fixture Cards Grid */}
                   {!activeGames.length ? (
@@ -1539,6 +1622,7 @@ export default function ChessTournamentPage() {
                       })}
                     </div>
                   )}
+                  </div>
                 </div>
               );
             })()}

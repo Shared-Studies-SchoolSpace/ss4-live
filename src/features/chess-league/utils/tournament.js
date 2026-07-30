@@ -374,9 +374,9 @@ export function getCountdownTarget(tournament) {
 
   if (!tournament || tournament.status === 'upcoming') {
     if (today8pm > now) {
-      return { date: today8pm, label: 'Round 1 starts in' };
+      return { date: today8pm, label: 'Round of 32 starts in' };
     }
-    return { date: new Date(`${dates[0]}T20:00:00+01:00`), label: 'Round 1 starts in' };
+    return { date: new Date(`${dates[0]}T20:00:00+01:00`), label: 'Round of 32 starts in' };
   }
 
   if (tournament.status === 'active') {
@@ -387,7 +387,7 @@ export function getCountdownTarget(tournament) {
 
     // Admin panel override stored in DB takes priority
     if (latestRound && latestRound.next_round_start) {
-      const customLabel = latestRound.next_round_label || `Round ${nextNum} starts in`;
+      const customLabel = latestRound.next_round_label || (nextNum === 4 ? 'Round of 32 starts in' : `Round ${nextNum} starts in`);
       return { 
         date: new Date(latestRound.next_round_start), 
         label: customLabel
@@ -401,7 +401,7 @@ export function getCountdownTarget(tournament) {
       ? new Date(prevDateObj.getTime() + 24 * 60 * 60 * 1000)
       : new Date(`${dates[Math.min(nextNum - 1, dates.length - 1)]}T20:00:00+01:00`);
 
-    const defaultLabel = latestRound?.next_round_label || `Round ${nextNum} starts in`;
+    const defaultLabel = latestRound?.next_round_label || 'Round of 32 starts in';
     return { 
       date: nextDate, 
       label: defaultLabel
@@ -409,11 +409,11 @@ export function getCountdownTarget(tournament) {
   }
 
   if (today8pm > now) {
-    return { date: today8pm, label: "Round 1 starts in" };
+    return { date: today8pm, label: "Round of 32 starts in" };
   }
 
   const nm = m === 12 ? 1 : m + 1, ny = m === 12 ? y + 1 : y;
-  return { date: new Date(`${getTournamentDates(ny, nm)[0]}T20:00:00+01:00`), label: "Next tournament in" };
+  return { date: new Date(`${getTournamentDates(ny, nm)[0]}T20:00:00+01:00`), label: "Round of 32 starts in" };
 }
 
 

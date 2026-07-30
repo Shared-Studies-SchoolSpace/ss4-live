@@ -129,8 +129,8 @@ export default function TournamentCountdownBanner() {
   const monthName = tournament ? MONTH_NAMES[tournament.month] : '';
 
   const headline = isUrgent
-    ? `Last chance! Tournament starts in ${days}d ${hours}h!`
-    : `${monthName} Chess Tournament is ${days} day${days !== 1 ? 's' : ''} away. Secure your spot!`;
+    ? `Last chance! Round of 32 starts in ${days}d ${hours}h!`
+    : `SCL Round of 32 is ${days} day${days !== 1 ? 's' : ''} away (8:00 PM WAT). Get ready!`;
 
   return (
     <AnimatePresence>
@@ -189,11 +189,11 @@ export default function TournamentCountdownBanner() {
                   className="font-black mr-1"
                   style={{ color: isUrgent ? '#93C5FD' : '#A5C8FF', fontSize: '12px' }}
                 >
-                  SCL Monthly Tournament.
+                  SCL Round of 32.
                 </span>
                 <span className="hidden sm:inline">{headline}</span>
                 <span className="inline sm:hidden">
-                  {days}d {hours}h left: join now!
+                  {days}d {hours}h left: Round of 32!
                 </span>
               </p>
             </div>

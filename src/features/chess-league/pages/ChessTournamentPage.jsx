@@ -557,20 +557,18 @@ export default function ChessTournamentPage() {
   };
 
   const [nextRoundStartInput, setNextRoundStartInput] = useState('');
-  const [nextRoundLabelInput, setNextRoundLabelInput] = useState('Group Stage Round 2 starts in');
+  const [nextRoundLabelInput, setNextRoundLabelInput] = useState('Round of 32 starts in');
   const [labelDropdownEnabled, setLabelDropdownEnabled] = useState(false);
 
   const ROUND_LABEL_OPTIONS = [
+    'Round of 32 starts in',
     'Group Stage Round 1 starts in',
     'Group Stage Round 2 starts in',
     'Group Stage Round 3 starts in',
-    'Round of 32 starts in',
     'Round of 16 starts in',
     'Quarterfinals start in',
     'Semifinals start in',
     'The Final starts in',
-    'Group Stage Round 4 starts in',
-    'Group Stage Round 5 starts in',
   ];
   const [showPastWinnersModal, setShowPastWinnersModal] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
@@ -1832,22 +1830,24 @@ export default function ChessTournamentPage() {
               {/* Countdown Label Row */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Countdown Label</label>
-                  {/* Toggle switch to enable/disable the dropdown */}
-                  <button
-                    onClick={() => setLabelDropdownEnabled(v => !v)}
-                    className={`relative inline-flex items-center w-10 h-5 rounded-full transition-colors cursor-pointer shrink-0 ${
-                      labelDropdownEnabled ? 'bg-brand-primary' : 'bg-gray-300'
-                    }`}
-                    title={labelDropdownEnabled ? 'Disable label editing' : 'Enable label editing'}
-                    aria-label="Toggle label dropdown"
-                    role="switch"
-                    aria-checked={labelDropdownEnabled}
-                  >
-                    <span className={`absolute w-3.5 h-3.5 bg-white rounded-full shadow transition-transform ${
-                      labelDropdownEnabled ? 'translate-x-5' : 'translate-x-1'
-                    }`} />
-                  </button>
+                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Countdown Label / Text</label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold text-gray-500">Preset Dropdown</span>
+                    <button
+                      onClick={() => setLabelDropdownEnabled(v => !v)}
+                      className={`relative inline-flex items-center w-10 h-5 rounded-full transition-colors cursor-pointer shrink-0 ${
+                        labelDropdownEnabled ? 'bg-brand-primary' : 'bg-gray-300'
+                      }`}
+                      title={labelDropdownEnabled ? 'Switch to custom text input' : 'Switch to preset dropdown'}
+                      aria-label="Toggle label dropdown"
+                      role="switch"
+                      aria-checked={labelDropdownEnabled}
+                    >
+                      <span className={`absolute w-3.5 h-3.5 bg-white rounded-full shadow transition-transform ${
+                        labelDropdownEnabled ? 'translate-x-5' : 'translate-x-1'
+                      }`} />
+                    </button>
+                  </div>
                 </div>
 
                 {labelDropdownEnabled ? (
@@ -1861,37 +1861,74 @@ export default function ChessTournamentPage() {
                     ))}
                   </select>
                 ) : (
-                  <div className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-gray-500 select-none">
-                    {nextRoundLabelInput}
-                    <span className="ml-2 text-[10px] text-gray-400">(enable toggle to change)</span>
-                  </div>
+                  <input
+                    type="text"
+                    value={nextRoundLabelInput}
+                    onChange={(e) => setNextRoundLabelInput(e.target.value)}
+                    placeholder="e.g. Round of 32 starts in"
+                    className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                  />
                 )}
               </div>
 
               {/* Date + Time Row */}
-              <div className="flex flex-col sm:flex-row items-end gap-4">
-                <div className="flex-1 w-full">
-                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Next Round Start Date & Time</label>
-                  <input
-                    type="datetime-local"
-                    value={nextRoundStartInput}
-                    onChange={(e) => setNextRoundStartInput(e.target.value)}
-                    className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
-                  />
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Next Round Start Date & Time</label>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const d = new Date();
+                        d.setHours(20, 0, 0, 0);
+                        const offset = d.getTimezoneOffset();
+                        const localTime = new Date(d.getTime() - offset * 60 * 1000);
+                        setNextRoundStartInput(localTime.toISOString().slice(0, 16));
+                      }}
+                      className="text-[10px] font-bold px-2 py-0.5 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-lg transition-colors cursor-pointer"
+                    >
+                      ⚡ 8:00 PM Today
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const d = new Date();
+                        d.setDate(d.getDate() + 1);
+                        d.setHours(20, 0, 0, 0);
+                        const offset = d.getTimezoneOffset();
+                        const localTime = new Date(d.getTime() - offset * 60 * 1000);
+                        setNextRoundStartInput(localTime.toISOString().slice(0, 16));
+                      }}
+                      className="text-[10px] font-bold px-2 py-0.5 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-lg transition-colors cursor-pointer"
+                    >
+                      ⚡ 8:00 PM Tomorrow
+                    </button>
+                  </div>
                 </div>
-                <div className="flex gap-2 w-full sm:w-auto shrink-0">
-                  <button
-                    onClick={handleSaveNextRoundStart}
-                    className="bg-brand-primary text-white text-xs font-black px-5 py-2.5 rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all cursor-pointer flex-1 sm:flex-initial text-center shadow-sm"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={handleClearNextRoundStart}
-                    className="bg-gray-100 text-gray-600 text-xs font-black px-4 py-2.5 rounded-xl hover:bg-gray-200 transition-all cursor-pointer flex-1 sm:flex-initial text-center"
-                  >
-                    Clear
-                  </button>
+
+                <div className="flex flex-col sm:flex-row items-end gap-4">
+                  <div className="flex-1 w-full">
+                    <input
+                      type="datetime-local"
+                      value={nextRoundStartInput}
+                      onChange={(e) => setNextRoundStartInput(e.target.value)}
+                      className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                    />
+                  </div>
+                  <div className="flex gap-2 w-full sm:w-auto shrink-0">
+                    <button
+                      onClick={handleSaveNextRoundStart}
+                      className="bg-brand-primary text-white text-xs font-black px-5 py-2.5 rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all cursor-pointer flex-1 sm:flex-initial text-center shadow-sm"
+                    >
+                      Save Countdown
+                    </button>
+                    <button
+                      onClick={handleClearNextRoundStart}
+                      className="bg-gray-100 text-gray-600 text-xs font-black px-4 py-2.5 rounded-xl hover:bg-gray-200 transition-all cursor-pointer flex-1 sm:flex-initial text-center"
+                    >
+                      Clear
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

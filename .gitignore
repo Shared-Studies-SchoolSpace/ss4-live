@@ -25,7 +25,7 @@ dist-ssr
 .env
 
 # Unused Clone/Agent Artifacts
-.agent/
+.agents/
 PRODUCT REQUIREMENTS DOCUMENT*.pdf
 *.pdf
 docs/research/

@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { useTournament } from '../hooks/useTournament';
 import { tournamentPlayers } from '../data/tournamentPlayers';
-import { getTournamentDates, getCountdownTarget, getSurvivingPlayers } from '../utils/tournament';
+import { getTournamentDates, getCountdownTarget, getSurvivingPlayers, getGroupData } from '../utils/tournament';
 import { TournamentHero } from '../components/TournamentHero';
 import { BracketTab } from '../components/BracketTab';
 import { GroupStageTable } from '../components/GroupStageTable';
@@ -120,7 +120,7 @@ function AdminMatchRow({ game, onSave }) {
             placeholder="Chess.com Game Link"
             value={gameLink}
             onChange={(e) => setGameLink(e.target.value)}
-            className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] placeholder-gray-300 transition-all bg-gray-50/50"
+            className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] placeholder-gray-300 transition-all bg-gray-50/50"
           />
         </div>
 
@@ -128,7 +128,7 @@ function AdminMatchRow({ game, onSave }) {
           <select
             value={winnerUsername}
             onChange={(e) => setWinnerUsername(e.target.value)}
-            className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] transition-all cursor-pointer"
+            className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] transition-all cursor-pointer"
           >
             <option value="">-- Select Result --</option>
             <option value={game.p1?.username}>Winner: {game.p1?.name}</option>
@@ -141,7 +141,7 @@ function AdminMatchRow({ game, onSave }) {
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="bg-brand-primary text-white text-xs font-black px-5 py-2.5 rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all disabled:opacity-50 cursor-pointer w-full sm:w-auto text-center shrink-0 shadow-sm"
+          className="bg-brand-primary text-white text-xs font-black px-5 py-3 min-h-[44px] rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all disabled:opacity-50 cursor-pointer w-full sm:w-auto text-center shrink-0 shadow-sm flex items-center justify-center"
         >
           {isSaving ? 'Saving...' : 'Save'}
         </button>
@@ -478,6 +478,24 @@ export default function ChessTournamentPage() {
     if (!tournament?.rounds?.length) return [];
     return getSurvivingPlayers(tournament);
   }, [tournament]);
+
+  const [selectedManualGroupFilter, setSelectedManualGroupFilter] = useState('ALL');
+
+  const allTournamentPlayers = React.useMemo(() => {
+    const staticList = tournamentPlayers || [];
+    const dynamicList = tournament?.players || [];
+    const map = new Map();
+    [...staticList, ...dynamicList].forEach(p => {
+      if (p && p.username) {
+        map.set(p.username.toLowerCase(), p);
+      }
+    });
+    return Array.from(map.values());
+  }, [tournament?.players]);
+
+  const manualGroupsData = React.useMemo(() => {
+    return getGroupData(tournament, allTournamentPlayers);
+  }, [tournament, allTournamentPlayers]);
 
   const { user, profile, updatePlayerDivision } = useAuth();
   const { openAuthModal } = useAuthModal();
@@ -1748,34 +1766,34 @@ export default function ChessTournamentPage() {
         {activeTab === 'admin' && isAdmin && adminSubView === 'main' && (
           <div className="space-y-8">
             <AdminBroadcastPanel />
-            <div className="varsity-card p-8 space-y-8">
-              <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-                <h2 className="font-space font-black text-2xl text-[#111111]">Admin Panel</h2>
-                <span className="text-xs font-bold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">Unlocked</span>
+            <div className="varsity-card p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-gray-100 gap-2">
+                <h2 className="font-space font-black text-xl sm:text-2xl text-[#111111]">Admin Panel</h2>
+                <span className="text-xs font-bold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100 w-fit">Unlocked</span>
               </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-6 space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-4 sm:p-6 space-y-3">
                 <p className="font-space font-black text-base text-[#111111]">Initialize Bracket</p>
                 <p className="text-sm text-gray-500">Seed {selectedMonthYear} tournament with 53 registered players.</p>
-                <button onClick={handleOpenR1Gen} className="bg-brand-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-brand-primary/90 transition-colors">
+                <button onClick={handleOpenR1Gen} className="w-full min-h-[44px] bg-brand-primary text-white text-sm font-bold px-5 py-3 rounded-xl cursor-pointer hover:bg-brand-primary/90 transition-colors flex items-center justify-center">
                   Generate Bracket
                 </button>
               </div>
-              <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6 space-y-3">
+              <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 sm:p-6 space-y-3">
                 <p className="font-space font-black text-base text-[#111111]">Advance Tournament</p>
                 {/* ponytail: calls advanceRound hook function directly */}
                 <p className="text-sm text-gray-500">Generate next round fixtures from current winners.</p>
-                <button onClick={handleOpenNextGen} className="bg-emerald-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-emerald-500 transition-colors">
+                <button onClick={handleOpenNextGen} className="w-full min-h-[44px] bg-emerald-600 text-white text-sm font-bold px-5 py-3 rounded-xl cursor-pointer hover:bg-emerald-500 transition-colors flex items-center justify-center">
                   Generate Next Round
                 </button>
               </div>
-              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 space-y-3">
+              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 sm:p-6 space-y-3">
                 <p className="font-space font-black text-base text-[#111111]">Auto Update Results</p>
                 <p className="text-sm text-gray-500">Scour last 10 matches of home players for games vs away players & update DB.</p>
                 <button 
                   onClick={handleAutoUpdateResults} 
                   disabled={isScouring}
-                  className="bg-brand-primary text-white text-sm font-bold px-4 py-2.5 rounded-xl cursor-pointer hover:bg-brand-accent transition-colors flex items-center justify-center gap-2 w-full disabled:opacity-50"
+                  className="bg-brand-primary text-white text-sm font-bold px-4 py-3 min-h-[44px] rounded-xl cursor-pointer hover:bg-brand-accent transition-colors flex items-center justify-center gap-2 w-full disabled:opacity-50"
                 >
                   {isScouring ? (
                     <>
@@ -1789,7 +1807,7 @@ export default function ChessTournamentPage() {
                   )}
                 </button>
               </div>
-              <div className="bg-red-50 border border-red-100 rounded-2xl p-6 space-y-3">
+              <div className="bg-red-50 border border-red-100 rounded-2xl p-4 sm:p-6 space-y-3">
                 <p className="font-space font-black text-base text-[#111111]">Reset Bracket</p>
                 <p className="text-sm text-gray-500">Wipe all results and reshuffle pairings.</p>
                 <button 
@@ -1802,7 +1820,7 @@ export default function ChessTournamentPage() {
                       toast.error('Reset aborted: incorrect confirmation text.');
                     }
                   }} 
-                  className="bg-red-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer hover:bg-red-500 transition-colors"
+                  className="w-full min-h-[44px] bg-red-600 text-white text-sm font-bold px-5 py-3 rounded-xl cursor-pointer hover:bg-red-500 transition-colors flex items-center justify-center"
                 >
                   Reset Tournament
                 </button>
@@ -1819,7 +1837,7 @@ export default function ChessTournamentPage() {
             )}
 
             {/* Manage Next Round Countdown */}
-            <div className="bg-[#FAF9F5] border border-brand-primary/10 rounded-2xl p-6 space-y-4">
+            <div className="bg-[#FAF9F5] border border-brand-primary/10 rounded-2xl p-4 sm:p-6 space-y-4">
               <div className="flex items-start justify-between gap-3 flex-wrap">
                 <div>
                   <h3 className="font-space font-black text-lg text-[#111111]">Manage Countdown</h3>
@@ -1829,13 +1847,13 @@ export default function ChessTournamentPage() {
 
               {/* Countdown Label Row */}
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                   <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Countdown Label / Text</label>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 min-h-[44px]">
                     <span className="text-[10px] font-bold text-gray-500">Preset Dropdown</span>
                     <button
                       onClick={() => setLabelDropdownEnabled(v => !v)}
-                      className={`relative inline-flex items-center w-10 h-5 rounded-full transition-colors cursor-pointer shrink-0 ${
+                      className={`relative inline-flex items-center w-11 h-6 rounded-full transition-colors cursor-pointer shrink-0 ${
                         labelDropdownEnabled ? 'bg-brand-primary' : 'bg-gray-300'
                       }`}
                       title={labelDropdownEnabled ? 'Switch to custom text input' : 'Switch to preset dropdown'}
@@ -1843,8 +1861,8 @@ export default function ChessTournamentPage() {
                       role="switch"
                       aria-checked={labelDropdownEnabled}
                     >
-                      <span className={`absolute w-3.5 h-3.5 bg-white rounded-full shadow transition-transform ${
-                        labelDropdownEnabled ? 'translate-x-5' : 'translate-x-1'
+                      <span className={`absolute w-4 h-4 bg-white rounded-full shadow transition-transform ${
+                        labelDropdownEnabled ? 'translate-x-6' : 'translate-x-1'
                       }`} />
                     </button>
                   </div>
@@ -1854,7 +1872,7 @@ export default function ChessTournamentPage() {
                   <select
                     value={nextRoundLabelInput}
                     onChange={(e) => setNextRoundLabelInput(e.target.value)}
-                    className="w-full text-xs font-bold px-3 py-2.5 border border-brand-primary/40 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] cursor-pointer"
+                    className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-brand-primary/40 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] cursor-pointer"
                   >
                     {ROUND_LABEL_OPTIONS.map(opt => (
                       <option key={opt} value={opt}>{opt}</option>
@@ -1866,16 +1884,16 @@ export default function ChessTournamentPage() {
                     value={nextRoundLabelInput}
                     onChange={(e) => setNextRoundLabelInput(e.target.value)}
                     placeholder="e.g. Round of 32 starts in"
-                    className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                    className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
                   />
                 )}
               </div>
 
               {/* Date + Time Row */}
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                   <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Next Round Start Date & Time</label>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
                     <button
                       type="button"
                       onClick={() => {
@@ -1885,7 +1903,7 @@ export default function ChessTournamentPage() {
                         const localTime = new Date(d.getTime() - offset * 60 * 1000);
                         setNextRoundStartInput(localTime.toISOString().slice(0, 16));
                       }}
-                      className="text-[10px] font-bold px-2 py-0.5 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-lg transition-colors cursor-pointer"
+                      className="text-xs font-bold px-3 py-2 min-h-[44px] bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-lg transition-colors cursor-pointer flex items-center"
                     >
                       ⚡ 8:00 PM Today
                     </button>
@@ -1899,32 +1917,32 @@ export default function ChessTournamentPage() {
                         const localTime = new Date(d.getTime() - offset * 60 * 1000);
                         setNextRoundStartInput(localTime.toISOString().slice(0, 16));
                       }}
-                      className="text-[10px] font-bold px-2 py-0.5 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-lg transition-colors cursor-pointer"
+                      className="text-xs font-bold px-3 py-2 min-h-[44px] bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-lg transition-colors cursor-pointer flex items-center"
                     >
                       ⚡ 8:00 PM Tomorrow
                     </button>
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-end gap-4">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-4">
                   <div className="flex-1 w-full">
                     <input
                       type="datetime-local"
                       value={nextRoundStartInput}
                       onChange={(e) => setNextRoundStartInput(e.target.value)}
-                      className="w-full text-xs font-bold px-3 py-2.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                      className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
                     />
                   </div>
                   <div className="flex gap-2 w-full sm:w-auto shrink-0">
                     <button
                       onClick={handleSaveNextRoundStart}
-                      className="bg-brand-primary text-white text-xs font-black px-5 py-2.5 rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all cursor-pointer flex-1 sm:flex-initial text-center shadow-sm"
+                      className="bg-brand-primary text-white text-xs font-black px-5 py-3 min-h-[44px] rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all cursor-pointer flex-1 sm:flex-initial text-center shadow-sm flex items-center justify-center"
                     >
                       Save Countdown
                     </button>
                     <button
                       onClick={handleClearNextRoundStart}
-                      className="bg-gray-100 text-gray-600 text-xs font-black px-4 py-2.5 rounded-xl hover:bg-gray-200 transition-all cursor-pointer flex-1 sm:flex-initial text-center"
+                      className="bg-gray-100 text-gray-600 text-xs font-black px-4 py-3 min-h-[44px] rounded-xl hover:bg-gray-200 transition-all cursor-pointer flex-1 sm:flex-initial text-center flex items-center justify-center"
                     >
                       Clear
                     </button>
@@ -1934,17 +1952,17 @@ export default function ChessTournamentPage() {
             </div>
 
             {/* Update Match Results */}
-            <div className="bg-[#FAF9F5] border border-brand-primary/10 rounded-2xl p-6 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-gray-100 flex-wrap gap-2">
+            <div className="bg-[#FAF9F5] border border-brand-primary/10 rounded-2xl p-4 sm:p-6 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-100 gap-3">
                 <div>
                   <h3 className="font-space font-black text-lg text-[#111111]">Update Match Results</h3>
                   <p className="text-xs text-gray-400">Select a winner and game link for any active match, then click Save to sync directly to Supabase.</p>
                 </div>
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                   <button
                     onClick={handleAutoUpdateResults}
                     disabled={isScouring}
-                    className="bg-brand-primary text-white text-xs font-black px-3.5 py-1.5 rounded-xl hover:bg-brand-accent transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs disabled:opacity-50"
+                    className="bg-brand-primary text-white text-xs font-black px-4 py-2.5 min-h-[44px] rounded-xl hover:bg-brand-accent transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs disabled:opacity-50 w-full sm:w-auto"
                   >
                     {isScouring ? (
                       <>
@@ -1958,11 +1976,11 @@ export default function ChessTournamentPage() {
                     )}
                   </button>
                   {tournament?.rounds && (
-                    <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                       <select
                         value={adminRoundNum}
                         onChange={(e) => setAdminRoundNum(Number(e.target.value))}
-                        className="text-xs font-bold px-3 py-1.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer"
+                        className="text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer w-full sm:w-auto"
                       >
                         {tournament.rounds.map(r => (
                           <option key={r.roundNum} value={r.roundNum}>{r.name}</option>
@@ -1977,7 +1995,7 @@ export default function ChessTournamentPage() {
                           <select
                             value={adminGroupFilter}
                             onChange={(e) => setAdminGroupFilter(e.target.value)}
-                            className="text-xs font-bold px-3 py-1.5 border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer"
+                            className="text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer w-full sm:w-auto"
                           >
                             <option value="ALL">All Groups</option>
                             {groupsInRound.map(grp => (
@@ -2006,7 +2024,7 @@ export default function ChessTournamentPage() {
                   return <p className="text-sm text-gray-400 italic py-4">No matches in this selection.</p>;
                 }
                 return (
-                  <div className="space-y-3 max-h-[450px] overflow-y-auto pr-1">
+                  <div className="space-y-3 max-h-[450px] overflow-y-auto pr-1 touch-pan-y" style={{ WebkitOverflowScrolling: 'touch' }}>
                     {gamesToShow.map((g) => (
                       <AdminMatchRow
                         key={g.id}
@@ -2022,14 +2040,14 @@ export default function ChessTournamentPage() {
             </div>
 
             {/* Test cleanup  user requested */}
-            <div className="border border-dashed border-blue-200 bg-blue-50/30 rounded-2xl p-5 space-y-3">
+            <div className="border border-dashed border-blue-200 bg-blue-50/30 rounded-2xl p-4 sm:p-5 space-y-3">
               <p className="font-space font-black text-base text-blue-900">Test Data Cleanup</p>
               <p className="text-sm text-blue-700">Removes April &amp; May 2026 mock archives from local storage after testing.</p>
-              <div className="flex flex-wrap gap-3">
-                <button onClick={clearMocks} className="text-sm font-bold bg-blue-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-blue-500 transition-colors">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+                <button onClick={clearMocks} className="w-full sm:w-auto min-h-[44px] text-sm font-bold bg-blue-600 text-white px-4 py-2.5 rounded-xl cursor-pointer hover:bg-blue-500 transition-colors flex items-center justify-center">
                    Clear Mock History
                 </button>
-                <button onClick={() => { setIsAdmin(false); toast.info('Admin locked'); }} className="text-sm font-bold bg-gray-200 text-gray-600 px-4 py-2 rounded-xl cursor-pointer hover:bg-gray-300 transition-colors">
+                <button onClick={() => { setIsAdmin(false); toast.info('Admin locked'); }} className="w-full sm:w-auto min-h-[44px] text-sm font-bold bg-gray-200 text-gray-600 px-4 py-2.5 rounded-xl cursor-pointer hover:bg-gray-300 transition-colors flex items-center justify-center">
                   Lock Panel
                 </button>
               </div>
@@ -2040,31 +2058,32 @@ export default function ChessTournamentPage() {
 
         {/* ADMIN GENERATE R1 VIEW */}
         {activeTab === 'admin' && isAdmin && adminSubView === 'generate-r1' && (
-          <div className="varsity-card p-8 space-y-6">
+          <div className="varsity-card p-4 sm:p-6 lg:p-8 space-y-6">
             <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
               <button 
                 onClick={() => setAdminSubView('main')}
-                className="text-gray-400 hover:text-[#111111] transition-colors cursor-pointer"
+                className="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-400 hover:text-[#111111] transition-colors cursor-pointer shrink-0 rounded-full hover:bg-gray-100"
+                aria-label="Back to Admin Panel"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                 </svg>
               </button>
               <div>
-                <h2 className="font-space font-black text-2xl text-[#111111]">Generate Round 1 Fixtures</h2>
+                <h2 className="font-space font-black text-xl sm:text-2xl text-[#111111]">Generate Round 1 Fixtures</h2>
                 <p className="text-xs text-gray-400">Configure pairing parameters and verify seeding before bracket generation.</p>
               </div>
             </div>
 
             {/* Parameters Grid */}
-            <div className="grid md:grid-cols-3 gap-6 bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 bg-gray-50/50 p-4 sm:p-6 rounded-2xl border border-gray-100">
               <div className="space-y-1.5">
                 <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Round Date</label>
                 <input 
                   type="text" 
                   value={paramCustomDate}
                   onChange={(e) => setParamCustomDate(e.target.value)}
-                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                  className="w-full text-sm font-bold px-3.5 py-2.5 min-h-[44px] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
                 />
               </div>
               <div className="space-y-1.5">
@@ -2073,7 +2092,7 @@ export default function ChessTournamentPage() {
                   type="number" 
                   value={paramTargetElo}
                   onChange={(e) => setParamTargetElo(Number(e.target.value))}
-                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                  className="w-full text-sm font-bold px-3.5 py-2.5 min-h-[44px] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
                 />
               </div>
               <div className="space-y-1.5">
@@ -2082,7 +2101,7 @@ export default function ChessTournamentPage() {
                   type="number" 
                   value={paramSchoolPenalty}
                   onChange={(e) => setParamSchoolPenalty(Number(e.target.value))}
-                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                  className="w-full text-sm font-bold px-3.5 py-2.5 min-h-[44px] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
                 />
               </div>
             </div>
@@ -2093,14 +2112,14 @@ export default function ChessTournamentPage() {
               {(() => {
                 const { byes, active } = getSeededPlayersR1();
                 return (
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     {/* BYEs */}
-                    <div className="border border-blue-100 bg-blue-50/20 rounded-2xl p-5 space-y-3">
+                    <div className="border border-blue-100 bg-blue-50/20 rounded-2xl p-4 sm:p-5 space-y-3">
                       <div className="flex items-center justify-between pb-2 border-b border-blue-100/50">
                         <span className="font-space font-black text-sm text-blue-900">BYE Seeding ({byes.length})</span>
                         <span className="text-[10px] font-black text-blue-700 bg-blue-100 px-2 py-0.5 rounded-full uppercase">Auto-Advance</span>
                       </div>
-                      <div className="space-y-2 max-h-[250px] overflow-y-auto pr-1">
+                      <div className="space-y-2 max-h-[250px] overflow-y-auto pr-1 touch-pan-y" style={{ WebkitOverflowScrolling: 'touch' }}>
                         {byes.map(p => (
                           <div key={p.username} className="flex justify-between items-center text-xs p-2 bg-white rounded-lg border border-blue-100/50">
                             <div>
@@ -2114,12 +2133,12 @@ export default function ChessTournamentPage() {
                     </div>
 
                     {/* Active Matchups */}
-                    <div className="border border-brand-primary/10 bg-brand-primary/5 rounded-2xl p-5 space-y-3">
+                    <div className="border border-brand-primary/10 bg-brand-primary/5 rounded-2xl p-4 sm:p-5 space-y-3">
                       <div className="flex items-center justify-between pb-2 border-b border-brand-primary/10">
                         <span className="font-space font-black text-sm text-[#111111]">Active Matchups Seeding ({active.length})</span>
                         <span className="text-[10px] font-black text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-full uppercase">Round 1 Opponents</span>
                       </div>
-                      <div className="space-y-2 max-h-[250px] overflow-y-auto pr-1">
+                      <div className="space-y-2 max-h-[250px] overflow-y-auto pr-1 touch-pan-y" style={{ WebkitOverflowScrolling: 'touch' }}>
                         {active.map(p => (
                           <div key={p.username} className="flex justify-between items-center text-xs p-2 bg-white rounded-lg border border-gray-100">
                             <div>
@@ -2137,10 +2156,10 @@ export default function ChessTournamentPage() {
             </div>
 
             {/* Actions */}
-            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-gray-100">
               <button 
                 onClick={() => setAdminSubView('main')}
-                className="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-500 rounded-xl text-sm font-bold cursor-pointer transition-colors"
+                className="w-full sm:w-auto px-5 py-3 min-h-[44px] border border-gray-200 hover:bg-gray-50 text-gray-500 rounded-xl text-sm font-bold cursor-pointer transition-colors flex items-center justify-center"
               >
                 Cancel
               </button>
@@ -2154,7 +2173,7 @@ export default function ChessTournamentPage() {
                   setAdminSubView('main');
                   toast.success('Round 1 fixtures generated successfully!');
                 }}
-                className="px-6 py-2.5 bg-brand-primary hover:bg-brand-primary/95 text-white rounded-xl text-sm font-bold cursor-pointer transition-colors"
+                className="w-full sm:w-auto px-6 py-3 min-h-[44px] bg-brand-primary hover:bg-brand-primary/95 text-white rounded-xl text-sm font-bold cursor-pointer transition-colors flex items-center justify-center"
               >
                 Generate Bracket
               </button>
@@ -2164,31 +2183,32 @@ export default function ChessTournamentPage() {
 
         {/* ADMIN GENERATE NEXT VIEW */}
         {activeTab === 'admin' && isAdmin && adminSubView === 'generate-next' && (
-          <div className="varsity-card p-8 space-y-6">
+          <div className="varsity-card p-4 sm:p-6 lg:p-8 space-y-6">
             <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
               <button 
                 onClick={() => setAdminSubView('main')}
-                className="text-gray-400 hover:text-[#111111] transition-colors cursor-pointer"
+                className="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-400 hover:text-[#111111] transition-colors cursor-pointer shrink-0 rounded-full hover:bg-gray-100"
+                aria-label="Back to Admin Panel"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                 </svg>
               </button>
               <div>
-                <h2 className="font-space font-black text-2xl text-[#111111]">Generate Next Round Fixtures</h2>
+                <h2 className="font-space font-black text-xl sm:text-2xl text-[#111111]">Generate Next Round Fixtures</h2>
                 <p className="text-xs text-gray-400">Configure pairing parameters and verify survivors before advancing.</p>
               </div>
             </div>
 
             {/* Parameters Grid */}
-            <div className="grid md:grid-cols-3 gap-6 bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 bg-gray-50/50 p-4 sm:p-6 rounded-2xl border border-gray-100">
               <div className="space-y-1.5">
                 <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Round Date</label>
                 <input 
                   type="text" 
                   value={paramCustomDate}
                   onChange={(e) => setParamCustomDate(e.target.value)}
-                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                  className="w-full text-sm font-bold px-3.5 py-2.5 min-h-[44px] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
                 />
               </div>
               <div className="space-y-1.5">
@@ -2197,7 +2217,7 @@ export default function ChessTournamentPage() {
                   type="number" 
                   value={paramTargetElo}
                   onChange={(e) => setParamTargetElo(Number(e.target.value))}
-                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                  className="w-full text-sm font-bold px-3.5 py-2.5 min-h-[44px] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
                 />
               </div>
               <div className="space-y-1.5">
@@ -2206,39 +2226,39 @@ export default function ChessTournamentPage() {
                   type="number" 
                   value={paramSchoolPenalty}
                   onChange={(e) => setParamSchoolPenalty(Number(e.target.value))}
-                  className="w-full text-sm font-bold px-3 py-2.5 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                  className="w-full text-sm font-bold px-3.5 py-2.5 min-h-[44px] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
                 />
               </div>
             </div>
 
             {/* Round Name Selection & Custom Entry Controls */}
-            <div className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-xs space-y-4">
-              <div className="flex items-center justify-between gap-4 flex-wrap pb-3 border-b border-gray-100">
+            <div className="bg-white p-4 sm:p-6 rounded-2xl border border-gray-200/80 shadow-xs space-y-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-gray-100">
                 <div>
                   <h4 className="font-space font-black text-sm text-[#111111]">Round Name Parameter</h4>
                   <p className="text-xs text-gray-400">Select an assumed next round from the dropdown or disable the dropdown to type a custom name.</p>
                 </div>
                 {/* Switch to disable dropdown & enable custom text input */}
-                <div className="flex items-center gap-2.5 bg-gray-50 border border-gray-200/80 px-3 py-1.5 rounded-xl">
-                  <span className="text-xs font-bold text-gray-600">Custom Mode (Disable Dropdown)</span>
+                <div className="flex items-center gap-2.5 bg-gray-50 border border-gray-200/80 px-3.5 py-2 rounded-xl min-h-[44px] shrink-0">
+                  <span className="text-xs font-bold text-gray-600">Custom Mode</span>
                   <button
                     type="button"
                     onClick={() => setParamUseCustomRoundName(v => !v)}
-                    className={`relative inline-flex items-center w-10 h-5 rounded-full transition-colors cursor-pointer shrink-0 ${
+                    className={`relative inline-flex items-center w-11 h-6 rounded-full transition-colors cursor-pointer shrink-0 ${
                       paramUseCustomRoundName ? 'bg-brand-primary' : 'bg-gray-300'
                     }`}
                     title={paramUseCustomRoundName ? 'Enable dropdown mode' : 'Disable dropdown and enable custom text entry'}
                     role="switch"
                     aria-checked={paramUseCustomRoundName}
                   >
-                    <span className={`absolute w-3.5 h-3.5 bg-white rounded-full shadow transition-transform ${
-                      paramUseCustomRoundName ? 'translate-x-5' : 'translate-x-1'
+                    <span className={`absolute w-4 h-4 bg-white rounded-full shadow transition-transform ${
+                      paramUseCustomRoundName ? 'translate-x-6' : 'translate-x-1'
                     }`} />
                   </button>
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Dropdown for assumed next round */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-black uppercase text-gray-500 tracking-wider flex items-center gap-1.5">
@@ -2249,7 +2269,7 @@ export default function ChessTournamentPage() {
                     value={paramRoundName}
                     disabled={paramUseCustomRoundName}
                     onChange={(e) => setParamRoundName(e.target.value)}
-                    className={`w-full text-sm font-bold px-3 py-2.5 border rounded-xl outline-none transition-all ${
+                    className={`w-full text-sm font-bold px-3.5 py-2.5 min-h-[44px] border rounded-xl outline-none transition-all ${
                       !paramUseCustomRoundName
                         ? 'bg-white border-brand-primary/40 focus:ring-2 focus:ring-brand-primary/20 text-[#111111] cursor-pointer'
                         : 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed'
@@ -2273,7 +2293,7 @@ export default function ChessTournamentPage() {
                     disabled={!paramUseCustomRoundName}
                     onChange={(e) => setParamRoundName(e.target.value)}
                     placeholder="Enter custom round name..."
-                    className={`w-full text-sm font-bold px-3 py-2.5 border rounded-xl outline-none transition-all ${
+                    className={`w-full text-sm font-bold px-3.5 py-2.5 min-h-[44px] border rounded-xl outline-none transition-all ${
                       paramUseCustomRoundName
                         ? 'bg-white border-brand-primary/40 focus:ring-2 focus:ring-brand-primary/20 text-[#111111]'
                         : 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed'
@@ -2284,10 +2304,10 @@ export default function ChessTournamentPage() {
             </div>
 
             {/* Retrieve Next Players / Surviving Players Control Block */}
-            <div className="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-xs space-y-4">
-              <div className="flex items-center justify-between gap-4 flex-wrap pb-3 border-b border-gray-100">
+            <div className="bg-white p-4 sm:p-6 rounded-2xl border border-gray-200/80 shadow-xs space-y-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-gray-100">
                 <div>
-                  <h3 className="font-space font-black text-lg text-[#111111] flex items-center gap-2">
+                  <h3 className="font-space font-black text-lg text-[#111111] flex items-center gap-2 flex-wrap">
                     <span>Retrieve Next Players</span>
                     <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2.5 py-0.5 rounded-full">
                       {paramManualSelection ? `${selectedSurvivingUsernames.length} Manually Selected` : `${seededPlayersNext.length} Auto-Retrieved`}
@@ -2301,7 +2321,7 @@ export default function ChessTournamentPage() {
                 </div>
 
                 {/* Switch for Auto vs Manual Selection */}
-                <div className="flex items-center gap-2.5 bg-gray-50 border border-gray-200/80 px-3.5 py-2 rounded-xl shrink-0">
+                <div className="flex items-center gap-2.5 bg-gray-50 border border-gray-200/80 px-3.5 py-2 rounded-xl shrink-0 min-h-[44px]">
                   <span className="text-xs font-bold text-gray-700">Manual Selection Mode</span>
                   <button
                     type="button"
@@ -2330,8 +2350,8 @@ export default function ChessTournamentPage() {
               {/* Mode Content */}
               {!paramManualSelection ? (
                 /* Auto-Retrieve View (Read Only Cards) */
-                <div className="border border-brand-accent/10 bg-brand-accent/5 rounded-2xl p-5 space-y-3">
-                  <div className="flex items-center justify-between text-xs font-bold text-gray-500">
+                <div className="border border-brand-accent/10 bg-brand-accent/5 rounded-2xl p-4 sm:p-5 space-y-3">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-bold text-gray-500">
                     <span>Auto-Retrieved Qualifiers ({seededPlayersNext.length} Players)</span>
                     
                     {/* Clickable System Survival Logic Badge & Tooltip */}
@@ -2339,11 +2359,11 @@ export default function ChessTournamentPage() {
                       <button
                         type="button"
                         onClick={() => setShowSurvivalLogicTooltip(v => !v)}
-                        className="text-brand-primary text-[10px] uppercase font-black hover:underline cursor-pointer flex items-center gap-1 bg-brand-primary/10 hover:bg-brand-primary/20 px-2.5 py-1 rounded-full transition-colors border-none"
+                        className="text-brand-primary text-[10px] uppercase font-black hover:underline cursor-pointer flex items-center gap-1 bg-brand-primary/10 hover:bg-brand-primary/20 px-3 py-2 min-h-[44px] rounded-full transition-colors border-none"
                         title="Click to view how players are retrieved"
                       >
                         <span>System Survival Logic</span>
-                        <svg className="w-3 h-3 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-3.5 h-3.5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </button>
@@ -2381,7 +2401,7 @@ export default function ChessTournamentPage() {
                       )}
                     </div>
                   </div>
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[260px] overflow-y-auto pr-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[260px] overflow-y-auto pr-1 touch-pan-y" style={{ WebkitOverflowScrolling: 'touch' }}>
                     {seededPlayersNext.map(p => (
                       <div key={p.username} className="flex justify-between items-center text-xs p-2.5 bg-white rounded-lg border border-gray-100 shadow-2xs">
                         <div className="min-w-0 flex-1 pr-2">
@@ -2394,100 +2414,302 @@ export default function ChessTournamentPage() {
                   </div>
                 </div>
               ) : (
-                /* Manual Selection View */
+                /* Manual Selection View: Group-Segmented Standings Tables */
                 <div className="space-y-4">
                   {/* Controls Toolbar: Search & Action Buttons */}
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                    <div className="relative flex-1">
-                      <input
-                        type="text"
-                        value={manualPlayerSearch}
-                        onChange={(e) => setManualPlayerSearch(e.target.value)}
-                        placeholder="Search player name, school, or @username..."
-                        className="w-full text-xs font-bold pl-9 pr-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:bg-white focus:border-brand-primary text-[#111111]"
-                      />
-                      <svg className="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
+                  <div className="flex flex-col gap-3">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                      {/* Search Bar */}
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={manualPlayerSearch}
+                          onChange={(e) => setManualPlayerSearch(e.target.value)}
+                          placeholder="Search player name, school, or @username..."
+                          className="w-full text-xs font-bold pl-9 pr-3 py-2.5 min-h-[44px] bg-gray-50 border border-gray-200 rounded-xl outline-none focus:bg-white focus:border-brand-primary text-[#111111]"
+                        />
+                        <svg className="w-4 h-4 text-gray-400 absolute left-3 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </div>
+
+                      {/* Quick Action Toolbar Buttons */}
+                      <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 w-full sm:w-auto shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedSurvivingUsernames(seededPlayersNext.map(p => p.username));
+                          }}
+                          className="text-xs font-bold px-3 py-2.5 min-h-[44px] bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-xl transition-colors cursor-pointer flex items-center justify-center text-center"
+                          title="Select system auto-retrieved qualifiers"
+                        >
+                          Reset to Auto
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const top2Usernames = [];
+                            manualGroupsData.forEach(grp => {
+                              (grp.standings || []).slice(0, 2).forEach(p => {
+                                if (p.username) top2Usernames.push(p.username);
+                              });
+                            });
+                            setSelectedSurvivingUsernames(top2Usernames);
+                          }}
+                          className="text-xs font-bold px-3 py-2.5 min-h-[44px] bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-xl transition-colors cursor-pointer border border-emerald-200/60 flex items-center justify-center text-center"
+                          title="Select Top 2 ranked players from each group"
+                        >
+                          Select Top 2
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const allUsers = allTournamentPlayers.map(p => p.username);
+                            setSelectedSurvivingUsernames(allUsers);
+                          }}
+                          className="text-xs font-bold px-3 py-2.5 min-h-[44px] bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl transition-colors cursor-pointer flex items-center justify-center text-center"
+                        >
+                          Select All
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setSelectedSurvivingUsernames([])}
+                          className="text-xs font-bold px-3 py-2.5 min-h-[44px] bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition-colors cursor-pointer flex items-center justify-center text-center"
+                        >
+                          Clear All
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
+
+                    {/* Group Filter Chips Bar */}
+                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
                       <button
                         type="button"
-                        onClick={() => {
-                          setSelectedSurvivingUsernames(seededPlayersNext.map(p => p.username));
-                        }}
-                        className="text-xs font-bold px-3 py-2 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-xl transition-colors cursor-pointer"
+                        onClick={() => setSelectedManualGroupFilter('ALL')}
+                        className={`px-3.5 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-colors cursor-pointer min-h-[44px] flex items-center ${
+                          selectedManualGroupFilter === 'ALL'
+                            ? 'bg-[#0B193C] text-white shadow-2xs'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
                       >
-                        Reset to Auto-Qualifiers
+                        All Groups ({manualGroupsData.length})
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const allUsers = (tournamentPlayers || []).map(p => p.username);
-                          setSelectedSurvivingUsernames(allUsers);
-                        }}
-                        className="text-xs font-bold px-3 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl transition-colors cursor-pointer"
-                      >
-                        Select All
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setSelectedSurvivingUsernames([])}
-                        className="text-xs font-bold px-3 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition-colors cursor-pointer"
-                      >
-                        Clear All
-                      </button>
+                      {manualGroupsData.map(grp => (
+                        <button
+                          key={grp.label}
+                          type="button"
+                          onClick={() => setSelectedManualGroupFilter(grp.label)}
+                          className={`px-3.5 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-colors cursor-pointer min-h-[44px] flex items-center ${
+                            selectedManualGroupFilter === grp.label
+                              ? 'bg-brand-primary text-white shadow-2xs'
+                              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          }`}
+                        >
+                          Group {grp.label}
+                        </button>
+                      ))}
                     </div>
                   </div>
 
-                  {/* Selectable Players Grid */}
-                  <div className="border border-gray-200 bg-gray-50/50 rounded-2xl p-4 max-h-[300px] overflow-y-auto">
+                  {/* Group-Segmented Selectable Tables Container */}
+                  <div className="space-y-4 max-h-[380px] overflow-y-auto pr-1 touch-pan-y" style={{ WebkitOverflowScrolling: 'touch' }}>
                     {(() => {
                       const query = manualPlayerSearch.trim().toLowerCase();
-                      const allPlayers = tournamentPlayers || [];
-                      const filtered = query
-                        ? allPlayers.filter(p => (p.name || '').toLowerCase().includes(query) || (p.username || '').toLowerCase().includes(query) || (p.school || '').toLowerCase().includes(query))
-                        : allPlayers;
 
-                      if (filtered.length === 0) {
-                        return <p className="text-xs text-gray-400 text-center py-6">No players match "{manualPlayerSearch}"</p>;
+                      // Filter groups based on selectedGroupFilter
+                      const filteredGroups = manualGroupsData.filter(grp => 
+                        selectedManualGroupFilter === 'ALL' || grp.label === selectedManualGroupFilter
+                      );
+
+                      let totalMatchingPlayers = 0;
+
+                      const renderedGroupCards = filteredGroups.map(grp => {
+                        const standings = grp.standings || [];
+                        const groupFilteredPlayers = query
+                          ? standings.filter(p => 
+                              (p.name || '').toLowerCase().includes(query) || 
+                              (p.username || '').toLowerCase().includes(query) || 
+                              (p.school || '').toLowerCase().includes(query)
+                            )
+                          : standings;
+
+                        if (groupFilteredPlayers.length === 0) return null;
+
+                        totalMatchingPlayers += groupFilteredPlayers.length;
+
+                        const selectedInGroupCount = groupFilteredPlayers.filter(p => 
+                          selectedSurvivingUsernames.includes(p.username)
+                        ).length;
+
+                        const allSelectedInGroup = selectedInGroupCount === groupFilteredPlayers.length && groupFilteredPlayers.length > 0;
+
+                        return (
+                          <div key={grp.label} className="border border-gray-200/90 bg-white rounded-2xl overflow-hidden shadow-2xs">
+                            {/* Group Card Header */}
+                            <div className="bg-gray-50/80 px-3.5 py-3 border-b border-gray-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="w-6 h-6 rounded-lg bg-[#0B193C] text-white font-black text-xs flex items-center justify-center">
+                                  {grp.label}
+                                </span>
+                                <h4 className="font-space font-black text-sm text-[#111111]">
+                                  Group {grp.label} Standings
+                                </h4>
+                                <span className="text-[11px] font-bold text-gray-500 bg-gray-200/70 px-2 py-0.5 rounded-full">
+                                  {selectedInGroupCount} of {groupFilteredPlayers.length} Selected
+                                </span>
+                              </div>
+
+                              <div className="flex items-center gap-2 w-full sm:w-auto">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const top2Usernames = standings.slice(0, 2).map(p => p.username).filter(Boolean);
+                                    setSelectedSurvivingUsernames(prev => Array.from(new Set([...prev, ...top2Usernames])));
+                                  }}
+                                  className="flex-1 sm:flex-initial min-h-[44px] text-[11px] font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3 py-2 rounded-lg transition-colors border border-emerald-200/60 cursor-pointer flex items-center justify-center"
+                                >
+                                  + Select Top 2
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const groupUsernames = groupFilteredPlayers.map(p => p.username).filter(Boolean);
+                                    if (allSelectedInGroup) {
+                                      setSelectedSurvivingUsernames(prev => prev.filter(u => !groupUsernames.includes(u)));
+                                    } else {
+                                      setSelectedSurvivingUsernames(prev => Array.from(new Set([...prev, ...groupUsernames])));
+                                    }
+                                  }}
+                                  className="flex-1 sm:flex-initial min-h-[44px] text-[11px] font-bold text-gray-600 bg-white hover:bg-gray-100 px-3 py-2 rounded-lg transition-colors border border-gray-200 cursor-pointer flex items-center justify-center"
+                                >
+                                  {allSelectedInGroup ? 'Deselect Group' : 'Select Group'}
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Group Standings Table */}
+                            <div className="overflow-x-auto touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
+                              <table className="w-full text-left text-xs border-collapse">
+                                <thead>
+                                  <tr className="bg-gray-100/60 text-gray-500 font-bold uppercase text-[10px] tracking-wider border-b border-gray-200/60">
+                                    <th className="py-2.5 px-3.5 w-10 text-center">Sel</th>
+                                    <th className="py-2.5 px-2 w-10 text-center">#</th>
+                                    <th className="py-2.5 px-3">Player</th>
+                                    <th className="py-2.5 px-2 text-right">Rating</th>
+                                    <th className="py-2.5 px-2 text-center" title="Matches Played">MP</th>
+                                    <th className="py-2.5 px-2 text-center" title="Wins">W</th>
+                                    <th className="py-2.5 px-2 text-center" title="Draws">D</th>
+                                    <th className="py-2.5 px-2 text-center" title="Losses">L</th>
+                                    <th className="py-2.5 px-3 text-right font-black text-[#111111]">PTS</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100">
+                                  {groupFilteredPlayers.map((p, idx) => {
+                                    const isSelected = selectedSurvivingUsernames.includes(p.username);
+                                    const rank = idx + 1;
+                                    const isTop2 = rank <= 2;
+
+                                    return (
+                                      <tr
+                                        key={p.username || idx}
+                                        onClick={() => {
+                                          if (isSelected) {
+                                            setSelectedSurvivingUsernames(prev => prev.filter(u => u !== p.username));
+                                          } else {
+                                            setSelectedSurvivingUsernames(prev => [...prev, p.username]);
+                                          }
+                                        }}
+                                        className={`transition-colors cursor-pointer select-none ${
+                                          isSelected
+                                            ? 'bg-emerald-50/70 hover:bg-emerald-100/70 font-semibold'
+                                            : 'hover:bg-gray-50/90'
+                                        }`}
+                                      >
+                                        {/* Selection Checkbox */}
+                                        <td className="py-3 px-3.5 text-center">
+                                          <div className={`w-5 h-5 rounded mx-auto flex items-center justify-center text-xs font-black transition-all ${
+                                            isSelected 
+                                              ? 'bg-emerald-600 text-white ring-2 ring-emerald-600/30' 
+                                              : 'border border-gray-300 text-transparent bg-white'
+                                          }`}>
+                                            ✓
+                                          </div>
+                                        </td>
+
+                                        {/* Rank */}
+                                        <td className="py-3 px-2 text-center font-black">
+                                          <span className={`inline-flex items-center justify-center w-5 h-5 rounded-md text-[11px] ${
+                                            isTop2 
+                                              ? 'bg-emerald-100 text-emerald-800 font-black' 
+                                              : 'text-gray-400'
+                                          }`}>
+                                            {rank}
+                                          </span>
+                                        </td>
+
+                                        {/* Player Details */}
+                                        <td className="py-3 px-3">
+                                          <div className="flex items-center gap-2 min-w-0">
+                                            <div className="min-w-0 flex-1">
+                                              <div className="flex items-center gap-1.5 flex-wrap">
+                                                <span className="font-bold text-[#111111] truncate">{p.name}</span>
+                                                {isTop2 && (
+                                                  <span className="text-[9px] font-black uppercase tracking-wider bg-emerald-600 text-white px-1.5 py-0.2 rounded-full shrink-0">
+                                                    Top 2 Qualifier
+                                                  </span>
+                                                )}
+                                              </div>
+                                              <p className="text-[10px] text-gray-400 truncate">
+                                                {p.school || p.department || 'Player'} &bull; @{p.username}
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </td>
+
+                                        {/* Rating */}
+                                        <td className="py-3 px-2 text-right font-black text-brand-primary text-[11px]">
+                                          {p.rating || 1200}
+                                        </td>
+
+                                        {/* MP, W, D, L */}
+                                        <td className="py-3 px-2 text-center text-gray-500">{p.P || 0}</td>
+                                        <td className="py-3 px-2 text-center text-emerald-600 font-bold">{p.W || 0}</td>
+                                        <td className="py-3 px-2 text-center text-amber-600 font-bold">{p.D || 0}</td>
+                                        <td className="py-3 px-2 text-center text-rose-500 font-bold">{p.L || 0}</td>
+
+                                        {/* PTS */}
+                                        <td className="py-3 px-3 text-right font-black text-sm text-[#111111]">
+                                          {p.Pts !== undefined ? p.Pts : (p.pts !== undefined ? p.pts : 0)}
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        );
+                      });
+
+                      if (totalMatchingPlayers === 0) {
+                        return (
+                          <div className="p-8 text-center bg-gray-50 rounded-2xl border border-gray-200">
+                            <p className="text-xs font-bold text-gray-500">No players match "{manualPlayerSearch}"</p>
+                            <button
+                              type="button"
+                              onClick={() => setManualPlayerSearch('')}
+                              className="mt-2 text-xs text-brand-primary font-bold hover:underline bg-transparent border-none cursor-pointer"
+                            >
+                              Clear Search
+                            </button>
+                          </div>
+                        );
                       }
 
-                      return (
-                        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-                          {filtered.map(p => {
-                            const isSelected = selectedSurvivingUsernames.includes(p.username);
-                            return (
-                              <button
-                                key={p.username}
-                                type="button"
-                                onClick={() => {
-                                  if (isSelected) {
-                                    setSelectedSurvivingUsernames(prev => prev.filter(u => u !== p.username));
-                                  } else {
-                                    setSelectedSurvivingUsernames(prev => [...prev, p.username]);
-                                  }
-                                }}
-                                className={`flex items-center justify-between text-left text-xs p-2.5 rounded-xl border transition-all cursor-pointer select-none ${
-                                  isSelected
-                                    ? 'bg-emerald-50/80 border-emerald-300 text-emerald-900 ring-1 ring-emerald-400/50 shadow-2xs font-bold'
-                                    : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-100/80'
-                                }`}
-                              >
-                                <div className="min-w-0 flex-1 pr-2">
-                                  <p className="truncate font-bold text-[#111111]">{p.name}</p>
-                                  <p className="text-[10px] text-gray-400 truncate">@{p.username}</p>
-                                </div>
-                                <div className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-black shrink-0 ${
-                                  isSelected ? 'bg-emerald-600 text-white' : 'border border-gray-300 text-transparent'
-                                }`}>
-                                  ✓
-                                </div>
-                              </button>
-                            );
-                          })}
-                        </div>
-                      );
+                      return renderedGroupCards;
                     })()}
                   </div>
                 </div>
@@ -2495,17 +2717,29 @@ export default function ChessTournamentPage() {
             </div>
 
             {/* Actions */}
-            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-gray-100">
               <button 
                 onClick={() => setAdminSubView('main')}
-                className="px-5 py-2.5 border border-gray-200 hover:bg-gray-50 text-gray-500 rounded-xl text-sm font-bold cursor-pointer transition-colors"
+                className="w-full sm:w-auto px-5 py-3 min-h-[44px] border border-gray-200 hover:bg-gray-50 text-gray-500 rounded-xl text-sm font-bold cursor-pointer transition-colors flex items-center justify-center"
               >
                 Cancel
               </button>
               <button 
                 onClick={() => {
+                  if (paramManualSelection) {
+                    if (selectedSurvivingUsernames.length < 2) {
+                      toast.error('Please select at least 2 players for manual round generation.');
+                      return;
+                    }
+                    if (selectedSurvivingUsernames.length % 2 !== 0) {
+                      toast.info(`Note: You selected ${selectedSurvivingUsernames.length} players (odd count). The un-paired player will be assigned a Bye.`);
+                    }
+                  }
+
                   const manualSelectedObjs = paramManualSelection
-                    ? (tournamentPlayers || []).filter(p => selectedSurvivingUsernames.includes(p.username))
+                    ? allTournamentPlayers.filter(p => 
+                        p.username && selectedSurvivingUsernames.map(u => u.toLowerCase()).includes(p.username.toLowerCase())
+                      )
                     : null;
 
                   advanceRound({
@@ -2519,7 +2753,7 @@ export default function ChessTournamentPage() {
                   setAdminSubView('main');
                   toast.success(`Next round (${paramRoundName}) fixtures generated successfully!`);
                 }}
-                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold cursor-pointer transition-colors"
+                className="w-full sm:w-auto px-6 py-3 min-h-[44px] bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold cursor-pointer transition-colors flex items-center justify-center"
               >
                 Generate Next Round
               </button>

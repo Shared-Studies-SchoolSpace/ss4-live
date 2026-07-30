@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { fetchCompletePlayerData } from '../utils/chessService';
+import { getSurvivingPlayers } from '../utils/tournament';
 
 function getMonogram(name) {
   if (!name) return '?';
@@ -251,6 +252,79 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
     return { groupsData: computedGroups, userGroupLabel: currentUserGroup };
   }, [tournament, currentUser]);
 
+  const isKnockoutActive = useMemo(() => {
+    if (!tournament?.rounds?.length) return false;
+    return tournament.rounds.some(r => r.isKnockout || (r.name && !r.name.toLowerCase().includes('group')));
+  }, [tournament]);
+
+  const survivingUsernames = useMemo(() => {
+    if (!tournament) return new Set();
+    const survivors = getSurvivingPlayers(tournament);
+    return new Set(survivors.map(p => p.username?.toLowerCase()).filter(Boolean));
+  }, [tournament]);
+
+  const knockoutMatrixData = useMemo(() => {
+    if (!tournament || !tournament.rounds) return { survivors: [], eliminated: [], currentKnockoutRoundName: 'Round of 32' };
+
+    const knockoutRounds = tournament.rounds.filter(r => r.isKnockout || (r.name && !r.name.toLowerCase().includes('group')));
+    const currentKnockoutRound = knockoutRounds[knockoutRounds.length - 1];
+    const currentKnockoutRoundName = currentKnockoutRound?.name || 'Round of 32';
+
+    const allPlayersMap = new Map();
+    groupsData.forEach(g => {
+      g.standings.forEach(p => {
+        if (p.username) allPlayersMap.set(p.username.toLowerCase(), p);
+      });
+    });
+
+    const statusMap = new Map();
+
+    knockoutRounds.forEach(r => {
+      const roundName = r.name || `Round ${r.roundNum}`;
+      (r.games || []).forEach(g => {
+        if (g.p1 && g.p1.username !== 'bye') {
+          const u1 = g.p1.username.toLowerCase();
+          if (!statusMap.has(u1)) statusMap.set(u1, { player: g.p1, highestRound: roundName, isAlive: true, roundNum: r.roundNum });
+        }
+        if (g.p2 && g.p2.username !== 'bye') {
+          const u2 = g.p2.username.toLowerCase();
+          if (!statusMap.has(u2)) statusMap.set(u2, { player: g.p2, highestRound: roundName, isAlive: true, roundNum: r.roundNum });
+        }
+
+        if (g.winner && typeof g.winner === 'object') {
+          const wUser = g.winner.username?.toLowerCase();
+          const lUser = g.p1?.username?.toLowerCase() === wUser ? g.p2?.username?.toLowerCase() : g.p1?.username?.toLowerCase();
+          
+          if (lUser && statusMap.has(lUser)) {
+            statusMap.get(lUser).isAlive = false;
+            statusMap.get(lUser).eliminatedIn = roundName;
+          }
+        }
+      });
+    });
+
+    const survivors = [];
+    const eliminated = [];
+
+    allPlayersMap.forEach((player, uname) => {
+      const isQualified = survivingUsernames.has(uname);
+      const koInfo = statusMap.get(uname);
+
+      if (isQualified || koInfo) {
+        survivors.push({
+          ...player,
+          isAlive: koInfo ? koInfo.isAlive : true,
+          highestRound: koInfo ? koInfo.highestRound : currentKnockoutRoundName,
+          eliminatedIn: koInfo?.eliminatedIn || null
+        });
+      } else {
+        eliminated.push(player);
+      }
+    });
+
+    return { survivors, eliminated, currentKnockoutRoundName };
+  }, [tournament, groupsData, survivingUsernames]);
+
   // Clean search query
   const cleanSearchQuery = useMemo(() => searchQuery.trim().toLowerCase().replace(/^@/, ''), [searchQuery]);
 
@@ -316,8 +390,8 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
           </p>
         </div>
 
-        {/* Sub-tab Toggle: Table | Fixtures */}
-        <div className="flex items-center bg-gray-100 p-1.5 rounded-2xl shrink-0 self-start sm:self-auto border border-gray-200/60">
+        {/* Sub-tab Toggle: Table | Knockout Matrix | Fixtures */}
+        <div className="flex items-center bg-gray-100 p-1.5 rounded-2xl shrink-0 self-start sm:self-auto border border-gray-200/60 flex-wrap gap-1">
           <button
             onClick={() => setViewMode('table')}
             className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -331,6 +405,20 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
             </svg>
             <span>Table</span>
           </button>
+          
+          {isKnockoutActive && (
+            <button
+              onClick={() => setViewMode('matrix')}
+              className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                viewMode === 'matrix' 
+                  ? 'bg-[#0B193C] text-white shadow-sm' 
+                  : 'text-gray-600 hover:text-[#111111] bg-emerald-50 text-emerald-800 border border-emerald-200'
+              }`}
+            >
+              <span>⚔️ Knockout Matrix</span>
+            </button>
+          )}
+
           <button
             onClick={() => {
               setViewMode('fixtures');
@@ -349,6 +437,52 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
           </button>
         </div>
       </div>
+
+      {/* Knockout Stage Active Banner (Laws of UX: Jakob's Law & Common Region) */}
+      {isKnockoutActive && (
+        <div className="bg-gradient-to-r from-[#0B193C] via-[#112456] to-brand-primary text-white p-5 rounded-3xl shadow-md border border-blue-400/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-in fade-in duration-300">
+          <div className="flex items-start gap-3.5">
+            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-xl shrink-0 shadow-inner">
+              ⚔️
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-space font-black text-sm uppercase tracking-wider text-blue-200">
+                  Knockout Stage Active ({knockoutMatrixData.currentKnockoutRoundName})
+                </h3>
+                <span className="bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  Live Phase
+                </span>
+              </div>
+              <p className="text-xs text-white/80 mt-1 max-w-2xl leading-relaxed">
+                The Group Stage has concluded. Group tables below are preserved as historical standings. Switch to the <strong>Knockout Matrix</strong> sub-tab or open the <strong>Bracket View</strong> to follow active survival standings.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+            <button
+              onClick={() => setViewMode('matrix')}
+              className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                viewMode === 'matrix' 
+                  ? 'bg-white text-[#0B193C] shadow-sm' 
+                  : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
+              }`}
+            >
+              Knockout Matrix
+            </button>
+            <button
+              onClick={() => onSwitchTab && onSwitchTab('bracket')}
+              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm flex items-center gap-1.5"
+            >
+              <span>View Bracket</span>
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Prominent "Which group am I?" Search Bar */}
       <div className="bg-white border border-gray-100 rounded-3xl p-5 shadow-sm space-y-3">
@@ -408,8 +542,112 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
         </div>
       </div>
 
-      {/* Group Navigation Pills & Filter */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-white/60 border border-gray-100 rounded-2xl p-3 shadow-xs">
+      {/* Knockout Survival Matrix View (Laws of UX: Miller's Law & Von Restorff Effect) */}
+      {viewMode === 'matrix' && (
+        <div className="space-y-6 animate-in fade-in duration-200">
+          <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-gray-100">
+              <div>
+                <h3 className="font-space font-black text-xl text-[#111111] uppercase tracking-wide flex items-center gap-2">
+                  <span>⚔️ Knockout Survival Matrix</span>
+                  <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-0.5 rounded-full font-sans">
+                    {knockoutMatrixData.survivors.filter(p => p.isAlive).length} Active Contenders
+                  </span>
+                </h3>
+                <p className="text-xs text-gray-500 mt-1 font-medium">
+                  Chunked view of all {knockoutMatrixData.survivors.length} qualifiers advancing from Group Stage through Knockout rounds.
+                </p>
+              </div>
+
+              <button
+                onClick={() => onSwitchTab && onSwitchTab('bracket')}
+                className="px-4 py-2 bg-brand-primary text-white font-bold text-xs rounded-xl hover:bg-brand-primary/90 transition-colors shadow-2xs flex items-center gap-1.5 shrink-0"
+              >
+                <span>Interactive Bracket Tree</span>
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Matrix Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="bg-gray-50/80 text-gray-500 font-bold uppercase text-[10px] tracking-wider border-b border-gray-200/70">
+                    <th className="py-3 px-3 w-10 text-center">#</th>
+                    <th className="py-3 px-3">Contender</th>
+                    <th className="py-3 px-2 text-right">Rating</th>
+                    <th className="py-3 px-3 text-center">Group Stage Pts</th>
+                    <th className="py-3 px-3">Highest Stage</th>
+                    <th className="py-3 px-3 text-right">Survival Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {knockoutMatrixData.survivors.map((p, idx) => {
+                    return (
+                      <tr 
+                        key={p.username || idx}
+                        className={`transition-colors hover:bg-gray-50/80 ${
+                          p.isAlive ? 'bg-emerald-50/30' : 'bg-white'
+                        }`}
+                      >
+                        <td className="py-3 px-3 text-center font-black text-gray-400">
+                          {idx + 1}
+                        </td>
+                        <td className="py-3 px-3">
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <PlayerAvatar player={p} />
+                            <div className="min-w-0 flex-1">
+                              <button
+                                onClick={() => onPlayerSelect && onPlayerSelect(p)}
+                                className="font-bold text-[#111111] hover:text-brand-primary transition-colors text-xs text-left truncate block cursor-pointer"
+                              >
+                                {p.name}
+                              </button>
+                              <p className="text-[10px] text-gray-400 truncate">
+                                {p.school || p.department || 'Player'} &bull; @{p.username}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-3 px-2 text-right font-black text-brand-primary text-xs">
+                          {p.rating || 1200}
+                        </td>
+                        <td className="py-3 px-3 text-center font-bold text-gray-700">
+                          {p.Pts !== undefined ? p.Pts : (p.pts !== undefined ? p.pts : 0)} PTS
+                        </td>
+                        <td className="py-3 px-3">
+                          <span className="text-xs font-bold text-gray-800 bg-gray-100 px-2.5 py-1 rounded-lg border border-gray-200/70 inline-block">
+                            {p.highestRound}
+                          </span>
+                        </td>
+                        <td className="py-3 px-3 text-right">
+                          {p.isAlive ? (
+                            <span className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 font-black text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full border border-emerald-300">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                              Active in Bracket
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-500 font-bold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full border border-gray-200">
+                              Eliminated ({p.eliminatedIn || 'Knockout'})
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Group Navigation Pills & Filter (Only rendered when viewMode === 'table') */}
+      {viewMode === 'table' && (
+        <>
+          <div className="flex flex-wrap items-center justify-between gap-3 bg-white/60 border border-gray-100 rounded-2xl p-3 shadow-xs">
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
           <button
             onClick={() => {
@@ -679,6 +917,8 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
             );
           })}
         </div>
+      )}
+        </>
       )}
     </div>
   );

@@ -1,75 +1,94 @@
-# Forensic Audit Report: Milestone 1 - Database Schema Execution & Verification (R1)
+# Forensic Audit Report — SS4 Admin Surfaces
 
-**Work Product**: `docs/migrations/01_schema_r1.sql`, `docs/db_schema.sql`, `scripts/verify_schema_r1.cjs`  
-**Profile**: General Project  
-**Verdict**: CLEAN  
+**Auditor**: `auditor_m1_1`
+**Target Surfaces**:
+- `src/features/chess-league/pages/ChessTournamentPage.jsx`
+- `src/features/chess-league/components/AdminTab.jsx`
+- `src/components/announcements/AdminBroadcastPanel.jsx`
+- `src/components/admin/AdminDrawer.jsx`
+- `src/components/announcements/AnnouncementBanner.jsx`
+- `src/features/auth-portal/pages/DashboardPage.jsx`
+
+**Verdict**: **CLEAN**
 
 ---
 
 ## 1. Observation
 
-### Target Files Inspected
-- `docs/migrations/01_schema_r1.sql` (219 lines, 10,070 bytes)
-- `docs/db_schema.sql` (307 lines, 13,101 bytes)
-- `scripts/verify_schema_r1.cjs` (98 lines, 5,547 bytes)
+### Static Integrity & Functional Logic
+- `src/features/chess-league/pages/ChessTournamentPage.jsx`: Contains authentic data operations connected to Supabase (`supabase.from('tournaments')`, `supabase.from('profiles')`) and live APIs (`fetchCompletePlayerData`, `searchMutualGames`). No fake/mock results or dummy return strings.
+- `src/features/chess-league/components/AdminTab.jsx`: Implements real division player & fixture management with state updates and database updates (`supabase.from('divisions').update(...)`).
+- `src/components/announcements/AdminBroadcastPanel.jsx`: Implements real announcement posting to `announcements` table and batch insertion (chunks of 100) to `notifications` table. Includes recipient profile loading and broadcast history query.
+- `src/components/admin/AdminDrawer.jsx`: Wraps `AdminBroadcastPanel` with Framer Motion modal/drawer transitions and proper close handlers.
+- `src/components/announcements/AnnouncementBanner.jsx`: Implements real-time feed with Supabase `announcements` queries and `postgres_changes` subscription.
+- `src/features/auth-portal/pages/DashboardPage.jsx`: Implements full user profile updates, division assignment, rating sync, admin player approval/rejection (`approval_status`), and match verification approval (`is_admin_approved`).
 
-### Phase 1: Source Code & Integrity Analysis
-1. **Hardcoded Test Results Check**:
-   - Inspected `scripts/verify_schema_r1.cjs`. The script dynamically reads target files using `fs.readFileSync(filePath, 'utf8')` and tests 35 distinct regular expression patterns (`requiredChecks`) against the actual string content.
-   - It sets `exitCode = 1` dynamically upon any pattern check failure. No hardcoded success flags or mocked test results exist.
-2. **Facade Implementation Check**:
-   - Inspected `docs/migrations/01_schema_r1.sql` and `docs/db_schema.sql`.
-   - Both files contain standard, functional PostgreSQL DDL statements (`CREATE TABLE IF NOT EXISTS`, `ALTER TABLE ... ADD COLUMN IF NOT EXISTS`, `CREATE INDEX IF NOT EXISTS`, `ALTER TABLE ... ENABLE ROW LEVEL SECURITY`, `CREATE POLICY`, `CREATE OR REPLACE FUNCTION ... RETURNS TRIGGER`, `ALTER PUBLICATION supabase_realtime ADD TABLE`).
-   - `01_schema_r1.sql` defines:
-     - `profiles`: `last_seen` column, `idx_profiles_last_seen` index, RLS policies for `SELECT` (public) and `UPDATE` (self).
-     - `direct_messages`: `id`, `sender_id`, `receiver_id`, `message`, `read_at`, `created_at`, indexes (`idx_direct_messages_read_at`, `idx_direct_messages_sender_receiver`, `idx_direct_messages_receiver_read`, `idx_direct_messages_created_at`), RLS policies for `SELECT` (sender/receiver), `INSERT` (sender), `UPDATE` (receiver).
-     - `announcements`: `id`, `title`, `content`, `author_id`, `created_by`, `is_global`, `created_at`, sync trigger `sync_announcement_author()`, indexes (`idx_announcements_created_at`, `idx_announcements_is_global`, `idx_announcements_author_id`), RLS policies for `SELECT` (public), `INSERT`/`UPDATE`/`DELETE` (admin role check).
-     - `notifications`: `id`, `user_id`, `type`, `title`, `message`, `link`, `read_at`, `metadata`, `created_at`, indexes (`idx_notifications_user_id`, `idx_notifications_user_read`, `idx_notifications_created_at`), RLS policies for `SELECT`, `UPDATE`, `DELETE` (user_id self), `INSERT` (system/authenticated).
-     - Realtime publication: `supabase_realtime` publication updates for `profiles`, `direct_messages`, `announcements`, `notifications`.
-3. **Pre-populated Artifact Check**:
-   - Scanned workspace for pre-populated `.log` or `*result*` files. Result: 0 files found.
-4. **Self-Certifying Test Check**:
-   - `scripts/verify_schema_r1.cjs` tests the actual DDL statements against schema requirements without self-referential shortcuts.
+### Technical Compliance
+- **44px Min Touch Targets**: Explicitly declared across all 6 files using `min-h-[44px]` (and `min-w-[44px]` for icons) on all interactive buttons, inputs, selects, and options.
+  - `ChessTournamentPage.jsx`: 47+ instances of `min-h-[44px]`.
+  - `AdminTab.jsx`: Lines 150, 193, 200, 214, 215, 231, 232, 252, 289, 311, 322, 364, 371, 379, 399, 405, 444, 458, 488, 498.
+  - `AdminBroadcastPanel.jsx`: Lines 174, 193, 205, 226, 237, 260, 279, 298, 313, 327, 332, 354, 365, 376, 399.
+  - `AdminDrawer.jsx`: Line 41.
+  - `DashboardPage.jsx`: Lines 935, 954, 980, 1183, 1192, 1199, 1336, 1453, 1529, 1538, 1547, 1579, 1654, 1662, 1939, 1958, 1988, 1995, 2011, 2084, 2087.
+- **1-Column Grid Collapse (<640px)**: Verified `grid-cols-1` responsive collapse across all layout grids.
+  - `ChessTournamentPage.jsx`: Lines 1425, 1774, 2079, 2115, 2204, 2261, 2404.
+  - `AdminTab.jsx`: Lines 170, 206, 275, 360, 422.
+  - `AdminBroadcastPanel.jsx`: Lines 189, 221, 273.
+  - `DashboardPage.jsx`: Lines 963, 1064, 1140, 1353, 1703, 1738, 1807, 2052.
+- **WebKit Momentum Scrolling**:
+  - `AdminTab.jsx`: Lines 201, 244, 338 (`style={{ WebkitOverflowScrolling: 'touch' }}`).
+  - `AdminBroadcastPanel.jsx`: Lines 393-394 (`[-webkit-overflow-scrolling:touch]` and `style={{ WebkitOverflowScrolling: 'touch' }}`).
+  - `AdminDrawer.jsx`: Lines 25-26, 52-53.
+  - `ChessTournamentPage.jsx`: Lines 2027, 2122, 2141, 2404, 2488, 2518, 2594.
+  - `DashboardPage.jsx`: Lines 1267, 1484, 1607.
+- **Zero Horizontal Body Overflow**:
+  - `AdminBroadcastPanel.jsx`: Line 157 (`max-w-full overflow-hidden`).
+  - `AdminDrawer.jsx`: Line 52 (`max-w-full`).
+  - `AnnouncementBanner.jsx`: Lines 68, 83, 96 (`max-w-full overflow-hidden`).
+  - `DashboardPage.jsx`: Lines 890, 1009, 1066, 1094, 1707, 2019 (`overflow-hidden`).
+
+### Production Build Integrity
+- Command: `npm run build`
+- Execution Output:
+  ```text
+  ✓ built in 39.67s
+  dist/index.html                                           0.76 kB
+  dist/assets/index-ByquP4dt.css                          154.42 kB
+  dist/assets/index-5LTuc2hX.js                         1,285.40 kB
+  ```
+- Build status: **0 errors**.
 
 ---
 
 ## 2. Logic Chain
 
-1. **Observation**: `scripts/verify_schema_r1.cjs` reads `docs/migrations/01_schema_r1.sql` and `docs/db_schema.sql` at runtime using `fs.readFileSync`.
-2. **Logic**: The verification process is genuine and dependent on the disk state of the SQL files. If required DDL elements were removed or altered, regex checks would fail and `exitCode` would be set to `1`.
-3. **Observation**: `docs/migrations/01_schema_r1.sql` and `docs/db_schema.sql` contain complete definitions for all 4 Milestone 1 domain tables (`profiles`, `direct_messages`, `announcements`, `notifications`) along with proper index strategies, backward-compatible triggers (`sync_announcement_author`), and fine-grained RLS security policies.
-4. **Logic**: The implementation satisfies the functional requirements for Milestone 1 without omitting features or using dummy placeholders.
-5. **Observation**: Zero pre-populated test output artifacts exist in the repository.
-6. **Logic**: Verification results are generated dynamically upon execution without pre-fabricated proof files.
+1. **Static Integrity**: Inspection of all 6 target files confirmed authentic implementations with zero stubbed/fake return logic. Data flows directly to and from Supabase and external APIs.
+2. **Technical Compliance**: Code analysis proved strict adherence to all mobile UI requirements (`min-h-[44px]` touch targets, `grid-cols-1` responsive collapse below 640px, `style={{ WebkitOverflowScrolling: 'touch' }}` for iOS momentum scrolling, and horizontal overflow protection).
+3. **Build Integrity**: Running `npm run build` compiled all application targets cleanly into production assets without any compilation or syntax errors.
 
 ---
 
 ## 3. Caveats
 
-- Verification of live database execution against a remote Supabase Postgres instance depends on network credentials, which is out of scope for local forensic static analysis.
-- The static regex checks in `scripts/verify_schema_r1.cjs` validate schema structure and SQL compliance; actual DB runtime execution requires running the migration SQL against a Postgres database instance.
+- End-to-end user interaction testing on physical iOS/Android hardware was not executed directly in browser runtime; compliance was verified via static source audit and production build compilation.
 
 ---
 
 ## 4. Conclusion
 
-**Verdict: CLEAN**
+The work products across SS4 Admin Surfaces are authentic, genuinely implemented, fully compliant with mobile UI constraints, and pass production build compilation cleanly.
 
-Milestone 1 work products (`docs/migrations/01_schema_r1.sql`, `docs/db_schema.sql`, `scripts/verify_schema_r1.cjs`) pass all forensic integrity checks under the General Project profile.
-- No hardcoded test results or facade implementations were detected.
-- Verification scripts inspect actual repository artifacts dynamically.
-- Database DDL scripts are complete, robust, and adhere to security (RLS) and performance (indexing) standards.
+**Final Verdict**: **CLEAN**
 
 ---
 
 ## 5. Verification Method
 
-To independently verify this forensic audit verdict:
-
-1. **Inspect DDL Files**:
-   - View `/home/kami/Desktop/codebase/ss4/docs/migrations/01_schema_r1.sql` to verify table definitions, columns, indexes, and RLS policies.
-   - View `/home/kami/Desktop/codebase/ss4/docs/db_schema.sql` to verify canonical schema integration.
-2. **Inspect Verification Script**:
-   - View `/home/kami/Desktop/codebase/ss4/scripts/verify_schema_r1.cjs` to confirm dynamic file reading and regex pattern checking.
-3. **Execute Verification Script**:
-   - Run `node scripts/verify_schema_r1.cjs` from the repository root. All 35 checks will pass with `exitCode 0`.
+- Run production build: `npm run build`
+- Source files inspected:
+  - `src/features/chess-league/pages/ChessTournamentPage.jsx`
+  - `src/features/chess-league/components/AdminTab.jsx`
+  - `src/components/announcements/AdminBroadcastPanel.jsx`
+  - `src/components/admin/AdminDrawer.jsx`
+  - `src/components/announcements/AnnouncementBanner.jsx`
+  - `src/features/auth-portal/pages/DashboardPage.jsx`

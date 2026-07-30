@@ -16,6 +16,7 @@ export default function AdminBroadcastPanel({ onClose }) {
   const [customLink, setCustomLink] = useState('/news');
   const [profiles, setProfiles] = useState([]);
   const [recentBroadcasts, setRecentBroadcasts] = useState([]);
+  const [historyFilter, setHistoryFilter] = useState('all'); // 'all' | 'global' | 'targeted'
   const [loading, setLoading] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(false);
 
@@ -53,7 +54,7 @@ export default function AdminBroadcastPanel({ onClose }) {
         .from('announcements')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(5);
+        .limit(10);
       if (error) throw error;
       setRecentBroadcasts(data || []);
     } catch (err) {
@@ -146,24 +147,32 @@ export default function AdminBroadcastPanel({ onClose }) {
     }
   };
 
+  const filteredHistory = recentBroadcasts.filter((b) => {
+    if (historyFilter === 'global') return b.is_global;
+    if (historyFilter === 'targeted') return !b.is_global;
+    return true;
+  });
+
   return (
-    <div className="bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
-      <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-        <div>
+    <div className="bg-white border border-gray-100 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 lg:p-8 shadow-sm space-y-5 sm:space-y-6 max-w-full overflow-hidden">
+      {/* Header bar */}
+      <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-gray-100 gap-2">
+        <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <span className="text-base">📢</span>
-            <h3 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+            <span className="text-base shrink-0">📢</span>
+            <h3 className="text-xs sm:text-sm font-black text-brand-text-dark font-space uppercase tracking-wider truncate">
               Universal Admin Broadcast
             </h3>
           </div>
-          <p className="text-[10px] text-gray-400 font-semibold mt-0.5">
+          <p className="text-[10px] text-gray-400 font-semibold mt-0.5 leading-snug">
             Post global announcements and dispatch targeted or broadcast notifications to players.
           </p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+            className="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors cursor-pointer shrink-0 border-none bg-transparent focus:outline-none focus:ring-2 focus:ring-brand-primary/30"
+            aria-label="Close panel"
           >
             ✕
           </button>
@@ -172,34 +181,69 @@ export default function AdminBroadcastPanel({ onClose }) {
 
       <form onSubmit={handleBroadcast} className="space-y-4 text-left">
         
-        {/* Target & Broadcast Mode Selectors */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
-              Audience Target
-            </label>
-            <select
-              value={targetType}
-              onChange={(e) => setTargetType(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-800 focus:ring-brand-primary text-xs font-semibold"
+        {/* Audience Target Option Controls (Collapses to 1-column on <640px) */}
+        <div>
+          <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+            Audience Target
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setTargetType('all')}
+              className={`min-h-[44px] py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-primary/50 ${
+                targetType === 'all'
+                  ? 'bg-brand-primary text-white border-brand-primary shadow-xs'
+                  : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+              }`}
             >
-              <option value="all">🌐 All Players (Global Broadcast)</option>
-              <option value="specific">🎯 Specific Player</option>
-            </select>
+              <span>🌐</span>
+              <span>All Players (Global)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setTargetType('specific')}
+              className={`min-h-[44px] py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-primary/50 ${
+                targetType === 'specific'
+                  ? 'bg-brand-primary text-white border-brand-primary shadow-xs'
+                  : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+              }`}
+            >
+              <span>🎯</span>
+              <span>Specific Player</span>
+            </button>
           </div>
+        </div>
 
-          <div>
-            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
-              Dispatch Action
-            </label>
-            <select
-              value={broadcastMode}
-              onChange={(e) => setBroadcastMode(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-800 focus:ring-brand-primary text-xs font-semibold"
+        {/* Dispatch Action Option Controls (Collapses to 1-column on <640px) */}
+        <div>
+          <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+            Dispatch Action
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setBroadcastMode('announcement_and_notif')}
+              className={`min-h-[44px] py-2.5 px-3 rounded-xl border text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-primary/50 ${
+                broadcastMode === 'announcement_and_notif'
+                  ? 'bg-brand-primary text-white border-brand-primary shadow-xs'
+                  : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+              }`}
             >
-              <option value="announcement_and_notif">📢 Global Announcement + Notification</option>
-              <option value="notif_only">🔔 Direct Notification Only</option>
-            </select>
+              <span>📢</span>
+              <span>Announcement + Notif</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setBroadcastMode('notif_only')}
+              className={`min-h-[44px] py-2.5 px-3 rounded-xl border text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-primary/50 ${
+                broadcastMode === 'notif_only'
+                  ? 'bg-brand-primary text-white border-brand-primary shadow-xs'
+                  : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+              }`}
+            >
+              <span>🔔</span>
+              <span>Direct Notification Only</span>
+            </button>
           </div>
         </div>
 
@@ -213,7 +257,7 @@ export default function AdminBroadcastPanel({ onClose }) {
               value={selectedUserId}
               onChange={(e) => setSelectedUserId(e.target.value)}
               required
-              className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-800 focus:ring-brand-primary text-xs font-semibold"
+              className="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-gray-300 bg-white text-gray-800 focus:ring-2 focus:ring-brand-primary focus:border-brand-primary text-xs font-semibold shadow-xs"
             >
               <option value="">-- Choose Player --</option>
               {profiles.map((p) => (
@@ -225,7 +269,7 @@ export default function AdminBroadcastPanel({ onClose }) {
           </div>
         )}
 
-        {/* Notification Category & Action Link */}
+        {/* Notification Category & Action Link (Collapses to 1-column on <640px) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
@@ -234,7 +278,7 @@ export default function AdminBroadcastPanel({ onClose }) {
             <select
               value={notifType}
               onChange={(e) => setNotifType(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-800 focus:ring-brand-primary text-xs font-semibold"
+              className="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-gray-300 bg-white text-gray-800 focus:ring-2 focus:ring-brand-primary focus:border-brand-primary text-xs font-semibold shadow-xs"
             >
               <option value="announcement">📢 Announcement</option>
               <option value="admin_alert">🚨 Admin Alert</option>
@@ -251,7 +295,7 @@ export default function AdminBroadcastPanel({ onClose }) {
               placeholder="/news or /chess-league or /dashboard"
               value={customLink}
               onChange={(e) => setCustomLink(e.target.value)}
-              className="text-xs"
+              className="text-xs min-h-[44px] py-2.5 px-3.5 rounded-xl border-gray-300 shadow-xs"
             />
           </div>
         </div>
@@ -266,11 +310,11 @@ export default function AdminBroadcastPanel({ onClose }) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="text-xs font-bold"
+            className="text-xs font-bold min-h-[44px] py-2.5 px-3.5 rounded-xl border-gray-300 shadow-xs"
           />
         </div>
 
-        {/* Announcement Body */}
+        {/* Announcement Body Message */}
         <div>
           <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
             Body Message
@@ -280,38 +324,92 @@ export default function AdminBroadcastPanel({ onClose }) {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
-            className="w-full px-4 py-3 rounded-2xl border border-gray-300 bg-white text-gray-800 focus:ring-brand-primary focus:border-brand-primary text-xs h-28 leading-relaxed font-normal"
+            className="w-full px-4 py-3 min-h-[110px] rounded-2xl border border-gray-300 bg-white text-gray-800 focus:ring-2 focus:ring-brand-primary focus:border-brand-primary text-xs leading-relaxed font-normal touch-manipulation resize-y outline-none shadow-xs"
           />
         </div>
 
+        {/* Submit Broadcast Button */}
         <Button
           type="submit"
           variant="primary"
           disabled={loading}
-          className="w-full flex items-center justify-center gap-2 py-3 bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer text-xs uppercase tracking-wider"
+          className="w-full flex items-center justify-center gap-2 py-3 px-4 min-h-[44px] bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer text-xs uppercase tracking-wider"
         >
           {loading ? 'Dispatching Broadcast...' : '🚀 Dispatch Broadcast'}
         </Button>
       </form>
 
-      {/* History log of recent announcements */}
+      {/* Broadcast History Log with Filter Toggles & Momentum Scrolling */}
       <div className="pt-4 border-t border-gray-100 text-left">
-        <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">
-          Recent Announcements History
-        </h4>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            Recent Announcements History
+          </h4>
+          
+          {/* Filter Toggles (Min height 44px on mobile) */}
+          <div className="grid grid-cols-3 gap-1 sm:flex sm:items-center">
+            <button
+              type="button"
+              onClick={() => setHistoryFilter('all')}
+              className={`min-h-[44px] sm:min-h-[36px] px-2.5 py-1.5 text-[10px] font-bold rounded-lg border transition-all cursor-pointer text-center ${
+                historyFilter === 'all'
+                  ? 'bg-gray-900 text-white border-gray-900 shadow-2xs'
+                  : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              All Logs
+            </button>
+            <button
+              type="button"
+              onClick={() => setHistoryFilter('global')}
+              className={`min-h-[44px] sm:min-h-[36px] px-2.5 py-1.5 text-[10px] font-bold rounded-lg border transition-all cursor-pointer text-center ${
+                historyFilter === 'global'
+                  ? 'bg-brand-primary text-white border-brand-primary shadow-2xs'
+                  : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              Global
+            </button>
+            <button
+              type="button"
+              onClick={() => setHistoryFilter('targeted')}
+              className={`min-h-[44px] sm:min-h-[36px] px-2.5 py-1.5 text-[10px] font-bold rounded-lg border transition-all cursor-pointer text-center ${
+                historyFilter === 'targeted'
+                  ? 'bg-amber-600 text-white border-amber-600 shadow-2xs'
+                  : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              Targeted
+            </button>
+          </div>
+        </div>
+
         {loadingHistory ? (
           <p className="text-xs text-gray-400 italic">Loading past announcements...</p>
-        ) : recentBroadcasts.length === 0 ? (
-          <p className="text-xs text-gray-400 italic">No broadcast announcements recorded yet.</p>
+        ) : filteredHistory.length === 0 ? (
+          <p className="text-xs text-gray-400 italic">No matching broadcast history found.</p>
         ) : (
-          <div className="space-y-2 max-h-40 overflow-y-auto no-scrollbar pr-1">
-            {recentBroadcasts.map((b) => (
-              <div key={b.id} className="p-3 bg-gray-50 rounded-xl border border-gray-100 flex justify-between items-start text-xs">
-                <div>
-                  <p className="font-black text-brand-text-dark">{b.title}</p>
-                  <p className="text-[10px] text-gray-500 line-clamp-1 mt-0.5">{b.content}</p>
+          <div 
+            className="space-y-2 max-h-52 overflow-y-auto overscroll-contain pr-1 scroll-smooth [-webkit-overflow-scrolling:touch]"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
+            {filteredHistory.map((b) => (
+              <div 
+                key={b.id} 
+                className="p-3 bg-gray-50/90 rounded-xl border border-gray-150 flex justify-between items-start text-xs min-h-[44px]"
+              >
+                <div className="min-w-0 flex-1 pr-2">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className={`text-[8px] font-black uppercase px-1.5 py-0.5 rounded ${
+                      b.is_global ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-800'
+                    }`}>
+                      {b.is_global ? 'Global' : 'Targeted'}
+                    </span>
+                    <p className="font-black text-brand-text-dark truncate">{b.title}</p>
+                  </div>
+                  <p className="text-[10px] text-gray-500 line-clamp-2 mt-1 leading-normal">{b.content}</p>
                 </div>
-                <span className="text-[8px] font-bold text-gray-400 shrink-0 ml-2">
+                <span className="text-[9px] font-bold text-gray-400 shrink-0 ml-1">
                   {new Date(b.created_at).toLocaleDateString()}
                 </span>
               </div>

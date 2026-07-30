@@ -22,24 +22,25 @@ export default function AdminDrawer({ isOpen, onClose }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="relative w-full max-w-lg bg-white h-full shadow-2xl overflow-y-auto z-10 flex flex-col"
+            className="relative w-full max-w-lg bg-white h-full shadow-2xl overflow-y-auto z-10 flex flex-col scroll-smooth overscroll-contain [-webkit-overflow-scrolling:touch]"
+            style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {/* Header Bar */}
-            <div className="p-4 bg-brand-primary text-white flex items-center justify-between shadow-md shrink-0">
-              <div className="flex items-center gap-2">
-                <span className="text-lg">📢</span>
-                <div>
-                  <h3 className="text-xs font-black uppercase tracking-wider font-space">
+            <div className="p-3.5 sm:p-4 bg-brand-primary text-white flex items-center justify-between shadow-md shrink-0 border-b border-white/10">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="text-xl shrink-0">📢</span>
+                <div className="min-w-0">
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider font-space truncate">
                     Admin Broadcast Center
                   </h3>
-                  <p className="text-[9px] text-white/80 font-bold">
+                  <p className="text-[10px] text-white/80 font-semibold truncate">
                     Global & Targeted Notifications
                   </p>
                 </div>
               </div>
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-full hover:bg-white/20 transition-colors text-white text-sm font-black cursor-pointer border-none bg-transparent"
+                className="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/20 active:bg-white/30 transition-colors text-white text-base font-black cursor-pointer border-none bg-transparent shrink-0 focus:outline-none focus:ring-2 focus:ring-white/40"
                 aria-label="Close Admin Drawer"
               >
                 ✕
@@ -47,7 +48,10 @@ export default function AdminDrawer({ isOpen, onClose }) {
             </div>
 
             {/* Panel Body */}
-            <div className="p-4 sm:p-6 flex-grow bg-gray-50/50">
+            <div 
+              className="p-3 sm:p-6 flex-grow bg-gray-50/50 overflow-y-auto max-w-full [-webkit-overflow-scrolling:touch]"
+              style={{ WebkitOverflowScrolling: 'touch' }}
+            >
               <AdminBroadcastPanel onClose={onClose} />
             </div>
           </motion.div>

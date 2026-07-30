@@ -147,7 +147,7 @@ export const AdminTab = ({
 
   const playerOptions = currentDivision.players.filter(p => !p.hidden).map(p => playerLabel(p));
 
-  const inputClass = "w-full px-4 py-2 text-sm text-[#111111] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary placeholder-gray-400 transition-all";
+  const inputClass = "w-full px-4 py-2.5 min-h-[44px] text-sm text-[#111111] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary placeholder-gray-400 transition-all";
   const labelClass = "block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5";
 
   const activeRoundsList = (currentDivision.rounds || []).filter(r => !r.hidden);
@@ -160,14 +160,14 @@ export const AdminTab = ({
       <AdminBroadcastPanel />
       
       {/* ── Manage Players ── */}
-      <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
-        <h3 className="font-space text-lg font-black text-[#111111] mb-6 pb-3 border-b border-gray-50 flex items-center justify-between">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 lg:p-8 border border-gray-100 shadow-sm">
+        <h3 className="font-space text-lg font-black text-[#111111] mb-6 pb-3 border-b border-gray-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <span>Manage Division Players</span>
-          <span className="text-sm font-bold text-brand-accent bg-brand-accent/5 px-3 py-1 rounded-full">{currentDivision.name}</span>
+          <span className="text-sm font-bold text-brand-accent bg-brand-accent/5 px-3 py-1 rounded-full w-fit">{currentDivision.name}</span>
         </h3>
         
         {/* Add Player Form */}
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
           <div>
             <label className={labelClass}>Name</label>
             <input type="text" placeholder="e.g. John Doe" value={newPlayer.name} onChange={e => setNewPlayer({...newPlayer, name: e.target.value})} className={inputClass} />
@@ -191,32 +191,32 @@ export const AdminTab = ({
         </div>
         
         <button 
-          className="bg-green-600 hover:bg-green-500 text-white font-bold px-6 py-2.5 rounded-xl shadow-sm hover:shadow transition-all text-xs cursor-pointer mb-8"
+          className="w-full sm:w-auto min-h-[44px] bg-green-600 hover:bg-green-500 text-white font-bold px-6 py-3 rounded-xl shadow-sm hover:shadow transition-all text-xs cursor-pointer flex items-center justify-center mb-8"
           onClick={handleAddPlayer}
         >
           + Add Player
         </button>
 
         {/* Player List */}
-        <div className="border border-gray-100 rounded-2xl overflow-hidden max-h-[350px] overflow-y-auto divide-y divide-gray-50">
+        <div className="border border-gray-100 rounded-2xl overflow-hidden max-h-[350px] overflow-y-auto divide-y divide-gray-50 touch-pan-y" style={{ WebkitOverflowScrolling: 'touch' }}>
           {currentDivision.players.filter(p => !p.hidden).map(p => (
             <div key={p.username} className="p-4 hover:bg-brand-bg-cream/10 transition-colors">
               {editingPlayerUsername === p.username ? (
                 <div className="flex flex-col gap-3 w-full">
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                     <input type="text" value={editPlayerForm.name} onChange={e => setEditPlayerForm({...editPlayerForm, name: e.target.value})} className={inputClass} placeholder="Name" />
                     <input type="text" value={editPlayerForm.username} onChange={e => setEditPlayerForm({...editPlayerForm, username: e.target.value})} className={inputClass} placeholder="Username" />
                     <input type="text" value={editPlayerForm.contact} onChange={e => setEditPlayerForm({...editPlayerForm, contact: e.target.value})} className={inputClass} placeholder="Contact" />
                     <input type="text" value={editPlayerForm.department} onChange={e => setEditPlayerForm({...editPlayerForm, department: e.target.value})} className={inputClass} placeholder="Department" />
                     <input type="text" value={editPlayerForm.school} onChange={e => setEditPlayerForm({...editPlayerForm, school: e.target.value})} className={inputClass} placeholder="School" />
                   </div>
-                  <div className="flex gap-2 self-start">
-                    <button className="bg-brand-primary text-white text-xs font-bold px-4 py-2 rounded-xl cursor-pointer" onClick={saveEditPlayer}>Save</button>
-                    <button className="bg-gray-100 text-gray-500 text-xs font-bold px-4 py-2 rounded-xl cursor-pointer" onClick={() => setEditingPlayerUsername(null)}>Cancel</button>
+                  <div className="flex gap-2 self-start w-full sm:w-auto">
+                    <button className="flex-1 sm:flex-initial min-h-[44px] bg-brand-primary text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer flex items-center justify-center" onClick={saveEditPlayer}>Save</button>
+                    <button className="flex-1 sm:flex-initial min-h-[44px] bg-gray-100 text-gray-500 text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer flex items-center justify-center" onClick={() => setEditingPlayerUsername(null)}>Cancel</button>
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <span className="text-sm font-bold text-[#111111]">{p.name}</span>
                     <span className="text-xs font-bold text-brand-primary ml-2">@{p.username}</span>
@@ -227,9 +227,9 @@ export const AdminTab = ({
                       {p.contact && <span> &bull; WhatsApp: {p.contact}</span>}
                     </div>
                   </div>
-                  <div className="flex gap-2">
-                    <button className="bg-brand-primary/5 hover:bg-brand-primary/10 text-brand-primary text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer" onClick={() => startEditPlayer(p)}>Edit</button>
-                    <button className="bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer" onClick={() => handleDeletePlayer(p.username)}>Archive</button>
+                  <div className="flex gap-2 w-full sm:w-auto">
+                    <button className="flex-1 sm:flex-initial min-h-[44px] bg-brand-primary/5 hover:bg-brand-primary/10 text-brand-primary text-xs font-bold px-4 py-2 rounded-lg cursor-pointer flex items-center justify-center" onClick={() => startEditPlayer(p)}>Edit</button>
+                    <button className="flex-1 sm:flex-initial min-h-[44px] bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs font-bold px-4 py-2 rounded-lg cursor-pointer flex items-center justify-center" onClick={() => handleDeletePlayer(p.username)}>Archive</button>
                   </div>
                 </div>
               )}
@@ -241,15 +241,15 @@ export const AdminTab = ({
         {currentDivision.players.some(p => p.hidden) && (
           <div className="mt-8 pt-6 border-t border-gray-100">
             <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Archived Players (Hidden)</h4>
-            <div className="border border-dashed border-gray-200 rounded-2xl overflow-hidden max-h-[200px] overflow-y-auto divide-y divide-gray-50 bg-gray-50/20">
+            <div className="border border-dashed border-gray-200 rounded-2xl overflow-hidden max-h-[200px] overflow-y-auto divide-y divide-gray-50 bg-gray-50/20 touch-pan-y" style={{ WebkitOverflowScrolling: 'touch' }}>
               {currentDivision.players.filter(p => p.hidden).map(p => (
-                <div key={p.username} className="p-4 flex items-center justify-between gap-4">
+                <div key={p.username} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <span className="text-sm font-bold text-gray-400 line-through">{p.name}</span>
                     <span className="text-xs font-bold text-gray-400 ml-2">@{p.username}</span>
                   </div>
                   <button 
-                    className="bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer transition-colors" 
+                    className="w-full sm:w-auto min-h-[44px] bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold px-4 py-2 rounded-lg cursor-pointer transition-colors flex items-center justify-center" 
                     onClick={() => handleRestorePlayer(p.username)}
                   >
                     Restore
@@ -263,16 +263,16 @@ export const AdminTab = ({
       </div>
 
       {/* ── Manage Rounds & Fixtures ── */}
-      <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 lg:p-8 border border-gray-100 shadow-sm">
         <h3 className="font-space text-lg font-black text-[#111111] mb-6 pb-3 border-b border-gray-50">Manage Rounds &amp; Fixtures</h3>
         
         {/* Create Swiss Pairing Round */}
-        <div className="bg-brand-bg-cream/40 rounded-3xl p-6 border border-gray-100 mb-8 space-y-4 animate-in fade-in duration-200">
+        <div className="bg-brand-bg-cream/40 rounded-3xl p-4 sm:p-6 border border-gray-100 mb-8 space-y-4 animate-in fade-in duration-200">
           <p className="text-sm text-gray-700 font-bold">Generate Round Fixtures (Swiss Pairing System)</p>
           <p className="text-xs text-gray-500 leading-relaxed">
             Automatically generates match fixtures for the next round based on current standings. The Swiss system will pair active players of similar standings.
           </p>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Round Date (optional)</label>
               <input 
@@ -287,7 +287,7 @@ export const AdminTab = ({
             If left blank, the date will automatically default to 1 day after the last active round (or today if no rounds exist).
           </p>
           <button 
-            className="bg-brand-primary text-white font-bold px-5 py-3 rounded-xl shadow-sm hover:shadow transition-all text-xs cursor-pointer" 
+            className="w-full sm:w-auto min-h-[44px] bg-brand-primary text-white font-bold px-6 py-3 rounded-xl shadow-sm hover:shadow transition-all text-xs cursor-pointer flex items-center justify-center" 
             onClick={() => {
               handleCreateFixtures(newRoundDate || undefined);
               setNewRoundDate('');
@@ -308,18 +308,18 @@ export const AdminTab = ({
                 
                 {/* Accordion Trigger */}
                 <div 
-                  className="flex items-center justify-between p-4 bg-brand-bg-cream/20 hover:bg-brand-bg-cream/40 transition-colors cursor-pointer select-none"
+                  className="flex flex-wrap items-center justify-between p-4 min-h-[48px] bg-brand-bg-cream/20 hover:bg-brand-bg-cream/40 transition-colors cursor-pointer select-none gap-2"
                   onClick={() => setExpandedRound(expandedRound === r.round ? null : r.round)}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap">
                     <span className="text-sm font-bold text-[#111111]">Round {r.round}</span>
                     <span className="text-xs font-black text-brand-primary bg-brand-primary/5 px-2.5 py-0.5 rounded-full">{r.date}</span>
                     <span className="text-xs text-gray-400">({r.games.length} games)</span>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 ml-auto">
                     <span className="text-xs text-brand-accent">{expandedRound === r.round ? '▲' : '▼'}</span>
                     <button 
-                      className="bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1.5 rounded-xl cursor-pointer transition-colors" 
+                      className="min-h-[44px] bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs font-bold px-3 py-2 rounded-xl cursor-pointer transition-colors flex items-center justify-center" 
                       onClick={(e) => { e.stopPropagation(); handleDeleteRound(r.round); }}
                     >
                       Archive
@@ -329,20 +329,20 @@ export const AdminTab = ({
                 
                 {/* Accordion Content */}
                 {expandedRound === r.round && (
-                  <div className="p-5 bg-white border-t border-gray-50 space-y-6">
+                  <div className="p-4 sm:p-5 bg-white border-t border-gray-50 space-y-6">
                     <div>
                       <h5 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Games List</h5>
                       {r.games.length === 0 ? (
                         <p className="text-xs text-gray-400 italic">No games configured in this round.</p>
                       ) : (
-                        <div className="grid gap-2 max-h-[200px] overflow-y-auto">
+                        <div className="grid gap-2 max-h-[200px] overflow-y-auto pr-1 touch-pan-y" style={{ WebkitOverflowScrolling: 'touch' }}>
                            {r.games.map(([w, b], idx) => (
-                            <div key={idx} className="flex justify-between items-center bg-gray-50 border border-gray-200/40 px-4 py-2 rounded-xl">
-                              <span className="text-xs font-bold text-gray-600">
-                                <span className="text-brand-primary font-black">W:</span> {w.split(' (')[0]} <span className="text-gray-300 mx-2">vs</span> <span className="text-[#111111] font-black">B:</span> {b.split(' (')[0]}
+                            <div key={idx} className="flex justify-between items-center bg-gray-50 border border-gray-200/40 px-3.5 py-2.5 rounded-xl gap-2">
+                              <span className="text-xs font-bold text-gray-600 truncate">
+                                <span className="text-brand-primary font-black">W:</span> {w.split(' (')[0]} <span className="text-gray-300 mx-1.5">vs</span> <span className="text-[#111111] font-black">B:</span> {b.split(' (')[0]}
                               </span>
                               <button 
-                                className="text-red-500 hover:text-red-700 text-xs font-black p-1 transition-colors cursor-pointer" 
+                                className="w-9 h-9 min-w-[36px] min-h-[36px] text-red-500 hover:text-red-700 hover:bg-red-50 text-base font-black flex items-center justify-center rounded-lg transition-colors cursor-pointer shrink-0" 
                                 onClick={() => handleDeleteFixture(r.round, w, b)}
                                 title="Delete fixture"
                               >
@@ -357,11 +357,11 @@ export const AdminTab = ({
                     {/* Add Custom Fixture */}
                     <div className="bg-brand-bg-cream/20 p-4 border border-gray-100 rounded-2xl space-y-3">
                       <span className="block text-xs font-bold text-[#111111]">Add Custom Matchup</span>
-                      <div className="grid sm:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <select 
                           value={newFixture.white} 
                           onChange={e => setNewFixture({...newFixture, white: e.target.value})} 
-                          className="w-full px-3 py-2 text-xs text-[#111111] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary"
+                          className="w-full px-3.5 py-2.5 min-h-[44px] text-xs text-[#111111] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary"
                         >
                           <option value="">-- Select White --</option>
                           {playerOptions.map(opt => <option key={`w-${opt}`} value={opt}>{opt}</option>)}
@@ -369,14 +369,14 @@ export const AdminTab = ({
                         <select 
                           value={newFixture.black} 
                           onChange={e => setNewFixture({...newFixture, black: e.target.value})} 
-                          className="w-full px-3 py-2 text-xs text-[#111111] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary"
+                          className="w-full px-3.5 py-2.5 min-h-[44px] text-xs text-[#111111] bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary"
                         >
                           <option value="">-- Select Black --</option>
                           {playerOptions.map(opt => <option key={`b-${opt}`} value={opt}>{opt}</option>)}
                         </select>
                       </div>
                       <button 
-                        className="bg-brand-primary text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm hover:shadow transition-all cursor-pointer" 
+                        className="w-full sm:w-auto min-h-[44px] bg-brand-primary text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm hover:shadow transition-all cursor-pointer flex items-center justify-center" 
                         onClick={() => handleAddFixture(r.round)}
                       >
                         Add Fixture
@@ -395,13 +395,13 @@ export const AdminTab = ({
             <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Archived Rounds (Hidden)</h4>
             <div className="space-y-3">
               {archivedRoundsList.map(r => (
-                <div key={r.round} className="flex justify-between items-center p-4 bg-gray-50/50 border border-dashed border-gray-200 rounded-2xl">
+                <div key={r.round} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-gray-50/50 border border-dashed border-gray-200 rounded-2xl">
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-bold text-gray-400 line-through">Round {r.round}</span>
                     <span className="text-xs text-gray-400 font-bold bg-gray-100 px-2.5 py-0.5 rounded-full">{r.date}</span>
                   </div>
                   <button 
-                    className="bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold px-3 py-1.5 rounded-xl cursor-pointer transition-colors" 
+                    className="w-full sm:w-auto min-h-[44px] bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold px-4 py-2 rounded-xl cursor-pointer transition-colors flex items-center justify-center" 
                     onClick={() => handleRestoreRound(r.round)}
                   >
                     Restore
@@ -415,7 +415,7 @@ export const AdminTab = ({
       </div>
 
       {/* ── Create / Delete Divisions ── */}
-      <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm space-y-8">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 lg:p-8 border border-gray-100 shadow-sm space-y-8">
         
         <div>
           <h3 className="font-space text-lg font-black text-[#111111] mb-6 pb-3 border-b border-gray-50">Create New Division</h3>
@@ -437,12 +437,12 @@ export const AdminTab = ({
                 value={newDivPlayers} 
                 onChange={e => setNewDivPlayers(e.target.value)} 
                 placeholder={"Magnus (Carlsen)\nHikaru (Nakamura)\nFabiano (Caruana)"}
-                className="w-full px-4 py-3 text-sm text-[#111111] bg-white border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-brand-primary placeholder-gray-400 transition-all"
+                className="w-full px-4 py-3 min-h-[120px] text-sm text-[#111111] bg-white border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-brand-primary placeholder-gray-400 transition-all"
               />
             </div>
           </div>
           <button 
-            className="bg-brand-primary text-white font-bold px-6 py-3 rounded-xl shadow-sm hover:shadow transition-all text-xs cursor-pointer"
+            className="w-full sm:w-auto min-h-[44px] bg-brand-primary text-white font-bold px-6 py-3 rounded-xl shadow-sm hover:shadow transition-all text-xs cursor-pointer flex items-center justify-center"
             onClick={handleCreateDivision}
           >
             Generate Division &amp; Pairings
@@ -453,10 +453,10 @@ export const AdminTab = ({
           <h3 className="font-space text-base font-black text-[#111111] mb-4">Existing Divisions</h3>
           <div className="border border-gray-100 rounded-2xl overflow-hidden divide-y divide-gray-50">
             {divisions.map(d => (
-              <div key={d.id} className="flex justify-between items-center p-4 hover:bg-brand-bg-cream/10 transition-colors">
+              <div key={d.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 hover:bg-brand-bg-cream/10 transition-colors">
                 <span className="text-sm font-bold text-gray-700">{d.name} <span className="text-xs text-gray-400 font-semibold ml-1">({d.players.length} players)</span></span>
                 <button 
-                  className="bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer" 
+                  className="w-full sm:w-auto min-h-[44px] bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold px-4 py-2 rounded-lg cursor-pointer flex items-center justify-center" 
                   onClick={async () => {
                     if (divisions.length === 1) {
                       toast.error('Cannot delete the last division', { theme: 'dark' });
@@ -482,11 +482,11 @@ export const AdminTab = ({
           </div>
         </div>
 
-        <div className="bg-brand-bg-cream/20 rounded-2xl p-6 border border-gray-100 border-dashed space-y-4">
+        <div className="bg-brand-bg-cream/20 rounded-2xl p-4 sm:p-6 border border-gray-100 border-dashed space-y-4">
           <h3 className="font-space text-sm font-black text-[#111111]">Database Seeding &amp; Utilities</h3>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3">
             <button 
-              className="bg-brand-accent text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm hover:shadow transition-all cursor-pointer" 
+              className="w-full sm:w-auto min-h-[44px] bg-brand-accent text-white text-xs font-bold px-5 py-3 rounded-xl shadow-sm hover:shadow transition-all cursor-pointer flex items-center justify-center" 
               onClick={() => {
                 if (window.confirm('Sync players with the local codebase data? This will add any new contacts or players hardcoded in data.ts for this division.')) {
                   handleSyncPlayers();
@@ -496,7 +496,7 @@ export const AdminTab = ({
               Sync Players with Local Data
             </button>
             <button 
-              className="bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold px-5 py-2.5 rounded-xl transition-all cursor-pointer" 
+              className="w-full sm:w-auto min-h-[44px] bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold px-5 py-3 rounded-xl transition-all cursor-pointer flex items-center justify-center" 
               onClick={handleAdminToggle}
             >
               Lock Admin Panel

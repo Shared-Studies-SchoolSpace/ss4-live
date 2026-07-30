@@ -317,7 +317,7 @@ export function useTournament(monthYear) {
     if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return;
     const [y, m] = monthYear.split('-').map(Number);
     const last = tournament.rounds[tournament.rounds.length - 1];
-    const isManual = options.selectedPlayers && options.selectedPlayers.length > 0;
+    const isManual = Array.isArray(options.selectedPlayers);
     const games = last?.games || [];
     const allDone = games.length > 0 && games.every(g => g.winner);
     if (!allDone && !isManual) { toast.error('Log all match results or enable Manual Selection Mode before generating the next round.'); return; }

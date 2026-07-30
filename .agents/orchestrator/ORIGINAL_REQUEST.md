@@ -87,3 +87,30 @@ Working directory: /home/kami/Desktop/codebase/ss4
 
 ### Build & Code Verification
 - [ ] `npm run build` executes with zero compilation errors or missing symbol warnings.
+
+## 2026-07-30T10:55:30Z
+
+Mobile-optimize all pages and surfaces directly accessible from the admin section in SS4 (`ChessTournamentPage.jsx` admin panel/generators, `AdminBroadcastPanel.jsx` drawer/tab, and `DashboardPage.jsx` admin controls). Ensure touch targets are at least 44px, grids collapse gracefully on small screens (<640px), and scrollable areas retain momentum smooth scrolling. Assign one specialized worker per page/surface to execute in parallel.
+
+Working directory: /home/kami/Desktop/codebase/ss4
+Integrity mode: development
+
+## Requirements
+
+### R1. Admin Tournament Control & Generator Views (ChessTournamentPage.jsx)
+Ensure the Admin Control Panel, World Cup Generator view (`generate-r1`), and Generate Next Round view (`generate-next`) adapt smoothly to mobile viewports (<640px). Inputs, button stacks, player selection grids, and status badges must stack vertically without overflow or horizontal page scrolling.
+
+### R2. Universal Admin Broadcast Center (AdminBroadcastPanel.jsx & AdminDrawer.jsx)
+Optimize the Admin Broadcast drawer and embedded panel for mobile. Tab controls, message textareas, audience target selectors, and broadcast history logs must fit mobile screens cleanly with 44px min touch targets.
+
+### R3. Admin Dashboard Surface (DashboardPage.jsx)
+Ensure admin widgets, player approval lists, match submission review cards, and status tags inside the Dashboard render responsively on mobile screens without squashing content.
+
+## Acceptance Criteria
+
+### Mobile Responsiveness & Touch Quality
+- [ ] Zero horizontal overflow / page body scrolling at 360px viewport width across all admin views.
+- [ ] All interactive buttons, switches, and selects meet 44px minimum touch target size on mobile.
+- [ ] Grids (e.g. player cards, parameter inputs) collapse into single-column layouts on screens below 640px.
+- [ ] Production build (`npm run build`) completes with 0 errors.
+

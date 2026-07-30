@@ -144,6 +144,129 @@ export function generateRound1(players, year, month, options = {}) {
   return { roundNum: 1, name: ROUND_NAMES[0], date: roundDate, games: [...byeGames, ...pairedGames] };
 }
 
+// Compute and return group standings data across all groups
+export function getGroupData(tournament, customPlayers = null) {
+  if (!tournament) return [];
+  const rawPlayers = customPlayers || tournament.players || [];
+
+  let groupsMeta = tournament.groups || [];
+
+  if (!groupsMeta.length && tournament.rounds?.length) {
+    const discoveredLabels = new Set();
+    tournament.rounds.forEach(r => {
+      (r.games || []).forEach(g => {
+        if (g.groupLabel) discoveredLabels.add(g.groupLabel);
+      });
+    });
+
+    if (discoveredLabels.size > 0) {
+      const sortedLabels = Array.from(discoveredLabels).sort();
+      groupsMeta = sortedLabels.map(label => {
+        const playersInGroup = new Map();
+        tournament.rounds.forEach(r => {
+          (r.games || []).forEach(g => {
+            if (g.groupLabel === label) {
+              if (g.p1 && g.p1.username !== 'bye') playersInGroup.set(g.p1.username, g.p1);
+              if (g.p2 && g.p2.username !== 'bye') playersInGroup.set(g.p2.username, g.p2);
+            }
+          });
+        });
+        return {
+          label,
+          players: Array.from(playersInGroup.values())
+        };
+      });
+
+      const assignedUsernames = new Set();
+      groupsMeta.forEach(g => {
+        (g.players || []).forEach(p => {
+          if (p.username) assignedUsernames.add(p.username.toLowerCase());
+        });
+      });
+
+      const unassignedPlayers = rawPlayers.filter(p => p.username && !assignedUsernames.has(p.username.toLowerCase()));
+      if (unassignedPlayers.length > 0) {
+        const lastLabel = sortedLabels[sortedLabels.length - 1] || 'N';
+        const nextLabelChar = String.fromCharCode(lastLabel.charCodeAt(0) + 1);
+        groupsMeta.push({
+          label: nextLabelChar,
+          players: unassignedPlayers
+        });
+      }
+    }
+  }
+
+  if (!groupsMeta.length && rawPlayers.length >= 4) {
+    const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const G = Math.ceil(rawPlayers.length / 4);
+    groupsMeta = Array.from({ length: G }, (_, i) => ({
+      label: labels[i % labels.length],
+      players: rawPlayers.slice(i * 4, i * 4 + 4)
+    }));
+  }
+
+  const allGames = [];
+  (tournament.rounds || []).forEach(r => {
+    (r.games || []).forEach(g => {
+      allGames.push(g);
+    });
+  });
+
+  return groupsMeta.map(grp => {
+    const groupLabel = grp.label;
+    const groupPlayers = grp.players || [];
+
+    const standings = groupPlayers.map(p => {
+      let P = 0, W = 0, D = 0, L = 0;
+      allGames.forEach(g => {
+        if (g.groupLabel && g.groupLabel !== groupLabel) return;
+        const isP1 = g.p1 && (g.p1.username === p.username || g.p1.id === p.id);
+        const isP2 = g.p2 && (g.p2.username === p.username || g.p2.id === p.id);
+
+        if ((isP1 || isP2) && g.winner !== null && g.winner !== undefined) {
+          P++;
+          const isWinner = typeof g.winner === 'object'
+            ? (g.winner.username === p.username || g.winner.id === p.id)
+            : false;
+          const isDraw = typeof g.winner === 'object'
+            ? (g.winner.username === 'draw' || g.winner.name === 'Draw')
+            : g.winner === 'draw';
+
+          if (isWinner) W++;
+          else if (isDraw) D++;
+          else L++;
+        }
+      });
+
+      const computedPts = (W * 1) + (D * 0.5);
+      const Pts = typeof p.pts === 'number' ? p.pts : typeof p.Pts === 'number' ? p.Pts : computedPts;
+
+      return {
+        ...p,
+        P,
+        W,
+        D,
+        L,
+        Pts,
+        pts: Pts
+      };
+    });
+
+    standings.sort((a, b) => {
+      if ((b.Pts || 0) !== (a.Pts || 0)) return (b.Pts || 0) - (a.Pts || 0);
+      if ((b.W || 0) !== (a.W || 0)) return (b.W || 0) - (a.W || 0);
+      if ((b.P || 0) !== (a.P || 0)) return (b.P || 0) - (a.P || 0);
+      if ((b.rating || 0) !== (a.rating || 0)) return (b.rating || 0) - (a.rating || 0);
+      return (a.name || '').localeCompare(b.name || '');
+    });
+
+    return {
+      label: groupLabel,
+      standings
+    };
+  });
+}
+
 // Extract surviving players (top 2 per group during Group Stage, or match winners in Knockout Stage)
 export function getSurvivingPlayers(tournament) {
   if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return [];
@@ -155,76 +278,12 @@ export function getSurvivingPlayers(tournament) {
   const hasGroupStage = rounds.some(r => r.isGroupStage || r.name?.toLowerCase().includes('group'));
 
   if (hasGroupStage) {
-    const groupGames = [];
-    rounds.forEach(r => {
-      if (r.isGroupStage || r.name?.toLowerCase().includes('group')) {
-        (r.games || []).forEach(g => groupGames.push(g));
-      }
-    });
-
-    const groupsMap = new Map();
-    groupGames.forEach(g => {
-      const label = g.groupLabel || 'A';
-      if (!groupsMap.has(label)) groupsMap.set(label, new Map());
-      const playerMap = groupsMap.get(label);
-      if (g.p1 && g.p1.username !== 'bye') playerMap.set(g.p1.username, g.p1);
-      if (g.p2 && g.p2.username !== 'bye') playerMap.set(g.p2.username, g.p2);
-    });
-
-    if (groupsMap.size === 0 && tournament.players?.length) {
-      const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      const G = Math.ceil(tournament.players.length / 4);
-      for (let i = 0; i < G; i++) {
-        const label = labels[i % labels.length];
-        const pMap = new Map();
-        tournament.players.slice(i * 4, i * 4 + 4).forEach(p => {
-          if (p.username) pMap.set(p.username, p);
-        });
-        groupsMap.set(label, pMap);
-      }
-    }
-
+    const groupsData = getGroupData(tournament);
     const surviving = [];
     const thirdPlaceList = [];
 
-    Array.from(groupsMap.keys()).sort().forEach(groupLabel => {
-      const playerMap = groupsMap.get(groupLabel);
-      const players = Array.from(playerMap.values());
-
-      const standings = players.map(p => {
-        let P = 0, W = 0, D = 0, L = 0;
-        groupGames.forEach(g => {
-          if (g.groupLabel && g.groupLabel !== groupLabel) return;
-          const isP1 = g.p1 && (g.p1.username === p.username || g.p1.id === p.id);
-          const isP2 = g.p2 && (g.p2.username === p.username || g.p2.id === p.id);
-
-          if ((isP1 || isP2) && g.winner !== null && g.winner !== undefined) {
-            P++;
-            const isWinner = typeof g.winner === 'object'
-              ? (g.winner.username === p.username || g.winner.id === p.id)
-              : false;
-            const isDraw = typeof g.winner === 'object'
-              ? (g.winner.username === 'draw' || g.winner.name === 'Draw')
-              : g.winner === 'draw';
-
-            if (isWinner) W++;
-            else if (isDraw) D++;
-            else L++;
-          }
-        });
-
-        const Pts = (W * 1) + (D * 0.5);
-        return { ...p, P, W, D, L, Pts };
-      });
-
-      standings.sort((a, b) => {
-        if (b.Pts !== a.Pts) return b.Pts - a.Pts;
-        if (b.W !== a.W) return b.W - a.W;
-        if (b.P !== a.P) return b.P - a.P;
-        if ((b.rating || 0) !== (a.rating || 0)) return (b.rating || 0) - (a.rating || 0);
-        return (a.name || '').localeCompare(b.name || '');
-      });
-
+    groupsData.forEach(grp => {
+      const standings = grp.standings || [];
       const top2 = standings.slice(0, 2);
       surviving.push(...top2);
 
@@ -262,7 +321,7 @@ export function getSurvivingPlayers(tournament) {
 export function generateNextRound(rounds, year, month, options = {}) {
   const tournament = options.tournament || { rounds, players: options.players };
   const last = rounds[rounds.length - 1];
-  const winners = (options.selectedPlayers && options.selectedPlayers.length > 0)
+  const winners = (Array.isArray(options.selectedPlayers))
     ? options.selectedPlayers
     : getSurvivingPlayers(tournament);
   const nextNum = last.roundNum + 1;

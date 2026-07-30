@@ -185,6 +185,73 @@ export default function DashboardPage() {
   // Custom transcript modal state
   const [isTranscriptOpen, setIsTranscriptOpen] = useState(false);
 
+  // Admin Dashboard Surface States
+  const [adminPlayers, setAdminPlayers] = useState([]);
+  const [adminMatches, setAdminMatches] = useState([]);
+  const [adminLoading, setAdminLoading] = useState(false);
+  const [playerFilter, setPlayerFilter] = useState('all');
+  const [matchFilter, setMatchFilter] = useState('all');
+  const [updatingAdminId, setUpdatingAdminId] = useState(null);
+
+  const fetchAdminData = async () => {
+    if (profile?.role !== 'admin') return;
+    setAdminLoading(true);
+    try {
+      const [profsRes, gamesRes] = await Promise.all([
+        supabase.from('profiles').select('*').order('created_at', { ascending: false }),
+        supabase.from('verified_games').select('*').order('created_at', { ascending: false })
+      ]);
+      if (profsRes.data) setAdminPlayers(profsRes.data);
+      if (gamesRes.data) setAdminMatches(gamesRes.data);
+    } catch (err) {
+      console.error('Error fetching admin dashboard data:', err);
+    } finally {
+      setAdminLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (profile?.role === 'admin') {
+      fetchAdminData();
+    }
+  }, [profile?.role]);
+
+  const handleApprovePlayer = async (playerId, status) => {
+    setUpdatingAdminId(`player_${playerId}`);
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ approval_status: status })
+        .eq('id', playerId);
+
+      if (error) throw error;
+      setAdminPlayers(prev => prev.map(p => p.id === playerId ? { ...p, approval_status: status } : p));
+      toast.success(`Player registration status set to ${status}`);
+    } catch (err) {
+      toast.error('Failed to update player status: ' + err.message);
+    } finally {
+      setUpdatingAdminId(null);
+    }
+  };
+
+  const handleApproveMatch = async (matchId, approved) => {
+    setUpdatingAdminId(`match_${matchId}`);
+    try {
+      const { error } = await supabase
+        .from('verified_games')
+        .update({ is_admin_approved: approved })
+        .eq('id', matchId);
+
+      if (error) throw error;
+      setAdminMatches(prev => prev.map(m => m.id === matchId ? { ...m, is_admin_approved: approved } : m));
+      toast.success(approved ? 'Match submission approved & confirmed!' : 'Match submission rejected.');
+    } catch (err) {
+      toast.error('Failed to update match approval: ' + err.message);
+    } finally {
+      setUpdatingAdminId(null);
+    }
+  };
+
   // Fetch upcoming tournament to handle single-click registration.
   // Admin creates tournament rows  we never auto-generate them.
   useEffect(() => {
@@ -811,7 +878,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="container mx-auto px-6 md:px-12 lg:px-16 py-10">
+    <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-6 sm:py-10">
       
       {/* Header Profile Summary Hero */}
       {(() => {
@@ -820,12 +887,12 @@ export default function DashboardPage() {
         const divisionBadgeClass = maxElo >= 1800 ? 'bg-red-500/20 text-red-300 border-red-500/40' : maxElo >= 1000 ? 'bg-blue-500/20 text-blue-300 border-blue-500/40' : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
 
         return (
-          <div className="relative rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-gradient-to-r from-[#0B193C] via-[#153472] to-[#1A56C4] text-white shadow-xl border border-white/10 overflow-hidden">
+          <div className="relative rounded-3xl p-4 sm:p-6 lg:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-gradient-to-r from-[#0B193C] via-[#153472] to-[#1A56C4] text-white shadow-xl border border-white/10 overflow-hidden">
             {/* Background Radial Pattern Accent */}
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:12px_12px] pointer-events-none" />
             <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-primary/30 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="relative z-10 flex items-center gap-5">
+            <div className="relative z-10 flex items-center gap-4 sm:gap-5">
               <CollegiateCrest profile={profile} user={user} onClick={() => setIsTranscriptOpen(true)} />
               <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -839,7 +906,7 @@ export default function DashboardPage() {
                   )}
                 </div>
 
-                <h2 className="text-2xl font-bold font-space text-white leading-tight truncate">
+                <h2 className="text-xl sm:text-2xl font-bold font-space text-white leading-tight truncate">
                   {profile?.name || 'Player'}
                 </h2>
                 
@@ -861,11 +928,11 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="relative z-10 flex flex-wrap items-center gap-3">
+            <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
               <button 
                 onClick={handleSyncRatings} 
                 disabled={loadingSync || savingSettings}
-                className="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl transition-all border border-white/20 flex items-center gap-2 cursor-pointer backdrop-blur-sm min-h-[44px]"
+                className="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl transition-all border border-white/20 flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm min-h-[44px] w-full sm:w-auto"
               >
                 {loadingSync ? (
                   <>
@@ -884,7 +951,7 @@ export default function DashboardPage() {
 
               <button
                 onClick={() => setIsTranscriptOpen(true)}
-                className="px-4 py-2.5 bg-[#E8640A] hover:bg-[#d05707] text-white font-bold text-xs rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer min-h-[44px]"
+                className="px-4 py-2.5 bg-[#E8640A] hover:bg-[#d05707] text-white font-bold text-xs rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer min-h-[44px] w-full sm:w-auto"
               >
                 <span>📜 Digital ID Card</span>
               </button>
@@ -903,13 +970,14 @@ export default function DashboardPage() {
             { id: 'messages', label: 'Messages', notation: 'C3', icon: 'M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z', count: unreadMessages.length },
             { id: 'notifications', label: 'Notifications', notation: 'D4', icon: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9', count: unreadNotificationsCount },
             { id: 'announcements', label: 'Announcements', notation: 'E5', icon: 'M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.684A1.001 1.001 0 014.5 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.5c.38 0 .732.214.904.553L8.2 13h-2.764z', count: unreadAnnouncementsCount },
+            ...(profile?.role === 'admin' ? [{ id: 'admin', label: 'Admin Control Center', notation: 'ADM', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', count: adminMatches.filter(m => !m.is_admin_approved).length }] : []),
             { id: 'awards', label: 'Trophies & Badges', notation: 'F6', icon: 'M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5a2 2 0 10-2 2h2zm-2 4h4M8 21h8a2 2 0 002-2v-1.5a2.5 2.5 0 00-2.5-2.5h-7A2.5 2.5 0 004 17.5V19a2 2 0 002 2z' },
             { id: 'settings', label: 'Settings', notation: 'G7', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' }
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`w-full flex items-center justify-between px-5 py-3.5 rounded-2xl text-xs font-black transition-all uppercase tracking-wider text-left cursor-pointer binder-tab focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none ${
+              className={`w-full flex items-center justify-between px-5 py-3.5 min-h-[44px] rounded-2xl text-xs font-black transition-all uppercase tracking-wider text-left cursor-pointer binder-tab focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:outline-none ${
                 activeTab === tab.id 
                   ? 'bg-brand-primary text-white shadow-md' 
                   : 'bg-white text-gray-600 border border-gray-100 hover:bg-gray-50 hover:pl-6'
@@ -938,7 +1006,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Tab Contents Panel */}
-        <div className="lg:col-span-3 relative border border-gray-150 rounded-3xl p-6 bg-white shadow-sm overflow-hidden min-h-[500px]">
+        <div className="lg:col-span-3 relative border border-gray-150 rounded-3xl p-4 sm:p-6 lg:p-8 bg-white shadow-sm overflow-hidden min-h-[500px]">
           <div className="hidden sm:flex absolute top-1 left-4 right-4 justify-between text-[8px] font-black text-gray-400/25 select-none uppercase tracking-widest pointer-events-none">
             <span>a</span><span>b</span><span>c</span><span>d</span><span>e</span><span>f</span><span>g</span><span>h</span>
           </div>
@@ -1069,7 +1137,7 @@ export default function DashboardPage() {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 text-xs">
                   <div className="p-3.5 rounded-2xl bg-gray-50/70 border border-gray-100">
                     <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">University</span>
                     <span className="font-bold text-brand-text-dark block truncate" title={profile?.university}>{profile?.university || '-'}</span>
@@ -1108,11 +1176,11 @@ export default function DashboardPage() {
                             <h4 className="text-xs font-black text-brand-text-dark mt-1">vs {p.opponent.name}</h4>
                             <p className="text-[10px] font-bold text-gray-500 mt-0.5">@{p.opponent.username}</p>
                           </div>
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto shrink-0">
                             <Button
                               variant="secondary"
                               onClick={() => handleRequestReminder(p)}
-                              className="text-xs py-2.5 px-4 rounded-full focus-visible:ring-2 focus-visible:ring-brand-primary"
+                              className="text-xs py-2.5 px-4 min-h-[44px] rounded-full focus-visible:ring-2 focus-visible:ring-brand-primary w-full sm:w-auto flex items-center justify-center cursor-pointer"
                               title="Request a Match Reminder notification"
                             >
                               ⏰ Remind Me
@@ -1121,14 +1189,14 @@ export default function DashboardPage() {
                               variant="secondary"
                               onClick={() => handleScanMatch(p)}
                               disabled={scanningPairingId === p.id}
-                              className="text-xs py-2.5 px-4 rounded-full focus-visible:ring-2 focus-visible:ring-brand-primary"
+                              className="text-xs py-2.5 px-4 min-h-[44px] rounded-full focus-visible:ring-2 focus-visible:ring-brand-primary w-full sm:w-auto flex items-center justify-center cursor-pointer"
                             >
                               {scanningPairingId === p.id ? 'Scanning...' : 'Scan Result'}
                             </Button>
                             <Button
                               variant="primary"
                               onClick={() => setSelectedPairing(p)}
-                              className="text-xs py-2.5 px-4 rounded-full focus-visible:ring-2 focus-visible:ring-brand-primary"
+                              className="text-xs py-2.5 px-4 min-h-[44px] rounded-full focus-visible:ring-2 focus-visible:ring-brand-primary w-full sm:w-auto flex items-center justify-center cursor-pointer"
                             >
                               Open Chat
                             </Button>
@@ -1196,7 +1264,7 @@ export default function DashboardPage() {
                   </p>
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-3 max-h-[480px] overflow-y-auto overscroll-contain pr-1 scroll-smooth [-webkit-overflow-scrolling:touch]" style={{ WebkitOverflowScrolling: 'touch' }}>
                   {notifications.map((n) => {
                     const isUnread = !n.read_at;
                     return (
@@ -1244,6 +1312,385 @@ export default function DashboardPage() {
             </div>
           )}
 
+          {activeTab === 'admin' && (
+            profile?.role === 'admin' ? (
+              <div className="space-y-6 animate-in fade-in duration-200">
+                {/* Admin Control Center Header */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-150 pb-4">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#E8640A] text-white text-[9px] font-black uppercase tracking-widest">
+                        Admin Only
+                      </span>
+                      <h3 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                        Admin Control Center
+                      </h3>
+                    </div>
+                    <p className="text-xs font-semibold text-gray-400 mt-1">
+                      Manage player registrations, review submitted match verifications, and dispatch broadcasts.
+                    </p>
+                  </div>
+                  <button
+                    onClick={fetchAdminData}
+                    disabled={adminLoading}
+                    className="min-h-[44px] px-4 py-2.5 bg-brand-primary/10 hover:bg-brand-primary text-brand-primary hover:text-white font-bold text-xs rounded-full transition-colors cursor-pointer flex items-center justify-center gap-2 shrink-0 self-start sm:self-auto"
+                  >
+                    {adminLoading ? (
+                      <>
+                        <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        <span>Refreshing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>🔄</span>
+                        <span>Refresh Data</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Admin Overview Metrics Grid (Collapses into grid-cols-1 on screens < 640px) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                  {/* Card 1: Player Registration Overview */}
+                  {(() => {
+                    const pendingPlayers = adminPlayers.filter(p => p.approval_status === 'pending' || !p.approval_status).length;
+                    const approvedPlayers = adminPlayers.filter(p => p.approval_status === 'approved').length;
+                    return (
+                      <div className="p-5 rounded-3xl bg-gradient-to-br from-white via-blue-50/20 to-white border border-blue-150 shadow-xs">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest">Total Players</span>
+                          <span className="w-8 h-8 rounded-xl bg-blue-100 text-brand-primary flex items-center justify-center text-sm font-bold">
+                            👥
+                          </span>
+                        </div>
+                        <h4 className="text-2xl font-black text-brand-text-dark font-mono">{adminPlayers.length}</h4>
+                        <div className="mt-2 flex items-center gap-2 text-[10px] font-bold">
+                          <span className="text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md">{pendingPlayers} Pending</span>
+                          <span className="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">{approvedPlayers} Approved</span>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* Card 2: Match Submissions Review */}
+                  {(() => {
+                    const pendingMatches = adminMatches.filter(m => !m.is_admin_approved).length;
+                    const approvedMatches = adminMatches.filter(m => m.is_admin_approved).length;
+                    return (
+                      <div className="p-5 rounded-3xl bg-gradient-to-br from-white via-amber-50/20 to-white border border-amber-150 shadow-xs">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[10px] font-black text-amber-700 uppercase tracking-widest">Match Reviews</span>
+                          <span className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-sm font-bold">
+                            ♟
+                          </span>
+                        </div>
+                        <h4 className="text-2xl font-black text-brand-text-dark font-mono">{adminMatches.length}</h4>
+                        <div className="mt-2 flex items-center gap-2 text-[10px] font-bold">
+                          <span className="text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">{pendingMatches} Need Review</span>
+                          <span className="text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">{approvedMatches} Confirmed</span>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* Card 3: Platform Linked Accounts */}
+                  {(() => {
+                    const chessLinked = adminPlayers.filter(p => p.chess_username).length;
+                    const lichessLinked = adminPlayers.filter(p => p.lichess_username).length;
+                    return (
+                      <div className="p-5 rounded-3xl bg-gradient-to-br from-white via-emerald-50/20 to-white border border-emerald-150 shadow-xs">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[10px] font-black text-emerald-800 uppercase tracking-widest">Platform Sync</span>
+                          <span className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-sm font-bold">
+                            📊
+                          </span>
+                        </div>
+                        <h4 className="text-2xl font-black text-brand-text-dark font-mono">{chessLinked + lichessLinked}</h4>
+                        <div className="mt-2 flex items-center gap-2 text-[10px] font-bold">
+                          <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">Chess: {chessLinked}</span>
+                          <span className="text-orange-700 bg-orange-50 px-2 py-0.5 rounded-md">Lichess: {lichessLinked}</span>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* Card 4: Global Broadcast Access */}
+                  <div className="p-5 rounded-3xl bg-gradient-to-br from-white via-purple-50/20 to-white border border-purple-150 shadow-xs flex flex-col justify-between">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[10px] font-black text-purple-800 uppercase tracking-widest">Broadcast Hub</span>
+                      <span className="w-8 h-8 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center text-sm font-bold">
+                        📢
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 font-semibold mb-2">Direct global messaging & push alerts</p>
+                    <span className="text-[10px] font-bold text-purple-700 bg-purple-100 px-2.5 py-1 rounded-lg w-fit uppercase">
+                      Ready to Dispatch
+                    </span>
+                  </div>
+                </div>
+
+                {/* Universal Admin Broadcast Panel */}
+                <AdminBroadcastPanel />
+
+                {/* Player Approval & Registration Queue Section */}
+                <div className="bg-white border border-gray-150 rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
+                    <div>
+                      <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                        Player Approval Queue ({adminPlayers.length})
+                      </h4>
+                      <p className="text-xs font-semibold text-gray-400 mt-0.5">
+                        Review registered player profiles and update registration status.
+                      </p>
+                    </div>
+
+                    {/* Filter Dropdown (Touch target >= 44px) */}
+                    <div className="flex items-center gap-2">
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Filter:</label>
+                      <select
+                        value={playerFilter}
+                        onChange={e => setPlayerFilter(e.target.value)}
+                        className="px-3.5 py-2.5 min-h-[44px] rounded-xl border border-gray-200 bg-white text-xs font-bold text-gray-700 outline-none focus:ring-2 focus:ring-brand-primary w-full sm:w-auto"
+                      >
+                        <option value="all">All Players ({adminPlayers.length})</option>
+                        <option value="pending">Pending ({adminPlayers.filter(p => p.approval_status === 'pending' || !p.approval_status).length})</option>
+                        <option value="approved">Approved ({adminPlayers.filter(p => p.approval_status === 'approved').length})</option>
+                        <option value="rejected">Rejected ({adminPlayers.filter(p => p.approval_status === 'rejected').length})</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Player Approval Scrollable List (Momentum Smooth Scroll) */}
+                  {(() => {
+                    const filteredPlayers = adminPlayers.filter(p => {
+                      const status = p.approval_status || 'pending';
+                      if (playerFilter === 'pending') return status === 'pending';
+                      if (playerFilter === 'approved') return status === 'approved';
+                      if (playerFilter === 'rejected') return status === 'rejected';
+                      return true;
+                    });
+
+                    if (filteredPlayers.length === 0) {
+                      return (
+                        <div className="p-8 text-center bg-gray-50/50 rounded-2xl border border-dashed border-gray-200">
+                          <p className="text-xs font-semibold text-gray-400 italic">No players match the selected filter criteria.</p>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div
+                        className="space-y-3 max-h-[480px] overflow-y-auto overscroll-contain pr-1 scroll-smooth [-webkit-overflow-scrolling:touch]"
+                        style={{ WebkitOverflowScrolling: 'touch' }}
+                      >
+                        {filteredPlayers.map(p => {
+                          const status = p.approval_status || 'pending';
+                          const isUpdating = updatingAdminId === `player_${p.id}`;
+
+                          const badgeClass =
+                            status === 'approved'
+                              ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                              : status === 'rejected'
+                              ? 'bg-rose-50 text-rose-700 border-rose-200'
+                              : 'bg-amber-50 text-amber-700 border-amber-200';
+
+                          return (
+                            <div
+                              key={p.id}
+                              className="p-4 rounded-2xl border border-gray-150 bg-gray-50/40 hover:bg-white transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                            >
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center gap-2 flex-wrap mb-1">
+                                  <h5 className="text-xs font-black text-brand-text-dark font-space uppercase tracking-wider truncate">
+                                    {p.name || 'Unnamed Player'}
+                                  </h5>
+                                  <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border ${badgeClass}`}>
+                                    {status}
+                                  </span>
+                                </div>
+                                <div className="text-[11px] font-semibold text-gray-500 flex flex-wrap items-center gap-x-2 gap-y-1">
+                                  <span>{p.university || 'SS4 Member'}</span>
+                                  {p.department && <span>&bull; {p.department}</span>}
+                                  {p.level && <span>&bull; {p.level} Level</span>}
+                                </div>
+                                <div className="text-[10px] font-mono text-gray-400 mt-1 flex flex-wrap gap-2">
+                                  {p.chess_username && <span className="bg-emerald-50 text-emerald-800 px-1.5 py-0.5 rounded">Chess: @{p.chess_username}</span>}
+                                  {p.lichess_username && <span className="bg-orange-50 text-orange-800 px-1.5 py-0.5 rounded">Lichess: @{p.lichess_username}</span>}
+                                  {!p.chess_username && !p.lichess_username && <span className="text-gray-400 italic">No Handles Linked</span>}
+                                </div>
+                              </div>
+
+                              {/* Approval Action Buttons (Min height 44px) */}
+                              <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto shrink-0">
+                                {status !== 'approved' && (
+                                  <button
+                                    onClick={() => handleApprovePlayer(p.id, 'approved')}
+                                    disabled={isUpdating}
+                                    className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-colors shadow-2xs flex items-center justify-center cursor-pointer disabled:opacity-50"
+                                  >
+                                    {isUpdating ? 'Saving...' : '✓ Approve'}
+                                  </button>
+                                )}
+                                {status !== 'rejected' && (
+                                  <button
+                                    onClick={() => handleApprovePlayer(p.id, 'rejected')}
+                                    disabled={isUpdating}
+                                    className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-black uppercase tracking-wider rounded-xl transition-colors flex items-center justify-center cursor-pointer disabled:opacity-50"
+                                  >
+                                    {isUpdating ? 'Saving...' : '✕ Reject'}
+                                  </button>
+                                )}
+                                {status !== 'pending' && (
+                                  <button
+                                    onClick={() => handleApprovePlayer(p.id, 'pending')}
+                                    disabled={isUpdating}
+                                    className="w-full sm:w-auto min-h-[44px] px-3 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold rounded-xl transition-colors flex items-center justify-center cursor-pointer disabled:opacity-50"
+                                  >
+                                    Reset
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })()}
+                </div>
+
+                {/* Match Submission Review Cards Section */}
+                <div className="bg-white border border-gray-150 rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
+                    <div>
+                      <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                        Match Submission Review ({adminMatches.length})
+                      </h4>
+                      <p className="text-xs font-semibold text-gray-400 mt-0.5">
+                        Verify opponent match results submitted via external game scanner.
+                      </p>
+                    </div>
+
+                    {/* Match Filter Dropdown (Touch target >= 44px) */}
+                    <div className="flex items-center gap-2">
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Filter:</label>
+                      <select
+                        value={matchFilter}
+                        onChange={e => setMatchFilter(e.target.value)}
+                        className="px-3.5 py-2.5 min-h-[44px] rounded-xl border border-gray-200 bg-white text-xs font-bold text-gray-700 outline-none focus:ring-2 focus:ring-brand-primary w-full sm:w-auto"
+                      >
+                        <option value="all">All Matches ({adminMatches.length})</option>
+                        <option value="pending">Needs Review ({adminMatches.filter(m => !m.is_admin_approved).length})</option>
+                        <option value="approved">Confirmed ({adminMatches.filter(m => m.is_admin_approved).length})</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Match Review Scrollable List (Momentum Smooth Scroll) */}
+                  {(() => {
+                    const filteredMatches = adminMatches.filter(m => {
+                      if (matchFilter === 'pending') return !m.is_admin_approved;
+                      if (matchFilter === 'approved') return m.is_admin_approved;
+                      return true;
+                    });
+
+                    if (filteredMatches.length === 0) {
+                      return (
+                        <div className="p-8 text-center bg-gray-50/50 rounded-2xl border border-dashed border-gray-200">
+                          <p className="text-xs font-semibold text-gray-400 italic">No match submissions found for this filter.</p>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div
+                        className="space-y-3 max-h-[480px] overflow-y-auto overscroll-contain pr-1 scroll-smooth [-webkit-overflow-scrolling:touch]"
+                        style={{ WebkitOverflowScrolling: 'touch' }}
+                      >
+                        {filteredMatches.map(m => {
+                          const isApproved = m.is_admin_approved;
+                          const isUpdating = updatingAdminId === `match_${m.id}`;
+
+                          return (
+                            <div
+                              key={m.id}
+                              className="p-4 rounded-2xl border border-gray-150 bg-gray-50/40 hover:bg-white transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                            >
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center gap-2 flex-wrap mb-1">
+                                  <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-brand-primary/10 text-brand-primary">
+                                    {m.platform || 'Chess Platform'}
+                                  </span>
+                                  <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                                    isApproved ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'
+                                  }`}>
+                                    {isApproved ? '✓ Confirmed' : '⏰ Pending Review'}
+                                  </span>
+                                </div>
+                                <h5 className="text-xs font-black text-brand-text-dark font-mono truncate">
+                                  Match ID: {m.match_id || m.id}
+                                </h5>
+                                <p className="text-[11px] font-semibold text-gray-600 mt-0.5">
+                                  Winner: <strong className="text-brand-primary">{m.winner_username || 'Draw / Unspecified'}</strong>
+                                </p>
+                                {m.game_url && (
+                                  <a
+                                    href={m.game_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[10px] font-bold text-blue-600 hover:underline mt-1 inline-flex items-center gap-1 truncate max-w-xs"
+                                  >
+                                    <span>🔗 View Game:</span>
+                                    <span className="truncate">{m.game_url}</span>
+                                  </a>
+                                )}
+                              </div>
+
+                              {/* Action Buttons (Min height 44px) */}
+                              <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto shrink-0">
+                                {!isApproved ? (
+                                  <button
+                                    onClick={() => handleApproveMatch(m.id, true)}
+                                    disabled={isUpdating}
+                                    className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-colors shadow-2xs flex items-center justify-center cursor-pointer disabled:opacity-50"
+                                  >
+                                    {isUpdating ? 'Updating...' : '✓ Confirm Match'}
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={() => handleApproveMatch(m.id, false)}
+                                    disabled={isUpdating}
+                                    className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-black uppercase tracking-wider rounded-xl transition-colors flex items-center justify-center cursor-pointer disabled:opacity-50"
+                                  >
+                                    {isUpdating ? 'Updating...' : 'Revoke Approval'}
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })()}
+                </div>
+
+              </div>
+            ) : (
+              <div className="varsity-card p-10 flex flex-col items-center text-center">
+                <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <h3 className="text-sm font-black text-brand-text-dark uppercase tracking-wider">
+                  Access Restricted
+                </h3>
+                <p className="text-xs font-semibold text-gray-600 mt-2 max-w-xs leading-relaxed">
+                  The Admin Control Center is only accessible to authorized administrator accounts.
+                </p>
+              </div>
+            )
+          )}
+
           {activeTab === 'awards' && (
             <div className="varsity-card p-6 sm:p-8 bg-white border-none shadow-none">
               <h3 className="text-xs font-black text-gray-600 uppercase tracking-widest mb-6">Trophy Case</h3>
@@ -1253,7 +1700,7 @@ export default function DashboardPage() {
                   <p className="text-xs font-semibold text-gray-400 mt-3 italic">No badges unlocked yet. Compete in tournaments to earn trophies!</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {awards.map(aw => (
                     <div 
                       key={aw.id} 
@@ -1489,7 +1936,7 @@ export default function DashboardPage() {
                       type="submit"
                       variant="secondary"
                       disabled={updatingPasswordState}
-                      className="px-5 py-2 text-xs font-bold cursor-pointer"
+                      className="px-5 py-2.5 min-h-[44px] text-xs font-bold cursor-pointer w-full sm:w-auto flex items-center justify-center"
                     >
                       {updatingPasswordState ? 'Updating...' : 'Update Password'}
                     </Button>
@@ -1508,7 +1955,7 @@ export default function DashboardPage() {
                     setShowDeleteModal(true);
                   }}
                   variant="secondary"
-                  className="px-5 py-2.5 border-rose-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 text-xs font-black uppercase tracking-wider cursor-pointer"
+                  className="px-5 py-2.5 min-h-[44px] border-rose-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 text-xs font-black uppercase tracking-wider cursor-pointer w-full sm:w-auto flex items-center justify-center"
                 >
                   Delete Account
                 </Button>
@@ -1534,18 +1981,18 @@ export default function DashboardPage() {
                 value={deleteConfirmText}
                 onChange={e => setDeleteConfirmText(e.target.value)}
               />
-              <div className="flex gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <Button
                   variant="secondary"
                   onClick={() => setShowDeleteModal(false)}
-                  className="flex-1 text-xs cursor-pointer"
+                  className="flex-1 min-h-[44px] text-xs cursor-pointer flex items-center justify-center"
                 >
                   Cancel
                 </Button>
                 <Button
                   onClick={handleDeleteAccount}
                   disabled={deleteConfirmText !== 'DELETE' || deletingAccountState}
-                  className="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs font-bold cursor-pointer"
+                  className="flex-1 min-h-[44px] bg-red-600 hover:bg-red-700 text-white text-xs font-bold cursor-pointer flex items-center justify-center"
                 >
                   {deletingAccountState ? 'Deactivating...' : 'Confirm Delete'}
                 </Button>
@@ -1558,10 +2005,10 @@ export default function DashboardPage() {
       {/* Dynamic Transcript Modal */}
       {isTranscriptOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative border border-gray-150 animate-in zoom-in-95 duration-200">
+          <div className="bg-white rounded-3xl p-4 sm:p-8 max-w-lg w-full shadow-2xl relative border border-gray-150 animate-in zoom-in-95 duration-200">
             <button 
               onClick={() => setIsTranscriptOpen(false)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-lg font-black cursor-pointer border-none bg-transparent"
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-lg font-black cursor-pointer border-none bg-transparent min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="Close modal"
             >
               ✕
@@ -1569,7 +2016,7 @@ export default function DashboardPage() {
             
             <div 
               id="chess-transcript-card" 
-              className="p-6 bg-[#F6F4F0] border-4 double-border border-[#111111] rounded-2xl relative overflow-hidden text-left"
+              className="p-4 sm:p-6 bg-[#F6F4F0] border-4 double-border border-[#111111] rounded-2xl relative overflow-hidden text-left"
               style={{ minHeight: '380px' }}
             >
               <div className="absolute inset-0 bg-radial-grid opacity-[0.03] pointer-events-none" />
@@ -1602,7 +2049,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4 border-t border-b border-[#111111]/15 py-3 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 border-t border-b border-[#111111]/15 py-3 text-xs">
                   <div>
                     <span className="text-[8px] font-black text-gray-500 uppercase tracking-widest block">Chess.com ELO</span>
                     <span className="font-mono font-bold text-brand-text-dark mt-0.5 block">{profile?.chess_username ? `[ ${profile.chess_rating || 0} ]` : 'NOT LINKED'}</span>
@@ -1633,11 +2080,11 @@ export default function DashboardPage() {
               </div>
             </div>
             
-            <div className="mt-6 flex justify-end gap-3">
-              <Button variant="secondary" onClick={() => setIsTranscriptOpen(false)}>
+            <div className="mt-6 flex flex-col sm:flex-row justify-end gap-3">
+              <Button variant="secondary" onClick={() => setIsTranscriptOpen(false)} className="min-h-[44px] px-5 py-2.5 text-xs font-bold cursor-pointer flex items-center justify-center w-full sm:w-auto">
                 Close
               </Button>
-              <Button variant="primary" onClick={handleDownloadTranscript}>
+              <Button variant="primary" onClick={handleDownloadTranscript} className="min-h-[44px] px-5 py-2.5 text-xs font-bold cursor-pointer flex items-center justify-center w-full sm:w-auto">
                 📥 Download Badge PNG
               </Button>
             </div>

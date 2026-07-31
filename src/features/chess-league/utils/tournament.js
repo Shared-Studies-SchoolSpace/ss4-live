@@ -267,17 +267,35 @@ export function getGroupData(tournament, customPlayers = null) {
   });
 }
 
-// Extract surviving players (top 2 per group during Group Stage, or match winners in Knockout Stage)
-export function getSurvivingPlayers(tournament) {
-  if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return [];
+/**
+ * Evaluates completion status and extracts surviving players for a target round.
+ * Round-specific survival rules:
+ * - Group Stage -> Round of 32: Top 2 per group (plus top 2 best 3rd place if needed for 32).
+ * - Knockout Stage -> Next Knockout Round: Winners of previous knockout round matches.
+ */
+export function getSurvivingPlayersStatus(tournament, targetRoundName = null) {
+  if (!tournament || !tournament.rounds || tournament.rounds.length === 0) {
+    return { isComplete: false, pendingCount: 0, pendingGames: [], survivors: [] };
+  }
 
   const rounds = tournament.rounds;
   const lastRound = rounds[rounds.length - 1];
 
-  // Check if group stage is active
-  const hasGroupStage = rounds.some(r => r.isGroupStage || r.name?.toLowerCase().includes('group'));
+  // Determine target round name if not explicitly provided
+  const nextNum = (lastRound.roundNum || rounds.length) + 1;
+  const target = targetRoundName || (ROUND_NAMES[nextNum - 1] ?? `Round ${nextNum}`);
+  const targetLower = target.toLowerCase();
 
-  if (hasGroupStage) {
+  // Check whether target round advances from Group Stage (e.g., Round of 32) or from a Knockout round
+  const isTargetR32 = targetLower.includes('32') || targetLower.includes('round of 32');
+  const isLastRoundGroup = lastRound.isGroupStage || (lastRound.name && lastRound.name.toLowerCase().includes('group'));
+
+  if (isTargetR32 || isLastRoundGroup) {
+    // ── SURVIVAL FROM GROUP STAGE ──
+    const groupRounds = rounds.filter(r => r.isGroupStage || (r.name && r.name.toLowerCase().includes('group')));
+    const allGroupGames = groupRounds.flatMap(r => r.games || []);
+    const pendingGames = allGroupGames.filter(g => !g.winner);
+
     const groupsData = getGroupData(tournament);
     const surviving = [];
     const thirdPlaceList = [];
@@ -292,7 +310,6 @@ export function getSurvivingPlayers(tournament) {
       }
     });
 
-    // Option B: If 30 top-2 qualifiers, include top 2 best 3rd-place finishers to make a 32-player Round of 32
     if (surviving.length === 30 && thirdPlaceList.length >= 2) {
       thirdPlaceList.sort((a, b) => {
         if (b.Pts !== a.Pts) return b.Pts - a.Pts;
@@ -305,26 +322,61 @@ export function getSurvivingPlayers(tournament) {
       surviving.push(...bestThirds);
     }
 
-    return surviving;
+    return {
+      isComplete: pendingGames.length === 0,
+      pendingCount: pendingGames.length,
+      pendingGames,
+      survivors: surviving
+    };
   } else {
+    // ── SURVIVAL FROM PREVIOUS KNOCKOUT ROUND ──
+    // Determine preceding knockout round
+    let sourceRound = lastRound;
+    
+    // If targetRoundName is specified, try to find the round that precedes it
+    if (targetRoundName) {
+      const targetIdx = rounds.findIndex(r => r.name && r.name.toLowerCase() === targetLower);
+      if (targetIdx > 0) {
+        sourceRound = rounds[targetIdx - 1];
+      }
+    }
+
+    const prevGames = sourceRound.games || [];
+    const pendingGames = prevGames.filter(g => !g.winner);
+
     const winners = [];
-    (lastRound.games || []).forEach(g => {
+    prevGames.forEach(g => {
       if (g.winner && typeof g.winner === 'object' && g.winner.username !== 'forfeit' && g.winner.username !== 'bye') {
         winners.push(g.winner);
       }
     });
-    return winners;
+
+    return {
+      isComplete: pendingGames.length === 0,
+      pendingCount: pendingGames.length,
+      pendingGames,
+      survivors: winners
+    };
   }
 }
 
-// Generate next round from winners of the last round  called by admin after logging all results
+// Extract surviving players for a specific target round or default to current stage
+export function getSurvivingPlayers(tournament, targetRoundName = null) {
+  const status = getSurvivingPlayersStatus(tournament, targetRoundName);
+  return status.survivors;
+}
+
+// Generate next round from winners of the last round — called by admin after logging all results
 export function generateNextRound(rounds, year, month, options = {}) {
   const tournament = options.tournament || { rounds, players: options.players };
   const last = rounds[rounds.length - 1];
+  const nextNum = last.roundNum + 1;
+  const roundName = options.roundName || (ROUND_NAMES[nextNum - 1] ?? `Round ${nextNum}`);
+
   const winners = (Array.isArray(options.selectedPlayers))
     ? options.selectedPlayers
-    : getSurvivingPlayers(tournament);
-  const nextNum = last.roundNum + 1;
+    : getSurvivingPlayers(tournament, roundName);
+
   const targetEloGap = options.targetEloGap ?? 400;
   const schoolPenalty = options.schoolPenalty ?? 150;
   const customDate = options.customDate;
@@ -408,7 +460,6 @@ export function generateNextRound(rounds, year, month, options = {}) {
     }
   }
   const roundDate = customDate || dates[dateIdx];
-  const roundName = options.roundName || (ROUND_NAMES[nextNum - 1] ?? `Round ${nextNum}`);
   const isGroupStage = roundName.toLowerCase().includes('group');
   const isKnockout = !isGroupStage;
   return { roundNum: nextNum, name: roundName, date: roundDate, isGroupStage, isKnockout, games };

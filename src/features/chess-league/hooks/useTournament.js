@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { supabase } from '../../../supabase';
-import { generateRound1, generateNextRound } from '../utils/tournament';
+import { generateRound1, generateNextRound, getSurvivingPlayersStatus } from '../utils/tournament';
 import tournamentPlayers from '../data/playersWithRatings.json';
 
 const LS_KEY = (my) => `scl_tournament_${my}`;
@@ -307,18 +307,45 @@ export function useTournament(monthYear) {
     save({ ...tournament, rounds: updated });
   };
 
-  // Generate next round from current winners  admin calls after all results are logged
+  // Generate next round from current winners — admin calls after all results are logged
   const advanceRound = (options = {}) => {
     if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return;
     const [y, m] = monthYear.split('-').map(Number);
     const last = tournament.rounds[tournament.rounds.length - 1];
     const isManual = Array.isArray(options.selectedPlayers);
-    const games = last?.games || [];
-    const allDone = games.length > 0 && games.every(g => g.winner);
-    if (!allDone && !isManual) { toast.error('Log all match results or enable Manual Selection Mode before generating the next round.'); return; }
-    if (games.length === 1 && !isManual) { toast.info('Tournament complete. No more rounds.'); return; }
-    const nextRound = generateNextRound(tournament.rounds, y, m, options);
+    const targetRoundName = options.roundName || null;
+
+    if (last?.games?.length === 1 && last?.games[0]?.winner && !isManual) {
+      toast.info('Tournament complete. No more rounds to generate.');
+      return;
+    }
+
+    const survivalCheck = getSurvivingPlayersStatus(tournament, targetRoundName);
+
+    if (!survivalCheck.isComplete && !isManual) {
+      toast.error(`Cannot generate round: Previous phase has ${survivalCheck.pendingCount} un-logged match result(s). Log all results first.`);
+      return;
+    }
+
+    const nextRound = generateNextRound(tournament.rounds, y, m, {
+      ...options,
+      selectedPlayers: isManual ? options.selectedPlayers : survivalCheck.survivors
+    });
+
     save({ ...tournament, rounds: [...tournament.rounds, nextRound] });
+  };
+
+  const deleteRound = (roundNum) => {
+    if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return;
+    const roundToDelete = tournament.rounds.find(r => r.roundNum === roundNum);
+    if (!roundToDelete) return;
+
+    const roundName = roundToDelete.name || `Round ${roundNum}`;
+    if (!window.confirm(`Are you sure you want to delete all generated fixtures for "${roundName}"?`)) return;
+
+    const updatedRounds = tournament.rounds.filter(r => r.roundNum !== roundNum);
+    save({ ...tournament, rounds: updatedRounds });
+    toast.warn(`Deleted fixtures for "${roundName}".`);
   };
 
   const reset = () => {
@@ -344,5 +371,5 @@ export function useTournament(monthYear) {
     save({ ...tournament, rounds: updatedRounds });
   };
 
-  return { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart };
+  return { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, deleteRound, reset, clearMocks, updateNextRoundStart };
 }

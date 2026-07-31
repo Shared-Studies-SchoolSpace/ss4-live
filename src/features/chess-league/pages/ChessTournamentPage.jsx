@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { useTournament } from '../hooks/useTournament';
 import { tournamentPlayers } from '../data/tournamentPlayers';
-import { getTournamentDates, getCountdownTarget, getSurvivingPlayers, getGroupData } from '../utils/tournament';
+import { getTournamentDates, getCountdownTarget, getSurvivingPlayers, getSurvivingPlayersStatus, getGroupData } from '../utils/tournament';
 import { TournamentHero } from '../components/TournamentHero';
 import { BracketTab } from '../components/BracketTab';
 import { GroupStageTable } from '../components/GroupStageTable';
@@ -291,7 +291,7 @@ export default function ChessTournamentPage() {
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
   });
 
-  const { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
+  const { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, deleteRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
 
   const [activeTab, setActiveTab] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -475,10 +475,14 @@ export default function ChessTournamentPage() {
     return { byes, active };
   };
 
+  const survivalStatus = React.useMemo(() => {
+    if (!tournament?.rounds?.length) return { isComplete: true, pendingCount: 0, pendingGames: [], survivors: [] };
+    return getSurvivingPlayersStatus(tournament, paramRoundName);
+  }, [tournament, paramRoundName]);
+
   const seededPlayersNext = React.useMemo(() => {
-    if (!tournament?.rounds?.length) return [];
-    return getSurvivingPlayers(tournament);
-  }, [tournament]);
+    return survivalStatus.survivors || [];
+  }, [survivalStatus]);
 
   const [selectedManualGroupFilter, setSelectedManualGroupFilter] = useState('ALL');
 
@@ -2114,18 +2118,33 @@ export default function ChessTournamentPage() {
                       {(() => {
                         const currentAdminRound = tournament.rounds.find(r => r.roundNum === adminRoundNum);
                         const groupsInRound = [...new Set((currentAdminRound?.games || []).map(g => g.groupLabel).filter(Boolean))].sort();
-                        if (!groupsInRound.length) return null;
                         return (
-                          <select
-                            value={adminGroupFilter}
-                            onChange={(e) => setAdminGroupFilter(e.target.value)}
-                            className="text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer w-full sm:w-auto"
-                          >
-                            <option value="ALL">All Groups</option>
-                            {groupsInRound.map(grp => (
-                              <option key={grp} value={grp}>Group {grp}</option>
-                            ))}
-                          </select>
+                          <>
+                            {groupsInRound.length > 0 && (
+                              <select
+                                value={adminGroupFilter}
+                                onChange={(e) => setAdminGroupFilter(e.target.value)}
+                                className="text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] cursor-pointer w-full sm:w-auto"
+                              >
+                                <option value="ALL">All Groups</option>
+                                {groupsInRound.map(grp => (
+                                  <option key={grp} value={grp}>Group {grp}</option>
+                                ))}
+                              </select>
+                            )}
+
+                            <button
+                              type="button"
+                              onClick={() => deleteRound(adminRoundNum)}
+                              className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-bold px-3.5 py-2.5 min-h-[44px] rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-1.5 shrink-0"
+                              title="Delete all generated fixtures for the selected round"
+                            >
+                              <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                              <span>Delete Round Fixtures</span>
+                            </button>
+                          </>
                         );
                       })()}
                     </div>
@@ -2475,6 +2494,14 @@ export default function ChessTournamentPage() {
               {!paramManualSelection ? (
                 /* Auto-Retrieve View (Read Only Cards) */
                 <div className="border border-brand-accent/10 bg-brand-accent/5 rounded-2xl p-4 sm:p-5 space-y-3">
+                  {!survivalStatus.isComplete && (
+                    <div className="bg-amber-50 border border-amber-200 text-amber-900 p-3 rounded-xl text-xs font-bold flex items-center gap-2">
+                      <svg className="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      <span>Completion Prerequisite Unmet: The previous round has <strong>{survivalStatus.pendingCount}</strong> pending match result(s). Please log all match outcomes before auto-generating <strong>{paramRoundName}</strong>.</span>
+                    </div>
+                  )}
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-bold text-gray-500">
                     <span>Auto-Retrieved Qualifiers ({seededPlayersNext.length} Players)</span>
                     
@@ -2858,6 +2885,9 @@ export default function ChessTournamentPage() {
                     if (selectedSurvivingUsernames.length % 2 !== 0) {
                       toast.info(`Note: You selected ${selectedSurvivingUsernames.length} players (odd count). The un-paired player will be assigned a Bye.`);
                     }
+                  } else if (!survivalStatus.isComplete) {
+                    toast.error(`Cannot generate ${paramRoundName}: Previous round has ${survivalStatus.pendingCount} pending match result(s). Log all results first.`);
+                    return;
                   }
 
                   const manualSelectedObjs = paramManualSelection

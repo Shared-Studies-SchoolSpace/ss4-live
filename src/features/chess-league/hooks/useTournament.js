@@ -335,21 +335,21 @@ export function useTournament(monthYear) {
     save({ ...tournament, rounds: [...tournament.rounds, nextRound] });
   };
 
-  const deleteRound = (roundNum) => {
+  const deleteRound = (roundNum, options = {}) => {
     if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return;
     const roundToDelete = tournament.rounds.find(r => r.roundNum === roundNum);
     if (!roundToDelete) return;
 
     const roundName = roundToDelete.name || `Round ${roundNum}`;
-    if (!window.confirm(`Are you sure you want to delete all generated fixtures for "${roundName}"?`)) return;
+    if (!options.skipConfirm && !window.confirm(`Are you sure you want to delete all generated fixtures for "${roundName}"?`)) return;
 
     const updatedRounds = tournament.rounds.filter(r => r.roundNum !== roundNum);
     save({ ...tournament, rounds: updatedRounds });
-    toast.warn(`Deleted fixtures for "${roundName}".`);
+    toast.info(`Deleted fixtures for "${roundName}".`);
   };
 
-  const reset = () => {
-    if (!window.confirm('Reset? All results will be lost.')) return;
+  const reset = (options = {}) => {
+    if (!options.skipConfirm && !window.confirm('Reset? All results will be lost.')) return;
     save({ ...tournament, status: 'upcoming', winner: null, rounds: [] });
   };
 

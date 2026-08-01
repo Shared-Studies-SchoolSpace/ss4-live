@@ -140,7 +140,7 @@ export default function AdminBroadcastPanel({ onClose }) {
       fetchRecentBroadcasts();
       if (onClose) onClose();
     } catch (err) {
-      toast.error('Failed to dispatch broadcast: ' + err.message);
+      toast.error('Unable to send broadcast. Please try again.');
       console.error(err);
     } finally {
       setLoading(false);
@@ -159,7 +159,9 @@ export default function AdminBroadcastPanel({ onClose }) {
       <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-gray-100 gap-2">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <span className="text-base shrink-0">📢</span>
+            <svg className="w-4.5 h-4.5 text-brand-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.684A1.761 1.761 0 013 12c0-.68.384-1.272.954-1.564l4.63-2.316m9.852.196L21 6.5" />
+            </svg>
             <h3 className="text-xs sm:text-sm font-black text-brand-text-dark font-space uppercase tracking-wider truncate">
               Universal Admin Broadcast
             </h3>
@@ -196,7 +198,9 @@ export default function AdminBroadcastPanel({ onClose }) {
                   : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
               }`}
             >
-              <span>🌐</span>
+              <svg className="w-4 h-4 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V8.082M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
               <span>All Players (Global)</span>
             </button>
             <button
@@ -208,7 +212,9 @@ export default function AdminBroadcastPanel({ onClose }) {
                   : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
               }`}
             >
-              <span>🎯</span>
+              <svg className="w-4 h-4 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
               <span>Specific Player</span>
             </button>
           </div>
@@ -229,7 +235,9 @@ export default function AdminBroadcastPanel({ onClose }) {
                   : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
               }`}
             >
-              <span>📢</span>
+              <svg className="w-4 h-4 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z" />
+              </svg>
               <span>Announcement + Notif</span>
             </button>
             <button
@@ -241,7 +249,9 @@ export default function AdminBroadcastPanel({ onClose }) {
                   : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
               }`}
             >
-              <span>🔔</span>
+              <svg className="w-4 h-4 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
               <span>Direct Notification Only</span>
             </button>
           </div>
@@ -280,10 +290,10 @@ export default function AdminBroadcastPanel({ onClose }) {
               onChange={(e) => setNotifType(e.target.value)}
               className="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-gray-300 bg-white text-gray-800 focus:ring-2 focus:ring-brand-primary focus:border-brand-primary text-xs font-semibold shadow-xs"
             >
-              <option value="announcement">📢 Announcement</option>
-              <option value="admin_alert">🚨 Admin Alert</option>
-              <option value="opponent_assigned">♟ Opponent / Match</option>
-              <option value="rating_update">📊 Rating Update</option>
+              <option value="announcement">Announcement</option>
+              <option value="admin_alert">Admin Alert</option>
+              <option value="opponent_assigned">Opponent / Match</option>
+              <option value="rating_update">Rating Update</option>
             </select>
           </div>
 
@@ -335,7 +345,7 @@ export default function AdminBroadcastPanel({ onClose }) {
           disabled={loading}
           className="w-full flex items-center justify-center gap-2 py-3 px-4 min-h-[44px] bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer text-xs uppercase tracking-wider"
         >
-          {loading ? 'Dispatching Broadcast...' : '🚀 Dispatch Broadcast'}
+          {loading ? 'Dispatching Broadcast...' : 'Dispatch Broadcast'}
         </Button>
       </form>
 

@@ -304,6 +304,25 @@ export default function ChessTournamentPage() {
     if (tabParam) {
       setActiveTab(tabParam);
     }
+    const monthParam = params.get('month');
+    if (monthParam) {
+      setSelectedMonthYear(monthParam);
+    } else {
+      // Auto-detect currently active tournament from DB if available
+      supabase
+        .from('tournaments')
+        .select('month_year')
+        .eq('status', 'active')
+        .order('month_year', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+        .then(({ data }) => {
+          if (data && data.month_year) {
+            setSelectedMonthYear(data.month_year);
+          }
+        })
+        .catch(() => {});
+    }
   }, [location.search]);
   const [isAdmin, setIsAdmin]       = useState(false);
   const [pinModal, setPinModal]     = useState(false);
@@ -756,7 +775,7 @@ export default function ChessTournamentPage() {
       toast.success("Your spot is locked in! The board awaits.");
     } catch (err) {
       console.error('Registration failed:', err);
-      toast.error('Registration failed: ' + err.message);
+      toast.error('Registration could not be completed. Please try again.');
     } finally {
       setLoadingReg(false);
     }

@@ -125,110 +125,203 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
     );
   }
 
-  // Get 5 knockout rounds starting from Round of 32
-  const ROUND_NAMES = ['Round of 32', 'Round of 16', 'Quarterfinals', 'Semifinals', 'Final'];
-  const gameCounts = [16, 8, 4, 2, 1];
-  
-  // Filter out any Group Stage rounds
-  let rawRounds = (tournament.rounds || []).filter(
+  // Filter out any Group Stage rounds from tournament.rounds
+  const rawKnockoutRounds = (tournament.rounds || []).filter(
     r => r.isKnockout || (r.name && !r.name.toLowerCase().includes('group'))
   );
 
-  const rounds = JSON.parse(JSON.stringify(rawRounds));
+  const findExistingRound = (targetName, expectedCount, roundIdxInKnockout = -1) => {
+    const lowerTarget = targetName.toLowerCase();
+    let match = rawKnockoutRounds.find(r => {
+      const name = (r.name || '').toLowerCase();
+      if (lowerTarget.includes('16')) return name.includes('16');
+      if (lowerTarget.includes('quarter')) return name.includes('quarter');
+      if (lowerTarget.includes('semi')) return name.includes('semi');
+      if (lowerTarget.includes('final')) return name.includes('final') && !name.includes('semi');
+      return false;
+    });
+    if (match) return match;
 
-  // If no knockout rounds yet, generate Round of 32 games template using surviving qualifiers
-  if (rounds.length === 0) {
-    const survivors = getSurvivingPlayers(tournament);
-    const round1Games = Array.from({ length: 16 }, (_, i) => {
-      const p1 = survivors[i * 2] ?? null;
-      const p2 = survivors[i * 2 + 1] ?? null;
+    match = rawKnockoutRounds.find(r => r.games && r.games.length === expectedCount);
+    if (match) return match;
+
+    if (roundIdxInKnockout >= 0 && rawKnockoutRounds[roundIdxInKnockout]) {
+      return rawKnockoutRounds[roundIdxInKnockout];
+    }
+    return null;
+  };
+
+  // Helper to map fixture games cleanly
+  const mapGames = (games, prefix, targetCount) => {
+    const mapped = (games || []).slice(0, targetCount).map((g, i) => ({
+      id: g.id || `${prefix}_G${i + 1}`,
+      p1: g.p1 || null,
+      p2: g.p2 || null,
+      winner: g.winner || null,
+      gameLink: g.gameLink || ''
+    }));
+    while (mapped.length < targetCount) {
+      const idx = mapped.length + 1;
+      mapped.push({ id: `${prefix}_G${idx}`, p1: null, p2: null, winner: null, gameLink: '' });
+    }
+    return mapped;
+  };
+
+  // 1. Round of 16 (8 games)
+  let r16Games = [];
+  const existingR16 = findExistingRound('Round of 16', 8, 0);
+
+  if (existingR16 && existingR16.games && existingR16.games.length > 0) {
+    r16Games = mapGames(existingR16.games, 'R16', 8);
+  } else {
+    const existingR32 = findExistingRound('Round of 32', 16);
+    if (existingR32 && existingR32.games && existingR32.games.length === 16) {
+      r16Games = Array.from({ length: 8 }, (_, i) => {
+        const g1 = existingR32.games[i * 2];
+        const g2 = existingR32.games[i * 2 + 1];
+        let p1 = g1?.winner ?? null;
+        let p2 = g2?.winner ?? null;
+        if (g1?.p1 && g1.p2?.username === 'bye') p1 = g1.p1;
+        if (g2?.p1 && g2.p2?.username === 'bye') p2 = g2.p1;
+        return {
+          id: `R16_G${i + 1}`,
+          p1, p2, winner: null, gameLink: ''
+        };
+      });
+    } else {
+      const survivors = getSurvivingPlayers(tournament);
+      r16Games = Array.from({ length: 8 }, (_, i) => {
+        const p1 = survivors[i * 2] ?? null;
+        const p2 = survivors[i * 2 + 1] ?? null;
+        return {
+          id: `R16_G${i + 1}`,
+          p1, p2, winner: null, gameLink: ''
+        };
+      });
+    }
+  }
+
+  // 2. Quarterfinals (4 games)
+  let qfGames = [];
+  const existingQF = findExistingRound('Quarterfinals', 4, 1);
+
+  if (existingQF && existingQF.games && existingQF.games.length > 0) {
+    qfGames = mapGames(existingQF.games, 'QF', 4);
+  } else {
+    qfGames = Array.from({ length: 4 }, (_, i) => {
+      const g1 = r16Games[i * 2];
+      const g2 = r16Games[i * 2 + 1];
+      const p1 = g1?.winner ?? null;
+      const p2 = g2?.winner ?? null;
       return {
-        id: `R1_G${i + 1}`,
+        id: `QF_G${i + 1}`,
         p1, p2, winner: null, gameLink: ''
       };
     });
-    rounds.push({
-      roundNum: 1,
-      name: 'Round of 32',
-      date: 'Knockout Stage',
-      games: round1Games
-    });
   }
 
-  while (rounds.length < 5) {
-    const nextRoundNum = rounds.length + 1;
-    const prevRound = rounds[rounds.length - 1];
-    const nextGamesCount = gameCounts[nextRoundNum - 1];
-    
-    const games = Array.from({ length: nextGamesCount }, (_, i) => {
-      const g1 = prevRound.games[i * 2];
-      const g2 = prevRound.games[i * 2 + 1];
+  // 3. Semifinals (2 games)
+  let sfGames = [];
+  const existingSF = findExistingRound('Semifinals', 2, 2);
+
+  if (existingSF && existingSF.games && existingSF.games.length > 0) {
+    sfGames = mapGames(existingSF.games, 'SF', 2);
+  } else {
+    sfGames = Array.from({ length: 2 }, (_, i) => {
+      const g1 = qfGames[i * 2];
+      const g2 = qfGames[i * 2 + 1];
       const p1 = g1?.winner ?? null;
       const p2 = g2?.winner ?? null;
-      
-      let winner = null;
-      if (p1 && p1.username === 'bye') winner = p2;
-      else if (p2 && p2.username === 'bye') winner = p1;
-      
       return {
-        id: `R${nextRoundNum}_G${i + 1}`,
-        p1, p2, winner, gameLink: ''
+        id: `SF_G${i + 1}`,
+        p1, p2, winner: null, gameLink: ''
       };
     });
-    
-    rounds.push({
-      roundNum: nextRoundNum,
-      name: ROUND_NAMES[nextRoundNum - 1],
-      date: `Knockout Day ${nextRoundNum}`,
-      games
-    });
   }
 
-  // Ensure round names match the 5-round knockout template
-  rounds.forEach((r, idx) => {
-    r.name = ROUND_NAMES[idx] || r.name;
-  });
+  // 4. Final (1 game)
+  let finalGames = [];
+  const existingFinal = findExistingRound('Final', 1, 3);
 
-  // Propagate all winners forward across all 5 rounds
-  for (let i = 0; i < rounds.length - 1; i++) {
+  if (existingFinal && existingFinal.games && existingFinal.games.length > 0) {
+    finalGames = mapGames(existingFinal.games, 'FINAL', 1);
+  } else {
+    const g1 = sfGames[0];
+    const g2 = sfGames[1];
+    const p1 = g1?.winner ?? null;
+    const p2 = g2?.winner ?? null;
+    finalGames = [{
+      id: `FINAL_G1`,
+      p1, p2, winner: null, gameLink: ''
+    }];
+  }
+
+
+  // Always show all 4 rounds; future rounds populate with TBD naturally as winners emerge
+  const rounds = [
+    { roundNum: 1, name: 'Round of 16',   games: r16Games },
+    { roundNum: 2, name: 'Quarterfinals', games: qfGames },
+    { roundNum: 3, name: 'Semifinals',    games: sfGames },
+    { roundNum: 4, name: 'Final',         games: finalGames },
+  ];
+
+  if (!existingR16) {
+    return (
+      <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
+        <p className="font-space font-black text-lg text-[#111111] mb-1">No Knockout Rounds Yet</p>
+        <p className="text-xs text-gray-400">Bracket will appear once knockout fixtures are published.</p>
+      </div>
+    );
+  }
+
+  // Auto-advance BYEs and propagate winners forward
+  for (let i = 0; i < rounds.length; i++) {
     const curr = rounds[i];
-    const next = rounds[i + 1];
-    next.games.forEach((g, gi) => {
-      const g1 = curr.games[gi * 2];
-      const g2 = curr.games[gi * 2 + 1];
-      g.p1 = g1?.winner ?? null;
-      g.p2 = g2?.winner ?? null;
-      
-      if (g.p1 && g.p1.username === 'bye') g.winner = g.p2;
-      else if (g.p2 && g.p2.username === 'bye') g.winner = g.p1;
-      else if (!g.p1 || !g.p2) g.winner = null;
+    curr.games.forEach(g => {
+      if (g.p1?.username === 'bye' && g.p2 && g.p2.username !== 'bye') {
+        g.winner = g.p2;
+      } else if (g.p2?.username === 'bye' && g.p1 && g.p1.username !== 'bye') {
+        g.winner = g.p1;
+      }
     });
+
+    if (i < rounds.length - 1) {
+      const next = rounds[i + 1];
+      next.games.forEach((g, gi) => {
+        const g1 = curr.games[gi * 2];
+        const g2 = curr.games[gi * 2 + 1];
+        if (!g.p1 && g1?.winner) g.p1 = g1.winner;
+        if (!g.p2 && g2?.winner) g.p2 = g2.winner;
+        if (g.p1 && g.p1.username === 'bye' && g.p2 && g.p2.username !== 'bye') g.winner = g.p2;
+        else if (g.p2 && g.p2.username === 'bye' && g.p1 && g.p1.username !== 'bye') g.winner = g.p1;
+      });
+    }
   }
 
-  const finalGame = rounds[4].games[0];
-  const champion = finalGame?.winner;
+  const finalGame = rounds[3].games[0];
+  const champion = finalGame?.winner && finalGame.winner.username !== 'forfeit' ? finalGame.winner : null;
   const activeChampUsername = champion?.username;
 
-  // Split rounds into left-side, right-side, and center final
+  // Split rounds into left-side (R16, QF, SF), right-side (mirror), and center Final
+  const sideRounds = rounds.slice(0, 3);
   const leftRounds = [];
   const rightRounds = [];
 
-  for (let rIdx = 0; rIdx < 4; rIdx++) {
-    const r = rounds[rIdx];
+  for (const r of sideRounds) {
     const totalG = r.games.length;
     leftRounds.push({ roundNum: r.roundNum, name: r.name, games: r.games.slice(0, totalG / 2) });
     rightRounds.push({ roundNum: r.roundNum, name: r.name, games: r.games.slice(totalG / 2) });
   }
 
-  // Compute minimum total width needed: 4 rounds each side at 185px + gaps, plus 300px center column
+  // Compute minimum total width needed: 3 rounds each side at 185px + gaps, plus 300px center column
   const COL_W = 185;
   const COL_GAP = 8;
   const CENTER_W = 300;
   const PADDING = 64; // p-8 = 32px each side
-  const numRoundCols = leftRounds.length; // 4
+  const numRoundCols = leftRounds.length; // always 3
   const sideWidth = numRoundCols * COL_W + (numRoundCols - 1) * COL_GAP;
   const TOTAL_W = sideWidth * 2 + CENTER_W + COL_GAP * 4 + PADDING;
-  const TOTAL_H = 1100;
+  const TOTAL_H = 750;
 
   // Draw lines based on bounding rect coordinates
   const calculateLines = () => {
@@ -247,7 +340,7 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
       return { x, y };
     };
 
-    for (let r = 1; r < 4; r++) {
+    for (let r = 1; r < 3; r++) {
       const prevRound = rounds[r - 1];
       const currRound = rounds[r];
       const half = currRound.games.length / 2;
@@ -278,9 +371,9 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
       });
     }
 
-    // Connect Semifinalists (Round 4, index 3) to the Center Finalist box (index 4)
-    const sfLeft = rounds[3].games[0];
-    const sfRight = rounds[3].games[1];
+    // Connect Semifinalists (Round 3, index 2) to the Center Finalist box (index 3)
+    const sfLeft = rounds[2].games[0];
+    const sfRight = rounds[2].games[1];
     
     const pSFLeft = getPoint(sfLeft.id, 'right');
     const pSFRight = getPoint(sfRight.id, 'left');
@@ -627,7 +720,7 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
               {champion ? (
                 <div className="bg-gradient-to-tr from-[#0B193C] to-[#1A56C4] text-white rounded-2xl p-4 shadow-md border border-blue-300 w-full">
                   <span className="text-[10px] font-black uppercase tracking-[0.25em] block text-blue-200">Champion</span>
-                  <p 
+                  <p
                     onClick={() => onPlayerClick(champion)}
                     className="text-base font-black font-space mt-1 hover:underline cursor-pointer truncate"
                   >

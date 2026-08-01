@@ -250,6 +250,7 @@ export function useTournament(monthYear) {
   useEffect(() => { fetchHistory(); }, []);
 
   useEffect(() => {
+    if (!monthYear) return; // wait for auto-detect
     const load = async () => {
       setIsLoading(true);
       try {
@@ -262,9 +263,22 @@ export function useTournament(monthYear) {
       const mock = MOCK_HISTORY.find(m => m.month_year === monthYear);
       setTournamentState(mock || null);
       setIsLoading(false);
-      // ponytail: no auto-init  admin explicitly seeds Round 1
     };
     load();
+
+    const channel = supabase
+      .channel(`tournament_${monthYear}_changes`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'tournaments', filter: `month_year=eq.${monthYear}` }, (payload) => {
+        if (payload.new) {
+          setTournamentState(payload.new);
+          localStorage.setItem(LS_KEY(monthYear), JSON.stringify(payload.new));
+        }
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [monthYear]);
 
   // Seed Round 1 permanently  called once by admin

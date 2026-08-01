@@ -286,10 +286,7 @@ function ResultFixtureCard({ game, roundName, onSelectPlayer }) {
 export default function ChessTournamentPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedMonthYear, setSelectedMonthYear] = useState(() => {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-  });
+  const [selectedMonthYear, setSelectedMonthYear] = useState(null);
 
   const { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, deleteRound, reset, clearMocks, updateNextRoundStart } = useTournament(selectedMonthYear);
 
@@ -308,7 +305,7 @@ export default function ChessTournamentPage() {
     if (monthParam) {
       setSelectedMonthYear(monthParam);
     } else {
-      // Auto-detect currently active tournament from DB if available
+      // Auto-detect the active (or most recent) tournament month
       supabase
         .from('tournaments')
         .select('month_year')
@@ -317,11 +314,26 @@ export default function ChessTournamentPage() {
         .limit(1)
         .maybeSingle()
         .then(({ data }) => {
-          if (data && data.month_year) {
+          if (data?.month_year) {
             setSelectedMonthYear(data.month_year);
+          } else {
+            // Fallback: most recent tournament of any status
+            return supabase
+              .from('tournaments')
+              .select('month_year')
+              .order('month_year', { ascending: false })
+              .limit(1)
+              .maybeSingle()
+              .then(({ data: d }) => {
+                const now = new Date();
+                setSelectedMonthYear(d?.month_year || `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`);
+              });
           }
         })
-        .catch(() => {});
+        .catch(() => {
+          const now = new Date();
+          setSelectedMonthYear(`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`);
+        });
     }
   }, [location.search]);
   const [isAdmin, setIsAdmin]       = useState(false);
@@ -1062,7 +1074,7 @@ export default function ChessTournamentPage() {
     }] : []),
   ];
 
-  const isUpcoming = !tournament || tournament.status === 'upcoming';
+  const isCompleted = tournament?.status === 'completed';
 
   return (
     <div className="min-h-screen bg-[#F6F4F0]">
@@ -1084,7 +1096,7 @@ export default function ChessTournamentPage() {
             <div className="h-12 bg-white/10 rounded-xl w-48 mx-auto"></div>
           </div>
         </div>
-      ) : isUpcoming && !isAdmin ? (
+      ) : isCompleted && !isAdmin ? (
         /* Non-Active View: Big Ass Countdown */
         <div 
           className="relative text-white px-4 sm:px-6 md:px-12 lg:px-16 py-12 sm:py-16 md:py-24 min-h-[85vh] flex flex-col justify-center overflow-hidden"

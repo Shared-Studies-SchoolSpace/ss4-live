@@ -803,7 +803,7 @@ export default function LandingPage() {
               <div className="space-y-3">
                 <div className="p-3.5 bg-[#FAF8F4] rounded-xl border border-m3-outline-variant">
                   <span className="text-[10px] font-black text-brand-accent uppercase tracking-widest block">Next Tournament</span>
-                  <a href="/chess-league" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
+                  <a href="/chess-league/tournament" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
                     July 2026 Monthly Tournament
                   </a>
                   <span className="text-xs font-semibold text-gray-700 block mt-0.5">

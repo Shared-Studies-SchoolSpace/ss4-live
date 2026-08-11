@@ -1,38 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getTournamentDates } from '../utils/tournament';
-
-/**
- * TournamentCountdownBanner
- *
- * Laws of UX applied:
- * - Von Restorff:      One distinct strip  nothing else on-page pulses amber.
- * - Zeigarnik Effect: Live countdown ticks = incomplete task the brain wants to resolve.
- * - Goal-Gradient:    As days shrink the urgency message escalates.
- * - Fitts's Law:      44 px-min CTA, full-height dismiss area.
- * - Hick's Law:       Exactly one action: "Register Now".
- * - Occam's Razor:    Strip, not modal. Catchiness over space.
- * - Parkinson's Law:  Hard deadline shown explicitly to constrain deliberation.
- * - Peak-End Rule:    Dismiss is smooth/frictionless  no guilt, no friction.
- */
+import { getCountdownTarget } from '../utils/tournament';
+import { supabase } from '../../../supabase';
 
 const SHOW_DAYS_BEFORE = 14;
 const URGENT_THRESHOLD = 3;
-const DISMISS_KEY = 'scl_tournament_banner_dismissed_v2';
-
-function getNextTournamentStart() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = now.getMonth() + 1;
-  const todayStr = `${y}-${String(m).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-  const today8pm = new Date(`${todayStr}T20:00:00+01:00`);
-
-  return { date: today8pm, month: m, year: y };
-}
+const DISMISS_KEY = 'scl_tournament_banner_dismissed_v3';
 
 function useCountdown(targetDate) {
   const calc = useCallback(() => {
-    const diff = targetDate - Date.now();
+    if (!targetDate) return { days: 0, hours: 0, mins: 0, secs: 0, expired: true };
+    const diff = targetDate.getTime() - Date.now();
     if (diff <= 0) return { days: 0, hours: 0, mins: 0, secs: 0, expired: true };
     const totalSecs = Math.floor(diff / 1000);
     return {
@@ -76,53 +54,80 @@ function Colon() {
 export default function TournamentCountdownBanner() {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  const [tournament, setTournament] = useState(null);
+  const [targetDate, setTargetDate] = useState(null);
+  const [bannerLabel, setBannerLabel] = useState('');
 
   useEffect(() => {
-    const stored = localStorage.getItem(DISMISS_KEY);
-    if (stored) {
-      const dismissedDate = new Date(stored);
-      const now = new Date();
-      if (
-        dismissedDate.getFullYear() === now.getFullYear() &&
-        dismissedDate.getMonth() === now.getMonth()
-      ) {
-        return;
+    const loadTarget = async () => {
+      let tObj = null;
+      try {
+        const { data } = await supabase
+          .from('tournaments')
+          .select('*')
+          .or('status.eq.active,status.eq.upcoming')
+          .order('month_year', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        if (data) tObj = data;
+      } catch (err) {
+        console.warn('Could not fetch active tournament for banner:', err);
       }
-    }
 
-    const { date, month, year } = getNextTournamentStart();
-    const msAway = date - Date.now();
-    const daysAway = msAway / (1000 * 60 * 60 * 24);
+      const { date, label } = getCountdownTarget(tObj);
 
-    if (daysAway > 0 && daysAway <= SHOW_DAYS_BEFORE) {
-      setTournament({ date, month, year });
+      // Fix 1: If there is no valid scheduled future date, don't show the banner at all.
+      // Previously getCountdownTarget returned today-8pm as a fallback, causing the banner
+      // to fire every evening with stale copy even with no active tournament.
+      if (!date) return;
+
+      const msAway = date.getTime() - Date.now();
+      const daysAway = msAway / (1000 * 60 * 60 * 24);
+      if (daysAway <= 0 || daysAway > SHOW_DAYS_BEFORE) return;
+
+      // Fix 2: Per-event dismiss — only suppress the banner if the user dismissed it
+      // for this EXACT target date. Previously the dismiss reset on calendar-month
+      // rollover, which was too coarse (reset even when no new event was scheduled,
+      // or failed to reset when a new event was scheduled mid-month).
+      const stored = localStorage.getItem(DISMISS_KEY);
+      if (stored) {
+        try {
+          const { dismissedFor } = JSON.parse(stored);
+          if (dismissedFor && new Date(dismissedFor).toISOString() === date.toISOString()) {
+            return; // dismissed for this exact event — stay hidden
+          }
+          // Different target date → new event, ignore the old dismiss
+        } catch {
+          // Legacy string format or corrupt data — ignore and show the banner
+        }
+      }
+
+      setTargetDate(date);
+      setBannerLabel(label || 'Tournament Round');
       setVisible(true);
-    }
+    };
+
+    loadTarget();
   }, []);
 
   const handleDismiss = () => {
     setDismissed(true);
-    localStorage.setItem(DISMISS_KEY, new Date().toISOString());
+    // Store the exact event date so a new event correctly resets the dismiss
+    localStorage.setItem(DISMISS_KEY, JSON.stringify({
+      dismissedAt: new Date().toISOString(),
+      dismissedFor: targetDate ? targetDate.toISOString() : null,
+    }));
   };
 
-  const { days, hours, mins, secs, expired } = useCountdown(
-    tournament?.date ?? new Date(Date.now() + 1e9)
-  );
+  const { days, hours, mins, secs, expired } = useCountdown(targetDate);
 
-  if (!visible || dismissed || expired) return null;
+  if (!visible || dismissed || expired || !targetDate) return null;
 
   const isUrgent = days < URGENT_THRESHOLD;
 
-  const MONTH_NAMES = [
-    '', 'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-  ];
-  const monthName = tournament ? MONTH_NAMES[tournament.month] : '';
-
+  // Fix 3: Use dynamic bannerLabel — was hardcoded "Round of 32" regardless of round stage
   const headline = isUrgent
-    ? `Knockout Action! Round of 32 starts in ${hours}h ${mins}m!`
-    : `SCL Round of 32 matches begin tonight at 8:00 PM WAT. Get ready!`;
+    ? `${bannerLabel} starts in ${days > 0 ? `${days}d ` : ''}${hours}h ${mins}m!`
+    : `SCL ${bannerLabel} matches are scheduled! Get ready.`;
 
   return (
     <AnimatePresence>
@@ -174,18 +179,18 @@ export default function TournamentCountdownBanner() {
               />
             )}
 
-            {/* LEFT: copy */}
+            {/* LEFT: dynamic label (was hardcoded "SCL Round of 32.") */}
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <p className="text-white font-bold text-[11px] sm:text-xs leading-tight truncate" style={{ margin: 0 }}>
                 <span
                   className="font-black mr-1"
                   style={{ color: isUrgent ? '#93C5FD' : '#A5C8FF', fontSize: '12px' }}
                 >
-                  SCL Round of 32.
+                  SCL {bannerLabel}.
                 </span>
                 <span className="hidden sm:inline">{headline}</span>
                 <span className="inline sm:hidden">
-                  {hours}h {mins}m left: Round of 32!
+                  {hours}h {mins}m left: {bannerLabel}!
                 </span>
               </p>
             </div>
@@ -204,7 +209,7 @@ export default function TournamentCountdownBanner() {
               <Digit val={secs} unit="s" />
             </div>
 
-            {/* RIGHT: CTA */}
+            {/* RIGHT: CTA + dismiss */}
             <div className="flex items-center gap-2 shrink-0">
               <a
                 href="/chess-league/tournament"
@@ -236,6 +241,18 @@ export default function TournamentCountdownBanner() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
                 </svg>
               </a>
+
+              {/* Dismiss button */}
+              <button
+                onClick={handleDismiss}
+                aria-label="Dismiss tournament banner"
+                className="flex items-center justify-center w-6 h-6 rounded-full transition-colors cursor-pointer border-none focus:outline-none focus-visible:outline-2 focus-visible:outline-white"
+                style={{ background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.7)' }}
+              >
+                <svg style={{ width: '10px', height: '10px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
           </div>
         </motion.div>

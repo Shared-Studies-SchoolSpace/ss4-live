@@ -370,18 +370,57 @@ export function getSurvivingPlayers(tournament, targetRoundName = null) {
 export function generateNextRound(rounds, year, month, options = {}) {
   const tournament = options.tournament || { rounds, players: options.players };
   const last = rounds[rounds.length - 1];
-  const nextNum = last.roundNum + 1;
+  const nextNum = last ? last.roundNum + 1 : 1;
   const roundName = options.roundName || (ROUND_NAMES[nextNum - 1] ?? `Round ${nextNum}`);
+  const isGroupStage = roundName.toLowerCase().includes('group');
+  const isKnockout = !isGroupStage;
 
+  const customDate = options.customDate;
+  const dates = getTournamentDates(year, month);
+  const dateIdx = Math.min(nextNum - 1, dates.length - 1);
+  const roundDate = customDate || dates[dateIdx];
+  const BYE_OBJ = { name: 'BYE', username: 'bye', school: '', department: '' };
+
+  // Deterministic knockout bracket pairing (Round of 32 -> 16 -> QF -> SF -> Final)
+  if (isKnockout && last && last.games && last.games.length > 1 && !options.selectedPlayers) {
+    const prevGames = last.games;
+    const numNextGames = Math.floor(prevGames.length / 2);
+    const games = [];
+
+    for (let i = 0; i < numNextGames; i++) {
+      const g1 = prevGames[i * 2];
+      const g2 = prevGames[i * 2 + 1];
+
+      let p1 = g1?.winner ?? null;
+      let p2 = g2?.winner ?? null;
+
+      // Auto-resolve BYE winners if not explicit
+      if (!p1 && g1?.p1 && g1.p2?.username === 'bye') p1 = g1.p1;
+      if (!p2 && g2?.p1 && g2.p2?.username === 'bye') p2 = g2.p1;
+
+      let winner = null;
+      if (p1?.username === 'bye' && p2 && p2.username !== 'bye') winner = p2;
+      else if (p2?.username === 'bye' && p1 && p1.username !== 'bye') winner = p1;
+
+      games.push({
+        id: `R${nextNum}_G${i + 1}`,
+        p1,
+        p2,
+        winner,
+        gameLink: ''
+      });
+    }
+
+    return { roundNum: nextNum, name: roundName, date: roundDate, isGroupStage, isKnockout, games };
+  }
+
+  // Fallback / Swiss / Custom selection ELO-based pairing
   const winners = (Array.isArray(options.selectedPlayers))
     ? options.selectedPlayers
     : getSurvivingPlayers(tournament, roundName);
 
   const targetEloGap = options.targetEloGap ?? 400;
   const schoolPenalty = options.schoolPenalty ?? 150;
-  const customDate = options.customDate;
-  const dates = getTournamentDates(year, month);
-  const dateIdx = Math.min(nextNum - 1, dates.length - 1);
 
   // 1. Sort winners by ELO rating desc to calculate boundaries
   const sortedWinners = [...winners].sort((a, b) => (b.rating || 0) - (a.rating || 0));
@@ -392,14 +431,12 @@ export function generateNextRound(rounds, year, month, options = {}) {
   let maxAvg = 0;
 
   if (numPairs > 0) {
-    // min_avg: adjacent pairing
     let sumMin = 0;
     for (let i = 0; i < numPairs; i++) {
       sumMin += Math.abs((sortedWinners[i * 2].rating || 0) - (sortedWinners[i * 2 + 1].rating || 0));
     }
     minAvg = sumMin / numPairs;
 
-    // max_avg: split-half pairing
     let sumMax = 0;
     for (let i = 0; i < numPairs; i++) {
       sumMax += Math.abs((sortedWinners[i].rating || 0) - (sortedWinners[i + numPairs].rating || 0));
@@ -419,7 +456,6 @@ export function generateNextRound(rounds, year, month, options = {}) {
   const unpaired = [...winners];
   const games = [];
   let gameIdCounter = 1;
-  const BYE_OBJ = { name: 'BYE', username: 'bye', school: '', department: '' };
 
   while (unpaired.length > 0) {
     const p1 = unpaired.shift();
@@ -459,48 +495,49 @@ export function generateNextRound(rounds, year, month, options = {}) {
       });
     }
   }
-  const roundDate = customDate || dates[dateIdx];
-  const isGroupStage = roundName.toLowerCase().includes('group');
-  const isKnockout = !isGroupStage;
+
   return { roundNum: nextNum, name: roundName, date: roundDate, isGroupStage, isKnockout, games };
 }
 
 
 export function getCountdownTarget(tournament) {
   const now = new Date();
-  const y = now.getFullYear();
-  const m = now.getMonth() + 1;
-  const todayStr = `${y}-${String(m).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-  const today8pm = new Date(`${todayStr}T20:00:00+01:00`);
 
-  if (!tournament || tournament.status === 'upcoming') {
-    return { date: today8pm, label: 'Round of 32 starts in' };
+  if (!tournament) {
+    // No active tournament in DB — signal the banner to stay hidden.
+    // Do NOT fall back to a phantom today-8pm date; that caused the banner
+    // to appear every evening with stale "Round of 32" copy even when no
+    // event was scheduled.
+    return { date: null, label: null };
   }
 
-  if (tournament.status === 'active') {
-    const rounds = tournament.rounds || [];
-    const latestRound = rounds.length > 0 ? rounds[rounds.length - 1] : null;
-
-    // Admin panel override stored in DB takes priority if it's set and in the future
-    if (latestRound && latestRound.next_round_start) {
-      const customDate = new Date(latestRound.next_round_start);
-      if (!isNaN(customDate.getTime()) && customDate > now) {
-        const customLabel = latestRound.next_round_label || 'Round of 32 starts in';
-        return { 
-          date: customDate, 
-          label: customLabel
-        };
-      }
+  // Priority 1: explicit top-level next_round_start on the tournament row
+  if (tournament.next_round_start) {
+    const customDate = new Date(tournament.next_round_start);
+    if (!isNaN(customDate.getTime()) && customDate > now) {
+      return {
+        date: customDate,
+        label: tournament.next_round_label || 'Tournament Round'
+      };
     }
-
-    const defaultLabel = latestRound?.next_round_label || 'Round of 32 starts in';
-    return { 
-      date: today8pm, 
-      label: defaultLabel
-    };
   }
 
-  return { date: today8pm, label: 'Round of 32 starts in' };
+  // Priority 2: next_round_start on the most recent round
+  const rounds = tournament.rounds || [];
+  const latestRound = rounds.length > 0 ? rounds[rounds.length - 1] : null;
+
+  if (latestRound && latestRound.next_round_start) {
+    const customDate = new Date(latestRound.next_round_start);
+    if (!isNaN(customDate.getTime()) && customDate > now) {
+      return {
+        date: customDate,
+        label: latestRound.next_round_label || latestRound.name || 'Next Round'
+      };
+    }
+  }
+
+  // No valid future date found — signal the banner to stay hidden.
+  return { date: null, label: null };
 }
 
 

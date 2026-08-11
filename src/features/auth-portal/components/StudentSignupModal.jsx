@@ -18,7 +18,7 @@ export default function StudentSignupModal({
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [resetEmailSent, setResetEmailSent] = useState(false);
   const [flowType, setFlowType] = useState(initialFlowType);
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -31,7 +31,7 @@ export default function StudentSignupModal({
       setErrors({ email: "Email is required to reset password" });
       return;
     }
-    setLoading(true);
+    setSubmitting(true);
     try {
       const { error } = await sendPasswordReset(form.email);
       if (error) throw error;
@@ -40,7 +40,7 @@ export default function StudentSignupModal({
     } catch (err) {
       toast.error(`Error sending reset link: ${err.message}`);
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -170,16 +170,17 @@ export default function StudentSignupModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (loading) return;
+    if (submitting) return;
     if (!validate()) return;
-    setLoading(true);
-
-    // Store the remember-me flag BEFORE sign-in so the storage proxy reads it correctly
-    localStorage.setItem('ss4_remember_me', rememberMe ? 'true' : 'false');
+    setSubmitting(true);
 
     if (isLogin) {
+      // Fix 4: Write rememberMe flag immediately before the Supabase auth call,
+      // NOT at the top of handleSubmit where a verification short-circuit return
+      // could leave the flag set from a prior unchecked-checkbox state.
+      localStorage.setItem('ss4_remember_me', rememberMe ? 'true' : 'false');
       const { error } = await signIn(form.email, form.password);
-      setLoading(false);
+      setSubmitting(false);
       if (error) {
         toast.error(`Login failed: ${error.message}`);
       } else {
@@ -196,7 +197,7 @@ export default function StudentSignupModal({
       const needsLichessVerify = form.lichess_username && lichessStatus !== 'valid';
 
       if (needsChessVerify || needsLichessVerify) {
-        setLoading(true);
+        setSubmitting(true);
         toast.info("Verifying chess usernames and fetching ratings...");
         
         let hasError = false;
@@ -233,7 +234,7 @@ export default function StudentSignupModal({
           }
         }
 
-        setLoading(false);
+        setSubmitting(false);
         if (hasError) {
           toast.error("Please enter a valid username for your chess account(s).");
         } else {
@@ -242,7 +243,7 @@ export default function StudentSignupModal({
         return;
       }
 
-      setLoading(true);
+      setSubmitting(true);
       const profileData = {
         name: form.name,
         university: form.university || '',
@@ -257,8 +258,12 @@ export default function StudentSignupModal({
         is_student: flowType === 'student'
       };
 
+      // Fix 4: Write rememberMe flag immediately before the Supabase auth call.
+      // This ensures the storage proxy reads the correct flag even if verification
+      // returned early in a prior handleSubmit call and the checkbox state has changed.
+      localStorage.setItem('ss4_remember_me', rememberMe ? 'true' : 'false');
       const { error } = await signUp(form.email, form.password, profileData);
-      setLoading(false);
+      setSubmitting(false);
 
       if (error) {
         toast.error(`Signup failed: ${error.message}`);
@@ -713,10 +718,10 @@ export default function StudentSignupModal({
             <Button
               type="submit"
               variant="primary"
-              disabled={loading}
+              disabled={submitting}
               className="w-full flex items-center justify-center gap-2 py-3 bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer"
             >
-              {loading ? (
+              {submitting ? (
                 <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
               ) : (
                 isLogin ? "Sign In" : (

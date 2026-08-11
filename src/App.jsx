@@ -14,7 +14,7 @@ import SasPage from './pages/SasPage';
 import AspirantsAwardPage from './pages/AspirantsAwardPage';
 import NewsPage from './pages/NewsPage';
 import AboutPage from './pages/AboutPage';
-import ChessLeaguePage from './features/chess-league/pages/ChessLeaguePage';
+import FriendliesPage from './features/chess-league/pages/FriendliesPage';
 import ChessTournamentPage from './features/chess-league/pages/ChessTournamentPage';
 import TertiaryPage from './features/tertiary-admissions/pages/TertiaryPage';
 import TertiaryDetailPage from './features/tertiary-admissions/pages/TertiaryDetailPage';
@@ -43,7 +43,8 @@ function App() {
             <Route path="/award" element={<AspirantsAwardPage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/chess-league" element={<ChessLeaguePage />} />
+            <Route path="/friendlies" element={<FriendliesPage />} />
+            <Route path="/chess-league" element={<Navigate to="/friendlies" replace />} />
             <Route path="/chess-league/tournament" element={<ChessTournamentPage />} />
             <Route path="/tournaments/register" element={<Navigate to="/chess-league/tournament" replace />} />
             <Route path="/tournament/register" element={<Navigate to="/chess-league/tournament" replace />} />

@@ -385,7 +385,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
               Group Stage Table
             </h2>
           </div>
-          <p className="text-xs text-gray-500 mt-1 font-medium">
+          <p className="text-xs text-gray-600 mt-1 font-medium">
             Top 2 players in each group advance to the Knockout Stage. Scoring: <strong className="text-[#111111]">Win = 1 pt</strong> &bull; <strong className="text-[#111111]">Draw = 1 pt</strong> &bull; <strong className="text-[#111111]">Loss = 0 pts</strong>.
           </p>
         </div>
@@ -394,10 +394,10 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
         <div className="flex items-center bg-gray-100 p-1.5 rounded-2xl shrink-0 self-start sm:self-auto border border-gray-200/60 flex-wrap gap-1">
           <button
             onClick={() => setViewMode('table')}
-            className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+            className={`px-4 py-2 min-h-[44px] rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
               viewMode === 'table' 
                 ? 'bg-white text-brand-primary shadow-sm' 
-                : 'text-gray-500 hover:text-[#111111]'
+                : 'text-gray-600 hover:text-[#111111]'
             }`}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -409,10 +409,10 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
           {isKnockoutActive && (
             <button
               onClick={() => setViewMode('matrix')}
-              className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+              className={`px-4 py-2 min-h-[44px] rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
                 viewMode === 'matrix' 
                   ? 'bg-white text-brand-primary shadow-sm' 
-                  : 'text-gray-500 hover:text-[#111111]'
+                  : 'text-gray-600 hover:text-[#111111]'
               }`}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -427,10 +427,10 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
               setViewMode('fixtures');
               if (onSwitchTab) onSwitchTab('fixtures');
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+            className={`px-4 py-2 min-h-[44px] rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
               viewMode === 'fixtures' 
                 ? 'bg-white text-brand-primary shadow-sm' 
-                : 'text-gray-500 hover:text-[#111111]'
+                : 'text-gray-600 hover:text-[#111111]'
             }`}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

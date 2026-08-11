@@ -45,3 +45,6 @@ src/components/CreateCourseContentForm.jsx
 src/components/CourseSection.jsx
 
 
+.trash/
+scratch/
+.agent/

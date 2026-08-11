@@ -59,7 +59,7 @@ export const MatchFixture = ({ w, b, date, round, division, onPlayerSelect }) =>
         tabIndex={0}
         role="button"
         aria-label={`View ${wP.name} profile`}
-        className="w-[40%] flex justify-end shrink-0 cursor-pointer hover:bg-brand-bg-cream/40 rounded-xl p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary"
+        className="w-[40%] flex justify-end shrink-0 cursor-pointer min-h-[44px] hover:bg-brand-bg-cream/40 rounded-xl p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary"
       >
         <PlayerCardSide 
           name={wP.name} 
@@ -74,7 +74,7 @@ export const MatchFixture = ({ w, b, date, round, division, onPlayerSelect }) =>
         <span className="text-brand-primary font-black font-space text-sm md:text-base tracking-wider uppercase group-hover:scale-105 transition-transform">
           VS
         </span>
-        <span className="text-gray-500 text-[9px] md:text-[10px] font-bold mt-0.5 uppercase tracking-wider text-center line-clamp-1">
+        <span className="text-gray-600 text-[9px] md:text-[10px] font-bold mt-0.5 uppercase tracking-wider text-center line-clamp-1">
           {date || `ROUND ${round}`}
         </span>
       </div>
@@ -86,7 +86,7 @@ export const MatchFixture = ({ w, b, date, round, division, onPlayerSelect }) =>
         tabIndex={0}
         role="button"
         aria-label={`View ${bP.name} profile`}
-        className="w-[40%] flex justify-start shrink-0 cursor-pointer hover:bg-brand-bg-cream/40 rounded-xl p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary"
+        className="w-[40%] flex justify-start shrink-0 cursor-pointer min-h-[44px] hover:bg-brand-bg-cream/40 rounded-xl p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary"
       >
         <PlayerCardSide 
           name={bP.name} 

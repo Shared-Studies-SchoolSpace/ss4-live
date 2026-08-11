@@ -30,7 +30,7 @@ function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
   const renderRow = (p) => {
     if (!p) {
       return (
-        <div className="flex items-center px-2.5 py-1.5 text-xs text-gray-300 font-semibold italic">
+        <div className="flex items-center px-2.5 py-1.5 text-xs text-gray-400 font-semibold italic">
           TBD
         </div>
       );
@@ -43,13 +43,22 @@ function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
     
     return (
       <div 
+        role="button"
+        tabIndex={bye ? -1 : 0}
         onClick={(e) => {
           if (!bye) {
             e.stopPropagation();
             onPlayerClick(p);
           }
         }}
-        className={`flex items-center justify-between px-2.5 py-1.5 transition-all select-none ${
+        onKeyDown={(e) => {
+          if (!bye && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            e.stopPropagation();
+            onPlayerClick(p);
+          }
+        }}
+        className={`flex items-center justify-between px-2.5 py-1.5 transition-all select-none focus-visible:outline-2 focus-visible:outline-brand-primary ${
           bye ? 'opacity-40' : 'cursor-pointer hover:bg-brand-primary/5 group/row'
         } ${
           won
@@ -64,7 +73,7 @@ function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
             {bye ? 'BYE' : formatName(p.name)}
           </span>
           {!bye && (
-            <span className="text-[10px] text-gray-400 font-medium truncate leading-tight">
+            <span className="text-[10px] text-gray-600 font-medium truncate leading-tight">
               {getSchoolInitials(p.school)}{p.rating ? ` · ${p.rating}` : ''}
             </span>
           )}

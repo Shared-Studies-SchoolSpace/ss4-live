@@ -39,10 +39,9 @@ export function AuthProvider({ children }) {
   const fetchingUidRef = useRef(null);
 
   const fetchProfile = async (uid) => {
-    // If profile is already loaded for this user, do not fetch again
-    if (profile && profile.id === uid) return;
-
-    // Deduplicate in-flight fetches for the same user
+    // Deduplicate in-flight fetches for the same user.
+    // NOTE: Do NOT short-circuit on `profile.id === uid` here — that stale closure
+    // guard defeats explicit refreshProfile() calls made after profile updates.
     if (fetchingUidRef.current === uid) return;
     fetchingUidRef.current = uid;
 
@@ -521,8 +520,11 @@ export function AuthProvider({ children }) {
       if (ratingVal >= 1800) targetDivId = 'a_division';
       else if (ratingVal >= 1000) targetDivId = 'default';
 
-      const { data: currentDivs, error: divErr } = await supabase.from('divisions').select('*');
-      if (divErr || !currentDivs) return;
+      // Fix 5: Fetch only division IDs first, then process each division sequentially.
+      // The previous Promise.all concurrent read-modify-write created a race: two concurrent
+      // signups would both read the same players[] snapshot, then overwrite each other's write.
+      const { data: divIds, error: divErr } = await supabase.from('divisions').select('id');
+      if (divErr || !divIds) return;
 
       const matchingUsernames = [
         profileObj.chess_username?.toLowerCase(),
@@ -531,14 +533,23 @@ export function AuthProvider({ children }) {
         profileObj.name?.toLowerCase()
       ].filter(Boolean);
 
-      const updatePromises = currentDivs.map(async (d) => {
-        const playersList = d.players || [];
-        const found = playersList.some(p => 
+      for (const { id: divId } of divIds) {
+        // Fresh read per division — minimises the window where a concurrent write gets clobbered
+        const { data: divData } = await supabase
+          .from('divisions')
+          .select('players')
+          .eq('id', divId)
+          .single();
+
+        if (!divData) continue;
+
+        const playersList = divData.players || [];
+        const found = playersList.some(p =>
           matchingUsernames.includes(p.username?.toLowerCase()) ||
           matchingUsernames.includes(p.name?.toLowerCase())
         );
 
-        if (d.id === targetDivId) {
+        if (divId === targetDivId) {
           if (!found) {
             const addedPlayer = {
               name: profileObj.name,
@@ -547,13 +558,13 @@ export function AuthProvider({ children }) {
               school: profileObj.university || 'SS4 Member',
               contact: profileObj.phone || profileObj.whatsapp || profileObj.contact || ''
             };
-            const nextList = [...playersList, addedPlayer];
-            return supabase.from('divisions').update({ players: nextList }).eq('id', d.id);
+            await supabase.from('divisions').update({ players: [...playersList, addedPlayer] }).eq('id', divId);
           } else {
             let detailChanged = false;
             const nextList = playersList.map(p => {
-              const isMatch = matchingUsernames.includes(p.username?.toLowerCase()) ||
-                              matchingUsernames.includes(p.name?.toLowerCase());
+              const isMatch =
+                matchingUsernames.includes(p.username?.toLowerCase()) ||
+                matchingUsernames.includes(p.name?.toLowerCase());
               if (isMatch) {
                 const updatedP = {
                   ...p,
@@ -571,19 +582,17 @@ export function AuthProvider({ children }) {
               return p;
             });
             if (detailChanged) {
-              return supabase.from('divisions').update({ players: nextList }).eq('id', d.id);
+              await supabase.from('divisions').update({ players: nextList }).eq('id', divId);
             }
           }
         } else if (found) {
-          const nextList = playersList.filter(p => 
+          const nextList = playersList.filter(p =>
             !matchingUsernames.includes(p.username?.toLowerCase()) &&
             !matchingUsernames.includes(p.name?.toLowerCase())
           );
-          return supabase.from('divisions').update({ players: nextList }).eq('id', d.id);
+          await supabase.from('divisions').update({ players: nextList }).eq('id', divId);
         }
-        return Promise.resolve();
-      });
-      await Promise.all(updatePromises);
+      }
     } catch (err) {
       console.warn('Could not update player division assignment:', err.message);
     }
@@ -717,25 +726,34 @@ export function AuthProvider({ children }) {
             role: 'player'
           });
 
-        if (profileErr) throw profileErr;
-
-        // Auto-assign player division on signup
-        try {
-          const createdProfile = {
-            name: profileData.name,
-            chess_username: profileData.chess_username || '',
-            lichess_username: profileData.lichess_username || '',
-            email,
-            department: profileData.department || '',
-            university: profileData.university || ''
-          };
-          const maxRating = Math.max(profileData.chess_rating || 0, profileData.lichess_rating || 0);
-          await updatePlayerDivision(createdProfile, maxRating);
-        } catch (divErr) {
-          console.warn('Division auto-assignment failed:', divErr.message);
+        // Fix 3: Do NOT throw on profileErr. The auth user already exists in auth.users.
+        // Throwing here creates a split-brain: user gets "Signup failed" toast but their
+        // email is permanently locked. The self-heal fallback in fetchProfile will create
+        // the profile row on first login if it's missing due to this failure.
+        if (profileErr) {
+          console.error('[signUp] Profile row upsert failed after auth user created — self-heal will run on next login:', profileErr.message);
+          toast.warn('Account created! Finalizing your profile on first login...');
+        } else {
+          // Only auto-assign division if profile write succeeded
+          try {
+            const createdProfile = {
+              name: profileData.name,
+              chess_username: profileData.chess_username || '',
+              lichess_username: profileData.lichess_username || '',
+              email,
+              department: profileData.department || '',
+              university: profileData.university || ''
+            };
+            const maxRating = Math.max(profileData.chess_rating || 0, profileData.lichess_rating || 0);
+            await updatePlayerDivision(createdProfile, maxRating);
+          } catch (divErr) {
+            console.warn('Division auto-assignment failed:', divErr.message);
+          }
         }
-
-        await fetchProfile(data.user.id);
+        // Fix 2: Do NOT call fetchProfile explicitly here.
+        // onAuthStateChange fires SIGNED_IN immediately after signUp and calls fetchProfile
+        // via the listener. Calling it here too creates a non-deterministic race where
+        // fetchingUidRef deduplication silently skips one of the two calls.
       }
       setLoading(false);
       return { data, error: null };
@@ -746,17 +764,18 @@ export function AuthProvider({ children }) {
   };
 
   const signIn = async (email, password) => {
-    setLoading(true);
+    // Fix 1: Do NOT call setLoading here. Global `loading` is only for session hydration.
+    // The modal manages its own `submitting` state independently (orthogonal concerns).
+    // Calling setLoading(true) here forces a global re-render that fights the modal's
+    // local spinner, creating a double-flash race on slow connections.
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
       if (error) throw error;
-      setLoading(false);
       return { data, error: null };
     } catch (err) {
-      setLoading(false);
       return { data: null, error: err };
     }
   };

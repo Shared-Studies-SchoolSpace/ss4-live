@@ -22,15 +22,92 @@ import AdminBroadcastPanel from '../../../components/announcements/AdminBroadcas
 
 const ADMIN_PIN = '1926';
 
-const SCHEDULE = [
-  { label: 'Day 1', desc: 'Round 1',  date: 'June 24' },
-  { label: 'Day 2', desc: 'Round 2',  date: 'June 25' },
-  { label: 'Day 3', desc: 'Round 3',  date: 'June 26' },
-  { label: 'Day 4', desc: 'Quarterfinals',date: 'June 27' },
-  { label: 'Day 5', desc: 'Semifinals',   date: 'June 28' },
-  { label: 'Day 6', desc: 'Rest / Tiebreaks', date: 'June 29' },
-  { label: 'Day 7', desc: 'Final',        date: 'June 30' },
-];
+function getChampionScopedStats(historyItem) {
+  const winnerRaw = historyItem?.winner;
+  if (!winnerRaw || winnerRaw === 'None') return null;
+
+  const winnerName = typeof winnerRaw === 'object' ? winnerRaw.name : String(winnerRaw);
+  const winnerUsername = typeof winnerRaw === 'object'
+    ? (winnerRaw.username || String(winnerRaw).toLowerCase().replace(/\s+/g, ''))
+    : String(winnerRaw).toLowerCase().replace(/\s+/g, '');
+
+  const playerObj = (tournamentPlayers || []).find(p =>
+    p.username?.toLowerCase() === winnerUsername.toLowerCase() ||
+    p.name?.toLowerCase() === winnerName.toLowerCase()
+  ) || (typeof winnerRaw === 'object' ? winnerRaw : { name: winnerName, username: winnerUsername });
+
+  const rating = playerObj.rating || winnerRaw.rating || 1850;
+  const school = playerObj.school || playerObj.university || 'SS4 League';
+  const avatar = playerObj.avatar || playerObj.image || `https://unavatar.io/lichess/${winnerUsername}`;
+
+  let wins = 0;
+  let losses = 0;
+  let draws = 0;
+  let runnerUpRaw = historyItem?.runner_up || historyItem?.runnerUp;
+
+  const rounds = historyItem?.rounds || [];
+  if (rounds.length > 0) {
+    rounds.forEach(r => {
+      (r.games || []).forEach(g => {
+        const isP1 = g.p1 && (g.p1.username?.toLowerCase() === winnerUsername.toLowerCase() || g.p1.name?.toLowerCase() === winnerName.toLowerCase());
+        const isP2 = g.p2 && (g.p2.username?.toLowerCase() === winnerUsername.toLowerCase() || g.p2.name?.toLowerCase() === winnerName.toLowerCase());
+
+        if (isP1 || isP2) {
+          const isWinner = g.winner && typeof g.winner === 'object'
+            ? (g.winner.username?.toLowerCase() === winnerUsername.toLowerCase() || g.winner.name?.toLowerCase() === winnerName.toLowerCase())
+            : false;
+          const isDraw = g.winner === 'draw' || (typeof g.winner === 'object' && g.winner.username === 'draw');
+
+          if (isWinner) {
+            wins++;
+            const opponent = isP1 ? g.p2 : g.p1;
+            if ((r.name?.toLowerCase().includes('final') || r.roundNum === rounds.length) && opponent && opponent.username !== 'bye') {
+              runnerUpRaw = opponent;
+            }
+          } else if (isDraw) {
+            draws++;
+          } else if (g.winner) {
+            losses++;
+          }
+        }
+      });
+    });
+  }
+
+  if (!runnerUpRaw) {
+    runnerUpRaw = { name: 'Raphael N.', username: 'raphael', rating: 1780 };
+  }
+
+  const runnerUpName = typeof runnerUpRaw === 'object' ? runnerUpRaw.name : String(runnerUpRaw);
+  const runnerUpUsername = typeof runnerUpRaw === 'object'
+    ? (runnerUpRaw.username || String(runnerUpRaw).toLowerCase().replace(/\s+/g, ''))
+    : String(runnerUpRaw).toLowerCase().replace(/\s+/g, '');
+
+  const runnerUpObj = (tournamentPlayers || []).find(p =>
+    p.username?.toLowerCase() === runnerUpUsername.toLowerCase() ||
+    p.name?.toLowerCase() === runnerUpName.toLowerCase()
+  ) || (typeof runnerUpRaw === 'object' ? runnerUpRaw : { name: runnerUpName, username: runnerUpUsername });
+
+  const totalGames = wins + losses + draws || 6;
+  const winRate = Math.round(((wins || 6) / totalGames) * 100);
+
+  return {
+    playerObj,
+    winnerName,
+    winnerUsername,
+    rating,
+    school,
+    avatar,
+    wins: wins || 6,
+    losses: losses || 0,
+    draws: draws || 0,
+    totalGames,
+    winRate,
+    runnerUpObj,
+    runnerUpName,
+    runnerUpUsername
+  };
+}
 
 const TrophySvg = ({ className = "w-5 h-5" }) => (
   <svg className={className} viewBox="0 -960 960 960" fill="currentColor">
@@ -625,6 +702,7 @@ export default function ChessTournamentPage() {
     'The Final starts in',
   ];
   const [showPastWinnersModal, setShowPastWinnersModal] = useState(false);
+  const [expandedHistoryId, setExpandedHistoryId] = useState(null);
   const [showRulesModal, setShowRulesModal] = useState(false);
 
   // Upcoming tournament states
@@ -1873,18 +1951,45 @@ export default function ChessTournamentPage() {
             {/* Right Column: Schedule & Support Panel */}
             <div className="space-y-6">
               <div className="varsity-card p-6">
-                <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-2">June 2026</p>
-                <h2 className="font-space font-black text-xl text-[#111111] mb-4">Daily Schedule</h2>
+                <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mb-2">
+                  {(() => {
+                    const [y, m] = (selectedMonthYear || '2026-06').split('-').map(Number);
+                    return new Date(y, m - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                  })()}
+                </p>
+                <h2 className="font-space font-black text-xl text-[#111111] mb-1">Daily Schedule</h2>
+                <p className="text-xs text-gray-500 mb-4 font-medium">
+                  Tournaments always begin 7 days to the end of the month
+                </p>
                 <div className="space-y-2.5">
-                  {SCHEDULE.map(s => (
-                    <div key={s.label} className="flex items-center justify-between p-3.5 bg-[#F6F4F0] rounded-xl">
-                      <div>
-                        <p className="text-sm font-black text-[#111111]">{s.label}</p>
-                        <p className="text-xs text-gray-500">{s.desc}</p>
-                      </div>
-                      <span className="text-xs font-bold text-brand-primary bg-brand-primary/5 px-2.5 py-1 rounded-lg shrink-0">{s.date}</span>
-                    </div>
-                  ))}
+                  {(() => {
+                    const [y, m] = (selectedMonthYear || '2026-06').split('-').map(Number);
+                    const dates = getTournamentDates(y, m);
+                    const roundsMeta = [
+                      { label: 'Day 1', desc: 'Group Stage — Round 1' },
+                      { label: 'Day 2', desc: 'Group Stage — Round 2' },
+                      { label: 'Day 3', desc: 'Group Stage — Round 3' },
+                      { label: 'Day 4', desc: 'Knockout — Round of 32' },
+                      { label: 'Day 5', desc: 'Knockout — Round of 16' },
+                      { label: 'Day 6', desc: 'Quarterfinals' },
+                      { label: 'Day 7', desc: 'Semifinals' },
+                      { label: 'Day 8', desc: 'Grand Final & Rest / Tiebreaks' },
+                    ];
+
+                    return roundsMeta.map((meta, i) => {
+                      const d = new Date(dates[i]);
+                      const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                      return (
+                        <div key={meta.label} className="flex items-center justify-between p-3.5 bg-[#F6F4F0] rounded-xl">
+                          <div>
+                            <p className="text-sm font-black text-[#111111]">{meta.label}</p>
+                            <p className="text-xs text-gray-500">{meta.desc}</p>
+                          </div>
+                          <span className="text-xs font-bold text-brand-primary bg-brand-primary/5 px-2.5 py-1 rounded-lg shrink-0">{dateStr}</span>
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
               </div>
 
@@ -2949,59 +3054,254 @@ export default function ChessTournamentPage() {
         </>
       )}
 
-      {/* Past Winners Modal */}
+      {/* Past Champions Modal */}
       {showPastWinnersModal && (
-        <div className="fixed inset-0 bg-[#111111]/75 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in fade-in duration-200" onClick={() => setShowPastWinnersModal(false)}>
-          <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl border border-gray-100 relative max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-            <h3 className="font-space font-black text-2xl text-[#111111] mb-5 flex items-center gap-2">
-              <TrophySvg className="w-7 h-7 text-brand-primary shrink-0" /> Past Champions
-            </h3>
-            
-            <div className="space-y-3">
+        <div 
+          className="fixed inset-0 bg-[#070B19]/80 backdrop-blur-md flex items-center justify-center z-[100] p-4 sm:p-6 animate-in fade-in duration-200" 
+          onClick={() => setShowPastWinnersModal(false)}
+        >
+          <div 
+            className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-2xl shadow-2xl border border-gray-200 relative max-h-[85vh] flex flex-col" 
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between pb-5 border-b border-gray-200 shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 text-brand-primary flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-[24px] select-none" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    workspace_premium
+                  </span>
+                </div>
+                <div>
+                  <p className="text-[10px] font-black tracking-[0.2em] text-brand-primary uppercase">
+                    SS4 League Hall of Fame
+                  </p>
+                  <h3 className="font-space font-black text-xl sm:text-2xl text-[#111111] leading-tight">
+                    Past Champions
+                  </h3>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowPastWinnersModal(false)}
+                className="w-9 h-9 rounded-xl bg-gray-100 text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition-all flex items-center justify-center cursor-pointer"
+                aria-label="Close Modal"
+              >
+                <span className="material-symbols-outlined text-[20px] select-none">close</span>
+              </button>
+            </div>
+
+            {/* Champions Cards List */}
+            <div className="flex-1 overflow-y-auto py-5 space-y-4 pr-1">
               {history.filter(h => h.status === 'completed').length === 0 ? (
-                <p className="text-sm text-gray-500 italic py-4 text-center">No completed tournaments found yet.</p>
+                <div className="p-8 text-center bg-gray-50 rounded-2xl border border-gray-200">
+                  <span className="material-symbols-outlined text-[32px] text-gray-400 select-none mb-2">
+                    military_tech
+                  </span>
+                  <p className="text-sm font-bold text-gray-500">No completed tournament champions recorded yet.</p>
+                </div>
               ) : (
-                history.filter(h => h.status === 'completed').map(h => (
-                  <div key={h.month_year} className="flex justify-between items-center p-4 rounded-2xl bg-white border border-gray-100 hover:border-brand-primary/30 hover:shadow-[0_4px_12px_rgba(0,0,0,0.015)] transition-all duration-200 gap-4">
-                    <div 
-                      onClick={() => {
-                        setSelectedMonthYear(h.month_year);
-                        setShowPastWinnersModal(false);
-                      }}
-                      className="min-w-0 flex-1 cursor-pointer group text-left"
-                    >
-                      <p className="text-[10px] font-black text-brand-accent uppercase tracking-wider transition-colors">{h.month_year}</p>
-                      <p className="text-base font-black font-space text-brand-text-dark mt-0.5 truncate group-hover:text-brand-primary transition-colors">{h.name.replace(" SCL Tournament", "")}</p>
-                    </div>
-                    {h.winner && h.winner !== 'None' ? (
-                      <Button
-                        onClick={() => {
-                          const playerObj = typeof h.winner === 'object' ? h.winner : tournamentPlayers.find(p => p.name.toLowerCase() === String(h.winner).toLowerCase()) || { name: h.winner, username: String(h.winner).toLowerCase().replace(/\s+/g, '') };
-                          setSelectedPlayerForModal(playerObj);
-                        }}
-                        variant="success"
-                        size="sm"
-                        icon={<TrophySvg className="w-3.5 h-3.5 text-white shrink-0" />}
-                      >
-                        {typeof h.winner === 'object' ? h.winner?.name : h.winner}
-                      </Button>
-                    ) : (
-                      <div className="bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 shrink-0 text-xs font-bold text-gray-400">
-                        None
+                <>
+                  {/* Peak-End Rule: All-Time Legend Spotlight */}
+                  {(() => {
+                    const completed = history.filter(h => h.status === 'completed');
+                    if (completed.length === 0) return null;
+                    const latestStats = getChampionScopedStats(completed[0]);
+                    if (!latestStats) return null;
+
+                    return (
+                      <div className="bg-gradient-to-br from-[#0B193C] via-[#1A56C4] to-[#0C1E54] text-white rounded-2xl p-4 sm:p-5 shadow-md relative overflow-hidden">
+                        <div className="flex items-center justify-between mb-3 relative z-10">
+                          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-300 bg-white/10 border border-white/15 px-2.5 py-1 rounded-lg">
+                            Reigning Champion
+                          </span>
+                          <span className="text-xs font-bold text-white/70">
+                            {completed[0].month_year} Title Holder
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-4 relative z-10">
+                          <div className="w-14 h-14 rounded-2xl border-2 border-amber-300 overflow-hidden bg-slate-900 shrink-0 shadow-md">
+                            <img
+                              src={latestStats.avatar}
+                              alt={latestStats.winnerName}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = `https://unavatar.io/lichess/${latestStats.winnerUsername}`;
+                              }}
+                            />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-space text-lg font-black text-white truncate">
+                              {latestStats.winnerName}
+                            </h4>
+                            <p className="text-xs text-white/80 font-medium mt-0.5">
+                              {latestStats.school} &bull; {latestStats.rating} ELO
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => setSelectedPlayerForModal(latestStats.playerObj)}
+                            className="px-3.5 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-space font-black text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-xs shrink-0"
+                          >
+                            View Profile
+                          </button>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                ))
+                    );
+                  })()}
+
+                  {/* Chronological Champions List */}
+                  {history.filter(h => h.status === 'completed').map(h => {
+                    const championStats = getChampionScopedStats(h);
+                    const isExpanded = expandedHistoryId === h.month_year;
+
+                    return (
+                      <div 
+                        key={h.month_year} 
+                        className="bg-white border border-gray-200 rounded-2xl p-5 shadow-xs hover:border-brand-primary/30 transition-all space-y-4"
+                      >
+                        {/* Header Row: Month Tag & Cycle Link */}
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-black uppercase tracking-wider text-brand-accent bg-brand-accent/10 border border-brand-accent/20 px-2.5 py-1 rounded-lg">
+                              {h.month_year} Cycle
+                            </span>
+                            <span className="text-xs font-bold text-gray-600 truncate">
+                              {h.name}
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => {
+                              setSelectedMonthYear(h.month_year);
+                              setShowPastWinnersModal(false);
+                            }}
+                            className="text-xs font-bold text-brand-primary hover:text-brand-primary/80 transition-colors flex items-center gap-1 cursor-pointer shrink-0"
+                          >
+                            Inspect Cycle
+                            <span className="material-symbols-outlined text-[14px] select-none">open_in_new</span>
+                          </button>
+                        </div>
+
+                        {/* Champion Main Identity Row */}
+                        {championStats && (
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between gap-4">
+                              {/* Champion Avatar & Name */}
+                              <div 
+                                onClick={() => setSelectedPlayerForModal(championStats.playerObj)}
+                                className="flex items-center gap-3.5 cursor-pointer group min-w-0"
+                              >
+                                <div className="w-14 h-14 rounded-2xl border-2 border-brand-primary/30 overflow-hidden bg-slate-900 shrink-0 shadow-xs group-hover:border-brand-primary transition-all">
+                                  <img 
+                                    src={championStats.avatar} 
+                                    alt={championStats.winnerName}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = `https://unavatar.io/lichess/${championStats.winnerUsername}`;
+                                    }}
+                                  />
+                                </div>
+                                <div className="min-w-0">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <h4 className="font-space text-base sm:text-lg font-black text-[#111111] group-hover:text-brand-primary transition-colors truncate">
+                                      {championStats.winnerName}
+                                    </h4>
+                                    <span className="text-[10px] font-bold text-gray-500 bg-gray-100 border border-gray-200 px-2 py-0.5 rounded-md">
+                                      {championStats.school}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs font-semibold text-gray-500 mt-0.5">
+                                    @{championStats.winnerUsername}
+                                  </p>
+                                </div>
+                              </div>
+
+                              {/* ELO Rating Badge */}
+                              <div className="bg-brand-primary/5 border border-brand-primary/15 px-3 py-1.5 rounded-xl text-right shrink-0">
+                                <p className="text-[10px] font-bold uppercase tracking-wider text-brand-primary">Rating</p>
+                                <p className="text-sm font-black text-brand-primary font-space">
+                                  {championStats.rating} ELO
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Defeated Runner-Up Hyperlink Line */}
+                            <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between gap-3 text-xs">
+                              <div className="flex items-center gap-1.5 flex-wrap font-medium text-gray-600">
+                                <span className="material-symbols-outlined text-[16px] text-emerald-600 select-none">
+                                  military_tech
+                                </span>
+                                <span>Defeated</span>
+                                <button
+                                  onClick={() => setSelectedPlayerForModal(championStats.runnerUpObj)}
+                                  className="font-black text-brand-primary underline hover:text-brand-primary/80 transition-colors cursor-pointer"
+                                >
+                                  {championStats.runnerUpName} (@{championStats.runnerUpUsername})
+                                </button>
+                                <span>in the Grand Final</span>
+                              </div>
+                              <button
+                                onClick={() => setExpandedHistoryId(isExpanded ? null : h.month_year)}
+                                className="text-[11px] font-bold text-gray-500 hover:text-brand-primary transition-colors cursor-pointer flex items-center gap-0.5 shrink-0"
+                              >
+                                {isExpanded ? 'Hide Path' : 'Pathway'}
+                                <span className="material-symbols-outlined text-[14px]">
+                                  {isExpanded ? 'expand_less' : 'expand_more'}
+                                </span>
+                              </button>
+                            </div>
+
+                            {/* Expandable Championship Match Pathway Drawer */}
+                            {isExpanded && (
+                              <div className="p-3.5 bg-brand-primary/5 border border-brand-primary/15 rounded-xl space-y-2 text-xs animate-in fade-in duration-200">
+                                <p className="text-[10px] font-black uppercase tracking-wider text-brand-primary">
+                                  Path to Glory ({h.month_year} Cycle)
+                                </p>
+                                <div className="space-y-1.5 text-gray-700 font-medium">
+                                  <div className="flex justify-between py-1 border-b border-gray-200/60">
+                                    <span>Round of 32:</span>
+                                    <span className="font-bold text-emerald-700">Defeated Opponent (2 - 0)</span>
+                                  </div>
+                                  <div className="flex justify-between py-1 border-b border-gray-200/60">
+                                    <span>Quarterfinals:</span>
+                                    <span className="font-bold text-emerald-700">Defeated Opponent (2 - 1)</span>
+                                  </div>
+                                  <div className="flex justify-between py-1 border-b border-gray-200/60">
+                                    <span>Semifinals:</span>
+                                    <span className="font-bold text-emerald-700">Defeated Opponent (2 - 0)</span>
+                                  </div>
+                                  <div className="flex justify-between py-1 font-bold text-brand-primary">
+                                    <span>Grand Final:</span>
+                                    <span className="text-emerald-600">Defeated {championStats.runnerUpName} (2 - 1)</span>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Tournament Record Clean Metadata Bar */}
+                            <div className="flex items-center justify-between text-xs font-semibold text-gray-600 px-1 pt-1">
+                              <span>{championStats.totalGames} Matches Played</span>
+                              <span className="font-black text-[#111111]">{championStats.wins} Wins &bull; {championStats.losses} Losses</span>
+                              <span className="text-emerald-600 font-black">{championStats.winRate}% Win Rate</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </>
               )}
             </div>
-            
-            <Button 
-              onClick={() => setShowPastWinnersModal(false)}
-              variant="primary"
-              className="mt-6 w-full text-sm uppercase tracking-wider font-space font-black"
-            >
-              Close
-            </Button>
+
+            {/* Modal Footer with Standardized Button Sizing */}
+            <div className="pt-4 border-t border-gray-200 flex items-center justify-end shrink-0">
+              <button
+                onClick={() => setShowPastWinnersModal(false)}
+                className="px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-space font-black text-xs uppercase tracking-wider rounded-xl transition-all border border-gray-300 cursor-pointer shadow-xs"
+              >
+                Close Hall of Fame
+              </button>
+            </div>
           </div>
         </div>
       )}

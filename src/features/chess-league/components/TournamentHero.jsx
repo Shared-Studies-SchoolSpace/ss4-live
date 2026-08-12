@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { getCountdownTarget } from '../utils/tournament';
+import { fetchCompletePlayerData } from '../utils/chessService';
 
 function pad(n) { return String(n).padStart(2, '0'); }
 
@@ -16,6 +17,7 @@ function CountdownCell({ value, label, isPulse = false }) {
 
 export function TournamentHero({ tournament, selectedMonthYear, history, onMonthChange, onTitleDoubleClick }) {
   const [{ days, hours, mins, secs, label }, setClock] = useState({ days: 0, hours: 0, mins: 0, secs: 0, label: '' });
+  const [winnerAvatar, setWinnerAvatar] = useState(null);
 
   // Detect timezone abbreviation (e.g. WAT, BST, EST)
   const tzAbbr = useMemo(() => {
@@ -52,12 +54,42 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
     return () => clearInterval(id);
   }, [tournament]);
 
-  const statusColors = {
-    upcoming: 'bg-m3-secondary-container text-m3-on-secondary-container',
-    active:   'bg-success-container text-on-success-container',
-    completed: 'bg-m3-surface-variant text-m3-on-surface-variant'
-  };
   const status = tournament?.status ?? 'upcoming';
+
+  const winnerObj = useMemo(() => {
+    if (!tournament?.winner) return null;
+    return typeof tournament.winner === 'object'
+      ? tournament.winner
+      : { name: String(tournament.winner), username: String(tournament.winner) };
+  }, [tournament]);
+
+  const winnerName = winnerObj?.name || winnerObj?.username || 'Champion';
+
+  // Load Champion profile picture / avatar cleanly
+  useEffect(() => {
+    if (status === 'completed' && winnerObj) {
+      const directAvatar = winnerObj.avatar || winnerObj.image || winnerObj.photo || winnerObj.profilePic;
+      if (directAvatar) {
+        setWinnerAvatar(directAvatar);
+      } else if (winnerObj.username) {
+        let isMounted = true;
+        fetchCompletePlayerData(winnerObj.username, 'lichess').then(data => {
+          if (isMounted && data?.avatar) {
+            setWinnerAvatar(data.avatar);
+          } else {
+            setWinnerAvatar(`https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`);
+          }
+        }).catch(() => {
+          if (isMounted) {
+            setWinnerAvatar(`https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`);
+          }
+        });
+        return () => { isMounted = false; };
+      } else {
+        setWinnerAvatar(`https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`);
+      }
+    }
+  }, [status, winnerObj, winnerName]);
 
   return (
     <section
@@ -66,17 +98,13 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
     >
       {/* Ambient glow blobs */}
       <div className="pointer-events-none absolute inset-0">
-        {/* Top-right royal blue bloom */}
         <div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full opacity-30"
           style={{ background: 'radial-gradient(circle, #3B82F6 0%, transparent 70%)' }} />
-        {/* Bottom-left brand-primary dark bloom */}
         <div className="absolute -bottom-32 -left-20 w-[400px] h-[400px] rounded-full opacity-20"
           style={{ background: 'radial-gradient(circle, #0A2A6A 0%, transparent 70%)' }} />
-        {/* Center accent streak */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px opacity-10"
-          style={{ background: 'linear-gradient(90deg, transparent, #60A5FA, transparent)' }} />
       </div>
-      <div className="max-w-5xl mx-auto">
+
+      <div className="max-w-5xl mx-auto relative z-10">
         {/* Overline row */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
           <p className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-white/70 uppercase">SS4 Chess Network</p>
@@ -98,7 +126,7 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
 
             {/* Countdown */}
             <p className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-white/50 uppercase mb-2 sm:mb-3">
-              {label} · <span className="text-white/40">{formattedTargetTime}</span>
+              {label} &bull; <span className="text-white/40">{formattedTargetTime}</span>
             </p>
             <div className="flex gap-2 sm:gap-3 max-w-[280px] sm:max-w-none">
               <CountdownCell value={days}  label="Days" />
@@ -112,24 +140,37 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
           <div className="flex flex-col gap-3 sm:gap-4 mt-4 md:mt-0">
             {/* Champion or Prize Card */}
             {status === 'completed' ? (
-              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-4 sm:p-6 shadow-sm">
-                <p className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-emerald-400 uppercase mb-2.5 sm:mb-3 flex items-center gap-1.5">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 text-blue-400">
-                    <path d="M19 5H17V3C17 2.45 16.55 2 16 2H8C7.45 2 7 2.45 7 3V5H5C3.9 5 3 5.9 3 7V9C3 10.87 4.31 12.43 6.07 12.87C6.77 14.73 8.39 16.14 10.4 16.44C10.74 17.3 11.33 18.03 12.09 18.52V20H9C8.45 20 8 20.45 8 21C8 21.55 8.45 22 9 22H15C15.55 22 16 21.55 16 21C16 20.45 15.55 20 15 20H12.09V18.52C12.85 18.03 13.43 17.3 13.78 16.44C15.78 16.14 17.41 14.73 18.11 12.87C19.87 12.43 21 10.87 21 9V7C21 5.9 20.1 5 19 5ZM5 9V7H7V10.24C5.81 9.87 5 9.02 5 9ZM19 9C19 9.02 18.19 9.87 17 10.24V7H19V9Z"/>
-                  </svg>
-                  <span>Champion</span>
+              <div className="bg-white/10 border border-white/20 rounded-2xl p-4 sm:p-6 shadow-md backdrop-blur-md">
+                <p className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-emerald-400 uppercase mb-3 flex items-center gap-1.5">
+                  <span className="material-symbols-outlined text-[16px] text-emerald-400 select-none">
+                    emoji_events
+                  </span>
+                  <span>Crowned Champion</span>
                 </p>
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center flex-shrink-0 animate-pulse">
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6 text-brand-accent">
-                      <path d="M11.645 20.91l-.007-.003-.003-.001a.752.752 0 01-.7-.03l-.006-.004-1.07-.672a4.508 4.508 0 00-2.24-.617H6.75a3 3 0 01-3-3v-6.75a3 3 0 013-3h.878c.86 0 1.696-.3 2.37-.845l.933-.756a3.75 3.75 0 014.868 0l.933.756c.673.545 1.51.845 2.37.845h.878a3 3 0 013 3v6.75a3 3 0 01-3 3h-.878a4.511 4.511 0 00-2.24.617l-1.07.672a.75.75 0 01-.706.035z" />
-                    </svg>
+                <div className="flex items-center gap-3.5 sm:gap-4">
+                  {/* Player Profile Picture (No pulsing placeholder) */}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl border-2 border-emerald-400/80 overflow-hidden flex-shrink-0 bg-slate-900 shadow-md">
+                    {winnerAvatar ? (
+                      <img
+                        src={winnerAvatar}
+                        alt={winnerName}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`;
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-brand-primary text-white font-black flex items-center justify-center text-lg uppercase">
+                        {winnerName.charAt(0)}
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <p className="text-white font-space font-black text-sm sm:text-base leading-tight">
-                      {typeof tournament.winner === 'object' ? tournament.winner?.name : tournament.winner}
+                  <div className="min-w-0">
+                    <p className="text-white font-space font-black text-base sm:text-lg leading-tight truncate">
+                      {winnerName}
                     </p>
-                    <p className="text-emerald-400 text-[10px] sm:text-xs font-bold">Crowned Champion</p>
+                    <p className="text-emerald-300 text-xs font-semibold mt-0.5">Tournament Winner</p>
                   </div>
                 </div>
               </div>
@@ -138,9 +179,9 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
                 <p className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-white/60 uppercase mb-2.5 sm:mb-3">Grand Prize</p>
                 <div className="flex items-center gap-3 sm:gap-4">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 sm:w-6 sm:h-6 text-white">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.872M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 002.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 012.916.52 6.003 6.003 0 01-5.395 4.972m0 0a6.726 6.726 0 01-2.749 1.35m0 0a6.772 6.772 0 01-3.044 0" />
-                    </svg>
+                    <span className="material-symbols-outlined text-[20px] text-white select-none">
+                      workspace_premium
+                    </span>
                   </div>
                   <div>
                     <p className="text-white font-space font-black text-sm sm:text-base leading-tight">1 Month Chess.com</p>

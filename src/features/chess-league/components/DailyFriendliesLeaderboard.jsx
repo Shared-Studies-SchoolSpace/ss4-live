@@ -11,8 +11,9 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
   const hasScrolledRef = useRef(false);
 
   const [arenaIds, setArenaIds] = useState(DEFAULT_ARENA_IDS);
-  const [tonightArena, setTonightArena] = useState(null);
-  const [tonightResults, setTonightResults] = useState([]);
+  const [selectedArenaId, setSelectedArenaId] = useState(DEFAULT_ARENA_IDS[0]);
+  const [tableMode, setTableMode] = useState('season'); // 'season' | 'arena'
+  const [arenaDetailsMap, setArenaDetailsMap] = useState({});
   const [allArenaResults, setAllArenaResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,47 +42,50 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
           // Ignore if table doesn't exist
         }
 
-        if (isMounted) setArenaIds(targetIds);
-
-        const latestId = targetIds[0];
-        const [metaRes, resultsRes] = await Promise.all([
-          fetch(`https://lichess.org/api/tournament/${latestId}`).then(r => r.ok ? r.json() : null),
-          fetch(`https://lichess.org/api/tournament/${latestId}/results`).then(r => r.ok ? r.text() : '')
-        ]);
-
-        if (metaRes && isMounted) {
-          setTonightArena(metaRes);
-        }
-
-        let parsedResults = [];
-        if (resultsRes) {
-          const lines = resultsRes.trim().split('\n').filter(Boolean);
-          parsedResults = lines.map(line => {
-            try { return JSON.parse(line); } catch (e) { return null; }
-          }).filter(Boolean);
-        }
-
         if (isMounted) {
-          setTonightResults(parsedResults);
+          setArenaIds(targetIds);
+          if (!targetIds.includes(selectedArenaId)) {
+            setSelectedArenaId(targetIds[0]);
+          }
         }
 
+        // Fetch meta and results for all target arenas concurrently
         const historyPromises = targetIds.map(async (id) => {
           try {
-            const text = await fetch(`https://lichess.org/api/tournament/${id}/results`).then(r => r.ok ? r.text() : '');
-            if (!text) return [];
-            return text.trim().split('\n').filter(Boolean).map(line => {
-              try { return { ...JSON.parse(line), arena_id: id }; } catch (e) { return null; }
-            }).filter(Boolean);
+            const [metaRes, textRes] = await Promise.all([
+              fetch(`https://lichess.org/api/tournament/${id}`).then(r => r.ok ? r.json() : null),
+              fetch(`https://lichess.org/api/tournament/${id}/results`).then(r => r.ok ? r.text() : '')
+            ]);
+
+            let results = [];
+            if (textRes) {
+              const lines = textRes.trim().split('\n').filter(Boolean);
+              results = lines.map(line => {
+                try { return { ...JSON.parse(line), arena_id: id }; } catch (e) { return null; }
+              }).filter(Boolean);
+            }
+
+            return { id, meta: metaRes, results };
           } catch (e) {
-            return [];
+            return { id, meta: null, results: [] };
           }
         });
 
-        const historyArrays = await Promise.all(historyPromises);
-        const combined = historyArrays.flat();
+        const historyData = await Promise.all(historyPromises);
 
         if (isMounted) {
-          setAllArenaResults(combined.length > 0 ? combined : parsedResults);
+          const map = {};
+          const combined = [];
+
+          historyData.forEach(item => {
+            map[item.id] = item;
+            if (item.results && item.results.length > 0) {
+              combined.push(...item.results);
+            }
+          });
+
+          setArenaDetailsMap(map);
+          setAllArenaResults(combined);
         }
       } catch (err) {
         console.warn('Lichess API fetch error:', err);
@@ -94,6 +98,58 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
     fetchLichessData();
     return () => { isMounted = false; };
   }, []);
+
+  // Currently selected arena details
+  const selectedArena = useMemo(() => {
+    return arenaDetailsMap[selectedArenaId] || null;
+  }, [arenaDetailsMap, selectedArenaId]);
+
+  const selectedArenaMeta = selectedArena?.meta;
+  const selectedArenaResults = useMemo(() => selectedArena?.results || [], [selectedArena]);
+
+  // Helper for computing dynamic arena title
+  const getArenaLabel = (startsAt) => {
+    if (!startsAt) return "Daily Arena";
+    const arenaDate = new Date(startsAt);
+    const now = new Date();
+
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const targetDate = new Date(arenaDate.getFullYear(), arenaDate.getMonth(), arenaDate.getDate());
+
+    if (targetDate.getTime() === today.getTime()) {
+      return "Tonight's Arena";
+    } else if (targetDate.getTime() === yesterday.getTime()) {
+      return "Last Night's Arena";
+    } else {
+      const weekday = arenaDate.toLocaleDateString('en-US', { weekday: 'short' });
+      const month = arenaDate.toLocaleDateString('en-US', { month: 'short' });
+      const day = arenaDate.getDate();
+      return `Arena — ${weekday}, ${month} ${day}`;
+    }
+  };
+
+  const selectedArenaTitle = useMemo(() => {
+    return getArenaLabel(selectedArenaMeta?.startsAt);
+  }, [selectedArenaMeta]);
+
+  // Available Arenas dropdown options
+  const arenaOptions = useMemo(() => {
+    return arenaIds.map(id => {
+      const item = arenaDetailsMap[id];
+      const startsAt = item?.meta?.startsAt;
+      const title = getArenaLabel(startsAt);
+      const name = item?.meta?.fullName || item?.meta?.name || `Arena #${id.slice(0, 6)}`;
+      return {
+        id,
+        title,
+        name,
+        startsAt
+      };
+    });
+  }, [arenaIds, arenaDetailsMap]);
 
   // Signed-in user rank matching helper
   const isUserMatch = useMemo(() => {
@@ -120,9 +176,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
   const seasonStandings = useMemo(() => {
     const playerMap = {};
 
-    const sourceData = allArenaResults.length > 0 ? allArenaResults : tonightResults;
-
-    sourceData.forEach(item => {
+    allArenaResults.forEach(item => {
       const uname = item.username || item.name;
       if (!uname) return;
       
@@ -172,19 +226,44 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
     sorted.sort((a, b) => b.pts - a.pts || b.perf - a.perf || b.wins - a.wins);
 
     return sorted.map((p, idx) => ({ ...p, rank: idx + 1 }));
-  }, [allArenaResults, tonightResults, allPlayers]);
+  }, [allArenaResults, allPlayers]);
 
-  const filteredStandings = useMemo(() => {
-    if (!searchQuery.trim()) return seasonStandings;
+  // Format Standings for Selected Arena specifically
+  const selectedArenaStandings = useMemo(() => {
+    return selectedArenaResults.map((item, idx) => {
+      const uname = item.username || item.name || 'Anonymous';
+      const matchedProfile = allPlayers.find(ap => 
+        ap.lichess_username?.toLowerCase() === uname.toLowerCase() ||
+        ap.chess_username?.toLowerCase() === uname.toLowerCase() ||
+        ap.username?.toLowerCase() === uname.toLowerCase()
+      );
+
+      return {
+        username: uname,
+        name: matchedProfile?.name || uname,
+        dp: 1,
+        pts: item.score || 0,
+        perf: item.performance || 1500,
+        wins: item.rank === 1 ? 1 : 0,
+        rank: item.rank || idx + 1,
+        profile: matchedProfile
+      };
+    });
+  }, [selectedArenaResults, allPlayers]);
+
+  // Filtered Standings by search query depending on table mode
+  const activeStandings = useMemo(() => {
+    const list = tableMode === 'season' ? seasonStandings : selectedArenaStandings;
+    if (!searchQuery.trim()) return list;
     const q = searchQuery.toLowerCase().trim();
-    return seasonStandings.filter(
+    return list.filter(
       p => p.name.toLowerCase().includes(q) || p.username.toLowerCase().includes(q)
     );
-  }, [seasonStandings, searchQuery]);
+  }, [seasonStandings, selectedArenaStandings, tableMode, searchQuery]);
 
   const summaryMetrics = useMemo(() => {
     const arenasCount = Math.max(arenaIds.length, 4);
-    const playersCount = seasonStandings.length || (tonightArena?.nbPlayers || 21);
+    const playersCount = seasonStandings.length || (selectedArenaMeta?.nbPlayers || 21);
     const leader = seasonStandings[0]?.username || 'Fastandmaybefurious';
     const topScore = seasonStandings[0]?.pts || 90;
 
@@ -194,70 +273,48 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
       leader,
       topScore
     };
-  }, [seasonStandings, arenaIds, tonightArena]);
+  }, [seasonStandings, arenaIds, selectedArenaMeta]);
 
   useEffect(() => {
     if (typeof onStatsUpdate === 'function') {
       let arenaStatus = 'live';
-      if (tonightArena) {
-        if (tonightArena.status === 'finished' || tonightArena.isFinished) {
+      if (selectedArenaMeta) {
+        if (selectedArenaMeta.status === 'finished' || selectedArenaMeta.isFinished) {
           arenaStatus = 'ended';
-        } else if (tonightArena.status === 'started' || tonightArena.isStarted) {
+        } else if (selectedArenaMeta.status === 'started' || selectedArenaMeta.isStarted) {
           arenaStatus = 'live';
-        } else if (tonightArena.startsAt && Date.now() < tonightArena.startsAt) {
+        } else if (selectedArenaMeta.startsAt && Date.now() < selectedArenaMeta.startsAt) {
           arenaStatus = 'upcoming';
-        } else if (tonightArena.finishesAt && Date.now() > tonightArena.finishesAt) {
+        } else if (selectedArenaMeta.finishesAt && Date.now() > selectedArenaMeta.finishesAt) {
           arenaStatus = 'ended';
         }
       }
       onStatsUpdate({
         summaryMetrics,
         arenaStatus,
-        tonightArena,
+        tonightArena: selectedArenaMeta,
         loading
       });
     }
-  }, [summaryMetrics, tonightArena, loading, onStatsUpdate]);
+  }, [summaryMetrics, selectedArenaMeta, loading, onStatsUpdate]);
 
-  const arenaTitle = useMemo(() => {
-    if (!tonightArena?.startsAt) return "Tonight's Arena";
-    const arenaDate = new Date(tonightArena.startsAt);
-    const now = new Date();
-
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    const targetDate = new Date(arenaDate.getFullYear(), arenaDate.getMonth(), arenaDate.getDate());
-
-    if (targetDate.getTime() === today.getTime()) {
-      return "Tonight's Arena";
-    } else if (targetDate.getTime() === yesterday.getTime()) {
-      return "Last Night's Arena";
-    } else {
-      const weekday = arenaDate.toLocaleDateString('en-US', { weekday: 'short' });
-      const month = arenaDate.toLocaleDateString('en-US', { month: 'short' });
-      const day = arenaDate.getDate();
-      return `Arena — ${weekday}, ${month} ${day}`;
-    }
-  }, [tonightArena]);
-
+  // Dynamic Podium Data for selected arena
   const topPodium = useMemo(() => {
-    if (tonightArena?.podium && tonightArena.podium.length > 0) {
-      return tonightArena.podium;
+    if (selectedArenaMeta?.podium && selectedArenaMeta.podium.length > 0) {
+      return selectedArenaMeta.podium;
     }
-    if (tonightResults.length > 0) {
-      return tonightResults.slice(0, 3).map(r => ({
+    if (selectedArenaResults.length > 0) {
+      return selectedArenaResults.slice(0, 3).map(r => ({
         name: r.username,
         score: r.score,
         rank: r.rank
       }));
     }
     return [];
-  }, [tonightArena, tonightResults]);
+  }, [selectedArenaMeta, selectedArenaResults]);
 
   const renderPodiumSection = () => {
-    const hasArena = Boolean(tonightArena) || tonightResults.length > 0;
+    const hasArena = Boolean(selectedArenaMeta) || selectedArenaResults.length > 0;
 
     if (!loading && !hasArena) {
       return null;
@@ -267,7 +324,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
       return (
         <div className="space-y-3">
           <p className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
-            {arenaTitle}
+            {selectedArenaTitle}
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 animate-pulse">
@@ -303,19 +360,41 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
 
     return (
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        {/* Arena Header with Interactive Arena Selector (Option 1) */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="material-symbols-outlined text-[18px] text-brand-primary select-none">
               emoji_events
             </span>
             <p className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
-              {arenaTitle}
+              {selectedArenaTitle}
             </p>
+
+            {/* Interactive Arena Selector Dropdown */}
+            {arenaOptions.length > 1 && (
+              <div className="relative inline-flex items-center ml-1">
+                <select
+                  value={selectedArenaId}
+                  onChange={(e) => setSelectedArenaId(e.target.value)}
+                  className="bg-white text-[#111111] text-xs font-bold rounded-xl px-3 py-1 pr-7 border border-gray-200 focus:outline-none focus:border-brand-primary transition-all cursor-pointer shadow-xs appearance-none"
+                  aria-label="Select Daily Arena Tournament"
+                >
+                  {arenaOptions.map(opt => (
+                    <option key={opt.id} value={opt.id}>
+                      {opt.title} ({opt.name})
+                    </option>
+                  ))}
+                </select>
+                <span className="material-symbols-outlined text-[16px] text-gray-400 absolute right-2 pointer-events-none select-none">
+                  expand_more
+                </span>
+              </div>
+            )}
           </div>
 
-          {tonightArena?.id && (
+          {selectedArenaMeta?.id && (
             <a
-              href={`https://lichess.org/tournament/${tonightArena.id}`}
+              href={`https://lichess.org/tournament/${selectedArenaMeta.id}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-xs font-bold text-brand-primary hover:text-brand-primary/80 transition-colors"
@@ -328,7 +407,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
           )}
         </div>
 
-        {/* Pro-Max Redesigned Compact Podium Cards (Optimized space, tight typography, zero overhang) */}
+        {/* Compact Podium Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 items-stretch">
           {/* Rank 1: Champion Card */}
           <div
@@ -342,11 +421,9 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
                 </span>
               </div>
               <div className="min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-brand-accent bg-brand-accent/10 px-1.5 py-0.5 rounded">
-                    Champion
-                  </span>
-                </div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-brand-accent bg-brand-accent/10 px-1.5 py-0.5 rounded">
+                  Champion
+                </span>
                 <h4 className="font-space text-sm sm:text-base font-bold text-[#111111] truncate mt-0.5">
                   {p1?.name || p1?.username || '—'}
                 </h4>
@@ -414,16 +491,45 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
     );
   };
 
-  const renderSeasonStandingsTable = () => (
+  const renderStandingsTable = () => (
     <div className="space-y-4 pt-2">
-      {/* Section Header & Filter Input */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <p className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
-            Season Standings
-          </p>
-          <p className="text-xs font-semibold text-gray-400 mt-0.5">
-            Cumulative points across all daily arenas
+      {/* Section Header & Segmented Control Switcher (Option 1) */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="space-y-2">
+          {/* Segmented Control Switcher */}
+          <div className="flex items-center gap-1.5 p-1 bg-gray-100/90 border border-gray-200 rounded-xl w-fit select-none">
+            <button
+              onClick={() => setTableMode('season')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                tableMode === 'season'
+                  ? 'bg-white text-brand-primary shadow-xs font-black'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[15px] select-none">
+                emoji_events
+              </span>
+              Season Leaderboard
+            </button>
+            <button
+              onClick={() => setTableMode('arena')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                tableMode === 'arena'
+                  ? 'bg-white text-brand-primary shadow-xs font-black'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[15px] select-none">
+                sports_esports
+              </span>
+              {selectedArenaTitle} Results
+            </button>
+          </div>
+
+          <p className="text-xs font-semibold text-gray-500">
+            {tableMode === 'season'
+              ? 'Cumulative season standings across all daily tournaments'
+              : `Standings for ${selectedArenaTitle} specifically`}
           </p>
         </div>
 
@@ -456,19 +562,19 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
         <div className="grid grid-cols-12 gap-2 px-5 py-3.5 bg-gray-50 text-xs font-black text-gray-600 uppercase tracking-wider select-none border-b border-gray-200 sticky top-0 z-20">
           <span className="col-span-1 text-center">#</span>
           <span className="col-span-5 md:col-span-5">PLAYER</span>
-          <span className="col-span-2 text-center">Arenas</span>
+          <span className="col-span-2 text-center">{tableMode === 'season' ? 'Arenas' : 'Arena'}</span>
           <span className="col-span-2 text-center">Points</span>
           <span className="col-span-2 text-center">Rating</span>
         </div>
 
         {/* Scrollable Ranked Rows */}
         <div className="max-h-[600px] overflow-y-auto divide-y divide-gray-100">
-          {filteredStandings.length === 0 ? (
+          {activeStandings.length === 0 ? (
             <div className="p-8 text-center text-gray-500 text-xs font-semibold">
-              No players matched "{searchQuery}"
+              {searchQuery ? `No players matched "${searchQuery}"` : 'No standings recorded for this view'}
             </div>
           ) : (
-            filteredStandings.map((p, idx) => {
+            activeStandings.map((p, idx) => {
               const isFirst = p.rank === 1;
               const isTopThree = p.rank <= 3;
               const isUser = isUserMatch(p);
@@ -551,20 +657,20 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
       {/* Render Podium Section */}
       {renderPodiumSection()}
 
-      {/* Loading indicator or Empty State or Season Standings Table */}
+      {/* Loading indicator or Empty State or Standings Table */}
       {loading ? (
         <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center shadow-xs">
           <div className="inline-block animate-spin w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full mb-3" />
           <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Loading Live Lichess Standings...</p>
         </div>
-      ) : seasonStandings.length === 0 ? (
+      ) : activeStandings.length === 0 && !searchQuery ? (
         <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center shadow-xs">
           <p className="text-sm font-semibold text-gray-500">
             No standings recorded yet for Season II
           </p>
         </div>
       ) : (
-        renderSeasonStandingsTable()
+        renderStandingsTable()
       )}
 
       {/* Aesthetic Footer Watermark */}

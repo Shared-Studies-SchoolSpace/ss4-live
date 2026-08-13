@@ -811,9 +811,9 @@ export default function LandingPage() {
                   </span>
                 </div>
                 <div className="p-3.5 bg-[#FAF8F4] rounded-xl border border-m3-outline-variant">
-                  <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest block">Daily Friendlies</span>
-                  <span className="text-sm font-bold text-brand-text-dark block mt-1">Lichess Tournament</span>
-                  <span className="text-xs font-semibold text-gray-700 block mt-0.5">Every night at 8 PM</span>
+                  <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest block">Daily League</span>
+                  <span class="text-sm font-bold text-brand-text-dark block mt-1">Lichess Tournament</span>
+                  <span class="text-xs font-semibold text-gray-700 block mt-0.5">Every night at 8 PM</span>
                 </div>
               </div>
             </div>
@@ -1115,7 +1115,7 @@ export default function LandingPage() {
                     leaderboardTab === "friendlies" ? "active" : ""
                   }`}
                 >
-                  Friendlies
+                  League
                 </button>
                 <button
                   onClick={() => setLeaderboardTab("schools")}

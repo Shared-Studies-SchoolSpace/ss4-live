@@ -43,8 +43,9 @@ function App() {
             <Route path="/award" element={<AspirantsAwardPage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/friendlies" element={<FriendliesPage />} />
-            <Route path="/chess-league" element={<Navigate to="/friendlies" replace />} />
+            <Route path="/league" element={<FriendliesPage />} />
+            <Route path="/friendlies" element={<Navigate to="/league" replace />} />
+            <Route path="/chess-league" element={<Navigate to="/league" replace />} />
             <Route path="/chess-league/tournament" element={<ChessTournamentPage />} />
             <Route path="/tournaments/register" element={<Navigate to="/chess-league/tournament" replace />} />
             <Route path="/tournament/register" element={<Navigate to="/chess-league/tournament" replace />} />

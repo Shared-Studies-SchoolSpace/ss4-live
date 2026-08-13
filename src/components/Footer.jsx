@@ -42,7 +42,7 @@ export const Footer = () => {
              <ul className="flex flex-wrap gap-x-8 gap-y-3">
                 {[
                   { label: 'About Us', href: '/about' },
-                  { label: 'Friendlies', href: '/friendlies' },
+                  { label: 'Daily League', href: '/league' },
                   { label: 'SS4 for Sponsors', href: '/partner' },
                   { label: 'Blog', href: '/news' },
                   { label: 'Contact SS4', href: 'mailto:ss4.mail.org@gmail.com' }
@@ -58,7 +58,7 @@ export const Footer = () => {
               { label: 'Secondary Schools', href: '/schools' },
               { label: 'Tertiary Institutions', href: '/tertiary' },
               { label: 'Departments', href: '/tertiary' },
-              { label: 'Friendlies', href: '/friendlies' }
+              { label: 'Daily League', href: '/league' }
             ]}
           />
         </div>

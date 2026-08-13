@@ -1,13 +1,16 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import DailyFriendliesLeaderboard from '../components/DailyFriendliesLeaderboard';
 import { PlayerProfile } from '../components/PlayerProfile';
+import FriendliesAdminModal from '../components/FriendliesAdminModal';
 
 export default function FriendliesPage() {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [statsData, setStatsData] = useState(null);
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
-    document.title = 'Friendlies Leaderboard | SS4 Chess League';
+    document.title = 'League Leaderboard | SS4 Chess League';
   }, []);
 
   const handleStatsUpdate = useCallback((data) => {
@@ -29,7 +32,7 @@ export default function FriendliesPage() {
           {/* Category Overline (Matching TournamentHero Standard) & Status Pill */}
           <div className="flex items-center justify-between flex-wrap gap-3">
             <p className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-white/70 uppercase">
-              SCL Daily Friendlies
+              SCL Daily League
             </p>
 
             {isLoading ? (
@@ -66,8 +69,12 @@ export default function FriendliesPage() {
 
           {/* Title & Headline */}
           <div className="max-w-3xl space-y-2">
-            <h1 className="text-3xl md:text-5xl font-black text-white font-space tracking-tight leading-tight">
-              Friendlies Leaderboard
+            <h1 
+              onDoubleClick={() => setShowAdminModal(true)}
+              className="text-3xl md:text-5xl font-black text-white font-space tracking-tight leading-tight cursor-pointer select-none group"
+              title="Double-click to open Admin Panel"
+            >
+              League Leaderboard
             </h1>
             <p className="text-sm md:text-base font-semibold text-white/70 leading-relaxed">
               Daily arena battles &bull; Season standings updated live
@@ -160,6 +167,7 @@ export default function FriendliesPage() {
         <DailyFriendliesLeaderboard
           onPlayerSelect={(p) => setSelectedPlayer(p)}
           onStatsUpdate={handleStatsUpdate}
+          refreshTrigger={refreshTrigger}
         />
       </div>
 
@@ -170,6 +178,14 @@ export default function FriendliesPage() {
           onClose={() => setSelectedPlayer(null)}
         />
       )}
+
+      {/* Friendlies Admin Modal */}
+      <FriendliesAdminModal
+        isOpen={showAdminModal}
+        onClose={() => setShowAdminModal(false)}
+        onArenaUpdated={() => setRefreshTrigger((prev) => prev + 1)}
+      />
     </div>
   );
 }
+

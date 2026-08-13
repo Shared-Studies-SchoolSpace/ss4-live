@@ -43,13 +43,14 @@ typography:
     fontSize: "0.875rem"
     fontWeight: 400
     lineHeight: 1.5
-  label:
+  label / micro-label / eyebrow / eyebrow tags / badges / chips / metadata pills:
     fontFamily: "Space Grotesk, sans-serif"
     fontSize: "0.75rem"
     fontWeight: 800
     lineHeight: 1.2
     letterSpacing: "0.05em"
     textTransform: "uppercase"
+    style: "Solid high-contrast light surface design (NO NEON, NO GLOW, NO DARK MASKS)"
 rounded:
   sm: "4px"
   md: "8px"
@@ -220,9 +221,9 @@ All buttons follow "The Varsity Arena" structured corner guidelines, maintaining
 
 ---
 
-### 5.2 Primary Navigation Tabs & Sticky Tab Bar
+### 5.2 Primary Outer Page Tabs ("Tables | Fixtures | Knockout Bracket | Results | Rules & Schedule | Admin")
 
-Extracted directly from the Tournament Page, the sticky tab bar organizes multi-section pages with mobile-first touch support.
+Mandatory layout for all top-level outer page section navigation across SS4 (e.g. Tournament Page main tabs). Extracted directly from the Tournament Page sticky tab bar.
 
 #### A. Sticky Tab Bar Container
 - **Positioning:** `sticky top-16 lg:top-20 z-40`
@@ -231,9 +232,9 @@ Extracted directly from the Tournament Page, the sticky tab bar organizes multi-
 - **Padding & Layout:** `px-3 sm:px-6 md:px-12 lg:px-16 shadow-xs`
 - **Scroll Container:** `max-w-5xl mx-auto flex gap-2 sm:gap-6 overflow-x-auto no-scrollbar touch-pan-x py-1`
 
-#### B. Individual Tab Button Specification
+#### B. Individual Primary Tab Button Specification
 - **Min Target Size:** Min-height `48px`, Padding `10px 14px` (`px-3.5 py-3`)
-- **Typography:** `font-black` (700/900), `whitespace-nowrap`, `text-sm sm:text-base`
+- **Typography:** `font-black` (700/900), `whitespace-nowrap`, `text-sm sm:text-base`, `Space Grotesk` / `Outfit`
 - **Corners:** Top-rounded `rounded-t-xl` (`12px`)
 - **Active State:**
   - Border: `border-b-2 border-brand-primary` (`#1A56C4`)
@@ -247,7 +248,9 @@ Extracted directly from the Tournament Page, the sticky tab bar organizes multi-
 
 ---
 
-### 5.3 Secondary Segmented Controls & Notebook Binder Tabs
+### 5.3 Secondary Inner Page Segmented Tabs ("Tables | Knockout Matrix | Fixtures")
+
+Mandatory layout for all secondary inner-view switching inside cards, panels, or nested views.
 
 #### A. M3 Segmented Button Container (`.m3-segmented-container`)
 - **Display:** `flex` row
@@ -259,8 +262,8 @@ Extracted directly from the Tournament Page, the sticky tab bar organizes multi-
 #### B. M3 Segmented Item (`.m3-segmented-item`)
 - **Height:** `38px`
 - **Corners:** `rounded-full` (`100px`)
-- **Typography:** `font-size: 0.72rem`, `font-weight: 700`, `text-transform: uppercase`, `letter-spacing: 0.02em`
-- **Active State:** Background `#FFFFFF`, Text `#1A56C4`, Box Shadow `0 1px 3px rgba(0,0,0,0.08)`
+- **Typography:** `font-size: 0.72rem`, `font-weight: 800`, `font-family: Space Grotesk`, `text-transform: uppercase`, `letter-spacing: 0.02em`
+- **Active State:** Background `#FFFFFF`, Text `#1A56C4` Varsity Blue, Box Shadow `0 1px 3px rgba(0,0,0,0.08)`
 - **Inactive State:** Background `transparent`, Text `#444444`, Hover `rgba(68, 68, 68, 0.04)`
 
 #### C. Notebook Binder Tabs (`.binder-tab`)
@@ -351,12 +354,17 @@ Extracted from the Split Bracket Visualizer component.
 
 ---
 
-### 5.8 Badges, Status Pills & Micro-Indicators
+### 5.8 Badges, Chips, Eyebrows & Metadata Pills (`label / micro-label / eyebrow / eyebrow tags / badges / chips / metadata pills`)
 
-- **Division Tag:** `px-2.5 py-1 text-xs font-bold rounded-full bg-brand-primary/10 text-brand-primary border border-brand-primary/20`
-- **Live Badge:** `px-2 py-0.5 text-[10px] font-black rounded-full bg-red-100 text-red-600 border border-red-200 flex items-center gap-1.5`
-- **ELO Rating Pill:** `px-2 py-0.5 text-[10px] font-bold rounded-md bg-blue-50 text-blue-700 border border-blue-200`
-- **Qualified Status Tag:** `px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300`
+All micro-labels, eyebrow tags, category badges, chips, and metadata pills across SS4 MUST follow these strict light-surface rules (strictly NO neon colors, NO glowing text, NO dark background masks):
+
+- **Typography Mandate:** Font `Space Grotesk` (or `Outfit`), Size `0.65rem` - `0.75rem` (`text-xs` / `text-[10px]`), Weight `800` (ExtraBold/Black), Uppercase `textTransform: uppercase`, Tracking `letterSpacing: 0.05em`.
+- **Primary Division / Round Tag:** Solid Varsity Blue (`bg-[#1A56C4]`), text Pure White (`#FFFFFF`), `rounded-md` (`6px`), padding `px-3 py-1`.
+- **Neutral Metadata Chip:** Pure White surface (`bg-white`), border `1px solid #CCCCCC`, text Ink Black (`#111111`), padding `px-3 py-1`.
+- **Secondary Category Chip:** Light gray surface (`bg-gray-200` / `bg-[#F0EEEA]`), text dark gray (`text-gray-700`), padding `px-3 py-1`.
+- **Live Status Badge:** Light red surface (`bg-red-50`), border `1px solid #FECACA`, text dark red (`text-red-700`), with an inline 8px solid red dot (`w-2 h-2 rounded-full bg-red-600`).
+- **ELO Rating Pill:** Soft blue tint surface (`bg-blue-50`), border `1px solid #BFDBFE`, text Varsity Blue (`text-[#1A56C4]`), weight `800`.
+- **Qualified Status Pill:** Soft green surface (`bg-emerald-100`), border `1px solid #A7F3D0`, text dark green (`text-emerald-800`), weight `800`.
 
 ---
 

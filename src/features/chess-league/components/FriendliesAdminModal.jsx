@@ -276,52 +276,94 @@ export default function FriendliesAdminModal({ isOpen, onClose, onArenaUpdated }
       toast.error('Failed to save arena: ' + err.message);
     } finally {
       setIsSaving(false);
+        if (simpleErr) throw simpleErr;
+      }
+
+      toast.success(`Added Arena: ${payload.custom_name}`);
+      setNewArenaUrl('');
+      loadConfiguredArenas();
+      if (onArenaUpdated) onArenaUpdated();
+    } catch (err) {
+      console.error('Error adding single arena:', err);
+      toast.error(`Failed to add arena: ${err.message}`);
+    } finally {
+      setAddingLoading(false);
     }
   };
 
-  const handleDeleteArena = async (dbId, arenaId) => {
-    if (!window.confirm(`Remove Arena #${arenaId} from active config?`)) return;
+  const handleMultiImport = async (e) => {
+    e.preventDefault();
+    if (!multiInput.trim()) return;
 
+    const lines = multiInput
+      .split('\n')
+      .map(line => line.trim())
+      .filter(Boolean);
+
+    if (lines.length === 0) return;
+
+    setMultiLoading(true);
+    toast.info(`Processing ${lines.length} arenas...`);
+
+    const payloads = [];
+    for (const rawLine of lines) {
+      const cleanId = extractLichessArenaId(rawLine);
+      if (cleanId) {
+        payloads.push({
+          arena_id: cleanId,
+          created_at: new Date().toISOString()
+        });
+      }
+    }
+
+    try {
+      let { error } = await supabase.from('daily_friendlies_config').insert(payloads);
+      if (error) {
+        // Fallback single-column batch insert
+        const simplePayloads = payloads.map(p => ({ arena_id: p.arena_id }));
+        const { error: simpleErr } = await supabase.from('daily_friendlies_config').insert(simplePayloads);
+        if (simpleErr) throw simpleErr;
+      }
+
+      toast.success(`Successfully imported ${payloads.length} arenas!`);
+      setMultiInput('');
+      loadConfiguredArenas();
+      if (onArenaUpdated) onArenaUpdated();
+    } catch (err) {
+      console.error('Error bulk importing arenas:', err);
+      toast.error(`Bulk import failed: ${err.message}`);
+    } finally {
+      setMultiLoading(false);
+    }
+  };
+
+  const handleRemoveArena = async (arenaId) => {
     try {
       const { error } = await supabase
         .from('daily_friendlies_config')
         .delete()
-        .eq('id', dbId);
+        .eq('arena_id', arenaId);
 
       if (error) throw error;
-      toast.info(`Removed Arena #${arenaId}`);
-      fetchStoredArenas();
+
+      toast.info(`Removed arena ${arenaId}`);
+      setConfiguredArenas(prev => prev.filter(item => item.arena_id !== arenaId));
       if (onArenaUpdated) onArenaUpdated();
     } catch (err) {
-      toast.error('Failed to delete arena: ' + err.message);
+      console.error('Error deleting arena:', err);
+      toast.error(`Failed to remove arena: ${err.message}`);
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div 
-        className="w-full max-w-xl bg-[#0c1e54] border border-white/20 rounded-3xl p-6 sm:p-8 text-white shadow-2xl space-y-6 relative overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Glow accent */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/20 rounded-full blur-3xl pointer-events-none" />
-
-        {/* Modal Header */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-4">
-          <div>
-            <span className="text-[10px] font-black uppercase tracking-widest text-brand-accent">Admin Surface</span>
-            <h3 className="font-space font-black text-xl sm:text-2xl text-white">League Admin</h3>
-          </div>
-          <button 
-            onClick={onClose}
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 transition-colors"
-          >
-            ✕
-          </button>
-        </div>
-
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="League Admin"
+      subtitle="Admin Surface"
+      maxWidth="max-w-xl"
+      variant="dark"
+    >
         {!isUnlocked ? (
           /* PIN Entry Form */
           <form onSubmit={handleUnlockPin} className="space-y-4 py-4">
@@ -568,7 +610,6 @@ export default function FriendliesAdminModal({ isOpen, onClose, onArenaUpdated }
             </div>
           </div>
         )}
-      </div>
-    </div>
+    </Modal>
   );
 }

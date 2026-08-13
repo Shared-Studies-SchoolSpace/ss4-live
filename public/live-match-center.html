@@ -267,48 +267,119 @@
   </header>
 
 
-  <!-- ==================== HERO MATCH BANNER (DESIGN.md 4 & 5.5) ==================== -->
-  <section class="bg-[#0B192C] text-white py-6 sm:py-8 px-4 sm:px-8 border-b border-white/10 relative overflow-hidden">
-    <!-- Background Texture -->
-    <div class="absolute inset-0 opacity-10 bg-radial-grid"></div>
+  <!-- ==================== HERO MATCH BANNER (VARSITY BROADCAST SCOREBUG) ==================== -->
+  <section class="bg-[#0B192C] text-white py-8 sm:py-10 px-4 sm:px-8 border-b border-white/10 relative overflow-hidden">
+    <!-- Background Radial Grid Texture (DESIGN.md 4) -->
+    <div class="absolute inset-0 opacity-15 bg-radial-grid pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto relative z-10">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-        
-        <!-- Tournament & Division Metadata -->
-        <div class="flex flex-col items-center md:items-start text-center md:text-left">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="px-2.5 py-0.5 text-[10px] font-space font-black uppercase tracking-wider rounded-md bg-[#B84D00] text-white">
-              FINAL ROUND 5
-            </span>
-            <span class="px-2.5 py-0.5 text-[10px] font-space font-black uppercase tracking-wider rounded-md bg-white/10 text-blue-200 border border-white/20">
-              BOARD 1 • GOLD MEDAL MATCH
-            </span>
-          </div>
-          <h1 class="font-space font-black text-2xl sm:text-3xl md:text-4xl tracking-tight text-white leading-tight">
-            SS4 Varsity League Finals
-          </h1>
-          <p class="font-outfit text-xs sm:text-sm text-gray-300 mt-1 max-w-xl">
-            SCL Monthly Tournament 2026 • Swiss Division 1 • Blitz 5+3 Standard Rules
-          </p>
+      
+      <!-- Top Eyebrow Metadata & Status Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-6 border-b border-white/10 pb-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 text-[11px] font-space font-black uppercase tracking-wider rounded-lg bg-[#B84D00] text-white shadow-sm flex items-center gap-1.5">
+            🏆 FINAL ROUND 5
+          </span>
+          <span class="px-3 py-1 text-[11px] font-space font-black uppercase tracking-wider rounded-lg bg-white/10 text-blue-200 border border-white/20">
+            BOARD 1 • GOLD MEDAL MATCH
+          </span>
+          <span class="px-3 py-1 text-[11px] font-space font-extrabold uppercase tracking-wider rounded-lg bg-blue-900/60 text-blue-300 border border-blue-700/50">
+            SWISS DIVISION 1
+          </span>
         </div>
 
-        <!-- Live Scoreboard & Evaluation Summary -->
-        <div class="flex items-center gap-6 sm:gap-10 bg-white/5 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/15 shadow-xl">
-          <!-- White Player -->
-          <div class="text-center">
-            <div class="text-xs font-space font-extrabold uppercase text-blue-300">White</div>
-            <div class="font-space font-black text-lg sm:text-xl text-white">Alex Johnson</div>
-            <div class="text-[11px] text-gray-300 font-semibold">FGC Lagos • 2145 ELO</div>
+        <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full text-xs font-space font-bold text-red-400">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+          </span>
+          <span>142 SPECTATORS LIVE</span>
+        </div>
+      </div>
+
+      <!-- Main Headline & Scorebug Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Left: Match Title & Editorial Narrative -->
+        <div class="lg:col-span-5 text-center lg:text-left">
+          <h1 class="font-space font-black text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white leading-none mb-3">
+            SS4 Varsity Finals
+          </h1>
+          <p class="font-outfit text-sm sm:text-base text-gray-300 max-w-lg leading-relaxed mb-4">
+            The national championship showdown between Nigeria’s top two secondary school grandmasters. 
+          </p>
+          <div class="inline-flex items-center gap-3 text-xs font-space font-bold text-blue-300 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-xl">
+            <span>⏱ Blitz 5+3 Standard Rules</span>
+            <span class="text-white/30">•</span>
+            <span>ECO B90 Sicilian Defense</span>
           </div>
+        </div>
 
-          <div class="font-space font-black text-2xl sm:text-3xl text-[#E8640A] px-2">VS</div>
+        <!-- Right: Engineered Athletic Scoreboard Card (Signature Feature) -->
+        <div class="lg:col-span-7">
+          <div class="bg-[#111111]/90 backdrop-blur-xl rounded-3xl border border-white/15 p-4 sm:p-6 shadow-2xl relative overflow-hidden">
+            <!-- Subtle diagonal accent stripe -->
+            <div class="absolute -right-12 -top-12 w-36 h-36 bg-[#1A56C4]/20 rounded-full blur-2xl pointer-events-none"></div>
 
-          <!-- Black Player -->
-          <div class="text-center">
-            <div class="text-xs font-space font-extrabold uppercase text-orange-300">Black</div>
-            <div class="font-space font-black text-lg sm:text-xl text-white">Chidi Okafor</div>
-            <div class="text-[11px] text-gray-300 font-semibold">King's College • 2110 ELO</div>
+            <div class="grid grid-cols-1 sm:grid-cols-11 gap-4 items-center">
+              
+              <!-- White Contender Tile -->
+              <div class="sm:col-span-5 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-4 border border-white/10 flex items-center gap-3.5">
+                <div class="relative shrink-0">
+                  <div class="w-12 h-12 rounded-2xl bg-[#1A56C4] text-white flex items-center justify-center font-space font-black text-xl shadow-lg border-2 border-white/20">
+                    AJ
+                  </div>
+                  <span class="absolute -bottom-1 -right-1 bg-white text-[#111111] text-[9px] font-space font-black px-1 rounded shadow">
+                    ♔ W
+                  </span>
+                </div>
+                <div class="min-w-0 flex-grow">
+                  <div class="flex items-center gap-2">
+                    <h3 class="font-space font-black text-base text-white truncate">Alex Johnson</h3>
+                  </div>
+                  <p class="text-xs text-gray-300 truncate font-outfit">FGC Lagos</p>
+                  <div class="mt-1 flex items-center gap-2">
+                    <span class="px-2 py-0.5 text-[10px] font-space font-black rounded bg-blue-500/20 text-blue-300 border border-blue-400/30">
+                      2145 ELO
+                    </span>
+                    <span class="text-[10px] text-emerald-400 font-bold">Seed #1</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Center VS & Clock Emblem -->
+              <div class="sm:col-span-1 text-center flex flex-col items-center justify-center py-2 sm:py-0">
+                <div class="w-10 h-10 rounded-full bg-[#E8640A] text-white font-space font-black text-xs flex items-center justify-center shadow-lg border-2 border-white/20 animate-pulse">
+                  VS
+                </div>
+                <span class="font-space text-[9px] font-black uppercase text-gray-400 tracking-wider mt-1">Move 10</span>
+              </div>
+
+              <!-- Black Contender Tile -->
+              <div class="sm:col-span-5 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-4 border border-white/10 flex items-center gap-3.5">
+                <div class="relative shrink-0">
+                  <div class="w-12 h-12 rounded-2xl bg-[#0B192C] text-white flex items-center justify-center font-space font-black text-xl shadow-lg border-2 border-white/20">
+                    CO
+                  </div>
+                  <span class="absolute -bottom-1 -right-1 bg-[#111111] text-white text-[9px] font-space font-black px-1 rounded border border-white/20">
+                    ♚ B
+                  </span>
+                </div>
+                <div class="min-w-0 flex-grow">
+                  <div class="flex items-center gap-2">
+                    <h3 class="font-space font-black text-base text-white truncate">Chidi Okafor</h3>
+                  </div>
+                  <p class="text-xs text-gray-300 truncate font-outfit">King's College Lagos</p>
+                  <div class="mt-1 flex items-center gap-2">
+                    <span class="px-2 py-0.5 text-[10px] font-space font-black rounded bg-orange-500/20 text-orange-300 border border-orange-400/30">
+                      2110 ELO
+                    </span>
+                    <span class="text-[10px] text-emerald-400 font-bold">Seed #2</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
 

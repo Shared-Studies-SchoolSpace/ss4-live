@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Varsity Live Match Center — SS4 Chess League</title>
+  
+  <!-- Google Fonts: Space Grotesk (Headings) & Outfit (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN for Utility Classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              primary: '#1A56C4',
+              'primary-hover': '#1545A2',
+              'primary-container': '#E8EFFF',
+              accent: '#B84D00',
+              'accent-bright': '#E8640A',
+              'accent-container': '#FFEEDB',
+              cream: '#F6F4F0',
+              dark: '#111111',
+              navy: '#0B192C',
+              surface: '#FFFFFF',
+              border: '#EAEAEA'
+            }
+          },
+          fontFamily: {
+            space: ['Space Grotesk', 'sans-serif'],
+            outfit: ['Outfit', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Strictly Following DESIGN.md Specs */
+    :root {
+      --color-brand-primary: #1A56C4;
+      --color-brand-accent: #B84D00;
+      --color-brand-bg-cream: #F6F4F0;
+      --color-brand-text-dark: #111111;
+      --color-m3-surface: #FFFFFF;
+      --color-m3-outline-variant: #EAEAEA;
+      --font-space: "Space Grotesk", sans-serif;
+      --font-outfit: "Outfit", sans-serif;
+    }
+
+    body {
+      font-family: var(--font-outfit);
+      background-color: var(--color-brand-bg-cream);
+      color: var(--color-brand-text-dark);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-space { font-family: var(--font-space); }
+    .font-outfit { font-family: var(--font-outfit); }
+
+    /* DESIGN.md 4. Elevation: Outlined Varsity Card */
+    .varsity-card {
+      background: var(--color-m3-surface);
+      border: 1px solid var(--color-m3-outline-variant);
+      border-radius: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.015);
+      transition: all 180ms cubic-bezier(0.2, 0, 0, 1);
+    }
+    .varsity-card:hover {
+      border-color: var(--color-brand-primary);
+      box-shadow: 0 4px 16px rgba(26, 86, 196, 0.05);
+      transform: translateY(-1px);
+    }
+
+    /* DESIGN.md 4. Elevation: Stitched Varsity Patch */
+    .varsity-patch {
+      border: 2px dashed var(--color-brand-primary);
+      box-shadow: inset 0 0 0 2px #FFFFFF, 0 4px 12px rgba(0, 0, 0, 0.05);
+      background-color: var(--color-brand-bg-cream);
+      transition: transform 0.2s ease;
+    }
+    .varsity-patch:hover {
+      transform: scale(1.015);
+    }
+
+    /* DESIGN.md 5.1 Buttons */
+    .varsity-btn-primary {
+      background-color: var(--color-brand-primary);
+      color: #FFFFFF;
+      border-radius: 16px;
+      min-height: 48px;
+      padding: 10px 24px;
+      font-weight: 700;
+      font-family: var(--font-outfit);
+      transition: all 180ms cubic-bezier(0.2, 0, 0, 1);
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .varsity-btn-primary:hover {
+      background-color: #1545A2;
+      box-shadow: 0 2px 8px rgba(26, 86, 196, 0.25);
+      transform: translateY(-0.5px);
+    }
+    .varsity-btn-primary:active { transform: scale(0.98); }
+
+    .varsity-btn-secondary {
+      background-color: transparent;
+      color: var(--color-brand-primary);
+      border: 1px solid var(--color-brand-primary);
+      border-radius: 16px;
+      min-height: 48px;
+      padding: 10px 24px;
+      font-weight: 700;
+      font-family: var(--font-outfit);
+      transition: all 180ms cubic-bezier(0.2, 0, 0, 1);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .varsity-btn-secondary:hover {
+      background-color: rgba(26, 86, 196, 0.06);
+      transform: translateY(-0.5px);
+    }
+    .varsity-btn-secondary:active { transform: scale(0.98); }
+
+    /* DESIGN.md 5.3 M3 Segmented Controls */
+    .m3-segmented-container {
+      display: flex;
+      background-color: #F0EEEA;
+      border: 1px solid #CCCCCC;
+      border-radius: 100px;
+      padding: 2px;
+    }
+    .m3-segmented-item {
+      flex: 1;
+      border: none;
+      background: transparent;
+      height: 38px;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      font-family: var(--font-space);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #444444;
+      transition: all 180ms cubic-bezier(0.2, 0, 0, 1);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .m3-segmented-item.active {
+      background-color: #FFFFFF;
+      color: var(--color-brand-primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    /* DESIGN.md 5.4 M3 Filter Chips */
+    .m3-filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 32px;
+      padding: 0 14px;
+      border-radius: 8px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      transition: all 180ms cubic-bezier(0.2, 0, 0, 1);
+      border: 1px solid #CCCCCC;
+      background-color: transparent;
+      color: #444444;
+      cursor: pointer;
+    }
+    .m3-filter-chip.active-primary {
+      background-color: #E8EFFF;
+      color: #00194B;
+      border-color: #1A56C4;
+    }
+
+    /* Chessboard Square Grid */
+    .chess-board {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      aspect-ratio: 1 / 1;
+      border: 4px solid #0B192C;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    }
+    .sq-light { background-color: #F0D9B5; }
+    .sq-dark { background-color: #B58863; }
+    .sq-highlight { background-color: rgba(255, 235, 59, 0.6) !important; }
+    .sq-lastmove { background-color: rgba(184, 77, 0, 0.45) !important; }
+
+    /* Piece styling */
+    .chess-piece {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      user-select: none;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .chess-piece:hover { transform: scale(1.12); }
+
+    /* Hide scrollbars */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Radial Grid Background Watermark */
+    .bg-radial-grid {
+      background-image: radial-gradient(#111111 1px, transparent 1px);
+      background-size: 12px 12px;
+    }
+  </style>
+</head>
+<body class="bg-[#F6F4F0] text-[#111111] min-h-screen flex flex-col">
+
+  <!-- ==================== HEADER NAVBAR (DESIGN.md 5.11) ==================== -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#EAEAEA] px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-xs">
+    <div class="flex items-center gap-4">
+      <a href="/chess-league/tournament" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-[#1A56C4] flex items-center justify-center text-white font-space font-black text-xl shadow-md group-hover:scale-105 transition-transform">
+          ⚡
+        </div>
+        <div>
+          <span class="font-space font-black text-lg sm:text-xl tracking-tight text-[#111111] block leading-none">SS4 VARSITY</span>
+          <span class="font-space text-[10px] font-extrabold uppercase tracking-widest text-[#1A56C4]">Live Match Arena</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Live Status Pill & Global Navigation -->
+    <div class="flex items-center gap-3 sm:gap-4">
+      <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-50 border border-red-200">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600"></span>
+        </span>
+        <span class="font-space text-xs font-black uppercase text-red-600 tracking-wider">LIVE • BOARD 1</span>
+      </div>
+
+      <a href="/chess-league/tournament" class="varsity-btn-secondary text-xs sm:text-sm px-4 py-2 min-h-[38px]">
+        ← Back to Standings
+      </a>
+    </div>
+  </header>
+
+
+  <!-- ==================== HERO MATCH BANNER (DESIGN.md 4 & 5.5) ==================== -->
+  <section class="bg-[#0B192C] text-white py-6 sm:py-8 px-4 sm:px-8 border-b border-white/10 relative overflow-hidden">
+    <!-- Background Texture -->
+    <div class="absolute inset-0 opacity-10 bg-radial-grid"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <!-- Tournament & Division Metadata -->
+        <div class="flex flex-col items-center md:items-start text-center md:text-left">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 text-[10px] font-space font-black uppercase tracking-wider rounded-md bg-[#B84D00] text-white">
+              FINAL ROUND 5
+            </span>
+            <span class="px-2.5 py-0.5 text-[10px] font-space font-black uppercase tracking-wider rounded-md bg-white/10 text-blue-200 border border-white/20">
+              BOARD 1 • GOLD MEDAL MATCH
+            </span>
+          </div>
+          <h1 class="font-space font-black text-2xl sm:text-3xl md:text-4xl tracking-tight text-white leading-tight">
+            SS4 Varsity League Finals
+          </h1>
+          <p class="font-outfit text-xs sm:text-sm text-gray-300 mt-1 max-w-xl">
+            SCL Monthly Tournament 2026 • Swiss Division 1 • Blitz 5+3 Standard Rules
+          </p>
+        </div>
+
+        <!-- Live Scoreboard & Evaluation Summary -->
+        <div class="flex items-center gap-6 sm:gap-10 bg-white/5 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/15 shadow-xl">
+          <!-- White Player -->
+          <div class="text-center">
+            <div class="text-xs font-space font-extrabold uppercase text-blue-300">White</div>
+            <div class="font-space font-black text-lg sm:text-xl text-white">Alex Johnson</div>
+            <div class="text-[11px] text-gray-300 font-semibold">FGC Lagos • 2145 ELO</div>
+          </div>
+
+          <div class="font-space font-black text-2xl sm:text-3xl text-[#E8640A] px-2">VS</div>
+
+          <!-- Black Player -->
+          <div class="text-center">
+            <div class="text-xs font-space font-extrabold uppercase text-orange-300">Black</div>
+            <div class="font-space font-black text-lg sm:text-xl text-white">Chidi Okafor</div>
+            <div class="text-[11px] text-gray-300 font-semibold">King's College • 2110 ELO</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== STICKY VARSITY TAB BAR (DESIGN.md 5.2) ==================== -->
+  <div class="sticky top-[65px] z-40 bg-white/95 backdrop-blur-md border-b border-[#EAEAEA] px-4 sm:px-8 shadow-xs">
+    <div class="max-w-7xl mx-auto flex gap-4 sm:gap-8 overflow-x-auto no-scrollbar py-1">
+      <button onclick="switchTab('interactive-board')" id="tab-interactive-board" class="min-h-[48px] px-4 py-3 font-space font-extrabold whitespace-nowrap border-b-2 border-[#1A56C4] text-[#1A56C4] bg-[#1A56C4]/5 rounded-t-xl transition-all cursor-pointer flex items-center gap-2 text-sm sm:text-base outline-none">
+        <svg class="w-4 h-4 text-[#1A56C4]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span>Live Interactive Board</span>
+      </button>
+
+      <button onclick="switchTab('h2h-stats')" id="tab-h2h-stats" class="min-h-[48px] px-4 py-3 font-space font-extrabold whitespace-nowrap border-b-2 border-transparent text-gray-500 hover:text-[#111111] hover:bg-gray-50/50 rounded-t-xl transition-all cursor-pointer flex items-center gap-2 text-sm sm:text-base outline-none">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"/></svg>
+        <span>Tale of the Tape (H2H)</span>
+      </button>
+
+      <button onclick="switchTab('spectator-stream')" id="tab-spectator-stream" class="min-h-[48px] px-4 py-3 font-space font-extrabold whitespace-nowrap border-b-2 border-transparent text-gray-500 hover:text-[#111111] hover:bg-gray-50/50 rounded-t-xl transition-all cursor-pointer flex items-center gap-2 text-sm sm:text-base outline-none">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        <span>Spectator Chat & Cheers</span>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ==================== MAIN CONTENT LAYOUT (DESIGN.md 6) ==================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8 flex-grow w-full">
+    
+    <div id="section-interactive-board" class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+      
+      <!-- ==================== LEFT COLUMN: CHESS BOARD & CONTROLS (8 COLS) ==================== -->
+      <div class="lg:col-span-7 xl:col-span-7 flex flex-col gap-6">
+        
+        <!-- Player Black Header Bar -->
+        <div class="varsity-card p-4 flex items-center justify-between bg-white border border-[#EAEAEA]">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-[#111111] text-white flex items-center justify-center font-space font-black text-sm border-2 border-gray-800 shadow-sm">
+              ♟
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-space font-black text-base text-[#111111]">Chidi Okafor</span>
+                <span class="px-2 py-0.5 text-[10px] font-space font-black rounded-md bg-blue-50 text-[#1A56C4] border border-blue-200">2110 ELO</span>
+              </div>
+              <span class="text-xs text-gray-500 font-semibold">King's College Lagos • Black Pieces</span>
+            </div>
+          </div>
+
+          <!-- Clock Timer -->
+          <div class="bg-[#111111] text-white px-4 py-2 rounded-xl font-space font-black text-xl tracking-wider shadow-inner flex items-center gap-2 border border-gray-800">
+            <svg class="w-4 h-4 text-[#E8640A] animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span id="black-clock">03:42</span>
+          </div>
+        </div>
+
+        <!-- ENGINE EVALUATION BAR + CHESSBOARD CONTAINER -->
+        <div class="varsity-card p-4 sm:p-6 bg-white border border-[#EAEAEA] shadow-md flex flex-col gap-4">
+          
+          <!-- Live Engine Bar Indicator -->
+          <div class="flex items-center gap-3 bg-gray-50 p-2.5 rounded-xl border border-gray-200">
+            <span class="font-space text-xs font-black uppercase text-gray-600 shrink-0">Stockfish 16.1:</span>
+            
+            <div class="flex-grow h-3 bg-gray-300 rounded-full overflow-hidden flex border border-gray-300 relative">
+              <div id="eval-bar" class="bg-[#1A56C4] h-full transition-all duration-500" style="width: 58%;"></div>
+            </div>
+
+            <span id="eval-text" class="font-space text-xs font-black text-[#1A56C4] bg-blue-50 px-2 py-0.5 rounded border border-blue-200 shrink-0">
+              +0.85 (White)
+            </span>
+          </div>
+
+          <!-- Board Workspace -->
+          <div class="relative">
+            <div id="board" class="chess-board w-full shadow-2xl"></div>
+          </div>
+
+          <!-- Interactive Playback Controls (DESIGN.md 5.1 & Fitts's Law) -->
+          <div class="flex items-center justify-between gap-2 pt-2 bg-gray-50 p-3 rounded-2xl border border-gray-200">
+            <div class="flex items-center gap-1 sm:gap-2">
+              <button onclick="stepFirst()" class="m3-filter-chip hover:bg-gray-200 text-xs font-bold" title="First Move">
+                ⏮ Start
+              </button>
+              <button onclick="stepPrev()" class="m3-filter-chip hover:bg-gray-200 text-xs font-bold" title="Previous Move">
+                ◀ Prev
+              </button>
+              <button onclick="togglePlay()" id="btn-play" class="varsity-btn-primary min-h-[38px] px-5 text-xs py-1.5" title="Auto Replay">
+                ▶ Auto Play
+              </button>
+              <button onclick="stepNext()" class="m3-filter-chip hover:bg-gray-200 text-xs font-bold" title="Next Move">
+                Next ▶
+              </button>
+              <button onclick="stepLast()" class="m3-filter-chip hover:bg-gray-200 text-xs font-bold" title="Live End">
+                Live ⏭
+              </button>
+            </div>
+
+            <div class="hidden sm:flex items-center gap-2">
+              <span class="font-space text-[10px] font-extrabold text-gray-500 uppercase">Flip View</span>
+              <button onclick="flipBoard()" class="m3-filter-chip text-xs hover:bg-gray-200">
+                🔄
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Player White Header Bar -->
+        <div class="varsity-card p-4 flex items-center justify-between bg-white border border-[#EAEAEA]">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-50 text-[#1A56C4] flex items-center justify-center font-space font-black text-sm border-2 border-[#1A56C4] shadow-sm">
+              ♔
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-space font-black text-base text-[#111111]">Alex Johnson</span>
+                <span class="px-2 py-0.5 text-[10px] font-space font-black rounded-md bg-blue-50 text-[#1A56C4] border border-blue-200">2145 ELO</span>
+              </div>
+              <span class="text-xs text-gray-500 font-semibold">FGC Lagos • White Pieces</span>
+            </div>
+          </div>
+
+          <!-- Clock Timer -->
+          <div class="bg-[#1A56C4] text-white px-4 py-2 rounded-xl font-space font-black text-xl tracking-wider shadow-inner flex items-center gap-2 border border-blue-700">
+            <svg class="w-4 h-4 text-blue-200 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span id="white-clock">04:15</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- ==================== RIGHT COLUMN: MOVE LEDGER & ANALYTICS (5 COLS) ==================== -->
+      <div class="lg:col-span-5 xl:col-span-5 flex flex-col gap-6">
+        
+        <!-- M3 Segmented Navigation inside Panel -->
+        <div class="m3-segmented-container">
+          <button onclick="switchRightPanel('moves')" id="btn-panel-moves" class="m3-segmented-item active">
+            📋 Move Ledger
+          </button>
+          <button onclick="switchRightPanel('spectators')" id="btn-panel-spectators" class="m3-segmented-item">
+            💬 Live Chat (142)
+          </button>
+        </div>
+
+        <!-- PANEL 1: MOVE LEDGER TABLE (DESIGN.md 5.6) -->
+        <div id="panel-moves" class="varsity-card overflow-hidden border border-[#EAEAEA] bg-white flex flex-col h-[600px]">
+          <div class="px-5 py-4 bg-gray-50/90 border-b border-gray-200 flex items-center justify-between">
+            <div>
+              <h3 class="font-space font-extrabold text-base text-[#111111]">Algebraic Move Ledger</h3>
+              <p class="text-xs text-gray-500 font-medium">Click any move to jump the board</p>
+            </div>
+            <span class="px-2.5 py-1 text-[10px] font-space font-black uppercase rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+              Active Round 5
+            </span>
+          </div>
+
+          <!-- Table Container -->
+          <div class="overflow-y-auto flex-grow">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead class="sticky top-0 bg-gray-100/90 backdrop-blur-sm border-b border-gray-200">
+                <tr>
+                  <th class="py-2.5 px-4 font-space font-extrabold text-gray-500 uppercase tracking-wider text-[10px]">#</th>
+                  <th class="py-2.5 px-4 font-space font-extrabold text-gray-500 uppercase tracking-wider text-[10px]">White (Alex)</th>
+                  <th class="py-2.5 px-4 font-space font-extrabold text-gray-500 uppercase tracking-wider text-[10px]">Black (Chidi)</th>
+                  <th class="py-2.5 px-4 font-space font-extrabold text-gray-500 uppercase tracking-wider text-[10px] text-right">Eval</th>
+                </tr>
+              </thead>
+              <tbody id="move-table-body" class="divide-y divide-gray-100 font-outfit font-semibold text-[#111111]">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Match Summary Footer -->
+          <div class="p-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between text-xs">
+            <span class="font-space font-bold text-gray-600">Opening: Sicilian Defense (Najdorf Variant)</span>
+            <span class="font-space font-black text-[#1A56C4]">ECO B90</span>
+          </div>
+        </div>
+
+        <!-- PANEL 2: SPECTATOR STREAM & CHEERS -->
+        <div id="panel-spectators" class="varsity-card overflow-hidden border border-[#EAEAEA] bg-white flex-col h-[600px] hidden">
+          <div class="px-5 py-4 bg-gray-50/90 border-b border-gray-200 flex items-center justify-between">
+            <div>
+              <h3 class="font-space font-extrabold text-base text-[#111111]">Varsity Spectator Chat</h3>
+              <p class="text-xs text-gray-500 font-medium">142 school alumni & students viewing live</p>
+            </div>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          </div>
+
+          <!-- Chat Stream -->
+          <div id="chat-messages" class="p-4 overflow-y-auto flex-grow flex flex-col gap-3">
+            <div class="flex items-start gap-2.5 text-xs">
+              <div class="w-7 h-7 rounded-full bg-blue-100 text-[#1A56C4] flex items-center justify-center font-bold shrink-0">
+                KO
+              </div>
+              <div class="bg-gray-50 p-2.5 rounded-2xl border border-gray-200">
+                <span class="font-space font-bold text-[#1A56C4] block">Kelechi (FGC Lagos Coach)</span>
+                <span class="text-gray-700">Brilliant Knight sacrifice on e6 by Alex! Textbook tactical stroke! ⚡</span>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-2.5 text-xs">
+              <div class="w-7 h-7 rounded-full bg-orange-100 text-[#B84D00] flex items-center justify-center font-bold shrink-0">
+                T
+              </div>
+              <div class="bg-gray-50 p-2.5 rounded-2xl border border-gray-200">
+                <span class="font-space font-bold text-[#B84D00] block">Tolu (King's Alumnus)</span>
+                <span class="text-gray-700">Chidi has 3 mins left on clock, he can consolidate with ...Rc8! Stay focused! 🔥</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="p-3 bg-gray-50 border-t border-gray-200 flex items-center gap-2">
+            <input type="text" id="chat-input" placeholder="Cheer for your school team..." class="flex-grow bg-white border border-gray-300 rounded-xl px-3 py-2 text-xs font-outfit outline-none focus:border-[#1A56C4]">
+            <button onclick="sendChatMessage()" class="varsity-btn-primary min-h-[36px] px-4 text-xs py-1">
+              Send
+            </button>
+          </div>
+        </div>
+
+        <!-- STITCHED VARSITY PATCH WIDGET (DESIGN.md 5.5) -->
+        <div class="varsity-patch p-5 rounded-2xl">
+          <div class="flex items-center justify-between mb-3">
+            <span class="font-space font-black text-xs uppercase tracking-wider text-[#1A56C4]">🏆 Tournament Bracket Context</span>
+            <span class="text-[10px] font-bold text-gray-500">Board 1 of 16</span>
+          </div>
+          <p class="text-xs text-gray-700 leading-relaxed font-medium mb-3">
+            Winner of this match advances to the <strong>Grand Final Championship Match</strong> against <em>Ibrahim S. (Command Sec)</em>.
+          </p>
+          <div class="flex items-center gap-2">
+            <a href="/chess-league/tournament?tab=bracket" class="varsity-btn-secondary w-full text-xs min-h-[36px] py-1">
+              View Full Knockout Tree →
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==================== TALE OF THE TAPE (H2H STATS SECTION) ==================== -->
+    <div id="section-h2h-stats" class="mt-8 hidden">
+      <div class="varsity-card p-6 sm:p-8 bg-white border border-[#EAEAEA]">
+        <h2 class="font-space font-black text-xl sm:text-2xl text-[#111111] mb-6 border-b border-gray-200 pb-3 flex items-center gap-2">
+          <span>🥊 Tale of the Tape: Head-to-Head Comparison</span>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          
+          <!-- Alex Stats -->
+          <div class="varsity-patch p-6 rounded-2xl text-center">
+            <div class="w-16 h-16 rounded-full bg-[#1A56C4] text-white mx-auto flex items-center justify-center font-space font-black text-2xl shadow-lg mb-3">
+              AJ
+            </div>
+            <h3 class="font-space font-black text-lg text-[#111111]">Alex Johnson</h3>
+            <p class="text-xs text-gray-500 font-semibold mb-4">Federal Government College Lagos</p>
+
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between bg-white p-2 rounded-lg border border-gray-200">
+                <span class="text-gray-500 font-bold">ELO Rating:</span>
+                <span class="font-space font-black text-[#1A56C4]">2145</span>
+              </div>
+              <div class="flex justify-between bg-white p-2 rounded-lg border border-gray-200">
+                <span class="text-gray-500 font-bold">Tournament Rank:</span>
+                <span class="font-space font-black text-[#111111]">Seed #1</span>
+              </div>
+              <div class="flex justify-between bg-white p-2 rounded-lg border border-gray-200">
+                <span class="text-gray-500 font-bold">Win Rate:</span>
+                <span class="font-space font-black text-emerald-600">82.4%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vs Comparison Middle Badge -->
+          <div class="text-center flex flex-col items-center justify-center">
+            <div class="w-14 h-14 rounded-full bg-[#0B192C] text-white flex items-center justify-center font-space font-black text-xl shadow-xl mb-3">
+              VS
+            </div>
+            <span class="font-space text-xs font-black uppercase text-[#B84D00] tracking-wider mb-2">Historical H2H Record</span>
+            <div class="text-sm font-space font-black text-[#111111] bg-gray-100 px-4 py-2 rounded-xl border border-gray-300">
+              Alex 3 — 1 Chidi (1 Draw)
+            </div>
+          </div>
+
+          <!-- Chidi Stats -->
+          <div class="varsity-patch p-6 rounded-2xl text-center">
+            <div class="w-16 h-16 rounded-full bg-[#111111] text-white mx-auto flex items-center justify-center font-space font-black text-2xl shadow-lg mb-3">
+              CO
+            </div>
+            <h3 class="font-space font-black text-lg text-[#111111]">Chidi Okafor</h3>
+            <p class="text-xs text-gray-500 font-semibold mb-4">King's College Lagos</p>
+
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between bg-white p-2 rounded-lg border border-gray-200">
+                <span class="text-gray-500 font-bold">ELO Rating:</span>
+                <span class="font-space font-black text-[#1A56C4]">2110</span>
+              </div>
+              <div class="flex justify-between bg-white p-2 rounded-lg border border-gray-200">
+                <span class="text-gray-500 font-bold">Tournament Rank:</span>
+                <span class="font-space font-black text-[#111111]">Seed #2</span>
+              </div>
+              <div class="flex justify-between bg-white p-2 rounded-lg border border-gray-200">
+                <span class="text-gray-500 font-bold">Win Rate:</span>
+                <span class="font-space font-black text-emerald-600">79.1%</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- ==================== FOOTER (DESIGN.md 5.11) ==================== -->
+  <footer class="bg-[#0B192C] text-gray-300 py-8 px-4 sm:px-8 border-t border-white/10 mt-12">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-[#1A56C4] flex items-center justify-center text-white font-space font-black text-sm">
+          ⚡
+        </div>
+        <span class="font-space font-extrabold text-white text-base">SS4 Chess League — Varsity Arena</span>
+      </div>
+      <p class="text-xs text-gray-400 font-medium">
+        © 2026 SS4 Chess League. Grounded strictly in <a href="file:///home/kami/Desktop/codebase/ss4/DESIGN.md" class="text-blue-300 underline">DESIGN.md</a>.
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- ==================== INTERACTIVE CHESS BOARD JAVASCRIPT ==================== -->
+  <script>
+    // Game Move Sequence (Sicilian Defense Najdorf)
+    const MOVES = [
+      { num: 1, white: 'e4', black: 'c5', eval: '+0.2' },
+      { num: 2, white: 'Nf3', black: 'd6', eval: '+0.3' },
+      { num: 3, white: 'd4', black: 'cxd4', eval: '+0.3' },
+      { num: 4, white: 'Nxd4', black: 'Nf6', eval: '+0.25' },
+      { num: 5, white: 'Nc3', black: 'a6', eval: '+0.35' },
+      { num: 6, white: 'Be3', black: 'e5', eval: '+0.4' },
+      { num: 7, white: 'Nb3', black: 'Be6', eval: '+0.45' },
+      { num: 8, white: 'f3', black: 'Be7', eval: '+0.5' },
+      { num: 9, white: 'Qd2', black: 'O-O', eval: '+0.6' },
+      { num: 10, white: 'O-O-O', black: 'Nbd7', eval: '+0.85' }
+    ];
+
+    // Starting Board Position Matrix
+    const initialBoard = [
+      ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+      ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+      ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+    ];
+
+    // Board state after move 10
+    const currentBoardState = [
+      ['r', '', 'b', 'q', '1r', 'k', '', ''],
+      ['', 'p', 'p', 'n', 'b', 'p', 'p', 'p'],
+      ['p', '', '', 'p', '', 'n', '', ''],
+      ['', '', '', '', 'p', '', '', ''],
+      ['', '', '', 'N', 'P', '', '', ''],
+      ['', '', 'N', '', '', 'P', '', ''],
+      ['P', 'P', 'P', 'Q', '', '', 'P', 'P'],
+      ['2r', '2r', 'K', '', '', 'B', '', '']
+    ];
+
+    const pieceUnicode = {
+      'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
+      'R': '♖', 'N': '♘', 'B': '♗', 'Q': '♕', 'K': '♔', 'P': '♙'
+    };
+
+    let currentMoveIndex = MOVES.length - 1;
+    let isPlaying = false;
+    let timerInterval = null;
+
+    // Render Chessboard
+    function renderBoard(boardMatrix) {
+      const boardContainer = document.getElementById('board');
+      boardContainer.innerHTML = '';
+
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const sq = document.createElement('div');
+          const isLight = (r + c) % 2 === 0;
+          sq.className = `w-full h-full flex items-center justify-center ${isLight ? 'sq-light' : 'sq-dark'}`;
+
+          const pieceChar = boardMatrix[r][c].replace(/[0-9]/g, '');
+          if (pieceChar && pieceUnicode[pieceChar]) {
+            const pEl = document.createElement('span');
+            pEl.className = 'chess-piece';
+            pEl.innerText = pieceUnicode[pieceChar];
+            sq.appendChild(pEl);
+          }
+
+          // Highlight last moved squares (d2 -> d4 / c8 -> d7)
+          if ((r === 6 && c === 3) || (r === 1 && c === 3)) {
+            sq.classList.add('sq-lastmove');
+          }
+
+          boardContainer.appendChild(sq);
+        }
+      }
+    }
+
+    // Render Move Table Body
+    function renderMoveTable() {
+      const tbody = document.getElementById('move-table-body');
+      tbody.innerHTML = '';
+
+      MOVES.forEach((m, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = `cursor-pointer transition-colors ${idx === currentMoveIndex ? 'bg-blue-50 border-l-4 border-[#1A56C4]' : 'hover:bg-gray-50'}`;
+        tr.onclick = () => selectMove(idx);
+
+        tr.innerHTML = `
+          <td class="py-2.5 px-4 font-space font-extrabold text-gray-500">${m.num}.</td>
+          <td class="py-2.5 px-4 font-bold text-[#1A56C4]">${m.white}</td>
+          <td class="py-2.5 px-4 font-bold text-[#111111]">${m.black}</td>
+          <td class="py-2.5 px-4 text-right font-space font-bold text-gray-600">${m.eval}</td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function selectMove(index) {
+      currentMoveIndex = index;
+      renderMoveTable();
+      updateEvalBar(MOVES[index].eval);
+    }
+
+    function updateEvalBar(evalVal) {
+      const evalText = document.getElementById('eval-text');
+      const evalBar = document.getElementById('eval-bar');
+      evalText.innerText = `${evalVal} (White)`;
+      
+      const num = parseFloat(evalVal.replace('+', '')) || 0.5;
+      const pct = Math.min(Math.max((num + 2) / 4 * 100, 20), 85);
+      evalBar.style.width = `${pct}%`;
+    }
+
+    function stepFirst() { selectMove(0); }
+    function stepLast() { selectMove(MOVES.length - 1); }
+    function stepPrev() { if (currentMoveIndex > 0) selectMove(currentMoveIndex - 1); }
+    function stepNext() { if (currentMoveIndex < MOVES.length - 1) selectMove(currentMoveIndex + 1); }
+
+    function togglePlay() {
+      const btn = document.getElementById('btn-play');
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        btn.innerText = '⏸ Pause';
+        btn.classList.replace('varsity-btn-primary', 'varsity-btn-secondary');
+        timerInterval = setInterval(() => {
+          if (currentMoveIndex < MOVES.length - 1) {
+            stepNext();
+          } else {
+            stepFirst();
+          }
+        }, 1500);
+      } else {
+        btn.innerText = '▶ Auto Play';
+        btn.classList.replace('varsity-btn-secondary', 'varsity-btn-primary');
+        clearInterval(timerInterval);
+      }
+    }
+
+    function flipBoard() {
+      const board = document.getElementById('board');
+      board.style.transform = board.style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    // Tab Navigation
+    function switchTab(tabId) {
+      ['interactive-board', 'h2h-stats', 'spectator-stream'].forEach(id => {
+        const sec = document.getElementById(`section-${id}`);
+        const tabBtn = document.getElementById(`tab-${id}`);
+        if (sec) sec.classList.add('hidden');
+        if (tabBtn) {
+          tabBtn.className = 'min-h-[48px] px-4 py-3 font-space font-extrabold whitespace-nowrap border-b-2 border-transparent text-gray-500 hover:text-[#111111] hover:bg-gray-50/50 rounded-t-xl transition-all cursor-pointer flex items-center gap-2 text-sm sm:text-base outline-none';
+        }
+      });
+
+      const activeSec = document.getElementById(`section-${tabId}`);
+      const activeTabBtn = document.getElementById(`tab-${tabId}`);
+      if (activeSec) activeSec.classList.remove('hidden');
+      if (activeTabBtn) {
+        activeTabBtn.className = 'min-h-[48px] px-4 py-3 font-space font-extrabold whitespace-nowrap border-b-2 border-[#1A56C4] text-[#1A56C4] bg-[#1A56C4]/5 rounded-t-xl transition-all cursor-pointer flex items-center gap-2 text-sm sm:text-base outline-none';
+      }
+    }
+
+    // Switch Right Column Panel
+    function switchRightPanel(panelName) {
+      document.getElementById('panel-moves').classList.add('hidden');
+      document.getElementById('panel-spectators').classList.add('hidden');
+      document.getElementById('btn-panel-moves').classList.remove('active');
+      document.getElementById('btn-panel-spectators').classList.remove('active');
+
+      document.getElementById(`panel-${panelName}`).classList.remove('hidden');
+      document.getElementById(`btn-panel-${panelName}`).classList.add('active');
+    }
+
+    // Send Chat Message
+    function sendChatMessage() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatContainer = document.getElementById('chat-messages');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'flex items-start gap-2.5 text-xs';
+      msgDiv.innerHTML = `
+        <div class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shrink-0">
+          You
+        </div>
+        <div class="bg-blue-50 p-2.5 rounded-2xl border border-blue-200">
+          <span class="font-space font-bold text-[#1A56C4] block">You (Spectator)</span>
+          <span class="text-gray-800">${text}</span>
+        </div>
+      `;
+      chatContainer.appendChild(msgDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      input.value = '';
+    }
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      renderBoard(currentBoardState);
+      renderMoveTable();
+    });
+  </script>
+</body>
+</html>

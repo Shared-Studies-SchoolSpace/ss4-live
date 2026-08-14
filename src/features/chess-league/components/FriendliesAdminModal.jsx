@@ -276,18 +276,6 @@ export default function FriendliesAdminModal({ isOpen, onClose, onArenaUpdated }
       toast.error('Failed to save arena: ' + err.message);
     } finally {
       setIsSaving(false);
-        if (simpleErr) throw simpleErr;
-      }
-
-      toast.success(`Added Arena: ${payload.custom_name}`);
-      setNewArenaUrl('');
-      loadConfiguredArenas();
-      if (onArenaUpdated) onArenaUpdated();
-    } catch (err) {
-      console.error('Error adding single arena:', err);
-      toast.error(`Failed to add arena: ${err.message}`);
-    } finally {
-      setAddingLoading(false);
     }
   };
 

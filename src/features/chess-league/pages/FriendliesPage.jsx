@@ -40,7 +40,7 @@ export default function FriendliesPage() {
                 <span className="material-symbols-outlined text-[16px] animate-spin select-none">
                   progress_activity
                 </span>
-                Loading Arena Data...
+                Loading Arena Data
               </span>
             ) : status === 'live' ? (
               <span className="inline-flex items-center gap-2 text-xs bg-rose-500/20 border border-rose-500/20 text-rose-200 font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
@@ -134,7 +134,7 @@ export default function FriendliesPage() {
               {isLoading ? (
                 <div className="h-8 bg-white/15 rounded animate-pulse mt-2 w-28" />
               ) : (
-                <p className="font-space text-lg md:text-2xl font-black text-white mt-1 truncate">
+                <p className="font-space text-lg md:text-2xl font-black text-white mt-1 break-words">
                   {summary?.leader || '—'}
                 </p>
               )}

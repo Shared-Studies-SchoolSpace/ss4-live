@@ -324,13 +324,13 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-11 h-11 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-sm font-space text-lg font-black">
-                🥇
+                1
               </div>
               <div className="min-w-0">
                 <span className="text-[9px] font-black uppercase tracking-wider text-amber-800 bg-amber-200/80 px-2 py-0.5 rounded-md">
                   1st Champion
                 </span>
-                <h4 className="font-space text-sm sm:text-base font-bold text-[#111111] truncate mt-0.5">
+                <h4 className="font-space text-sm sm:text-base font-bold text-[#111111] break-words mt-0.5">
                   {p1?.name || p1?.username || '—'}
                 </h4>
               </div>
@@ -348,13 +348,13 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-11 h-11 rounded-xl bg-slate-400 text-white flex items-center justify-center shrink-0 shadow-sm font-space text-lg font-black">
-                🥈
+                2
               </div>
               <div className="min-w-0">
                 <span className="text-[9px] font-bold uppercase tracking-wider text-slate-700 bg-slate-200/80 px-2 py-0.5 rounded-md">
                   2nd Place
                 </span>
-                <h4 className="font-space text-sm sm:text-base font-bold text-[#111111] truncate mt-0.5">
+                <h4 className="font-space text-sm sm:text-base font-bold text-[#111111] break-words mt-0.5">
                   {p2?.name || p2?.username || '—'}
                 </h4>
               </div>
@@ -372,13 +372,13 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-11 h-11 rounded-xl bg-amber-700 text-white flex items-center justify-center shrink-0 shadow-sm font-space text-lg font-black">
-                🥉
+                3
               </div>
               <div className="min-w-0">
                 <span className="text-[9px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 px-2 py-0.5 rounded-md">
                   3rd Place
                 </span>
-                <h4 className="font-space text-sm sm:text-base font-bold text-[#111111] truncate mt-0.5">
+                <h4 className="font-space text-sm sm:text-base font-bold text-[#111111] break-words mt-0.5">
                   {p3?.name || p3?.username || '—'}
                 </h4>
               </div>
@@ -409,7 +409,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search player or handle..."
+              placeholder="Search player or handle"
               className="w-full bg-white text-[#111111] placeholder-gray-400 text-xs font-semibold rounded-xl px-3.5 py-2 pl-9 border border-gray-200 focus:outline-none focus:border-[#1A56C4] focus:ring-1 focus:ring-[#1A56C4] transition-all shadow-xs"
             />
             <span className="material-symbols-outlined text-[18px] text-gray-400 absolute left-2.5 top-2 pointer-events-none select-none">
@@ -570,15 +570,15 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
                       isThird ? 'bg-amber-700 text-white' :
                       'bg-gray-100 text-gray-700 group-hover:bg-gray-200'
                     }`}>
-                      {isFirst ? '👑' : p.rank}
+                      {p.rank}
                     </span>
                   </div>
 
                   {/* PLAYER COLUMN */}
-                  <div className="col-span-6 sm:col-span-5 flex items-center gap-2.5 truncate pr-2">
-                    <div className="min-w-0 flex-1 truncate">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-bold text-[#111111] truncate group-hover:text-[#1A56C4] transition-colors">
+                  <div className="col-span-6 sm:col-span-5 flex items-center gap-2.5 pr-2">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="font-bold text-[#111111] group-hover:text-[#1A56C4] transition-colors break-words">
                           {p.name}
                         </span>
                         {isUser && (
@@ -587,12 +587,13 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
                           </span>
                         )}
                         {p.wins > 0 && (
-                          <span className="inline-flex items-center gap-0.5 text-[9px] font-black text-amber-900 bg-amber-100 border border-amber-300 px-1.5 py-0.2 rounded shrink-0">
-                            ⭐ {p.wins} {p.wins === 1 ? 'Win' : 'Wins'}
+                          <span className="inline-flex items-center gap-1 text-[9px] font-black text-amber-900 bg-amber-100 border border-amber-300 px-1.5 py-0.2 rounded shrink-0">
+                            <span className="material-symbols-outlined text-[11px] text-amber-700 select-none">star</span>
+                            {p.wins} {p.wins === 1 ? 'Win' : 'Wins'}
                           </span>
                         )}
                       </div>
-                      <p className="text-[10px] text-gray-400 truncate flex items-center gap-1 mt-0.5">
+                      <p className="text-[10px] text-gray-400 flex flex-wrap items-center gap-1 mt-0.5">
                         <span>@{p.username}</span>
                         {p.profile?.university && (
                           <>

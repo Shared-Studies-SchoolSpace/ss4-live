@@ -439,8 +439,9 @@ export default function FriendliesAdminModal({ isOpen, onClose, onArenaUpdated }
                 {inspectedMeta && (
                   <div className="bg-white/10 border border-emerald-500/40 rounded-xl p-3.5 space-y-2 animate-in fade-in duration-200">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-300">
-                        ✓ Automatically Inferred Metadata
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-300 flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[14px] text-emerald-300 select-none">check_circle</span>
+                        Automatically Inferred Metadata
                       </span>
                       <span className="text-[10px] font-black bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded">
                         {inspectedMeta.status}
@@ -534,7 +535,7 @@ export default function FriendliesAdminModal({ isOpen, onClose, onArenaUpdated }
                     <div className="max-h-40 overflow-y-auto pr-1 space-y-1.5 custom-scrollbar border border-white/10 rounded-xl p-2 bg-black/20">
                       {hostTournaments.map((t, idx) => (
                         <div key={t.id || idx} className="text-xs flex items-center justify-between py-1 px-2 hover:bg-white/5 rounded">
-                          <div className="min-w-0 flex-1 truncate">
+                          <div className="min-w-0 flex-1">
                             <span className="font-semibold text-white">{t.fullName || t.name || `Arena #${t.id}`}</span>
                             <span className="text-[10px] text-white/50 ml-2 font-mono">#{t.id}</span>
                           </div>
@@ -557,7 +558,7 @@ export default function FriendliesAdminModal({ isOpen, onClose, onArenaUpdated }
               </h4>
 
               {loadingArenas ? (
-                <p className="text-xs text-white/50 italic py-2">Loading stored arenas...</p>
+                <p className="text-xs text-white/50 italic py-2">Loading stored arenas</p>
               ) : storedArenas.length === 0 ? (
                 <p className="text-xs text-white/50 italic py-2">No custom arenas stored yet. Add one above!</p>
               ) : (
@@ -568,10 +569,10 @@ export default function FriendliesAdminModal({ isOpen, onClose, onArenaUpdated }
                       className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center justify-between gap-3 text-xs"
                     >
                       <div className="min-w-0 flex-1">
-                        <p className="font-bold text-white truncate">{item.name || `Arena #${item.arena_id}`}</p>
+                        <p className="font-bold text-white break-words">{item.name || `Arena #${item.arena_id}`}</p>
                         <p className="text-[10px] text-white/50">
                           ID: <span className="font-mono text-white/80">{item.arena_id}</span>
-                          {item.starts_at && ` • ${formatInferredDate(item.starts_at)}`}
+                          {item.starts_at && ` ${formatInferredDate(item.starts_at)}`}
                         </p>
                       </div>
                       <button

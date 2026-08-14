@@ -505,10 +505,21 @@ export function getCountdownTarget(tournament) {
 
   if (!tournament) {
     // No active tournament in DB — signal the banner to stay hidden.
-    // Do NOT fall back to a phantom today-8pm date; that caused the banner
-    // to appear every evening with stale "Round of 32" copy even when no
-    // event was scheduled.
     return { date: null, label: null };
+  }
+
+  // Priority 0: finals_completed_at countdown (12 hours post-finals celebration)
+  if (tournament.status === 'active' && tournament.finals_completed_at) {
+    const finalsCompletedTime = new Date(tournament.finals_completed_at).getTime();
+    if (!isNaN(finalsCompletedTime)) {
+      const finalsEnd = new Date(finalsCompletedTime + 12 * 60 * 60 * 1000);
+      if (finalsEnd > now) {
+        return {
+          date: finalsEnd,
+          label: 'Tournament Concludes & Next Registration Opens'
+        };
+      }
+    }
   }
 
   // Priority 1: explicit top-level next_round_start on the tournament row
@@ -766,4 +777,51 @@ export function generateWorldCupFixtures(players, year, month, options = {}) {
   }));
 
   return { rounds, groups: groupsMeta };
+}
+
+export const FINALS_TRANSITION_MS = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+
+/**
+ * Calculates the target month_year for the next upcoming tournament.
+ * Rule:
+ * 1. Find current calendar year and month M (e.g. 2026-08).
+ * 2. Check if any tournament in allTournaments started in month M (status === 'active' or 'completed' with month_year === M).
+ * 3. If NO tournament started in month M, return M.
+ * 4. If a tournament started in month M, return M + 1 (e.g. 2026-09).
+ */
+export function calculateNextUpcomingMonth(allTournaments = []) {
+  const now = new Date();
+  const curY = now.getFullYear();
+  const curM = now.getMonth() + 1;
+  const curMY = `${curY}-${String(curM).padStart(2, '0')}`;
+
+  const hasStartedInCurrentMonth = (allTournaments || []).some(t => 
+    t.month_year === curMY && (t.status === 'active' || t.status === 'completed')
+  );
+
+  if (!hasStartedInCurrentMonth) {
+    return curMY;
+  }
+
+  let nextY = curY;
+  let nextM = curM + 1;
+  if (nextM > 12) {
+    nextM = 1;
+    nextY += 1;
+  }
+  return `${nextY}-${String(nextM).padStart(2, '0')}`;
+}
+
+/**
+ * Checks if 12 hours have passed since the finals were completed.
+ */
+export function checkFinalsCompletion(tournament) {
+  if (!tournament || tournament.status !== 'active') return false;
+  if (!tournament.finals_completed_at) return false;
+  
+  const completedAt = new Date(tournament.finals_completed_at).getTime();
+  if (isNaN(completedAt)) return false;
+  
+  const elapsed = Date.now() - completedAt;
+  return elapsed >= FINALS_TRANSITION_MS;
 }

@@ -5,6 +5,7 @@ import { useAuthModal } from '../context/AuthModalContext';
 import { supabase } from '../../../supabase';
 
 import { fetchChessComStats, fetchLichessStats, fetchCompletePlayerData, searchMutualGames } from '../../chess-league/utils/chessService';
+import { buildPlayerRecord } from '../../chess-league/utils/buildPlayerRecord';
 import MatchChat from '../../chess-league/components/MatchChat';
 import DirectChat from '../../../components/messaging/DirectChat';
 import AnnouncementBanner from '../../../components/announcements/AnnouncementBanner';
@@ -277,11 +278,14 @@ export default function DashboardPage() {
     fetchUpcoming();
   }, [user]);
 
-  // Set isRegistered status based on roster check (P0 fix)
+  // Set isRegistered status based on roster check
   useEffect(() => {
     if (upcomingTournament && user) {
       const registered = (upcomingTournament.players || []).some(p => p.id === user.id);
       setIsRegistered(registered);
+    } else {
+      // Reset registration status when tournament state is unknown/gone
+      setIsRegistered(false);
     }
   }, [upcomingTournament, user]);
 
@@ -299,15 +303,15 @@ export default function DashboardPage() {
       
       const activeProfile = latestProfile || profile;
 
-      const regPlayer = {
-        id: user.id,
-        name: activeProfile.name,
-        username: activeProfile.chess_username || activeProfile.lichess_username || user.email.split('@')[0],
-        rating: Math.max(activeProfile.chess_rating || 0, activeProfile.lichess_rating || 0) || 1200,
-        school: activeProfile.university || 'SS4 Member',
-        department: activeProfile.department || '',
-        phone: activeProfile.phone || activeProfile.whatsapp || ''
-      };
+      // Use shared record builder — same schema as ChessTournamentPage registration
+      const regPlayer = buildPlayerRecord(user, activeProfile);
+
+      // Guard: require a chess.com username
+      if (!regPlayer.username) {
+        toast.error('Please link a Chess.com account in Settings before joining a tournament.');
+        setLoadingReg(false);
+        return;
+      }
       
       const updatedPlayers = [
         ...(upcomingTournament.players || []).filter(p => p.id !== user.id),

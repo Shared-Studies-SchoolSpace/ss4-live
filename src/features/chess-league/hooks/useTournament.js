@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { supabase } from '../../../supabase';
-import { generateRound1, generateNextRound, getSurvivingPlayersStatus } from '../utils/tournament';
+import { generateRound1, generateNextRound, getSurvivingPlayersStatus, calculateNextUpcomingMonth, checkFinalsCompletion } from '../utils/tournament';
 import tournamentPlayers from '../data/playersWithRatings.json';
 
 const LS_KEY = (my) => `scl_tournament_${my}`;
@@ -51,7 +51,8 @@ export function useTournament(monthYear) {
     try {
       const { error } = await supabase.from('tournaments').upsert({
         id: t.id || t.month_year, name: t.name, month_year: t.month_year,
-        players: t.players, rounds: t.rounds, status: t.status, winner: t.winner
+        players: t.players, rounds: t.rounds, status: t.status, winner: t.winner,
+        finals_completed_at: t.finals_completed_at || null
       });
       if (error) throw error;
       setIsDbFallback(false);
@@ -281,14 +282,73 @@ export function useTournament(monthYear) {
     };
   }, [monthYear]);
 
-  // Seed Round 1 permanently  called once by admin
-  const initialize = (options = {}) => {
+  // 12-hour Post-Finals Auto-Conclude & Spawn Upcoming
+  useEffect(() => {
+    if (!tournament || tournament.status !== 'active' || !tournament.finals_completed_at) return;
+
+    const runLifecycleCheck = async () => {
+      if (checkFinalsCompletion(tournament)) {
+        const completedT = {
+          ...tournament,
+          status: 'completed'
+        };
+        setTournamentState(completedT);
+        localStorage.setItem(LS_KEY(completedT.month_year), JSON.stringify(completedT));
+
+        try {
+          await supabase
+            .from('tournaments')
+            .update({ status: 'completed' })
+            .eq('id', tournament.id);
+
+          const { data: allT } = await supabase.from('tournaments').select('*');
+          const nextMY = calculateNextUpcomingMonth(allT || [completedT]);
+
+          // Purge any existing upcoming rows to maintain single-upcoming invariant
+          await supabase.from('tournaments').delete().eq('status', 'upcoming');
+
+          // Insert new upcoming tournament
+          const autoUpcoming = {
+            id: nextMY,
+            month_year: nextMY,
+            name: `${nextMY} SCL Tournament`,
+            status: 'upcoming',
+            players: [],
+            rounds: [],
+            winner: null
+          };
+          await supabase.from('tournaments').upsert(autoUpcoming);
+
+          toast.success(`Tournament concluded! Registration for ${nextMY} is now OPEN.`, { autoClose: 6000 });
+          fetchHistory();
+        } catch (err) {
+          console.error('Error during 12h tournament conclusion:', err);
+        }
+      }
+    };
+
+    runLifecycleCheck();
+    const interval = setInterval(runLifecycleCheck, 30000);
+    return () => clearInterval(interval);
+  }, [tournament]);
+
+  // Seed Round 1 permanently — called once by admin
+  const initialize = async (options = {}) => {
     const [y, m] = monthYear.split('-').map(Number);
     const round1 = generateRound1(tournamentPlayers, y, m, options);
+
+    // Purge any upcoming tournament rows so that NO tournament is upcoming while active
+    try {
+      await supabase.from('tournaments').delete().eq('status', 'upcoming');
+    } catch (e) {
+      console.warn('Error purging upcoming row on initialize:', e);
+    }
+
     const t = {
       id: monthYear, name: `${monthYear} SCL Tournament`,
       month_year: monthYear, status: 'active', winner: null,
-      players: tournamentPlayers, rounds: [round1]
+      players: tournamentPlayers, rounds: [round1],
+      finals_completed_at: null
     };
     save(t);
   };
@@ -304,12 +364,23 @@ export function useTournament(monthYear) {
     const lastRound = updated[updated.length - 1];
     const rawWinner = (lastRound && lastRound.games.length === 1) ? lastRound.games[0].winner : null;
     const finalWinner = (rawWinner && rawWinner.username !== 'forfeit') ? rawWinner : null;
+
+    let finalsCompletedAt = tournament?.finals_completed_at || null;
+    if (finalWinner && !finalsCompletedAt) {
+      finalsCompletedAt = new Date().toISOString();
+    }
+
     const t = {
-      ...tournament, rounds: updated,
+      ...tournament,
+      rounds: updated,
       winner: finalWinner ? finalWinner.name : (rawWinner === null && lastRound && lastRound.games.length === 1 ? null : tournament.winner),
-      status: finalWinner ? 'completed' : (rawWinner === null && lastRound && lastRound.games.length === 1 ? 'active' : tournament.status)
+      status: tournament.status,
+      finals_completed_at: finalsCompletedAt
     };
-    if (finalWinner) toast.success(`${finalWinner.name} is the Champion!`, { autoClose: 4000 });
+
+    if (finalWinner && !tournament?.finals_completed_at) {
+      toast.success(`${finalWinner.name} is the Champion! Tournament will conclude in 12 hours.`, { autoClose: 6000 });
+    }
     save(t);
   };
 

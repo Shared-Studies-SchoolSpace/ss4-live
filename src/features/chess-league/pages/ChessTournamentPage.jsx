@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { useTournament } from '../hooks/useTournament';
 import { tournamentPlayers } from '../data/tournamentPlayers';
-import { getTournamentDates, getCountdownTarget, getSurvivingPlayers, getSurvivingPlayersStatus, getGroupData } from '../utils/tournament';
+import { getTournamentDates, getCountdownTarget, getSurvivingPlayers, getSurvivingPlayersStatus, getGroupData, calculateNextUpcomingMonth } from '../utils/tournament';
+import { buildPlayerRecord } from '../utils/buildPlayerRecord';
 import { TournamentHero } from '../components/TournamentHero';
 import { BracketTab } from '../components/BracketTab';
 import { GroupStageTable } from '../components/GroupStageTable';
@@ -709,27 +710,31 @@ export default function ChessTournamentPage() {
   const [upcomingTournament, setUpcomingTournament] = useState(null);
   const [loadingReg, setLoadingReg] = useState(false);
   const [registeredPlayers, setRegisteredPlayers] = useState([]);
-  const [refetchTrigger, setRefetchTrigger] = useState(0);
-  const [loadingRegisteredPlayers, setLoadingRegisteredPlayers] = useState(true);
 
 
 
-  // Fetch upcoming tournament  admin creates rows, we just read the soonest one.
-  // Also purge any stale future-month upcoming rows that were auto-created in the past.
+  // Fetch upcoming tournament enforcing state invariants:
+  // 1. If an active tournament exists -> NO upcoming tournament exists (purge upcoming rows).
+  // 2. If no active tournament exists -> fetch or auto-create the next upcoming tournament based on starting month rule.
   useEffect(() => {
     const fetchUpcoming = async () => {
       try {
-        const nowObj = new Date();
-        const curMY = `${nowObj.getFullYear()}-${String(nowObj.getMonth() + 1).padStart(2, '0')}`;
-
-        // Delete stale upcoming rows that are strictly beyond the current month
-        await supabase
+        // Check if an active tournament exists
+        const { data: activeRows } = await supabase
           .from('tournaments')
-          .delete()
-          .eq('status', 'upcoming')
-          .gt('month_year', curMY);
+          .select('*')
+          .eq('status', 'active')
+          .limit(1);
 
-        const { data: rows, error } = await supabase
+        if (activeRows && activeRows.length > 0) {
+          // Rule: When a tournament is active, NO tournament is upcoming!
+          await supabase.from('tournaments').delete().eq('status', 'upcoming');
+          setUpcomingTournament(null);
+          return;
+        }
+
+        // Fetch existing upcoming tournament
+        const { data: upcomingRows, error } = await supabase
           .from('tournaments')
           .select('*')
           .eq('status', 'upcoming')
@@ -737,7 +742,35 @@ export default function ChessTournamentPage() {
           .limit(1);
 
         if (error) throw error;
-        setUpcomingTournament(rows?.[0] ?? null);
+
+        if (upcomingRows && upcomingRows.length > 0) {
+          setUpcomingTournament(upcomingRows[0]);
+        } else {
+          // Auto-create next upcoming tournament using starting month calculation rule
+          const { data: allT } = await supabase.from('tournaments').select('*');
+          const targetMY = calculateNextUpcomingMonth(allT || []);
+
+          const autoRow = {
+            id: targetMY,
+            month_year: targetMY,
+            name: `${targetMY} SCL Tournament`,
+            status: 'upcoming',
+            players: [],
+            rounds: [],
+            winner: null
+          };
+          const { data: inserted, error: insertErr } = await supabase
+            .from('tournaments')
+            .upsert(autoRow)
+            .select()
+            .maybeSingle();
+
+          if (insertErr) {
+            console.error('Error auto-creating upcoming tournament:', insertErr);
+          } else {
+            setUpcomingTournament(inserted || autoRow);
+          }
+        }
       } catch (err) {
         console.error('Error fetching upcoming tournament:', err);
       }
@@ -745,35 +778,15 @@ export default function ChessTournamentPage() {
     fetchUpcoming();
   }, []);
 
-  // Fetch registered players from Supabase profiles table (Logic B)
+  // Derive registered players from the upcoming tournament's actual player roster.
+  // This is the ground truth — not `profiles`. Only people who clicked Join are shown.
   useEffect(() => {
-    const fetchRegisteredPlayers = async () => {
-      setLoadingRegisteredPlayers(true);
-      try {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('*');
-        if (error) throw error;
-
-        const mapped = (data || [])
-          .filter(p => p.chess_username || p.lichess_username)
-          .map(p => ({
-            id: p.id,
-            name: p.name,
-            username: p.chess_username || p.lichess_username,
-            rating: Math.max(p.chess_rating || 0, p.lichess_rating || 0) || 1200,
-            school: p.university || 'SS4 Member',
-            department: p.department || ''
-          }));
-        setRegisteredPlayers(mapped);
-      } catch (err) {
-        console.error('Error fetching registered players:', err);
-      } finally {
-        setLoadingRegisteredPlayers(false);
-      }
-    };
-    fetchRegisteredPlayers();
-  }, [profile, refetchTrigger]);
+    if (upcomingTournament) {
+      setRegisteredPlayers(upcomingTournament.players || []);
+    } else {
+      setRegisteredPlayers([]);
+    }
+  }, [upcomingTournament]);
 
   const isUserRegisteredForUpcoming = React.useMemo(() => {
     if (!user) return false;
@@ -817,6 +830,7 @@ export default function ChessTournamentPage() {
   const executeRegistration = async (targetUser, targetProfile) => {
     setLoadingReg(true);
     try {
+      // Fetch the latest tournament state to avoid writing to a stale roster
       const { data: freshT } = await supabase
         .from('tournaments')
         .select('*')
@@ -825,8 +839,15 @@ export default function ChessTournamentPage() {
 
       const currentT = freshT || upcomingTournament;
 
-      let chessUsername = targetProfile.chess_username;
-      if (!chessUsername) {
+      // Guard: only upcoming tournaments are open for registration
+      if (!currentT || currentT.status !== 'upcoming') {
+        toast.error('Registration is only available for upcoming tournaments. This tournament is already underway or has ended.');
+        setLoadingReg(false);
+        return;
+      }
+
+      // Guard: require a chess.com username — tournaments run on chess.com
+      if (!targetProfile.chess_username) {
         setPendingRegData({ user: targetUser, profile: targetProfile });
         setPromptUsername('');
         setPromptError('');
@@ -836,32 +857,21 @@ export default function ChessTournamentPage() {
         return;
       }
 
-      if (currentT) {
-        const regPlayer = {
-          id: targetUser.id,
-          name: targetProfile.name,
-          username: chessUsername,
-          rating: Math.max(targetProfile.chess_rating || 0, targetProfile.lichess_rating || 0) || 1200,
-          school: targetProfile.university || 'SS4 Member',
-          department: targetProfile.department || ''
-        };
-        
-        const updatedPlayers = [
-          ...(currentT.players || []).filter(p => p.id !== targetUser.id),
-          regPlayer
-        ];
-        
-        const { error } = await supabase
-          .from('tournaments')
-          .update({ players: updatedPlayers })
-          .eq('id', currentT.id);
-          
-        if (error) throw error;
-        
-        setUpcomingTournament({ ...currentT, players: updatedPlayers });
-      }
+      const regPlayer = buildPlayerRecord(targetUser, targetProfile);
 
-      setRefetchTrigger(prev => prev + 1);
+      const updatedPlayers = [
+        ...(currentT.players || []).filter(p => p.id !== targetUser.id),
+        regPlayer
+      ];
+
+      const { error } = await supabase
+        .from('tournaments')
+        .update({ players: updatedPlayers })
+        .eq('id', currentT.id);
+
+      if (error) throw error;
+
+      setUpcomingTournament({ ...currentT, players: updatedPlayers });
       toast.success("Your spot is locked in! The board awaits.");
     } catch (err) {
       console.error('Registration failed:', err);
@@ -884,15 +894,16 @@ export default function ChessTournamentPage() {
 
   useEffect(() => {
     const tick = () => {
-      const targetT = tournament || upcomingTournament;
+      // Prioritize upcomingTournament when in registration mode so clock targets next launch date
+      const targetT = (tournament?.status === 'upcoming' ? tournament : upcomingTournament) || tournament;
       const { date, label: targetLabel } = getCountdownTarget(targetT);
-      const diff = Math.max(0, date - new Date());
+      const diff = Math.max(0, date ? (new Date(date) - new Date()) : 0);
       setClock({
         days:  Math.floor(diff / 864e5),
         hours: Math.floor(diff / 36e5) % 24,
         mins:  Math.floor(diff / 6e4) % 60,
         secs:  Math.floor(diff / 1e3) % 60,
-        label: targetLabel
+        label: targetLabel || 'Next Round'
       });
     };
     tick();
@@ -1152,7 +1163,6 @@ export default function ChessTournamentPage() {
     }] : []),
   ];
 
-  const isCompleted = tournament?.status === 'completed';
 
   return (
     <div className="min-h-screen bg-[#F6F4F0]">
@@ -1174,195 +1184,8 @@ export default function ChessTournamentPage() {
             <div className="h-12 bg-white/10 rounded-xl w-48 mx-auto"></div>
           </div>
         </div>
-      ) : isCompleted && !isAdmin ? (
-        /* Non-Active View: Big Ass Countdown */
-        <div 
-          className="relative text-white px-4 sm:px-6 md:px-12 lg:px-16 py-12 sm:py-16 md:py-24 min-h-[85vh] flex flex-col justify-center overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #0B193C 0%, #102A6A 55%, #0C1E54 100%)' }}
-        >
-          {/* Ambient glow blobs */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full opacity-30"
-              style={{ background: 'radial-gradient(circle, #3B82F6 0%, transparent 70%)' }} />
-            <div className="absolute -bottom-32 -left-20 w-[400px] h-[400px] rounded-full opacity-20"
-              style={{ background: 'radial-gradient(circle, #0A2A6A 0%, transparent 70%)' }} />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px opacity-10"
-              style={{ background: 'linear-gradient(90deg, transparent, #60A5FA, transparent)' }} />
-          </div>
-
-          <div className="max-w-4xl mx-auto w-full text-center relative z-10 space-y-10 animate-in fade-in zoom-in-95 duration-300">
-            <div>
-              <p className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-white/50 uppercase mb-4">SS4 Chess Network</p>
-              <h1
-                onDoubleClick={() => { setPinInput(''); setPinErr(''); setShowPin(false); setPinModal(true); }}
-                className="font-space font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-[1.05] mb-4 cursor-pointer select-none"
-              >
-                SCL Monthly<br />
-                <span className="font-black text-brand-accent">Tournament</span>
-              </h1>
-              <p className="text-white/60 text-sm sm:text-base font-medium max-w-md mx-auto leading-relaxed">
-                Single elimination. Last 7 days of the month. One champion claims the prize.
-              </p>
-            </div>
-
-            {/* Big Ass Countdown */}
-            <div className="space-y-4">
-              <p className="text-brand-primary font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">
-                {label} &bull; <span className="text-white/50">{formattedTargetTime}</span>
-              </p>
-              
-              <div className="flex gap-2 sm:gap-4 md:gap-6 justify-center max-w-xl mx-auto">
-                <div className="flex flex-col items-center flex-1">
-                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
-                    {String(days).padStart(2, '0')}
-                  </div>
-                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Days</span>
-                </div>
-                <div className="flex flex-col items-center flex-1">
-                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
-                    {String(hours).padStart(2, '0')}
-                  </div>
-                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Hours</span>
-                </div>
-                <div className="flex flex-col items-center flex-1">
-                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
-                    {String(mins).padStart(2, '0')}
-                  </div>
-                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Mins</span>
-                </div>
-                <div className="flex flex-col items-center flex-1">
-                  <div className={`bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg text-brand-primary ${days === 0 && hours < 24 ? 'animate-pulse' : ''}`}>
-                    {String(secs).padStart(2, '0')}
-                  </div>
-                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Secs</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Structured CTAs (H2: Hick's Law Fix  1 Primary, 1 Secondary, Tertiary Links) */}
-            <div className="flex flex-col items-center gap-4 pt-2 max-w-md mx-auto">
-              <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-3">
-                {isUserRegisteredForUpcoming ? (
-                  <div className="w-full sm:w-auto px-8 py-3.5 bg-emerald-600 border border-emerald-500 text-white text-xs sm:text-sm font-black rounded-xl flex items-center justify-center gap-2 shadow-md select-none">
-                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                    </svg>
-                    You have Joined!
-                  </div>
-                ) : (
-                  <AuthGate reason="join the next tournament" onAction={handleJoinTournamentAfterAuth}>
-                    <Button
-                      onClick={handleJoinTournament}
-                      loading={loadingReg}
-                      size="lg"
-                      variant="primary"
-                      className="w-full sm:w-auto"
-                      icon={
-                        <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                        </svg>
-                      }
-                    >
-                      Join the next Tournament
-                    </Button>
-                  </AuthGate>
-                )}
-
-                <Button
-                  href={googleCalendarUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="white-outline"
-                  size="lg"
-                  className="w-full sm:w-auto"
-                  icon={
-                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  }
-                >
-                  Add to Calendar
-                </Button>
-              </div>
-
-              {/* Tertiary Links */}
-              <div className="flex items-center gap-6 text-xs text-white/60 pt-1">
-                <button
-                  onClick={() => setShowPastWinnersModal(true)}
-                  className="hover:text-white underline underline-offset-4 cursor-pointer transition-colors inline-flex items-center gap-1.5"
-                >
-                  <TrophySvg className="w-3.5 h-3.5 text-blue-400" />
-                  <span>View Past Winners</span>
-                </button>
-                <span>&bull;</span>
-                <button
-                  onClick={() => setShowRulesModal(true)}
-                  className="hover:text-white underline underline-offset-4 cursor-pointer transition-colors inline-flex items-center gap-1.5"
-                >
-                  <svg className="w-3.5 h-3.5 text-white/80" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-                  <span>Rules &amp; Schedule</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Registered Players List (M2: Pinned User, M3: Visible Scroll Affordance) */}
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-4 sm:p-6 sm:p-8 max-w-2xl mx-auto text-left space-y-4 mt-6">
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-3">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-space font-black text-base sm:text-lg text-white">Registered Participants</h3>
-                  <span className="bg-white/10 border border-white/10 text-gray-300 text-xs font-black px-2 py-0.5 rounded-lg shrink-0">
-                    {sortedRegisteredPlayers.length}
-                  </span>
-                </div>
-                {sortedRegisteredPlayers.length > 8 && (
-                  <span className="text-[10px] text-white/50 italic">Scroll to view all participants</span>
-                )}
-              </div>
-              
-              {loadingRegisteredPlayers ? (
-                <div className="flex flex-col items-center justify-center py-8 gap-3">
-                  <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                  <p className="text-gray-400 text-xs font-bold animate-pulse">Loading registered players...</p>
-                </div>
-              ) : sortedRegisteredPlayers.length === 0 ? (
-                <p className="text-gray-500 text-sm italic py-4 text-center">No participants registered yet. Be the first to join!</p>
-              ) : (
-                <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                  {sortedRegisteredPlayers.map((p, idx) => {
-                    const isSelf = user && user.id === p.id;
-                    return (
-                      <div 
-                        key={p.id || idx} 
-                        className={`border rounded-xl p-3.5 flex items-center justify-between gap-3 transition-colors ${
-                          isSelf 
-                            ? 'bg-emerald-500/15 border-emerald-500/40 ring-1 ring-emerald-500/30' 
-                            : 'bg-white/5 border-white/10 hover:bg-white/10'
-                        }`}
-                      >
-                        <div className="min-w-0 flex-1">
-                          <p className="text-xs font-bold text-white truncate flex items-center gap-1.5">
-                            {p.name}
-                            {isSelf && (
-                              <span className="text-[9px] font-black uppercase text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-1.5 py-0.2 rounded shrink-0">
-                                You
-                              </span>
-                            )}
-                          </p>
-                          <p className="text-[10px] text-gray-400 truncate">{p.school}</p>
-                        </div>
-                        <div className="bg-white/10 border border-white/15 px-2.5 py-1 rounded-xl shrink-0">
-                          <span className="text-[10px] font-black text-blue-200">{p.rating} ELO</span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
       ) : (
-        /* Regular Tournament View (Hero + Tab Layout) */
+        /* United Tournament View (Hero + Registration Banner + Tabbed Content) */
         <>
           <TournamentHero
             tournament={tournament}
@@ -1371,6 +1194,141 @@ export default function ChessTournamentPage() {
             onMonthChange={setSelectedMonthYear}
             onTitleDoubleClick={() => { setPinInput(''); setPinErr(''); setShowPin(false); setPinModal(true); }}
           />
+
+          {/* Registration & Participants Section — displayed whenever an upcoming tournament exists */}
+          {upcomingTournament && (
+            <section className="bg-[#0B193C] text-white px-4 sm:px-6 md:px-12 lg:px-16 py-8 border-b border-white/10">
+              <div className="max-w-4xl mx-auto space-y-6">
+                <div className="text-center space-y-2">
+                  <h2 className="font-space font-black text-xl sm:text-2xl text-white">
+                    Next Tournament: <span className="text-brand-accent">{upcomingTournament.name}</span>
+                  </h2>
+                  <p className="text-xs sm:text-sm text-white/60">
+                    {upcomingTournament.status === 'upcoming' 
+                      ? 'Registration is OPEN. Lock in your spot for the upcoming monthly tournament.'
+                      : 'Matches are currently underway. Registration for the next tournament will open when this phase concludes.'}
+                  </p>
+                </div>
+
+                {/* Structured CTAs */}
+                <div className="flex flex-col items-center gap-4 max-w-md mx-auto">
+                  <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-3">
+                    {isUserRegisteredForUpcoming ? (
+                      <div className="w-full sm:w-auto px-8 py-3.5 bg-emerald-600 border border-emerald-500 text-white text-xs sm:text-sm font-black rounded-xl flex items-center justify-center gap-2 shadow-md select-none">
+                        <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                        </svg>
+                        You have Joined!
+                      </div>
+                    ) : (
+                      <AuthGate reason="join the next tournament" onAction={handleJoinTournamentAfterAuth}>
+                        <Button
+                          onClick={handleJoinTournament}
+                          loading={loadingReg}
+                          size="lg"
+                          variant="primary"
+                          className="w-full sm:w-auto"
+                          icon={
+                            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+                          }
+                        >
+                          Join the next Tournament
+                        </Button>
+                      </AuthGate>
+                    )}
+
+                    <Button
+                      href={googleCalendarUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="white-outline"
+                      size="lg"
+                      className="w-full sm:w-auto"
+                      icon={
+                        <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      }
+                    >
+                      Add to Calendar
+                    </Button>
+                  </div>
+
+                  {/* Tertiary Links */}
+                  <div className="flex items-center gap-6 text-xs text-white/60 pt-1">
+                    <button
+                      onClick={() => setShowPastWinnersModal(true)}
+                      className="hover:text-white underline underline-offset-4 cursor-pointer transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <TrophySvg className="w-3.5 h-3.5 text-blue-400" />
+                      <span>View Past Winners</span>
+                    </button>
+                    <span>&bull;</span>
+                    <button
+                      onClick={() => setShowRulesModal(true)}
+                      className="hover:text-white underline underline-offset-4 cursor-pointer transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <svg className="w-3.5 h-3.5 text-white/80" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                      <span>Rules &amp; Schedule</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Registered Participants Roster */}
+                <div className="bg-white/5 border border-white/10 rounded-3xl p-4 sm:p-6 max-w-2xl mx-auto text-left space-y-4">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-3">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-space font-black text-base sm:text-lg text-white">Registered Participants</h3>
+                      <span className="bg-white/10 border border-white/10 text-gray-300 text-xs font-black px-2 py-0.5 rounded-lg shrink-0">
+                        {sortedRegisteredPlayers.length}
+                      </span>
+                    </div>
+                    {sortedRegisteredPlayers.length > 8 && (
+                      <span className="text-[10px] text-white/50 italic">Scroll to view all participants</span>
+                    )}
+                  </div>
+                  
+                  {sortedRegisteredPlayers.length === 0 ? (
+                    <p className="text-gray-500 text-sm italic py-4 text-center">No participants registered yet. Be the first to join!</p>
+                  ) : (
+                    <div className="grid sm:grid-cols-2 gap-3 max-h-[260px] overflow-y-auto pr-2 custom-scrollbar">
+                      {sortedRegisteredPlayers.map((p, idx) => {
+                        const isSelf = user && user.id === p.id;
+                        return (
+                          <div 
+                            key={p.id || idx} 
+                            className={`border rounded-xl p-3 flex items-center justify-between gap-3 transition-colors ${
+                              isSelf 
+                                ? 'bg-emerald-500/15 border-emerald-500/40 ring-1 ring-emerald-500/30' 
+                                : 'bg-white/5 border-white/10 hover:bg-white/10'
+                            }`}
+                          >
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs font-bold text-white truncate flex items-center gap-1.5">
+                                {p.name}
+                                {isSelf && (
+                                  <span className="text-[9px] font-black uppercase text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-1.5 py-0.2 rounded shrink-0">
+                                    You
+                                  </span>
+                                )}
+                              </p>
+                              <p className="text-[10px] text-gray-400 truncate">{p.school}</p>
+                            </div>
+                            <div className="bg-white/10 border border-white/15 px-2.5 py-1 rounded-xl shrink-0">
+                              <span className="text-[10px] font-black text-blue-200">{p.rating} ELO</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </section>
+          )}
+
 
           {/* Sticky Mobile-First Tab Bar (Fitts's Law & Hick's Law Fix) */}
           <div className="sticky top-16 lg:top-20 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/90 px-3 sm:px-6 md:px-12 lg:px-16 shadow-xs">
@@ -3119,14 +3077,15 @@ export default function ChessTournamentPage() {
                           </span>
                         </div>
                         <div className="flex items-center gap-4 relative z-10">
-                          <div className="w-14 h-14 rounded-2xl border-2 border-amber-300 overflow-hidden bg-slate-900 shrink-0 shadow-md">
+                          {/* Circular Avatar Frame */}
+                          <div className="w-14 h-14 rounded-full border-2 border-amber-300 overflow-hidden bg-brand-primary/20 shrink-0 shadow-md">
                             <img
                               src={latestStats.avatar}
                               alt={latestStats.winnerName}
                               className="w-full h-full object-cover"
                               onError={(e) => {
                                 e.target.onerror = null;
-                                e.target.src = `https://unavatar.io/lichess/${latestStats.winnerUsername}`;
+                                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(latestStats.winnerName)}&background=1A56C4&color=fff&bold=true`;
                               }}
                             />
                           </div>
@@ -3185,19 +3144,19 @@ export default function ChessTournamentPage() {
                         {championStats && (
                           <div className="space-y-3">
                             <div className="flex items-center justify-between gap-4">
-                              {/* Champion Avatar & Name */}
+                              {/* Champion Avatar & Name (Circular Frame) */}
                               <div 
                                 onClick={() => setSelectedPlayerForModal(championStats.playerObj)}
                                 className="flex items-center gap-3.5 cursor-pointer group min-w-0"
                               >
-                                <div className="w-14 h-14 rounded-2xl border-2 border-brand-primary/30 overflow-hidden bg-slate-900 shrink-0 shadow-xs group-hover:border-brand-primary transition-all">
+                                <div className="w-14 h-14 rounded-full border-2 border-brand-primary/30 overflow-hidden bg-brand-primary/10 shrink-0 shadow-xs group-hover:border-brand-primary transition-all">
                                   <img 
                                     src={championStats.avatar} 
                                     alt={championStats.winnerName}
                                     className="w-full h-full object-cover"
                                     onError={(e) => {
                                       e.target.onerror = null;
-                                      e.target.src = `https://unavatar.io/lichess/${championStats.winnerUsername}`;
+                                      e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(championStats.winnerName)}&background=1A56C4&color=fff&bold=true`;
                                     }}
                                   />
                                 </div>
@@ -3280,8 +3239,29 @@ export default function ChessTournamentPage() {
 
                             {/* Tournament Record Clean Metadata Bar */}
                             <div className="flex items-center justify-between text-xs font-semibold text-gray-600 px-1 pt-1">
-                              <span>{championStats.totalGames} Matches Played</span>
-                              <span className="font-black text-[#111111]">{championStats.wins} Wins &bull; {championStats.losses} Losses</span>
+                              <span className="text-gray-500 font-medium">{championStats.totalGames} Matches</span>
+
+                              {/* Visual Record Indicators: + (Green), - (Red), ½ (Gray) */}
+                              <div className="flex items-center gap-1.5">
+                                {/* Wins: Green + */}
+                                <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-black" title="Wins">
+                                  <span className="material-symbols-outlined text-[13px] select-none">add</span>
+                                  {championStats.wins}
+                                </span>
+
+                                {/* Losses: Red - */}
+                                <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 text-xs font-black" title="Losses">
+                                  <span className="material-symbols-outlined text-[13px] select-none">remove</span>
+                                  {championStats.losses}
+                                </span>
+
+                                {/* Draws: Gray 1/2 */}
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-gray-100 text-gray-700 border border-gray-200 text-xs font-black" title="Draws">
+                                  <span className="text-[11px] leading-none font-black font-mono">½</span>
+                                  {championStats.draws}
+                                </span>
+                              </div>
+
                               <span className="text-emerald-600 font-black">{championStats.winRate}% Win Rate</span>
                             </div>
                           </div>
@@ -3291,16 +3271,6 @@ export default function ChessTournamentPage() {
                   })}
                 </>
               )}
-            </div>
-
-            {/* Modal Footer with Standardized Button Sizing */}
-            <div className="pt-4 border-t border-gray-200 flex items-center justify-end shrink-0">
-              <button
-                onClick={() => setShowPastWinnersModal(false)}
-                className="px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-space font-black text-xs uppercase tracking-wider rounded-xl transition-all border border-gray-300 cursor-pointer shadow-xs"
-              >
-                Close Hall of Fame
-              </button>
             </div>
           </div>
         </div>

@@ -17,7 +17,6 @@ function CountdownCell({ value, label, isPulse = false }) {
 
 export function TournamentHero({ tournament, selectedMonthYear, history, onMonthChange, onTitleDoubleClick }) {
   const [{ days, hours, mins, secs, label }, setClock] = useState({ days: 0, hours: 0, mins: 0, secs: 0, label: '' });
-  const [winnerAvatar, setWinnerAvatar] = useState(null);
 
   // Detect timezone abbreviation (e.g. WAT, BST, EST)
   const tzAbbr = useMemo(() => {
@@ -64,6 +63,11 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
   }, [tournament]);
 
   const winnerName = winnerObj?.name || winnerObj?.username || 'Champion';
+  const winnerUsername = winnerObj?.username || winnerObj?.name || '';
+
+  const [winnerAvatar, setWinnerAvatar] = useState(() =>
+    winnerObj?.avatar || winnerObj?.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`
+  );
 
   // Load Champion profile picture / avatar cleanly
   useEffect(() => {
@@ -71,12 +75,12 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
       const directAvatar = winnerObj.avatar || winnerObj.image || winnerObj.photo || winnerObj.profilePic;
       if (directAvatar) {
         setWinnerAvatar(directAvatar);
-      } else if (winnerObj.username) {
+      } else if (winnerUsername) {
         let isMounted = true;
-        fetchCompletePlayerData(winnerObj.username, 'lichess').then(data => {
+        fetchCompletePlayerData(winnerUsername, 'lichess').then(data => {
           if (isMounted && data?.avatar) {
             setWinnerAvatar(data.avatar);
-          } else {
+          } else if (isMounted) {
             setWinnerAvatar(`https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`);
           }
         }).catch(() => {
@@ -89,7 +93,7 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
         setWinnerAvatar(`https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`);
       }
     }
-  }, [status, winnerObj, winnerName]);
+  }, [status, winnerObj, winnerName, winnerUsername]);
 
   return (
     <section
@@ -148,23 +152,17 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
                   <span>Crowned Champion</span>
                 </p>
                 <div className="flex items-center gap-3.5 sm:gap-4">
-                  {/* Player Profile Picture (No pulsing placeholder) */}
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl border-2 border-emerald-400/80 overflow-hidden flex-shrink-0 bg-slate-900 shadow-md">
-                    {winnerAvatar ? (
-                      <img
-                        src={winnerAvatar}
-                        alt={winnerName}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`;
-                        }}
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-brand-primary text-white font-black flex items-center justify-center text-lg uppercase">
-                        {winnerName.charAt(0)}
-                      </div>
-                    )}
+                  {/* Player Profile Picture (Circular Frame, Light BG) */}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-emerald-400/80 overflow-hidden flex-shrink-0 bg-brand-primary/20 shadow-md">
+                    <img
+                      src={winnerAvatar}
+                      alt={winnerName}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`;
+                      }}
+                    />
                   </div>
                   <div className="min-w-0">
                     <p className="text-white font-space font-black text-base sm:text-lg leading-tight truncate">

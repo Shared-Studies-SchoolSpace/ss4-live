@@ -45,34 +45,47 @@ export async function fetchHostTournaments(username = 'Jhudex') {
 }
 
 /**
- * Fetches player results for a specific Lichess tournament ID.
+ * Fetches player results for a specific Lichess tournament ID with retry backoff.
  */
-export async function fetchTournamentResults(tournamentId) {
-  try {
-    const res = await fetch(`https://lichess.org/api/tournament/${tournamentId}/results`);
-    if (!res.ok) return [];
-    const text = await res.text();
-    if (!text.trim()) return [];
-
-    const lines = text.trim().split('\n').filter(Boolean);
-    return lines.map(line => {
-      try {
-        return {
-          ...JSON.parse(line),
-          arena_id: tournamentId
-        };
-      } catch (e) {
-        return null;
+export async function fetchTournamentResults(tournamentId, retries = 2) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(`https://lichess.org/api/tournament/${tournamentId}/results`);
+      if (res.status === 429 && attempt < retries) {
+        // Rate limited — wait before retrying
+        await new Promise(r => setTimeout(r, 600 * (attempt + 1)));
+        continue;
       }
-    }).filter(Boolean);
-  } catch (err) {
-    console.warn(`Error fetching results for tournament ${tournamentId}:`, err);
-    return [];
+      if (!res.ok) return [];
+      const text = await res.text();
+      if (!text.trim()) return [];
+
+      const lines = text.trim().split('\n').filter(Boolean);
+      return lines.map(line => {
+        try {
+          return {
+            ...JSON.parse(line),
+            arena_id: tournamentId
+          };
+        } catch (e) {
+          return null;
+        }
+      }).filter(Boolean);
+    } catch (err) {
+      if (attempt < retries) {
+        await new Promise(r => setTimeout(r, 500 * (attempt + 1)));
+        continue;
+      }
+      console.warn(`Error fetching results for tournament ${tournamentId}:`, err);
+      return [];
+    }
   }
+  return [];
 }
 
 /**
  * Auto-fetches all tournaments & results across all configured hosts without database dependency.
+ * Uses batching to prevent API rate limiting.
  */
 export async function fetchAllFriendliesData(hosts = DEFAULT_HOSTS, fallbackIds = ['O8MFtK4X']) {
   let allTournaments = [];
@@ -97,17 +110,24 @@ export async function fetchAllFriendliesData(hosts = DEFAULT_HOSTS, fallbackIds 
   const tournamentList = Array.from(map.values());
   tournamentList.sort((a, b) => new Date(b.startsAt || 0) - new Date(a.startsAt || 0));
 
-  // 2. Fetch results for each tournament concurrently
-  const historyPromises = tournamentList.map(async (t) => {
-    const results = await fetchTournamentResults(t.id);
-    return {
-      id: t.id,
-      meta: t,
-      results
-    };
-  });
+  // 2. Fetch results in small controlled batches (concurrency of 4) to avoid rate limits
+  const BATCH_SIZE = 4;
+  const historyData = [];
 
-  const historyData = await Promise.all(historyPromises);
+  for (let i = 0; i < tournamentList.length; i += BATCH_SIZE) {
+    const batch = tournamentList.slice(i, i + BATCH_SIZE);
+    const batchResults = await Promise.all(
+      batch.map(async (t) => {
+        const results = await fetchTournamentResults(t.id);
+        return {
+          id: t.id,
+          meta: t,
+          results
+        };
+      })
+    );
+    historyData.push(...batchResults);
+  }
 
   const arenaDetailsMap = {};
   const combinedResults = [];

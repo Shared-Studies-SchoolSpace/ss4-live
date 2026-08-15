@@ -17,20 +17,8 @@ export const MatchFixture = ({ w, b, date, round, division, onPlayerSelect }) =>
   const wObj = getPlayerObj(wP.username);
   const bObj = getPlayerObj(bP.username);
 
-  // Helper to determine platform classes
-  const isChessComW = wObj?.lichess_username && !wObj?.username ? false : true;
-  const isChessComB = bObj?.lichess_username && !bObj?.username ? false : true;
-
-  // Choose a high-value border and hover glow based on the platforms playing
-  let borderHoverClass = 'hover:border-blue-500/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)]';
-  if (isChessComW && isChessComB) {
-    borderHoverClass = 'hover:border-[#81b64c]/40 hover:shadow-[0_0_15px_rgba(129,182,76,0.2)]';
-  } else if (!isChessComW && !isChessComB) {
-    borderHoverClass = 'hover:border-blue-500/40 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]';
-  } else {
-    // Mixed platforms - dual glow!
-    borderHoverClass = 'hover:border-emerald-500/30 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)]';
-  }
+  // Clean SS4 border hover state
+  const borderHoverClass = 'hover:border-brand-primary/50 hover:shadow-xs';
 
   const handlePlayerClick = (pObj, label) => {
     if (onPlayerSelect && pObj) {

@@ -18,22 +18,12 @@ export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, 
   const wObj = getPlayerObj(wP.username);
   const bObj = getPlayerObj(bP.username);
 
-  // Helper to determine platform classes
-  const isChessComW = wObj?.lichess_username && !wObj?.username ? false : true;
-  const isChessComB = bObj?.lichess_username && !bObj?.username ? false : true;
-
-  // Decide border hover state based on the winner or platforms
-  let borderHoverClass = 'hover:border-blue-500/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)]';
-  if (res === 'white') {
-    borderHoverClass = isChessComW 
-      ? 'hover:border-[#81b64c]/40 hover:shadow-[0_0_15px_rgba(129,182,76,0.2)]'
-      : 'hover:border-blue-500/40 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]';
-  } else if (res === 'black') {
-    borderHoverClass = isChessComB 
-      ? 'hover:border-[#81b64c]/40 hover:shadow-[0_0_15px_rgba(129,182,76,0.2)]'
-      : 'hover:border-blue-500/40 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]';
+  // Clean SS4 border hover state
+  let borderHoverClass = 'hover:border-brand-primary/40 hover:shadow-xs';
+  if (res === 'white' || res === 'black') {
+    borderHoverClass = 'hover:border-brand-primary/60 hover:shadow-sm';
   } else if (res === 'draw') {
-    borderHoverClass = 'hover:border-gray-500/40 hover:shadow-[0_0_15px_rgba(107,114,128,0.2)]';
+    borderHoverClass = 'hover:border-gray-400 hover:shadow-xs';
   }
 
   const handlePlayerClick = (pObj, label) => {
@@ -56,7 +46,7 @@ export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, 
     if (res === 'white') return '1 - 0';
     if (res === 'black') return '0 - 1';
     if (res === 'draw') return '½ - ½';
-    return 'vs';
+    return 'VS';
   };
 
   const getWinnerText = () => {
@@ -70,9 +60,9 @@ export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, 
   };
 
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex flex-col gap-2 w-full max-w-full overflow-hidden">
       <div 
-        className={`varsity-card p-4 md:p-5 flex items-center group ${disableHover ? 'no-hover-effects' : ''}`}
+        className={`varsity-card p-3 sm:p-4 flex items-center justify-between gap-1.5 sm:gap-3 group ${disableHover ? 'no-hover-effects' : ''} ${borderHoverClass}`}
       >
         {/* White Player (Left) */}
         <div 
@@ -81,11 +71,11 @@ export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, 
           tabIndex={0}
           role="button"
           aria-label={`View ${wP.name} profile`}
-          className={`w-[40%] flex justify-end shrink-0 cursor-pointer ${
-            disableHover ? '' : 'hover:bg-brand-bg-cream/40'
-          } rounded-xl p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary ${
-            res === 'black' ? 'opacity-40' : ''
-          } transition-opacity duration-300`}
+          className={`flex-1 min-w-0 flex justify-end cursor-pointer ${
+            disableHover ? '' : 'hover:bg-brand-primary/5'
+          } rounded-xl p-1 sm:p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary ${
+            res === 'black' ? 'opacity-50' : ''
+          } transition-opacity duration-200`}
         >
           <PlayerCardSide 
             name={wP.name} 
@@ -97,13 +87,13 @@ export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, 
         </div>
 
         {/* Score / Center Info */}
-        <div className="flex flex-col items-center justify-center w-[20%] px-2 shrink-0 select-none">
-          <span className={`font-extrabold text-sm md:text-base tracking-wider transition-colors ${
-            res ? 'text-brand-primary' : 'text-gray-400'
+        <div className="flex flex-col items-center justify-center shrink-0 px-1 sm:px-2 select-none min-w-[50px] sm:min-w-[65px]">
+          <span className={`font-space font-black text-xs sm:text-sm tracking-wider px-2 py-0.5 rounded-lg border ${
+            res ? 'bg-brand-primary text-white border-brand-primary' : 'bg-brand-bg-cream text-gray-500 border-m3-outline-variant'
           }`}>
             {getScoreDisplay()}
           </span>
-          <span className="text-gray-500 text-[9px] md:text-[10px] font-bold mt-0.5 uppercase tracking-wider text-center line-clamp-1">
+          <span className="text-gray-500 text-[8px] sm:text-[9px] font-black mt-1 uppercase tracking-wider text-center truncate max-w-[60px] sm:max-w-none">
             {getWinnerText()}
           </span>
         </div>
@@ -115,11 +105,11 @@ export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, 
           tabIndex={0}
           role="button"
           aria-label={`View ${bP.name} profile`}
-          className={`w-[40%] flex justify-start shrink-0 cursor-pointer ${
-            disableHover ? '' : 'hover:bg-brand-bg-cream/40'
-          } rounded-xl p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary ${
-            res === 'white' ? 'opacity-40' : ''
-          } transition-opacity duration-300`}
+          className={`flex-1 min-w-0 flex justify-start cursor-pointer ${
+            disableHover ? '' : 'hover:bg-brand-primary/5'
+          } rounded-xl p-1 sm:p-1.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-primary ${
+            res === 'white' ? 'opacity-50' : ''
+          } transition-opacity duration-200`}
         >
           <PlayerCardSide 
             name={bP.name} 
@@ -133,33 +123,33 @@ export const MatchResult = ({ w, b, res, date, round, division, onPlayerSelect, 
 
       {/* Admin Score Controls */}
       {isAdmin && !isBye && (
-        <div className="flex bg-brand-bg-cream border border-m3-outline-variant rounded-xl p-1 gap-1 w-full max-w-sm mx-auto justify-center self-center animate-in slide-in-from-top-1 duration-150 mt-1 shadow-sm">
+        <div className="flex bg-brand-bg-cream border border-m3-outline-variant rounded-xl p-1 gap-1 w-full max-w-sm mx-auto justify-center self-center animate-in slide-in-from-top-1 duration-150 shadow-xs">
           <button
             onClick={() => handleSetResult(gameKeyStr, 'white')}
-            className={`flex-1 px-3 py-1.5 text-[10px] font-black rounded-lg transition-all cursor-pointer ${
+            className={`flex-1 px-2.5 py-1.5 text-[10px] font-black rounded-lg transition-all cursor-pointer border-none ${
               res === 'white'
-                ? 'bg-brand-primary text-white shadow-sm'
-                : 'text-gray-500 hover:bg-white hover:text-brand-primary'
+                ? 'bg-brand-primary text-white shadow-xs'
+                : 'text-gray-600 hover:bg-white hover:text-brand-primary'
             }`}
           >
             {wP.name.split(' ')[0]} Win
           </button>
           <button
             onClick={() => handleSetResult(gameKeyStr, 'draw')}
-            className={`flex-1 px-3 py-1.5 text-[10px] font-black rounded-lg transition-all cursor-pointer ${
+            className={`flex-1 px-2.5 py-1.5 text-[10px] font-black rounded-lg transition-all cursor-pointer border-none ${
               res === 'draw'
-                ? 'bg-gray-600 text-white shadow-sm'
-                : 'text-gray-500 hover:bg-white hover:text-brand-primary'
+                ? 'bg-brand-accent text-white shadow-xs'
+                : 'text-gray-600 hover:bg-white hover:text-brand-primary'
             }`}
           >
             Draw
           </button>
           <button
             onClick={() => handleSetResult(gameKeyStr, 'black')}
-            className={`flex-1 px-3 py-1.5 text-[10px] font-black rounded-lg transition-all cursor-pointer ${
+            className={`flex-1 px-2.5 py-1.5 text-[10px] font-black rounded-lg transition-all cursor-pointer border-none ${
               res === 'black'
-                ? 'bg-brand-primary text-white shadow-sm'
-                : 'text-gray-500 hover:bg-white hover:text-brand-primary'
+                ? 'bg-brand-primary text-white shadow-xs'
+                : 'text-gray-600 hover:bg-white hover:text-brand-primary'
             }`}
           >
             {bP.name.split(' ')[0]} Win

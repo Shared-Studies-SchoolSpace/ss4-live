@@ -29,7 +29,8 @@ export const AdminTab = ({
   
   // Countdown Timer Config State
   const [nextRoundStartInput, setNextRoundStartInput] = useState('');
-  const [nextRoundLabelInput, setNextRoundLabelInput] = useState('Round of 32');
+  const [nextRoundLabelInput, setNextRoundLabelInput] = useState('Registration Closes in');
+  const [regCustomTextInput, setRegCustomTextInput] = useState('');
   const [isSavingTimer, setIsSavingTimer] = useState(false);
 
   // Player CRUD state
@@ -71,7 +72,7 @@ export const AdminTab = ({
         await supabase.from('divisions').update({ rounds: updatedRounds }).eq('id', currentDivision.id);
       }
 
-      // 2. Update active tournament in tournaments table
+      // 2. Update active/upcoming tournament in tournaments table
       const { data: activeTournaments } = await supabase
         .from('tournaments')
         .select('id, month_year')
@@ -84,12 +85,13 @@ export const AdminTab = ({
           .from('tournaments')
           .update({
             next_round_start: isoDate,
-            next_round_label: nextRoundLabelInput
+            next_round_label: nextRoundLabelInput,
+            reg_custom_text: regCustomTextInput
           })
           .eq('id', activeTournaments[0].id);
       }
 
-      toast.success('Tournament countdown schedule saved!', { theme: 'dark' });
+      toast.success('Tournament & Registration countdown schedule saved!', { theme: 'dark' });
     } catch (e) {
       console.error(e);
       toast.error('Failed to save countdown schedule');
@@ -541,7 +543,7 @@ export const AdminTab = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-brand-bg-cream/20 p-5 rounded-2xl border border-gray-100">
             <div>
-              <label className={labelClass}>Next Round Launch Date &amp; Time</label>
+              <label className={labelClass}>Launch / Deadline Date &amp; Time</label>
               <input
                 type="datetime-local"
                 value={nextRoundStartInput}
@@ -553,9 +555,19 @@ export const AdminTab = ({
               <label className={labelClass}>Countdown Label / Round Stage</label>
               <input
                 type="text"
-                placeholder="e.g. Round of 32, Quarterfinals, Final"
+                placeholder="e.g. Registration Closes in, Round of 32"
                 value={nextRoundLabelInput}
                 onChange={e => setNextRoundLabelInput(e.target.value)}
+                className={inputClass}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className={labelClass}>Registration Page Subtitle / Custom Copy</label>
+              <input
+                type="text"
+                placeholder="e.g. Single elimination. Last 7 days of the month. One champion claims the prize."
+                value={regCustomTextInput}
+                onChange={e => setRegCustomTextInput(e.target.value)}
                 className={inputClass}
               />
             </div>

@@ -65,8 +65,10 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
   const winnerName = winnerObj?.name || winnerObj?.username || 'Champion';
   const winnerUsername = winnerObj?.username || winnerObj?.name || '';
 
+  const fallbackChessAvatar = "https://images.chesscomfiles.com/uploads/v1/user/0.2a67e1a3.160x160o.1ce84ef4df63.png";
+
   const [winnerAvatar, setWinnerAvatar] = useState(() =>
-    winnerObj?.avatar || winnerObj?.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`
+    winnerObj?.avatar || winnerObj?.image || `https://unavatar.io/chess.com/${winnerUsername || 'chess'}`
   );
 
   // Load Champion profile picture / avatar cleanly
@@ -77,20 +79,24 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
         setWinnerAvatar(directAvatar);
       } else if (winnerUsername) {
         let isMounted = true;
-        fetchCompletePlayerData(winnerUsername, 'lichess').then(data => {
+        fetchCompletePlayerData(winnerUsername, 'chess.com').then(data => {
           if (isMounted && data?.avatar) {
             setWinnerAvatar(data.avatar);
           } else if (isMounted) {
-            setWinnerAvatar(`https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`);
+            fetchCompletePlayerData(winnerUsername, 'lichess').then(lData => {
+              if (isMounted && lData?.avatar) {
+                setWinnerAvatar(lData.avatar);
+              } else if (isMounted) {
+                setWinnerAvatar(fallbackChessAvatar);
+              }
+            });
           }
         }).catch(() => {
-          if (isMounted) {
-            setWinnerAvatar(`https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`);
-          }
+          if (isMounted) setWinnerAvatar(fallbackChessAvatar);
         });
         return () => { isMounted = false; };
       } else {
-        setWinnerAvatar(`https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`);
+        setWinnerAvatar(fallbackChessAvatar);
       }
     }
   }, [status, winnerObj, winnerName, winnerUsername]);
@@ -152,15 +158,16 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
                   <span>Crowned Champion</span>
                 </p>
                 <div className="flex items-center gap-3.5 sm:gap-4">
-                  {/* Player Profile Picture (Circular Frame, Light BG) */}
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-emerald-400/80 overflow-hidden flex-shrink-0 bg-brand-primary/20 shadow-md">
+                  {/* Player Profile Picture (Circular Frame) */}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-emerald-400/80 overflow-hidden flex-shrink-0 bg-slate-800 shadow-md">
                     <img
                       src={winnerAvatar}
                       alt={winnerName}
                       className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(winnerName)}&background=1A56C4&color=fff&bold=true`;
+                        e.target.src = fallbackChessAvatar;
                       }}
                     />
                   </div>

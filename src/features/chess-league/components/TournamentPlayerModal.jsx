@@ -171,8 +171,8 @@ export function TournamentPlayerModal({ player, onClose }) {
           {/* Platform Tag */}
           <span className={`relative z-10 text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full border flex items-center gap-1.5 shadow-2xs ${
             isChessCom 
-              ? 'bg-[#81b64c]/20 text-[#a3e635] border-[#81b64c]/40' 
-              : 'bg-[#3b82f6]/20 text-[#93c5fd] border-[#3b82f6]/40'
+              ? 'bg-brand-primary/20 text-white border-brand-primary/40' 
+              : 'bg-brand-accent/20 text-white border-brand-accent/40'
           }`}>
             <span>{isChessCom ? '♙' : '♞'}</span>
             <span>{platformName}</span>
@@ -199,6 +199,7 @@ export function TournamentPlayerModal({ player, onClose }) {
                   src={details.avatar} 
                   alt={player.name} 
                   className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
                   onError={() => setImgError(true)}
                 />
               ) : (
@@ -209,7 +210,7 @@ export function TournamentPlayerModal({ player, onClose }) {
             </div>
             {/* Platform Icon Badge */}
             <span className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-xs font-black text-white shadow-md ${
-              isChessCom ? 'bg-[#81b64c]' : 'bg-[#3b82f6]'
+              isChessCom ? 'bg-brand-primary' : 'bg-brand-accent'
             }`}>
               {isChessCom ? '♙' : '♞'}
             </span>

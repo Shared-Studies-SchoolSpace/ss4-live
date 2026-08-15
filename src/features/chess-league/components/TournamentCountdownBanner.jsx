@@ -107,6 +107,8 @@ export default function TournamentCountdownBanner() {
     };
 
     loadTarget();
+    const intervalId = setInterval(loadTarget, 10000);
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleDismiss = () => {
@@ -124,10 +126,29 @@ export default function TournamentCountdownBanner() {
 
   const isUrgent = days < URGENT_THRESHOLD;
 
-  // Fix 3: Use dynamic bannerLabel — was hardcoded "Round of 32" regardless of round stage
-  const headline = isUrgent
-    ? `${bannerLabel} starts in ${days > 0 ? `${days}d ` : ''}${hours}h ${mins}m!`
-    : `SCL ${bannerLabel} matches are scheduled! Get ready.`;
+  // Smart, grammatically clean banner copy generator
+  const getBannerCopy = () => {
+    const isRegistration = !bannerLabel || /registration|closes|deadline/i.test(bannerLabel);
+    const timeRemainingStr = `${days > 0 ? `${days}d ` : ''}${hours}h ${mins}m`;
+
+    if (isRegistration) {
+      const badge = "SCL Registration";
+      const mainText = isUrgent 
+        ? `Closes in ${timeRemainingStr}! Lock in your spot now.`
+        : `Registration is open! Closes in ${timeRemainingStr}.`;
+      const mobileText = `Closes in ${timeRemainingStr}!`;
+      return { badge, mainText, mobileText };
+    } else {
+      const badge = `SCL ${bannerLabel}`;
+      const mainText = isUrgent
+        ? `Starts in ${timeRemainingStr}! Check your pairings.`
+        : `Matches are scheduled! Starting in ${timeRemainingStr}.`;
+      const mobileText = `${bannerLabel} in ${timeRemainingStr}!`;
+      return { badge, mainText, mobileText };
+    }
+  };
+
+  const { badge, mainText, mobileText } = getBannerCopy();
 
   return (
     <AnimatePresence>
@@ -179,19 +200,17 @@ export default function TournamentCountdownBanner() {
               />
             )}
 
-            {/* LEFT: dynamic label (was hardcoded "SCL Round of 32.") */}
+            {/* LEFT: clean, non-repetitive dynamic copy */}
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <p className="text-white font-bold text-[11px] sm:text-xs leading-tight truncate" style={{ margin: 0 }}>
                 <span
-                  className="font-black mr-1"
-                  style={{ color: isUrgent ? '#93C5FD' : '#A5C8FF', fontSize: '12px' }}
+                  className="font-black mr-2 uppercase tracking-wide"
+                  style={{ color: isUrgent ? '#93C5FD' : '#A5C8FF', fontSize: '11px' }}
                 >
-                  SCL {bannerLabel}.
+                  {badge}:
                 </span>
-                <span className="hidden sm:inline">{headline}</span>
-                <span className="inline sm:hidden">
-                  {hours}h {mins}m left: {bannerLabel}!
-                </span>
+                <span className="hidden sm:inline text-white/90">{mainText}</span>
+                <span className="inline sm:hidden text-white/90">{mobileText}</span>
               </p>
             </div>
 

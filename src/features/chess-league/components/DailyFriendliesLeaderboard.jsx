@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useAuth } from '../../auth-portal/hooks/useAuth';
-import { fetchAllFriendliesData } from '../utils/friendliesService';
+import { fetchAllFriendliesData, fetchTournamentResults } from '../utils/friendliesService';
 
 const DEFAULT_ARENA_IDS = ['O8MFtK4X'];
 
@@ -50,6 +50,27 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
     fetchLichessData();
     return () => { isMounted = false; };
   }, [refreshTrigger]);
+
+  // On-demand fetch for selected arena if initial batch missed it or returned empty
+  useEffect(() => {
+    if (!selectedArenaId || tableMode !== 'arena' || loading) return;
+    const currentResults = arenaDetailsMap[selectedArenaId]?.results;
+    if (!currentResults || currentResults.length === 0) {
+      let isSubscribed = true;
+      fetchTournamentResults(selectedArenaId).then(results => {
+        if (isSubscribed && results && results.length > 0) {
+          setArenaDetailsMap(prev => ({
+            ...prev,
+            [selectedArenaId]: {
+              ...(prev[selectedArenaId] || { id: selectedArenaId }),
+              results
+            }
+          }));
+        }
+      });
+      return () => { isSubscribed = false; };
+    }
+  }, [selectedArenaId, tableMode, loading, arenaDetailsMap]);
 
   // Currently selected arena details
   const selectedArena = useMemo(() => {
@@ -516,8 +537,16 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
         <div className="max-h-[620px] overflow-y-auto divide-y divide-gray-100">
           {activeStandings.length === 0 ? (
             <div className="p-12 text-center text-gray-500 text-xs font-semibold space-y-2">
-              <span className="material-symbols-outlined text-3xl text-gray-300">search_off</span>
-              <p>{searchQuery ? `No players matched "${searchQuery}"` : 'No standings recorded for this view'}</p>
+              <span className="material-symbols-outlined text-3xl text-gray-300">
+                {searchQuery ? 'search_off' : 'sports_esports'}
+              </span>
+              <p>
+                {searchQuery 
+                  ? `No players matched "${searchQuery}"` 
+                  : tableMode === 'arena' 
+                    ? 'No standings recorded yet for this daily arena.' 
+                    : 'No standings recorded yet for Season II'}
+              </p>
             </div>
           ) : (
             activeStandings.map((p, idx) => {
@@ -712,15 +741,8 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
           {/* Render Podium Section */}
           {renderPodiumSection()}
 
-          {activeStandings.length === 0 && !searchQuery ? (
-            <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center shadow-xs">
-              <p className="text-sm font-semibold text-gray-500">
-                No standings recorded yet for Season II
-              </p>
-            </div>
-          ) : (
-            renderStandingsTable()
-          )}
+          {/* Render Standings Table & Navigation Controls */}
+          {renderStandingsTable()}
         </>
       )}
 

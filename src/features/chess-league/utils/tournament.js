@@ -525,10 +525,10 @@ export function getCountdownTarget(tournament) {
   // Priority 1: explicit top-level next_round_start on the tournament row
   if (tournament.next_round_start) {
     const customDate = new Date(tournament.next_round_start);
-    if (!isNaN(customDate.getTime()) && customDate > now) {
+    if (!isNaN(customDate.getTime())) {
       return {
         date: customDate,
-        label: tournament.next_round_label || 'Tournament Round'
+        label: tournament.next_round_label || (tournament.status === 'upcoming' ? 'Registration Closes in' : 'Tournament Round')
       };
     }
   }
@@ -539,7 +539,7 @@ export function getCountdownTarget(tournament) {
 
   if (latestRound && latestRound.next_round_start) {
     const customDate = new Date(latestRound.next_round_start);
-    if (!isNaN(customDate.getTime()) && customDate > now) {
+    if (!isNaN(customDate.getTime())) {
       return {
         date: customDate,
         label: latestRound.next_round_label || latestRound.name || 'Next Round'
@@ -547,7 +547,24 @@ export function getCountdownTarget(tournament) {
     }
   }
 
-  // No valid future date found — signal the banner to stay hidden.
+  // Priority 3: Fallback for upcoming tournaments — start of monthly tournament (24th/25th 18:00 WAT)
+  if (tournament.status === 'upcoming' || (!tournament.status && tournament.month_year)) {
+    let year, month;
+    if (tournament.month_year) {
+      [year, month] = tournament.month_year.split('-').map(Number);
+    } else {
+      year = now.getFullYear();
+      month = now.getMonth() + 1;
+    }
+    const dates = getTournamentDates(year, month);
+    const startDateStr = dates[0] ? `${dates[0]}T18:00:00+01:00` : null;
+    const fallbackDate = startDateStr ? new Date(startDateStr) : new Date(now.getTime() + 7 * 86400 * 1000);
+    return {
+      date: fallbackDate,
+      label: tournament.next_round_label || 'Registration Closes in'
+    };
+  }
+
   return { date: null, label: null };
 }
 

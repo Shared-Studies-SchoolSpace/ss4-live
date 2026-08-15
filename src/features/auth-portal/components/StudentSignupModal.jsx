@@ -355,21 +355,7 @@ export default function StudentSignupModal({
           </p>
         </div>
 
-        {/* Flow Type Switcher when Registering */}
-        {!isLogin && !isForgotPassword && (
-          <div className="flex items-center justify-between bg-gray-50 border border-gray-150 rounded-2xl px-4 py-2 mb-5 text-xs font-semibold text-gray-600">
-            <span>Registration Flow: <strong className="text-brand-primary uppercase font-bold">{flowType === 'student' ? 'Student' : 'General / Open'}</strong></span>
-            {onBackToChoice && (
-              <button
-                type="button"
-                onClick={onBackToChoice}
-                className="text-brand-primary text-[11px] font-bold hover:underline cursor-pointer bg-transparent border-none"
-              >
-                Change Flow
-              </button>
-            )}
-          </div>
-        )}
+
 
         {/* Segmented Mode Selector */}
         {!isForgotPassword && (

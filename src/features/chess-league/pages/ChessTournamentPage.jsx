@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -49,15 +49,21 @@ function getChampionScopedStats(historyItem) {
   const rounds = historyItem?.rounds || [];
   if (rounds.length > 0) {
     rounds.forEach(r => {
-      (r.games || []).forEach(g => {
-        const isP1 = g.p1 && (g.p1.username?.toLowerCase() === winnerUsername.toLowerCase() || g.p1.name?.toLowerCase() === winnerName.toLowerCase());
-        const isP2 = g.p2 && (g.p2.username?.toLowerCase() === winnerUsername.toLowerCase() || g.p2.name?.toLowerCase() === winnerName.toLowerCase());
+      (r?.games || []).forEach(g => {
+        if (!g) return;
+        const p1User = (g.p1?.username || g.p1?.name || '').toLowerCase();
+        const p1Name = (g.p1?.name || g.p1?.username || '').toLowerCase();
+        const p2User = (g.p2?.username || g.p2?.name || '').toLowerCase();
+        const p2Name = (g.p2?.name || g.p2?.username || '').toLowerCase();
+
+        const isP1 = g.p1 && (p1User === winnerUsername.toLowerCase() || p1Name === winnerName.toLowerCase());
+        const isP2 = g.p2 && (p2User === winnerUsername.toLowerCase() || p2Name === winnerName.toLowerCase());
 
         if (isP1 || isP2) {
-          const isWinner = g.winner && typeof g.winner === 'object'
-            ? (g.winner.username?.toLowerCase() === winnerUsername.toLowerCase() || g.winner.name?.toLowerCase() === winnerName.toLowerCase())
-            : false;
-          const isDraw = g.winner === 'draw' || (typeof g.winner === 'object' && g.winner.username === 'draw');
+          const winnerUser = (typeof g.winner === 'object' && g.winner ? (g.winner.username || g.winner.name || '') : '').toLowerCase();
+          const winnerNameStr = (typeof g.winner === 'object' && g.winner ? (g.winner.name || g.winner.username || '') : '').toLowerCase();
+          const isWinner = (winnerUser && winnerUser === winnerUsername.toLowerCase()) || (winnerNameStr && winnerNameStr === winnerName.toLowerCase());
+          const isDraw = g.winner === 'draw' || (typeof g.winner === 'object' && g.winner?.username === 'draw');
 
           if (isWinner) {
             wins++;
@@ -75,19 +81,29 @@ function getChampionScopedStats(historyItem) {
     });
   }
 
-  if (!runnerUpRaw) {
-    runnerUpRaw = { name: 'Raphael N.', username: 'raphael', rating: 1780 };
+  if (!runnerUpRaw && rounds.length > 0) {
+    const finalRound = rounds[rounds.length - 1] || rounds.find(r => r.name?.toLowerCase().includes('final'));
+    if (finalRound && finalRound.games) {
+      const finalGame = finalRound.games.find(g => 
+        (g?.p1 && ((g.p1.username || '').toLowerCase() === winnerUsername.toLowerCase() || (g.p1.name || '').toLowerCase() === winnerName.toLowerCase())) ||
+        (g?.p2 && ((g.p2.username || '').toLowerCase() === winnerUsername.toLowerCase() || (g.p2.name || '').toLowerCase() === winnerName.toLowerCase()))
+      );
+      if (finalGame) {
+        const isP1 = finalGame.p1 && ((finalGame.p1.username || '').toLowerCase() === winnerUsername.toLowerCase() || (finalGame.p1.name || '').toLowerCase() === winnerName.toLowerCase());
+        runnerUpRaw = isP1 ? finalGame.p2 : finalGame.p1;
+      }
+    }
   }
 
-  const runnerUpName = typeof runnerUpRaw === 'object' ? runnerUpRaw.name : String(runnerUpRaw);
-  const runnerUpUsername = typeof runnerUpRaw === 'object'
+  const runnerUpName = runnerUpRaw ? (typeof runnerUpRaw === 'object' ? runnerUpRaw.name : String(runnerUpRaw)) : 'Finalist';
+  const runnerUpUsername = runnerUpRaw ? (typeof runnerUpRaw === 'object'
     ? (runnerUpRaw.username || String(runnerUpRaw).toLowerCase().replace(/\s+/g, ''))
-    : String(runnerUpRaw).toLowerCase().replace(/\s+/g, '');
+    : String(runnerUpRaw).toLowerCase().replace(/\s+/g, '')) : 'finalist';
 
-  const runnerUpObj = (tournamentPlayers || []).find(p =>
+  const runnerUpObj = runnerUpRaw ? ((tournamentPlayers || []).find(p =>
     p.username?.toLowerCase() === runnerUpUsername.toLowerCase() ||
     p.name?.toLowerCase() === runnerUpName.toLowerCase()
-  ) || (typeof runnerUpRaw === 'object' ? runnerUpRaw : { name: runnerUpName, username: runnerUpUsername });
+  ) || (typeof runnerUpRaw === 'object' ? runnerUpRaw : { name: runnerUpName, username: runnerUpUsername })) : null;
 
   const totalGames = wins + losses + draws || 6;
   const winRate = Math.round(((wins || 6) / totalGames) * 100);
@@ -115,6 +131,101 @@ const TrophySvg = ({ className = "w-5 h-5" }) => (
     <path d="M280-120v-80h160v-116q-111-8-185.5-84.5T180-590v-90h80v-80h440v80h80v90q0 113-74.5 189.5T520-316v116h160v80H280Zm0-550h-20v90q0 73 47.5 125T420-402v-268H280Zm260 133q65-5 112.5-57t47.5-125v-90H540v272Z" />
   </svg>
 );
+
+function ChampionAvatarImg({ playerObj, winnerName, winnerUsername, className = "w-full h-full object-cover" }) {
+  const fallbackAvatar = "https://images.chesscomfiles.com/uploads/v1/user/0.2a67e1a3.160x160o.1ce84ef4df63.png";
+
+  const [avatarUrl, setAvatarUrl] = useState(() => {
+    return playerObj?.avatar || playerObj?.image || playerObj?.photo || `https://unavatar.io/chess.com/${winnerUsername || 'chess'}`;
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+    const username = winnerUsername || playerObj?.chess_username || playerObj?.username;
+    if (username) {
+      fetchCompletePlayerData(username, 'chess.com').then(data => {
+        if (isMounted && data?.avatar) {
+          setAvatarUrl(data.avatar);
+        } else if (isMounted) {
+          fetchCompletePlayerData(username, 'lichess').then(lData => {
+            if (isMounted && lData?.avatar) {
+              setAvatarUrl(lData.avatar);
+            } else if (isMounted) {
+              setAvatarUrl(fallbackAvatar);
+            }
+          });
+        }
+      }).catch(() => {
+        if (isMounted) setAvatarUrl(fallbackAvatar);
+      });
+    }
+    return () => { isMounted = false; };
+  }, [winnerUsername, playerObj]);
+
+  return (
+    <img
+      src={avatarUrl}
+      alt={winnerName || 'Champion'}
+      className={className}
+      referrerPolicy="no-referrer"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = fallbackAvatar;
+      }}
+    />
+  );
+}
+
+function getChampionPathwayMatches(historyItem, championUsername, championName) {
+  const rounds = historyItem?.rounds || [];
+  if (!rounds.length) return [];
+
+  const cleanChampUser = (championUsername || '').toLowerCase().trim();
+  const cleanChampName = (championName || '').toLowerCase().trim();
+
+  const pathway = [];
+
+  rounds.forEach((r, rIdx) => {
+    const roundTitle = r.name || (r.roundNum ? `Round ${r.roundNum}` : `Phase ${rIdx + 1}`);
+    const games = r.games || [];
+
+    games.forEach(g => {
+      const p1User = (g.p1?.username || '').toLowerCase().trim();
+      const p1Name = (g.p1?.name || '').toLowerCase().trim();
+      const p2User = (g.p2?.username || '').toLowerCase().trim();
+      const p2Name = (g.p2?.name || '').toLowerCase().trim();
+
+      const isP1 = (cleanChampUser && p1User === cleanChampUser) || (cleanChampName && p1Name === cleanChampName);
+      const isP2 = (cleanChampUser && p2User === cleanChampUser) || (cleanChampName && p2Name === cleanChampName);
+
+      if (isP1 || isP2) {
+        const opponentObj = isP1 ? g.p2 : g.p1;
+        let opponentDisplay = 'Opponent';
+        if (opponentObj && opponentObj.username !== 'bye') {
+          opponentDisplay = opponentObj.name || opponentObj.username || 'Opponent';
+        } else if (opponentObj && opponentObj.username === 'bye') {
+          opponentDisplay = 'BYE (Automatic Advance)';
+        }
+
+        const isWinner = g.winner && typeof g.winner === 'object'
+          ? ((cleanChampUser && (g.winner.username || '').toLowerCase() === cleanChampUser) || (cleanChampName && (g.winner.name || '').toLowerCase() === cleanChampName))
+          : false;
+
+        const isDraw = g.winner === 'draw';
+
+        pathway.push({
+          roundTitle,
+          opponentDisplay,
+          isWinner,
+          isDraw,
+          scoreText: isWinner ? `Defeated ${opponentDisplay}` : isDraw ? `Tied ${opponentDisplay}` : `Lost to ${opponentDisplay}`
+        });
+      }
+    });
+  });
+
+  return pathway;
+}
 
 
 
@@ -689,10 +800,14 @@ export default function ChessTournamentPage() {
   };
 
   const [nextRoundStartInput, setNextRoundStartInput] = useState('');
-  const [nextRoundLabelInput, setNextRoundLabelInput] = useState('Round of 32 starts in');
+  const [nextRoundLabelInput, setNextRoundLabelInput] = useState('Registration Closes in');
+  const [regCustomTextInput, setRegCustomTextInput] = useState('Single elimination. Last 7 days of the month. One champion claims the prize.');
   const [labelDropdownEnabled, setLabelDropdownEnabled] = useState(false);
 
   const ROUND_LABEL_OPTIONS = [
+    'Registration Closes in',
+    'Registration Deadline in',
+    'Tournament Begins in',
     'Round of 32 starts in',
     'Group Stage Round 1 starts in',
     'Group Stage Round 2 starts in',
@@ -704,6 +819,35 @@ export default function ChessTournamentPage() {
   ];
   const [showPastWinnersModal, setShowPastWinnersModal] = useState(false);
   const [expandedHistoryId, setExpandedHistoryId] = useState(null);
+  const [loadingPathwayId, setLoadingPathwayId] = useState(null);
+  const [fetchedPathways, setFetchedPathways] = useState({});
+
+  const handleTogglePathway = async (monthYear, historyItem) => {
+    if (expandedHistoryId === monthYear) {
+      setExpandedHistoryId(null);
+      return;
+    }
+    setExpandedHistoryId(monthYear);
+
+    const itemToUse = fetchedPathways[monthYear] || historyItem;
+    if ((!itemToUse?.rounds || itemToUse.rounds.length === 0) && !fetchedPathways[monthYear]) {
+      setLoadingPathwayId(monthYear);
+      try {
+        const { data } = await supabase
+          .from('tournaments')
+          .select('*')
+          .eq('month_year', monthYear)
+          .maybeSingle();
+        if (data) {
+          setFetchedPathways(prev => ({ ...prev, [monthYear]: data }));
+        }
+      } catch (err) {
+        console.warn('Error fetching tournament history for pathway:', err);
+      } finally {
+        setLoadingPathwayId(null);
+      }
+    }
+  };
   const [showRulesModal, setShowRulesModal] = useState(false);
 
   // Upcoming tournament states
@@ -892,58 +1036,63 @@ export default function ChessTournamentPage() {
     } catch { return ''; }
   }, []);
 
+  const activeTargetT = useMemo(() => {
+    return upcomingTournament || tournament;
+  }, [upcomingTournament, tournament]);
+
   useEffect(() => {
     const tick = () => {
-      // Prioritize upcomingTournament when in registration mode so clock targets next launch date
-      const targetT = (tournament?.status === 'upcoming' ? tournament : upcomingTournament) || tournament;
-      const { date, label: targetLabel } = getCountdownTarget(targetT);
-      const diff = Math.max(0, date ? (new Date(date) - new Date()) : 0);
+      const { date, label: targetLabel } = getCountdownTarget(activeTargetT);
+      const diff = Math.max(0, date ? (new Date(date).getTime() - Date.now()) : 0);
       setClock({
         days:  Math.floor(diff / 864e5),
         hours: Math.floor(diff / 36e5) % 24,
         mins:  Math.floor(diff / 6e4) % 60,
         secs:  Math.floor(diff / 1e3) % 60,
-        label: targetLabel || 'Next Round'
+        label: targetLabel || 'Registration Closes in'
       });
     };
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [tournament, upcomingTournament]);
+  }, [activeTargetT]);
 
   useEffect(() => {
-    if (tournament) {
-      const latestRound = tournament.rounds && tournament.rounds[tournament.rounds.length - 1];
-      if (latestRound && latestRound.next_round_start) {
+    if (activeTargetT) {
+      if (activeTargetT.next_round_label) setNextRoundLabelInput(activeTargetT.next_round_label);
+      if (activeTargetT.reg_custom_text) setRegCustomTextInput(activeTargetT.reg_custom_text);
+
+      const latestRound = activeTargetT?.rounds && activeTargetT.rounds[activeTargetT.rounds.length - 1];
+      const targetDateStr = activeTargetT.next_round_start || latestRound?.next_round_start;
+      if (targetDateStr) {
         try {
-          const d = new Date(latestRound.next_round_start);
+          const d = new Date(targetDateStr);
           const offset = d.getTimezoneOffset();
           const localTime = new Date(d.getTime() - offset * 60 * 1000);
           setNextRoundStartInput(localTime.toISOString().slice(0, 16));
         } catch {
           setNextRoundStartInput('');
         }
-      } else {
-        setNextRoundStartInput('');
-      }
-      if (latestRound?.next_round_label) {
-        setNextRoundLabelInput(latestRound.next_round_label);
       }
     }
-  }, [tournament]);
+  }, [activeTargetT]);
 
   const formattedTargetTime = React.useMemo(() => {
     try {
-      const { date } = getCountdownTarget(tournament);
-      return `${date.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit', hour12: false })} ${tzAbbr}`;
+      const { date } = getCountdownTarget(activeTargetT);
+      if (!date) return `18:00 ${tzAbbr}`;
+      const timeStr = date.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit', hour12: false });
+      const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      return `${timeStr} ${tzAbbr} (${dateStr})`;
     } catch {
       return `18:00 ${tzAbbr}`;
     }
-  }, [tournament, tzAbbr]);
+  }, [activeTargetT, tzAbbr]);
 
   const googleCalendarUrl = React.useMemo(() => {
     try {
-      const { date } = getCountdownTarget(tournament);
+      const { date } = getCountdownTarget(activeTargetT);
+      if (!date) return '#';
       const startStr = date.toISOString().replace(/-|:|\.\d\d\d/g, "");
       const endStr = new Date(date.getTime() + 2 * 3600 * 1000).toISOString().replace(/-|:|\.\d\d\d/g, "");
       return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + 
@@ -953,7 +1102,7 @@ export default function ChessTournamentPage() {
     } catch {
       return "#";
     }
-  }, [tournament]);
+  }, [activeTargetT]);
 
   const handleSaveNextRoundStart = async () => {
     if (!nextRoundStartInput) {
@@ -962,20 +1111,84 @@ export default function ChessTournamentPage() {
     }
     try {
       const isoStr = new Date(nextRoundStartInput).toISOString();
-      await updateNextRoundStart(isoStr, nextRoundLabelInput);
-      toast.success('Countdown updated!');
+
+      // 1. Save directly to Supabase tournaments table
+      const targetT = activeTargetT;
+      if (targetT && targetT.id) {
+        const { error } = await supabase
+          .from('tournaments')
+          .update({
+            next_round_start: isoStr,
+            next_round_label: nextRoundLabelInput,
+            reg_custom_text: regCustomTextInput
+          })
+          .eq('id', targetT.id);
+
+        if (error) console.error("Supabase update error:", error);
+      }
+
+      // 2. Update local upcomingTournament state immediately
+      setUpcomingTournament(prev => prev ? ({
+        ...prev,
+        next_round_start: isoStr,
+        next_round_label: nextRoundLabelInput,
+        reg_custom_text: regCustomTextInput
+      }) : {
+        id: selectedMonthYear,
+        month_year: selectedMonthYear,
+        name: `${selectedMonthYear} SCL Tournament`,
+        status: 'upcoming',
+        next_round_start: isoStr,
+        next_round_label: nextRoundLabelInput,
+        reg_custom_text: regCustomTextInput,
+        players: [],
+        rounds: []
+      });
+
+      // 3. Update active tournament hook state if active rounds exist
+      if (tournament?.rounds?.length) {
+        await updateNextRoundStart(isoStr, nextRoundLabelInput);
+      }
+
+      toast.success('Registration countdown & page settings saved!');
     } catch (e) {
-      toast.error('Error updating countdown.');
+      console.error(e);
+      toast.error('Error updating countdown settings.');
     }
   };
 
   const handleClearNextRoundStart = async () => {
     try {
-      await updateNextRoundStart(null, undefined);
+      const targetT = upcomingTournament || tournament;
+      if (targetT && targetT.id) {
+        await supabase
+          .from('tournaments')
+          .update({
+            next_round_start: null,
+            next_round_label: null,
+            reg_custom_text: null
+          })
+          .eq('id', targetT.id);
+      }
+
+      if (upcomingTournament) {
+        setUpcomingTournament(prev => ({
+          ...prev,
+          next_round_start: null,
+          next_round_label: null,
+          reg_custom_text: null
+        }));
+      }
+
+      if (tournament?.rounds?.length) {
+        await updateNextRoundStart(null, undefined);
+      }
+
       setNextRoundStartInput('');
-      toast.success('Next round start time cleared.');
+      setRegCustomTextInput('');
+      toast.success('Registration countdown & text cleared.');
     } catch (e) {
-      toast.error('Error clearing next round start time.');
+      toast.error('Error clearing countdown.');
     }
   };
 
@@ -1164,6 +1377,8 @@ export default function ChessTournamentPage() {
   ];
 
 
+  const isUpcoming = !tournament || tournament.status === 'upcoming';
+
   return (
     <div className="min-h-screen bg-[#F6F4F0]">
       <ToastContainer position="bottom-right" />
@@ -1184,150 +1399,192 @@ export default function ChessTournamentPage() {
             <div className="h-12 bg-white/10 rounded-xl w-48 mx-auto"></div>
           </div>
         </div>
-      ) : (
-        /* United Tournament View (Hero + Registration Banner + Tabbed Content) */
-        <>
-          <TournamentHero
-            tournament={tournament}
-            selectedMonthYear={selectedMonthYear}
-            history={history}
-            onMonthChange={setSelectedMonthYear}
-            onTitleDoubleClick={() => { setPinInput(''); setPinErr(''); setShowPin(false); setPinModal(true); }}
-          />
+      ) : isUpcoming && !isAdmin ? (
+        /* Non-Active View: Big Ass Countdown */
+        <div 
+          className="relative text-white px-4 sm:px-6 md:px-12 lg:px-16 py-12 sm:py-16 md:py-24 min-h-[85vh] flex flex-col justify-center overflow-hidden"
+          style={{ background: 'linear-gradient(135deg, #0B193C 0%, #1E1B4B 55%, #431407 100%)' }}
+        >
+          {/* Ambient glow blobs */}
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full opacity-30"
+              style={{ background: 'radial-gradient(circle, #fb923c 0%, transparent 70%)' }} />
+            <div className="absolute -bottom-32 -left-20 w-[400px] h-[400px] rounded-full opacity-20"
+              style={{ background: 'radial-gradient(circle, #6366f1 0%, transparent 70%)' }} />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px opacity-10"
+              style={{ background: 'linear-gradient(90deg, transparent, #fdba74, transparent)' }} />
+          </div>
 
-          {/* Registration & Participants Section — displayed whenever an upcoming tournament exists */}
-          {upcomingTournament && (
-            <section className="bg-[#0B193C] text-white px-4 sm:px-6 md:px-12 lg:px-16 py-8 border-b border-white/10">
-              <div className="max-w-4xl mx-auto space-y-6">
-                <div className="text-center space-y-2">
-                  <h2 className="font-space font-black text-xl sm:text-2xl text-white">
-                    Next Tournament: <span className="text-brand-accent">{upcomingTournament.name}</span>
-                  </h2>
-                  <p className="text-xs sm:text-sm text-white/60">
-                    {upcomingTournament.status === 'upcoming' 
-                      ? 'Registration is OPEN. Lock in your spot for the upcoming monthly tournament.'
-                      : 'Matches are currently underway. Registration for the next tournament will open when this phase concludes.'}
-                  </p>
+          <div className="max-w-4xl mx-auto w-full text-center relative z-10 space-y-10 animate-in fade-in zoom-in-95 duration-300">
+            <div>
+              <p className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-white/50 uppercase mb-4">SS4 Chess Network</p>
+              <h1
+                onDoubleClick={() => { setPinInput(''); setPinErr(''); setShowPin(false); setPinModal(true); }}
+                className="font-space font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-[1.05] mb-4 cursor-pointer select-none"
+              >
+                SCL Monthly<br />
+                <span className="font-black text-brand-accent">Tournament</span>
+              </h1>
+              <p className="text-white/60 text-sm sm:text-base font-medium max-w-md mx-auto leading-relaxed">
+                {activeTargetT?.reg_custom_text || regCustomTextInput || 'Single elimination. Last 7 days of the month. One champion claims the prize.'}
+              </p>
+            </div>
+
+            {/* Big Ass Countdown */}
+            <div className="space-y-4">
+              <p className="text-brand-primary font-bold text-xs sm:text-sm tracking-[0.25em] uppercase">
+                {label} &bull; <span className="text-white/50">{formattedTargetTime}</span>
+              </p>
+              
+              <div className="flex gap-2 sm:gap-4 md:gap-6 justify-center max-w-xl mx-auto">
+                <div className="flex flex-col items-center flex-1">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
+                    {String(days).padStart(2, '0')}
+                  </div>
+                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Days</span>
                 </div>
-
-                {/* Structured CTAs */}
-                <div className="flex flex-col items-center gap-4 max-w-md mx-auto">
-                  <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-3">
-                    {isUserRegisteredForUpcoming ? (
-                      <div className="w-full sm:w-auto px-8 py-3.5 bg-emerald-600 border border-emerald-500 text-white text-xs sm:text-sm font-black rounded-xl flex items-center justify-center gap-2 shadow-md select-none">
-                        <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                        </svg>
-                        You have Joined!
-                      </div>
-                    ) : (
-                      <AuthGate reason="join the next tournament" onAction={handleJoinTournamentAfterAuth}>
-                        <Button
-                          onClick={handleJoinTournament}
-                          loading={loadingReg}
-                          size="lg"
-                          variant="primary"
-                          className="w-full sm:w-auto"
-                          icon={
-                            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                            </svg>
-                          }
-                        >
-                          Join the next Tournament
-                        </Button>
-                      </AuthGate>
-                    )}
-
-                    <Button
-                      href={googleCalendarUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="white-outline"
-                      size="lg"
-                      className="w-full sm:w-auto"
-                      icon={
-                        <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      }
-                    >
-                      Add to Calendar
-                    </Button>
+                <div className="flex flex-col items-center flex-1">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
+                    {String(hours).padStart(2, '0')}
                   </div>
-
-                  {/* Tertiary Links */}
-                  <div className="flex items-center gap-6 text-xs text-white/60 pt-1">
-                    <button
-                      onClick={() => setShowPastWinnersModal(true)}
-                      className="hover:text-white underline underline-offset-4 cursor-pointer transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <TrophySvg className="w-3.5 h-3.5 text-blue-400" />
-                      <span>View Past Winners</span>
-                    </button>
-                    <span>&bull;</span>
-                    <button
-                      onClick={() => setShowRulesModal(true)}
-                      className="hover:text-white underline underline-offset-4 cursor-pointer transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <svg className="w-3.5 h-3.5 text-white/80" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-                      <span>Rules &amp; Schedule</span>
-                    </button>
-                  </div>
+                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Hours</span>
                 </div>
-
-                {/* Registered Participants Roster */}
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-4 sm:p-6 max-w-2xl mx-auto text-left space-y-4">
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-3">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-space font-black text-base sm:text-lg text-white">Registered Participants</h3>
-                      <span className="bg-white/10 border border-white/10 text-gray-300 text-xs font-black px-2 py-0.5 rounded-lg shrink-0">
-                        {sortedRegisteredPlayers.length}
-                      </span>
-                    </div>
-                    {sortedRegisteredPlayers.length > 8 && (
-                      <span className="text-[10px] text-white/50 italic">Scroll to view all participants</span>
-                    )}
+                <div className="flex flex-col items-center flex-1">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
+                    {String(mins).padStart(2, '0')}
                   </div>
-                  
-                  {sortedRegisteredPlayers.length === 0 ? (
-                    <p className="text-gray-500 text-sm italic py-4 text-center">No participants registered yet. Be the first to join!</p>
-                  ) : (
-                    <div className="grid sm:grid-cols-2 gap-3 max-h-[260px] overflow-y-auto pr-2 custom-scrollbar">
-                      {sortedRegisteredPlayers.map((p, idx) => {
-                        const isSelf = user && user.id === p.id;
-                        return (
-                          <div 
-                            key={p.id || idx} 
-                            className={`border rounded-xl p-3 flex items-center justify-between gap-3 transition-colors ${
-                              isSelf 
-                                ? 'bg-emerald-500/15 border-emerald-500/40 ring-1 ring-emerald-500/30' 
-                                : 'bg-white/5 border-white/10 hover:bg-white/10'
-                            }`}
-                          >
-                            <div className="min-w-0 flex-1">
-                              <p className="text-xs font-bold text-white truncate flex items-center gap-1.5">
-                                {p.name}
-                                {isSelf && (
-                                  <span className="text-[9px] font-black uppercase text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-1.5 py-0.2 rounded shrink-0">
-                                    You
-                                  </span>
-                                )}
-                              </p>
-                              <p className="text-[10px] text-gray-400 truncate">{p.school}</p>
-                            </div>
-                            <div className="bg-white/10 border border-white/15 px-2.5 py-1 rounded-xl shrink-0">
-                              <span className="text-[10px] font-black text-blue-200">{p.rating} ELO</span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
+                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Mins</span>
+                </div>
+                <div className="flex flex-col items-center flex-1">
+                  <div className="bg-white/10 border border-white/20 text-white font-space font-black text-2xl sm:text-4xl md:text-6xl w-full aspect-square max-w-[76px] sm:max-w-[112px] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg text-brand-primary animate-pulse">
+                    {String(secs).padStart(2, '0')}
+                  </div>
+                  <span className="text-[9px] sm:text-xs font-bold text-white/50 uppercase tracking-widest mt-1.5">Secs</span>
                 </div>
               </div>
-            </section>
-          )}
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+              {isUserRegisteredForUpcoming ? (
+                <div className="px-8 py-3.5 bg-emerald-600 border border-emerald-500 text-white text-xs sm:text-sm font-black rounded-xl flex items-center gap-2 shadow-md select-none">
+                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                  </svg>
+                  You have Joined! 🚀
+                </div>
+              ) : (
+                <AuthGate reason="join the next tournament" onAction={handleJoinTournamentAfterAuth}>
+                  <Button
+                    onClick={handleJoinTournament}
+                    loading={loadingReg}
+                    size="lg"
+                    variant="primary"
+                    icon={
+                      <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                      </svg>
+                    }
+                  >
+                    Join the next Tournament
+                  </Button>
+                </AuthGate>
+              )}
+
+              <Button
+                href={googleCalendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="white-outline"
+                size="lg"
+                icon={
+                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                }
+              >
+                Add to Calendar
+              </Button>
+              <Button
+                onClick={() => setShowPastWinnersModal(true)}
+                variant="white-outline"
+                size="lg"
+                icon={
+                  <svg className="w-4.5 h-4.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                }
+              >
+                View Past Winners
+              </Button>
+              <Button
+                onClick={() => setShowRulesModal(true)}
+                variant="white-outline"
+                size="lg"
+                icon={
+                  <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                }
+              >
+                Rules & Schedule
+              </Button>
+            </div>
+
+            {/* Registered Players List */}
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-4 sm:p-6 sm:p-8 max-w-2xl mx-auto text-left space-y-4 mt-6">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <h3 className="font-space font-black text-base sm:text-lg text-white">Registered Participants</h3>
+                  <span className="bg-white/10 border border-white/10 text-gray-300 text-xs font-black px-2 py-0.5 rounded-lg shrink-0">
+                    {sortedRegisteredPlayers.length}
+                  </span>
+                </div>
+                {sortedRegisteredPlayers.length > 8 && (
+                  <span className="text-[10px] text-white/50 italic">Scroll to view all participants</span>
+                )}
+              </div>
+              
+              {sortedRegisteredPlayers.length === 0 ? (
+                <p className="text-gray-500 text-sm italic py-4 text-center">No participants registered yet. Be the first to join!</p>
+              ) : (
+                <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
+                  {sortedRegisteredPlayers.map((p, idx) => {
+                    const isSelf = user && user.id === p.id;
+                    return (
+                      <div 
+                        key={p.id || idx} 
+                        className={`border rounded-xl p-3.5 flex items-center justify-between gap-3 transition-colors ${
+                          isSelf 
+                            ? 'bg-emerald-500/15 border-emerald-500/40 ring-1 ring-emerald-500/30' 
+                            : 'bg-white/5 border-white/10 hover:bg-white/10'
+                        }`}
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-bold text-white truncate flex items-center gap-1.5">
+                            {p.name}
+                            {isSelf && (
+                              <span className="text-[9px] font-black uppercase text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-1.5 py-0.2 rounded shrink-0">
+                                You
+                              </span>
+                            )}
+                          </p>
+                          <p className="text-[10px] text-gray-400 truncate">{p.school}</p>
+                        </div>
+                        <div className="bg-white/10 border border-white/15 px-2.5 py-1 rounded-xl shrink-0">
+                          <span className="text-[10px] font-black text-blue-200">{p.rating} ELO</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Regular Tournament View (Hero + Tab Layout) */
+        <>
 
 
           {/* Sticky Mobile-First Tab Bar (Fitts's Law & Hick's Law Fix) */}
@@ -2109,6 +2366,18 @@ export default function ChessTournamentPage() {
                     className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
                   />
                 )}
+              </div>
+
+              {/* Registration Hero Subtitle / Copy */}
+              <div className="space-y-2">
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Registration Hero Subtitle / Custom Copy</label>
+                <input
+                  type="text"
+                  value={regCustomTextInput}
+                  onChange={(e) => setRegCustomTextInput(e.target.value)}
+                  placeholder="e.g. Single elimination. Last 7 days of the month. One champion claims the prize."
+                  className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                />
               </div>
 
               {/* Date + Time Row */}
@@ -3078,15 +3347,11 @@ export default function ChessTournamentPage() {
                         </div>
                         <div className="flex items-center gap-4 relative z-10">
                           {/* Circular Avatar Frame */}
-                          <div className="w-14 h-14 rounded-full border-2 border-amber-300 overflow-hidden bg-brand-primary/20 shrink-0 shadow-md">
-                            <img
-                              src={latestStats.avatar}
-                              alt={latestStats.winnerName}
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(latestStats.winnerName)}&background=1A56C4&color=fff&bold=true`;
-                              }}
+                          <div className="w-14 h-14 rounded-full border-2 border-amber-300 overflow-hidden bg-slate-800 shrink-0 shadow-md">
+                            <ChampionAvatarImg
+                              playerObj={latestStats.playerObj}
+                              winnerName={latestStats.winnerName}
+                              winnerUsername={latestStats.winnerUsername}
                             />
                           </div>
                           <div className="min-w-0 flex-1">
@@ -3149,15 +3414,11 @@ export default function ChessTournamentPage() {
                                 onClick={() => setSelectedPlayerForModal(championStats.playerObj)}
                                 className="flex items-center gap-3.5 cursor-pointer group min-w-0"
                               >
-                                <div className="w-14 h-14 rounded-full border-2 border-brand-primary/30 overflow-hidden bg-brand-primary/10 shrink-0 shadow-xs group-hover:border-brand-primary transition-all">
-                                  <img 
-                                    src={championStats.avatar} 
-                                    alt={championStats.winnerName}
-                                    className="w-full h-full object-cover"
-                                    onError={(e) => {
-                                      e.target.onerror = null;
-                                      e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(championStats.winnerName)}&background=1A56C4&color=fff&bold=true`;
-                                    }}
+                                <div className="w-14 h-14 rounded-full border-2 border-brand-primary/30 overflow-hidden bg-slate-100 shrink-0 shadow-xs group-hover:border-brand-primary transition-all">
+                                  <ChampionAvatarImg 
+                                    playerObj={championStats.playerObj}
+                                    winnerName={championStats.winnerName}
+                                    winnerUsername={championStats.winnerUsername}
                                   />
                                 </div>
                                 <div className="min-w-0">
@@ -3200,40 +3461,72 @@ export default function ChessTournamentPage() {
                                 <span>in the Grand Final</span>
                               </div>
                               <button
-                                onClick={() => setExpandedHistoryId(isExpanded ? null : h.month_year)}
-                                className="text-[11px] font-bold text-gray-500 hover:text-brand-primary transition-colors cursor-pointer flex items-center gap-0.5 shrink-0"
+                                onClick={() => handleTogglePathway(h.month_year, h)}
+                                className="text-[11px] font-bold text-gray-500 hover:text-brand-primary transition-colors cursor-pointer flex items-center gap-1 shrink-0"
                               >
                                 {isExpanded ? 'Hide Path' : 'Pathway'}
-                                <span className="material-symbols-outlined text-[14px]">
-                                  {isExpanded ? 'expand_less' : 'expand_more'}
-                                </span>
+                                {loadingPathwayId === h.month_year ? (
+                                  <svg className="animate-spin h-3 w-3 text-brand-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                ) : (
+                                  <span className="material-symbols-outlined text-[14px]">
+                                    {isExpanded ? 'expand_less' : 'expand_more'}
+                                  </span>
+                                )}
                               </button>
                             </div>
 
                             {/* Expandable Championship Match Pathway Drawer */}
                             {isExpanded && (
                               <div className="p-3.5 bg-brand-primary/5 border border-brand-primary/15 rounded-xl space-y-2 text-xs animate-in fade-in duration-200">
-                                <p className="text-[10px] font-black uppercase tracking-wider text-brand-primary">
-                                  Path to Glory ({h.month_year} Cycle)
-                                </p>
-                                <div className="space-y-1.5 text-gray-700 font-medium">
-                                  <div className="flex justify-between py-1 border-b border-gray-200/60">
-                                    <span>Round of 32:</span>
-                                    <span className="font-bold text-emerald-700">Defeated Opponent (2 - 0)</span>
-                                  </div>
-                                  <div className="flex justify-between py-1 border-b border-gray-200/60">
-                                    <span>Quarterfinals:</span>
-                                    <span className="font-bold text-emerald-700">Defeated Opponent (2 - 1)</span>
-                                  </div>
-                                  <div className="flex justify-between py-1 border-b border-gray-200/60">
-                                    <span>Semifinals:</span>
-                                    <span className="font-bold text-emerald-700">Defeated Opponent (2 - 0)</span>
-                                  </div>
-                                  <div className="flex justify-between py-1 font-bold text-brand-primary">
-                                    <span>Grand Final:</span>
-                                    <span className="text-emerald-600">Defeated {championStats.runnerUpName} (2 - 1)</span>
-                                  </div>
+                                <div className="flex items-center justify-between">
+                                  <p className="text-[10px] font-black uppercase tracking-wider text-brand-primary">
+                                    Path to Glory ({h.month_year} Cycle)
+                                  </p>
+                                  {loadingPathwayId === h.month_year && (
+                                    <span className="text-[10px] font-bold text-brand-primary flex items-center gap-1">
+                                      <svg className="animate-spin h-3 w-3 text-brand-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                      </svg>
+                                      Fetching database records...
+                                    </span>
+                                  )}
                                 </div>
+
+                                {loadingPathwayId === h.month_year ? (
+                                  <div className="py-4 flex flex-col items-center justify-center gap-2 text-gray-500">
+                                    <svg className="animate-spin h-6 w-6 text-brand-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <span className="text-xs font-bold text-brand-primary">Loading pathway match details...</span>
+                                  </div>
+                                ) : (
+                                  <div className="space-y-1.5 text-gray-700 font-medium">
+                                    {(() => {
+                                      const itemToUse = fetchedPathways[h.month_year] || h;
+                                      const pathwayMatches = getChampionPathwayMatches(itemToUse, championStats.winnerUsername, championStats.winnerName);
+                                      if (pathwayMatches.length === 0) {
+                                        return (
+                                          <p className="text-xs text-gray-500 italic py-1">
+                                            Match round details not recorded for this historical cycle.
+                                          </p>
+                                        );
+                                      }
+                                      return pathwayMatches.map((m, mIdx) => (
+                                        <div key={mIdx} className="flex justify-between py-1 border-b border-gray-200/60 last:border-0">
+                                          <span>{m.roundTitle}:</span>
+                                          <span className={`font-bold ${m.isWinner ? 'text-emerald-700' : 'text-gray-600'}`}>
+                                            {m.scoreText}
+                                          </span>
+                                        </div>
+                                      ));
+                                    })()}
+                                  </div>
+                                )}
                               </div>
                             )}
 

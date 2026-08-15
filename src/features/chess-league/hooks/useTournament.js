@@ -229,7 +229,7 @@ export function useTournament(monthYear) {
     const now = new Date();
     const currentMY = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
     try {
-      const { data } = await supabase.from('tournaments').select('month_year,name,status,winner');
+      const { data } = await supabase.from('tournaments').select('*').order('month_year', { ascending: false });
       const db = data || [];
       const merged = [...db];
       if (!merged.find(x => x.month_year === currentMY))

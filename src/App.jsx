@@ -31,9 +31,9 @@ function App() {
     <AuthModalProvider>
       <Router>
         <ScrollToTop />
-        <div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white flex flex-col">
+        <div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white flex flex-col w-full max-w-full overflow-x-hidden">
           <Header />
-          <main className="flex-grow">
+          <main className="flex-grow w-full max-w-full overflow-x-hidden">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/schools" element={<SchoolsPage />} />

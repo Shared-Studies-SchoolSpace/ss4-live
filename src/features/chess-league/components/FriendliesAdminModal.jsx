@@ -588,14 +588,14 @@ export default function FriendliesAdminModal({ isOpen, onClose, onArenaUpdated }
             </div>
 
             {/* Section 3: Global Link Information */}
-            <div className="bg-blue-500/10 border border-blue-400/20 rounded-2xl p-4 text-xs text-white/70 space-y-1.5">
-              <p className="font-bold text-blue-200 flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-sm text-blue-300">info</span>
+            <div className="bg-brand-primary/15 border border-brand-primary/30 rounded-2xl p-4 text-xs text-white/80 space-y-1.5">
+              <p className="font-bold text-white flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-sm text-brand-primary">info</span>
                 Global Lichess Tournament Archives
               </p>
               <p className="leading-relaxed">
                 To view all tournaments played across a Lichess team, visit your team URL on Lichess: <br />
-                <code className="text-blue-300 bg-white/10 px-1.5 py-0.5 rounded font-mono">https://lichess.org/team/&lt;your-team-id&gt;/tournaments</code>
+                <code className="text-white bg-white/10 px-1.5 py-0.5 rounded font-mono">https://lichess.org/team/&lt;your-team-id&gt;/tournaments</code>
               </p>
             </div>
           </div>

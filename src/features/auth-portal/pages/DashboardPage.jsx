@@ -303,7 +303,7 @@ export default function DashboardPage() {
       
       const activeProfile = latestProfile || profile;
 
-      // Use shared record builder — same schema as ChessTournamentPage registration
+      // Use shared record builder - same schema as ChessTournamentPage registration
       const regPlayer = buildPlayerRecord(user, activeProfile);
 
       // Guard: require a chess.com username
@@ -888,7 +888,7 @@ export default function DashboardPage() {
       {(() => {
         const maxElo = Math.max(profile?.chess_rating || 0, profile?.lichess_rating || 0);
         const divisionTag = maxElo >= 1800 ? 'A Division • Elite Category' : maxElo >= 1000 ? 'Fork Division • Intermediate' : 'Pin Division • Aspirants';
-        const divisionBadgeClass = maxElo >= 1800 ? 'bg-red-500/20 text-red-300 border-red-500/40' : maxElo >= 1000 ? 'bg-blue-500/20 text-blue-300 border-blue-500/40' : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+        const divisionBadgeClass = maxElo >= 1800 ? 'bg-red-500/20 text-red-300 border-red-500/40' : maxElo >= 1000 ? 'bg-brand-primary/30 text-white border-brand-primary/50' : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
 
         return (
           <div className="relative rounded-3xl p-4 sm:p-6 lg:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-gradient-to-r from-[#0B193C] via-[#153472] to-[#1A56C4] text-white shadow-xl border border-white/10 overflow-hidden">
@@ -1257,7 +1257,7 @@ export default function DashboardPage() {
 
               {notifications.length === 0 ? (
                 <div className="bg-white border border-gray-100 rounded-3xl p-10 text-center shadow-xs">
-                  <div className="w-12 h-12 bg-blue-50 rounded-2xl text-brand-primary flex items-center justify-center mx-auto mb-3">
+                  <div className="w-12 h-12 bg-brand-primary/10 rounded-2xl text-brand-primary flex items-center justify-center mx-auto mb-3">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
@@ -1280,7 +1280,7 @@ export default function DashboardPage() {
                         }}
                         className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-4 ${
                           isUnread
-                            ? 'bg-blue-50/40 border-brand-primary/30 shadow-xs'
+                            ? 'bg-brand-primary/5 border-brand-primary/30 shadow-xs'
                             : 'bg-white border-gray-150 hover:bg-gray-50'
                         }`}
                       >
@@ -1360,10 +1360,10 @@ export default function DashboardPage() {
                     const pendingPlayers = adminPlayers.filter(p => p.approval_status === 'pending' || !p.approval_status).length;
                     const approvedPlayers = adminPlayers.filter(p => p.approval_status === 'approved').length;
                     return (
-                      <div className="p-5 rounded-3xl bg-gradient-to-br from-white via-blue-50/20 to-white border border-blue-150 shadow-xs">
+                      <div className="p-5 rounded-3xl bg-gradient-to-br from-white via-brand-primary/5 to-white border border-brand-primary/20 shadow-xs">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest">Total Players</span>
-                          <span className="w-8 h-8 rounded-xl bg-blue-100 text-brand-primary flex items-center justify-center text-sm font-bold">
+                          <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center text-sm font-bold">
                             👥
                           </span>
                         </div>

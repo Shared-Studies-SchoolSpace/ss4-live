@@ -135,7 +135,7 @@ export default function FriendliesPage() {
                 <div className="h-8 bg-white/15 rounded animate-pulse mt-2 w-28" />
               ) : (
                 <p className="font-space text-lg md:text-2xl font-black text-white mt-1 break-words">
-                  {summary?.leader || '—'}
+                  {summary?.leader || 'N/A'}
                 </p>
               )}
             </div>
@@ -154,7 +154,7 @@ export default function FriendliesPage() {
                 <div className="h-8 bg-white/15 rounded animate-pulse mt-2 w-20" />
               ) : (
                 <p className="font-space text-2xl md:text-3xl font-black text-white mt-1">
-                  {summary?.topScore ? `${summary.topScore} pts` : '—'}
+                  {summary?.topScore ? `${summary.topScore} pts` : 'N/A'}
                 </p>
               )}
             </div>

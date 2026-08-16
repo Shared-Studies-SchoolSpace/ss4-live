@@ -366,7 +366,7 @@ export function getSurvivingPlayers(tournament, targetRoundName = null) {
   return status.survivors;
 }
 
-// Generate next round from winners of the last round — called by admin after logging all results
+// Generate next round from winners of the last round - called by admin after logging all results
 export function generateNextRound(rounds, year, month, options = {}) {
   const tournament = options.tournament || { rounds, players: options.players };
   const last = rounds[rounds.length - 1];
@@ -504,7 +504,7 @@ export function getCountdownTarget(tournament) {
   const now = new Date();
 
   if (!tournament) {
-    // No active tournament in DB — signal the banner to stay hidden.
+    // No active tournament in DB - signal the banner to stay hidden.
     return { date: null, label: null };
   }
 
@@ -547,7 +547,7 @@ export function getCountdownTarget(tournament) {
     }
   }
 
-  // Priority 3: Fallback for upcoming tournaments — start of monthly tournament (24th/25th 18:00 WAT)
+  // Priority 3: Fallback for upcoming tournaments - start of monthly tournament (24th/25th 18:00 WAT)
   if (tournament.status === 'upcoming' || (!tournament.status && tournament.month_year)) {
     let year, month;
     if (tournament.month_year) {

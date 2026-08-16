@@ -493,8 +493,8 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                 Which group am I in?
               </h3>
               {searchResults.length > 0 && cleanSearchQuery && (
-                <span className="bg-[#0B193C] border border-blue-400/40 text-blue-300 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-2xs font-space">
-                  <svg className="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="bg-[#0B193C] border border-brand-primary/40 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-2xs font-space">
+                  <svg className="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                   </svg>
                   <span>Found in Group {searchResults[0].groupLabel}</span>
@@ -661,7 +661,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
               className={`text-xs font-black px-3.5 py-1.5 rounded-xl whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
                 selectedGroupFilter === 'MY_GROUP' && !cleanSearchQuery
                   ? 'bg-brand-primary text-white shadow-xs'
-                  : 'bg-blue-50 text-brand-primary border border-blue-200/60 hover:bg-blue-100'
+                  : 'bg-brand-primary/10 text-brand-primary border border-brand-primary/20 hover:bg-brand-primary/20'
               }`}
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -693,7 +693,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
       {/* Empty Search State */}
       {filteredGroups.length === 0 && cleanSearchQuery && (
         <div className="bg-white border-2 border-dashed border-gray-300 rounded-3xl p-12 text-center max-w-md mx-auto my-8">
-          <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center mx-auto text-brand-primary mb-3 text-2xl">
+          <div className="w-14 h-14 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mx-auto text-brand-primary mb-3 text-2xl">
             🔍
           </div>
           <h3 className="font-space font-black text-lg text-[#111111] mb-1">
@@ -723,16 +723,16 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                 id={`group-card-${grp.label}`}
                 className={`bg-white rounded-3xl border shadow-sm overflow-hidden flex flex-col justify-between transition-all ${
                   hasSearchMatch
-                    ? 'border-brand-primary ring-2 ring-brand-primary/40 shadow-blue-50'
+                    ? 'border-brand-primary ring-2 ring-brand-primary/40 shadow-xs'
                     : grp.containsUser 
-                    ? 'border-brand-primary/60 ring-2 ring-blue-300/40 shadow-blue-50' 
+                    ? 'border-brand-primary/60 ring-2 ring-brand-primary/30 shadow-xs' 
                     : 'border-gray-100'
                 }`}
               >
                 {/* Group Header Bar */}
                 <div className="bg-brand-bg-cream/50 border-b border-gray-100 px-5 py-3.5 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8.5 h-8.5 rounded-xl bg-[#0B193C] text-blue-300 border border-blue-400/40 font-space font-black text-base flex items-center justify-center shadow-xs shrink-0 select-none">
+                    <div className="w-8.5 h-8.5 rounded-xl bg-[#0B193C] text-white border border-brand-primary/40 font-space font-black text-base flex items-center justify-center shadow-xs shrink-0 select-none">
                       {grp.label}
                     </div>
                     <div>
@@ -748,14 +748,14 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                   </div>
 
                   {hasSearchMatch && (
-                    <span className="bg-[#0B193C] border border-blue-400/40 text-blue-300 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs font-space">
+                    <span className="bg-[#0B193C] border border-brand-primary/40 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs font-space">
                       <span>🔍</span>
                       <span>MATCH FOUND</span>
                     </span>
                   )}
 
                   {grp.containsUser && !hasSearchMatch && (
-                    <span className="bg-blue-50 border border-blue-200 text-brand-primary text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
+                    <span className="bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
                       <svg className="w-3 h-3 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
                       </svg>
@@ -765,17 +765,17 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                 </div>
 
                 {/* Mobile Touch Tooltip Hint Animation (Mobile only) */}
-                <div className="sm:hidden px-4 pt-2 pb-1 flex items-center justify-between gap-2 text-[10px] font-bold text-brand-primary bg-blue-50/50 border-y border-blue-100">
+                <div className="sm:hidden px-4 pt-2 pb-1 flex items-center justify-between gap-2 text-[10px] font-bold text-brand-primary bg-brand-primary/5 border-y border-brand-primary/15">
                   <div className="flex items-center gap-1.5 min-w-0">
                     <span className="inline-block animate-bounce shrink-0">👆</span>
                     <span className="truncate">Tap any header (MP, W, D, L, PTS) to find out what it means</span>
                   </div>
-                  <span className="text-[9px] font-black uppercase text-blue-400 shrink-0">Mobile Tip</span>
+                  <span className="text-[9px] font-black uppercase text-brand-primary shrink-0">Mobile Tip</span>
                 </div>
 
                 {/* Mobile Tap Legend Explanation Popover Banner */}
                 {activeLegend && (
-                  <div className="mx-4 my-2 p-2.5 bg-blue-600 text-white rounded-xl text-xs font-semibold flex items-center justify-between shadow-md animate-in fade-in duration-150">
+                  <div className="mx-4 my-2 p-2.5 bg-brand-primary text-white rounded-xl text-xs font-semibold flex items-center justify-between shadow-md animate-in fade-in duration-150">
                     <span>💡 <strong>{activeLegend}</strong>: {legendDetails[activeLegend]}</span>
                     <button onClick={() => setActiveLegend(null)} className="text-white/80 hover:text-white font-bold ml-2">✕</button>
                   </div>
@@ -806,9 +806,9 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                             key={p.username || idx}
                             className={`transition-all duration-300 group ${
                               isSearchMatch
-                                ? 'bg-blue-50/90 border-l-4 border-[#1A56C4] ring-1 ring-blue-300/60 shadow-xs font-semibold'
+                                ? 'bg-brand-primary/10 border-l-4 border-brand-primary ring-1 ring-brand-primary/30 shadow-xs font-semibold'
                                 : p.isUser
-                                ? 'bg-blue-500/10 font-medium'
+                                ? 'bg-brand-primary/10 font-medium'
                                 : 'hover:bg-brand-bg-cream/30'
                             }`}
                           >
@@ -840,12 +840,12 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                                       {p.name}
                                     </button>
                                     {isSearchMatch && (
-                                      <span className="text-[8px] font-black uppercase text-blue-300 bg-[#0B193C] border border-blue-400/40 px-1 py-0.5 rounded-full shrink-0 flex items-center shadow-2xs font-space" title="Match Found">
+                                      <span className="text-[8px] font-black uppercase text-white bg-[#0B193C] border border-brand-primary/40 px-1 py-0.5 rounded-full shrink-0 flex items-center shadow-2xs font-space" title="Match Found">
                                         🔍
                                       </span>
                                     )}
                                     {p.isUser && !isSearchMatch && (
-                                      <span className="text-[8px] font-black uppercase text-brand-primary bg-blue-100 border border-blue-300 px-1 py-0.1 rounded shrink-0">
+                                      <span className="text-[8px] font-black uppercase text-brand-primary bg-brand-primary/10 border border-brand-primary/20 px-1 py-0.1 rounded shrink-0">
                                         You
                                       </span>
                                     )}
@@ -883,7 +883,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                             </td>
 
                             {/* D */}
-                            <td className="py-2.5 px-0.5 text-center font-bold text-blue-600 text-[11px] sm:text-xs" title={`Draws: ${p.D} (+${p.D * 0.5} pts)`}>
+                            <td className="py-2.5 px-0.5 text-center font-bold text-brand-primary text-[11px] sm:text-xs" title={`Draws: ${p.D} (+${p.D * 0.5} pts)`}>
                               {p.D}
                             </td>
 

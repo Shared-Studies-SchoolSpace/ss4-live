@@ -123,7 +123,7 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
             </span>
           )}
           {isByeMatch && (
-            <span className="text-[10px] font-black text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-black text-brand-primary bg-brand-primary/10 px-1.5 py-0.5 rounded-full">
               AUTO-ADVANCE
             </span>
           )}

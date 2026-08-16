@@ -49,7 +49,7 @@ export default function Badge({
     live: 'bg-red-50 text-red-700 border border-red-200 rounded-full',
 
     // ELO Rating Badge
-    elo: 'bg-blue-50 text-[#1A56C4] border border-blue-200 rounded-md text-[10px] py-0.5 px-2 font-bold',
+    elo: 'bg-brand-primary/10 text-[#1A56C4] border border-brand-primary/20 rounded-md text-[10px] py-0.5 px-2 font-bold',
 
     // Success / Qualified Status Badge
     success: 'bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-full'

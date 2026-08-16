@@ -27,17 +27,17 @@ export const ChooseYourSchool = () => {
 
         {/* Right Side: Interactive Placeholders */}
         <div className="w-full lg:w-1/2 flex gap-4">
-            <div className="flex-1 aspect-[3/4] bg-blue-100/50 rounded-2xl border-4 border-dashed border-blue-200 flex flex-col items-center justify-center p-8 text-center group cursor-pointer hover:bg-blue-100 transition-all">
+            <div className="flex-1 aspect-[3/4] bg-brand-primary/10 rounded-2xl border-4 border-dashed border-brand-primary/20 flex flex-col items-center justify-center p-8 text-center group cursor-pointer hover:bg-brand-primary/15 transition-all">
                 <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md mb-4 group-hover:scale-110 transition-transform">
-                    <span className="text-blue-400 text-2xl font-bold">+</span>
+                    <span className="text-brand-primary text-2xl font-bold">+</span>
                 </div>
-                <p className="text-sm font-bold text-blue-400 uppercase tracking-widest">Add a School</p>
+                <p className="text-sm font-bold text-brand-primary uppercase tracking-widest">Add a School</p>
             </div>
-            <div className="flex-1 aspect-[3/4] bg-blue-100/30 rounded-2xl border-4 border-dashed border-blue-100 flex flex-col items-center justify-center p-8 text-center">
+            <div className="flex-1 aspect-[3/4] bg-brand-primary/5 rounded-2xl border-4 border-dashed border-brand-primary/10 flex flex-col items-center justify-center p-8 text-center">
                 <div className="w-12 h-12 bg-white/50 rounded-full flex items-center justify-center mb-4">
-                    <span className="text-blue-200 text-2xl font-bold">+</span>
+                    <span className="text-brand-primary/40 text-2xl font-bold">+</span>
                 </div>
-                <p className="text-sm font-bold text-blue-200 uppercase tracking-widest">Add a School</p>
+                <p className="text-sm font-bold text-brand-primary/40 uppercase tracking-widest">Add a School</p>
             </div>
         </div>
       </div>

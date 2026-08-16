@@ -90,7 +90,7 @@ components:
     boxShadow: "0 2px 8px rgba(0,0,0,0.015)"
 ---
 
-# Design System: SS4 Chess League — "The Varsity Arena"
+# Design System: SS4 Chess League - "The Varsity Arena"
 
 ## 1. Overview & Creative Identity
 
@@ -144,8 +144,8 @@ SS4 is styled as a premium, high-contrast varsity sports community. Inspired by 
 ## 3. Typography & Hierarchy
 
 ### Fonts
-- **Display & Headings:** `Space Grotesk` (Google Fonts, sans-serif) — Weights: `800` (ExtraBold), `900` (Black).
-- **Body & Controls:** `Outfit` / `Avenir Next` (sans-serif) — Weights: `400` (Regular), `500` (Medium), `600` (SemiBold), `700` (Bold).
+- **Display & Headings:** `Space Grotesk` (Google Fonts, sans-serif) - Weights: `800` (ExtraBold), `900` (Black).
+- **Body & Controls:** `Outfit` / `Avenir Next` (sans-serif) - Weights: `400` (Regular), `500` (Medium), `600` (SemiBold), `700` (Bold).
 
 ### Typographic Scale & Hierarchy
 | Hierarchy Level | Font Family | Size | Weight | Line Height | Letter Spacing | Usage / Guidelines |

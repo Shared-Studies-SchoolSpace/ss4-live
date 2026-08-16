@@ -282,7 +282,7 @@ function AdminMatchRow({ game, onSave }) {
           </span>
           {game.winner && (
             <span className={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider ${
-              isDraw ? 'text-blue-600 bg-blue-50' : isForfeit ? 'text-red-600 bg-red-50' : 'text-emerald-600 bg-emerald-50'
+              isDraw ? 'text-brand-primary bg-brand-primary/10' : isForfeit ? 'text-red-600 bg-red-50' : 'text-emerald-600 bg-emerald-50'
             }`}>
               {isDraw ? '🤝 Draw' : isForfeit ? 'Double Forfeit' : 'Completed'}
             </span>
@@ -923,7 +923,7 @@ export default function ChessTournamentPage() {
   }, []);
 
   // Derive registered players from the upcoming tournament's actual player roster.
-  // This is the ground truth — not `profiles`. Only people who clicked Join are shown.
+  // This is the ground truth - not `profiles`. Only people who clicked Join are shown.
   useEffect(() => {
     if (upcomingTournament) {
       setRegisteredPlayers(upcomingTournament.players || []);
@@ -990,7 +990,7 @@ export default function ChessTournamentPage() {
         return;
       }
 
-      // Guard: require a chess.com username — tournaments run on chess.com
+      // Guard: require a chess.com username - tournaments run on chess.com
       if (!targetProfile.chess_username) {
         setPendingRegData({ user: targetUser, profile: targetProfile });
         setPromptUsername('');
@@ -1613,8 +1613,8 @@ export default function ChessTournamentPage() {
 
           {/* DB status pill */}
           {isDbFallback && (
-            <div className="bg-blue-50 border-b border-blue-100 text-center py-2 px-4">
-              <p className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">Offline: changes stored locally</p>
+            <div className="bg-brand-primary/10 border-b border-brand-primary/20 text-center py-2 px-4">
+              <p className="text-[10px] font-bold text-brand-primary uppercase tracking-wider">Offline: changes stored locally</p>
             </div>
           )}
 
@@ -1901,7 +1901,7 @@ export default function ChessTournamentPage() {
                             <div className="bg-brand-bg-cream/40 border-b border-gray-100 px-3 sm:px-5 py-2.5 sm:py-3 flex flex-wrap items-center justify-between gap-2">
                               <div className="flex items-center gap-1.5 flex-wrap min-w-0 max-w-full">
                                 {groupLabel && (
-                                  <span className="bg-[#0B193C] text-blue-300 border border-blue-400/30 font-space font-black text-[10px] sm:text-[11px] px-2.5 py-0.5 sm:py-1 rounded-lg uppercase tracking-wider shadow-2xs shrink-0">
+                                  <span className="bg-[#0B193C] text-white border border-brand-primary/30 font-space font-black text-[10px] sm:text-[11px] px-2.5 py-0.5 sm:py-1 rounded-lg uppercase tracking-wider shadow-2xs shrink-0">
                                     Group {groupLabel}
                                   </span>
                                 )}
@@ -1909,7 +1909,7 @@ export default function ChessTournamentPage() {
                                   Match #{gameIdx + 1}
                                 </span>
                                 {isUserGame && (
-                                  <span className="bg-blue-100 border border-blue-300 text-brand-primary text-[9px] sm:text-[10px] font-black px-2 py-0.5 rounded-full shrink-0 flex items-center gap-1">
+                                  <span className="bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-[9px] sm:text-[10px] font-black px-2 py-0.5 rounded-full shrink-0 flex items-center gap-1">
                                     <span>YOUR MATCH</span>
                                   </span>
                                 )}
@@ -1922,7 +1922,7 @@ export default function ChessTournamentPage() {
                                     isForfeit 
                                       ? 'bg-red-50 text-red-700 border-red-200' 
                                       : isDraw 
-                                      ? 'bg-blue-50 text-blue-800 border-blue-200' 
+                                      ? 'bg-brand-primary/10 text-brand-primary border-brand-primary/20' 
                                       : 'bg-emerald-50 text-emerald-800 border-emerald-200'
                                   }`}>
                                     {isForfeit ? 'Double Forfeit' : isDraw ? 'Match Drawn' : `Won by ${g.winner.name}`}
@@ -2005,8 +2005,8 @@ export default function ChessTournamentPage() {
                     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M19 22H5v-2h14v2zm-2-3H7v-2h10v1.5zm-5-17a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm2.8 7.3A4.5 4.5 0 0 0 12 8a4.5 4.5 0 0 0-2.8 1.3C8.1 10.6 7.5 12.7 7.5 15h9c0-2.3-.6-4.4-1.7-5.7z"/></svg>
                     <span>Gameplay &amp; Match Rules</span>
                   </a>
-                  <a href="#rules-fairplay" className="text-xs font-bold px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-700 hover:bg-blue-600 hover:text-white transition-colors inline-flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                  <a href="#rules-fairplay" className="text-xs font-bold px-3 py-1.5 rounded-lg bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white transition-colors inline-flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5 text-brand-primary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
                     <span>Fair Play &amp; Forfeits</span>
                   </a>
                   <a href="#rules-prizes" className="text-xs font-bold px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-700 hover:bg-emerald-600 hover:text-white transition-colors inline-flex items-center gap-1.5">
@@ -2181,11 +2181,11 @@ export default function ChessTournamentPage() {
                     const [y, m] = (selectedMonthYear || '2026-06').split('-').map(Number);
                     const dates = getTournamentDates(y, m);
                     const roundsMeta = [
-                      { label: 'Day 1', desc: 'Group Stage — Round 1' },
-                      { label: 'Day 2', desc: 'Group Stage — Round 2' },
-                      { label: 'Day 3', desc: 'Group Stage — Round 3' },
-                      { label: 'Day 4', desc: 'Knockout — Round of 32' },
-                      { label: 'Day 5', desc: 'Knockout — Round of 16' },
+                      { label: 'Day 1', desc: 'Group Stage - Round 1' },
+                      { label: 'Day 2', desc: 'Group Stage - Round 2' },
+                      { label: 'Day 3', desc: 'Group Stage - Round 3' },
+                      { label: 'Day 4', desc: 'Knockout - Round of 32' },
+                      { label: 'Day 5', desc: 'Knockout - Round of 16' },
                       { label: 'Day 6', desc: 'Quarterfinals' },
                       { label: 'Day 7', desc: 'Semifinals' },
                       { label: 'Day 8', desc: 'Grand Final & Rest / Tiebreaks' },
@@ -2266,7 +2266,7 @@ export default function ChessTournamentPage() {
                   Generate Next Round
                 </button>
               </div>
-              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 sm:p-6 space-y-3">
+              <div className="bg-brand-primary/5 border border-brand-primary/20 rounded-2xl p-4 sm:p-6 space-y-3">
                 <p className="font-space font-black text-base text-[#111111]">Auto Update Results</p>
                 <p className="text-sm text-gray-500">Scour last 10 matches of home players for games vs away players & update DB.</p>
                 <button 
@@ -2307,7 +2307,7 @@ export default function ChessTournamentPage() {
             </div>
 
             {scourProgress && (
-              <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 flex items-center justify-between gap-3 text-xs font-bold text-brand-primary shadow-2xs">
+              <div className="bg-brand-primary/10 border border-brand-primary/20 rounded-2xl p-4 flex items-center justify-between gap-3 text-xs font-bold text-brand-primary shadow-2xs">
                 <div className="flex items-center gap-2.5">
                   <span className="w-3 h-3 rounded-full bg-brand-primary animate-ping shrink-0"></span>
                   <span>{scourProgress}</span>
@@ -2546,11 +2546,12 @@ export default function ChessTournamentPage() {
             </div>
 
             {/* Test cleanup  user requested */}
-            <div className="border border-dashed border-blue-200 bg-blue-50/30 rounded-2xl p-4 sm:p-5 space-y-3">
-              <p className="font-space font-black text-base text-blue-900">Test Data Cleanup</p>
-              <p className="text-sm text-blue-700">Removes April &amp; May 2026 mock archives from local storage after testing.</p>
+            {/* Test cleanup user requested */}
+            <div className="border border-dashed border-brand-primary/20 bg-brand-primary/5 rounded-2xl p-4 sm:p-5 space-y-3">
+              <p className="font-space font-black text-base text-[#111111]">Test Data Cleanup</p>
+              <p className="text-sm text-gray-600">Removes April &amp; May 2026 mock archives from local storage after testing.</p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-                <button onClick={clearMocks} className="w-full sm:w-auto min-h-[44px] text-sm font-bold bg-blue-600 text-white px-4 py-2.5 rounded-xl cursor-pointer hover:bg-blue-500 transition-colors flex items-center justify-center">
+                <button onClick={clearMocks} className="w-full sm:w-auto min-h-[44px] text-sm font-bold bg-brand-primary text-white px-4 py-2.5 rounded-xl cursor-pointer hover:bg-brand-primary/80 transition-colors flex items-center justify-center">
                    Clear Mock History
                 </button>
                 <button onClick={() => { setIsAdmin(false); toast.info('Admin locked'); }} className="w-full sm:w-auto min-h-[44px] text-sm font-bold bg-gray-200 text-gray-600 px-4 py-2.5 rounded-xl cursor-pointer hover:bg-gray-300 transition-colors flex items-center justify-center">
@@ -2620,19 +2621,19 @@ export default function ChessTournamentPage() {
                 return (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     {/* BYEs */}
-                    <div className="border border-blue-100 bg-blue-50/20 rounded-2xl p-4 sm:p-5 space-y-3">
-                      <div className="flex items-center justify-between pb-2 border-b border-blue-100/50">
-                        <span className="font-space font-black text-sm text-blue-900">BYE Seeding ({byes.length})</span>
-                        <span className="text-[10px] font-black text-blue-700 bg-blue-100 px-2 py-0.5 rounded-full uppercase">Auto-Advance</span>
+                    <div className="border border-brand-primary/20 bg-brand-primary/5 rounded-2xl p-4 sm:p-5 space-y-3">
+                      <div className="flex items-center justify-between pb-2 border-b border-brand-primary/10">
+                        <span className="font-space font-black text-sm text-[#111111]">BYE Seeding ({byes.length})</span>
+                        <span className="text-[10px] font-black text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-full uppercase">Auto-Advance</span>
                       </div>
                       <div className="space-y-2 max-h-[250px] overflow-y-auto pr-1 touch-pan-y" style={{ WebkitOverflowScrolling: 'touch' }}>
                         {byes.map(p => (
-                          <div key={p.username} className="flex justify-between items-center text-xs p-2 bg-white rounded-lg border border-blue-100/50">
+                          <div key={p.username} className="flex justify-between items-center text-xs p-2 bg-white rounded-lg border border-gray-200">
                             <div>
-                              <p className="font-bold text-blue-950">{p.name}</p>
+                              <p className="font-bold text-brand-text-dark">{p.name}</p>
                               <p className="text-gray-400 text-[10px]">{p.school} &bull; @{p.username}</p>
                             </div>
-                            <span className="font-black text-blue-700">{p.rating} ELO</span>
+                            <span className="font-black text-brand-primary">{p.rating} ELO</span>
                           </div>
                         ))}
                       </div>

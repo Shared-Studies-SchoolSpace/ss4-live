@@ -332,7 +332,7 @@ export function useTournament(monthYear) {
     return () => clearInterval(interval);
   }, [tournament]);
 
-  // Seed Round 1 permanently — called once by admin
+  // Seed Round 1 permanently - called once by admin
   const initialize = async (options = {}) => {
     const [y, m] = monthYear.split('-').map(Number);
     const round1 = generateRound1(tournamentPlayers, y, m, options);
@@ -392,7 +392,7 @@ export function useTournament(monthYear) {
     save({ ...tournament, rounds: updated });
   };
 
-  // Generate next round from current winners — admin calls after all results are logged
+  // Generate next round from current winners - admin calls after all results are logged
   const advanceRound = (options = {}) => {
     if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return;
     const [y, m] = monthYear.split('-').map(Number);

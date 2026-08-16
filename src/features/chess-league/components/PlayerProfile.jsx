@@ -64,9 +64,9 @@ export const PlayerProfile = ({ player, onClose }) => {
       return {
         name: 'Fork Division',
         label: 'Intermediate Category',
-        colorClass: 'bg-blue-50 text-blue-700 border-blue-200',
-        textColor: 'text-blue-700',
-        badge: <span className="material-symbols-outlined text-blue-600 text-xs select-none leading-none align-middle" style={{ fontVariationSettings: "'FILL' 1" }}>circle</span>
+        colorClass: 'bg-brand-primary/10 text-brand-primary border-brand-primary/20',
+        textColor: 'text-brand-primary',
+        badge: <span className="material-symbols-outlined text-brand-primary text-xs select-none leading-none align-middle" style={{ fontVariationSettings: "'FILL' 1" }}>circle</span>
       };
     } else {
       return {

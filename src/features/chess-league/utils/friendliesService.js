@@ -52,7 +52,7 @@ export async function fetchTournamentResults(tournamentId, retries = 2) {
     try {
       const res = await fetch(`https://lichess.org/api/tournament/${tournamentId}/results`);
       if (res.status === 429 && attempt < retries) {
-        // Rate limited — wait before retrying
+        // Rate limited - wait before retrying
         await new Promise(r => setTimeout(r, 600 * (attempt + 1)));
         continue;
       }
@@ -135,7 +135,12 @@ export async function fetchAllFriendliesData(hosts = DEFAULT_HOSTS, fallbackIds 
   historyData.forEach(item => {
     arenaDetailsMap[item.id] = item;
     if (item.results && item.results.length > 0) {
-      combinedResults.push(...item.results);
+      item.results.forEach(res => {
+        combinedResults.push({
+          ...res,
+          startsAt: item.meta?.startsAt || null
+        });
+      });
     }
   });
 

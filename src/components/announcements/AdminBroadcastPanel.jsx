@@ -411,7 +411,7 @@ export default function AdminBroadcastPanel({ onClose }) {
                 <div className="min-w-0 flex-1 pr-2">
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <span className={`text-[8px] font-black uppercase px-1.5 py-0.5 rounded ${
-                      b.is_global ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-800'
+                      b.is_global ? 'bg-brand-primary/10 text-brand-primary' : 'bg-amber-100 text-amber-800'
                     }`}>
                       {b.is_global ? 'Global' : 'Targeted'}
                     </span>

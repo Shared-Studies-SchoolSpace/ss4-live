@@ -266,7 +266,7 @@ export function TournamentPlayerModal({ player, onClose }) {
                   {details.rating || player.rating || 'N/A'}
                 </span>
                 {player.isProvisional && (
-                  <span className="bg-blue-100 text-blue-900 border border-blue-200 text-[8px] font-bold px-1 py-0.2 rounded uppercase">
+                  <span className="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 text-[8px] font-bold px-1 py-0.2 rounded uppercase">
                     Prov
                   </span>
                 )}

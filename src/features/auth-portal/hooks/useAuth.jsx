@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
 
   const fetchProfile = async (uid) => {
     // Deduplicate in-flight fetches for the same user.
-    // NOTE: Do NOT short-circuit on `profile.id === uid` here — that stale closure
+    // NOTE: Do NOT short-circuit on `profile.id === uid` here - that stale closure
     // guard defeats explicit refreshProfile() calls made after profile updates.
     if (fetchingUidRef.current === uid) return;
     fetchingUidRef.current = uid;
@@ -534,7 +534,7 @@ export function AuthProvider({ children }) {
       ].filter(Boolean);
 
       for (const { id: divId } of divIds) {
-        // Fresh read per division — minimises the window where a concurrent write gets clobbered
+        // Fresh read per division - minimises the window where a concurrent write gets clobbered
         const { data: divData } = await supabase
           .from('divisions')
           .select('players')
@@ -731,7 +731,7 @@ export function AuthProvider({ children }) {
         // email is permanently locked. The self-heal fallback in fetchProfile will create
         // the profile row on first login if it's missing due to this failure.
         if (profileErr) {
-          console.error('[signUp] Profile row upsert failed after auth user created — self-heal will run on next login:', profileErr.message);
+          console.error('[signUp] Profile row upsert failed after auth user created - self-heal will run on next login:', profileErr.message);
           toast.warn('Account created! Finalizing your profile on first login...');
         } else {
           // Only auto-assign division if profile write succeeded

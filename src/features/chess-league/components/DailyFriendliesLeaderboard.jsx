@@ -103,7 +103,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
       const weekday = arenaDate.toLocaleDateString('en-US', { weekday: 'short' });
       const month = arenaDate.toLocaleDateString('en-US', { month: 'short' });
       const day = arenaDate.getDate();
-      return `Arena — ${weekday}, ${month} ${day}`;
+      return `Arena - ${weekday}, ${month} ${day}`;
     }
   };
 
@@ -161,13 +161,51 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
     };
   }, [profile]);
 
-  // Compute Season Cumulative Standings across all tournaments
-  const seasonStandings = useMemo(() => {
+  // Available Month-Year options derived from daily arenas
+  const availableMonths = useMemo(() => {
+    const monthsSet = new Set();
+    const now = new Date();
+    const currentMY = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    monthsSet.add(currentMY);
+
+    Object.values(arenaDetailsMap).forEach(item => {
+      if (item?.meta?.startsAt) {
+        const d = new Date(item.meta.startsAt);
+        const my = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+        monthsSet.add(my);
+      }
+    });
+
+    return Array.from(monthsSet).sort((a, b) => b.localeCompare(a));
+  }, [arenaDetailsMap]);
+
+  const [selectedMonth, setSelectedMonth] = useState(() => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  });
+
+  // Format month-year display name (e.g. "August 2026")
+  const formatMonthName = (myStr) => {
+    if (!myStr) return 'Current Month';
+    const [year, month] = myStr.split('-');
+    const d = new Date(parseInt(year, 10), parseInt(month, 10) - 1, 1);
+    return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  };
+
+  // Compute Monthly Standings (isolated strictly by selectedMonth - points do not sum across months)
+  const monthlyStandings = useMemo(() => {
     const playerMap = {};
 
     allArenaResults.forEach(item => {
       const uname = item.username || item.name;
       if (!uname) return;
+
+      // Filter strictly by selectedMonth!
+      if (item.startsAt) {
+        const d = new Date(item.startsAt);
+        const itemMY = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+        if (itemMY !== selectedMonth) return;
+      }
       
       const key = uname.toLowerCase();
       if (!playerMap[key]) {
@@ -215,7 +253,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
     sorted.sort((a, b) => b.pts - a.pts || b.perf - a.perf || b.wins - a.wins);
 
     return sorted.map((p, idx) => ({ ...p, rank: idx + 1 }));
-  }, [allArenaResults, allPlayers]);
+  }, [allArenaResults, selectedMonth, allPlayers]);
 
   // Format Standings for Selected Arena specifically
   const selectedArenaStandings = useMemo(() => {
@@ -242,8 +280,8 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
 
   // Active view standings based on tableMode
   const activeStandingsRaw = useMemo(() => {
-    return tableMode === 'season' ? seasonStandings : selectedArenaStandings;
-  }, [tableMode, seasonStandings, selectedArenaStandings]);
+    return tableMode === 'season' ? monthlyStandings : selectedArenaStandings;
+  }, [tableMode, monthlyStandings, selectedArenaStandings]);
 
   // Filtered standings by search query
   const activeStandings = useMemo(() => {
@@ -259,9 +297,9 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
   // Summary Metrics calculation
   const summaryMetrics = useMemo(() => {
     const arenasCount = arenaIds.length;
-    const playersCount = seasonStandings.length;
-    const leader = seasonStandings[0]?.name || seasonStandings[0]?.username || '—';
-    const topScore = seasonStandings[0]?.pts || 0;
+    const playersCount = monthlyStandings.length;
+    const leader = monthlyStandings[0]?.name || monthlyStandings[0]?.username || 'N/A';
+    const topScore = monthlyStandings[0]?.pts || 0;
 
     return {
       arenasCount,
@@ -269,7 +307,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
       leader,
       topScore
     };
-  }, [arenaIds, seasonStandings]);
+  }, [arenaIds, monthlyStandings]);
 
   // Determine current live arena status
   const currentArenaStatus = useMemo(() => {
@@ -352,7 +390,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
                   1st Champion
                 </span>
                 <h4 className="font-space text-sm sm:text-base font-bold text-[#111111] break-words mt-0.5">
-                  {p1?.name || p1?.username || '—'}
+                  {p1?.name || p1?.username || 'N/A'}
                 </h4>
               </div>
             </div>
@@ -376,7 +414,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
                   2nd Place
                 </span>
                 <h4 className="font-space text-sm sm:text-base font-bold text-[#111111] break-words mt-0.5">
-                  {p2?.name || p2?.username || '—'}
+                  {p2?.name || p2?.username || 'N/A'}
                 </h4>
               </div>
             </div>
@@ -400,7 +438,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
                   3rd Place
                 </span>
                 <h4 className="font-space text-sm sm:text-base font-bold text-[#111111] break-words mt-0.5">
-                  {p3?.name || p3?.username || '—'}
+                  {p3?.name || p3?.username || 'N/A'}
                 </h4>
               </div>
             </div>
@@ -449,19 +487,40 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
 
         {/* Quick Select Tabs (Season + Recent 5 Arenas + Older Arenas Dropdown) */}
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 touch-pan-x">
-          {/* Season Standings Tab */}
+          {/* Monthly League Selector Dropdown */}
+          <div className="relative inline-flex items-center shrink-0">
+            <select
+              value={selectedMonth}
+              onChange={(e) => {
+                setSelectedMonth(e.target.value);
+                setTableMode('season');
+              }}
+              className="text-xs font-bold rounded-xl px-3.5 py-2.5 pr-8 border bg-brand-primary text-white border-transparent font-black ring-2 ring-brand-primary/30 transition-all cursor-pointer shadow-md appearance-none focus:outline-none"
+            >
+              {availableMonths.map(myStr => (
+                <option key={myStr} value={myStr} className="text-[#111111] bg-white font-semibold py-1">
+                  📅 {formatMonthName(myStr)} League
+                </option>
+              ))}
+            </select>
+            <span className="material-symbols-outlined text-[16px] absolute right-2.5 pointer-events-none select-none text-white opacity-90">
+              expand_more
+            </span>
+          </div>
+
+          {/* Monthly Standings Tab Button */}
           <button
             onClick={() => setTableMode('season')}
             className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 flex items-center gap-2 outline-none ${
               tableMode === 'season'
-                ? 'bg-[#0c1e54] text-white shadow-md font-black ring-2 ring-[#0c1e54]/30'
+                ? 'bg-brand-primary text-white shadow-md font-black ring-2 ring-brand-primary/30'
                 : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200/90'
             }`}
           >
             <span className="material-symbols-outlined text-[16px] text-amber-400 select-none">
               emoji_events
             </span>
-            <span>Season Standings (All-Time)</span>
+            <span>{formatMonthName(selectedMonth)} Standings</span>
           </button>
 
           {/* Recent 5 Arenas Quick-Select Pills */}
@@ -569,7 +628,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
                     }
                   }) : null}
                   role="button"
-                  aria-label={`${p.name} — view profile`}
+                  aria-label={`${p.name} - view profile`}
                   tabIndex={0}
                   onClick={() => onPlayerSelect && onPlayerSelect(p.profile || { username: p.username, name: p.name })}
                   onKeyDown={(e) => {
@@ -652,7 +711,7 @@ export default function DailyFriendliesLeaderboard({ allPlayers = [], onPlayerSe
                   {/* PERFORMANCE RATING */}
                   <div className="hidden sm:block sm:col-span-2 text-center">
                     <span className="text-xs font-bold text-gray-600 bg-gray-50 border border-gray-200/60 px-2.5 py-1 rounded-lg">
-                      {p.perf ? `${p.perf} ELO` : '—'}
+                      {p.perf ? `${p.perf} ELO` : 'N/A'}
                     </span>
                   </div>
                 </div>

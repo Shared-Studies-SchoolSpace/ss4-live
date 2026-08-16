@@ -215,7 +215,7 @@ export default function TertiaryDetailPage() {
     if (elo >= 1800) {
       return { name: "A Division", color: "bg-red-50 text-red-700 border-red-100" };
     } else if (elo >= 1000) {
-      return { name: "Fork Division", color: "bg-blue-50 text-blue-700 border-blue-100" };
+      return { name: "Fork Division", color: "bg-brand-primary/10 text-brand-primary border-brand-primary/20" };
     } else {
       return { name: "Pin Division", color: "bg-emerald-50 text-emerald-700 border-emerald-100" };
     }
@@ -355,7 +355,7 @@ export default function TertiaryDetailPage() {
                   </div>
                   <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
                     <div 
-                      className="bg-blue-500 h-full transition-all duration-500" 
+                      className="bg-brand-primary h-full transition-all duration-500" 
                       style={{ width: `${players.length > 0 ? (stats.distribution.fork / players.length) * 100 : 0}%` }}
                     />
                   </div>

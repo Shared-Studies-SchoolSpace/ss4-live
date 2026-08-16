@@ -449,7 +449,7 @@ export default function DirectChat() {
                   onClick={() => setActiveContact(c)}
                   className={`w-full flex items-center justify-between p-3.5 transition-all text-left cursor-pointer ${
                     isActive 
-                      ? "bg-blue-50/80 border-l-4 border-brand-primary font-semibold" 
+                      ? "bg-brand-primary/10 border-l-4 border-brand-primary font-semibold" 
                       : "hover:bg-[#F6F4F0]"
                   }`}
                 >
@@ -523,7 +523,7 @@ export default function DirectChat() {
                 </div>
               ) : messages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center p-4">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-3">
+                  <div className="w-12 h-12 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mb-3">
                     <svg className="w-6 h-6 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
@@ -598,7 +598,7 @@ export default function DirectChat() {
           </>
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-center p-6 bg-gray-50/30">
-            <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-3">
+            <div className="w-14 h-14 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mb-3">
               <svg className="w-7 h-7 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
               </svg>

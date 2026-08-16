@@ -727,31 +727,31 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
             {/* Bottom: Trophy & Champion Display */}
             <div className="w-full flex flex-col items-center gap-4">
               {champion ? (
-                <div className="bg-gradient-to-tr from-[#0B193C] to-[#1A56C4] text-white rounded-2xl p-4 shadow-md border border-blue-300 w-full">
-                  <span className="text-[10px] font-black uppercase tracking-[0.25em] block text-blue-200">Champion</span>
+                <div className="bg-gradient-to-tr from-[#0B193C] to-[#1A56C4] text-white rounded-2xl p-4 shadow-md border border-brand-primary/40 w-full">
+                  <span className="text-[10px] font-black uppercase tracking-[0.25em] block text-amber-300">Champion</span>
                   <p
                     onClick={() => onPlayerClick(champion)}
                     className="text-base font-black font-space mt-1 hover:underline cursor-pointer truncate"
                   >
                     {champion.name}
                   </p>
-                  <p className="text-xs font-bold text-blue-100 truncate mt-0.5">{champion.school}</p>
+                  <p className="text-xs font-bold text-white/80 truncate mt-0.5">{champion.school}</p>
                   <span className="inline-block mt-2 bg-white/20 text-[10px] font-black px-2 py-0.5 rounded-full">
                     Rating: {champion.rating}
                   </span>
                 </div>
               ) : (
                 <div className="bg-gray-50 border border-gray-100 text-gray-400 rounded-2xl py-4 px-3 text-xs font-semibold select-none w-full flex items-center justify-center gap-1">
-                  Winner receives the SCL Champion Cup & <svg className="w-4 h-4 text-blue-500 inline-block align-text-bottom" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg> status
+                  Winner receives the SCL Champion Cup & <svg className="w-4 h-4 text-brand-primary inline-block align-text-bottom" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg> status
                 </div>
               )}
 
               {/* Smaller compact trophy */}
               <div className="relative group">
-                <div className="absolute inset-0 bg-blue-400/10 blur-2xl rounded-full scale-75" />
+                <div className="absolute inset-0 bg-brand-primary/10 blur-2xl rounded-full scale-75" />
                 <svg 
                    viewBox="0 0 24 24" 
-                   className={`w-20 h-20 relative transition-transform duration-500 group-hover:scale-105 ${champion ? 'text-blue-500 drop-shadow-[0_4px_12px_rgba(59,130,246,0.4)]' : 'text-gray-200'}`}
+                   className={`w-20 h-20 relative transition-transform duration-500 group-hover:scale-105 ${champion ? 'text-amber-400 drop-shadow-[0_4px_12px_rgba(245,158,11,0.4)]' : 'text-gray-200'}`}
                    fill="currentColor"
                 >
                   <path d="M19 5H17V3C17 2.45 16.55 2 16 2H8C7.45 2 7 2.45 7 3V5H5C3.9 5 3 5.9 3 7V9C3 10.87 4.31 12.43 6.07 12.87C6.77 14.73 8.39 16.14 10.4 16.44C10.74 17.3 11.33 18.03 12.09 18.52V20H9C8.45 20 8 20.45 8 21C8 21.55 8.45 22 9 22H15C15.55 22 16 21.55 16 21C16 20.45 15.55 20 15 20H12.09V18.52C12.85 18.03 13.43 17.3 13.78 16.44C15.78 16.14 17.41 14.73 18.11 12.87C19.87 12.43 21 10.87 21 9V7C21 5.9 20.1 5 19 5ZM5 9V7H7V10.24C5.81 9.87 5 9.02 5 9ZM19 9C19 9.02 18.19 9.87 17 10.24V7H19V9Z"/>

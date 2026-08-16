@@ -84,7 +84,7 @@ export default function TournamentCountdownBanner() {
       const daysAway = msAway / (1000 * 60 * 60 * 24);
       if (daysAway <= 0 || daysAway > SHOW_DAYS_BEFORE) return;
 
-      // Fix 2: Per-event dismiss — only suppress the banner if the user dismissed it
+      // Fix 2: Per-event dismiss - only suppress the banner if the user dismissed it
       // for this EXACT target date. Previously the dismiss reset on calendar-month
       // rollover, which was too coarse (reset even when no new event was scheduled,
       // or failed to reset when a new event was scheduled mid-month).
@@ -93,11 +93,11 @@ export default function TournamentCountdownBanner() {
         try {
           const { dismissedFor } = JSON.parse(stored);
           if (dismissedFor && new Date(dismissedFor).toISOString() === date.toISOString()) {
-            return; // dismissed for this exact event — stay hidden
+            return; // dismissed for this exact event - stay hidden
           }
-          // Different target date → new event, ignore the old dismiss
+          // Different target date -> new event, ignore the old dismiss
         } catch {
-          // Legacy string format or corrupt data — ignore and show the banner
+          // Legacy string format or corrupt data - ignore and show the banner
         }
       }
 

@@ -679,7 +679,30 @@ export function AuthProvider({ children }) {
 
   const signUp = async (email, password, profileData) => {
     const rememberMe = typeof localStorage !== 'undefined' && localStorage.getItem('ss4_remember_me') === 'true';
-    return await signUpUser({ email, password, profileData, rememberMe }, updatePlayerDivision);
+    const result = await signUpUser({ email, password, profileData, rememberMe }, updatePlayerDivision);
+    if (!result.error && result.data?.user) {
+      fetchingUidRef.current = null;
+      const uid = result.data.user.id;
+      const freshProfile = {
+        id: uid,
+        email: result.data.user.email,
+        name: (profileData.name || '').trim(),
+        university: profileData.university || '',
+        faculty: profileData.faculty || '',
+        department: profileData.department || '',
+        level: profileData.level || '',
+        phone: profileData.phone || profileData.whatsapp || '',
+        whatsapp: profileData.phone || profileData.whatsapp || '',
+        chess_username: profileData.chess_username || '',
+        lichess_username: profileData.lichess_username || '',
+        chess_rating: profileData.chess_rating || 0,
+        lichess_rating: profileData.lichess_rating || 0,
+        role: 'player'
+      };
+      setProfile(freshProfile);
+      await fetchProfile(uid);
+    }
+    return result;
   };
 
   const signIn = async (email, password) => {

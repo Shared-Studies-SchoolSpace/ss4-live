@@ -945,12 +945,23 @@ export default function ChessTournamentPage() {
       return;
     }
 
-    if (!profile) {
+    let activeProfile = profile;
+    if (!activeProfile) {
+      if (typeof refreshProfile === 'function') {
+        await refreshProfile();
+      }
+      const { data: freshProf } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle();
+      if (freshProf) {
+        activeProfile = freshProf;
+      }
+    }
+
+    if (!activeProfile) {
       toast.error('Player profile not found. Please complete your profile in the Dashboard.');
       return;
     }
 
-    await executeRegistration(user, profile);
+    await executeRegistration(user, activeProfile);
   };
 
   const handleJoinTournamentAfterAuth = async () => {

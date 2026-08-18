@@ -58,7 +58,7 @@ function App() {
         <Footer />
         <BackToTop />
         <WhatsAppPromptNotification />
-        <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} />
+        <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} style={{ zIndex: 999999 }} />
         </div>
       </Router>
     </AuthModalProvider>

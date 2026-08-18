@@ -1381,7 +1381,7 @@ export default function ChessTournamentPage() {
 
   return (
     <div className="min-h-screen bg-[#F6F4F0]">
-      <ToastContainer position="bottom-right" />
+      <ToastContainer position="bottom-right" style={{ zIndex: 999999 }} />
 
       {isLoading ? (
         /* Skeleton Loading View (H3: Doherty Threshold Fix) */

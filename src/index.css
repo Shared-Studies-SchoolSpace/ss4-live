@@ -382,3 +382,9 @@ body {
 .double-border {
   border-style: double;
 }
+
+/* Toastify Container Z-Index Fix: Always render above all modal backdrops and blurs */
+.Toastify__toast-container {
+  z-index: 999999 !important;
+}
+

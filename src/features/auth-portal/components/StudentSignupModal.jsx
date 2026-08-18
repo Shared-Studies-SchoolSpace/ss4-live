@@ -181,8 +181,6 @@ export default function StudentSignupModal({
       const needsLichessVerify = form.lichess_username?.trim() && lichessStatus !== 'valid';
 
       if (needsChessVerify || needsLichessVerify) {
-        toast.info("Verifying chess usernames and fetching ratings...");
-        
         let hasError = false;
 
         if (needsChessVerify) {

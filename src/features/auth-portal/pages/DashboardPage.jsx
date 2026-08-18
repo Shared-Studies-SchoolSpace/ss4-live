@@ -688,7 +688,6 @@ export default function DashboardPage() {
   const handleSyncRatings = async () => {
     if (!profile) return;
     setLoadingSync(true);
-    toast.info('Syncing ratings with platforms...');
 
     try {
       // Fetch latest profile first to avoid stale state from recent saves

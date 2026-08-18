@@ -56,7 +56,6 @@ export function useTournament(monthYear) {
       });
       if (error) throw error;
       setIsDbFallback(false);
-      toast.success('Saved to Database!', { autoClose: 1000 });
 
       // ── R2 & R7: Check if a new round has been generated/added ──
       const oldRoundsCount = tournament?.rounds?.length || 0;
@@ -221,7 +220,6 @@ export function useTournament(monthYear) {
     } catch (e) {
       console.warn('Tournament status notification save error:', e.message);
       setIsDbFallback(true);
-      toast.info('Saved locally (offline)');
     }
   };
 

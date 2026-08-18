@@ -487,11 +487,6 @@ export function AuthProvider({ children }) {
 
           const item = { ...payload.new, sender: data || { name: 'Admin' } };
           setAnnouncements(prev => [item, ...prev]);
-
-          toast.info(`📢 ${payload.new.title}`, {
-            position: 'bottom-right',
-            autoClose: 6000
-          });
         }
       )
       .subscribe();

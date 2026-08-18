@@ -87,10 +87,12 @@ export function validateSignupForm(form = {}) {
   const passErr = validatePassword(form.password, true);
   if (passErr) errors.password = passErr;
 
-  if (form.password && form.confirm && form.password !== form.confirm) {
-    errors.confirm = 'Passwords do not match';
-  } else if (!form.confirm && form.password) {
-    errors.confirm = 'Please confirm your password';
+  if (form.confirm !== undefined) {
+    if (form.password && form.confirm && form.password !== form.confirm) {
+      errors.confirm = 'Passwords do not match';
+    } else if (!form.confirm && form.password) {
+      errors.confirm = 'Please confirm your password';
+    }
   }
 
   const phoneTrimmed = (form.phone || '').trim();

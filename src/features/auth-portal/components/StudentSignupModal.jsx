@@ -62,6 +62,15 @@ export default function StudentSignupModal({
   const [chessAvatar, setChessAvatar] = useState(null);
   const [lichessAvatar, setLichessAvatar] = useState(null);
 
+  const resetVerificationState = () => {
+    setChessStatus('idle');
+    setLichessStatus('idle');
+    setVerifiedChessRating(0);
+    setVerifiedLichessRating(0);
+    setChessAvatar(null);
+    setLichessAvatar(null);
+  };
+
   const verifyChessUsername = async (username) => {
     const trimmed = username?.trim();
     if (!trimmed) {
@@ -74,6 +83,8 @@ export default function StudentSignupModal({
     setChessStatus('verifying');
     try {
       const data = await fetchCompletePlayerData(trimmed, 'chess.com');
+      if (form.chess_username?.trim() !== trimmed) return;
+
       if (data.error || !data.rating) {
         setErrors(prev => ({ ...prev, chess_username: "Chess.com username not found" }));
         setChessStatus('invalid');
@@ -86,6 +97,7 @@ export default function StudentSignupModal({
         setChessAvatar(data.avatar);
       }
     } catch (err) {
+      if (form.chess_username?.trim() !== trimmed) return;
       setChessStatus('invalid');
       setVerifiedChessRating(0);
       setChessAvatar(null);
@@ -104,6 +116,8 @@ export default function StudentSignupModal({
     setLichessStatus('verifying');
     try {
       const data = await fetchCompletePlayerData(trimmed, 'lichess');
+      if (form.lichess_username?.trim() !== trimmed) return;
+
       if (data.error || !data.rating) {
         setErrors(prev => ({ ...prev, lichess_username: "Lichess username not found" }));
         setLichessStatus('invalid');
@@ -116,6 +130,7 @@ export default function StudentSignupModal({
         setLichessAvatar(data.avatar);
       }
     } catch (err) {
+      if (form.lichess_username?.trim() !== trimmed) return;
       setLichessStatus('invalid');
       setVerifiedLichessRating(0);
       setLichessAvatar(null);
@@ -232,6 +247,7 @@ export default function StudentSignupModal({
         first_name: form.first_name.trim(),
         last_name: form.last_name.trim(),
         name: fullName,
+        confirm: form.confirm,
         phone: form.phone.trim(),
         university: form.university.trim(),
         faculty: form.faculty.trim(),
@@ -244,12 +260,15 @@ export default function StudentSignupModal({
       };
 
       localStorage.setItem('ss4_remember_me', rememberMe ? 'true' : 'false');
-      const { error } = await signUp(form.email, form.password, profileData);
+      const { error, warning } = await signUp(form.email, form.password, profileData);
       setSubmitting(false);
 
       if (error) {
         toast.error(`Signup failed: ${error.message}`);
       } else {
+        if (warning) {
+          toast.warning(warning);
+        }
         setSignupSuccess(true);
         setTimeout(() => {
           if (typeof onAuthSuccess === 'function') {
@@ -343,6 +362,7 @@ export default function StudentSignupModal({
                 setErrors({});
                 setShowPassword(false);
                 setShowConfirm(false);
+                resetVerificationState();
               }}
               className={`flex-1 py-1.5 text-[11px] font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none ${
                 isLogin
@@ -359,6 +379,7 @@ export default function StudentSignupModal({
                 setErrors({});
                 setShowPassword(false);
                 setShowConfirm(false);
+                resetVerificationState();
               }}
               className={`flex-1 py-1.5 text-[11px] font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none ${
                 !isLogin

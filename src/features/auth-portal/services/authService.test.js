@@ -191,6 +191,37 @@ describe('Authentication Validation Utility Suite', () => {
       });
       assert.deepStrictEqual(errors, {});
     });
+
+    it('should accept valid signup input when confirm is omitted from service payload', () => {
+      const errors = validateSignupForm({
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'user@domain.com',
+        password: 'Password123!',
+        phone: '+2348000000000',
+        university: 'University of Uyo',
+        faculty: 'Science',
+        department: 'Computer Science',
+        chess_username: 'player1'
+      });
+      assert.deepStrictEqual(errors, {});
+    });
+
+    it('should reject signup when confirm is provided and does not match password', () => {
+      const errors = validateSignupForm({
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'user@domain.com',
+        password: 'Password123!',
+        confirm: 'WrongPassword!',
+        phone: '+2348000000000',
+        university: 'University of Uyo',
+        faculty: 'Science',
+        department: 'Computer Science',
+        chess_username: 'player1'
+      });
+      assert.strictEqual(errors.confirm, 'Passwords do not match');
+    });
   });
 
   describe('validatePasswordResetForm', () => {

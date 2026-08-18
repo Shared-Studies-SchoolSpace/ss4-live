@@ -303,8 +303,8 @@ export default function StudentSignupModal({
 
   return (
     <div className="fixed inset-0 bg-[#111111]/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-6 overflow-y-auto">
-      {/* Landscape / Wider-than-taller card container */}
-      <div className={`bg-white rounded-3xl p-6 sm:p-8 w-full ${isLogin || isForgotPassword ? 'max-w-md' : 'max-w-3xl'} shadow-2xl border border-gray-100 relative my-auto animate-in fade-in zoom-in-95 duration-200 transition-all`}>
+      {/* Portrait Medium-Inspired Aspect Ratio & Geometry */}
+      <div className="bg-white rounded-[2rem] p-7 sm:p-9 w-full max-w-[480px] shadow-2xl border border-gray-100 relative my-auto animate-in fade-in zoom-in-95 duration-200 transition-all">
 
         {/* Close Button */}
         <button
@@ -324,7 +324,7 @@ export default function StudentSignupModal({
               ? "Reset Password" 
               : (isLogin ? "Welcome Back" : "Create Account")}
           </h2>
-          <p className="text-xs font-semibold text-gray-400 mt-1.5">
+          <p className="text-xs font-semibold text-gray-400 mt-1.5 max-w-xs mx-auto">
             {isForgotPassword 
               ? "We'll send a password recovery link to your email" 
               : (isLogin ? "Log in to access pairings and chat" : "Join the SS4 Chess League & Tournaments")}
@@ -436,12 +436,12 @@ export default function StudentSignupModal({
             )}
           </form>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-1 no-scrollbar animate-in fade-in duration-150">
+          <form onSubmit={handleSubmit} className="space-y-4 max-h-[65vh] overflow-y-auto pr-1 no-scrollbar animate-in fade-in duration-150">
 
             {!isLogin ? (
               <>
-                {/* Personal Information Row: First Name & Last Name */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Side-by-side First Name & Last Name */}
+                <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">First Name</label>
                     <Input
@@ -462,27 +462,27 @@ export default function StudentSignupModal({
                   </div>
                 </div>
 
-                {/* Contact Row: Email & Phone Number */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
-                    <Input
-                      type="email"
-                      placeholder="e.g. john@university.edu"
-                      value={form.email}
-                      onChange={(e) => update("email", e.target.value)}
-                    />
-                    {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Phone / WhatsApp Number</label>
-                    <Input
-                      placeholder="e.g. +2348000000000"
-                      value={form.phone}
-                      onChange={(e) => update("phone", e.target.value)}
-                    />
-                    {errors.phone && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.phone}</p>}
-                  </div>
+                {/* Email Address */}
+                <div>
+                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
+                  <Input
+                    type="email"
+                    placeholder="e.g. john@university.edu"
+                    value={form.email}
+                    onChange={(e) => update("email", e.target.value)}
+                  />
+                  {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
+                </div>
+
+                {/* Phone / WhatsApp Number */}
+                <div>
+                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Phone / WhatsApp Number</label>
+                  <Input
+                    placeholder="e.g. +2348000000000"
+                    value={form.phone}
+                    onChange={(e) => update("phone", e.target.value)}
+                  />
+                  {errors.phone && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.phone}</p>}
                 </div>
               </>
             ) : (
@@ -499,7 +499,7 @@ export default function StudentSignupModal({
             )}
 
             {/* Password Row */}
-            <div className={`${isLogin ? 'block' : 'grid grid-cols-1 sm:grid-cols-2 gap-4'}`}>
+            <div className={`${isLogin ? 'block' : 'grid grid-cols-1 sm:grid-cols-2 gap-3'}`}>
               <div>
                 <div className="flex justify-between items-center mb-1.5">
                   <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest">Password</label>
@@ -570,7 +570,7 @@ export default function StudentSignupModal({
               <h3 className="text-xs font-black text-brand-primary uppercase tracking-widest mb-3">
                 Academic Details
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-3">
                 <div>
                   <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
                     University / School
@@ -582,27 +582,29 @@ export default function StudentSignupModal({
                   />
                   {errors.university && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.university}</p>}
                 </div>
-                <div>
-                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
-                    Faculty
-                  </label>
-                  <Input
-                    placeholder="e.g. Engineering"
-                    value={form.faculty}
-                    onChange={(e) => update("faculty", e.target.value)}
-                  />
-                  {errors.faculty && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.faculty}</p>}
-                </div>
-                <div>
-                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
-                    Department
-                  </label>
-                  <Input
-                    placeholder="e.g. Computer Science"
-                    value={form.department}
-                    onChange={(e) => update("department", e.target.value)}
-                  />
-                  {errors.department && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.department}</p>}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                      Faculty
+                    </label>
+                    <Input
+                      placeholder="e.g. Engineering"
+                      value={form.faculty}
+                      onChange={(e) => update("faculty", e.target.value)}
+                    />
+                    {errors.faculty && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.faculty}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                      Department
+                    </label>
+                    <Input
+                      placeholder="e.g. Computer Science"
+                      value={form.department}
+                      onChange={(e) => update("department", e.target.value)}
+                    />
+                    {errors.department && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.department}</p>}
+                  </div>
                 </div>
                 <div>
                   <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
@@ -628,7 +630,7 @@ export default function StudentSignupModal({
               <h3 className="text-xs font-black text-brand-accent uppercase tracking-widest mb-1">Chess Credentials</h3>
               <p className="text-[10px] text-gray-400 mb-3 font-semibold">At least one username is required; providing both is recommended for accurate rating sync.</p>
 
-                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Chess.com Username</label>
                     <div className="relative flex items-center">

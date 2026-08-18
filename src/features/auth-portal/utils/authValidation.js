@@ -54,7 +54,7 @@ export function validateLoginForm(form = {}) {
 
 /**
  * Validates registration form inputs.
- * Mandatory: name, email, password, confirm, phone, university, faculty, department
+ * Mandatory: first_name, last_name, email, password, confirm, phone, university, faculty, department
  * Optional: level
  * Requirement: At least one chess credential (chess_username or lichess_username)
  * @param {Object} form 
@@ -63,9 +63,14 @@ export function validateLoginForm(form = {}) {
 export function validateSignupForm(form = {}) {
   const errors = {};
 
-  const nameTrimmed = (form.name || '').trim();
-  if (!nameTrimmed) {
-    errors.name = 'Full name is required';
+  const firstNameTrimmed = (form.first_name || '').trim();
+  if (!firstNameTrimmed) {
+    errors.first_name = 'First name is required';
+  }
+
+  const lastNameTrimmed = (form.last_name || '').trim();
+  if (!lastNameTrimmed) {
+    errors.last_name = 'Last name is required';
   }
 
   const emailErr = validateEmail(form.email);

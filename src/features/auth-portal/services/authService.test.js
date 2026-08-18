@@ -61,9 +61,10 @@ describe('Authentication Validation Utility Suite', () => {
   });
 
   describe('validateSignupForm', () => {
-    it('should reject signup with missing name', () => {
+    it('should reject signup with missing first name or last name', () => {
       const errors = validateSignupForm({
-        name: '',
+        first_name: '',
+        last_name: '',
         email: 'user@domain.com',
         password: 'Password123!',
         confirm: 'Password123!',
@@ -73,12 +74,14 @@ describe('Authentication Validation Utility Suite', () => {
         department: 'Computer Science',
         chess_username: 'player1'
       });
-      assert.strictEqual(errors.name, 'Full name is required');
+      assert.strictEqual(errors.first_name, 'First name is required');
+      assert.strictEqual(errors.last_name, 'Last name is required');
     });
 
     it('should reject signup with missing mandatory phone', () => {
       const errors = validateSignupForm({
-        name: 'John Doe',
+        first_name: 'John',
+        last_name: 'Doe',
         email: 'user@domain.com',
         password: 'Password123!',
         confirm: 'Password123!',
@@ -93,7 +96,8 @@ describe('Authentication Validation Utility Suite', () => {
 
     it('should reject signup with missing mandatory academic fields (university, faculty, department)', () => {
       const errors = validateSignupForm({
-        name: 'John Doe',
+        first_name: 'John',
+        last_name: 'Doe',
         email: 'user@domain.com',
         password: 'Password123!',
         confirm: 'Password123!',
@@ -110,7 +114,8 @@ describe('Authentication Validation Utility Suite', () => {
 
     it('should reject signup when password confirmation does not match', () => {
       const errors = validateSignupForm({
-        name: 'John Doe',
+        first_name: 'John',
+        last_name: 'Doe',
         email: 'user@domain.com',
         password: 'Password123!',
         confirm: 'Mismatch123!',
@@ -125,7 +130,8 @@ describe('Authentication Validation Utility Suite', () => {
 
     it('should require at least one chess credential', () => {
       const errors = validateSignupForm({
-        name: 'John Doe',
+        first_name: 'John',
+        last_name: 'Doe',
         email: 'user@domain.com',
         password: 'Password123!',
         confirm: 'Password123!',
@@ -142,7 +148,8 @@ describe('Authentication Validation Utility Suite', () => {
 
     it('should accept valid signup input with mandatory fields filled and optional level omitted', () => {
       const errorsChess = validateSignupForm({
-        name: 'John Doe',
+        first_name: 'John',
+        last_name: 'Doe',
         email: 'user@domain.com',
         password: 'Password123!',
         confirm: 'Password123!',
@@ -155,7 +162,8 @@ describe('Authentication Validation Utility Suite', () => {
       assert.deepStrictEqual(errorsChess, {});
 
       const errorsLichess = validateSignupForm({
-        name: 'Jane Doe',
+        first_name: 'Jane',
+        last_name: 'Doe',
         email: 'jane@domain.com',
         password: 'Password123!',
         confirm: 'Password123!',

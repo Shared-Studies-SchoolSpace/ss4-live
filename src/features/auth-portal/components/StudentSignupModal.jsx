@@ -123,7 +123,8 @@ export default function StudentSignupModal({
   };
 
   const [form, setForm] = useState({
-    name: "",
+    first_name: "",
+    last_name: "",
     email: "",
     phone: "",
     password: "",
@@ -224,8 +225,11 @@ export default function StudentSignupModal({
         }
       }
 
+      // Concatenate First Name and Last Name into full name for database storage
+      const fullName = `${form.first_name.trim()} ${form.last_name.trim()}`.trim();
+
       const profileData = {
-        name: form.name.trim(),
+        name: fullName,
         phone: form.phone.trim(),
         university: form.university.trim(),
         faculty: form.faculty.trim(),
@@ -298,8 +302,9 @@ export default function StudentSignupModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-[#111111]/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-lg shadow-2xl border border-gray-100 relative my-8 animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 bg-[#111111]/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-6 overflow-y-auto">
+      {/* Landscape / Wider-than-taller card container */}
+      <div className={`bg-white rounded-3xl p-6 sm:p-8 w-full ${isLogin || isForgotPassword ? 'max-w-md' : 'max-w-3xl'} shadow-2xl border border-gray-100 relative my-auto animate-in fade-in zoom-in-95 duration-200 transition-all`}>
 
         {/* Close Button */}
         <button
@@ -431,43 +436,69 @@ export default function StudentSignupModal({
             )}
           </form>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4 max-h-[60vh] overflow-y-auto pr-1 no-scrollbar animate-in fade-in duration-150">
+          <form onSubmit={handleSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-1 no-scrollbar animate-in fade-in duration-150">
 
-            {!isLogin && (
+            {!isLogin ? (
+              <>
+                {/* Personal Information Row: First Name & Last Name */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">First Name</label>
+                    <Input
+                      placeholder="e.g. John"
+                      value={form.first_name}
+                      onChange={(e) => update("first_name", e.target.value)}
+                    />
+                    {errors.first_name && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.first_name}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Last Name</label>
+                    <Input
+                      placeholder="e.g. Doe"
+                      value={form.last_name}
+                      onChange={(e) => update("last_name", e.target.value)}
+                    />
+                    {errors.last_name && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.last_name}</p>}
+                  </div>
+                </div>
+
+                {/* Contact Row: Email & Phone Number */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
+                    <Input
+                      type="email"
+                      placeholder="e.g. john@university.edu"
+                      value={form.email}
+                      onChange={(e) => update("email", e.target.value)}
+                    />
+                    {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Phone / WhatsApp Number</label>
+                    <Input
+                      placeholder="e.g. +2348000000000"
+                      value={form.phone}
+                      onChange={(e) => update("phone", e.target.value)}
+                    />
+                    {errors.phone && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.phone}</p>}
+                  </div>
+                </div>
+              </>
+            ) : (
               <div>
-                <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Full Name</label>
+                <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
                 <Input
-                  placeholder="e.g. John Doe"
-                  value={form.name}
-                  onChange={(e) => update("name", e.target.value)}
+                  type="email"
+                  placeholder="e.g. john@university.edu"
+                  value={form.email}
+                  onChange={(e) => update("email", e.target.value)}
                 />
-                {errors.name && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.name}</p>}
+                {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
               </div>
             )}
 
-            <div>
-              <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
-              <Input
-                type="email"
-                placeholder="e.g. john@university.edu"
-                value={form.email}
-                onChange={(e) => update("email", e.target.value)}
-              />
-              {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
-            </div>
-
-            {!isLogin && (
-              <div>
-                <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Phone / WhatsApp Number</label>
-                <Input
-                  placeholder="e.g. +2348000000000"
-                  value={form.phone}
-                  onChange={(e) => update("phone", e.target.value)}
-                />
-                {errors.phone && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.phone}</p>}
-              </div>
-            )}
-
+            {/* Password Row */}
             <div className={`${isLogin ? 'block' : 'grid grid-cols-1 sm:grid-cols-2 gap-4'}`}>
               <div>
                 <div className="flex justify-between items-center mb-1.5">

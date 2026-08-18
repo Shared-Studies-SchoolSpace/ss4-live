@@ -3,6 +3,7 @@ import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import { useAuth } from '../hooks/useAuth';
 import { fetchChessComStats, fetchLichessStats, fetchCompletePlayerData } from '../../chess-league/utils/chessService';
+import { validateLoginForm, validateSignupForm, validatePasswordResetForm } from '../utils/authValidation';
 import { toast } from "react-toastify";
 
 export default function StudentSignupModal({ 
@@ -27,8 +28,9 @@ export default function StudentSignupModal({
 
   const handleForgotPasswordSubmit = async (e) => {
     e.preventDefault();
-    if (!form.email) {
-      setErrors({ email: "Email is required to reset password" });
+    const resetErrors = validatePasswordResetForm(form.email);
+    if (Object.keys(resetErrors).length > 0) {
+      setErrors(resetErrors);
       return;
     }
     setSubmitting(true);
@@ -146,24 +148,10 @@ export default function StudentSignupModal({
   }
 
   const validate = () => {
-    const newErrors = {};
-    if (!form.email) newErrors.email = "Email is required";
-    if (!form.password) newErrors.password = "Password is required";
+    const newErrors = isLogin
+      ? validateLoginForm(form)
+      : validateSignupForm(form, flowType);
 
-    if (!isLogin) {
-      if (!form.name) newErrors.name = "Full name is required";
-      if (form.password !== form.confirm) {
-        newErrors.confirm = "Passwords do not match";
-      }
-      if (form.password && form.password.length < 8) {
-        newErrors.password = "Password must be at least 8 characters";
-      }
-      if (!form.chess_username && !form.lichess_username) {
-        newErrors.chess_username = "At least one Chess.com or Lichess username is required";
-        newErrors.lichess_username = "At least one Chess.com or Lichess username is required";
-      }
-    }
-    // Educational fields (university, faculty, department, level) are strictly non-mandatory (optional)
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -175,9 +163,6 @@ export default function StudentSignupModal({
     setSubmitting(true);
 
     if (isLogin) {
-      // Fix 4: Write rememberMe flag immediately before the Supabase auth call,
-      // NOT at the top of handleSubmit where a verification short-circuit return
-      // could leave the flag set from a prior unchecked-checkbox state.
       localStorage.setItem('ss4_remember_me', rememberMe ? 'true' : 'false');
       const { error } = await signIn(form.email, form.password);
       setSubmitting(false);
@@ -185,7 +170,6 @@ export default function StudentSignupModal({
         toast.error(`Login failed: ${error.message}`);
       } else {
         toast.success("Welcome back!");
-        // Fire post-login callback if provided, otherwise just close
         if (typeof onAuthSuccess === 'function') {
           onAuthSuccess();
         } else {
@@ -193,11 +177,12 @@ export default function StudentSignupModal({
         }
       }
     } else {
-      const needsChessVerify = form.chess_username && chessStatus !== 'valid';
-      const needsLichessVerify = form.lichess_username && lichessStatus !== 'valid';
+      let currentChessRating = verifiedChessRating;
+      let currentLichessRating = verifiedLichessRating;
+      const needsChessVerify = form.chess_username?.trim() && chessStatus !== 'valid';
+      const needsLichessVerify = form.lichess_username?.trim() && lichessStatus !== 'valid';
 
       if (needsChessVerify || needsLichessVerify) {
-        setSubmitting(true);
         toast.info("Verifying chess usernames and fetching ratings...");
         
         let hasError = false;
@@ -213,6 +198,7 @@ export default function StudentSignupModal({
           } else {
             setErrors(prev => ({ ...prev, chess_username: "" }));
             setChessStatus('valid');
+            currentChessRating = data.rating;
             setVerifiedChessRating(data.rating);
             setChessAvatar(data.avatar);
           }
@@ -229,38 +215,33 @@ export default function StudentSignupModal({
           } else {
             setErrors(prev => ({ ...prev, lichess_username: "" }));
             setLichessStatus('valid');
+            currentLichessRating = data.rating;
             setVerifiedLichessRating(data.rating);
             setLichessAvatar(data.avatar);
           }
         }
 
-        setSubmitting(false);
         if (hasError) {
+          setSubmitting(false);
           toast.error("Please enter a valid username for your chess account(s).");
-        } else {
-          toast.success("Accounts verified successfully! Click Create Account to finalize.");
+          return;
         }
-        return;
       }
 
-      setSubmitting(true);
       const profileData = {
-        name: form.name,
-        university: form.university || '',
-        faculty: form.faculty || '',
-        department: form.department || '',
+        name: form.name.trim(),
+        university: form.university?.trim() || '',
+        faculty: form.faculty?.trim() || '',
+        department: form.department?.trim() || '',
         level: form.level || '',
-        chess_username: form.chess_username || '',
-        lichess_username: form.lichess_username || '',
-        chess_rating: verifiedChessRating,
-        lichess_rating: verifiedLichessRating,
+        chess_username: form.chess_username?.trim() || '',
+        lichess_username: form.lichess_username?.trim() || '',
+        chess_rating: currentChessRating,
+        lichess_rating: currentLichessRating,
         user_type: flowType,
         is_student: flowType === 'student'
       };
 
-      // Fix 4: Write rememberMe flag immediately before the Supabase auth call.
-      // This ensures the storage proxy reads the correct flag even if verification
-      // returned early in a prior handleSubmit call and the checkbox state has changed.
       localStorage.setItem('ss4_remember_me', rememberMe ? 'true' : 'false');
       const { error } = await signUp(form.email, form.password, profileData);
       setSubmitting(false);

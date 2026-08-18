@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
 import { supabase } from '../../../supabase';
 import { toast } from 'react-toastify';
+import { signInUser, signUpUser, sendPasswordResetEmail } from '../services/authService';
 
 const AuthContext = createContext({
   user: null,
@@ -662,9 +663,7 @@ export function AuthProvider({ children }) {
   };
 
   const sendPasswordReset = async (email) => {
-    return await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + '/dashboard?tab=settings',
-    });
+    return await sendPasswordResetEmail(email);
   };
 
   const deleteAccount = async () => {
@@ -684,100 +683,13 @@ export function AuthProvider({ children }) {
   };
 
   const signUp = async (email, password, profileData) => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            name: profileData.name,
-            university: profileData.university || '',
-            faculty: profileData.faculty || '',
-            department: profileData.department || '',
-            level: profileData.level || '',
-            phone: profileData.phone || profileData.whatsapp || '',
-            chess_username: profileData.chess_username || '',
-            lichess_username: profileData.lichess_username || '',
-            chess_rating: profileData.chess_rating || 0,
-            lichess_rating: profileData.lichess_rating || 0,
-            role: 'player'
-          }
-        }
-      });
-
-      if (error) throw error;
-      if (data.user) {
-        const { error: profileErr } = await supabase
-          .from('profiles')
-          .upsert({
-            id: data.user.id,
-            email,
-            name: profileData.name,
-            university: profileData.university || '',
-            faculty: profileData.faculty || '',
-            department: profileData.department || '',
-            level: profileData.level || '',
-            phone: profileData.phone || profileData.whatsapp || '',
-            chess_username: profileData.chess_username || '',
-            lichess_username: profileData.lichess_username || '',
-            chess_rating: profileData.chess_rating || 0,
-            lichess_rating: profileData.lichess_rating || 0,
-            role: 'player'
-          });
-
-        // Fix 3: Do NOT throw on profileErr. The auth user already exists in auth.users.
-        // Throwing here creates a split-brain: user gets "Signup failed" toast but their
-        // email is permanently locked. The self-heal fallback in fetchProfile will create
-        // the profile row on first login if it's missing due to this failure.
-        if (profileErr) {
-          console.error('[signUp] Profile row upsert failed after auth user created - self-heal will run on next login:', profileErr.message);
-          toast.warn('Account created! Finalizing your profile on first login...');
-        } else {
-          // Only auto-assign division if profile write succeeded
-          try {
-            const createdProfile = {
-              name: profileData.name,
-              chess_username: profileData.chess_username || '',
-              lichess_username: profileData.lichess_username || '',
-              email,
-              department: profileData.department || '',
-              university: profileData.university || ''
-            };
-            const maxRating = Math.max(profileData.chess_rating || 0, profileData.lichess_rating || 0);
-            await updatePlayerDivision(createdProfile, maxRating);
-          } catch (divErr) {
-            console.warn('Division auto-assignment failed:', divErr.message);
-          }
-        }
-        // Fix 2: Do NOT call fetchProfile explicitly here.
-        // onAuthStateChange fires SIGNED_IN immediately after signUp and calls fetchProfile
-        // via the listener. Calling it here too creates a non-deterministic race where
-        // fetchingUidRef deduplication silently skips one of the two calls.
-      }
-      setLoading(false);
-      return { data, error: null };
-    } catch (err) {
-      setLoading(false);
-      return { data: null, error: err };
-    }
+    const rememberMe = typeof localStorage !== 'undefined' && localStorage.getItem('ss4_remember_me') === 'true';
+    return await signUpUser({ email, password, profileData, rememberMe }, updatePlayerDivision);
   };
 
   const signIn = async (email, password) => {
-    // Fix 1: Do NOT call setLoading here. Global `loading` is only for session hydration.
-    // The modal manages its own `submitting` state independently (orthogonal concerns).
-    // Calling setLoading(true) here forces a global re-render that fights the modal's
-    // local spinner, creating a double-flash race on slow connections.
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
-      if (error) throw error;
-      return { data, error: null };
-    } catch (err) {
-      return { data: null, error: err };
-    }
+    const rememberMe = typeof localStorage !== 'undefined' && localStorage.getItem('ss4_remember_me') === 'true';
+    return await signInUser({ email, password, rememberMe });
   };
 
 

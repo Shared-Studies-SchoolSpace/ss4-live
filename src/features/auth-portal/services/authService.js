@@ -109,7 +109,6 @@ export async function signUpUser({ email, password, profileData = {}, rememberMe
         faculty: profileData.faculty || '',
         department: profileData.department || '',
         level: profileData.level || '',
-        phone: cleanPhone,
         chess_username: cleanChessUser,
         lichess_username: cleanLichessUser,
         chess_rating: profileData.chess_rating || 0,

@@ -945,23 +945,28 @@ export default function ChessTournamentPage() {
       return;
     }
 
-    let activeProfile = profile;
-    if (!activeProfile) {
-      if (typeof refreshProfile === 'function') {
-        await refreshProfile();
+    setLoadingReg(true);
+    try {
+      let activeProfile = profile;
+      if (!activeProfile) {
+        if (typeof refreshProfile === 'function') {
+          await refreshProfile();
+        }
+        const { data: freshProf } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle();
+        if (freshProf) {
+          activeProfile = freshProf;
+        }
       }
-      const { data: freshProf } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle();
-      if (freshProf) {
-        activeProfile = freshProf;
+
+      if (!activeProfile) {
+        toast.error('Player profile not found. Please complete your profile in the Dashboard.');
+        return;
       }
-    }
 
-    if (!activeProfile) {
-      toast.error('Player profile not found. Please complete your profile in the Dashboard.');
-      return;
+      await executeRegistration(user, activeProfile);
+    } finally {
+      setLoadingReg(false);
     }
-
-    await executeRegistration(user, activeProfile);
   };
 
   const handleJoinTournamentAfterAuth = async () => {

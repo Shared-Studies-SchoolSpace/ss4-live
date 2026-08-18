@@ -275,10 +275,10 @@ export default function StudentSignupModal({
             </div>
           </div>
 
-          <h2 className="text-2xl font-black font-space text-brand-text-dark leading-tight animate-in slide-in-from-bottom-2 duration-300">
+          <h2 className="text-[22px] font-black font-space text-brand-text-dark leading-tight animate-in slide-in-from-bottom-2 duration-300">
             Welcome to the League!
           </h2>
-          <p className="text-sm font-semibold text-gray-500 mt-2.5 max-w-xs mx-auto animate-in slide-in-from-bottom-3 duration-400">
+          <p className="text-[11px] font-semibold text-gray-500 mt-2.5 max-w-xs mx-auto animate-in slide-in-from-bottom-3 duration-400">
             Account created successfully. Initializing your profile and ratings...
           </p>
 
@@ -292,7 +292,7 @@ export default function StudentSignupModal({
                 }}
               ></div>
             </div>
-            <span className="text-[10px] font-black text-gray-350 uppercase tracking-widest block mt-3">
+            <span className="text-[9px] font-black text-gray-350 uppercase tracking-widest block mt-3">
               Redirecting to dashboard
             </span>
           </div>
@@ -303,28 +303,28 @@ export default function StudentSignupModal({
 
   return (
     <div className="fixed inset-0 bg-[#111111]/60 backdrop-blur-md flex items-center justify-center z-[9999] p-4 sm:p-6 overflow-y-auto">
-      {/* Portrait Medium-Inspired Aspect Ratio & Geometry */}
-      <div className="bg-white rounded-[2rem] p-7 sm:p-9 w-full max-w-[480px] shadow-2xl border border-gray-100 relative my-auto animate-in fade-in zoom-in-95 duration-200 transition-all">
+      {/* 2-Field Row Enforced Geometry & 8% Reduced Font Hierarchy */}
+      <div className="bg-white rounded-[2rem] p-6 sm:p-8 w-full max-w-[500px] shadow-2xl border border-gray-100 relative my-auto animate-in fade-in zoom-in-95 duration-200 transition-all">
 
         {/* Close Button */}
         <button
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 text-gray-400 hover:text-brand-text-dark w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 text-gray-400 hover:text-brand-text-dark w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors cursor-pointer"
           onClick={onClose}
           aria-label="Close"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <div className="text-center mb-6">
-          <img src="/ss4_logo.jpg" alt="SS4 Logo" className="h-10 mx-auto mb-3" />
-          <h2 className="text-2xl font-black font-space text-brand-text-dark leading-tight">
+        <div className="text-center mb-5">
+          <img src="/ss4_logo.jpg" alt="SS4 Logo" className="h-9 mx-auto mb-2.5" />
+          <h2 className="text-[22px] font-black font-space text-brand-text-dark leading-tight">
             {isForgotPassword 
               ? "Reset Password" 
               : (isLogin ? "Welcome Back" : "Create Account")}
           </h2>
-          <p className="text-xs font-semibold text-gray-400 mt-1.5 max-w-xs mx-auto">
+          <p className="text-[11px] font-semibold text-gray-400 mt-1 max-w-xs mx-auto">
             {isForgotPassword 
               ? "We'll send a password recovery link to your email" 
               : (isLogin ? "Log in to access pairings and chat" : "Join the SS4 Chess League & Tournaments")}
@@ -333,7 +333,7 @@ export default function StudentSignupModal({
 
         {/* Segmented Mode Selector */}
         {!isForgotPassword && (
-          <div className="flex bg-gray-100/70 border border-gray-200/60 rounded-2xl p-1 mb-6 max-w-xs mx-auto">
+          <div className="flex bg-gray-100/70 border border-gray-200/60 rounded-2xl p-1 mb-5 max-w-[240px] mx-auto">
             <button
               type="button"
               onClick={() => {
@@ -342,7 +342,7 @@ export default function StudentSignupModal({
                 setShowPassword(false);
                 setShowConfirm(false);
               }}
-              className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none ${
+              className={`flex-1 py-1.5 text-[11px] font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none ${
                 isLogin
                   ? "bg-white text-brand-primary shadow-sm"
                   : "text-gray-400 hover:text-gray-600 bg-transparent"
@@ -358,7 +358,7 @@ export default function StudentSignupModal({
                 setShowPassword(false);
                 setShowConfirm(false);
               }}
-              className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none ${
+              className={`flex-1 py-1.5 text-[11px] font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none ${
                 !isLogin
                   ? "bg-white text-brand-primary shadow-sm"
                   : "text-gray-400 hover:text-gray-600 bg-transparent"
@@ -370,15 +370,15 @@ export default function StudentSignupModal({
         )}
 
         {isForgotPassword ? (
-          <form onSubmit={handleForgotPasswordSubmit} className="space-y-4">
+          <form onSubmit={handleForgotPasswordSubmit} className="space-y-3.5">
             {resetEmailSent ? (
-              <div className="text-center py-6 space-y-3">
-                <span className="text-4xl block mb-2">✉️</span>
-                <h3 className="text-sm font-black text-brand-text-dark uppercase tracking-wider">Reset Link Sent</h3>
-                <p className="text-xs font-semibold text-gray-500 max-w-xs mx-auto leading-relaxed">
+              <div className="text-center py-5 space-y-2.5">
+                <span className="text-3xl block mb-1.5">✉️</span>
+                <h3 className="text-[11px] font-black text-brand-text-dark uppercase tracking-wider">Reset Link Sent</h3>
+                <p className="text-[11px] font-semibold text-gray-500 max-w-xs mx-auto leading-relaxed">
                   We've sent a password reset link to <strong className="text-brand-primary font-bold">{form.email}</strong>. Please check your inbox.
                 </p>
-                <div className="pt-4">
+                <div className="pt-3">
                   <Button
                     type="button"
                     variant="primary"
@@ -386,7 +386,7 @@ export default function StudentSignupModal({
                       setIsForgotPassword(false);
                       setResetEmailSent(false);
                     }}
-                    className="w-full py-2.5 text-xs font-bold rounded-full cursor-pointer"
+                    className="w-full py-2.5 text-[11px] font-bold rounded-full cursor-pointer"
                   >
                     Back to Sign In
                   </Button>
@@ -395,39 +395,40 @@ export default function StudentSignupModal({
             ) : (
               <>
                 <div>
-                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
+                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Email Address</label>
                   <Input
                     type="email"
                     placeholder="e.g. john@university.edu"
                     value={form.email}
                     onChange={(e) => update("email", e.target.value)}
+                    className="text-[13px] py-2 px-3"
                   />
-                  {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
+                  {errors.email && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.email}</p>}
                 </div>
                 
-                <div className="pt-2">
+                <div className="pt-1.5">
                   <Button
                     type="submit"
                     variant="primary"
                     disabled={submitting}
-                    className="w-full flex items-center justify-center gap-2 py-3 bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 py-2.5 text-[13px] bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer"
                   >
                     {submitting ? (
-                      <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                     ) : (
                       "Send Reset Link"
                     )}
                   </Button>
                 </div>
 
-                <div className="text-center pt-2">
+                <div className="text-center pt-1.5">
                   <button
                     type="button"
                     onClick={() => {
                       setIsForgotPassword(false);
                       setErrors({});
                     }}
-                    className="text-brand-primary text-xs font-bold hover:underline cursor-pointer bg-transparent border-none focus:outline-none"
+                    className="text-brand-primary text-[11px] font-bold hover:underline cursor-pointer bg-transparent border-none focus:outline-none"
                   >
                     Back to Sign In
                   </button>
@@ -436,73 +437,78 @@ export default function StudentSignupModal({
             )}
           </form>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4 animate-in fade-in duration-150">
+          <form onSubmit={handleSubmit} className="space-y-3 animate-in fade-in duration-150">
 
             {!isLogin ? (
               <>
-                {/* Side-by-side First Name & Last Name */}
+                {/* Row 1: First Name & Last Name (2 Fields Per Row) */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">First Name</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">First Name</label>
                     <Input
                       placeholder="e.g. John"
                       value={form.first_name}
                       onChange={(e) => update("first_name", e.target.value)}
+                      className="text-[13px] py-2 px-3"
                     />
-                    {errors.first_name && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.first_name}</p>}
+                    {errors.first_name && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.first_name}</p>}
                   </div>
                   <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Last Name</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Last Name</label>
                     <Input
                       placeholder="e.g. Doe"
                       value={form.last_name}
                       onChange={(e) => update("last_name", e.target.value)}
+                      className="text-[13px] py-2 px-3"
                     />
-                    {errors.last_name && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.last_name}</p>}
+                    {errors.last_name && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.last_name}</p>}
                   </div>
                 </div>
 
-                {/* Contact Row: Email Address & Phone Number */}
+                {/* Row 2: Email Address & Phone Number (2 Fields Per Row) */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Email Address</label>
                     <Input
                       type="email"
-                      placeholder="e.g. john@university.edu"
+                      placeholder="e.g. john@uni.edu"
                       value={form.email}
                       onChange={(e) => update("email", e.target.value)}
+                      className="text-[13px] py-2 px-3"
                     />
-                    {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
+                    {errors.email && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.email}</p>}
                   </div>
                   <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Phone / WhatsApp</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Phone / WhatsApp</label>
                     <Input
                       placeholder="e.g. +2348000000000"
                       value={form.phone}
                       onChange={(e) => update("phone", e.target.value)}
+                      className="text-[13px] py-2 px-3"
                     />
-                    {errors.phone && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.phone}</p>}
+                    {errors.phone && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.phone}</p>}
                   </div>
                 </div>
               </>
             ) : (
               <div>
-                <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Email Address</label>
                 <Input
                   type="email"
                   placeholder="e.g. john@university.edu"
                   value={form.email}
                   onChange={(e) => update("email", e.target.value)}
+                  className="text-[13px] py-2 px-3"
                 />
-                {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
+                {errors.email && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.email}</p>}
               </div>
             )}
 
-            {/* Password Row */}
-            <div className={`${isLogin ? 'block' : 'grid grid-cols-1 sm:grid-cols-2 gap-3'}`}>
+            {/* Row 3: Password & Confirm Password (2 Fields Per Row) */}
+            <div className={`${isLogin ? 'block' : 'grid grid-cols-2 gap-3'}`}>
               <div>
-                <div className="flex justify-between items-center mb-1.5">
-                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest">Password</label>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Password</label>
                   {isLogin && (
                     <button
                       type="button"
@@ -510,129 +516,138 @@ export default function StudentSignupModal({
                         setIsForgotPassword(true);
                         setErrors({});
                       }}
-                      className="text-brand-primary text-[10px] font-bold hover:underline cursor-pointer bg-transparent border-none focus:outline-none"
+                      className="text-brand-primary text-[9px] font-bold hover:underline cursor-pointer bg-transparent border-none focus:outline-none"
                     >
-                      Forgot Password?
+                      Forgot?
                     </button>
                   )}
                 </div>
                 <div className="relative flex items-center">
                   <Input
                     type={showPassword ? "text" : "password"}
-                    placeholder="Min. 8 characters"
+                    placeholder="Min. 8 chars"
                     value={form.password}
                     onChange={(e) => update("password", e.target.value)}
-                    className="pr-10"
+                    className="pr-9 text-[13px] py-2 px-3"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
+                    className="absolute right-2.5 text-gray-400 hover:text-gray-600 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
                     aria-label={showPassword ? "Hide password" : "Show password"}
                   >
-                    <span className="material-symbols-outlined text-[20px]">
+                    <span className="material-symbols-outlined text-[18px]">
                       {showPassword ? "visibility_off" : "visibility"}
                     </span>
                   </button>
                 </div>
-                {errors.password && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.password}</p>}
+                {errors.password && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.password}</p>}
               </div>
 
               {!isLogin && (
                 <div>
-                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Confirm Password</label>
+                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Confirm Password</label>
                   <div className="relative flex items-center">
                     <Input
                       type={showConfirm ? "text" : "password"}
                       placeholder="Re-enter password"
                       value={form.confirm}
                       onChange={(e) => update("confirm", e.target.value)}
-                      className="pr-10"
+                      className="pr-9 text-[13px] py-2 px-3"
                     />
                     <button
                       type="button"
                       onClick={() => setShowConfirm(!showConfirm)}
-                      className="absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
+                      className="absolute right-2.5 text-gray-400 hover:text-gray-600 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
                       aria-label={showConfirm ? "Hide password" : "Show password"}
                     >
-                      <span className="material-symbols-outlined text-[20px]">
+                      <span className="material-symbols-outlined text-[18px]">
                         {showConfirm ? "visibility_off" : "visibility"}
                       </span>
                     </button>
                   </div>
-                  {errors.confirm && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.confirm}</p>}
+                  {errors.confirm && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.confirm}</p>}
                 </div>
               )}
             </div>
 
           {!isLogin && (
-            <div className="border-t border-gray-100 pt-4 mt-2">
-              <h3 className="text-xs font-black text-brand-primary uppercase tracking-widest mb-3">
+            <div className="border-t border-gray-100 pt-3 mt-1">
+              <h3 className="text-[11px] font-black text-brand-primary uppercase tracking-widest mb-2.5">
                 Academic Details
               </h3>
               <div className="space-y-3">
-                <div>
-                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
-                    University / School
-                  </label>
-                  <Input
-                    placeholder="e.g. University of Uyo"
-                    value={form.university}
-                    onChange={(e) => update("university", e.target.value)}
-                  />
-                  {errors.university && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.university}</p>}
-                </div>
+                {/* Row 4: University / School & Faculty (2 Fields Per Row) */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">
+                      University / School
+                    </label>
+                    <Input
+                      placeholder="e.g. Uniuyo"
+                      value={form.university}
+                      onChange={(e) => update("university", e.target.value)}
+                      className="text-[13px] py-2 px-3"
+                    />
+                    {errors.university && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.university}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">
                       Faculty
                     </label>
                     <Input
-                      placeholder="e.g. Engineering"
+                      placeholder="e.g. Science"
                       value={form.faculty}
                       onChange={(e) => update("faculty", e.target.value)}
+                      className="text-[13px] py-2 px-3"
                     />
-                    {errors.faculty && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.faculty}</p>}
+                    {errors.faculty && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.faculty}</p>}
                   </div>
+                </div>
+
+                {/* Row 5: Department & Academic Level (2 Fields Per Row) */}
+                <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">
                       Department
                     </label>
                     <Input
-                      placeholder="e.g. Computer Science"
+                      placeholder="e.g. Computer Sci"
                       value={form.department}
                       onChange={(e) => update("department", e.target.value)}
+                      className="text-[13px] py-2 px-3"
                     />
-                    {errors.department && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.department}</p>}
+                    {errors.department && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.department}</p>}
                   </div>
-                </div>
-                <div>
-                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
-                    Academic Level <span className="text-[10px] font-normal lowercase text-gray-400">(optional)</span>
-                  </label>
-                  <select
-                    value={form.level}
-                    onChange={(e) => update("level", e.target.value)}
-                    className="w-full bg-white border border-[#E8640A] rounded-xl px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#E8640A]/40"
-                  >
-                    <option value="">Select Level (Optional)</option>
-                    {[100, 200, 300, 400, 500].map(l => (
-                      <option key={l} value={`${l}`}>{l} Level</option>
-                    ))}
-                  </select>
+                  <div>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">
+                      Academic Level <span className="text-[9px] font-normal lowercase text-gray-400">(opt)</span>
+                    </label>
+                    <select
+                      value={form.level}
+                      onChange={(e) => update("level", e.target.value)}
+                      className="w-full bg-white border border-[#E8640A] rounded-xl px-3 py-2 text-[13px] text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#E8640A]/40"
+                    >
+                      <option value="">Select Level</option>
+                      {[100, 200, 300, 400, 500].map(l => (
+                        <option key={l} value={`${l}`}>{l} Level</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
           {!isLogin && (
-            <div className="border-t border-gray-100 pt-4 mt-2">
-              <h3 className="text-xs font-black text-brand-accent uppercase tracking-widest mb-1">Chess Credentials</h3>
-              <p className="text-[10px] text-gray-400 mb-3 font-semibold">At least one username is required; providing both is recommended for accurate rating sync.</p>
+            <div className="border-t border-gray-100 pt-3 mt-1">
+              <h3 className="text-[11px] font-black text-brand-accent uppercase tracking-widest mb-0.5">Chess Credentials</h3>
+              <p className="text-[9px] text-gray-400 mb-2.5 font-semibold">At least one username is required; both recommended.</p>
 
-                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Row 6: Chess.com Username & Lichess Username (2 Fields Per Row) */}
+                <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Chess.com Username</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Chess.com Username</label>
                     <div className="relative flex items-center">
                       <Input
                         placeholder="e.g. GrandmasterX"
@@ -642,30 +657,30 @@ export default function StudentSignupModal({
                           setChessStatus('idle');
                         }}
                         onBlur={(e) => verifyChessUsername(e.target.value)}
-                        className="pr-20"
+                        className="pr-16 text-[13px] py-2 px-3"
                       />
                       {chessStatus === 'verifying' && (
-                        <span className="absolute right-3 flex h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-brand-primary"></span>
+                        <span className="absolute right-2.5 flex h-3.5 w-3.5 animate-spin rounded-full border-2 border-gray-300 border-t-brand-primary"></span>
                       )}
                       {chessStatus === 'valid' && (
-                        <span className="absolute right-3 text-xs font-bold text-emerald-650 flex items-center gap-1 bg-emerald-50 px-2 py-1 rounded-lg">
+                        <span className="absolute right-2 text-[10px] font-bold text-emerald-650 flex items-center gap-0.5 bg-emerald-50 px-1.5 py-0.5 rounded-md">
                           {chessAvatar && (
-                            <img src={chessAvatar} alt="Chess Avatar" className="w-4 h-4 rounded-full object-cover mr-0.5 border border-emerald-200" />
+                            <img src={chessAvatar} alt="Chess Avatar" className="w-3.5 h-3.5 rounded-full object-cover mr-0.5 border border-emerald-200" />
                           )}
-                          <span className="material-symbols-outlined text-[14px]">check</span>
+                          <span className="material-symbols-outlined text-[12px]">check</span>
                           {verifiedChessRating}
                         </span>
                       )}
                       {chessStatus === 'invalid' && (
-                        <span className="absolute right-3 text-xs font-bold text-brand-accent flex items-center gap-1 bg-red-50 px-2 py-1 rounded-lg">
-                          <span className="material-symbols-outlined text-[14px]">close</span>
+                        <span className="absolute right-2 text-[10px] font-bold text-brand-accent flex items-center gap-0.5 bg-red-50 px-1.5 py-0.5 rounded-md">
+                          <span className="material-symbols-outlined text-[12px]">close</span>
                         </span>
                       )}
                     </div>
-                    {errors.chess_username && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.chess_username}</p>}
+                    {errors.chess_username && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.chess_username}</p>}
                   </div>
                   <div>
-                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Lichess Username</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Lichess Username</label>
                     <div className="relative flex items-center">
                       <Input
                         placeholder="e.g. LichessPro"
@@ -675,55 +690,55 @@ export default function StudentSignupModal({
                           setLichessStatus('idle');
                         }}
                         onBlur={(e) => verifyLichessUsername(e.target.value)}
-                        className="pr-20"
+                        className="pr-16 text-[13px] py-2 px-3"
                       />
                       {lichessStatus === 'verifying' && (
-                        <span className="absolute right-3 flex h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-brand-primary"></span>
+                        <span className="absolute right-2.5 flex h-3.5 w-3.5 animate-spin rounded-full border-2 border-gray-300 border-t-brand-primary"></span>
                       )}
                       {lichessStatus === 'valid' && (
-                        <span className="absolute right-3 text-xs font-bold text-emerald-650 flex items-center gap-1 bg-emerald-50 px-2 py-1 rounded-lg">
+                        <span className="absolute right-2 text-[10px] font-bold text-emerald-650 flex items-center gap-0.5 bg-emerald-50 px-1.5 py-0.5 rounded-md">
                           {lichessAvatar && (
-                            <img src={lichessAvatar} alt="Lichess Avatar" className="w-4 h-4 rounded-full object-cover mr-0.5 border border-emerald-200" />
+                            <img src={lichessAvatar} alt="Lichess Avatar" className="w-3.5 h-3.5 rounded-full object-cover mr-0.5 border border-emerald-200" />
                           )}
-                          <span className="material-symbols-outlined text-[14px]">check</span>
+                          <span className="material-symbols-outlined text-[12px]">check</span>
                           {verifiedLichessRating}
                         </span>
                       )}
                       {lichessStatus === 'invalid' && (
-                        <span className="absolute right-3 text-xs font-bold text-brand-accent flex items-center gap-1 bg-red-50 px-2 py-1 rounded-lg">
-                          <span className="material-symbols-outlined text-[14px]">close</span>
+                        <span className="absolute right-2 text-[10px] font-bold text-brand-accent flex items-center gap-0.5 bg-red-50 px-1.5 py-0.5 rounded-md">
+                          <span className="material-symbols-outlined text-[12px]">close</span>
                         </span>
                       )}
                     </div>
-                    {errors.lichess_username && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.lichess_username}</p>}
+                    {errors.lichess_username && <p className="text-[9px] font-bold text-brand-accent mt-0.5">{errors.lichess_username}</p>}
                   </div>
                 </div>
               </div>
           )}
 
           {/* Remember Me */}
-          <div className="flex items-center gap-2.5 pt-1">
+          <div className="flex items-center gap-2 pt-0.5">
             <input
               id="remember-me"
               type="checkbox"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
-              className="w-4 h-4 rounded border-gray-300 text-brand-primary accent-brand-primary cursor-pointer"
+              className="w-3.5 h-3.5 rounded border-gray-300 text-brand-primary accent-brand-primary cursor-pointer"
             />
-            <label htmlFor="remember-me" className="text-xs font-semibold text-gray-500 cursor-pointer select-none">
+            <label htmlFor="remember-me" className="text-[11px] font-semibold text-gray-500 cursor-pointer select-none">
               Remember me on this device
             </label>
           </div>
 
-          <div className="pt-2">
+          <div className="pt-1.5">
             <Button
               type="submit"
               variant="primary"
               disabled={submitting}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 py-2.5 text-[13px] bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer"
             >
               {submitting ? (
-                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
               ) : (
                 isLogin ? "Sign In" : (
                   ((form.chess_username && chessStatus !== 'valid') ||
@@ -738,8 +753,8 @@ export default function StudentSignupModal({
         )}
 
         {!isForgotPassword && (
-          <div className="text-center mt-6 pt-4 border-t border-gray-100">
-            <p className="text-xs font-semibold text-gray-500">
+          <div className="text-center mt-5 pt-3 border-t border-gray-100">
+            <p className="text-[11px] font-semibold text-gray-500">
               {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
               <button
                 onClick={() => {

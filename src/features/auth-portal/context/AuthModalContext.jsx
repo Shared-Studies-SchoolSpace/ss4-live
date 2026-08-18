@@ -1,15 +1,13 @@
 import React, { createContext, useCallback, useContext, useRef, useState } from 'react';
 import StudentSignupModal from '../components/StudentSignupModal';
-import SignupChoiceModal from '../components/SignupChoiceModal';
 import { useAuth } from '../hooks/useAuth';
 
 /**
  * AuthModalContext
  *
  * Provides a site-wide, prop-drilling-free way to:
- *   1. Open the sign-in/register modal from anywhere.
- *   2. Support student vs general pre-flow branching.
- *   3. Register a one-shot "post-login" callback so the action that prompted
+ *   1. Open the sign-in/register modal directly from anywhere.
+ *   2. Register a one-shot "post-login" callback so the action that prompted
  *      the sign-in can be completed automatically once auth succeeds.
  *
  * Usage:
@@ -22,8 +20,7 @@ const AuthModalContext = createContext({
 });
 
 export function AuthModalProvider({ children }) {
-  const [stage, setStage] = useState(null); // null | 'choice' | 'student' | 'general' | 'login'
-  // A ref so the callback is never stale inside the modal's onClose handler
+  const [stage, setStage] = useState(null); // null | 'register' | 'login'
   const pendingCallbackRef = useRef(null);
   const { user, loading } = useAuth();
   const [pendingSuccess, setPendingSuccess] = useState(false);
@@ -31,26 +28,21 @@ export function AuthModalProvider({ children }) {
   /**
    * openAuthModal(reason?, onAuthenticated?, mode?)
    *
-   * @param {string}   [reason]          – Human-readable reason shown to the user (for future tooltip use).
-   * @param {Function} [onAuthenticated] – Callback invoked once the user has signed in / registered.
-   * @param {string}   [mode]            – The mode to open: 'login' | 'register' | 'student' | 'general'.
+   * @param {string}   [reason]          – Human-readable reason shown to the user.
+   * @param {Function} [onAuthenticated] – Callback invoked once authenticated.
+   * @param {string}   [mode]            – The mode to open: 'login' | 'register'.
    */
   const openAuthModal = useCallback((reason = '', onAuthenticated = null, mode = 'register') => {
     pendingCallbackRef.current = onAuthenticated;
     if (mode === 'login') {
       setStage('login');
-    } else if (mode === 'student') {
-      setStage('student');
-    } else if (mode === 'general') {
-      setStage('general');
     } else {
-      setStage('choice');
+      setStage('register');
     }
   }, []);
 
   const handleClose = useCallback(() => {
     setStage(null);
-    // Do NOT invoke the callback on cancel  only on successful auth
     pendingCallbackRef.current = null;
     setPendingSuccess(false);
   }, []);
@@ -78,21 +70,11 @@ export function AuthModalProvider({ children }) {
   return (
     <AuthModalContext.Provider value={{ openAuthModal }}>
       {children}
-      {stage === 'choice' && (
-        <SignupChoiceModal
-          onClose={handleClose}
-          onStudent={() => setStage('student')}
-          onGeneral={() => setStage('general')}
-          onSignIn={() => setStage('login')}
-        />
-      )}
-      {(stage === 'student' || stage === 'general' || stage === 'login') && (
+      {(stage === 'register' || stage === 'login') && (
         <StudentSignupModal
           onClose={handleClose}
           onAuthSuccess={handleAuthSuccess}
           initialIsLogin={stage === 'login'}
-          initialFlowType={stage === 'general' ? 'general' : 'student'}
-          onBackToChoice={() => setStage('choice')}
         />
       )}
     </AuthModalContext.Provider>

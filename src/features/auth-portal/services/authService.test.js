@@ -67,9 +67,45 @@ describe('Authentication Validation Utility Suite', () => {
         email: 'user@domain.com',
         password: 'Password123!',
         confirm: 'Password123!',
+        phone: '+2348000000000',
+        university: 'University of Uyo',
+        faculty: 'Science',
+        department: 'Computer Science',
         chess_username: 'player1'
       });
       assert.strictEqual(errors.name, 'Full name is required');
+    });
+
+    it('should reject signup with missing mandatory phone', () => {
+      const errors = validateSignupForm({
+        name: 'John Doe',
+        email: 'user@domain.com',
+        password: 'Password123!',
+        confirm: 'Password123!',
+        phone: '',
+        university: 'University of Uyo',
+        faculty: 'Science',
+        department: 'Computer Science',
+        chess_username: 'player1'
+      });
+      assert.strictEqual(errors.phone, 'Phone / WhatsApp number is required');
+    });
+
+    it('should reject signup with missing mandatory academic fields (university, faculty, department)', () => {
+      const errors = validateSignupForm({
+        name: 'John Doe',
+        email: 'user@domain.com',
+        password: 'Password123!',
+        confirm: 'Password123!',
+        phone: '+2348000000000',
+        university: '',
+        faculty: '',
+        department: '',
+        chess_username: 'player1'
+      });
+      assert.strictEqual(errors.university, 'University / School is required');
+      assert.strictEqual(errors.faculty, 'Faculty is required');
+      assert.strictEqual(errors.department, 'Department is required');
     });
 
     it('should reject signup when password confirmation does not match', () => {
@@ -78,6 +114,10 @@ describe('Authentication Validation Utility Suite', () => {
         email: 'user@domain.com',
         password: 'Password123!',
         confirm: 'Mismatch123!',
+        phone: '+2348000000000',
+        university: 'University of Uyo',
+        faculty: 'Science',
+        department: 'Computer Science',
         chess_username: 'player1'
       });
       assert.strictEqual(errors.confirm, 'Passwords do not match');
@@ -89,6 +129,10 @@ describe('Authentication Validation Utility Suite', () => {
         email: 'user@domain.com',
         password: 'Password123!',
         confirm: 'Password123!',
+        phone: '+2348000000000',
+        university: 'University of Uyo',
+        faculty: 'Science',
+        department: 'Computer Science',
         chess_username: '',
         lichess_username: ''
       });
@@ -96,12 +140,16 @@ describe('Authentication Validation Utility Suite', () => {
       assert.ok(errors.lichess_username);
     });
 
-    it('should accept valid signup input with either Chess.com or Lichess username', () => {
+    it('should accept valid signup input with mandatory fields filled and optional level omitted', () => {
       const errorsChess = validateSignupForm({
         name: 'John Doe',
         email: 'user@domain.com',
         password: 'Password123!',
         confirm: 'Password123!',
+        phone: '+2348000000000',
+        university: 'University of Uyo',
+        faculty: 'Engineering',
+        department: 'Mechanical Engineering',
         chess_username: 'grandmaster'
       });
       assert.deepStrictEqual(errorsChess, {});
@@ -111,6 +159,11 @@ describe('Authentication Validation Utility Suite', () => {
         email: 'jane@domain.com',
         password: 'Password123!',
         confirm: 'Password123!',
+        phone: '+2348111111111',
+        university: 'University of Lagos',
+        faculty: 'Law',
+        department: 'Public Law',
+        level: '400',
         lichess_username: 'lichess_pro'
       });
       assert.deepStrictEqual(errorsLichess, {});

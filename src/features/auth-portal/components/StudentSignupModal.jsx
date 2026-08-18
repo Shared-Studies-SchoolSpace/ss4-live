@@ -2,23 +2,20 @@ import { useState, useEffect } from "react";
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import { useAuth } from '../hooks/useAuth';
-import { fetchChessComStats, fetchLichessStats, fetchCompletePlayerData } from '../../chess-league/utils/chessService';
+import { fetchCompletePlayerData } from '../../chess-league/utils/chessService';
 import { validateLoginForm, validateSignupForm, validatePasswordResetForm } from '../utils/authValidation';
 import { toast } from "react-toastify";
 
 export default function StudentSignupModal({ 
   onClose, 
   onAuthSuccess, 
-  initialIsLogin = false, 
-  initialFlowType = 'student',
-  onBackToChoice 
+  initialIsLogin = false 
 }) {
   const { signUp, signIn, sendPasswordReset } = useAuth();
 
   const [isLogin, setIsLogin] = useState(initialIsLogin);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [resetEmailSent, setResetEmailSent] = useState(false);
-  const [flowType, setFlowType] = useState(initialFlowType);
   const [submitting, setSubmitting] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -128,6 +125,7 @@ export default function StudentSignupModal({
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
     password: "",
     confirm: "",
     university: "",
@@ -150,7 +148,7 @@ export default function StudentSignupModal({
   const validate = () => {
     const newErrors = isLogin
       ? validateLoginForm(form)
-      : validateSignupForm(form, flowType);
+      : validateSignupForm(form);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -230,16 +228,15 @@ export default function StudentSignupModal({
 
       const profileData = {
         name: form.name.trim(),
-        university: form.university?.trim() || '',
-        faculty: form.faculty?.trim() || '',
-        department: form.department?.trim() || '',
+        phone: form.phone.trim(),
+        university: form.university.trim(),
+        faculty: form.faculty.trim(),
+        department: form.department.trim(),
         level: form.level || '',
         chess_username: form.chess_username?.trim() || '',
         lichess_username: form.lichess_username?.trim() || '',
         chess_rating: currentChessRating,
-        lichess_rating: currentLichessRating,
-        user_type: flowType,
-        is_student: flowType === 'student'
+        lichess_rating: currentLichessRating
       };
 
       localStorage.setItem('ss4_remember_me', rememberMe ? 'true' : 'false');
@@ -265,14 +262,10 @@ export default function StudentSignupModal({
     return (
       <div className="fixed inset-0 bg-[#111111]/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl border border-gray-100 text-center relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-          {/* Subtle top decoration */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-primary to-brand-accent"></div>
           
-          {/* Animated Success Checkmark Ring */}
           <div className="relative w-20 h-20 mx-auto mb-6 flex items-center justify-center">
-            {/* Outer pulsing ring */}
             <div className="absolute inset-0 rounded-full bg-emerald-50 border border-emerald-100 animate-ping opacity-75 duration-1000"></div>
-            {/* Inner stable circle */}
             <div className="relative w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center shadow-inner animate-in zoom-in duration-300">
               <svg className="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
@@ -284,10 +277,9 @@ export default function StudentSignupModal({
             Welcome to the League!
           </h2>
           <p className="text-sm font-semibold text-gray-500 mt-2.5 max-w-xs mx-auto animate-in slide-in-from-bottom-3 duration-400">
-            Account created successfully. Initializing your SCL chess stats and pairings...
+            Account created successfully. Initializing your profile and ratings...
           </p>
 
-          {/* Animating Progress Bar */}
           <div className="mt-8 max-w-xs mx-auto">
             <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
               <div 
@@ -327,16 +319,14 @@ export default function StudentSignupModal({
           <h2 className="text-2xl font-black font-space text-brand-text-dark leading-tight">
             {isForgotPassword 
               ? "Reset Password" 
-              : (isLogin ? "Welcome Back" : (flowType === 'student' ? "Student Registration" : "General Registration"))}
+              : (isLogin ? "Welcome Back" : "Create Account")}
           </h2>
           <p className="text-xs font-semibold text-gray-400 mt-1.5">
             {isForgotPassword 
               ? "We'll send a password recovery link to your email" 
-              : (isLogin ? "Log in to access pairings and chat" : (flowType === 'student' ? "Join the SS4 Chess League & Tournaments as a Student" : "Join the SS4 Chess League & Tournaments"))}
+              : (isLogin ? "Log in to access pairings and chat" : "Join the SS4 Chess League & Tournaments")}
           </p>
         </div>
-
-
 
         {/* Segmented Mode Selector */}
         {!isForgotPassword && (
@@ -416,10 +406,10 @@ export default function StudentSignupModal({
                   <Button
                     type="submit"
                     variant="primary"
-                    disabled={loading}
+                    disabled={submitting}
                     className="w-full flex items-center justify-center gap-2 py-3 bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer"
                   >
-                    {loading ? (
+                    {submitting ? (
                       <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                     ) : (
                       "Send Reset Link"
@@ -446,17 +436,15 @@ export default function StudentSignupModal({
           <form onSubmit={handleSubmit} className="space-y-4 max-h-[60vh] overflow-y-auto pr-1 no-scrollbar animate-in fade-in duration-150">
 
             {!isLogin && (
-              <>
-                <div>
-                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Full Name</label>
-                  <Input
-                    placeholder="e.g. John Doe"
-                    value={form.name}
-                    onChange={(e) => update("name", e.target.value)}
-                  />
-                  {errors.name && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.name}</p>}
-                </div>
-              </>
+              <div>
+                <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Full Name</label>
+                <Input
+                  placeholder="e.g. John Doe"
+                  value={form.name}
+                  onChange={(e) => update("name", e.target.value)}
+                />
+                {errors.name && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.name}</p>}
+              </div>
             )}
 
             <div>
@@ -469,6 +457,18 @@ export default function StudentSignupModal({
               />
               {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
             </div>
+
+            {!isLogin && (
+              <div>
+                <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Phone / WhatsApp Number</label>
+                <Input
+                  placeholder="e.g. +2348000000000"
+                  value={form.phone}
+                  onChange={(e) => update("phone", e.target.value)}
+                />
+                {errors.phone && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.phone}</p>}
+              </div>
+            )}
 
             <div className={`${isLogin ? 'block' : 'grid grid-cols-1 sm:grid-cols-2 gap-4'}`}>
               <div>
@@ -536,45 +536,48 @@ export default function StudentSignupModal({
               )}
             </div>
 
-          {!isLogin && flowType === 'student' && (
+          {!isLogin && (
             <div className="border-t border-gray-100 pt-4 mt-2">
               <h3 className="text-xs font-black text-brand-primary uppercase tracking-widest mb-3">
-                Academic Info <span className="text-gray-400 font-semibold lowercase">(optional)</span>
+                Academic Details
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
-                    University / School <span className="text-[10px] font-normal lowercase text-gray-400">(optional)</span>
+                    University / School
                   </label>
                   <Input
                     placeholder="e.g. University of Uyo"
                     value={form.university}
                     onChange={(e) => update("university", e.target.value)}
                   />
+                  {errors.university && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.university}</p>}
                 </div>
                 <div>
                   <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
-                    Faculty <span className="text-[10px] font-normal lowercase text-gray-400">(optional)</span>
+                    Faculty
                   </label>
                   <Input
                     placeholder="e.g. Engineering"
                     value={form.faculty}
                     onChange={(e) => update("faculty", e.target.value)}
                   />
+                  {errors.faculty && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.faculty}</p>}
                 </div>
                 <div>
                   <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
-                    Department <span className="text-[10px] font-normal lowercase text-gray-400">(optional)</span>
+                    Department
                   </label>
                   <Input
                     placeholder="e.g. Computer Science"
                     value={form.department}
                     onChange={(e) => update("department", e.target.value)}
                   />
+                  {errors.department && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.department}</p>}
                 </div>
                 <div>
                   <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
-                    Level <span className="text-[10px] font-normal lowercase text-gray-400">(optional)</span>
+                    Academic Level <span className="text-[10px] font-normal lowercase text-gray-400">(optional)</span>
                   </label>
                   <select
                     value={form.level}
@@ -594,7 +597,7 @@ export default function StudentSignupModal({
           {!isLogin && (
             <div className="border-t border-gray-100 pt-4 mt-2">
               <h3 className="text-xs font-black text-brand-accent uppercase tracking-widest mb-1">Chess Credentials</h3>
-              <p className="text-[10px] text-gray-400 mb-3 font-semibold">Enter your username on at least one platform to sync your ratings.</p>
+              <p className="text-[10px] text-gray-400 mb-3 font-semibold">At least one username is required; providing both is recommended for accurate rating sync.</p>
 
                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>

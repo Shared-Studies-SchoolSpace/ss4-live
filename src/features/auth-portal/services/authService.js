@@ -3,7 +3,7 @@ import { normalizeEmail, validateLoginForm, validateSignupForm, validatePassword
 
 /**
  * Isolated Authentication Service
- * Manages Supabase Auth, Profile creation, Division assignment, and storage preference.
+ * Manages Supabase Auth, Profile creation, and storage preference.
  */
 
 /**
@@ -51,17 +51,16 @@ export async function signInUser({ email, password, rememberMe = false }) {
 }
 
 /**
- * Executes user signup, profile row creation, and division auto-assignment.
+ * Executes user signup and profile row creation (S10 division auto-assignment removed).
  * @param {Object} params
  * @param {string} params.email
  * @param {string} params.password
  * @param {Object} params.profileData
  * @param {boolean} [params.rememberMe=false]
- * @param {Function} [updatePlayerDivisionFn]
  * @returns {Promise<{ data: any, error: Error|null, warning?: string }>}
  */
-export async function signUpUser({ email, password, profileData = {}, rememberMe = false }, updatePlayerDivisionFn = null) {
-  const validationErrors = validateSignupForm({ email, password, ...profileData }, profileData.user_type || 'student');
+export async function signUpUser({ email, password, profileData = {}, rememberMe = false }) {
+  const validationErrors = validateSignupForm({ email, password, ...profileData });
   if (Object.keys(validationErrors).length > 0) {
     const firstErrKey = Object.keys(validationErrors)[0];
     return { data: null, error: new Error(validationErrors[firstErrKey]) };
@@ -69,6 +68,7 @@ export async function signUpUser({ email, password, profileData = {}, rememberMe
 
   const cleanEmail = normalizeEmail(email);
   const cleanName = (profileData.name || '').trim();
+  const cleanPhone = (profileData.phone || profileData.whatsapp || '').trim();
   const cleanChessUser = (profileData.chess_username || '').trim();
   const cleanLichessUser = (profileData.lichess_username || '').trim();
 
@@ -85,7 +85,8 @@ export async function signUpUser({ email, password, profileData = {}, rememberMe
           faculty: profileData.faculty || '',
           department: profileData.department || '',
           level: profileData.level || '',
-          phone: profileData.phone || profileData.whatsapp || '',
+          phone: cleanPhone,
+          whatsapp: cleanPhone,
           chess_username: cleanChessUser,
           lichess_username: cleanLichessUser,
           chess_rating: profileData.chess_rating || 0,
@@ -108,7 +109,7 @@ export async function signUpUser({ email, password, profileData = {}, rememberMe
         faculty: profileData.faculty || '',
         department: profileData.department || '',
         level: profileData.level || '',
-        phone: profileData.phone || profileData.whatsapp || '',
+        phone: cleanPhone,
         chess_username: cleanChessUser,
         lichess_username: cleanLichessUser,
         chess_rating: profileData.chess_rating || 0,
@@ -123,21 +124,6 @@ export async function signUpUser({ email, password, profileData = {}, rememberMe
       if (profileErr) {
         console.error('[authService] Profile row upsert failed, self-heal on next login:', profileErr.message);
         warningMessage = 'Account created! Finalizing your profile on first login...';
-      } else if (typeof updatePlayerDivisionFn === 'function') {
-        try {
-          const createdProfile = {
-            name: cleanName,
-            chess_username: cleanChessUser,
-            lichess_username: cleanLichessUser,
-            email: cleanEmail,
-            department: profileData.department || '',
-            university: profileData.university || ''
-          };
-          const maxRating = Math.max(profileData.chess_rating || 0, profileData.lichess_rating || 0);
-          await updatePlayerDivisionFn(createdProfile, maxRating);
-        } catch (divErr) {
-          console.warn('[authService] Division auto-assignment failed:', divErr.message);
-        }
       }
     }
 

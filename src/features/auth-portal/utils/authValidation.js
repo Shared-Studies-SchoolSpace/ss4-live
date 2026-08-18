@@ -54,11 +54,13 @@ export function validateLoginForm(form = {}) {
 
 /**
  * Validates registration form inputs.
+ * Mandatory: name, email, password, confirm, phone, university, faculty, department
+ * Optional: level
+ * Requirement: At least one chess credential (chess_username or lichess_username)
  * @param {Object} form 
- * @param {'student'|'general'} [flowType='student'] 
  * @returns {Record<string, string>} Map of field key to error message.
  */
-export function validateSignupForm(form = {}, flowType = 'student') {
+export function validateSignupForm(form = {}) {
   const errors = {};
 
   const nameTrimmed = (form.name || '').trim();
@@ -76,6 +78,26 @@ export function validateSignupForm(form = {}, flowType = 'student') {
     errors.confirm = 'Passwords do not match';
   } else if (!form.confirm && form.password) {
     errors.confirm = 'Please confirm your password';
+  }
+
+  const phoneTrimmed = (form.phone || '').trim();
+  if (!phoneTrimmed) {
+    errors.phone = 'Phone / WhatsApp number is required';
+  }
+
+  const universityTrimmed = (form.university || '').trim();
+  if (!universityTrimmed) {
+    errors.university = 'University / School is required';
+  }
+
+  const facultyTrimmed = (form.faculty || '').trim();
+  if (!facultyTrimmed) {
+    errors.faculty = 'Faculty is required';
+  }
+
+  const departmentTrimmed = (form.department || '').trim();
+  if (!departmentTrimmed) {
+    errors.department = 'Department is required';
   }
 
   const chessTrimmed = (form.chess_username || '').trim();

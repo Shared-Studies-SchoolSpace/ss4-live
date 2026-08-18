@@ -108,7 +108,6 @@ export function AuthProvider({ children }) {
               faculty: meta.faculty || '',
               department: meta.department || '',
               level: meta.level || '',
-              phone: meta.phone || meta.whatsapp || '',
               chess_username: meta.chess_username || '',
               lichess_username: meta.lichess_username || '',
               chess_rating: meta.chess_rating || 0,

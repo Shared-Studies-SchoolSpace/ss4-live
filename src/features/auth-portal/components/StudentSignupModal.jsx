@@ -262,7 +262,7 @@ export default function StudentSignupModal({
 
   if (signupSuccess) {
     return (
-      <div className="fixed inset-0 bg-[#111111]/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="fixed inset-0 bg-[#111111]/60 backdrop-blur-md flex items-center justify-center z-[9999] p-4">
         <div className="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl border border-gray-100 text-center relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-primary to-brand-accent"></div>
           
@@ -302,7 +302,7 @@ export default function StudentSignupModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-[#111111]/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-6 overflow-y-auto">
+    <div className="fixed inset-0 bg-[#111111]/60 backdrop-blur-md flex items-center justify-center z-[9999] p-4 sm:p-6 overflow-y-auto">
       {/* Portrait Medium-Inspired Aspect Ratio & Geometry */}
       <div className="bg-white rounded-[2rem] p-7 sm:p-9 w-full max-w-[480px] shadow-2xl border border-gray-100 relative my-auto animate-in fade-in zoom-in-95 duration-200 transition-all">
 
@@ -436,7 +436,7 @@ export default function StudentSignupModal({
             )}
           </form>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4 max-h-[65vh] overflow-y-auto pr-1 no-scrollbar animate-in fade-in duration-150">
+          <form onSubmit={handleSubmit} className="space-y-4 animate-in fade-in duration-150">
 
             {!isLogin ? (
               <>
@@ -462,27 +462,27 @@ export default function StudentSignupModal({
                   </div>
                 </div>
 
-                {/* Email Address */}
-                <div>
-                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
-                  <Input
-                    type="email"
-                    placeholder="e.g. john@university.edu"
-                    value={form.email}
-                    onChange={(e) => update("email", e.target.value)}
-                  />
-                  {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
-                </div>
-
-                {/* Phone / WhatsApp Number */}
-                <div>
-                  <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Phone / WhatsApp Number</label>
-                  <Input
-                    placeholder="e.g. +2348000000000"
-                    value={form.phone}
-                    onChange={(e) => update("phone", e.target.value)}
-                  />
-                  {errors.phone && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.phone}</p>}
+                {/* Contact Row: Email Address & Phone Number */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Email Address</label>
+                    <Input
+                      type="email"
+                      placeholder="e.g. john@university.edu"
+                      value={form.email}
+                      onChange={(e) => update("email", e.target.value)}
+                    />
+                    {errors.email && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.email}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Phone / WhatsApp</label>
+                    <Input
+                      placeholder="e.g. +2348000000000"
+                      value={form.phone}
+                      onChange={(e) => update("phone", e.target.value)}
+                    />
+                    {errors.phone && <p className="text-[10px] font-bold text-brand-accent mt-1">{errors.phone}</p>}
+                  </div>
                 </div>
               </>
             ) : (

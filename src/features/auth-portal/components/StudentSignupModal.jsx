@@ -229,6 +229,8 @@ export default function StudentSignupModal({
       const fullName = `${form.first_name.trim()} ${form.last_name.trim()}`.trim();
 
       const profileData = {
+        first_name: form.first_name.trim(),
+        last_name: form.last_name.trim(),
         name: fullName,
         phone: form.phone.trim(),
         university: form.university.trim(),

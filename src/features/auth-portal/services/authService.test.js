@@ -176,6 +176,21 @@ describe('Authentication Validation Utility Suite', () => {
       });
       assert.deepStrictEqual(errorsLichess, {});
     });
+
+    it('should accept valid signup input when full name string is provided', () => {
+      const errors = validateSignupForm({
+        name: 'John Doe',
+        email: 'user@domain.com',
+        password: 'Password123!',
+        confirm: 'Password123!',
+        phone: '+2348000000000',
+        university: 'University of Uyo',
+        faculty: 'Science',
+        department: 'Computer Science',
+        chess_username: 'player1'
+      });
+      assert.deepStrictEqual(errors, {});
+    });
   });
 
   describe('validatePasswordResetForm', () => {

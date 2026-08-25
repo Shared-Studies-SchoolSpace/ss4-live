@@ -494,10 +494,14 @@ export default function DashboardPage() {
     }
   }, [profile]);
 
-  // Redirect / switch to Settings if recovery session is active
+  // Redirect / switch to Settings if recovery session is active and smooth-scroll to password section
   useEffect(() => {
     if (isRecoverySession) {
       setActiveTab('settings');
+      setTimeout(() => {
+        const el = document.getElementById('change-password-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 150);
     }
   }, [isRecoverySession]);
 
@@ -2024,7 +2028,7 @@ export default function DashboardPage() {
                 </form>
               </div>
 
-              <div className="border-t border-gray-150 pt-6">
+              <div id="change-password-section" className="border-t border-gray-150 pt-6">
                 <h3 className="text-sm font-black text-brand-text-dark uppercase tracking-widest border-b border-gray-150 pb-2 mb-4">Change Password</h3>
                 <form onSubmit={handleUpdatePassword} className="space-y-4 max-w-md">
                   <div>

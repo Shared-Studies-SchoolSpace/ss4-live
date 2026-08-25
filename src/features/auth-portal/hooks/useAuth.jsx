@@ -162,10 +162,15 @@ export function AuthProvider({ children }) {
       activeUserIdRef.current = u?.id;
 
       if (u) {
-        // Restore recovery state from sessionStorage if it survives page refresh
-        const isRecovery = sessionStorage.getItem('ss4_recovery_session') === 'true';
+        // Restore recovery state from sessionStorage or URL hash/query if it survives page refresh
+        const hasUrlRecovery = typeof window !== 'undefined' && (
+          window.location.hash.includes('type=recovery') ||
+          window.location.search.includes('type=recovery')
+        );
+        const isRecovery = sessionStorage.getItem('ss4_recovery_session') === 'true' || hasUrlRecovery;
         if (isRecovery) {
           setIsRecoverySession(true);
+          sessionStorage.setItem('ss4_recovery_session', 'true');
         }
         await fetchProfile(u.id);
       } else {

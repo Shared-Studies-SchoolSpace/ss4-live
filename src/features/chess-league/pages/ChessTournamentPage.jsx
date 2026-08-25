@@ -1658,7 +1658,7 @@ export default function ChessTournamentPage() {
 
 
           {/* Sticky Mobile-First Tab Bar (Fitts's Law & Hick's Law Fix) */}
-          <div className="sticky top-16 lg:top-20 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/90 px-3 sm:px-6 md:px-12 lg:px-16 shadow-xs">
+          <div className="sticky top-16 lg:top-20 z-30 bg-white border-b border-gray-200 px-3 sm:px-6 md:px-12 lg:px-16 shadow-xs">
             <div className="max-w-5xl mx-auto flex gap-2 sm:gap-6 overflow-x-auto no-scrollbar touch-pan-x py-1">
               {TABS.map(t => {
                 const isPrimary = t.id === 'bracket';
@@ -1689,7 +1689,7 @@ export default function ChessTournamentPage() {
           )}
 
           {/* Tab content wrapper */}
-          <div className={`${activeTab === 'table' ? 'max-w-7xl' : 'max-w-5xl'} mx-auto px-3 sm:px-6 md:px-8 lg:px-0 py-6 sm:py-10 transition-all duration-300`}>
+          <div className={`${activeTab === 'table' ? 'max-w-7xl' : 'max-w-5xl'} mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-10 transition-all duration-300`}>
 
         {/* TABLE (GROUP STANDINGS) */}
         {activeTab === 'table' && (

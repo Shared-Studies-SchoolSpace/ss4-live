@@ -379,20 +379,20 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
     <div className="space-y-6 animate-in fade-in duration-300">
       
       {/* Top Header Card & View Mode Switcher */}
-      <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white border border-gray-200/80 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="font-space font-black text-2xl text-[#111111] uppercase tracking-wide">
+            <h2 className="font-space font-black text-xl sm:text-2xl text-[#111111] uppercase tracking-wide">
               Group Stage Table
             </h2>
           </div>
-          <p className="text-xs text-gray-600 mt-1 font-medium">
+          <p className="text-xs text-gray-600 mt-1 font-medium leading-relaxed">
             Top 2 players in each group advance to the Knockout Stage. Scoring: <strong className="text-[#111111]">Win = 1 pt</strong> &bull; <strong className="text-[#111111]">Draw = 0.5 pts</strong> &bull; <strong className="text-[#111111]">Loss = 0 pts</strong>.
           </p>
         </div>
 
         {/* Sub-tab Toggle: Tables | Knockout Matrix | Fixtures */}
-        <div className="flex items-center bg-gray-100 p-1.5 rounded-2xl shrink-0 self-start sm:self-auto border border-gray-200/60 flex-wrap gap-1">
+        <div className="flex items-center bg-gray-100 p-1.5 rounded-2xl shrink-0 border border-gray-200/60 flex-wrap gap-1">
           <button
             onClick={() => setViewMode('table')}
             className={`px-4 py-2 min-h-[44px] rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${

@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { SplitBracketVisualizer } from './SplitBracketVisualizer';
+import { evaluateBo3Series, initializeBo3SubGames } from '../utils/tournament';
 
 function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
   const isBye = (p) => p?.username === 'bye';
-  const won = (p) => game.winner && game.winner.username === p?.username;
-  const lost = (p) => game.winner && !won(p);
-  const isMatchDone = !!game.winner;
+  const isBo3 = game.bestOf === 3 || (game.subGames && game.subGames.length > 0);
+  const bo3Eval = isBo3 ? evaluateBo3Series(game) : null;
+  const won = (p) => {
+    if (isBo3) return bo3Eval?.winner && bo3Eval.winner.username === p?.username;
+    return game.winner && game.winner.username === p?.username;
+  };
+  const lost = (p) => {
+    if (isBo3) return bo3Eval?.winner && !won(p);
+    return game.winner && !won(p);
+  };
+  const isMatchDone = isBo3 ? bo3Eval?.isFinished : !!game.winner;
   const isByeMatch = isBye(game.p1) || isBye(game.p2);
 
   const playerRow = (p, side) => {
@@ -14,6 +23,7 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
     const isLost = lost(p);
     const clickable = p && !isBye(p);
     const bye = isBye(p);
+    const scoreVal = isBo3 ? (p?.username === game.p1?.username ? bo3Eval?.p1Pts : p?.username === game.p2?.username ? bo3Eval?.p2Pts : 0) : null;
 
     const handleRowAction = (e) => {
       if (clickable && onPlayerClick) {
@@ -35,7 +45,7 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
         disabled={!clickable}
         role="button"
         tabIndex={clickable ? 0 : -1}
-        className={`w-full text-left relative flex items-center gap-2.5 px-3 py-2.5 transition-all duration-150 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-1 outline-none border-none ${
+        className={`w-full text-left relative flex items-center justify-between gap-2.5 px-3 py-2.5 transition-all duration-150 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-1 outline-none border-none ${
           clickable ? 'cursor-pointer group/row' : 'cursor-default'
         } ${
           isWon
@@ -45,38 +55,49 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
             : 'hover:bg-gray-50 bg-white'
         }`}
       >
-        {/* Winner checkmark */}
-        {isWon && (
-          <span className="shrink-0">
-            <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-emerald-600">
-              <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
-            </svg>
-          </span>
-        )}
-        
-        <div className="min-w-0 flex-1">
-          <p 
-            title={p ? (bye ? 'BYE' : p.name) : 'TBD'} 
-            className={`text-sm leading-tight truncate font-bold ${
-              isWon ? 'font-black text-emerald-800' : bye ? 'text-gray-400 italic' : 'text-[#111111]'
-            } ${clickable ? 'group-hover/row:underline' : ''}`}
-          >
-            {p ? (bye ? 'BYE' : p.name) : 'TBD'}
-          </p>
-          {p && !bye && (
-            <p 
-              title={p.school} 
-              className={`text-xs truncate mt-0.5 ${isWon ? 'text-emerald-600' : 'text-gray-400'}`}
-            >
-              {p.school}{p.rating ? ` · ${p.rating}` : ''}
-            </p>
+        <div className="flex items-center gap-2.5 min-w-0 flex-1">
+          {/* Winner checkmark */}
+          {isWon && (
+            <span className="shrink-0">
+              <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-emerald-600">
+                <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+              </svg>
+            </span>
           )}
+          
+          <div className="min-w-0 flex-1">
+            <p 
+              title={p ? (bye ? 'BYE' : p.name) : 'TBD'} 
+              className={`text-sm leading-tight truncate font-bold ${
+                isWon ? 'font-black text-emerald-800' : bye ? 'text-gray-400 italic' : 'text-[#111111]'
+              } ${clickable ? 'group-hover/row:underline' : ''}`}
+            >
+              {p ? (bye ? 'BYE' : p.name) : 'TBD'}
+            </p>
+            {p && !bye && (
+              <p 
+                title={p.school} 
+                className={`text-xs truncate mt-0.5 ${isWon ? 'text-emerald-600' : 'text-gray-400'}`}
+              >
+                {p.school}{p.rating ? ` · ${p.rating}` : ''}
+              </p>
+            )}
+          </div>
         </div>
 
         {p && !bye && (
-          <span className={`text-xs font-bold shrink-0 ${isWon ? 'text-emerald-700' : 'text-brand-primary/50'}`}>
-            @{p.username}
-          </span>
+          <div className="flex items-center gap-2 shrink-0">
+            {isBo3 && typeof scoreVal === 'number' && (
+              <span className={`text-xs font-black px-2 py-0.5 rounded-lg border ${
+                isWon ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-gray-100 text-gray-700 border-gray-200'
+              }`}>
+                {scoreVal} {scoreVal === 1 ? 'pt' : 'pts'}
+              </span>
+            )}
+            <span className={`text-xs font-bold ${isWon ? 'text-emerald-700' : 'text-brand-primary/50'}`}>
+              @{p.username}
+            </span>
+          </div>
         )}
       </button>
     );
@@ -101,6 +122,11 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
           <span className={`text-xs font-black uppercase tracking-widest ${isMatchDone ? 'text-brand-primary' : 'text-gray-300'}`}>
             Match {idx + 1}
           </span>
+          {isBo3 && bo3Eval && (
+            <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 border border-purple-200 uppercase tracking-wider">
+              BO3 ({bo3Eval.p1Pts} - {bo3Eval.p2Pts})
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-2">
           {isAdmin && !isByeMatch && (
@@ -112,14 +138,26 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
               }}
               className="text-[10px] font-black px-2 py-1 rounded bg-brand-primary text-white hover:bg-brand-primary/95 transition-all focus-visible:ring-1 focus-visible:ring-brand-primary focus-visible:ring-offset-1 outline-none cursor-pointer border-none"
             >
-              {isMatchDone ? 'EDIT RESULT' : 'LOG RESULT'}
+              {isBo3 ? (isMatchDone ? 'EDIT SERIES' : 'LOG GAME') : (isMatchDone ? 'EDIT RESULT' : 'LOG RESULT')}
+            </button>
+          )}
+          {!isAdmin && isBo3 && !isByeMatch && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClick(game);
+              }}
+              className="text-[10px] font-black px-2 py-1 rounded bg-purple-50 text-purple-700 hover:bg-purple-100 transition-all border border-purple-200 cursor-pointer"
+            >
+              SERIES DETAILS
             </button>
           )}
           {isMatchDone && !isByeMatch && (
             <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${
-              game.winner?.username === 'forfeit' ? 'text-red-600 bg-red-100' : 'text-emerald-600 bg-emerald-100'
+              (game.winner?.username || bo3Eval?.winner?.username) === 'forfeit' ? 'text-red-600 bg-red-100' : 'text-emerald-600 bg-emerald-100'
             }`}>
-              {game.winner?.username === 'forfeit' ? 'DOUBLE FORFEIT' : 'DONE'}
+              {(game.winner?.username || bo3Eval?.winner?.username) === 'forfeit' ? 'DOUBLE FORFEIT' : 'DONE'}
             </span>
           )}
           {isByeMatch && (
@@ -127,7 +165,7 @@ function MatchCard({ game, idx, isAdmin, onClick, onPlayerClick }) {
               AUTO-ADVANCE
             </span>
           )}
-          {game.gameLink && (
+          {game.gameLink && !isBo3 && (
             <a
               href={game.gameLink}
               target="_blank"
@@ -364,55 +402,217 @@ export function BracketTab({ tournament, isAdmin, onLogResult, onSaveGameLink, o
       )}
 
       {/* Log result modal */}
-      {loggingGame && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" onClick={closeModal}>
-          <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl" onClick={e => e.stopPropagation()}>
-            <p className="font-space font-black text-lg text-[#111111] mb-1">Log Match - {loggingGame.id}</p>
-            <p className="text-sm text-gray-400 mb-5">Paste the Chess.com game link and select the winner.</p>
+      {loggingGame && (() => {
+        const isBo3 = loggingGame.bestOf === 3 || (loggingGame.subGames && loggingGame.subGames.length > 0);
+        const bo3Eval = isBo3 ? evaluateBo3Series(loggingGame) : null;
+        const subGames = isBo3 ? (bo3Eval?.subGames || initializeBo3SubGames(loggingGame.p1, loggingGame.p2)) : [];
+        const [activeSubIndex, setActiveSubIndex] = useState(() => {
+          if (!isBo3) return 0;
+          const firstUnfinished = subGames.findIndex(sg => !sg.winner);
+          return firstUnfinished !== -1 ? firstUnfinished : 0;
+        });
 
-            {/* Game link */}
-            <div className="mb-4">
-              <label className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1.5">Chess.com Game Link</label>
-              <input
-                type="url"
-                placeholder="https://www.chess.com/game/live/..."
-                value={gameLinkInput}
-                onChange={e => setGameLinkInput(e.target.value)}
-                className="w-full text-sm font-bold px-3 py-2.5 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] placeholder-gray-300"
-              />
-              {gameLinkInput && (
-                <button
-                  onClick={() => { onSaveGameLink(loggingGame.id, gameLinkInput); toast.success('Link saved'); }}
-                  className="mt-1.5 text-xs font-bold text-brand-primary hover:underline cursor-pointer">
-                  Save link only (no winner yet)
-                </button>
+        const activeSub = isBo3 ? subGames[activeSubIndex] || subGames[0] : null;
+
+        return (
+          <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" onClick={closeModal}>
+            <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4" onClick={e => e.stopPropagation()}>
+              
+              <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+                <div>
+                  <h3 className="font-space font-black text-lg text-[#111111]">
+                    {isBo3 ? 'Best of 3 Match' : `Log Match - ${loggingGame.id}`}
+                  </h3>
+                  <p className="text-xs text-gray-400">
+                    {loggingGame.p1?.name || 'TBD'} vs {loggingGame.p2?.name || 'TBD'}
+                  </p>
+                </div>
+                {isBo3 && bo3Eval && (
+                  <span className="text-xs font-black px-3 py-1 bg-purple-100 text-purple-700 rounded-full border border-purple-200">
+                    Score: {bo3Eval.p1Pts} - {bo3Eval.p2Pts}
+                  </span>
+                )}
+              </div>
+
+              {/* BO3 Sub-game Selector Tabs */}
+              {isBo3 && (
+                <div className="space-y-3">
+                  <div className="flex gap-1.5 bg-gray-100 p-1 rounded-xl">
+                    {subGames.map((sg, idx) => {
+                      const isCompleted = !!sg.winner;
+                      const isCurrent = activeSubIndex === idx;
+                      let winnerLabel = '';
+                      if (sg.winner) {
+                        const wUser = typeof sg.winner === 'object' ? sg.winner.username : sg.winner;
+                        if (wUser === loggingGame.p1?.username) winnerLabel = ` (${loggingGame.p1?.name.split(' ')[0]} Win)`;
+                        else if (wUser === loggingGame.p2?.username) winnerLabel = ` (${loggingGame.p2?.name.split(' ')[0]} Win)`;
+                        else if (wUser === 'draw' || wUser === 'draws') winnerLabel = ' (Draw)';
+                      }
+
+                      return (
+                        <button
+                          key={sg.gameNum || idx}
+                          type="button"
+                          onClick={() => {
+                            setActiveSubIndex(idx);
+                            setGameLinkInput(sg.gameLink || '');
+                          }}
+                          className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                            isCurrent
+                              ? 'bg-white text-brand-primary shadow-xs font-black'
+                              : isCompleted
+                              ? 'text-emerald-700 hover:bg-gray-200/60'
+                              : 'text-gray-500 hover:bg-gray-200/60'
+                          }`}
+                        >
+                          Game {sg.gameNum || idx + 1}{sg.isArmageddon ? ' ⚔️' : ''}
+                          <span className="block text-[9px] font-normal opacity-80">{winnerLabel || (isCompleted ? 'Done' : 'Pending')}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {activeSub && (
+                    <div className="p-3 bg-purple-50/70 border border-purple-100 rounded-2xl text-xs space-y-1">
+                      <p className="font-bold text-purple-900 flex items-center justify-between">
+                        <span>Game {activeSub.gameNum} Piece Colors:</span>
+                        {activeSub.isArmageddon && <span className="text-red-600 font-black">Armageddon Tiebreak</span>}
+                      </p>
+                      <div className="grid grid-cols-2 gap-2 text-[#111111] pt-1">
+                        <div className="bg-white p-2 rounded-xl border border-purple-100 shadow-2xs">
+                          <span className="text-[10px] font-black text-gray-400 uppercase block">White ⚪</span>
+                          <span className="font-bold">{activeSub.white === loggingGame.p1?.username ? loggingGame.p1?.name : loggingGame.p2?.name}</span>
+                        </div>
+                        <div className="bg-white p-2 rounded-xl border border-purple-100 shadow-2xs">
+                          <span className="text-[10px] font-black text-gray-400 uppercase block">Black ⚫</span>
+                          <span className="font-bold">{activeSub.black === loggingGame.p1?.username ? loggingGame.p1?.name : loggingGame.p2?.name}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
-            </div>
 
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Select Winner</p>
-            <div className="space-y-2">
-              {[loggingGame.p1, loggingGame.p2].filter(p => p && p.username !== 'bye').map(p => (
-                <button key={p.username}
-                  onClick={() => { onLogResult(loggingGame.id, p, gameLinkInput); closeModal(); }}
-                  className="w-full text-left p-4 border border-gray-200 hover:border-brand-primary/40 hover:bg-brand-primary/5 rounded-xl transition-all cursor-pointer">
-                  <p className="text-base font-black text-[#111111]">{p.name}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{p.school} · @{p.username}</p>
-                </button>
-              ))}
-              <button
-                onClick={() => { 
-                  onLogResult(loggingGame.id, { username: 'forfeit', name: 'Double Forfeit', rating: 0, school: '' }, gameLinkInput); 
-                  closeModal(); 
-                }}
-                className="w-full text-left p-4 border border-red-200 hover:border-red-400 hover:bg-red-50 rounded-xl transition-all cursor-pointer">
-                <p className="text-base font-black text-red-600">Double Forfeit</p>
-                <p className="text-xs text-red-400 mt-0.5">Eliminates both players from tournament</p>
+              {/* Game link input */}
+              <div>
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1.5">
+                  {isBo3 ? `Game ${activeSub?.gameNum || 1} Lichess / Chess.com Link` : 'Chess.com Game Link'}
+                </label>
+                <input
+                  type="url"
+                  placeholder="https://lichess.org/... or https://www.chess.com/game/..."
+                  value={gameLinkInput || (isBo3 ? activeSub?.gameLink || '' : loggingGame.gameLink || '')}
+                  onChange={e => setGameLinkInput(e.target.value)}
+                  className="w-full text-sm font-bold px-3 py-2.5 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary text-[#111111] placeholder-gray-300"
+                />
+                {gameLinkInput && isAdmin && (
+                  <button
+                    type="button"
+                    onClick={() => { 
+                      if (isBo3) {
+                        onLogResult(loggingGame.id, activeSub?.winner || null, gameLinkInput, activeSub?.gameNum);
+                      } else {
+                        onSaveGameLink(loggingGame.id, gameLinkInput); 
+                      }
+                      toast.success('Link saved'); 
+                    }}
+                    className="mt-1.5 text-xs font-bold text-brand-primary hover:underline cursor-pointer">
+                    Save link only (no winner edit)
+                  </button>
+                )}
+              </div>
+
+              {/* Winner Selector */}
+              {isAdmin ? (
+                <div>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+                    {isBo3 ? `Select Game ${activeSub?.gameNum || 1} Outcome` : 'Select Winner'}
+                  </p>
+                  <div className="space-y-2">
+                    {[loggingGame.p1, loggingGame.p2].filter(p => p && p.username !== 'bye').map(p => (
+                      <button 
+                        key={p.username}
+                        type="button"
+                        onClick={() => { 
+                          if (isBo3) {
+                            onLogResult(loggingGame.id, p, gameLinkInput, activeSub?.gameNum);
+                          } else {
+                            onLogResult(loggingGame.id, p, gameLinkInput);
+                          }
+                          closeModal(); 
+                        }}
+                        className="w-full text-left p-3.5 border border-gray-200 hover:border-brand-primary/40 hover:bg-brand-primary/5 rounded-2xl transition-all cursor-pointer flex items-center justify-between"
+                      >
+                        <div>
+                          <p className="text-sm font-black text-[#111111]">{p.name}</p>
+                          <p className="text-xs text-gray-400 mt-0.5">{p.school} · @{p.username}</p>
+                        </div>
+                        <span className="text-xs font-black text-brand-primary bg-brand-primary/10 px-2.5 py-1 rounded-xl">
+                          {isBo3 ? 'Win Game' : 'Match Winner'}
+                        </span>
+                      </button>
+                    ))}
+
+                    {/* Draw button for BO3 sub-games */}
+                    {isBo3 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onLogResult(loggingGame.id, { username: 'draw', name: 'Draw' }, gameLinkInput, activeSub?.gameNum);
+                          closeModal();
+                        }}
+                        className="w-full text-left p-3.5 border border-amber-200 hover:border-amber-400 hover:bg-amber-50 rounded-2xl transition-all cursor-pointer flex items-center justify-between"
+                      >
+                        <div>
+                          <p className="text-sm font-black text-amber-900">Draw ( ½ - ½ )</p>
+                          <p className="text-xs text-amber-600 mt-0.5">Split 0.5 pts each for Game {activeSub?.gameNum}</p>
+                        </div>
+                        <span className="text-xs font-black text-amber-700 bg-amber-200/50 px-2.5 py-1 rounded-xl">
+                          Record Draw
+                        </span>
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => { 
+                        onLogResult(loggingGame.id, { username: 'forfeit', name: 'Double Forfeit', rating: 0, school: '' }, gameLinkInput, isBo3 ? activeSub?.gameNum : null); 
+                        closeModal(); 
+                      }}
+                      className="w-full text-left p-3 border border-red-200 hover:border-red-400 hover:bg-red-50 rounded-2xl transition-all cursor-pointer">
+                      <p className="text-sm font-black text-red-600">Double Forfeit</p>
+                      <p className="text-xs text-red-400">Eliminates both players from tournament</p>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                /* Read-only view for players */
+                <div className="pt-2 border-t border-gray-100">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Series Sub-Game Links</p>
+                  <div className="space-y-1.5">
+                    {subGames.map((sg, idx) => (
+                      <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded-xl text-xs">
+                        <span className="font-bold text-gray-700">Game {sg.gameNum}:</span>
+                        {sg.gameLink ? (
+                          <a href={sg.gameLink} target="_blank" rel="noopener noreferrer" className="text-brand-primary font-bold hover:underline">
+                            View Game ↗
+                          </a>
+                        ) : (
+                          <span className="text-gray-400 italic">No link logged yet</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <button onClick={closeModal} type="button" className="w-full text-sm font-bold text-gray-400 py-2 hover:text-gray-600 cursor-pointer">
+                Close
               </button>
             </div>
-            <button onClick={closeModal} className="mt-4 w-full text-sm font-bold text-gray-400 py-2 hover:text-gray-600 cursor-pointer">Cancel</button>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 }

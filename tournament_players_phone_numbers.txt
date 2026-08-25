@@ -1,0 +1,408 @@
+================================================================================
+              SS4 CHESS LEAGUE - TOURNAMENT PLAYERS PHONE DIRECTORY             
+================================================================================
+Generated Date : 2026-08-20
+Source System  : Supabase Tournament Database & SCL Registration Archives
+
+================================================================================
+TOURNAMENT: 2026-08 SCL Tournament (2026-08) [Status: UPCOMING]
+Total Participants: 28 players
+================================================================================
+No.  Player Name                     Username                 Phone Number          Institution
+----------------------------------------------------------------------------------------------------------------
+1.   Victor Martin Umoren            Martin_The               N/A                   University of Uyo
+2.   Kingsley Ekpo                   Kontor001                +234 906 051 5456     University of Uyo
+3.   Anietie Ben                     Jude_Ben                 +234 806 307 1862     Bells University of Technology
+4.   Edem, Jesse Gregory             Jesse70256               +234 814 507 4849     University of uyo
+5.   William Arum                    Lilshadys                +234 913 632 6622     Enugu State University of Science and Technology
+6.   ETIMBUK PAUL THOMPSON           Bayron-sage7             +234 701 565 0278     Federal University of Technology Ikot Abasi
+7.   Uzochukwu chiedozie prince      Princedoziee             +234 704 598 1381     Nnamdi Azikiwe university
+8.   Covenant Udobia                 Anonix_01                N/A                   Federal University of Technology, Ikot Abasi
+9.   Batista Effontery               GeneralRal               +234 905 608 5216     University of Uyo
+10.  Kenneth Gilbert                 Prince_of_pieceX         +234 913 159 2008     University of ilorin
+11.  Elijah Okunoye                  Elijah_eao               N/A                   Unilorin
+12.  Robert Samuel                   Unclesam34e              +234 806 475 5213     University of uyo
+13.  Dean Bassey                     deanbassey001            +234 706 445 2708     Unical
+14.  Victor Augustine                victoraugustine          +234 707 172 4882     University of Uyo
+15.  Shazanny Black                  Shazanny-112             +234 704 638 3887     Akwa ibom state University
+16.  Abasiakan Mbat                  basky09                  N/A                   uniuyo
+17.  AGU Daniel                      Yari-bem                 N/A                   UNN
+18.  Ugwu Praise Chinwuba            PraiseChinwuba           +234 704 926 9211     University of Nigeria Nsukka
+19.  Emmanuel Michael                Ikbeast1                 +234 906 710 7943     Federal University of Technology, Ikotabasi
+20.  Joseph Chukwumaeze              joeblaq104               +234 803 397 9096     University of Nigeria Nsukka
+21.  Ninuoluwa Nins                  Ninuoluwa                +234 816 798 8323     Uniuyo
+22.  Duke Ndifreke Etim              Duke-001                 +234 708 529 5795     AKWAIBOM STATE UNIVERSITY
+23.  Oyebode Samuel                  TheWeehfhi               +234 816 944 2714     Bells university of technology
+24.  princewill obi                  Mathemachesser-the-GOAT  N/A                   Landmark university
+25.  Gloria Okoro                    Gloria0726               N/A                   Unical
+26.  David                           Davidbarakaii            +234 704 178 3383     Federal university of technology, ikot abasi
+27.  Samuel Nkereuwem                Fulgent47                +234 902 971 0550     University of Uyo
+28.  Johnstone Henshaw               Shin_12                  +234 708 406 4561     Bells University
+
+
+================================================================================
+TOURNAMENT: July 2026 SCL Tournament (2026-07) [Status: COMPLETED]
+Total Participants: 60 players
+================================================================================
+No.  Player Name                     Username                 Phone Number          Institution
+----------------------------------------------------------------------------------------------------------------
+1.   Olatunjijeremiah                olatunjijeremiah         N/A                   Unknown
+2.   Edem, Jesse Gregory             Jesse70256               +234 814 507 4849     University of uyo
+3.   Ado Bolouaweri Samuel           Bolouaweri               N/A                   University of Uyo
+4.   Alex Richard                    Alexrichy19              N/A                   University of auyo
+5.   Raphael wisdom                  Yoyo1513                 N/A                   AFIT
+6.   Robert Samuel                   Unclesam34e              +234 806 475 5213     University of uyo
+7.   Daniel Richard                  danielrich69             +234 814 502 1780     University of Uyo
+8.   Best James                      Bestmvh                  N/A                   University of Calabar
+9.   Covenant Udobia                 Anonix_01                N/A                   Federal University of Technology, Ikot Abasi
+10.  Robert Victor Imo               Kidd9h                   +234 705 523 4409     University of Uyo
+11.  Blossom AMAETOR                 Blozisom1                N/A                   University of uyo
+12.  Victor Augustine                victoraugustine          +234 707 172 4882     University of Uyo
+13.  Teniola                         D_Resign_Gambit          N/A                   Bells University
+14.  Kingsley Ekpo                   Kontor001                +234 906 051 5456     University of Uyo
+15.  Chris Emmanuel Etim             Karyptus                 +234 916 863 6887     University of Uyo
+16.  Ugwu Praise Chinwuba            PraiseChinwuba           +234 704 926 9211     University of Nigeria Nsukka
+17.  Gloria Okoro                    Gloria0726               N/A                   Unical
+18.  Victor Ani-Joseph               ajv1510                  N/A                   Unknown
+19.  Oyebode Samuel                  TheWeehfhi               +234 816 944 2714     Bells university of technology
+20.  Duke Ndifreke Etim              Duke-001                 +234 708 529 5795     AKWAIBOM STATE UNIVERSITY
+21.  Vincent Clement Effiong         scorpiochicago1          N/A                   University of Uyo
+22.  Okoli Tochukwu                  HAKAI_026                N/A                   University of Nigeria Nsukka
+23.  Iyanam!                         kingiyanam               +234 704 631 7575     University of Uyo
+24.  Edidiong Okoro                  Imblesseddy              N/A                   University of Uyo
+25.  Saviour Ibok                    Savlast                  N/A                   University of Uyo
+26.  Sunny                           WS-MIC-HAEL              +234 907 929 9847     University of Uyo
+27.  Jarvis                          NobbieFF                 +234 806 930 7996     UNICAL
+28.  Shazanny Black                  Shazanny-112             070046383887          Akwa ibom state University
+29.  Jonathan Victor                 jonzing200               +234 812 817 3134     University of UYO
+30.  Destiny Chilaka                 chilax333                +234 813 973 2276     University of Uyo
+31.  José Akpan                      Zilla065                 N/A                   University of Uyo
+32.  Pickle Rick                     Picklerick-24            N/A                   Unknown
+33.  Samuel Nkereuwem                Fulgent47                +234 902 971 0550     University of Uyo
+34.  Inimfon Akpan                   Inimfon_67               +234 913 609 8015     University of Uyo
+35.  Enoch Isaac                     21stPhenom               N/A                   University Of Nigeria Nsukka
+36.  Prince Betiang                  Master                   N/A                   University of uyo
+37.  Raphael Anyorikyo               milly_2872               N/A                   University of Uyo
+38.  Edara-Abasi Nnyanga Akpan       Dara-veldora             N/A                   University of Uyo
+39.  Idorenyin Emmanuel              Emmaculate               N/A                   University of uyo
+40.  Faith Uko                       Kg_flames                N/A                   University of Uyo
+41.  Benson                          BenG_22                  N/A                   University of uyo
+42.  Udoh, Ephraim                   Udohephraim              N/A                   University of Uyo
+43.  Godwin Akaiso                   gallfather               N/A                   University of uyo
+44.  Ches sing                       Checkmate                N/A                   University of Uyo
+45.  Anietie Ben                     Jude_Ben                 +234 806 307 1862     Bells University of Technology
+46.  ETIMBUK PAUL THOMPSON           Bayron-sage7             +234 701 565 0278     Federal University of Technology Ikot Abasi
+47.  Goodness Mbakara                Goodnessmbakara          N/A                   Uniuyo
+48.  Favour Nnenji                   Sprky124                 +234 802 758 7953     University of Uyo
+49.  David                           Davidbarakaii            +234 704 178 3383     Federal university of technology, ikot abasi
+50.  Adeoye Daniel                   Ay_ano_koji123444562     +234 907 108 6914     Bells University of Technology, Ota
+51.  Ade                             Strav1k                  +1 289 689 2415       Unknown
+52.  Bassey Okon Etia                BOE200                   N/A                   Federal University of Technology Ikot Abasi
+53.  Sanusi Inioluwa                 chesskiller090           N/A                   Bells university
+54.  Isuekevbo Uduehi                MaouTanner               +234 912 660 6382     Bells University
+55.  Iniubong Wilson Udofia          Zavvy23                  N/A                   Federal University of Technology Ikot Abasi
+56.  Victor Martin Umoren            Martin_The               N/A                   University of Uyo
+57.  Joseph Chukwumaeze              joeblaq104               +234 803 397 9096     University of Nigeria Nsukka
+58.  Emmanuel Michael                Ikbeast1                 +234 906 710 7943     Federal University of Technology, Ikotabasi
+59.  Laurel Amanam Umohntuen         ManCHESSterLaurel        N/A                   University of Uyo
+60.  Etengeabasi Ekpe                Power_101                +234 906 419 6491     University of Uyo
+
+
+================================================================================
+TOURNAMENT: June 2026 SCL Tournament (2026-06) [Status: COMPLETED]
+Total Participants: 51 players
+================================================================================
+No.  Player Name                     Username                 Phone Number          Institution
+----------------------------------------------------------------------------------------------------------------
+1.   Kingsley Ekpo                   Kontor_001               +234 906 051 5456     University of Uyo
+2.   Anietie Ben                     Jude_Ben                 +234 806 307 1862     Bells University of Technology
+3.   Robert Victor Imo               Kidd9h                   +234 705 523 4409     University of Uyo
+4.   Rowland Ini John                Rowlex19                 +234 810 614 4924     University of Uyo
+5.   OKOYA OLADIMEJI OLUWADAMILARE   OkoyaOluwadamilare       +234 902 398 4526     Bells University of Technology
+6.   Efeturi Joseph Ishaka           Efejossy                 +234 810 325 7385     University of Uyo
+7.   Jerome, Anietienteabasi Lawren  Shazanny-112             070046383887          Akwa Ibom State University
+8.   John Israel                     Ezzy29                   +234 906 176 4913     Uniuyo
+9.   Emmanuel Edet                   NobbieFF                 +234 806 930 7996     University of Calabar
+10.  Ohzzy                           Ohzzy90                  +234 808 990 0375     Uniuyo
+11.  Kingsley Basssy                 kingsleydominus          0705493993            University of Uyo
+12.  Abasifreke Sylvester Nyarks     Mfonmyservant            +234 816 718 4937     Akwa Ibom State University
+13.  Sunny Sunday George             WS-Mic-Hael              +234 907 929 9847     University of Uyo
+14.  Jesse Gregory Edem              Jesse70256               +234 814 507 4849     Uniuyo
+15.  Philip Favour                   Favourizo1               +234 808 177 9634     University of Uyo
+16.  Oliver Emmanuel                 Emex1                    +234 814 621 1361     University of uyo
+17.  Daniel Richard                  danielrich69             +234 814 502 1780     University of Uyo
+18.  Jerome, Anietienteabasi Lawren  Shazam-112               +234 704 638 3887     Akwa Ibom State University
+19.  Nnenji Favour Emmanuel          Sprky124                 +234 802 758 7953     University of Uyo
+20.  Uzochukwu Chiedozie Prince      Princedoziee             +234 704 598 1381     Nnamdi Azikiwe University
+21.  Ugbani Onyekachi Favour         r2_snyp                  +234 812 212 6954     Nnamdi Azikiwe University
+22.  Precious Egware                 precious2145             +234 810 690 0661     University of Uyo
+23.  Ubongabasi Iyanam               kingiyanam               +234 704 631 7575     University of Uyo
+24.  Etengeabasi Ekpe                Power_101                +234 906 419 6491     University of Uyo
+25.  Oliaku Chiedozie Christian      chibest9                 +234 904 437 2256     Nnamdi Azikiwe University
+26.  Oyebode Samuel Adewale          TheWeehfhi               +234 816 944 2714     Bells University of Technology
+27.  UduakAbasi Francis Ekanem       Stormcote                +234 907 818 6827     Uniuyo
+28.  James Mfon                      Rfirm842                 +234 704 111 0528     University of Uyo
+29.  Essien Jonathan Victor          Jonzing200               +234 812 817 3134     University of uyo
+30.  Adeoye Daniel                   Ay_ano_koji123444562     +234 907 108 6914     Bells University of Technology
+31.  Azeez Agbaje                    Strav1k                  +1 289 689 2415       Mohawk College
+32.  Sammuel Robert                  Unclesam34e              +234 806 475 5213     Uniuyo
+33.  Archibong Otobong Bassey        OtobongBassey            +234 913 879 4763     University of Uyo
+34.  Henshaw Johnstone               Shin_12                  +234 708 406 4561     Bells University of Technology
+35.  Michael Denis Okon              Dharrygee                +234 911 431 7232     University of uyo
+36.  Isuekevbo Uduehi Joel           MaouTanner               +234 912 660 6382     Bells University of Technology
+37.  Sunday, Excellence Kufre        sellysmart               +234 913 016 0444     University of Uyo
+38.  Princewill                      PRI639                   +234 912 410 6396     University of Uyo
+39.  Shalom Bebebaraseigha           shalombenx               +234 707 057 6049     University of Uyo
+40.  Samuel Amiang Akpan             Samuelikescodin          +234 810 438 2157     University of Uyo
+41.  Nkereuwem Samuel Ime            Fulgent47                +234 902 971 0550     University of Uyo
+42.  Adepoju Emmanuel Olamide        olami254                 +234 705 197 7326     Bells University of Technology
+43.  Kesene Nicholas                 keseneNicholas           +234 901 512 5293     Bells University of Technology
+44.  Israel                          thatshortboyeyez         +234 707 680 7027     Uniuyo
+45.  Destiny Chilaka                 Chilax333                +234 813 973 2276     University of Uyo
+46.  Osmond-Nath Robson Robinson     Robdarkknight            +234 812 632 9930     University of Uyo
+47.  Henshaw James                   oblivion1416             +234 902 804 5978     Bells University of Technology
+48.  Emmanuel Aniema Michael         Ikbeast1                 +234 906 710 7943     Federal University of Technology, Ikot Abasi
+49.  Etim Chris Emmanuel             Karyptus                 +234 916 863 6887     University of Uyo
+50.  Victor Augustine                victoraugustine          +234 707 172 4882     Uniuyo
+51.  Inimfon Celestine               Inimfon_67               +234 913 609 8015     Uniuyo
+
+
+================================================================================
+         CONSOLIDATED MASTER DIRECTORY OF ALL UNIQUE TOURNAMENT PLAYERS         
+================================================================================
+Total Unique Players: 98
+
+No.  Player Name                     Username                 Phone Number          Tournaments
+----------------------------------------------------------------------------------------------------------------
+1.   Victor Martin Umoren            Martin_The               N/A                   2026-08 SCL Tournament, July 2026 SCL Tournament
+2.   Kingsley Ekpo                   Kontor001                +234 906 051 5456     2026-08 SCL Tournament, July 2026 SCL Tournament
+3.   Anietie Ben                     Jude_Ben                 +234 806 307 1862     2026-08 SCL Tournament, July 2026 SCL Tournament, June 2026 SCL Tournament
+4.   Edem, Jesse Gregory             Jesse70256               +234 814 507 4849     2026-08 SCL Tournament, July 2026 SCL Tournament, June 2026 SCL Tournament
+5.   William Arum                    Lilshadys                +234 913 632 6622     2026-08 SCL Tournament
+6.   ETIMBUK PAUL THOMPSON           Bayron-sage7             +234 701 565 0278     2026-08 SCL Tournament, July 2026 SCL Tournament
+7.   Uzochukwu chiedozie prince      Princedoziee             +234 704 598 1381     2026-08 SCL Tournament, June 2026 SCL Tournament
+8.   Covenant Udobia                 Anonix_01                N/A                   2026-08 SCL Tournament, July 2026 SCL Tournament
+9.   Batista Effontery               GeneralRal               +234 905 608 5216     2026-08 SCL Tournament
+10.  Kenneth Gilbert                 Prince_of_pieceX         +234 913 159 2008     2026-08 SCL Tournament
+11.  Elijah Okunoye                  Elijah_eao               N/A                   2026-08 SCL Tournament
+12.  Robert Samuel                   Unclesam34e              +234 806 475 5213     2026-08 SCL Tournament, July 2026 SCL Tournament, June 2026 SCL Tournament
+13.  Dean Bassey                     deanbassey001            +234 706 445 2708     2026-08 SCL Tournament
+14.  Victor Augustine                victoraugustine          +234 707 172 4882     2026-08 SCL Tournament, July 2026 SCL Tournament, June 2026 SCL Tournament
+15.  Shazanny Black                  Shazanny-112             +234 704 638 3887     2026-08 SCL Tournament, July 2026 SCL Tournament, June 2026 SCL Tournament
+16.  Abasiakan Mbat                  basky09                  N/A                   2026-08 SCL Tournament
+17.  AGU Daniel                      Yari-bem                 N/A                   2026-08 SCL Tournament
+18.  Ugwu Praise Chinwuba            PraiseChinwuba           +234 704 926 9211     2026-08 SCL Tournament, July 2026 SCL Tournament
+19.  Emmanuel Michael                Ikbeast1                 +234 906 710 7943     2026-08 SCL Tournament, July 2026 SCL Tournament, June 2026 SCL Tournament
+20.  Joseph Chukwumaeze              joeblaq104               +234 803 397 9096     2026-08 SCL Tournament, July 2026 SCL Tournament
+21.  Ninuoluwa Nins                  Ninuoluwa                +234 816 798 8323     2026-08 SCL Tournament
+22.  Duke Ndifreke Etim              Duke-001                 +234 708 529 5795     2026-08 SCL Tournament, July 2026 SCL Tournament
+23.  Oyebode Samuel                  TheWeehfhi               +234 816 944 2714     2026-08 SCL Tournament, July 2026 SCL Tournament, June 2026 SCL Tournament
+24.  princewill obi                  Mathemachesser-the-GOAT  N/A                   2026-08 SCL Tournament
+25.  Gloria Okoro                    Gloria0726               N/A                   2026-08 SCL Tournament, July 2026 SCL Tournament
+26.  David                           Davidbarakaii            +234 704 178 3383     2026-08 SCL Tournament, July 2026 SCL Tournament
+27.  Samuel Nkereuwem                Fulgent47                +234 902 971 0550     2026-08 SCL Tournament, July 2026 SCL Tournament, June 2026 SCL Tournament
+28.  Johnstone Henshaw               Shin_12                  +234 708 406 4561     2026-08 SCL Tournament, June 2026 SCL Tournament
+29.  Olatunjijeremiah                olatunjijeremiah         N/A                   July 2026 SCL Tournament
+30.  Ado Bolouaweri Samuel           Bolouaweri               N/A                   July 2026 SCL Tournament
+31.  Alex Richard                    Alexrichy19              N/A                   July 2026 SCL Tournament
+32.  Raphael wisdom                  Yoyo1513                 N/A                   July 2026 SCL Tournament
+33.  Daniel Richard                  danielrich69             +234 814 502 1780     July 2026 SCL Tournament, June 2026 SCL Tournament
+34.  Best James                      Bestmvh                  N/A                   July 2026 SCL Tournament
+35.  Robert Victor Imo               Kidd9h                   +234 705 523 4409     July 2026 SCL Tournament, June 2026 SCL Tournament
+36.  Blossom AMAETOR                 Blozisom1                N/A                   July 2026 SCL Tournament
+37.  Teniola                         D_Resign_Gambit          N/A                   July 2026 SCL Tournament
+38.  Chris Emmanuel Etim             Karyptus                 +234 916 863 6887     July 2026 SCL Tournament, June 2026 SCL Tournament
+39.  Victor Ani-Joseph               ajv1510                  N/A                   July 2026 SCL Tournament
+40.  Vincent Clement Effiong         scorpiochicago1          N/A                   July 2026 SCL Tournament
+41.  Okoli Tochukwu                  HAKAI_026                N/A                   July 2026 SCL Tournament
+42.  Iyanam!                         kingiyanam               +234 704 631 7575     July 2026 SCL Tournament, June 2026 SCL Tournament
+43.  Edidiong Okoro                  Imblesseddy              N/A                   July 2026 SCL Tournament
+44.  Saviour Ibok                    Savlast                  N/A                   July 2026 SCL Tournament
+45.  Sunny                           WS-MIC-HAEL              +234 907 929 9847     July 2026 SCL Tournament, June 2026 SCL Tournament
+46.  Jarvis                          NobbieFF                 +234 806 930 7996     July 2026 SCL Tournament, June 2026 SCL Tournament
+47.  Jonathan Victor                 jonzing200               +234 812 817 3134     July 2026 SCL Tournament, June 2026 SCL Tournament
+48.  Destiny Chilaka                 chilax333                +234 813 973 2276     July 2026 SCL Tournament, June 2026 SCL Tournament
+49.  José Akpan                      Zilla065                 N/A                   July 2026 SCL Tournament
+50.  Pickle Rick                     Picklerick-24            N/A                   July 2026 SCL Tournament
+51.  Inimfon Akpan                   Inimfon_67               +234 913 609 8015     July 2026 SCL Tournament, June 2026 SCL Tournament
+52.  Enoch Isaac                     21stPhenom               N/A                   July 2026 SCL Tournament
+53.  Prince Betiang                  Master                   N/A                   July 2026 SCL Tournament
+54.  Raphael Anyorikyo               milly_2872               N/A                   July 2026 SCL Tournament
+55.  Edara-Abasi Nnyanga Akpan       Dara-veldora             N/A                   July 2026 SCL Tournament
+56.  Idorenyin Emmanuel              Emmaculate               N/A                   July 2026 SCL Tournament
+57.  Faith Uko                       Kg_flames                N/A                   July 2026 SCL Tournament
+58.  Benson                          BenG_22                  N/A                   July 2026 SCL Tournament
+59.  Udoh, Ephraim                   Udohephraim              N/A                   July 2026 SCL Tournament
+60.  Godwin Akaiso                   gallfather               N/A                   July 2026 SCL Tournament
+61.  Ches sing                       Checkmate                N/A                   July 2026 SCL Tournament
+62.  Goodness Mbakara                Goodnessmbakara          N/A                   July 2026 SCL Tournament
+63.  Favour Nnenji                   Sprky124                 +234 802 758 7953     July 2026 SCL Tournament, June 2026 SCL Tournament
+64.  Adeoye Daniel                   Ay_ano_koji123444562     +234 907 108 6914     July 2026 SCL Tournament, June 2026 SCL Tournament
+65.  Ade                             Strav1k                  +1 289 689 2415       July 2026 SCL Tournament, June 2026 SCL Tournament
+66.  Bassey Okon Etia                BOE200                   N/A                   July 2026 SCL Tournament
+67.  Sanusi Inioluwa                 chesskiller090           N/A                   July 2026 SCL Tournament
+68.  Isuekevbo Uduehi                MaouTanner               +234 912 660 6382     July 2026 SCL Tournament, June 2026 SCL Tournament
+69.  Iniubong Wilson Udofia          Zavvy23                  N/A                   July 2026 SCL Tournament
+70.  Laurel Amanam Umohntuen         ManCHESSterLaurel        N/A                   July 2026 SCL Tournament
+71.  Etengeabasi Ekpe                Power_101                +234 906 419 6491     July 2026 SCL Tournament, June 2026 SCL Tournament
+72.  Kingsley Ekpo                   Kontor_001               +234 906 051 5456     June 2026 SCL Tournament
+73.  Rowland Ini John                Rowlex19                 +234 810 614 4924     June 2026 SCL Tournament
+74.  OKOYA OLADIMEJI OLUWADAMILARE   OkoyaOluwadamilare       +234 902 398 4526     June 2026 SCL Tournament
+75.  Efeturi Joseph Ishaka           Efejossy                 +234 810 325 7385     June 2026 SCL Tournament
+76.  John Israel                     Ezzy29                   +234 906 176 4913     June 2026 SCL Tournament
+77.  Ohzzy                           Ohzzy90                  +234 808 990 0375     June 2026 SCL Tournament
+78.  Kingsley Basssy                 kingsleydominus          0705493993            June 2026 SCL Tournament
+79.  Abasifreke Sylvester Nyarks     Mfonmyservant            +234 816 718 4937     June 2026 SCL Tournament
+80.  Philip Favour                   Favourizo1               +234 808 177 9634     June 2026 SCL Tournament
+81.  Oliver Emmanuel                 Emex1                    +234 814 621 1361     June 2026 SCL Tournament
+82.  Jerome, Anietienteabasi Lawren  Shazam-112               +234 704 638 3887     June 2026 SCL Tournament
+83.  Ugbani Onyekachi Favour         r2_snyp                  +234 812 212 6954     June 2026 SCL Tournament
+84.  Precious Egware                 precious2145             +234 810 690 0661     June 2026 SCL Tournament
+85.  Oliaku Chiedozie Christian      chibest9                 +234 904 437 2256     June 2026 SCL Tournament
+86.  UduakAbasi Francis Ekanem       Stormcote                +234 907 818 6827     June 2026 SCL Tournament
+87.  James Mfon                      Rfirm842                 +234 704 111 0528     June 2026 SCL Tournament
+88.  Archibong Otobong Bassey        OtobongBassey            +234 913 879 4763     June 2026 SCL Tournament
+89.  Michael Denis Okon              Dharrygee                +234 911 431 7232     June 2026 SCL Tournament
+90.  Sunday, Excellence Kufre        sellysmart               +234 913 016 0444     June 2026 SCL Tournament
+91.  Princewill                      PRI639                   +234 912 410 6396     June 2026 SCL Tournament
+92.  Shalom Bebebaraseigha           shalombenx               +234 707 057 6049     June 2026 SCL Tournament
+93.  Samuel Amiang Akpan             Samuelikescodin          +234 810 438 2157     June 2026 SCL Tournament
+94.  Adepoju Emmanuel Olamide        olami254                 +234 705 197 7326     June 2026 SCL Tournament
+95.  Kesene Nicholas                 keseneNicholas           +234 901 512 5293     June 2026 SCL Tournament
+96.  Israel                          thatshortboyeyez         +234 707 680 7027     June 2026 SCL Tournament
+97.  Osmond-Nath Robson Robinson     Robdarkknight            +234 812 632 9930     June 2026 SCL Tournament
+98.  Henshaw James                   oblivion1416             +234 902 804 5978     June 2026 SCL Tournament
+
+
+================================================================================
+        BULK PHONE NUMBER EXPORT (FORMATTED FOR DIRECT COPY / BROADCAST)        
+================================================================================
+
+Total Unique Phone Numbers: 60
+
+--- Standard Nigerian Local Format (080... / 090... / 070...) ---
+07015650278
+07041110528
+07041783383
+07045981381
+07046317575
+07046383887
+07049269211
+07051977326
+0705493993
+07055234409
+07064452708
+07070576049
+07071724882
+07076807027
+07084064561
+07085295795
+08027587953
+08033979096
+08063071862
+08064755213
+08069307996
+08081779634
+08089900375
+08103257385
+08104382157
+08106144924
+08106900661
+08122126954
+08126329930
+08128173134
+08139732276
+08145021780
+08145074849
+08146211361
+08167184937
+08167988323
+08169442714
+09015125293
+09023984526
+09028045978
+09029710550
+09044372256
+09056085216
+09060515456
+09061764913
+09064196491
+09067107943
+09071086914
+09078186827
+09079299847
+09114317232
+09124106396
+09126606382
+09130160444
+09131592008
+09136098015
+09136326622
+09138794763
+09168636887
+12896892415
+
+--- International E.164 Dialing Format (+234...) ---
++234 701 565 0278
++234 704 111 0528
++234 704 178 3383
++234 704 598 1381
++234 704 631 7575
++234 704 638 3887
++234 704 926 9211
++234 705 197 7326
+0705493993
++234 705 523 4409
++234 706 445 2708
++234 707 057 6049
++234 707 172 4882
++234 707 680 7027
++234 708 406 4561
++234 708 529 5795
++234 802 758 7953
++234 803 397 9096
++234 806 307 1862
++234 806 475 5213
++234 806 930 7996
++234 808 177 9634
++234 808 990 0375
++234 810 325 7385
++234 810 438 2157
++234 810 614 4924
++234 810 690 0661
++234 812 212 6954
++234 812 632 9930
++234 812 817 3134
++234 813 973 2276
++234 814 502 1780
++234 814 507 4849
++234 814 621 1361
++234 816 718 4937
++234 816 798 8323
++234 816 944 2714
++234 901 512 5293
++234 902 398 4526
++234 902 804 5978
++234 902 971 0550
++234 904 437 2256
++234 905 608 5216
++234 906 051 5456
++234 906 176 4913
++234 906 419 6491
++234 906 710 7943
++234 907 108 6914
++234 907 818 6827
++234 907 929 9847
++234 911 431 7232
++234 912 410 6396
++234 912 660 6382
++234 913 016 0444
++234 913 159 2008
++234 913 609 8015
++234 913 632 6622
++234 913 879 4763
++234 916 863 6887
++1 289 689 2415
+
+--- Comma-Separated (For SMS / WhatsApp Broadcast import) ---
+07015650278, 07041110528, 07041783383, 07045981381, 07046317575, 07046383887, 07049269211, 07051977326, 0705493993, 07055234409, 07064452708, 07070576049, 07071724882, 07076807027, 07084064561, 07085295795, 08027587953, 08033979096, 08063071862, 08064755213, 08069307996, 08081779634, 08089900375, 08103257385, 08104382157, 08106144924, 08106900661, 08122126954, 08126329930, 08128173134, 08139732276, 08145021780, 08145074849, 08146211361, 08167184937, 08167988323, 08169442714, 09015125293, 09023984526, 09028045978, 09029710550, 09044372256, 09056085216, 09060515456, 09061764913, 09064196491, 09067107943, 09071086914, 09078186827, 09079299847, 09114317232, 09124106396, 09126606382, 09130160444, 09131592008, 09136098015, 09136326622, 09138794763, 09168636887, 12896892415

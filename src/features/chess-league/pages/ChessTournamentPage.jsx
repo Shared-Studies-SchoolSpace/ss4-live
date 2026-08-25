@@ -569,6 +569,14 @@ export default function ChessTournamentPage() {
   const [promptError, setPromptError] = useState('');
   const [pendingRegData, setPendingRegData] = useState(null);
 
+  // Admin Banner & Registration Management States
+  const [showBanner, setShowBanner] = useState(true);
+  const [bannerMode, setBannerMode] = useState('auto'); // 'auto' | 'registration' | 'matches' | 'custom'
+  const [bannerHeadline, setBannerHeadline] = useState('');
+  const [bannerVersion, setBannerVersion] = useState(1);
+  const [registrationStatus, setRegistrationStatus] = useState('open'); // 'open' | 'closed'
+  const [autoCloseRegistration, setAutoCloseRegistration] = useState(true);
+
   const [isScouring, setIsScouring] = useState(false);
   const [scourProgress, setScourProgress] = useState(null);
 
@@ -1073,10 +1081,32 @@ export default function ChessTournamentPage() {
     return () => clearInterval(id);
   }, [activeTargetT]);
 
+  const isRegistrationClosed = useMemo(() => {
+    // 1. Explicit admin manual override
+    if (registrationStatus === 'closed') return true;
+    if (registrationStatus === 'open') return false;
+
+    // 2. Auto-close ONLY applies when the timer is specifically targeting Registration
+    const isRegistrationTimer = 
+      bannerMode === 'registration' || 
+      (bannerMode === 'auto' && /registration|closes|signup/i.test(nextRoundLabelInput || ''));
+
+    if (autoCloseRegistration && isRegistrationTimer && days === 0 && hours === 0 && mins === 0 && secs === 0) {
+      return true;
+    }
+    return false;
+  }, [registrationStatus, autoCloseRegistration, bannerMode, nextRoundLabelInput, days, hours, mins, secs]);
+
   useEffect(() => {
     if (activeTargetT) {
       if (activeTargetT.next_round_label) setNextRoundLabelInput(activeTargetT.next_round_label);
       if (activeTargetT.reg_custom_text) setRegCustomTextInput(activeTargetT.reg_custom_text);
+      if (activeTargetT.show_banner !== undefined) setShowBanner(activeTargetT.show_banner !== false);
+      if (activeTargetT.banner_mode) setBannerMode(activeTargetT.banner_mode);
+      if (activeTargetT.banner_headline) setBannerHeadline(activeTargetT.banner_headline);
+      if (activeTargetT.banner_version) setBannerVersion(activeTargetT.banner_version);
+      if (activeTargetT.registration_status) setRegistrationStatus(activeTargetT.registration_status);
+      if (activeTargetT.auto_close_registration !== undefined) setAutoCloseRegistration(activeTargetT.auto_close_registration !== false);
 
       const latestRound = activeTargetT?.rounds && activeTargetT.rounds[activeTargetT.rounds.length - 1];
       const targetDateStr = activeTargetT.next_round_start || latestRound?.next_round_start;
@@ -1127,49 +1157,67 @@ export default function ChessTournamentPage() {
     }
     try {
       const isoStr = new Date(nextRoundStartInput).toISOString();
+      const updatedPayload = {
+        next_round_start: isoStr,
+        next_round_label: nextRoundLabelInput,
+        reg_custom_text: regCustomTextInput,
+        show_banner: showBanner,
+        banner_mode: bannerMode,
+        banner_headline: bannerHeadline,
+        banner_version: bannerVersion,
+        registration_status: registrationStatus,
+        auto_close_registration: autoCloseRegistration
+      };
 
       // 1. Save directly to Supabase tournaments table
-      const targetT = activeTargetT;
-      if (targetT && targetT.id) {
-        const { error } = await supabase
-          .from('tournaments')
-          .update({
-            next_round_start: isoStr,
-            next_round_label: nextRoundLabelInput,
-            reg_custom_text: regCustomTextInput
-          })
-          .eq('id', targetT.id);
+      const targetMonthYear = activeTargetT?.month_year || selectedMonthYear;
+      const { error } = await supabase
+        .from('tournaments')
+        .update(updatedPayload)
+        .eq('month_year', targetMonthYear);
 
-        if (error) console.error("Supabase update error:", error);
-      }
+      if (error) console.error("Supabase update error:", error);
 
       // 2. Update local upcomingTournament state immediately
       setUpcomingTournament(prev => prev ? ({
         ...prev,
-        next_round_start: isoStr,
-        next_round_label: nextRoundLabelInput,
-        reg_custom_text: regCustomTextInput
-      }) : {
-        id: selectedMonthYear,
-        month_year: selectedMonthYear,
-        name: `${selectedMonthYear} SCL Tournament`,
-        status: 'upcoming',
-        next_round_start: isoStr,
-        next_round_label: nextRoundLabelInput,
-        reg_custom_text: regCustomTextInput,
-        players: [],
-        rounds: []
-      });
+        ...updatedPayload
+      }) : null);
 
       // 3. Update active tournament hook state if active rounds exist
-      if (tournament?.rounds?.length) {
-        await updateNextRoundStart(isoStr, nextRoundLabelInput);
+      if (tournament) {
+        updateNextRoundStart(isoStr, nextRoundLabelInput, updatedPayload);
       }
 
-      toast.success('Registration countdown & page settings saved!');
+      toast.success('Registration countdown & banner settings saved!');
     } catch (e) {
       console.error(e);
       toast.error('Error updating countdown settings.');
+    }
+  };
+
+  const handleResetBannerDismissals = async () => {
+    const nextVer = (bannerVersion || 1) + 1;
+    setBannerVersion(nextVer);
+    try {
+      const queryMonthYear = activeTargetT?.month_year || selectedMonthYear;
+      await supabase
+        .from('tournaments')
+        .update({ banner_version: nextVer })
+        .eq('month_year', queryMonthYear);
+
+      setUpcomingTournament(prev => prev ? ({ ...prev, banner_version: nextVer }) : prev);
+      if (tournament) {
+        updateNextRoundStart(
+          activeTargetT?.next_round_start || tournament.next_round_start || '',
+          activeTargetT?.next_round_label || tournament.next_round_label || '',
+          { banner_version: nextVer }
+        );
+      }
+      toast.success(`Banner updated to v${nextVer}! User dismissals reset.`);
+    } catch (e) {
+      console.error(e);
+      toast.error('Failed to reset banner dismissals.');
     }
   };
 
@@ -1397,7 +1445,6 @@ export default function ChessTournamentPage() {
 
   return (
     <div className="min-h-screen bg-[#F6F4F0]">
-      <ToastContainer position="bottom-right" style={{ zIndex: 999999 }} />
 
       {isLoading ? (
         /* Skeleton Loading View (H3: Doherty Threshold Fix) */
@@ -1601,6 +1648,13 @@ export default function ChessTournamentPage() {
       ) : (
         /* Regular Tournament View (Hero + Tab Layout) */
         <>
+          <TournamentHero
+            tournament={tournament}
+            selectedMonthYear={selectedMonthYear}
+            history={history}
+            onMonthChange={setSelectedMonthYear}
+            onTitleDoubleClick={() => { setPinInput(''); setPinErr(''); setShowPin(false); setPinModal(true); }}
+          />
 
 
           {/* Sticky Mobile-First Tab Bar (Fitts's Law & Hick's Law Fix) */}
@@ -2331,32 +2385,133 @@ export default function ChessTournamentPage() {
               </div>
             )}
 
-            {/* Manage Next Round Countdown */}
-            <div className="bg-[#FAF9F5] border border-brand-primary/10 rounded-2xl p-4 sm:p-6 space-y-4">
-              <div className="flex items-start justify-between gap-3 flex-wrap">
+            {/* Manage Next Round Countdown & Top Banner Controls */}
+            <div className="bg-white border border-gray-200 rounded-2xl p-4 sm:p-6 space-y-6">
+              <div className="flex items-start justify-between gap-3 flex-wrap border-b border-gray-100 pb-3">
                 <div>
-                  <h3 className="font-space font-black text-lg text-[#111111]">Manage Countdown</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Controls the live countdown timer and its label shown to all players.</p>
+                  <h3 className="font-space font-black text-lg text-[#111111]">
+                    Top Banner &amp; Registration Lifecycle Config
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-0.5">Controls site-wide announcement banners, countdown targets, and registration open/closed status.</p>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold text-gray-500">Banner Visibility</span>
+                  <button
+                    type="button"
+                    onClick={() => setShowBanner(v => !v)}
+                    className={`relative inline-flex items-center w-11 h-6 rounded-full transition-colors cursor-pointer shrink-0 ${
+                      showBanner ? 'bg-gray-900' : 'bg-gray-300'
+                    }`}
+                    title={showBanner ? 'Banner is Visible (ON)' : 'Banner is Hidden (OFF)'}
+                    role="switch"
+                    aria-checked={showBanner}
+                  >
+                    <span className={`absolute w-4 h-4 bg-white rounded-full transition-transform ${
+                      showBanner ? 'translate-x-6' : 'translate-x-1'
+                    }`} />
+                  </button>
                 </div>
               </div>
+
+              {/* REGISTRATION LIFECYCLE MANAGER */}
+              <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <span className="text-xs font-black text-gray-700 uppercase tracking-wider">Registration Status</span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setRegistrationStatus('open')}
+                      className={`text-xs font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
+                        registrationStatus === 'open' 
+                          ? 'bg-gray-900 text-white font-black' 
+                          : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-100'
+                      }`}
+                    >
+                      Registration Open
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setRegistrationStatus('closed')}
+                      className={`text-xs font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
+                        registrationStatus === 'closed' 
+                          ? 'bg-gray-900 text-white font-black' 
+                          : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-100'
+                      }`}
+                    >
+                      Registration Closed
+                    </button>
+                  </div>
+                </div>
+
+                <label className="flex items-center gap-2 text-xs font-medium text-gray-600 cursor-pointer pt-1">
+                  <input
+                    type="checkbox"
+                    checked={autoCloseRegistration}
+                    onChange={e => setAutoCloseRegistration(e.target.checked)}
+                    className="w-4 h-4 rounded text-gray-900 focus:ring-gray-900 cursor-pointer"
+                  />
+                  <span>Auto-close registration when deadline countdown expires</span>
+                </label>
+              </div>
+
+              {/* BANNER MODE SELECTOR */}
+              <div className="space-y-2">
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Banner Display Mode</label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {[
+                    { id: 'auto', label: 'Auto (Smart)', desc: 'Detects stage' },
+                    { id: 'registration', label: 'Registration', desc: 'Forces signup copy' },
+                    { id: 'matches', label: 'Match Schedule', desc: 'Forces match copy' },
+                    { id: 'custom', label: 'Custom Copy', desc: 'Manual headline' }
+                  ].map(m => (
+                    <button
+                      key={m.id}
+                      type="button"
+                      onClick={() => setBannerMode(m.id)}
+                      className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                        bannerMode === m.id
+                          ? 'bg-gray-900 border-gray-900 text-white font-bold'
+                          : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="text-xs font-bold">{m.label}</div>
+                      <div className={`text-[10px] font-normal mt-0.5 ${bannerMode === m.id ? 'text-gray-300' : 'text-gray-400'}`}>{m.desc}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {bannerMode === 'custom' && (
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Custom Banner Headline</label>
+                  <input
+                    type="text"
+                    value={bannerHeadline}
+                    onChange={(e) => setBannerHeadline(e.target.value)}
+                    placeholder="e.g. Special Blitz Qualifier Cup - Signups Closing!"
+                    className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:border-gray-900 text-[#111111]"
+                  />
+                </div>
+              )}
 
               {/* Countdown Label Row */}
               <div className="space-y-2">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Countdown Label / Text</label>
+                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Countdown Label / Stage Name</label>
                   <div className="flex items-center gap-2 min-h-[44px]">
                     <span className="text-[10px] font-bold text-gray-500">Preset Dropdown</span>
                     <button
                       onClick={() => setLabelDropdownEnabled(v => !v)}
                       className={`relative inline-flex items-center w-11 h-6 rounded-full transition-colors cursor-pointer shrink-0 ${
-                        labelDropdownEnabled ? 'bg-brand-primary' : 'bg-gray-300'
+                        labelDropdownEnabled ? 'bg-gray-900' : 'bg-gray-300'
                       }`}
                       title={labelDropdownEnabled ? 'Switch to custom text input' : 'Switch to preset dropdown'}
                       aria-label="Toggle label dropdown"
                       role="switch"
                       aria-checked={labelDropdownEnabled}
                     >
-                      <span className={`absolute w-4 h-4 bg-white rounded-full shadow transition-transform ${
+                      <span className={`absolute w-4 h-4 bg-white rounded-full transition-transform ${
                         labelDropdownEnabled ? 'translate-x-6' : 'translate-x-1'
                       }`} />
                     </button>
@@ -2367,7 +2522,7 @@ export default function ChessTournamentPage() {
                   <select
                     value={nextRoundLabelInput}
                     onChange={(e) => setNextRoundLabelInput(e.target.value)}
-                    className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-brand-primary/40 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111] cursor-pointer"
+                    className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:border-gray-900 text-[#111111] cursor-pointer"
                   >
                     {ROUND_LABEL_OPTIONS.map(opt => (
                       <option key={opt} value={opt}>{opt}</option>
@@ -2379,7 +2534,7 @@ export default function ChessTournamentPage() {
                     value={nextRoundLabelInput}
                     onChange={(e) => setNextRoundLabelInput(e.target.value)}
                     placeholder="e.g. Round of 32 starts in"
-                    className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                    className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:border-gray-900 text-[#111111]"
                   />
                 )}
               </div>
@@ -2392,14 +2547,14 @@ export default function ChessTournamentPage() {
                   value={regCustomTextInput}
                   onChange={(e) => setRegCustomTextInput(e.target.value)}
                   placeholder="e.g. Single elimination. Last 7 days of the month. One champion claims the prize."
-                  className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                  className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:border-gray-900 text-[#111111]"
                 />
               </div>
 
               {/* Date + Time Row */}
               <div className="space-y-2">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Next Round Start Date & Time</label>
+                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Next Round Start Date &amp; Time</label>
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <button
                       type="button"
@@ -2410,9 +2565,9 @@ export default function ChessTournamentPage() {
                         const localTime = new Date(d.getTime() - offset * 60 * 1000);
                         setNextRoundStartInput(localTime.toISOString().slice(0, 16));
                       }}
-                      className="text-xs font-bold px-3 py-2 min-h-[44px] bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-lg transition-colors cursor-pointer flex items-center"
+                      className="text-xs font-bold px-3 py-2 min-h-[44px] bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors cursor-pointer flex items-center"
                     >
-                      ⚡ 8:00 PM Today
+                      8:00 PM Today
                     </button>
                     <button
                       type="button"
@@ -2424,9 +2579,9 @@ export default function ChessTournamentPage() {
                         const localTime = new Date(d.getTime() - offset * 60 * 1000);
                         setNextRoundStartInput(localTime.toISOString().slice(0, 16));
                       }}
-                      className="text-xs font-bold px-3 py-2 min-h-[44px] bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-lg transition-colors cursor-pointer flex items-center"
+                      className="text-xs font-bold px-3 py-2 min-h-[44px] bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors cursor-pointer flex items-center"
                     >
-                      ⚡ 8:00 PM Tomorrow
+                      8:00 PM Tomorrow
                     </button>
                   </div>
                 </div>
@@ -2437,24 +2592,57 @@ export default function ChessTournamentPage() {
                       type="datetime-local"
                       value={nextRoundStartInput}
                       onChange={(e) => setNextRoundStartInput(e.target.value)}
-                      className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary text-[#111111]"
+                      className="w-full text-xs font-bold px-3.5 py-2.5 min-h-[44px] border border-gray-200 rounded-xl bg-white outline-none focus:border-gray-900 text-[#111111]"
                     />
                   </div>
-                  <div className="flex gap-2 w-full sm:w-auto shrink-0">
+                  <div className="flex flex-wrap gap-2 w-full sm:w-auto shrink-0">
                     <button
                       onClick={handleSaveNextRoundStart}
-                      className="bg-brand-primary text-white text-xs font-black px-5 py-3 min-h-[44px] rounded-xl hover:bg-brand-primary/95 active:scale-95 transition-all cursor-pointer flex-1 sm:flex-initial text-center shadow-sm flex items-center justify-center"
+                      className="bg-gray-900 text-white text-xs font-bold px-5 py-3 min-h-[44px] rounded-xl hover:bg-black transition-all cursor-pointer flex-1 sm:flex-initial text-center flex items-center justify-center"
                     >
-                      Save Countdown
+                      Save Settings
+                    </button>
+                    <button
+                      onClick={handleResetBannerDismissals}
+                      title="Increments banner version so users who clicked dismiss will see the banner again"
+                      className="bg-gray-100 text-gray-700 border border-gray-300 text-xs font-bold px-4 py-3 min-h-[44px] rounded-xl hover:bg-gray-200 transition-all cursor-pointer flex-1 sm:flex-initial text-center flex items-center justify-center"
+                    >
+                      Broadcast Update (v{bannerVersion})
                     </button>
                     <button
                       onClick={handleClearNextRoundStart}
-                      className="bg-gray-100 text-gray-600 text-xs font-black px-4 py-3 min-h-[44px] rounded-xl hover:bg-gray-200 transition-all cursor-pointer flex-1 sm:flex-initial text-center flex items-center justify-center"
+                      className="bg-gray-100 text-gray-500 text-xs font-bold px-4 py-3 min-h-[44px] rounded-xl hover:bg-gray-200 transition-all cursor-pointer flex-1 sm:flex-initial text-center flex items-center justify-center"
                     >
                       Clear
                     </button>
                   </div>
                 </div>
+              </div>
+
+              {/* LIVE BANNER PREVIEW BOX */}
+              <div className="pt-2 border-t border-gray-100">
+                <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Live Top Banner Preview</div>
+                {showBanner ? (
+                  <div className="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-gray-900 text-white text-xs font-medium border border-gray-800">
+                    <div className="flex items-center gap-2">
+                      <span className="bg-gray-800 border border-gray-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider text-gray-300">
+                        {bannerMode === 'custom' ? 'SCL Announcement' : bannerMode === 'registration' ? 'SCL Registration' : `SCL ${nextRoundLabelInput || 'Round'}`}
+                      </span>
+                      <span>
+                        {bannerMode === 'custom' 
+                          ? (bannerHeadline || 'Custom Announcement Copy') 
+                          : bannerMode === 'registration' 
+                            ? 'Registration is open! Closes in 2d 4h.' 
+                            : 'Matches are scheduled! Starting in 2d 4h.'}
+                      </span>
+                    </div>
+                    <span className="text-[10px] text-gray-400 border border-gray-700 px-2 py-0.5 rounded">Preview</span>
+                  </div>
+                ) : (
+                  <div className="p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-400 font-medium text-center">
+                    Top Banner is currently turned OFF (Hidden from all users)
+                  </div>
+                )}
               </div>
             </div>
 
@@ -3663,22 +3851,21 @@ export default function ChessTournamentPage() {
 
       {/* PIN modal */}
       {pinModal && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" onClick={() => setPinModal(false)}>
+        <div className="fixed inset-0 z-[90] bg-black/50 backdrop-blur-xs flex items-center justify-center p-4" onClick={() => setPinModal(false)}>
           <div className="bg-white rounded-2xl p-8 max-w-xs w-full shadow-2xl text-center relative" onClick={e => e.stopPropagation()}>
             <p className="font-space font-black text-lg text-[#111111] mb-1">Admin Login</p>
             <p className="text-xs text-gray-400 mb-6">Enter your 4-digit PIN</p>
-            <div className="relative flex items-center justify-center w-full">
+            <div className="relative flex items-center justify-center w-36 mx-auto mb-2">
               <input type={showPin ? "text" : "password"} inputMode="numeric" maxLength={8} autoFocus
                 value={pinInput} onChange={e => { setPinInput(e.target.value); setPinErr(''); }}
                 onKeyDown={e => e.key === 'Enter' && submitPin()}
-                className={`w-36 text-center pl-8 pr-10 py-3 text-xl font-black tracking-[0.4em] bg-gray-50 border rounded-2xl outline-none focus:ring-2 focus:ring-brand-primary mb-2 ${pinErr ? 'border-red-300' : 'border-gray-200'}`}
+                className={`w-full text-center pl-7 pr-9 py-3 text-xl font-black tracking-[0.4em] bg-gray-50 border rounded-2xl outline-none focus:ring-2 focus:ring-brand-primary ${pinErr ? 'border-red-300' : 'border-gray-200'}`}
                 placeholder="····"
               />
               <button
                 type="button"
                 onClick={() => setShowPin(!showPin)}
-                className="absolute text-gray-400 hover:text-gray-600 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
-                style={{ right: 'calc(50% - 66px)', top: '14px' }}
+                className="absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none flex items-center justify-center cursor-pointer select-none bg-transparent border-none"
                 aria-label={showPin ? "Hide PIN" : "Show PIN"}
               >
                 <span className="material-symbols-outlined text-[18px]">

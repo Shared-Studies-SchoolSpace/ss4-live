@@ -233,11 +233,12 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
         };
       });
 
-      // Sort group standings: Points (Pts) descending, Wins (W) descending, Matches Played (P) descending, then Name
+      // Sort group standings: Points (Pts) descending, Wins (W) descending, Matches Played (P) descending, ELO rating descending, then Name
       standings.sort((a, b) => {
         if ((b.Pts || 0) !== (a.Pts || 0)) return (b.Pts || 0) - (a.Pts || 0);
         if ((b.W || 0) !== (a.W || 0)) return (b.W || 0) - (a.W || 0);
         if ((b.P || 0) !== (a.P || 0)) return (b.P || 0) - (a.P || 0);
+        if ((b.rating || 0) !== (a.rating || 0)) return (b.rating || 0) - (a.rating || 0);
         return (a.name || '').localeCompare(b.name || '');
       });
 
@@ -386,7 +387,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
             </h2>
           </div>
           <p className="text-xs text-gray-600 mt-1 font-medium">
-            Top 2 players in each group advance to the Knockout Stage. Scoring: <strong className="text-[#111111]">Win = 1 pt</strong> &bull; <strong className="text-[#111111]">Draw = 1 pt</strong> &bull; <strong className="text-[#111111]">Loss = 0 pts</strong>.
+            Top 2 players in each group advance to the Knockout Stage. Scoring: <strong className="text-[#111111]">Win = 1 pt</strong> &bull; <strong className="text-[#111111]">Draw = 0.5 pts</strong> &bull; <strong className="text-[#111111]">Loss = 0 pts</strong>.
           </p>
         </div>
 
@@ -424,7 +425,6 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
 
           <button
             onClick={() => {
-              setViewMode('fixtures');
               if (onSwitchTab) onSwitchTab('fixtures');
             }}
             className={`px-4 py-2 min-h-[44px] rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -783,16 +783,16 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
 
                 {/* Group Standings Table List (No horizontal scroll needed on mobile) */}
                 <div className="w-full overflow-hidden flex-1">
-                  <table className="w-full text-left border-collapse text-xs table-fixed">
+                  <table className="w-full text-left border-collapse text-xs">
                     <thead>
                       <tr className="bg-gray-50/60 border-b border-gray-100 text-[9px] font-black text-gray-400 uppercase tracking-wider">
-                        <th className="py-2.5 px-1 sm:px-2 w-[28px] sm:w-[36px] text-center" title="Group Position / Rank">#</th>
+                        <th className="py-2.5 px-1 text-center w-7" title="Group Position / Rank">#</th>
                         <th className="py-2.5 px-1 sm:px-2" title="Player Name & Username">Player</th>
-                        <th onClick={() => handleHeaderClick('MP')} className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title={legendDetails.MP}>MP</th>
-                        <th onClick={() => handleHeaderClick('W')} className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title={legendDetails.W}>W</th>
-                        <th onClick={() => handleHeaderClick('D')} className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title={legendDetails.D}>D</th>
-                        <th onClick={() => handleHeaderClick('L')} className="py-2.5 px-0.5 sm:px-1 text-center w-[22px] sm:w-[30px]" title={legendDetails.L}>L</th>
-                        <th onClick={() => handleHeaderClick('PTS')} className="py-2.5 px-1 sm:px-2 text-center w-[28px] sm:w-[36px] text-brand-primary font-black" title={legendDetails.PTS}>PTS</th>
+                        <th onClick={() => handleHeaderClick('MP')} className="py-2.5 px-1 text-center w-7" title={legendDetails.MP}>MP</th>
+                        <th onClick={() => handleHeaderClick('W')} className="py-2.5 px-1 text-center w-7" title={legendDetails.W}>W</th>
+                        <th onClick={() => handleHeaderClick('D')} className="py-2.5 px-1 text-center w-7" title={legendDetails.D}>D</th>
+                        <th onClick={() => handleHeaderClick('L')} className="py-2.5 px-1 text-center w-7" title={legendDetails.L}>L</th>
+                        <th onClick={() => handleHeaderClick('PTS')} className="py-2.5 px-1 text-center w-9 text-brand-primary font-black" title={legendDetails.PTS}>PTS</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">

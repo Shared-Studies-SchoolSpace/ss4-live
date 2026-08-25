@@ -194,6 +194,19 @@ export default function DashboardPage() {
   const [matchFilter, setMatchFilter] = useState('all');
   const [updatingAdminId, setUpdatingAdminId] = useState(null);
 
+  // Admin Security Confirmation Modal State
+  const [adminConfirmModal, setAdminConfirmModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    confirmLabel: 'Confirm',
+    confirmVariant: 'danger',
+    onConfirm: null
+  });
+
+  // Pending admin actions map for 15s Undo countdown
+  const pendingAdminActionsRef = useRef(new Map());
+
   const fetchAdminData = async () => {
     if (profile?.role !== 'admin') return;
     setAdminLoading(true);
@@ -217,39 +230,152 @@ export default function DashboardPage() {
     }
   }, [profile?.role]);
 
-  const handleApprovePlayer = async (playerId, status) => {
-    setUpdatingAdminId(`player_${playerId}`);
-    try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({ approval_status: status })
-        .eq('id', playerId);
+  const executePlayerStatusChange = (player, newStatus) => {
+    const playerId = player.id;
+    const prevStatus = player.approval_status || 'pending';
+    const actionKey = `player_${playerId}`;
 
-      if (error) throw error;
-      setAdminPlayers(prev => prev.map(p => p.id === playerId ? { ...p, approval_status: status } : p));
-      toast.success(`Player registration status set to ${status}`);
-    } catch (err) {
-      toast.error('Failed to update player status: ' + err.message);
-    } finally {
-      setUpdatingAdminId(null);
+    // Cancel existing pending timer if any for this player
+    if (pendingAdminActionsRef.current.has(actionKey)) {
+      const existing = pendingAdminActionsRef.current.get(actionKey);
+      clearTimeout(existing.timerId);
+      if (existing.toastId) toast.dismiss(existing.toastId);
+    }
+
+    // 1. Optimistic UI state update
+    setAdminPlayers(prev => prev.map(p => p.id === playerId ? { ...p, approval_status: newStatus } : p));
+
+    // 2. Schedule DB update after 15 seconds
+    const timerId = setTimeout(async () => {
+      pendingAdminActionsRef.current.delete(actionKey);
+      try {
+        const { error } = await supabase
+          .from('profiles')
+          .update({ approval_status: newStatus })
+          .eq('id', playerId);
+
+        if (error) throw error;
+      } catch (err) {
+        console.error('Deferred player update error:', err);
+        setAdminPlayers(prev => prev.map(p => p.id === playerId ? { ...p, approval_status: prevStatus } : p));
+        toast.error('Failed to commit player status change: ' + err.message);
+      }
+    }, 15000);
+
+    // 3. Revert callback
+    const revert = () => {
+      setAdminPlayers(prev => prev.map(p => p.id === playerId ? { ...p, approval_status: prevStatus } : p));
+    };
+
+    // 4. Show 15s Undo Toast
+    const toastId = toast(
+      ({ closeToast }) => (
+        <UndoToastBanner
+          message={`${player.name || 'Player'} status set to ${newStatus}`}
+          countdown={15}
+          onUndo={() => {
+            const item = pendingAdminActionsRef.current.get(actionKey);
+            if (item) {
+              clearTimeout(item.timerId);
+              item.revert();
+              pendingAdminActionsRef.current.delete(actionKey);
+              toast.info(`Undone status change for ${player.name || 'player'}`);
+            }
+          }}
+          closeToast={closeToast}
+        />
+      ),
+      { autoClose: 15000, closeOnClick: false, hideProgressBar: true }
+    );
+
+    pendingAdminActionsRef.current.set(actionKey, { timerId, toastId, revert });
+  };
+
+  const handleApprovePlayer = (player, status) => {
+    if (status === 'rejected') {
+      setAdminConfirmModal({
+        isOpen: true,
+        title: 'Reject Player Registration',
+        message: `Are you sure you want to reject registration for ${player.name || 'this player'}? They will be flagged as rejected in the player queue.`,
+        confirmLabel: 'Yes, Reject Player',
+        confirmVariant: 'danger',
+        onConfirm: () => executePlayerStatusChange(player, status)
+      });
+    } else {
+      executePlayerStatusChange(player, status);
     }
   };
 
-  const handleApproveMatch = async (matchId, approved) => {
-    setUpdatingAdminId(`match_${matchId}`);
-    try {
-      const { error } = await supabase
-        .from('verified_games')
-        .update({ is_admin_approved: approved })
-        .eq('id', matchId);
+  const executeMatchApprovalChange = (match, approved) => {
+    const matchId = match.id;
+    const prevApproved = match.is_admin_approved;
+    const actionKey = `match_${matchId}`;
 
-      if (error) throw error;
-      setAdminMatches(prev => prev.map(m => m.id === matchId ? { ...m, is_admin_approved: approved } : m));
-      toast.success(approved ? 'Match submission approved & confirmed!' : 'Match submission rejected.');
-    } catch (err) {
-      toast.error('Failed to update match approval: ' + err.message);
-    } finally {
-      setUpdatingAdminId(null);
+    if (pendingAdminActionsRef.current.has(actionKey)) {
+      const existing = pendingAdminActionsRef.current.get(actionKey);
+      clearTimeout(existing.timerId);
+      if (existing.toastId) toast.dismiss(existing.toastId);
+    }
+
+    // 1. Optimistic UI update
+    setAdminMatches(prev => prev.map(m => m.id === matchId ? { ...m, is_admin_approved: approved } : m));
+
+    // 2. Schedule DB update after 15s
+    const timerId = setTimeout(async () => {
+      pendingAdminActionsRef.current.delete(actionKey);
+      try {
+        const { error } = await supabase
+          .from('verified_games')
+          .update({ is_admin_approved: approved })
+          .eq('id', matchId);
+
+        if (error) throw error;
+      } catch (err) {
+        console.error('Deferred match update error:', err);
+        setAdminMatches(prev => prev.map(m => m.id === matchId ? { ...m, is_admin_approved: prevApproved } : m));
+        toast.error('Failed to commit match status change: ' + err.message);
+      }
+    }, 15000);
+
+    const revert = () => {
+      setAdminMatches(prev => prev.map(m => m.id === matchId ? { ...m, is_admin_approved: prevApproved } : m));
+    };
+
+    const toastId = toast(
+      ({ closeToast }) => (
+        <UndoToastBanner
+          message={approved ? `Match #${match.match_id || matchId} approved` : `Match #${match.match_id || matchId} approval revoked`}
+          countdown={15}
+          onUndo={() => {
+            const item = pendingAdminActionsRef.current.get(actionKey);
+            if (item) {
+              clearTimeout(item.timerId);
+              item.revert();
+              pendingAdminActionsRef.current.delete(actionKey);
+              toast.info(`Undone match status change`);
+            }
+          }}
+          closeToast={closeToast}
+        />
+      ),
+      { autoClose: 15000, closeOnClick: false, hideProgressBar: true }
+    );
+
+    pendingAdminActionsRef.current.set(actionKey, { timerId, toastId, revert });
+  };
+
+  const handleApproveMatch = (match, approved) => {
+    if (!approved) {
+      setAdminConfirmModal({
+        isOpen: true,
+        title: 'Revoke Match Approval',
+        message: `Are you sure you want to revoke admin approval for Match ID ${match.match_id || match.id}?`,
+        confirmLabel: 'Yes, Revoke Approval',
+        confirmVariant: 'danger',
+        onConfirm: () => executeMatchApprovalChange(match, approved)
+      });
+    } else {
+      executeMatchApprovalChange(match, approved);
     }
   };
 
@@ -1523,33 +1649,33 @@ export default function DashboardPage() {
                                 </div>
                               </div>
 
-                              {/* Approval Action Buttons (Min height 44px) */}
-                              <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto shrink-0">
-                                {status !== 'approved' && (
+                              {/* Approval Action Buttons (Strict LTR Hierarchy: Secondary -> Destructive -> Primary on Far Right) */}
+                              <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto shrink-0">
+                                {status !== 'pending' && (
                                   <button
-                                    onClick={() => handleApprovePlayer(p.id, 'approved')}
+                                    onClick={() => handleApprovePlayer(p, 'pending')}
                                     disabled={isUpdating}
-                                    className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-colors shadow-2xs flex items-center justify-center cursor-pointer disabled:opacity-50"
+                                    className="w-full sm:w-auto min-h-[44px] px-3.5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold rounded-xl transition-colors flex items-center justify-center cursor-pointer disabled:opacity-50"
                                   >
-                                    {isUpdating ? 'Saving...' : '✓ Approve'}
+                                    Reset
                                   </button>
                                 )}
                                 {status !== 'rejected' && (
                                   <button
-                                    onClick={() => handleApprovePlayer(p.id, 'rejected')}
+                                    onClick={() => handleApprovePlayer(p, 'rejected')}
                                     disabled={isUpdating}
                                     className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-black uppercase tracking-wider rounded-xl transition-colors flex items-center justify-center cursor-pointer disabled:opacity-50"
                                   >
-                                    {isUpdating ? 'Saving...' : '✕ Reject'}
+                                    ✕ Reject
                                   </button>
                                 )}
-                                {status !== 'pending' && (
+                                {status !== 'approved' && (
                                   <button
-                                    onClick={() => handleApprovePlayer(p.id, 'pending')}
+                                    onClick={() => handleApprovePlayer(p, 'approved')}
                                     disabled={isUpdating}
-                                    className="w-full sm:w-auto min-h-[44px] px-3 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold rounded-xl transition-colors flex items-center justify-center cursor-pointer disabled:opacity-50"
+                                    className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-colors shadow-2xs flex items-center justify-center cursor-pointer disabled:opacity-50"
                                   >
-                                    Reset
+                                    ✓ Approve
                                   </button>
                                 )}
                               </div>
@@ -1649,22 +1775,23 @@ export default function DashboardPage() {
                               </div>
 
                               {/* Action Buttons (Min height 44px) */}
-                              <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto shrink-0">
-                                {!isApproved ? (
+                              <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto shrink-0">
+                                {isApproved && (
                                   <button
-                                    onClick={() => handleApproveMatch(m.id, true)}
-                                    disabled={isUpdating}
-                                    className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-colors shadow-2xs flex items-center justify-center cursor-pointer disabled:opacity-50"
-                                  >
-                                    {isUpdating ? 'Updating...' : '✓ Confirm Match'}
-                                  </button>
-                                ) : (
-                                  <button
-                                    onClick={() => handleApproveMatch(m.id, false)}
+                                    onClick={() => handleApproveMatch(m, false)}
                                     disabled={isUpdating}
                                     className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-black uppercase tracking-wider rounded-xl transition-colors flex items-center justify-center cursor-pointer disabled:opacity-50"
                                   >
-                                    {isUpdating ? 'Updating...' : 'Revoke Approval'}
+                                    Revoke Approval
+                                  </button>
+                                )}
+                                {!isApproved && (
+                                  <button
+                                    onClick={() => handleApproveMatch(m, true)}
+                                    disabled={isUpdating}
+                                    className="w-full sm:w-auto min-h-[44px] px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black uppercase tracking-wider rounded-xl transition-colors shadow-2xs flex items-center justify-center cursor-pointer disabled:opacity-50"
+                                  >
+                                    ✓ Confirm Match
                                   </button>
                                 )}
                               </div>
@@ -1676,6 +1803,16 @@ export default function DashboardPage() {
                   })()}
                 </div>
 
+                {/* Security Confirmation Modal */}
+                <AdminConfirmModal
+                  isOpen={adminConfirmModal.isOpen}
+                  title={adminConfirmModal.title}
+                  message={adminConfirmModal.message}
+                  confirmLabel={adminConfirmModal.confirmLabel}
+                  confirmVariant={adminConfirmModal.confirmVariant}
+                  onClose={() => setAdminConfirmModal(prev => ({ ...prev, isOpen: false }))}
+                  onConfirm={adminConfirmModal.onConfirm}
+                />
               </div>
             ) : (
               <div className="varsity-card p-10 flex flex-col items-center text-center">

@@ -1,0 +1,167 @@
+==============================================================================================================
+                              ALTE REGISTRATIONS                              
+                 New Accounts Created: 18th - 19th August 2026               
+==============================================================================================================
+  Generated : 24/08/2026, 4:59:07 pm
+  Source    : Supabase Database (profiles table) + Tournament Phone Directory
+  Total     : 8 registrants
+
+==============================================================================================================
+  NEW REGISTRATIONS  (Aug 18 - 19, 2026)
+==============================================================================================================
+No.  Full Name                   Chess Username            Phone Number        Email                             Created At (WAT)      Institution
+--------------------------------------------------------------------------------------------------------------
+1.   Batista Effontery           GeneralRal                +234 905 608 5216   batistaeffontery@gmail.com        18 Aug 2026, 13:18    University of Uyo
+2.   Kenneth Gilbert             Prince_of_pieceX          +234 913 159 2008   kenneth@unilorin.edu              18 Aug 2026, 13:39    University of ilorin 
+3.   Elijah Okunoye              Elijah_eao                N/A                 elijahokunoye52@gmail.com         18 Aug 2026, 18:53    Unilorin
+4.   Dean Bassey                 deanbassey001             +234 706 445 2708   deanbassey001@gmail.com           18 Aug 2026, 18:55    University of Calabar
+5.   Abasiakan Mbat              basky09                   N/A                 basky2592@gmail.com               18 Aug 2026, 21:42    uniuyo
+6.   AGU Daniel                  Yari-bem                  N/A                 agudaniel469@gmail.com            18 Aug 2026, 21:47    UNN
+7.   Ninuoluwa Nins              Ninuoluwa                 +234 816 798 8323   cyphercrown0@gmail.com            19 Aug 2026, 20:15    Uniuyo
+8.   princewill obi              Mathemachesser-the-GOAT   N/A                 obi.princewill@lmu.edu.ng         19 Aug 2026, 22:45    Landmark university
+
+==============================================================================================================
+  EXTENDED PLAYER DETAILS
+==============================================================================================================
+  1. Batista Effontery
+     Chess Username  : GeneralRal
+     Lichess Username: N/A
+     Email           : batistaeffontery@gmail.com
+     Phone           : +234 905 608 5216
+     Chess Rating    : 973
+     Lichess Rating  : N/A
+     University      : University of Uyo
+     Faculty         : Engineering
+     Department      : Metallurgical Engineering
+     Level           : 400
+     Role            : player
+     Registered At   : Tuesday, 18 August 2026 at 01:18:44 pm
+
+  2. Kenneth Gilbert
+     Chess Username  : Prince_of_pieceX
+     Lichess Username: Fastandmaybefurious
+     Email           : kenneth@unilorin.edu
+     Phone           : +234 913 159 2008
+     Chess Rating    : 2019
+     Lichess Rating  : 1976
+     University      : University of ilorin 
+     Faculty         : Physical science 
+     Department      : Mathematics 
+     Level           : 400
+     Role            : player
+     Registered At   : Tuesday, 18 August 2026 at 01:39:44 pm
+
+  3. Elijah Okunoye
+     Chess Username  : Elijah_eao
+     Lichess Username: elijahokunoye
+     Email           : elijahokunoye52@gmail.com
+     Phone           : N/A
+     Chess Rating    : 1182
+     Lichess Rating  : 1454
+     University      : Unilorin
+     Faculty         : Management Sciences
+     Department      : Business Administration
+     Level           : 400
+     Role            : player
+     Registered At   : Tuesday, 18 August 2026 at 06:53:21 pm
+
+  4. Dean Bassey
+     Chess Username  : deanbassey001
+     Lichess Username: deanbassey001
+     Email           : deanbassey001@gmail.com
+     Phone           : +234 706 445 2708
+     Chess Rating    : 1845
+     Lichess Rating  : 2108
+     University      : University of Calabar
+     Faculty         : Medicine and Surgery
+     Department      : Medicine and Surgery
+     Level           : 500
+     Role            : player
+     Registered At   : Tuesday, 18 August 2026 at 06:55:35 pm
+
+  5. Abasiakan Mbat
+     Chess Username  : basky09
+     Lichess Username: basky09
+     Email           : basky2592@gmail.com
+     Phone           : N/A
+     Chess Rating    : 1835
+     Lichess Rating  : 2007
+     University      : uniuyo
+     Faculty         : Engineering
+     Department      : Computer Engineering
+     Level           : N/A
+     Role            : player
+     Registered At   : Tuesday, 18 August 2026 at 09:42:09 pm
+
+  6. AGU Daniel
+     Chess Username  : Yari-bem
+     Lichess Username: YariBem05
+     Email           : agudaniel469@gmail.com
+     Phone           : N/A
+     Chess Rating    : 1052
+     Lichess Rating  : 1516
+     University      : UNN
+     Faculty         : Engineering
+     Department      : Electronic computer engineering
+     Level           : 100
+     Role            : player
+     Registered At   : Tuesday, 18 August 2026 at 09:47:16 pm
+
+  7. Ninuoluwa Nins
+     Chess Username  : Ninuoluwa
+     Lichess Username: N/A
+     Email           : cyphercrown0@gmail.com
+     Phone           : +234 816 798 8323
+     Chess Rating    : 100
+     Lichess Rating  : N/A
+     University      : Uniuyo
+     Faculty         : Science
+     Department      : Computer science
+     Level           : 100
+     Role            : player
+     Registered At   : Wednesday, 19 August 2026 at 08:15:37 pm
+
+  8. princewill obi
+     Chess Username  : Mathemachesser-the-GOAT
+     Lichess Username: Mathemachesser
+     Email           : obi.princewill@lmu.edu.ng
+     Phone           : N/A
+     Chess Rating    : 2004
+     Lichess Rating  : 2063
+     University      : Landmark university
+     Faculty         : CPAS
+     Department      : Computer Science
+     Level           : 300
+     Role            : player
+     Registered At   : Wednesday, 19 August 2026 at 10:45:59 pm
+
+==============================================================================================================
+  PHONE NUMBER EXPORT (Alte Registrants with known numbers)
+==============================================================================================================
+  Total with phone: 4 of 8
+
+  --- Nigerian Local Format ---
+  09056085216  (Batista Effontery)
+  09131592008  (Kenneth Gilbert)
+  07064452708  (Dean Bassey)
+  08167988323  (Ninuoluwa Nins)
+
+  --- International E.164 Format ---
+  +234 905 608 5216  (Batista Effontery)
+  +234 913 159 2008  (Kenneth Gilbert)
+  +234 706 445 2708  (Dean Bassey)
+  +234 816 798 8323  (Ninuoluwa Nins)
+
+  --- Comma-Separated (for WhatsApp Broadcast) ---
+  09056085216, 09131592008, 07064452708, 08167988323
+
+==============================================================================================================
+  SUMMARY
+==============================================================================================================
+  • Total new accounts (Aug 18-19, 2026) : 8
+  • With phone numbers (from directory)  : 4
+  • Without phone numbers                : 4
+  • Day breakdown:
+      18th August 2026 : 6 registrations
+      19th August 2026 : 2 registrations
+==============================================================================================================

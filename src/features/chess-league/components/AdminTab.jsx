@@ -31,7 +31,49 @@ export const AdminTab = ({
   const [nextRoundStartInput, setNextRoundStartInput] = useState('');
   const [nextRoundLabelInput, setNextRoundLabelInput] = useState('Registration Closes in');
   const [regCustomTextInput, setRegCustomTextInput] = useState('');
+  const [showBanner, setShowBanner] = useState(true);
+  const [bannerMode, setBannerMode] = useState('auto');
+  const [bannerHeadline, setBannerHeadline] = useState('');
+  const [bannerVersion, setBannerVersion] = useState(1);
+  const [registrationStatus, setRegistrationStatus] = useState('open');
+  const [autoCloseRegistration, setAutoCloseRegistration] = useState(true);
   const [isSavingTimer, setIsSavingTimer] = useState(false);
+
+  // Load existing timer config on mount
+  React.useEffect(() => {
+    const fetchTimerConfig = async () => {
+      try {
+        const { data } = await supabase
+          .from('tournaments')
+          .select('*')
+          .or('status.eq.active,status.eq.upcoming')
+          .order('month_year', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        if (data) {
+          if (data.next_round_label) setNextRoundLabelInput(data.next_round_label);
+          if (data.reg_custom_text) setRegCustomTextInput(data.reg_custom_text);
+          if (data.show_banner !== undefined) setShowBanner(data.show_banner !== false);
+          if (data.banner_mode) setBannerMode(data.banner_mode);
+          if (data.banner_headline) setBannerHeadline(data.banner_headline);
+          if (data.banner_version) setBannerVersion(data.banner_version);
+          if (data.registration_status) setRegistrationStatus(data.registration_status);
+          if (data.auto_close_registration !== undefined) setAutoCloseRegistration(data.auto_close_registration !== false);
+          if (data.next_round_start) {
+            try {
+              const d = new Date(data.next_round_start);
+              const offset = d.getTimezoneOffset();
+              const localTime = new Date(d.getTime() - offset * 60 * 1000);
+              setNextRoundStartInput(localTime.toISOString().slice(0, 16));
+            } catch { /* ignore */ }
+          }
+        }
+      } catch (err) {
+        console.warn('Could not load timer config:', err);
+      }
+    };
+    fetchTimerConfig();
+  }, []);
 
   // Player CRUD state
   const [newPlayer, setNewPlayer] = useState({ name: '', username: '', department: '', school: '', contact: '' });
@@ -86,17 +128,43 @@ export const AdminTab = ({
           .update({
             next_round_start: isoDate,
             next_round_label: nextRoundLabelInput,
-            reg_custom_text: regCustomTextInput
+            reg_custom_text: regCustomTextInput,
+            show_banner: showBanner,
+            banner_mode: bannerMode,
+            banner_headline: bannerHeadline,
+            banner_version: bannerVersion,
+            registration_status: registrationStatus,
+            auto_close_registration: autoCloseRegistration
           })
           .eq('id', activeTournaments[0].id);
       }
 
-      toast.success('Tournament & Registration countdown schedule saved!', { theme: 'dark' });
+      toast.success('Tournament countdown & banner settings saved!', { theme: 'dark' });
     } catch (e) {
       console.error(e);
       toast.error('Failed to save countdown schedule');
     } finally {
       setIsSavingTimer(false);
+    }
+  };
+
+  const handleResetBannerDismissals = async () => {
+    const nextVer = (bannerVersion || 1) + 1;
+    setBannerVersion(nextVer);
+    try {
+      const { data: activeTournaments } = await supabase
+        .from('tournaments')
+        .select('id')
+        .or('status.eq.active,status.eq.upcoming')
+        .order('month_year', { ascending: false })
+        .limit(1);
+
+      if (activeTournaments && activeTournaments.length > 0) {
+        await supabase.from('tournaments').update({ banner_version: nextVer }).eq('id', activeTournaments[0].id);
+      }
+      toast.success(`Banner updated to v${nextVer}! User dismissals reset.`, { theme: 'dark' });
+    } catch (e) {
+      toast.error('Failed to reset banner dismissals.');
     }
   };
 
@@ -534,14 +602,117 @@ export const AdminTab = ({
       {/* SUB-TAB 3: TIMER & SCHEDULE CONFIGURATION */}
       {adminSubTab === 'timer' && (
         <div className="bg-white rounded-3xl p-4 sm:p-6 lg:p-8 border border-gray-100 shadow-sm space-y-6 animate-in fade-in duration-150">
-          <h3 className="font-space text-lg font-black text-[#111111] pb-3 border-b border-gray-50 flex items-center gap-2">
-            <span>⏱️ Tournament Countdown &amp; Schedule Config</span>
-          </h3>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Configure the launch timestamp and headline for the countdown timer displayed on site-wide banners and page heroes.
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-100 gap-3">
+            <div>
+              <h3 className="font-space text-lg font-black text-[#111111]">
+                Top Banner &amp; Registration Lifecycle Config
+              </h3>
+              <p className="text-xs text-gray-500 leading-relaxed mt-0.5">
+                Configure site-wide announcement banners, countdown targets, and tournament registration status.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-brand-bg-cream/20 p-5 rounded-2xl border border-gray-100">
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-bold text-gray-600">Top Banner</span>
+              <button
+                type="button"
+                onClick={() => setShowBanner(v => !v)}
+                className={`relative inline-flex items-center w-11 h-6 rounded-full transition-colors cursor-pointer shrink-0 ${
+                  showBanner ? 'bg-gray-900' : 'bg-gray-300'
+                }`}
+                title={showBanner ? 'Banner is Visible (ON)' : 'Banner is Hidden (OFF)'}
+                role="switch"
+                aria-checked={showBanner}
+              >
+                <span className={`absolute w-4 h-4 bg-white rounded-full transition-transform ${
+                  showBanner ? 'translate-x-6' : 'translate-x-1'
+                }`} />
+              </button>
+            </div>
+          </div>
+
+          {/* REGISTRATION LIFECYCLE CONTROLS */}
+          <div className="bg-gray-50 p-5 rounded-2xl border border-gray-200 space-y-4">
+            <h4 className="text-xs font-black text-gray-700 uppercase tracking-widest">Registration Status &amp; Auto-Close</h4>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 rounded-xl border border-gray-200">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setRegistrationStatus('open')}
+                  className={`text-xs font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    registrationStatus === 'open' 
+                      ? 'bg-gray-900 text-white font-black' 
+                      : 'bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  Registration Open
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setRegistrationStatus('closed')}
+                  className={`text-xs font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    registrationStatus === 'closed' 
+                      ? 'bg-gray-900 text-white font-black' 
+                      : 'bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  Registration Closed
+                </button>
+              </div>
+
+              <label className="flex items-center gap-2 text-xs font-medium text-gray-600 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={autoCloseRegistration}
+                  onChange={e => setAutoCloseRegistration(e.target.checked)}
+                  className="w-4 h-4 rounded text-gray-900 focus:ring-gray-900 cursor-pointer"
+                />
+                <span>Auto-close registration on expiry</span>
+              </label>
+            </div>
+          </div>
+
+          {/* BANNER DISPLAY MODE */}
+          <div className="space-y-3">
+            <label className={labelClass}>Banner Display Mode</label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {[
+                { id: 'auto', label: 'Auto (Smart)', desc: 'Detects stage' },
+                { id: 'registration', label: 'Registration', desc: 'Forces signup copy' },
+                { id: 'matches', label: 'Match Schedule', desc: 'Forces match copy' },
+                { id: 'custom', label: 'Custom Copy', desc: 'Manual headline' }
+              ].map(m => (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => setBannerMode(m.id)}
+                  className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                    bannerMode === m.id
+                      ? 'bg-gray-900 border-gray-900 text-white font-bold'
+                      : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="text-xs font-bold">{m.label}</div>
+                  <div className={`text-[10px] font-normal mt-0.5 ${bannerMode === m.id ? 'text-gray-300' : 'text-gray-400'}`}>{m.desc}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {bannerMode === 'custom' && (
+            <div>
+              <label className={labelClass}>Custom Banner Headline</label>
+              <input
+                type="text"
+                placeholder="e.g. Special Blitz Qualifier Cup - Signups Closing!"
+                value={bannerHeadline}
+                onChange={e => setBannerHeadline(e.target.value)}
+                className={inputClass}
+              />
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 p-5 rounded-2xl border border-gray-200">
             <div>
               <label className={labelClass}>Launch / Deadline Date &amp; Time</label>
               <input
@@ -573,13 +744,48 @@ export const AdminTab = ({
             </div>
           </div>
 
-          <button
-            onClick={handleSaveTimerConfig}
-            disabled={isSavingTimer}
-            className="w-full sm:w-auto min-h-[44px] bg-brand-primary hover:bg-brand-primary/95 text-white font-bold px-6 py-3 rounded-xl shadow-sm transition-all text-xs cursor-pointer flex items-center justify-center disabled:opacity-50"
-          >
-            {isSavingTimer ? 'Saving Schedule...' : 'Save Countdown Schedule'}
-          </button>
+          {/* LIVE BANNER PREVIEW */}
+          <div className="space-y-2 pt-2 border-t border-gray-100">
+            <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Live Top Banner Preview</div>
+            {showBanner ? (
+              <div className="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-gray-900 text-white text-xs font-medium border border-gray-800">
+                <div className="flex items-center gap-2">
+                  <span className="bg-gray-800 border border-gray-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider text-gray-300">
+                    {bannerMode === 'custom' ? 'SCL Announcement' : bannerMode === 'registration' ? 'SCL Registration' : `SCL ${nextRoundLabelInput || 'Round'}`}
+                  </span>
+                  <span>
+                    {bannerMode === 'custom' 
+                      ? (bannerHeadline || 'Custom Announcement Copy') 
+                      : bannerMode === 'registration' 
+                        ? 'Registration is open! Closes in 2d 4h.' 
+                        : 'Matches are scheduled! Starting in 2d 4h.'}
+                  </span>
+                </div>
+                <span className="text-[10px] text-gray-400 border border-gray-700 px-2 py-0.5 rounded">Preview</span>
+              </div>
+            ) : (
+              <div className="p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-400 font-medium text-center">
+                Top Banner is currently turned OFF (Hidden from all users)
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-wrap gap-3 pt-2">
+            <button
+              onClick={handleSaveTimerConfig}
+              disabled={isSavingTimer}
+              className="bg-gray-900 hover:bg-black text-white font-bold px-6 py-3 min-h-[44px] rounded-xl transition-all text-xs cursor-pointer flex items-center justify-center disabled:opacity-50"
+            >
+              {isSavingTimer ? 'Saving Settings...' : 'Save Banner & Schedule Config'}
+            </button>
+            <button
+              onClick={handleResetBannerDismissals}
+              title="Increments banner version so users who clicked dismiss will see the banner again"
+              className="bg-gray-100 text-gray-700 border border-gray-300 text-xs font-bold px-5 py-3 min-h-[44px] rounded-xl hover:bg-gray-200 transition-all cursor-pointer flex items-center justify-center"
+            >
+              Broadcast Update (v{bannerVersion})
+            </button>
+          </div>
         </div>
       )}
 

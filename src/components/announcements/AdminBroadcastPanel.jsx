@@ -19,6 +19,7 @@ export default function AdminBroadcastPanel({ onClose }) {
   const [historyFilter, setHistoryFilter] = useState('all'); // 'all' | 'global' | 'targeted'
   const [loading, setLoading] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(false);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
 
   const sanitizeLink = (rawLink) => {
     const trimmed = (rawLink || '').trim();
@@ -68,7 +69,7 @@ export default function AdminBroadcastPanel({ onClose }) {
     fetchRecentBroadcasts();
   }, []);
 
-  const handleBroadcast = async (e) => {
+  const handleBroadcast = (e) => {
     e.preventDefault();
     if (!title.trim() || !content.trim() || !user) return;
 
@@ -82,6 +83,11 @@ export default function AdminBroadcastPanel({ onClose }) {
       return;
     }
 
+    // Open preview modal safeguard
+    setShowPreviewModal(true);
+  };
+
+  const executeBroadcast = async () => {
     setLoading(true);
 
     try {
@@ -137,6 +143,7 @@ export default function AdminBroadcastPanel({ onClose }) {
 
       setTitle('');
       setContent('');
+      setShowPreviewModal(false);
       fetchRecentBroadcasts();
       if (onClose) onClose();
     } catch (err) {
@@ -338,14 +345,18 @@ export default function AdminBroadcastPanel({ onClose }) {
           />
         </div>
 
-        {/* Submit Broadcast Button */}
+        {/* Submit Broadcast Button with Dynamic Recipient Count */}
         <Button
           type="submit"
           variant="primary"
           disabled={loading}
           className="w-full flex items-center justify-center gap-2 py-3 px-4 min-h-[44px] bg-brand-primary text-white font-bold rounded-full shadow-md hover:bg-brand-accent transition-colors disabled:opacity-50 cursor-pointer text-xs uppercase tracking-wider"
         >
-          {loading ? 'Dispatching Broadcast...' : 'Dispatch Broadcast'}
+          {loading
+            ? 'Dispatching Broadcast...'
+            : targetType === 'all'
+            ? `🚀 Preview & Dispatch (${profiles.length} Players)`
+            : `🚀 Preview Targeted Broadcast`}
         </Button>
       </form>
 
@@ -426,6 +437,125 @@ export default function AdminBroadcastPanel({ onClose }) {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Broadcast Dispatch Preview & Verification Safeguard Modal */}
+      <BroadcastPreviewModal
+        isOpen={showPreviewModal}
+        title={title}
+        content={content}
+        targetType={targetType}
+        selectedPlayerName={profiles.find(p => p.id === selectedUserId)?.name || ''}
+        notifType={notifType}
+        broadcastMode={broadcastMode}
+        customLink={customLink}
+        recipientCount={targetType === 'all' ? profiles.length : 1}
+        onClose={() => setShowPreviewModal(false)}
+        onConfirm={executeBroadcast}
+        loading={loading}
+      />
+    </div>
+  );
+}
+
+/**
+ * Broadcast Preview & Verification Safeguard Modal Component
+ */
+function BroadcastPreviewModal({
+  isOpen,
+  title,
+  content,
+  targetType,
+  selectedPlayerName,
+  notifType,
+  broadcastMode,
+  customLink,
+  recipientCount,
+  onClose,
+  onConfirm,
+  loading
+}) {
+  const [isVerified, setIsVerified] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) setIsVerified(false);
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="bg-white border border-gray-150 rounded-3xl p-5 sm:p-6 max-w-lg w-full shadow-2xl space-y-5 text-left animate-in zoom-in-95 duration-150">
+        <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+          <div className="flex items-center gap-2">
+            <span className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-bold">📢</span>
+            <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+              Broadcast Dispatch Safeguard
+            </h4>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 text-sm font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Metadata summary */}
+        <div className="grid grid-cols-2 gap-2 text-[11px] font-semibold bg-gray-50 p-3 rounded-2xl border border-gray-150">
+          <div>
+            <span className="text-gray-400 block text-[9px] uppercase tracking-wider font-black">Audience Target</span>
+            <span className="text-purple-700 font-bold">
+              {targetType === 'all' ? `All Players (${recipientCount} Total)` : `Direct: ${selectedPlayerName || '1 Player'}`}
+            </span>
+          </div>
+          <div>
+            <span className="text-gray-400 block text-[9px] uppercase tracking-wider font-black">Dispatch Mode</span>
+            <span className="text-gray-800 font-bold">
+              {broadcastMode === 'announcement_and_notif' ? 'Banner + Push Notif' : 'Notification Only'}
+            </span>
+          </div>
+        </div>
+
+        {/* Live Preview Box */}
+        <div className="p-4 rounded-2xl bg-brand-primary/5 border border-brand-primary/20 space-y-2">
+          <span className="text-[9px] font-black text-brand-primary uppercase tracking-widest block">Live Notification Preview</span>
+          <h5 className="text-xs font-black text-brand-text-dark font-space">{title}</h5>
+          <p className="text-xs font-medium text-gray-700 leading-relaxed whitespace-pre-wrap">{content}</p>
+        </div>
+
+        {/* Verification Checkbox */}
+        <label className="flex items-start gap-3 cursor-pointer p-3 rounded-xl border border-amber-200 bg-amber-50/60 hover:bg-amber-50 transition-colors">
+          <input
+            type="checkbox"
+            checked={isVerified}
+            onChange={(e) => setIsVerified(e.target.checked)}
+            className="mt-0.5 w-4 h-4 text-brand-primary rounded focus:ring-brand-primary cursor-pointer shrink-0"
+          />
+          <span className="text-[11px] font-bold text-amber-900 leading-snug">
+            I verify this broadcast message is formatted correctly and ready for immediate public dispatch.
+          </span>
+        </label>
+
+        {/* Modal Footer Controls */}
+        <div className="flex items-center justify-end gap-3 pt-2 border-t border-gray-100">
+          <button
+            type="button"
+            onClick={onClose}
+            className="min-h-[44px] px-4 py-2.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer"
+          >
+            Cancel / Edit
+          </button>
+          <button
+            type="button"
+            disabled={!isVerified || loading}
+            onClick={onConfirm}
+            className="min-h-[44px] px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-white bg-purple-600 hover:bg-purple-700 transition-colors cursor-pointer shadow-xs disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {loading ? 'Dispatching...' : `🚀 Confirm & Dispatch (${recipientCount})`}
+          </button>
+        </div>
       </div>
     </div>
   );

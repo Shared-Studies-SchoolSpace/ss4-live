@@ -56,6 +56,7 @@ export default function TournamentCountdownBanner() {
   const [dismissed, setDismissed] = useState(false);
   const [targetDate, setTargetDate] = useState(null);
   const [bannerLabel, setBannerLabel] = useState('');
+  const [bannerConfig, setBannerConfig] = useState({ showBanner: true, mode: 'auto', version: 1, headline: '' });
 
   useEffect(() => {
     const loadTarget = async () => {
@@ -73,36 +74,39 @@ export default function TournamentCountdownBanner() {
         console.warn('Could not fetch active tournament for banner:', err);
       }
 
-      const { date, label } = getCountdownTarget(tObj);
+      const { date, label, showBanner, mode, version, headline } = getCountdownTarget(tObj);
 
-      // Fix 1: If there is no valid scheduled future date, don't show the banner at all.
-      // Previously getCountdownTarget returned today-8pm as a fallback, causing the banner
-      // to fire every evening with stale copy even with no active tournament.
-      if (!date) return;
+      if (showBanner === false || !date) {
+        setVisible(false);
+        return;
+      }
 
       const msAway = date.getTime() - Date.now();
       const daysAway = msAway / (1000 * 60 * 60 * 24);
-      if (daysAway <= 0 || daysAway > SHOW_DAYS_BEFORE) return;
+      if (daysAway <= 0 || daysAway > SHOW_DAYS_BEFORE) {
+        setVisible(false);
+        return;
+      }
 
-      // Fix 2: Per-event dismiss - only suppress the banner if the user dismissed it
-      // for this EXACT target date. Previously the dismiss reset on calendar-month
-      // rollover, which was too coarse (reset even when no new event was scheduled,
-      // or failed to reset when a new event was scheduled mid-month).
+      // Check versioned dismissal: Reset dismissal if admin incremented banner_version or changed date
       const stored = localStorage.getItem(DISMISS_KEY);
       if (stored) {
         try {
-          const { dismissedFor } = JSON.parse(stored);
-          if (dismissedFor && new Date(dismissedFor).toISOString() === date.toISOString()) {
-            return; // dismissed for this exact event - stay hidden
+          const { dismissedFor, dismissedVersion } = JSON.parse(stored);
+          const isSameDate = dismissedFor && new Date(dismissedFor).toISOString() === date.toISOString();
+          const isSameOrNewerVersion = (dismissedVersion || 1) >= (version || 1);
+          if (isSameDate && isSameOrNewerVersion) {
+            setVisible(false);
+            return;
           }
-          // Different target date -> new event, ignore the old dismiss
         } catch {
-          // Legacy string format or corrupt data - ignore and show the banner
+          // Ignore parse errors
         }
       }
 
       setTargetDate(date);
       setBannerLabel(label || 'Tournament Round');
+      setBannerConfig({ showBanner, mode, version, headline });
       setVisible(true);
     };
 
@@ -113,23 +117,33 @@ export default function TournamentCountdownBanner() {
 
   const handleDismiss = () => {
     setDismissed(true);
-    // Store the exact event date so a new event correctly resets the dismiss
     localStorage.setItem(DISMISS_KEY, JSON.stringify({
       dismissedAt: new Date().toISOString(),
       dismissedFor: targetDate ? targetDate.toISOString() : null,
+      dismissedVersion: bannerConfig.version || 1
     }));
   };
 
   const { days, hours, mins, secs, expired } = useCountdown(targetDate);
 
-  if (!visible || dismissed || expired || !targetDate) return null;
+  if (!visible || dismissed || expired || !targetDate || bannerConfig.showBanner === false) return null;
 
   const isUrgent = days < URGENT_THRESHOLD;
 
   // Smart, grammatically clean banner copy generator
   const getBannerCopy = () => {
-    const isRegistration = !bannerLabel || /registration|closes|deadline/i.test(bannerLabel);
     const timeRemainingStr = `${days > 0 ? `${days}d ` : ''}${hours}h ${mins}m`;
+
+    if (bannerConfig.mode === 'custom' && bannerConfig.headline) {
+      return {
+        badge: "SCL Announcement",
+        mainText: `${bannerConfig.headline} (${timeRemainingStr} remaining)`,
+        mobileText: `${bannerConfig.headline}`
+      };
+    }
+
+    const isRegistration = bannerConfig.mode === 'registration' || 
+      (bannerConfig.mode === 'auto' && (!bannerLabel || /registration|closes|deadline/i.test(bannerLabel)));
 
     if (isRegistration) {
       const badge = "SCL Registration";
@@ -183,7 +197,7 @@ export default function TournamentCountdownBanner() {
               }}
             />
 
-            {/* Urgent amber left pulse bar */}
+            {/* Urgent amber left bar */}
             {isUrgent && (
               <span
                 aria-hidden="true"
@@ -194,8 +208,6 @@ export default function TournamentCountdownBanner() {
                   height: '100%',
                   width: '3px',
                   background: '#E8640A',
-                  boxShadow: '0 0 12px 2px rgba(232,100,10,0.55)',
-                  animation: 'pulse 1.4s ease-in-out infinite',
                 }}
               />
             )}
@@ -240,12 +252,9 @@ export default function TournamentCountdownBanner() {
                   fontSize: '11px',
                   whiteSpace: 'nowrap',
                   textDecoration: 'none',
-                  background: isUrgent
-                    ? 'linear-gradient(135deg, #1A56C4, #3B82F6)'
-                    : 'rgba(255,255,255,0.15)',
+                  background: isUrgent ? '#1A56C4' : 'rgba(255,255,255,0.15)',
                   color: '#fff',
                   border: isUrgent ? 'none' : '1px solid rgba(255,255,255,0.3)',
-                  boxShadow: isUrgent ? '0 2px 12px rgba(26,86,196,0.45)' : 'none',
                   backdropFilter: 'blur(4px)',
                 }}
               >

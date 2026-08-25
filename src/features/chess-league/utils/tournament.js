@@ -1,4 +1,9 @@
-// Tournament scheduling and bracket utilities
+export function parseRating(val) {
+  if (typeof val === 'number' && !isNaN(val)) return val;
+  const cleaned = String(val || '').replace(/\D/g, '');
+  const parsed = parseInt(cleaned, 10);
+  return isNaN(parsed) ? 1200 : parsed;
+}
 
 export function getTournamentDates(year, month) {
   const lastDay = new Date(year, month, 0).getDate();
@@ -9,6 +14,116 @@ export function getTournamentDates(year, month) {
   });
 }
 
+export function isBo3Round(roundName) {
+  if (!roundName) return false;
+  const name = roundName.toLowerCase();
+  if (name.includes('group') || name.includes('32') || name.includes('16')) return false;
+  return name.includes('quarter') || name.includes('semi') || name.includes('final') || name.includes('3rd');
+}
+
+export function initializeBo3SubGames(p1, p2) {
+  const p1User = p1?.username || 'tbd';
+  const p2User = p2?.username || 'tbd';
+  return [
+    { gameNum: 1, white: p1User, black: p2User, winner: null, gameLink: '' },
+    { gameNum: 2, white: p2User, black: p1User, winner: null, gameLink: '' },
+    { gameNum: 3, white: p1User, black: p2User, winner: null, gameLink: '' }
+  ];
+}
+
+export function evaluateBo3Series(game) {
+  if (!game) return { p1Pts: 0, p2Pts: 0, winner: null, isFinished: false, subGames: [] };
+
+  if (game.p1?.username === 'bye') {
+    return { p1Pts: 0, p2Pts: 0, winner: game.p2, isFinished: true, subGames: game.subGames || [] };
+  }
+  if (game.p2?.username === 'bye') {
+    return { p1Pts: 0, p2Pts: 0, winner: game.p1, isFinished: true, subGames: game.subGames || [] };
+  }
+
+  if (game.bestOf !== 3 && (!game.subGames || game.subGames.length === 0)) {
+    const isW1 = game.winner && typeof game.winner === 'object' && game.winner.username === game.p1?.username;
+    const isW2 = game.winner && typeof game.winner === 'object' && game.winner.username === game.p2?.username;
+    const isD = game.winner === 'draw' || (typeof game.winner === 'object' && game.winner.username === 'draw');
+    return {
+      p1Pts: isW1 ? 1 : isD ? 0.5 : 0,
+      p2Pts: isW2 ? 1 : isD ? 0.5 : 0,
+      winner: game.winner || null,
+      isFinished: !!game.winner,
+      subGames: []
+    };
+  }
+
+  const p1User = game.p1?.username;
+  const p2User = game.p2?.username;
+
+  let p1Pts = 0;
+  let p2Pts = 0;
+  let completedCount = 0;
+  const subGames = game.subGames ? [...game.subGames] : initializeBo3SubGames(game.p1, game.p2);
+
+  subGames.forEach(sg => {
+    if (!sg.winner) return;
+    completedCount++;
+    const wUser = (sg.winner && typeof sg.winner === 'object') ? sg.winner.username : sg.winner;
+    if (wUser === p1User) {
+      p1Pts += 1.0;
+    } else if (wUser === p2User) {
+      p2Pts += 1.0;
+    } else if (wUser === 'draw' || wUser === 'draws') {
+      p1Pts += 0.5;
+      p2Pts += 0.5;
+    }
+  });
+
+  let winner = null;
+  let isFinished = false;
+
+  const hasForfeit = subGames.some(sg => (sg.winner && typeof sg.winner === 'object' ? sg.winner.username : sg.winner) === 'forfeit');
+  if (hasForfeit) {
+    winner = { username: 'forfeit', name: 'Double Forfeit', rating: 0, school: '' };
+    isFinished = true;
+  } else if (p1Pts >= 1.5 && p1Pts > p2Pts) {
+    winner = game.p1;
+    isFinished = true;
+  } else if (p2Pts >= 1.5 && p2Pts > p1Pts) {
+    winner = game.p2;
+    isFinished = true;
+  } else if (p1Pts === 1.5 && p2Pts === 1.5) {
+    if (subGames.length < 4) {
+      subGames.push({ gameNum: 4, isArmageddon: true, white: p1User, black: p2User, winner: null, gameLink: '' });
+    } else if (subGames[3].winner) {
+      const g4Winner = (subGames[3].winner && typeof subGames[3].winner === 'object') ? subGames[3].winner.username : subGames[3].winner;
+      if (g4Winner === p1User) {
+        winner = game.p1;
+        p1Pts += 1.0;
+        isFinished = true;
+      } else if (g4Winner === p2User) {
+        winner = game.p2;
+        p2Pts += 1.0;
+        isFinished = true;
+      }
+    }
+  }
+
+  return {
+    p1Pts,
+    p2Pts,
+    winner,
+    isFinished,
+    subGames,
+    completedCount
+  };
+}
+
+export function getMatchWinner(game) {
+  if (!game) return null;
+  if (game.bestOf === 3 || (game.subGames && game.subGames.length > 0)) {
+    return evaluateBo3Series(game).winner;
+  }
+  return game.winner || null;
+}
+
 export function propagateWinners(rounds) {
   const r = JSON.parse(JSON.stringify(rounds));
   for (let i = 0; i < r.length - 1; i++) {
@@ -16,11 +131,38 @@ export function propagateWinners(rounds) {
     next.games.forEach((g, gi) => {
       const a = r[i].games[2 * gi];
       const b = r[i].games[2 * gi + 1];
-      g.p1 = a?.winner ?? null;
-      g.p2 = b?.winner ?? null;
-      if (!g.p1 || !g.p2) g.winner = null;
-      else if (g.p1.username === 'bye') g.winner = g.p2;
-      else if (g.p2.username === 'bye') g.winner = g.p1;
+
+      const aWinner = a ? getMatchWinner(a) : null;
+      const bWinner = b ? getMatchWinner(b) : null;
+
+      g.p1 = aWinner;
+      g.p2 = bWinner;
+
+      if (g.bestOf === 3 && (g.p1 || g.p2)) {
+        if (!g.subGames || g.subGames.length === 0) {
+          g.subGames = initializeBo3SubGames(g.p1, g.p2);
+        } else {
+          g.subGames.forEach((sg, sgi) => {
+            if (sgi % 2 === 0) {
+              sg.white = g.p1?.username || 'tbd';
+              sg.black = g.p2?.username || 'tbd';
+            } else {
+              sg.white = g.p2?.username || 'tbd';
+              sg.black = g.p1?.username || 'tbd';
+            }
+          });
+        }
+      }
+
+      if (!g.p1 || !g.p2) {
+        g.winner = null;
+      } else if (g.p1.username === 'bye') {
+        g.winner = g.p2;
+      } else if (g.p2.username === 'bye') {
+        g.winner = g.p1;
+      } else if (g.bestOf === 3) {
+        g.winner = evaluateBo3Series(g).winner;
+      }
     });
   }
   return r;
@@ -109,7 +251,7 @@ export function generateRound1(players, year, month, options = {}) {
     for (let i = 0; i < unpaired.length; i++) {
       const p2 = unpaired[i];
       const sameSchool = getSchool(p1) && getSchool(p2) && (getSchool(p1) === getSchool(p2));
-      const eloDiff = Math.abs((p1.rating || 0) - (p2.rating || 0));
+      const eloDiff = Math.abs(parseRating(p1?.rating) - parseRating(p2?.rating));
       const dev = Math.abs(eloDiff - targetEloGap);
       const cost = dev + (sameSchool ? schoolPenalty : 0);
       
@@ -374,6 +516,7 @@ export function generateNextRound(rounds, year, month, options = {}) {
   const roundName = options.roundName || (ROUND_NAMES[nextNum - 1] ?? `Round ${nextNum}`);
   const isGroupStage = roundName.toLowerCase().includes('group');
   const isKnockout = !isGroupStage;
+  const isBo3 = isBo3Round(roundName);
 
   const customDate = options.customDate;
   const dates = getTournamentDates(year, month);
@@ -391,8 +534,8 @@ export function generateNextRound(rounds, year, month, options = {}) {
       const g1 = prevGames[i * 2];
       const g2 = prevGames[i * 2 + 1];
 
-      let p1 = g1?.winner ?? null;
-      let p2 = g2?.winner ?? null;
+      let p1 = g1 ? getMatchWinner(g1) : null;
+      let p2 = g2 ? getMatchWinner(g2) : null;
 
       // Auto-resolve BYE winners if not explicit
       if (!p1 && g1?.p1 && g1.p2?.username === 'bye') p1 = g1.p1;
@@ -402,13 +545,23 @@ export function generateNextRound(rounds, year, month, options = {}) {
       if (p1?.username === 'bye' && p2 && p2.username !== 'bye') winner = p2;
       else if (p2?.username === 'bye' && p1 && p1.username !== 'bye') winner = p1;
 
-      games.push({
+      const gObj = {
         id: `R${nextNum}_G${i + 1}`,
         p1,
         p2,
         winner,
-        gameLink: ''
-      });
+        gameLink: '',
+        bestOf: isBo3 ? 3 : 1
+      };
+
+      if (isBo3) {
+        gObj.subGames = initializeBo3SubGames(p1, p2);
+        if (winner) {
+          gObj.winner = winner;
+        }
+      }
+
+      games.push(gObj);
     }
 
     return { roundNum: nextNum, name: roundName, date: roundDate, isGroupStage, isKnockout, games };
@@ -466,7 +619,7 @@ export function generateNextRound(rounds, year, month, options = {}) {
     for (let i = 0; i < unpaired.length; i++) {
       const p2 = unpaired[i];
       const sameSchool = getSchool(p1) && getSchool(p2) && (getSchool(p1) === getSchool(p2));
-      const eloDiff = Math.abs((p1.rating || 0) - (p2.rating || 0));
+      const eloDiff = Math.abs(parseRating(p1?.rating) - parseRating(p2?.rating));
       const dev = Math.abs(eloDiff - target);
       const cost = dev + (sameSchool ? schoolPenalty : 0);
       
@@ -478,21 +631,31 @@ export function generateNextRound(rounds, year, month, options = {}) {
 
     if (bestIdx !== -1) {
       const p2 = unpaired.splice(bestIdx, 1)[0];
-      games.push({
+      const gObj = {
         id: `R${nextNum}_G${gameIdCounter++}`,
         p1: p1,
         p2: p2,
         winner: null,
-        gameLink: ''
-      });
+        gameLink: '',
+        bestOf: isBo3 ? 3 : 1
+      };
+      if (isBo3) {
+        gObj.subGames = initializeBo3SubGames(p1, p2);
+      }
+      games.push(gObj);
     } else {
-      games.push({
+      const gObj = {
         id: `R${nextNum}_G${gameIdCounter++}`,
         p1: p1,
         p2: BYE_OBJ,
         winner: p1,
-        gameLink: ''
-      });
+        gameLink: '',
+        bestOf: isBo3 ? 3 : 1
+      };
+      if (isBo3) {
+        gObj.subGames = initializeBo3SubGames(p1, BYE_OBJ);
+      }
+      games.push(gObj);
     }
   }
 
@@ -505,8 +668,13 @@ export function getCountdownTarget(tournament) {
 
   if (!tournament) {
     // No active tournament in DB - signal the banner to stay hidden.
-    return { date: null, label: null };
+    return { date: null, label: null, showBanner: false, mode: 'auto', version: 1, headline: '' };
   }
+
+  const showBanner = tournament.show_banner !== false;
+  const mode = tournament.banner_mode || 'auto';
+  const version = tournament.banner_version || 1;
+  const headline = tournament.banner_headline || '';
 
   // Priority 0: finals_completed_at countdown (12 hours post-finals celebration)
   if (tournament.status === 'active' && tournament.finals_completed_at) {
@@ -516,7 +684,11 @@ export function getCountdownTarget(tournament) {
       if (finalsEnd > now) {
         return {
           date: finalsEnd,
-          label: 'Tournament Concludes & Next Registration Opens'
+          label: 'Tournament Concludes & Next Registration Opens',
+          showBanner,
+          mode,
+          version,
+          headline
         };
       }
     }
@@ -528,7 +700,11 @@ export function getCountdownTarget(tournament) {
     if (!isNaN(customDate.getTime())) {
       return {
         date: customDate,
-        label: tournament.next_round_label || (tournament.status === 'upcoming' ? 'Registration Closes in' : 'Tournament Round')
+        label: tournament.next_round_label || (tournament.status === 'upcoming' ? 'Registration Closes in' : 'Tournament Round'),
+        showBanner,
+        mode,
+        version,
+        headline
       };
     }
   }
@@ -542,7 +718,11 @@ export function getCountdownTarget(tournament) {
     if (!isNaN(customDate.getTime())) {
       return {
         date: customDate,
-        label: latestRound.next_round_label || latestRound.name || 'Next Round'
+        label: latestRound.next_round_label || latestRound.name || 'Next Round',
+        showBanner,
+        mode,
+        version,
+        headline
       };
     }
   }
@@ -561,11 +741,15 @@ export function getCountdownTarget(tournament) {
     const fallbackDate = startDateStr ? new Date(startDateStr) : new Date(now.getTime() + 7 * 86400 * 1000);
     return {
       date: fallbackDate,
-      label: tournament.next_round_label || 'Registration Closes in'
+      label: tournament.next_round_label || 'Registration Closes in',
+      showBanner,
+      mode,
+      version,
+      headline
     };
   }
 
-  return { date: null, label: null };
+  return { date: null, label: null, showBanner, mode, version, headline };
 }
 
 

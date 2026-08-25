@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { supabase } from '../../../supabase';
-import { generateRound1, generateNextRound, getSurvivingPlayersStatus, calculateNextUpcomingMonth, checkFinalsCompletion } from '../utils/tournament';
+import { generateRound1, generateNextRound, getSurvivingPlayersStatus, calculateNextUpcomingMonth, checkFinalsCompletion, evaluateBo3Series, propagateWinners, isBo3Round, initializeBo3SubGames } from '../utils/tournament';
 import tournamentPlayers from '../data/playersWithRatings.json';
 
 const LS_KEY = (my) => `scl_tournament_${my}`;
@@ -50,13 +50,36 @@ export function useTournament(monthYear) {
     localStorage.setItem(LS_KEY(t.month_year), JSON.stringify(t));
     try {
       const { error } = await supabase.from('tournaments').upsert({
-        id: t.id || t.month_year, name: t.name, month_year: t.month_year,
-        players: t.players, rounds: t.rounds, status: t.status, winner: t.winner,
-        finals_completed_at: t.finals_completed_at || null
+        id: t.id || t.month_year || '2026-08',
+        name: t.name || `${t.month_year || '2026-08'} SCL Tournament`,
+        month_year: t.month_year || '2026-08',
+        players: t.players || [],
+        rounds: t.rounds || [],
+        status: t.status || 'active',
+        winner: t.winner || null,
+        finals_completed_at: t.finals_completed_at || null,
+        next_round_start: t.next_round_start || null,
+        next_round_label: t.next_round_label || null,
+        reg_custom_text: t.reg_custom_text || null,
+        show_banner: t.show_banner !== false,
+        banner_mode: t.banner_mode || 'auto',
+        banner_headline: t.banner_headline || '',
+        banner_version: t.banner_version || 1,
+        registration_status: t.registration_status || (t.status === 'upcoming' ? 'open' : 'closed'),
+        auto_close_registration: t.auto_close_registration !== false
       });
       if (error) throw error;
       setIsDbFallback(false);
+    } catch (e) {
+      console.warn('Tournament save error:', e.message);
+      toast.error('Could not sync tournament with server database. Check network connection.');
+      setIsDbFallback(true);
+      return; // Stop here — don't attempt notifications if the core save failed
+    }
 
+    // ── Post-save side-effects: notifications & announcements ──
+    // These run independently; failures are logged but never surface as a sync error.
+    try {
       // ── R2 & R7: Check if a new round has been generated/added ──
       const oldRoundsCount = tournament?.rounds?.length || 0;
       const newRoundsCount = t.rounds?.length || 0;
@@ -85,11 +108,12 @@ export function useTournament(monthYear) {
 
         // 1. Post a global announcement in public.announcements
         if (adminId) {
-          await supabase.from('announcements').insert({
+          const { error: annErr } = await supabase.from('announcements').insert({
             title: `${roundName} Matchups Released!`,
             content: `${roundName} pairings for ${t.name} are now live. Head over to the tournament screen to view your opponent.`,
             created_by: adminId
-          }).then();
+          });
+          if (annErr) console.warn('Announcement insertion error:', annErr.message);
         }
 
         // 2. Dispatch targeted opponent notifications to each matched player
@@ -99,7 +123,6 @@ export function useTournament(monthYear) {
 
           const matchLink = `/chess-league/tournament?tab=fixtures&gameId=${g.id}`;
 
-          // Notification for Player 1
           if (g.p1.id && g.p1.id.length === 36) {
             notifications.push({
               user_id: g.p1.id,
@@ -111,7 +134,6 @@ export function useTournament(monthYear) {
             });
           }
 
-          // Notification for Player 2
           if (g.p2.id && g.p2.id.length === 36) {
             notifications.push({
               user_id: g.p2.id,
@@ -127,7 +149,8 @@ export function useTournament(monthYear) {
         if (notifications.length > 0) {
           const batchSize = 100;
           for (let i = 0; i < notifications.length; i += batchSize) {
-            await supabase.from('notifications').insert(notifications.slice(i, i + batchSize)).then();
+            const { error: notifErr } = await supabase.from('notifications').insert(notifications.slice(i, i + batchSize));
+            if (notifErr) console.warn('Opponent notification insertion error:', notifErr.message);
           }
         }
       }
@@ -142,7 +165,7 @@ export function useTournament(monthYear) {
           notifType = 'tournament_begin';
           notifTitle = 'Tournament Begun!';
           notifMsg = `The ${t.name} has officially started! Check your pairings and schedule your matches.`;
-          
+
           // Also broadcast that registration is closed
           try {
             const { data: profiles } = await supabase.from('profiles').select('id');
@@ -156,7 +179,8 @@ export function useTournament(monthYear) {
               }));
               const batchSize = 100;
               for (let i = 0; i < regClosedNotifs.length; i += batchSize) {
-                await supabase.from('notifications').insert(regClosedNotifs.slice(i, i + batchSize)).then();
+                const { error: regErr } = await supabase.from('notifications').insert(regClosedNotifs.slice(i, i + batchSize));
+                if (regErr) console.warn('Registration closed notification error:', regErr.message);
               }
             }
           } catch (regClosedErr) {
@@ -175,7 +199,6 @@ export function useTournament(monthYear) {
         }
 
         if (notifType) {
-          // Get admin ID or fallback for announcement creation
           let broadcastAdminId = null;
           try {
             const { data: { user: currentAuthUser } } = await supabase.auth.getUser();
@@ -190,13 +213,13 @@ export function useTournament(monthYear) {
             } catch { /* ignore fallback error */ }
           }
 
-          // Insert into global announcements table
           if (broadcastAdminId) {
-            await supabase.from('announcements').insert({
+            const { error: bcErr } = await supabase.from('announcements').insert({
               title: notifTitle,
               content: notifMsg,
               created_by: broadcastAdminId
-            }).then();
+            });
+            if (bcErr) console.warn('Broadcast announcement error:', bcErr.message);
           }
 
           const { data: profiles } = await supabase.from('profiles').select('id');
@@ -209,17 +232,17 @@ export function useTournament(monthYear) {
               link: '/chess-league/tournament'
             }));
 
-            // Batch insert
             const batchSize = 100;
             for (let i = 0; i < notifs.length; i += batchSize) {
-              await supabase.from('notifications').insert(notifs.slice(i, i + batchSize));
+              const { error: batchErr } = await supabase.from('notifications').insert(notifs.slice(i, i + batchSize));
+              if (batchErr) console.warn('Global notification batch error:', batchErr.message);
             }
           }
         }
       }
-    } catch (e) {
-      console.warn('Tournament status notification save error:', e.message);
-      setIsDbFallback(true);
+    } catch (sideEffectErr) {
+      // Notifications failed but the tournament data was saved — log only, no error toast
+      console.warn('Tournament status notification save error:', sideEffectErr.message);
     }
   };
 
@@ -352,14 +375,55 @@ export function useTournament(monthYear) {
   };
 
   // Log match result + optional game link
-  const logResult = (gameId, winner, gameLink = '') => {
-    const updated = tournament.rounds.map(r => ({
+  const logResult = (gameId, winner, gameLink = '', subGameNum = null) => {
+    let updatedRounds = tournament.rounds.map(r => ({
       ...r,
-      games: r.games.map(g => g.id === gameId
-        ? { ...g, winner: winner || null, gameLink: gameLink || '' }
-        : g)
+      games: r.games.map(g => {
+        if (g.id !== gameId) return g;
+        
+        // If BO3 match
+        if (g.bestOf === 3 || (g.subGames && g.subGames.length > 0)) {
+          const subGames = g.subGames ? [...g.subGames] : initializeBo3SubGames(g.p1, g.p2);
+          
+          // Determine which subgame to update
+          let targetIndex = -1;
+          if (typeof subGameNum === 'number') {
+            targetIndex = subGames.findIndex(sg => sg.gameNum === subGameNum);
+          }
+          if (targetIndex === -1) {
+            // Find first uncompleted subGame
+            targetIndex = subGames.findIndex(sg => !sg.winner);
+          }
+          if (targetIndex === -1 && subGames.length > 0) {
+            targetIndex = subGames.length - 1; // Fallback to last subgame
+          }
+
+          if (targetIndex !== -1) {
+            subGames[targetIndex] = {
+              ...subGames[targetIndex],
+              winner: winner || null,
+              gameLink: gameLink || subGames[targetIndex].gameLink || ''
+            };
+          }
+
+          const evalBo3 = evaluateBo3Series({ ...g, subGames });
+          return {
+            ...g,
+            subGames: evalBo3.subGames,
+            winner: evalBo3.winner,
+            gameLink: gameLink || g.gameLink || ''
+          };
+        }
+
+        // Standard BO1 match
+        return { ...g, winner: winner || null, gameLink: gameLink || '' };
+      })
     }));
-    const lastRound = updated[updated.length - 1];
+
+    // Auto propagate winners across rounds
+    updatedRounds = propagateWinners(updatedRounds);
+
+    const lastRound = updatedRounds[updatedRounds.length - 1];
     const rawWinner = (lastRound && lastRound.games.length === 1) ? lastRound.games[0].winner : null;
     const finalWinner = (rawWinner && rawWinner.username !== 'forfeit') ? rawWinner : null;
 
@@ -370,7 +434,7 @@ export function useTournament(monthYear) {
 
     const t = {
       ...tournament,
-      rounds: updated,
+      rounds: updatedRounds,
       winner: finalWinner ? finalWinner.name : (rawWinner === null && lastRound && lastRound.games.length === 1 ? null : tournament.winner),
       status: tournament.status,
       finals_completed_at: finalsCompletedAt
@@ -442,16 +506,24 @@ export function useTournament(monthYear) {
     fetchHistory();
   };
 
-  const updateNextRoundStart = (dateTimeStr, nextRoundLabel) => {
-    if (!tournament || !tournament.rounds || tournament.rounds.length === 0) return;
-    const updatedRounds = [...tournament.rounds];
-    const lastRound = updatedRounds[updatedRounds.length - 1];
-    updatedRounds[updatedRounds.length - 1] = {
-      ...lastRound,
+  const updateNextRoundStart = (dateTimeStr, nextRoundLabel, extraPayload = {}) => {
+    if (!tournament) return;
+    const updatedRounds = [...(tournament.rounds || [])];
+    if (updatedRounds.length > 0) {
+      const lastRound = updatedRounds[updatedRounds.length - 1];
+      updatedRounds[updatedRounds.length - 1] = {
+        ...lastRound,
+        next_round_start: dateTimeStr,
+        ...(nextRoundLabel !== undefined ? { next_round_label: nextRoundLabel } : {})
+      };
+    }
+    save({
+      ...tournament,
       next_round_start: dateTimeStr,
-      ...(nextRoundLabel !== undefined ? { next_round_label: nextRoundLabel } : {})
-    };
-    save({ ...tournament, rounds: updatedRounds });
+      next_round_label: nextRoundLabel !== undefined ? nextRoundLabel : tournament.next_round_label,
+      ...extraPayload,
+      rounds: updatedRounds
+    });
   };
 
   return { tournament, history, isDbFallback, isLoading, initialize, logResult, saveGameLink, advanceRound, deleteRound, reset, clearMocks, updateNextRoundStart };

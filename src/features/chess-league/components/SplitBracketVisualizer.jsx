@@ -1,5 +1,5 @@
 import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
-import { getSurvivingPlayers } from '../utils/tournament';
+import { getSurvivingPlayers, evaluateBo3Series } from '../utils/tournament';
 
 // Helper to format player names for compact bracket cards
 function formatName(name) {
@@ -26,6 +26,8 @@ function getSchoolInitials(school) {
 
 function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
   const isBye = (p) => p?.username === 'bye';
+  const isBo3 = game.bestOf === 3 || (game.subGames && game.subGames.length > 0);
+  const bo3Eval = isBo3 ? evaluateBo3Series(game) : null;
   
   const renderRow = (p) => {
     if (!p) {
@@ -37,9 +39,10 @@ function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
     }
     
     const bye = isBye(p);
-    const won = game.winner && game.winner.username === p.username;
-    const lost = game.winner && !won;
+    const won = isBo3 ? (bo3Eval?.winner && bo3Eval.winner.username === p.username) : (game.winner && game.winner.username === p.username);
+    const lost = isBo3 ? (bo3Eval?.winner && !won) : (game.winner && !won);
     const isChamp = activeChampUsername && p.username === activeChampUsername;
+    const scoreVal = isBo3 ? (p.username === game.p1?.username ? bo3Eval?.p1Pts : p.username === game.p2?.username ? bo3Eval?.p2Pts : 0) : null;
     
     return (
       <div 
@@ -79,7 +82,14 @@ function CompactMatchCard({ game, onPlayerClick, activeChampUsername }) {
           )}
         </div>
         <div className="flex items-center gap-1 shrink-0 ml-1">
-          {won && (
+          {isBo3 && typeof scoreVal === 'number' && (
+            <span className={`text-[10px] font-black px-1.5 py-0.5 rounded border ${
+              won ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-gray-100 text-gray-700 border-gray-200'
+            }`}>
+              {scoreVal} pts
+            </span>
+          )}
+          {won && !isBo3 && (
             <span className="text-[9px] font-black text-emerald-600 bg-emerald-100 px-1 py-0.5 rounded">W</span>
           )}
           {isChamp && (
@@ -417,7 +427,12 @@ export function SplitBracketVisualizer({ tournament, onPlayerClick }) {
     calculateLines();
     // Re-calculate after layout shifts or window resizes
     window.addEventListener('resize', calculateLines);
-    return () => window.removeEventListener('resize', calculateLines);
+    const ro = new ResizeObserver(() => calculateLines());
+    if (parentRef.current) ro.observe(parentRef.current);
+    return () => {
+      window.removeEventListener('resize', calculateLines);
+      ro.disconnect();
+    };
   }, [tournament]);
 
   // Handle Download to Image

@@ -325,18 +325,22 @@ export function useTournament(monthYear) {
           const { data: allT } = await supabase.from('tournaments').select('*');
           const nextMY = calculateNextUpcomingMonth(allT || [completedT]);
 
-          // Purge any existing upcoming rows to maintain single-upcoming invariant
-          await supabase.from('tournaments').delete().eq('status', 'upcoming');
+          // Fetch existing row for nextMY to preserve registered players
+          const { data: existingNext } = await supabase
+            .from('tournaments')
+            .select('*')
+            .eq('id', nextMY)
+            .maybeSingle();
 
-          // Insert new upcoming tournament
+          // Insert or update upcoming tournament safely
           const autoUpcoming = {
             id: nextMY,
             month_year: nextMY,
-            name: `${nextMY} SCL Tournament`,
+            name: existingNext?.name || `${nextMY} SCL Tournament`,
             status: 'upcoming',
-            players: [],
-            rounds: [],
-            winner: null
+            players: existingNext?.players || [],
+            rounds: existingNext?.rounds || [],
+            winner: existingNext?.winner || null
           };
           await supabase.from('tournaments').upsert(autoUpcoming);
 
@@ -357,13 +361,6 @@ export function useTournament(monthYear) {
   const initialize = async (options = {}) => {
     const [y, m] = monthYear.split('-').map(Number);
     const round1 = generateRound1(tournamentPlayers, y, m, options);
-
-    // Purge any upcoming tournament rows so that NO tournament is upcoming while active
-    try {
-      await supabase.from('tournaments').delete().eq('status', 'upcoming');
-    } catch (e) {
-      console.warn('Error purging upcoming row on initialize:', e);
-    }
 
     const t = {
       id: monthYear, name: `${monthYear} SCL Tournament`,

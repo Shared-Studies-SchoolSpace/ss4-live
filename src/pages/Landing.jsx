@@ -11,6 +11,7 @@ import { MatchResult } from '../features/chess-league/components/MatchResult';
 import { PlayerProfile } from '../features/chess-league/components/PlayerProfile';
 import { Hero } from '../components/Hero';
 import { fetchCompletePlayerData } from '../features/chess-league/utils/chessService';
+import LoadingScreen from '../components/LoadingScreen';
 
 // Fallback results for Daily Friendlies (since start on July 13, 2026)
 const FALLBACK_DAILY_FRIENDLIES = [
@@ -667,26 +668,7 @@ export default function LandingPage() {
 
 
   if (isPreloading) {
-    return (
-      <div className="fixed inset-0 bg-white z-[9999] flex items-center justify-center font-nunito selection:bg-gray-200">
-        <div className="flex flex-col items-center">
-          {/* Logo Mark */}
-          <div className="flex items-baseline space-x-1 mb-2">
-            <span className="load-item text-8xl font-black text-[#155baa] tracking-tighter animate-wave" style={{ animationDelay: '0ms' }}>S</span>
-            <span className="load-item text-8xl font-black text-[#155baa] tracking-tighter animate-wave" style={{ animationDelay: '120ms' }}>S</span>
-            <span className="load-item text-8xl font-black text-[#ce5313] tracking-tighter animate-wave" style={{ animationDelay: '240ms' }}>4</span>
-          </div>
-
-          {/* Tagline */}
-          <div className="flex space-x-1.5 text-xl font-semibold">
-            <span className="load-item text-[#ce5313] animate-wave" style={{ animationDelay: '360ms' }}>Shared</span>
-            <span className="load-item text-[#ce5313] animate-wave" style={{ animationDelay: '480ms' }}>Study</span>
-            <span className="load-item text-[#155baa] ml-2 animate-wave" style={{ animationDelay: '600ms' }}>School</span>
-            <span className="load-item text-[#155baa] animate-wave" style={{ animationDelay: '720ms' }}>Space</span>
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingScreen progress={preloadProgress} status={preloadStatus} />;
   }
 
   return (

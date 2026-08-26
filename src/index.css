@@ -10,6 +10,7 @@
   /* Font Families */
   --font-space: "Space Grotesk", sans-serif;
   --font-avenir: "Outfit", sans-serif;
+  --font-klemer: "Klemer Display", "Space Grotesk", sans-serif;
 
   /* Material 3 Semantic Colors Mapped to Varsity Theme */
   --color-m3-primary: #1A56C4;
@@ -46,6 +47,18 @@
 
   /* Brand accent on dark backgrounds (original undarkened value) */
   --color-brand-accent-on-dark: #E8640A;
+}
+
+@font-face {
+  font-family: 'Klemer Display';
+  src: url('/fonts/KlemerDisplay.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-klemer {
+  font-family: 'Klemer Display', 'Space Grotesk', sans-serif;
 }
 
 :root {

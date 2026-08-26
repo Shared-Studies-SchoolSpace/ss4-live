@@ -879,9 +879,14 @@ export default function ChessTournamentPage() {
           .limit(1);
 
         if (activeRows && activeRows.length > 0) {
-          // Rule: When a tournament is active, NO tournament is upcoming!
-          await supabase.from('tournaments').delete().eq('status', 'upcoming');
-          setUpcomingTournament(null);
+          // If an active tournament is running, fetch the upcoming tournament without deleting it from DB
+          const { data: upcomingRows } = await supabase
+            .from('tournaments')
+            .select('*')
+            .eq('status', 'upcoming')
+            .order('month_year', { ascending: true })
+            .limit(1);
+          setUpcomingTournament(upcomingRows?.[0] || null);
           return;
         }
 
@@ -902,14 +907,21 @@ export default function ChessTournamentPage() {
           const { data: allT } = await supabase.from('tournaments').select('*');
           const targetMY = calculateNextUpcomingMonth(allT || []);
 
+          // Check if row already exists for targetMY to preserve registered players
+          const { data: existingTarget } = await supabase
+            .from('tournaments')
+            .select('*')
+            .eq('id', targetMY)
+            .maybeSingle();
+
           const autoRow = {
             id: targetMY,
             month_year: targetMY,
-            name: `${targetMY} SCL Tournament`,
+            name: existingTarget?.name || `${targetMY} SCL Tournament`,
             status: 'upcoming',
-            players: [],
-            rounds: [],
-            winner: null
+            players: existingTarget?.players || [],
+            rounds: existingTarget?.rounds || [],
+            winner: existingTarget?.winner || null
           };
           const { data: inserted, error: insertErr } = await supabase
             .from('tournaments')
@@ -1060,8 +1072,11 @@ export default function ChessTournamentPage() {
     } catch { return ''; }
   }, []);
 
+  // ponytail: registration page countdown targets ONLY upcoming tournament data, never active tournament admin settings
   const activeTargetT = useMemo(() => {
-    return upcomingTournament || tournament;
+    if (upcomingTournament) return upcomingTournament;
+    if (tournament?.status === 'upcoming') return tournament;
+    return { status: 'upcoming' };
   }, [upcomingTournament, tournament]);
 
   useEffect(() => {
@@ -1355,15 +1370,13 @@ export default function ChessTournamentPage() {
   };
 
   useEffect(() => {
-    if (tournament?.rounds?.length) {
+    if (tournament?.rounds?.length && !adminRoundInitializedRef.current) {
+      adminRoundInitializedRef.current = true;
+      const firstRoundNum = tournament.rounds[0].roundNum;
       const latestRoundNum = tournament.rounds[tournament.rounds.length - 1].roundNum;
-      if (!adminRoundInitializedRef.current) {
-        adminRoundInitializedRef.current = true;
-        setAdminRoundNum(latestRoundNum);
-        setActiveFixtureRound(latestRoundNum);
-      } else {
-        setActiveFixtureRound(latestRoundNum);
-      }
+      // Default fixture view to Round 1 (leftmost); admin panel defaults to latest
+      setActiveFixtureRound(firstRoundNum);
+      setAdminRoundNum(latestRoundNum);
     }
   }, [tournament]);
 
@@ -1441,7 +1454,8 @@ export default function ChessTournamentPage() {
   ];
 
 
-  const isUpcoming = !tournament || tournament.status === 'upcoming';
+  // ponytail: show registration view whenever no tournament is active
+  const isUpcoming = !tournament || tournament.status !== 'active';
 
   return (
     <div className="min-h-screen bg-[#F6F4F0]">
@@ -1797,7 +1811,7 @@ export default function ChessTournamentPage() {
                   {/* Round Selector Bar */}
                   <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-5 shadow-sm flex items-center justify-between gap-4">
                     <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full py-0.5">
-                      {[...tournament.rounds].reverse().map(r => {
+                      {[...tournament.rounds].sort((a, b) => (a.roundNum || 0) - (b.roundNum || 0)).map(r => {
                         const isActive = activeFixtureRound === r.roundNum;
                         const formattedName = (r.name || `Round ${r.roundNum}`)
                           .replace(/Group Stage Round /i, 'Group stage ')
@@ -2004,10 +2018,10 @@ export default function ChessTournamentPage() {
                             {/* Card Content: Single Line Flex Row (Even on Mobile) */}
                             <div className="p-3 sm:p-5 flex items-center justify-between gap-1.5 sm:gap-4 min-w-0">
                               
-                              {/* Player 1 Card (Left 43%) */}
+                              {/* Player 1 Card (Left) */}
                               <div 
                                 onClick={() => setSelectedPlayerForModal(g.p1)}
-                                className={`w-[43%] shrink-0 min-w-0 border rounded-xl sm:rounded-2xl p-2.5 sm:p-4 transition-all cursor-pointer hover:bg-gray-50/60 ${
+                                className={`flex-1 min-w-0 border rounded-xl sm:rounded-2xl p-2.5 sm:p-4 transition-all cursor-pointer hover:bg-gray-50/60 ${
                                   isP1Winner 
                                     ? 'bg-emerald-50/50 border-emerald-200/80 ring-1 ring-emerald-300/50' 
                                     : 'bg-white border-gray-100'
@@ -2022,17 +2036,17 @@ export default function ChessTournamentPage() {
                                 />
                               </div>
 
-                              {/* VS Center Badge (Center 14%) */}
-                              <div className="w-[14%] shrink-0 flex flex-col items-center justify-center select-none py-1">
+                              {/* VS Center Badge (Center) */}
+                              <div className="shrink-0 flex flex-col items-center justify-center select-none py-1">
                                 <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary font-black text-[10px] sm:text-xs flex items-center justify-center shadow-2xs">
                                   VS
                                 </div>
                               </div>
 
-                              {/* Player 2 Card (Right 43%) */}
+                              {/* Player 2 Card (Right) */}
                               <div 
                                 onClick={() => setSelectedPlayerForModal(g.p2)}
-                                className={`w-[43%] shrink-0 min-w-0 border rounded-xl sm:rounded-2xl p-2.5 sm:p-4 transition-all cursor-pointer hover:bg-gray-50/60 ${
+                                className={`flex-1 min-w-0 border rounded-xl sm:rounded-2xl p-2.5 sm:p-4 transition-all cursor-pointer hover:bg-gray-50/60 ${
                                   isP2Winner 
                                     ? 'bg-emerald-50/50 border-emerald-200/80 ring-1 ring-emerald-300/50' 
                                     : 'bg-white border-gray-100'

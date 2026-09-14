@@ -8,16 +8,12 @@ export const INITIAL_FEED_POSTS = [
     mediaType: 'poster',
     imageUrl: '/varsity-tournament-poster.jpeg',
     categoryClass: 'tournament',
-    readTime: '2 min read',
+    readTime: '',
     isUnread: true,
     author: {
-      name: 'SS4 Arbiter Board',
-      avatar: 'SS4',
-      avatarBg: '#0F172A',
-      avatarColor: '#FFFFFF',
-      badge: 'OFFICIAL ADMIN',
-      badgeStyle: { background: '#FFEEDB', color: '#B84D00', fontWeight: 900 },
-      time: 'Official Broadcast · Urgent Update'
+      name: 'SS4',
+      avatarImg: '/ss4_logo_without_text.jpg',
+      isAdmin: true
     },
     title: 'SS4 Chess League Varsity Tournament 2026: Nigeria’s Top Universities Clash — Rosters Due Tonight!',
     excerpt: 'Nigeria’s premier inter-university chess championship is officially underway. From September 16th to 30th, 2026, the sharpest collegiate minds from top universities across Nigeria will clash in high-stakes 5-player squad battles hosted online on Chess.com and Lichess. The champion university takes home the national varsity crown and 5x 1-Month Chess.com Premium memberships.\n\n• Format: Teams of 5 contenders per institution\n• Match Window: 16th – 30th September 2026\n• Critical Deadline: Team line-ups and verified rosters are due by midnight tonight, 14th September 2026!\n• Match Hosting: Chess.com & Lichess\n\nFor team registration, line-up submissions, and corporate university sponsorships, contact arbiters directly at 09060515456 or 08161673691.\n\nMany Institutions, One Space. The Board Remembers.',

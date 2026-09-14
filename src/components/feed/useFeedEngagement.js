@@ -144,34 +144,36 @@ export function useFeedEngagement() {
 
         if (error) return;
         if (isMounted && data) {
-          const transformed = data.map((ann) => ({
-            id: `announcement_${ann.id}`,
-            postType: 'text',
-            categoryLabel: '📢 Official Announcement',
-            categoryClass: 'announcement',
-            isUnread: true,
-            author: {
-              name: ann.sender?.name || 'SS4 Arbiter Board',
-              avatar: getAvatarInitials(ann.sender?.name || 'SS4'),
-              avatarBg: '#0F172A',
-              avatarColor: '#FFFFFF',
-              badge: ann.sender?.role === 'admin' ? 'OFFICIAL ADMIN' : 'ANNOUNCEMENT',
-              badgeStyle: { background: '#FFEEDB', color: '#B84D00', fontWeight: 900 },
-              time: new Date(ann.created_at).toLocaleDateString(undefined, {
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-              })
-            },
-            title: ann.title,
-            excerpt: ann.content,
-            tags: ['#Announcement', '#SS4League'],
-            likesCount: 0,
-            isLiked: false,
-            isBookmarked: false,
-            comments: []
-          }));
+          const transformed = data.map((ann) => {
+            const isAdmin = ann.sender?.role === 'admin' || ann.is_global !== false;
+            return {
+              id: `announcement_${ann.id}`,
+              postType: 'text',
+              categoryClass: 'announcement',
+              isUnread: true,
+              author: isAdmin ? {
+                name: 'SS4',
+                avatarImg: '/ss4_logo_without_text.jpg',
+                isAdmin: true
+              } : {
+                name: ann.sender?.name || 'Contender',
+                avatar: getAvatarInitials(ann.sender?.name || 'SS4'),
+                avatarBg: '#0F172A',
+                avatarColor: '#FFFFFF',
+                time: new Date(ann.created_at).toLocaleDateString(undefined, {
+                  month: 'short',
+                  day: 'numeric'
+                })
+              },
+              title: ann.title,
+              excerpt: ann.content,
+              tags: ['#Announcement', '#SS4League'],
+              likesCount: 0,
+              isLiked: false,
+              isBookmarked: false,
+              comments: []
+            };
+          });
           setDbAnnouncements(transformed);
         }
       } catch (err) {
@@ -294,14 +296,21 @@ export function useFeedEngagement() {
       return false;
     }
 
-    const authorName = profile?.name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Contender';
-    const avatar = getAvatarInitials(authorName);
-    const color = getAvatarColor(user.id);
     const isAdmin = profile?.role === 'admin';
-    const badge = isAdmin ? 'OFFICIAL ADMIN' : (profile?.institution ? profile.institution.toUpperCase() : 'CONTENDER');
-    const badgeStyle = isAdmin
-      ? { background: '#FFEEDB', color: '#B84D00', fontWeight: 900 }
-      : { background: '#DBEAFE', color: '#1E40AF', fontWeight: 700 };
+    const color = getAvatarColor(user.id);
+    const author = isAdmin ? {
+      name: 'SS4',
+      avatarImg: '/ss4_logo_without_text.jpg',
+      isAdmin: true
+    } : {
+      name: profile?.name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Contender',
+      avatar: getAvatarInitials(profile?.name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Contender'),
+      avatarBg: color.bg,
+      avatarColor: color.color,
+      badge: profile?.institution ? profile.institution.toUpperCase() : 'CONTENDER',
+      badgeStyle: { background: '#DBEAFE', color: '#1E40AF', fontWeight: 700 },
+      time: 'Just now'
+    };
 
     let newPost;
     const postId = `post_${Date.now()}`;
@@ -313,15 +322,7 @@ export function useFeedEngagement() {
         categoryLabel: '🎯 Duel Challenge',
         categoryClass: 'announcement',
         isUnread: true,
-        author: {
-          name: authorName,
-          avatar,
-          avatarBg: color.bg,
-          avatarColor: color.color,
-          badge,
-          badgeStyle,
-          time: 'Just now'
-        },
+        author,
         title: 'Open 1v1 Challenge Issued!',
         excerpt: text.trim(),
         tags: ['#ContenderChallenge', '#SS4Duel', '#OpenMatch'],
@@ -346,15 +347,7 @@ export function useFeedEngagement() {
         categoryClass: 'tournament',
         readTime: '1 min read',
         isUnread: true,
-        author: {
-          name: authorName,
-          avatar,
-          avatarBg: color.bg,
-          avatarColor: color.color,
-          badge,
-          badgeStyle: { background: '#DCFCE7', color: '#15803D', fontWeight: 700 },
-          time: 'Just now'
-        },
+        author,
         title: 'New Personal Best Score Recorded!',
         excerpt: text.trim(),
         tags: ['#ScoreCard', '#SASMastery', '#Leaderboard'],
@@ -381,15 +374,7 @@ export function useFeedEngagement() {
         categoryLabel: '📢 Community Post',
         categoryClass: 'update',
         isUnread: true,
-        author: {
-          name: authorName,
-          avatar,
-          avatarBg: color.bg,
-          avatarColor: color.color,
-          badge,
-          badgeStyle,
-          time: 'Just now'
-        },
+        author,
         title: 'Community Update',
         excerpt: text.trim(),
         tags: ['#Community', '#SS4League'],

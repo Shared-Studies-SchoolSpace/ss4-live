@@ -33,33 +33,52 @@ export function TextPost({
       <div className="feed-card-body">
         <div className="feed-card-author">
           <div className="author-info">
-            <div 
-              className="author-avatar" 
-              style={{ background: author.avatarBg || '#0F172A', color: author.avatarColor || '#FFFFFF' }}
-            >
-              {author.avatarImg ? (
-                <img src={author.avatarImg} alt={author.name} />
-              ) : (
-                author.avatar || 'DEV'
-              )}
-            </div>
-            <div className="author-meta">
-              <div className="author-name">
-                {author.name || 'Engineering Team'}
-                {author.badge && (
-                  <span 
-                    className="author-badge" 
-                    style={author.badgeStyle || { background: '#fef3c7', color: '#b45309' }}
-                  >
-                    {author.badge}
-                  </span>
-                )}
-              </div>
-              <div className="author-time">{author.time || 'Yesterday at 4:30 PM'}</div>
-            </div>
+            {(author.isAdmin || author.name === 'SS4' || author.badge === 'OFFICIAL ADMIN') ? (
+              <>
+                <div className="author-avatar" style={{ background: '#FFFFFF', border: '1.5px solid #E2E8F0' }}>
+                  <img 
+                    src="/ss4_logo_without_text.jpg" 
+                    alt="SS4" 
+                    style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '2px' }} 
+                  />
+                </div>
+                <div className="author-meta">
+                  <div className="author-name" style={{ fontSize: '14px', fontWeight: 900, color: '#0F172A', letterSpacing: '-0.02em' }}>
+                    SS4
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div 
+                  className="author-avatar" 
+                  style={{ background: author.avatarBg || '#0F172A', color: author.avatarColor || '#FFFFFF' }}
+                >
+                  {author.avatarImg ? (
+                    <img src={author.avatarImg} alt={author.name} />
+                  ) : (
+                    author.avatar || 'ME'
+                  )}
+                </div>
+                <div className="author-meta">
+                  <div className="author-name">
+                    {author.name || 'Contender'}
+                    {author.badge && (
+                      <span 
+                        className="author-badge" 
+                        style={author.badgeStyle || { background: '#fef3c7', color: '#b45309' }}
+                      >
+                        {author.badge}
+                      </span>
+                    )}
+                  </div>
+                  {author.time && <div className="author-time">{author.time}</div>}
+                </div>
+              </>
+            )}
           </div>
 
-          {categoryLabel && (
+          {!(author.isAdmin || author.name === 'SS4' || author.badge === 'OFFICIAL ADMIN') && categoryLabel && (
             <div className={`feed-card-category-tag ${categoryClass}`} style={{ position: 'static' }}>
               <span>{categoryLabel}</span>
             </div>

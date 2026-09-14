@@ -7,11 +7,11 @@ import './feedStyles.css';
 
 const FILTER_PILLS = [
   { id: 'all', label: 'All Activity' },
-  { id: 'tournament', label: 'Tournaments 🏆', categoryClass: 'tournament' },
-  { id: 'announcements', label: 'Announcements 📢', categoryClass: 'announcement' },
-  { id: 'video', label: 'Video Highlights 🎥', mediaType: 'video' },
-  { id: 'photo_gallery', label: 'Photo Galleries 📸', mediaType: 'photo_gallery' },
-  { id: 'release', label: 'Release Notes ⚡', categoryClass: 'text-only' }
+  { id: 'tournament', label: 'Tournaments', categoryClass: 'tournament' },
+  { id: 'announcements', label: 'Announcements', categoryClass: 'announcement' },
+  { id: 'video', label: 'Video Highlights', mediaType: 'video' },
+  { id: 'photo_gallery', label: 'Photo Galleries', mediaType: 'photo_gallery' },
+  { id: 'release', label: 'Release Notes', categoryClass: 'text-only' }
 ];
 
 export function FeedContainer({ 
@@ -123,7 +123,7 @@ export function FeedContainer({
       {showHeader && (
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-black text-foreground tracking-tight font-outfit flex items-center gap-2.5">
-            <span className="text-primary">📰</span> {title}
+            {title}
           </h1>
           {subtitle && (
             <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
@@ -167,9 +167,12 @@ export function FeedContainer({
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-0.5"
+                aria-label="Clear search"
               >
-                ✕
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             )}
           </div>
@@ -179,9 +182,12 @@ export function FeedContainer({
               <span>Filter: {selectedTag}</span>
               <button 
                 onClick={() => setSelectedTag(null)}
-                className="ml-1 hover:text-primary-dark"
+                className="ml-1 hover:text-primary-dark cursor-pointer p-0.5"
+                aria-label="Remove filter"
               >
-                ✕
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
           )}
@@ -223,7 +229,10 @@ export function FeedContainer({
                       : 'bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-900 border border-border'
                   }`}
                 >
-                  ⚔️ Challenge Contender
+                  <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  Challenge Contender
                 </button>
 
                 <button
@@ -235,7 +244,10 @@ export function FeedContainer({
                       : 'bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-900 border border-border'
                   }`}
                 >
-                  🎯 Attach Score Card
+                  <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Attach Score Card
                 </button>
               </div>
 
@@ -252,7 +264,9 @@ export function FeedContainer({
           <div className="bg-gradient-to-r from-blue-50/90 via-slate-50 to-amber-50/50 border border-blue-100 rounded-2xl p-4 sm:p-5 shadow-xs mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-black text-base shrink-0">
-                ⚡
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
               </div>
               <div className="text-left">
                 <h3 className="text-xs sm:text-sm font-black text-slate-900 font-outfit">
@@ -278,7 +292,11 @@ export function FeedContainer({
       <div className="space-y-4">
         {filteredPosts.length === 0 ? (
           <div className="bg-card border border-border rounded-2xl p-10 text-center space-y-3">
-            <div className="text-4xl">🔍</div>
+            <div className="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
             <h3 className="text-base font-extrabold text-foreground">No feed posts matched your filters</h3>
             <p className="text-xs text-slate-500 max-w-sm mx-auto">
               Try adjusting your search query or reset filter pills to view all updates.
@@ -331,9 +349,12 @@ export function FeedContainer({
               </div>
               <button
                 onClick={() => setActiveVideoModal(null)}
-                className="text-slate-400 hover:text-white text-sm font-bold px-2 py-1 cursor-pointer"
+                className="text-slate-400 hover:text-white text-xs font-bold px-2.5 py-1 rounded-lg hover:bg-white/10 transition-colors cursor-pointer flex items-center gap-1.5"
               >
-                ✕ Close
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                Close
               </button>
             </div>
 

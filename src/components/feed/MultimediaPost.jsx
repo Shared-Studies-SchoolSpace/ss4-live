@@ -51,7 +51,11 @@ export function MultimediaPost({
 
           <div className="video-thumbnail-graphic">
             {!videoMeta.thumbnail && (
-              <div style={{ fontSize: '48px', marginBottom: '8px' }}>⚔️🎓</div>
+              <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-white/80 mb-2 border border-white/20">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+              </div>
             )}
             <div className="play-button-ring">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -91,7 +95,11 @@ export function MultimediaPost({
             {mainImg ? (
               <img src={mainImg} alt={`${title} 1`} />
             ) : (
-              <div className="photo-illustration">🏛️🥇</div>
+              <div className="photo-illustration flex items-center justify-center bg-slate-900 text-slate-400">
+                <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
             )}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
@@ -99,7 +107,11 @@ export function MultimediaPost({
               {sideImg1 ? (
                 <img src={sideImg1} alt={`${title} 2`} />
               ) : (
-                <span style={{ fontSize: '28px' }}>🏆</span>
+                <div className="w-full h-full flex items-center justify-center bg-slate-800 text-slate-400">
+                  <svg className="w-6 h-6 text-amber-400/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  </svg>
+                </div>
               )}
             </div>
             <div className="photo-cell side-photo-2" style={{ flex: 1 }}>
@@ -137,7 +149,7 @@ export function MultimediaPost({
         {bannerMeta.bgImage && (
           <img src={bannerMeta.bgImage} alt={title} className="feed-card-banner-bg" />
         )}
-        <div className="feed-card-banner-graphic">{bannerMeta.graphic || '🏆⚔️'}</div>
+        <div className="feed-card-banner-graphic">{bannerMeta.graphic || 'SS4'}</div>
         {readTime && <div className="feed-card-readtime">{readTime}</div>}
       </div>
     );

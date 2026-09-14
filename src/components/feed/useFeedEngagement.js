@@ -319,7 +319,7 @@ export function useFeedEngagement() {
       newPost = {
         id: postId,
         postType: 'text',
-        categoryLabel: '🎯 Duel Challenge',
+        categoryLabel: 'Duel Challenge',
         categoryClass: 'announcement',
         isUnread: true,
         author,
@@ -334,7 +334,7 @@ export function useFeedEngagement() {
           badge: 'CHALLENGE',
           title: 'Open Contender Speed Duel',
           subtitle: 'Awaiting Challenger Acceptance',
-          actionLabel: 'Accept Challenge ⚔️'
+          actionLabel: 'Accept Challenge →'
         },
         comments: []
       };
@@ -343,7 +343,7 @@ export function useFeedEngagement() {
         id: postId,
         postType: 'multimedia',
         mediaType: 'banner',
-        categoryLabel: '🏆 Score Card',
+        categoryLabel: 'Score Card',
         categoryClass: 'tournament',
         readTime: '1 min read',
         isUnread: true,
@@ -355,7 +355,7 @@ export function useFeedEngagement() {
         isLiked: false,
         isBookmarked: false,
         bannerMeta: {
-          graphic: '🎯⚡',
+          graphic: 'SS4',
           bgImage: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&q=80&w=1200'
         },
         embed: {
@@ -371,7 +371,7 @@ export function useFeedEngagement() {
       newPost = {
         id: postId,
         postType: 'text',
-        categoryLabel: '📢 Community Post',
+        categoryLabel: 'Community Post',
         categoryClass: 'update',
         isUnread: true,
         author,

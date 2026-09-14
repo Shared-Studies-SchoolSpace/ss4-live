@@ -1,6 +1,7 @@
 import React from 'react';
 import { FeedCardActions } from './FeedCardActions';
 import { FeedCardComments } from './FeedCardComments';
+import { AddToCalendarButton } from './AddToCalendarButton';
 import './feedStyles.css';
 
 export function MultimediaPost({
@@ -192,36 +193,22 @@ export function MultimediaPost({
         <h2 className="feed-card-title">{title}</h2>
         <p className="feed-card-excerpt">{excerpt}</p>
 
-        {/* Optional Embed Section (Match result, Lobby, or Challenge) */}
+        {/* Embed Action Section (Register button + Calendar button) */}
         {embed && (
           <div className={`feed-embed-card ${
             embed.type === 'match' ? 'feed-embed-match' :
             embed.type === 'lobby' ? 'feed-embed-lobby' : 'feed-embed-challenge'
           }`}>
-            <div className="flex items-center gap-3">
-              {embed.metric && (
-                <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary font-black flex items-center justify-center text-xs shrink-0">
-                  {embed.metric}
-                </div>
-              )}
-              {embed.badge && (
-                <span className="font-mono text-xs font-black bg-foreground text-white px-2.5 py-1 rounded-md shrink-0">
-                  {embed.badge}
-                </span>
-              )}
-              <div>
-                <div className="font-extrabold text-xs text-foreground">{embed.title}</div>
-                <div className="text-[11px] text-slate-500 font-semibold">{embed.subtitle}</div>
-              </div>
-            </div>
             {embed.actionLabel && (
               <button 
                 onClick={embed.onAction || (() => alert(`Action: ${embed.actionLabel}`))}
-                className="feed-embed-action-btn bg-primary hover:bg-primary-hover text-primary-foreground shrink-0"
+                className="feed-embed-action-btn bg-primary hover:bg-primary-hover text-primary-foreground shrink-0 shadow-sm"
               >
                 {embed.actionLabel}
               </button>
             )}
+
+            <AddToCalendarButton event={embed.calendarEvent} />
           </div>
         )}
 

@@ -23,13 +23,16 @@ export const INITIAL_FEED_POSTS = [
     isBookmarked: false,
     embed: {
       type: 'lobby',
-      badge: 'SEPT 16–30',
-      metric: '5-MAN',
-      title: 'SS4 Varsity Tournament · University Championship',
-      subtitle: 'Prize: 5x Chess.com Premium · Line-ups Due: Sept 14',
       actionLabel: 'Register University Squad →',
       onAction: () => {
         window.location.href = '/chess-league/tournament';
+      },
+      calendarEvent: {
+        title: 'SS4 Chess League Varsity Tournament 2026',
+        description: 'Nigeria’s premier inter-university chess championship (Sept 16–30, 2026). Teams of 5 contenders per institution hosted online on Chess.com and Lichess. Line-ups due Sept 14. Contact Arbiters: 09060515456 or 08161673691. Many Institutions, One Space. The Board Remembers.',
+        startDate: '2026-09-16',
+        endDate: '2026-09-30',
+        location: 'Online (Chess.com & Lichess)'
       }
     },
     comments: []

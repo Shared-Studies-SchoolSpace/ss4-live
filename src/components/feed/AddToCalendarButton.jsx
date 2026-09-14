@@ -108,7 +108,7 @@ export function AddToCalendarButton({ event = {} }) {
   };
 
   return (
-    <div className="relative inline-block" ref={menuRef}>
+    <div className={`relative inline-block ${isOpen ? 'z-50' : 'z-10'}`} ref={menuRef}>
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}

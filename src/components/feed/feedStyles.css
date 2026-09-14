@@ -4,17 +4,17 @@
    ========================================== */
 
 :root {
-  --feed-primary: #1A56C4;
-  --feed-primary-dark: #0F3BA1;
+  --feed-primary: var(--color-primary, #1A56C4);
+  --feed-primary-dark: var(--color-primary-dark, #0F3BA1);
   --feed-primary-light: #EFF6FF;
-  --feed-accent: #B84D00;
+  --feed-accent: var(--color-brand-accent, #B84D00);
   --feed-slate-900: #0F172A;
   --feed-slate-800: #1E293B;
   --feed-slate-700: #334155;
   --feed-slate-600: #475569;
   --feed-slate-500: #64748B;
   --feed-slate-400: #94A3B8;
-  --feed-slate-200: #E2E8F0;
+  --feed-slate-200: var(--color-border, #E2E8F0);
   --feed-slate-100: #F1F5F9;
   --feed-slate-50: #F8FAFC;
 }

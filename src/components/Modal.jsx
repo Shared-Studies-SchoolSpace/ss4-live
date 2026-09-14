@@ -53,7 +53,7 @@ export default function Modal({
 
   return (
     <div 
-      className="fixed inset-0 bg-[#111111]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
+      className="fixed inset-0 bg-foreground/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
       onClick={(e) => {
         if (e.target === e.currentTarget && onClose) onClose();
       }}
@@ -64,19 +64,19 @@ export default function Modal({
       <div 
         className={`w-full ${maxWidth} rounded-3xl border shadow-2xl transition-all my-8 ${
           isDark 
-            ? 'bg-[#0B192C] border-white/15 text-white' 
-            : 'bg-white border-[#EAEAEA] text-[#111111]'
+            ? 'bg-varsity-navy border-white/15 text-white' 
+            : 'bg-card border-border text-foreground'
         } ${className}`}
       >
         {/* Header Bar */}
         {(title || subtitle) && (
           <div className={`flex items-center justify-between p-6 border-b ${
-            isDark ? 'border-white/10' : 'border-[#EAEAEA]'
+            isDark ? 'border-white/10' : 'border-border'
           }`}>
             <div>
               {subtitle && (
                 <span className={`text-[10px] font-space font-extrabold uppercase tracking-widest block mb-1 ${
-                  isDark ? 'text-blue-300' : 'text-[#1A56C4]'
+                  isDark ? 'text-blue-300' : 'text-primary'
                 }`}>
                   {subtitle}
                 </span>

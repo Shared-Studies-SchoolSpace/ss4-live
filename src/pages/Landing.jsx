@@ -164,7 +164,7 @@ const ChessVisual = () => (
           <div
             key={i}
             className={`w-full h-full relative flex items-center justify-center text-3xl ${
-              isDark ? "bg-[#FAF8F4]" : "bg-m3-surface-variant"
+              isDark ? "bg-m3-surface-low" : "bg-m3-surface-variant"
             }`}
           >
             {i === 5 && (
@@ -784,7 +784,7 @@ export default function LandingPage() {
                 </h4>
               </div>
               <div className="space-y-3">
-                <div className="p-3.5 bg-[#FAF8F4] rounded-xl border border-m3-outline-variant">
+                <div className="p-3.5 bg-m3-surface-low rounded-xl border border-m3-outline-variant">
                   <span className="text-[10px] font-black text-brand-accent uppercase tracking-widest block">Next Tournament</span>
                   <a href="/chess-league/tournament" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
                     July 2026 Monthly Tournament
@@ -793,7 +793,7 @@ export default function LandingPage() {
                     Starts <span className="font-black text-xs text-brand-primary">July 25</span> | Secure your bracket
                   </span>
                 </div>
-                <div className="p-3.5 bg-[#FAF8F4] rounded-xl border border-m3-outline-variant">
+                <div className="p-3.5 bg-m3-surface-low rounded-xl border border-m3-outline-variant">
                   <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest block">Daily League</span>
                   <span class="text-sm font-bold text-brand-text-dark block mt-1">Lichess Tournament</span>
                   <span class="text-xs font-semibold text-gray-700 block mt-0.5">Every night at 8 PM</span>
@@ -833,7 +833,7 @@ export default function LandingPage() {
             {/* Spotlights Sub-Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
               {/* Featured Player Spotlight (M3 Filled Card style) */}
-              <div className="varsity-card p-5 bg-[#FAF8F4] relative overflow-hidden border-none shadow-none text-left">
+              <div className="varsity-card p-5 bg-m3-surface-low relative overflow-hidden border-none shadow-none text-left">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-brand-accent"><TrophyIcon /></span>
                   <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
@@ -867,7 +867,7 @@ export default function LandingPage() {
               </div>
 
               {/* Featured Institution Spotlight (M3 Filled Card style) */}
-              <div className="varsity-card p-5 bg-[#FAF8F4] border-none shadow-none text-left">
+              <div className="varsity-card p-5 bg-m3-surface-low border-none shadow-none text-left">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-brand-primary"><SchoolIcon /></span>
                   <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
@@ -967,9 +967,9 @@ export default function LandingPage() {
                   {leaderboardPlayers.map((p, i) => {
                     // M3/Von Restorff Colored Circle Badges for Top Positions
                     const badgeColors = 
-                      i === 0 ? "bg-[#FFD700] text-gray-900 font-black" : // Gold
-                      i === 1 ? "bg-[#C0C0C0] text-gray-900 font-black" : // Silver
-                      i === 2 ? "bg-[#CD7F32] text-gray-900 font-black" : // Bronze
+                      i === 0 ? "bg-gold text-gray-900 font-black" : // Gold
+                      i === 1 ? "bg-silver text-gray-900 font-black" : // Silver
+                      i === 2 ? "bg-bronze text-gray-900 font-black" : // Bronze
                       "bg-m3-surface-variant text-gray-800 font-bold";
 
                     return (
@@ -986,7 +986,7 @@ export default function LandingPage() {
                           </span>
                           <div className="truncate">
                             <p className="font-bold text-brand-text-dark truncate leading-tight" title={p.name}>{p.name}</p>
-                            <p className="text-[10px] font-semibold text-gray-600 truncate mt-0.5" title={p.university}>{p.university}</p>
+                            <p className="text-[10px] font-semibold text-gray-650 truncate mt-0.5" title={p.university}>{p.university}</p>
                           </div>
                         </div>
                         <span className="font-black text-brand-primary font-space shrink-0">
@@ -1000,9 +1000,9 @@ export default function LandingPage() {
                 <div className="space-y-2">
                   {dailyFriendliesLeaderboard.slice(0, 6).map((p, i) => {
                     const badgeColors = 
-                      i === 0 ? "bg-[#FFD700] text-gray-900 font-black" : // Gold
-                      i === 1 ? "bg-[#C0C0C0] text-gray-900 font-black" : // Silver
-                      i === 2 ? "bg-[#CD7F32] text-gray-900 font-black" : // Bronze
+                      i === 0 ? "bg-gold text-gray-900 font-black" : // Gold
+                      i === 1 ? "bg-silver text-gray-900 font-black" : // Silver
+                      i === 2 ? "bg-bronze text-gray-900 font-black" : // Bronze
                       "bg-m3-surface-variant text-gray-800 font-bold";
 
                     return (
@@ -1019,7 +1019,7 @@ export default function LandingPage() {
                           </span>
                           <div className="truncate">
                             <p className="font-bold text-brand-text-dark truncate leading-tight" title={p.name}>{p.name}</p>
-                            <p className="text-[10px] font-semibold text-gray-600 mt-0.5 truncate" title={p.university}>
+                            <p className="text-[10px] font-semibold text-gray-650 mt-0.5 truncate" title={p.university}>
                               {p.university} &bull; {p.wins > 0 ? `🏆 ${p.wins} Arena Win${p.wins > 1 ? 's' : ''}` : 'Active'}
                             </p>
                           </div>
@@ -1035,9 +1035,9 @@ export default function LandingPage() {
                 <div className="space-y-2">
                   {leaderboardSchools.map((s, i) => {
                     const badgeColors = 
-                      i === 0 ? "bg-[#FFD700] text-gray-900 font-black" : 
-                      i === 1 ? "bg-[#C0C0C0] text-gray-900 font-black" : 
-                      i === 2 ? "bg-[#CD7F32] text-gray-900 font-black" : 
+                      i === 0 ? "bg-gold text-gray-900 font-black" : 
+                      i === 1 ? "bg-silver text-gray-900 font-black" : 
+                      i === 2 ? "bg-bronze text-gray-900 font-black" : 
                       "bg-m3-surface-variant text-gray-800 font-bold";
 
                     return (

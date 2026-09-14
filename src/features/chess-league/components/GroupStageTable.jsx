@@ -23,7 +23,7 @@ function PlayerAvatar({ player }) {
     <img src={src} alt={player.name} onError={() => setSrc(null)}
       className="w-7 h-7 rounded-full object-cover shrink-0 shadow-2xs border border-gray-200" />
   ) : (
-    <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#0B193C] to-brand-primary text-white font-black text-[10px] flex items-center justify-center shrink-0 shadow-2xs select-none">
+    <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-varsity-navy to-brand-primary text-white font-black text-[10px] flex items-center justify-center shrink-0 shadow-2xs select-none">
       {getMonogram(player?.name)}
     </div>
   );
@@ -73,8 +73,14 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
           tournament.rounds.forEach(r => {
             (r.games || []).forEach(g => {
               if (g.groupLabel === label) {
-                if (g.p1 && g.p1.username !== 'bye') playersInGroup.set(g.p1.username, g.p1);
-                if (g.p2 && g.p2.username !== 'bye') playersInGroup.set(g.p2.username, g.p2);
+                if (g.p1 && g.p1.username !== 'bye') {
+                  const matchedP1 = rawPlayers.find(p => p.username?.toLowerCase() === g.p1.username?.toLowerCase() || p.id === g.p1.id);
+                  playersInGroup.set(g.p1.username, { ...g.p1, ...matchedP1 });
+                }
+                if (g.p2 && g.p2.username !== 'bye') {
+                  const matchedP2 = rawPlayers.find(p => p.username?.toLowerCase() === g.p2.username?.toLowerCase() || p.id === g.p2.id);
+                  playersInGroup.set(g.p2.username, { ...g.p2, ...matchedP2 });
+                }
               }
             });
           });
@@ -443,7 +449,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
 
       {/* Knockout Stage Active Banner */}
       {isKnockoutActive && (
-        <div className="bg-[#0B193C] text-white p-5 rounded-3xl shadow-sm border border-[#1E295B] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-in fade-in duration-300">
+        <div className="bg-varsity-navy text-white p-5 rounded-3xl shadow-sm border border-varsity-navy-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-in fade-in duration-300">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0 text-white/90">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -465,7 +471,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
               onClick={() => setViewMode('matrix')}
               className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
                 viewMode === 'matrix' 
-                  ? 'bg-white text-[#0B193C] shadow-sm' 
+                  ? 'bg-white text-varsity-navy shadow-sm' 
                   : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
               }`}
             >
@@ -489,11 +495,11 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-space font-black text-lg text-[#111111] uppercase tracking-wide">
+              <h3 className="font-space font-black text-lg text-foreground uppercase tracking-wide">
                 Which group am I in?
               </h3>
               {searchResults.length > 0 && cleanSearchQuery && (
-                <span className="bg-[#0B193C] border border-brand-primary/40 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-2xs font-space">
+                <span className="bg-varsity-navy border border-brand-primary/40 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-2xs font-space">
                   <svg className="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                   </svg>
@@ -549,10 +555,10 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-gray-100">
               <div>
                 <div className="flex flex-wrap items-center gap-3">
-                  <h3 className="font-space font-black text-xl text-[#111111] uppercase tracking-wide">
+                  <h3 className="font-space font-black text-xl text-foreground uppercase tracking-wide">
                     Knockout Matrix
                   </h3>
-                  <span className="text-xs font-bold text-[#0B193C] bg-[#0B193C]/5 border border-[#0B193C]/10 px-3.5 py-1 rounded-xl font-space">
+                  <span className="text-xs font-bold text-varsity-navy bg-varsity-navy/5 border border-varsity-navy/10 px-3.5 py-1 rounded-xl font-space">
                     {knockoutMatrixData.survivors.length} Contenders
                   </span>
                 </div>
@@ -732,11 +738,11 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                 {/* Group Header Bar */}
                 <div className="bg-brand-bg-cream/50 border-b border-gray-100 px-5 py-3.5 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8.5 h-8.5 rounded-xl bg-[#0B193C] text-white border border-brand-primary/40 font-space font-black text-base flex items-center justify-center shadow-xs shrink-0 select-none">
+                    <div className="w-8.5 h-8.5 rounded-xl bg-varsity-navy text-white border border-brand-primary/40 font-space font-black text-base flex items-center justify-center shadow-xs shrink-0 select-none">
                       {grp.label}
                     </div>
                     <div>
-                      <h3 className="font-space font-black text-base text-[#111111]">
+                      <h3 className="font-space font-black text-base text-foreground">
                         Group {grp.label}
                       </h3>
                       {grp.avgRating && (
@@ -748,7 +754,7 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                   </div>
 
                   {hasSearchMatch && (
-                    <span className="bg-[#0B193C] border border-brand-primary/40 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs font-space">
+                    <span className="bg-varsity-navy border border-brand-primary/40 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs font-space">
                       <span>🔍</span>
                       <span>MATCH FOUND</span>
                     </span>
@@ -834,13 +840,13 @@ export function GroupStageTable({ tournament, currentUser, onPlayerSelect, onSwi
                                   <div className="flex items-center gap-1 min-w-0 flex-wrap">
                                     <button
                                       onClick={() => onPlayerSelect && onPlayerSelect(p)}
-                                      className="font-bold text-[#111111] group-hover:text-brand-primary transition-colors cursor-pointer text-xs truncate text-left hover:underline max-w-[85px] xs:max-w-[120px] sm:max-w-none"
+                                      className="font-bold text-foreground group-hover:text-brand-primary transition-colors cursor-pointer text-xs truncate text-left hover:underline max-w-[85px] xs:max-w-[120px] sm:max-w-none"
                                       title={p.name}
                                     >
                                       {p.name}
                                     </button>
                                     {isSearchMatch && (
-                                      <span className="text-[8px] font-black uppercase text-white bg-[#0B193C] border border-brand-primary/40 px-1 py-0.5 rounded-full shrink-0 flex items-center shadow-2xs font-space" title="Match Found">
+                                      <span className="text-[8px] font-black uppercase text-white bg-varsity-navy border border-brand-primary/40 px-1 py-0.5 rounded-full shrink-0 flex items-center shadow-2xs font-space" title="Match Found">
                                         🔍
                                       </span>
                                     )}

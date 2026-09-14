@@ -68,7 +68,7 @@ export default function NewsPage() {
                                 onClick={() => setViewMode('feed')}
                                 className={`px-5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-2 ${
                                     viewMode === 'feed'
-                                        ? 'bg-[#1A56C4] text-white shadow-md'
+                                        ? 'bg-primary text-primary-foreground shadow-md'
                                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                                 }`}
                             >
@@ -78,7 +78,7 @@ export default function NewsPage() {
                                 onClick={() => setViewMode('grid')}
                                 className={`px-5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-2 ${
                                     viewMode === 'grid'
-                                        ? 'bg-[#1A56C4] text-white shadow-md'
+                                        ? 'bg-primary text-primary-foreground shadow-md'
                                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                                 }`}
                             >

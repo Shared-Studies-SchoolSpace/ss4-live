@@ -189,24 +189,24 @@ export function MultimediaPost({
           }`}>
             <div className="flex items-center gap-3">
               {embed.metric && (
-                <div className="w-9 h-9 rounded-lg bg-[#1A56C4]/10 text-[#1A56C4] font-black flex items-center justify-center text-xs shrink-0">
+                <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary font-black flex items-center justify-center text-xs shrink-0">
                   {embed.metric}
                 </div>
               )}
               {embed.badge && (
-                <span className="font-mono text-xs font-black bg-[#0F172A] text-white px-2.5 py-1 rounded-md shrink-0">
+                <span className="font-mono text-xs font-black bg-foreground text-white px-2.5 py-1 rounded-md shrink-0">
                   {embed.badge}
                 </span>
               )}
               <div>
-                <div className="font-extrabold text-xs text-[#0F172A]">{embed.title}</div>
+                <div className="font-extrabold text-xs text-foreground">{embed.title}</div>
                 <div className="text-[11px] text-slate-500 font-semibold">{embed.subtitle}</div>
               </div>
             </div>
             {embed.actionLabel && (
               <button 
                 onClick={embed.onAction || (() => alert(`Action: ${embed.actionLabel}`))}
-                className="feed-embed-action-btn bg-[#1A56C4] hover:bg-[#0F3BA1] text-white shrink-0"
+                className="feed-embed-action-btn bg-primary hover:bg-primary-hover text-primary-foreground shrink-0"
               >
                 {embed.actionLabel}
               </button>

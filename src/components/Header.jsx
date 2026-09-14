@@ -95,8 +95,8 @@ export const Header = () => {
                   </svg>
                 </button>
                 <div className="absolute top-[100%] left-0 mt-1 w-48 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
-                  <a href="/schools" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">Secondary Schools</a>
-                  <a href="/tertiary" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">Tertiary Institutions</a>
+                  <a href="/schools" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Secondary Schools</a>
+                  <a href="/tertiary" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Tertiary Institutions</a>
                 </div>
               </div>
               <div className="relative group shrink-0">
@@ -107,8 +107,8 @@ export const Header = () => {
                   </svg>
                 </button>
                 <div className="absolute top-[100%] left-0 mt-1 w-48 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
-                  <a href="/league" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">Daily League</a>
-                  <a href="/chess-league/tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">Monthly Tournament</a>
+                  <a href="/league" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Daily League</a>
+                  <a href="/chess-league/tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Monthly Tournament</a>
                 </div>
               </div>
               <a href="/sas" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Assessment Series</a>
@@ -195,7 +195,7 @@ export const Header = () => {
                                     window.location.href = n.link;
                                   }
                                 }}
-                                className={`w-full flex items-start gap-3 px-4 py-3 hover:bg-[#F6F4F0] transition-colors border-b border-gray-50 text-left focus:outline-none cursor-pointer relative ${
+                                className={`w-full flex items-start gap-3 px-4 py-3 hover:bg-background transition-colors border-b border-gray-50 text-left focus:outline-none cursor-pointer relative ${
                                   isUnread ? 'bg-brand-bg-cream/35 font-bold' : 'opacity-80'
                                 }`}
                               >
@@ -233,7 +233,7 @@ export const Header = () => {
                   className="h-9 sm:h-10 flex items-center gap-2 px-2.5 sm:px-3 rounded-full hover:bg-gray-100/80 border border-gray-150 transition-colors cursor-pointer focus:outline-none shrink-0"
                 >
                   <div className="relative shrink-0">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-[#0B193C] to-brand-primary text-white font-black text-xs sm:text-sm flex items-center justify-center overflow-hidden shadow-2xs">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-varsity-navy to-brand-primary text-white font-black text-xs sm:text-sm flex items-center justify-center overflow-hidden shadow-2xs">
                       {profile?.avatar || profile?.chess_avatar || profile?.avatar_url ? (
                         <img 
                           src={profile.avatar || profile.chess_avatar || profile.avatar_url} 
@@ -267,7 +267,7 @@ export const Header = () => {
                       className="absolute top-full right-0 mt-2 w-64 max-w-[calc(100vw-24px)] bg-white border border-gray-150 rounded-2xl shadow-xl z-50 py-2.5 overflow-hidden text-left"
                     >
                       <div className="px-4 py-2.5 border-b border-gray-100 mb-1 flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#0B193C] to-brand-primary text-white font-black text-xs flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+                        <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-varsity-navy to-brand-primary text-white font-black text-xs flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
                           {profile?.avatar || profile?.chess_avatar || profile?.avatar_url ? (
                             <img 
                               src={profile.avatar || profile.chess_avatar || profile.avatar_url} 
@@ -280,12 +280,12 @@ export const Header = () => {
                         </div>
                         <div className="min-w-0 flex-1">
                           <p className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Signed In As</p>
-                          <p className="text-xs font-bold font-space text-[#111111] truncate">{profile?.name || "Player"}</p>
+                          <p className="text-xs font-bold font-space text-foreground truncate">{profile?.name || "Player"}</p>
                           <p className="text-[10px] font-medium text-gray-500 truncate">{user.email}</p>
                         </div>
                       </div>
                       
-                      <a href="/dashboard" className="flex items-center justify-between px-4 py-2.5 text-xs font-bold text-gray-700 hover:bg-[#F6F4F0] hover:text-brand-primary transition-colors">
+                      <a href="/dashboard" className="flex items-center justify-between px-4 py-2.5 text-xs font-bold text-gray-700 hover:bg-background hover:text-brand-primary transition-colors">
                         <div className="flex items-center gap-2.5">
                           <svg className="w-4 h-4 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -388,7 +388,7 @@ export const Header = () => {
               {user ? (
                 <div className="bg-brand-bg-cream/80 border border-gray-200/80 rounded-2xl p-3.5 my-1 space-y-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0B193C] to-brand-primary text-white font-black text-sm flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-varsity-navy to-brand-primary text-white font-black text-sm flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
                       {profile?.avatar || profile?.chess_avatar || profile?.avatar_url ? (
                         <img 
                           src={profile.avatar || profile.chess_avatar || profile.avatar_url} 
@@ -400,7 +400,7 @@ export const Header = () => {
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-xs font-bold font-space text-[#111111] truncate">{profile?.name || "Player"}</p>
+                      <p className="text-xs font-bold font-space text-foreground truncate">{profile?.name || "Player"}</p>
                       <p className="text-[10px] font-medium text-gray-500 truncate">{user.email}</p>
                     </div>
                   </div>
@@ -409,7 +409,7 @@ export const Header = () => {
                     <a 
                       href="/dashboard" 
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold hover:bg-[#1545A2] transition-all shadow-2xs cursor-pointer"
+                      className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold hover:bg-primary-hover transition-all shadow-2xs cursor-pointer"
                     >
                       <div className="flex items-center gap-2">
                         <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">

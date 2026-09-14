@@ -1971,6 +1971,15 @@ export default function ChessTournamentPage() {
                           user.email?.split('@')[0] === g.p1?.username || user.email?.split('@')[0] === g.p2?.username
                         );
 
+                        const p1Enriched = {
+                          ...g.p1,
+                          ...((tournament.players || []).find(p => p.username?.toLowerCase() === g.p1?.username?.toLowerCase() || p.id === g.p1?.id) || {})
+                        };
+                        const p2Enriched = {
+                          ...g.p2,
+                          ...((tournament.players || []).find(p => p.username?.toLowerCase() === g.p2?.username?.toLowerCase() || p.id === g.p2?.id) || {})
+                        };
+
                         return (
                           <div 
                             id={`fixture-card-${g.id}`}
@@ -2020,7 +2029,7 @@ export default function ChessTournamentPage() {
                               
                               {/* Player 1 Card (Left) */}
                               <div 
-                                onClick={() => setSelectedPlayerForModal(g.p1)}
+                                onClick={() => setSelectedPlayerForModal(p1Enriched)}
                                 className={`flex-1 min-w-0 border rounded-xl sm:rounded-2xl p-2.5 sm:p-4 transition-all cursor-pointer hover:bg-gray-50/60 ${
                                   isP1Winner 
                                     ? 'bg-emerald-50/50 border-emerald-200/80 ring-1 ring-emerald-300/50' 
@@ -2028,9 +2037,9 @@ export default function ChessTournamentPage() {
                                 }`}
                               >
                                 <PlayerCardSide 
-                                  name={g.p1?.name || 'TBD'} 
-                                  username={g.p1?.username || ''} 
-                                  playerObj={g.p1} 
+                                  name={p1Enriched?.name || 'TBD'} 
+                                  username={p1Enriched?.username || ''} 
+                                  playerObj={p1Enriched} 
                                   align="left" 
                                   isWinner={isP1Winner}
                                 />
@@ -2045,7 +2054,7 @@ export default function ChessTournamentPage() {
 
                               {/* Player 2 Card (Right) */}
                               <div 
-                                onClick={() => setSelectedPlayerForModal(g.p2)}
+                                onClick={() => setSelectedPlayerForModal(p2Enriched)}
                                 className={`flex-1 min-w-0 border rounded-xl sm:rounded-2xl p-2.5 sm:p-4 transition-all cursor-pointer hover:bg-gray-50/60 ${
                                   isP2Winner 
                                     ? 'bg-emerald-50/50 border-emerald-200/80 ring-1 ring-emerald-300/50' 
@@ -2053,9 +2062,9 @@ export default function ChessTournamentPage() {
                                 }`}
                               >
                                 <PlayerCardSide 
-                                  name={g.p2?.name || 'TBD'} 
-                                  username={g.p2?.username || ''} 
-                                  playerObj={g.p2} 
+                                  name={p2Enriched?.name || 'TBD'} 
+                                  username={p2Enriched?.username || ''} 
+                                  playerObj={p2Enriched} 
                                   align="right" 
                                   isWinner={isP2Winner}
                                 />

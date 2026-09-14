@@ -156,7 +156,7 @@ export function TournamentPlayerModal({ player, onClose }) {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-[#0B193C]/60 backdrop-blur-md transition-opacity duration-200"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-varsity-navy/60 backdrop-blur-md transition-opacity duration-200"
       onClick={onClose}
     >
       {/* Dialog Shell (M3 28px corners, clean shadow, width 440px) */}
@@ -165,7 +165,7 @@ export function TournamentPlayerModal({ player, onClose }) {
         onClick={e => e.stopPropagation()}
       >
         {/* Top Hero Banner Header */}
-        <div className="relative h-36 bg-gradient-to-r from-[#0B193C] via-[#153472] to-[#1A56C4] px-5 py-4 flex justify-between items-start select-none shrink-0">
+        <div className="relative h-36 bg-gradient-to-r from-varsity-navy via-[#153472] to-primary px-5 py-4 flex justify-between items-start select-none shrink-0">
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:10px_10px] pointer-events-none" />
           
           {/* Platform Tag */}
@@ -203,7 +203,7 @@ export function TournamentPlayerModal({ player, onClose }) {
                   onError={() => setImgError(true)}
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-tr from-[#0B193C] to-brand-primary text-white font-black text-2xl flex items-center justify-center select-none">
+                <div className="w-full h-full bg-gradient-to-tr from-varsity-navy to-brand-primary text-white font-black text-2xl flex items-center justify-center select-none">
                   {monogram}
                 </div>
               )}
@@ -230,7 +230,7 @@ export function TournamentPlayerModal({ player, onClose }) {
 
           {/* Player Name and Username */}
           <div className="mb-5">
-            <h2 className="text-2xl font-bold font-space text-[#111111] leading-tight">
+            <h2 className="text-2xl font-bold font-space text-foreground leading-tight">
               {player.name}
             </h2>
             
@@ -247,7 +247,7 @@ export function TournamentPlayerModal({ player, onClose }) {
             </a>
 
             {(player.department || player.school) && (
-              <div className="text-xs font-medium text-gray-600 mt-2.5 flex items-center gap-1.5 flex-wrap bg-[#F6F4F0] px-3 py-2 rounded-xl border border-gray-200/60">
+              <div className="text-xs font-medium text-gray-600 mt-2.5 flex items-center gap-1.5 flex-wrap bg-background px-3 py-2 rounded-xl border border-gray-200/60">
                 <svg className="w-3.5 h-3.5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
@@ -260,9 +260,9 @@ export function TournamentPlayerModal({ player, onClose }) {
 
           {/* Stats Grid */}
           <div className="grid grid-cols-2 gap-3 mb-5">
-            <div className="bg-[#F6F4F0] rounded-2xl p-3 border border-gray-200/60 flex flex-col items-center justify-center text-center">
+            <div className="bg-background rounded-2xl p-3 border border-gray-200/60 flex flex-col items-center justify-center text-center">
               <div className="flex items-center gap-1">
-                <span className="block text-xl font-bold font-space text-[#111111]">
+                <span className="block text-xl font-bold font-space text-foreground">
                   {details.rating || player.rating || 'N/A'}
                 </span>
                 {player.isProvisional && (
@@ -276,8 +276,8 @@ export function TournamentPlayerModal({ player, onClose }) {
               </span>
             </div>
 
-            <div className="bg-[#F6F4F0] rounded-2xl p-3 border border-gray-200/60 flex flex-col items-center justify-center text-center">
-              <span className="block text-xl font-bold font-space text-[#111111]">
+            <div className="bg-background rounded-2xl p-3 border border-gray-200/60 flex flex-col items-center justify-center text-center">
+              <span className="block text-xl font-bold font-space text-foreground">
                 {player.gamesCount ?? player.P ?? 0}
               </span>
               <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mt-0.5 block">
@@ -292,7 +292,7 @@ export function TournamentPlayerModal({ player, onClose }) {
               <button
                 type="button"
                 onClick={handleMessagePlayer}
-                className="w-full flex items-center justify-center gap-1 sm:gap-1.5 bg-brand-primary hover:bg-[#1545A2] text-white font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all shadow-2xs cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98]"
+                className="w-full flex items-center justify-center gap-1 sm:gap-1.5 bg-brand-primary hover:bg-primary-hover text-white font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all shadow-2xs cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98]"
               >
                 <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -305,7 +305,7 @@ export function TournamentPlayerModal({ player, onClose }) {
               href={platformProfileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-1 sm:gap-1.5 bg-white hover:bg-gray-100 text-[#111111] font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all border border-gray-200/90 text-center cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98] shadow-2xs"
+              className="w-full flex items-center justify-center gap-1 sm:gap-1.5 bg-white hover:bg-gray-100 text-foreground font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all border border-gray-200/90 text-center cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98] shadow-2xs"
             >
               <span className="truncate">{platformName}</span>
               <svg className="w-3 h-3 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -320,7 +320,7 @@ export function TournamentPlayerModal({ player, onClose }) {
               onClick={handleWhatsAppClick}
               className={`w-full flex items-center justify-center gap-1 sm:gap-1.5 font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all text-center cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98] ${
                 whatsappUrl 
-                  ? 'bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-2xs' 
+                  ? 'bg-whatsapp hover:bg-whatsapp-hover text-white shadow-2xs' 
                   : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200'
               }`}
             >

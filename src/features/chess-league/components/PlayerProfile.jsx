@@ -160,7 +160,7 @@ export const PlayerProfile = ({ player, onClose }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#111111]/45 backdrop-blur-sm transition-all duration-300"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/45 backdrop-blur-sm transition-all duration-300"
       onClick={onClose}
     >
       <div 
@@ -220,7 +220,7 @@ export const PlayerProfile = ({ player, onClose }) => {
           <div className="grid grid-cols-3 gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-gray-50/80 rounded-2xl border border-gray-200/80 shadow-2xs">
             <button 
               onClick={handleMessageClick}
-              className="w-full flex items-center justify-center gap-1 sm:gap-1.5 bg-brand-primary hover:bg-[#1545A2] text-white font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all shadow-2xs cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98]"
+              className="w-full flex items-center justify-center gap-1 sm:gap-1.5 bg-brand-primary hover:bg-primary-hover text-white font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all shadow-2xs cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98]"
             >
               <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -232,7 +232,7 @@ export const PlayerProfile = ({ player, onClose }) => {
               href={primaryChessUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-1 sm:gap-1.5 bg-white hover:bg-gray-100 text-[#111111] font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all border border-gray-200/90 text-center cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98] shadow-2xs"
+              className="w-full flex items-center justify-center gap-1 sm:gap-1.5 bg-white hover:bg-gray-100 text-foreground font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all border border-gray-200/90 text-center cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98] shadow-2xs"
             >
               <span>{primaryChessLabel}</span>
               <svg className="w-3 h-3 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -247,7 +247,7 @@ export const PlayerProfile = ({ player, onClose }) => {
               onClick={handleWhatsAppClick}
               className={`w-full flex items-center justify-center gap-1 sm:gap-1.5 font-black text-[10px] sm:text-xs py-2 px-1.5 rounded-xl transition-all text-center cursor-pointer min-h-[38px] sm:min-h-[42px] active:scale-[0.98] ${
                 whatsappUrl 
-                  ? 'bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-2xs' 
+                  ? 'bg-whatsapp hover:bg-whatsapp-hover text-white shadow-2xs' 
                   : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200'
               }`}
             >

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { fetchCompletePlayerData } from '../utils/chessService';
 
 export function usePlayerDetails(username, playerObj) {
+  const initialRating = playerObj?.rating || playerObj?.chess_rating || 1200;
   const [details, setDetails] = useState({
     avatar: null,
-    rating: playerObj?.chess_rating || playerObj?.rating || 1200,
+    rating: initialRating,
     title: null,
     loading: true,
     platform: playerObj?.lichess_username && !playerObj?.username ? 'lichess' : 'chess.com'
@@ -22,16 +23,15 @@ export function usePlayerDetails(username, playerObj) {
 
     async function loadData() {
       const data = await fetchCompletePlayerData(targetUsername, platform);
-      if (isMounted && data) {
+      if (isMounted) {
+        const syncedRating = playerObj?.rating || playerObj?.chess_rating || data?.rating || initialRating;
         setDetails({
-          avatar: data.avatar,
-          rating: data.rating || details.rating,
-          title: data.title,
+          avatar: data?.avatar || null,
+          rating: syncedRating,
+          title: data?.title || null,
           loading: false,
           platform
         });
-      } else if (isMounted) {
-        setDetails(prev => ({ ...prev, loading: false }));
       }
     }
 
@@ -39,7 +39,7 @@ export function usePlayerDetails(username, playerObj) {
     return () => {
       isMounted = false;
     };
-  }, [username, playerObj]);
+  }, [username, playerObj?.rating, playerObj?.chess_rating, playerObj?.username, playerObj?.lichess_username]);
 
   return details;
 }

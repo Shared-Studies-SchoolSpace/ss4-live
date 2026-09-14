@@ -47,6 +47,93 @@
 
   /* Brand accent on dark backgrounds (original undarkened value) */
   --color-brand-accent-on-dark: #E8640A;
+
+  /* Standard Tailwind v4 Semantic Tokens */
+  --color-background: #F6F4F0;
+  --color-foreground: #111111;
+
+  --color-primary: #1A56C4;
+  --color-primary-foreground: #FFFFFF;
+  --color-primary-hover: #1545A2;
+  --color-primary-dark: #0F3BA1;
+
+  --color-secondary: #B84D00;
+  --color-secondary-foreground: #FFFFFF;
+  --color-secondary-hover: #963F00;
+
+  --color-muted: #F0EEEA;
+  --color-muted-foreground: #64748B;
+
+  --color-accent: #FFEEDB;
+  --color-accent-foreground: #2E0E00;
+
+  --color-destructive: #DC2626;
+  --color-destructive-foreground: #FFFFFF;
+
+  --color-border: #E2E8F0;
+  --color-ring: #1A56C4;
+  --color-ring-offset: #F6F4F0;
+
+  --color-card: #FFFFFF;
+  --color-card-foreground: #111111;
+
+  /* Varsity Brand Identity Tokens */
+  --color-varsity-navy: #0B193C;
+  --color-varsity-navy-border: #1E295B;
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #20BD5A;
+
+  /* Competitive Podium / Medal Tokens */
+  --color-gold: #FFD700;
+  --color-silver: #C0C0C0;
+  --color-bronze: #CD7F32;
+
+  /* Radius Tokens */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Animation Tokens */
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-fade-out: fade-out 0.2s ease-in;
+  --animate-slide-in: slide-in 0.3s ease-out;
+  --animate-slide-out: slide-out 0.3s ease-in;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  @keyframes slide-in {
+    from { transform: translateY(-0.5rem); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slide-out {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-0.5rem); opacity: 0; }
+  }
+}
+
+/* Dark mode variant - Tailwind v4 standard */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Base layer standard */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
 }
 
 @font-face {

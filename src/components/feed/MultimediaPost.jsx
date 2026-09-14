@@ -17,8 +17,6 @@ export function MultimediaPost({
 }) {
   const {
     mediaType = 'banner', // 'video' | 'photo_gallery' | 'banner'
-    categoryLabel = 'Multimedia',
-    categoryClass = 'video',
     readTime,
     author = {},
     title,
@@ -146,12 +144,6 @@ export function MultimediaPost({
 
   return (
     <article className={`feed-card ${isUnread ? 'unread' : ''}`}>
-      {categoryLabel && (
-        <div className={`feed-card-category-tag ${categoryClass}`}>
-          <span>{categoryLabel}</span>
-        </div>
-      )}
-
       {renderMedia()}
 
       <div className="feed-card-body">

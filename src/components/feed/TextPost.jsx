@@ -15,7 +15,7 @@ export function TextPost({
   onSelectTag
 }) {
   const {
-    categoryLabel = 'System Release',
+    categoryLabel = '',
     categoryClass = 'text-only',
     author = {},
     title,
@@ -59,9 +59,11 @@ export function TextPost({
             </div>
           </div>
 
-          <div className={`feed-card-category-tag ${categoryClass}`} style={{ position: 'static' }}>
-            <span>{categoryLabel}</span>
-          </div>
+          {categoryLabel && (
+            <div className={`feed-card-category-tag ${categoryClass}`} style={{ position: 'static' }}>
+              <span>{categoryLabel}</span>
+            </div>
+          )}
         </div>
 
         <h2 className="feed-card-title">{title}</h2>

@@ -2,6 +2,71 @@
 
 export const INITIAL_FEED_POSTS = [
   {
+    id: 'post_admin_varsity_tournament_2026',
+    postType: 'multimedia',
+    mediaType: 'poster',
+    imageUrl: '/varsity-tournament-poster.jpeg',
+    categoryLabel: '🏆 Varsity Tournament Announcement',
+    categoryClass: 'tournament',
+    readTime: '2 min read',
+    isUnread: true,
+    author: {
+      name: 'SS4 Arbiter Board',
+      avatar: 'SS4',
+      avatarBg: '#0F172A',
+      avatarColor: '#FFFFFF',
+      badge: 'OFFICIAL ADMIN',
+      badgeStyle: { background: '#FFEEDB', color: '#B84D00', fontWeight: 900 },
+      time: 'Official Broadcast · Urgent Update'
+    },
+    title: 'SS4 Chess League Varsity Tournament 2026: Nigeria’s Top Universities Clash — Rosters Due Tonight!',
+    excerpt: 'Nigeria’s premier inter-university chess championship is officially underway. From September 16th to 30th, 2026, the sharpest collegiate minds from top universities across Nigeria will clash in high-stakes 5-player squad battles hosted online on Chess.com and Lichess. The champion university takes home the national varsity crown and 5x 1-Month Chess.com Premium memberships.\n\n• Format: Teams of 5 contenders per institution\n• Match Window: 16th – 30th September 2026\n• Critical Deadline: Team line-ups and verified rosters are due by midnight tonight, 14th September 2026!\n• Match Hosting: Chess.com & Lichess\n\nFor team registration, line-up submissions, and corporate university sponsorships, contact arbiters directly at 09060515456 or 08161673691.\n\nMany Institutions, One Space. The Board Remembers.',
+    tags: ['#SS4VarsityTournament', '#UniversityChess', '#ChessNigeria', '#ChessDotCom', '#Lichess', '#TheBoardRemembers'],
+    likesCount: 245,
+    isLiked: true,
+    isBookmarked: true,
+    embed: {
+      type: 'lobby',
+      badge: 'SEPT 16–30',
+      metric: '5-MAN',
+      title: 'SS4 Varsity Tournament · University Championship',
+      subtitle: 'Prize: 5x Chess.com Premium · Line-ups Due: Sept 14',
+      actionLabel: 'Register University Squad →',
+      onAction: () => {
+        window.location.href = '/chess-league/tournament';
+      }
+    },
+    comments: [
+      {
+        id: 'c_varsity_1',
+        avatar: 'UL',
+        avatarBg: '#1E3A8A',
+        avatarColor: '#FFFFFF',
+        authorName: 'UNILAG Chess Captain',
+        time: '1h ago',
+        text: 'University of Lagos line-up officially locked in! Boards 1 through 5 ready for battle. Let’s see who can contest Akoka on the virtual boards. 🏆♟️'
+      },
+      {
+        id: 'c_varsity_2',
+        avatar: 'UI',
+        avatarBg: '#065F46',
+        avatarColor: '#FFFFFF',
+        authorName: 'University of Ibadan Chess Club',
+        time: '35m ago',
+        text: 'UI roster confirmed and usernames synced on Lichess and Chess.com. Prepared for the 16th!'
+      },
+      {
+        id: 'c_varsity_3',
+        avatar: 'AB',
+        avatarBg: '#7C2D12',
+        avatarColor: '#FFFFFF',
+        authorName: 'ABU Zaria Chess Society',
+        time: '15m ago',
+        text: 'Squad of 5 registered with the arbiter desk. Looking forward to representing the North. The Board Remembers.'
+      }
+    ]
+  },
+  {
     id: 'post_video_1',
     postType: 'multimedia',
     mediaType: 'video',

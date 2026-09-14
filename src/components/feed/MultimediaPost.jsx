@@ -116,6 +116,22 @@ export function MultimediaPost({
       );
     }
 
+    if (mediaType === 'poster' || mediaType === 'image') {
+      const posterSrc = post.imageUrl || post.posterImage || (post.posterMeta && post.posterMeta.src);
+      return (
+        <div 
+          className="feed-card-poster-container"
+          onClick={() => posterSrc && window.open(posterSrc, '_blank')}
+          title="Click to view full poster"
+        >
+          {posterSrc && (
+            <img src={posterSrc} alt={title} className="feed-card-poster-img" />
+          )}
+          {readTime && <div className="feed-card-readtime">{readTime}</div>}
+        </div>
+      );
+    }
+
     // Default banner mode
     return (
       <div className="feed-card-banner">

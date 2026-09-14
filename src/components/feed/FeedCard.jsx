@@ -49,9 +49,9 @@ export function FeedCard({ post, onPlayVideo, onSelectTag }) {
     comments
   };
 
-  // If post has multimedia type (video, photo_gallery, banner) or postType is multimedia
+  // If post has multimedia type (video, photo_gallery, banner, poster, image) or postType is multimedia
   const isMultimedia = post.postType === 'multimedia' || 
-    ['video', 'photo_gallery', 'banner'].includes(post.mediaType);
+    ['video', 'photo_gallery', 'banner', 'poster', 'image'].includes(post.mediaType);
 
   if (isMultimedia) {
     return (

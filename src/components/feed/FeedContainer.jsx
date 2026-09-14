@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FeedCard } from './FeedCard';
 import { INITIAL_FEED_POSTS } from './feedData';
+import { useFeedEngagement } from './useFeedEngagement';
+import { useAuthModal } from '../../features/auth-portal/context/AuthModalContext';
 import './feedStyles.css';
 
 const FILTER_PILLS = [
   { id: 'all', label: 'All Activity' },
+  { id: 'tournament', label: 'Tournaments 🏆', categoryClass: 'tournament' },
+  { id: 'announcements', label: 'Announcements 📢', categoryClass: 'announcement' },
   { id: 'video', label: 'Video Highlights 🎥', mediaType: 'video' },
   { id: 'photo_gallery', label: 'Photo Galleries 📸', mediaType: 'photo_gallery' },
-  { id: 'tournament', label: 'Tournaments 🏆', categoryClass: 'tournament' },
   { id: 'release', label: 'Release Notes ⚡', categoryClass: 'text-only' }
 ];
 
@@ -22,149 +25,97 @@ export function FeedContainer({
   showHeader = true,
   className = "w-full max-w-3xl mx-auto px-4 py-8"
 }) {
-  const [posts, setPosts] = useState(initialPosts);
+  const {
+    user,
+    profile,
+    dbAnnouncements,
+    userPosts,
+    toggleLike,
+    toggleBookmark,
+    addComment,
+    publishPost,
+    enrichPost
+  } = useFeedEngagement();
+  const { openAuthModal } = useAuthModal();
+
   const [internalFilter, setInternalFilter] = useState(defaultFilter);
   const activeFilter = controlledFilter !== undefined ? controlledFilter : internalFilter;
   const setActiveFilter = (val) => {
     setInternalFilter(val);
     if (onFilterChange) onFilterChange(val);
   };
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState(null);
   const [composerText, setComposerText] = useState('');
   const [activeVideoModal, setActiveVideoModal] = useState(null);
   const [composerType, setComposerType] = useState('general'); // 'general' | 'challenge' | 'score'
 
+  // Combine user-created posts, real database announcements, and initial posts
+  const allRawPosts = useMemo(() => {
+    const combined = [...userPosts, ...dbAnnouncements, ...initialPosts];
+    const seen = new Set();
+    return combined.filter(p => {
+      if (!p || !p.id || seen.has(p.id)) return false;
+      seen.add(p.id);
+      return true;
+    });
+  }, [userPosts, dbAnnouncements, initialPosts]);
+
   // Handle publishing a new post
   const handlePublishPost = (e) => {
     if (e) e.preventDefault();
     if (!composerText.trim()) return;
 
-    let newPost;
-    if (composerType === 'challenge') {
-      newPost = {
-        id: `post_${Date.now()}`,
-        postType: 'text',
-        categoryLabel: '🎯 Duel Challenge',
-        categoryClass: 'announcement',
-        isUnread: true,
-        author: {
-          name: 'You (Contender)',
-          avatar: 'ME',
-          avatarBg: '#1A56C4',
-          avatarColor: '#FFFFFF',
-          badge: 'ACTIVE',
-          badgeStyle: { background: '#DBEAFE', color: '#1E40AF' },
-          time: 'Just now'
-        },
-        title: 'Open 1v1 Challenge Issued!',
-        excerpt: composerText,
-        tags: ['#ContenderChallenge', '#SS4Duel', '#OpenMatch'],
-        likesCount: 1,
-        isLiked: true,
-        isBookmarked: false,
-        embed: {
-          type: 'challenge',
-          badge: 'CHALLENGE',
-          title: 'Open Contender Speed Duel',
-          subtitle: 'Awaiting Challenger Acceptance',
-          actionLabel: 'Accept Challenge ⚔️'
-        },
-        comments: []
-      };
-    } else if (composerType === 'score') {
-      newPost = {
-        id: `post_${Date.now()}`,
-        postType: 'multimedia',
-        mediaType: 'banner',
-        categoryLabel: '🏆 Score Card',
-        categoryClass: 'tournament',
-        readTime: '1 min read',
-        isUnread: true,
-        author: {
-          name: 'You (Contender)',
-          avatar: 'ME',
-          avatarBg: '#1A56C4',
-          avatarColor: '#FFFFFF',
-          badge: 'VERIFIED',
-          badgeStyle: { background: '#DCFCE7', color: '#15803D' },
-          time: 'Just now'
-        },
-        title: 'New Personal Best Score Recorded!',
-        excerpt: composerText,
-        tags: ['#ScoreCard', '#SASMastery', '#Leaderboard'],
-        likesCount: 1,
-        isLiked: true,
-        isBookmarked: false,
-        bannerMeta: {
-          graphic: '🎯⚡',
-          bgImage: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&q=80&w=1200'
-        },
-        embed: {
-          type: 'match',
-          metric: '98%',
-          title: 'SAS Practice Session Result',
-          subtitle: 'Mastery Accuracy: 98% · Speed: 14.2s/Q',
-          actionLabel: 'View Breakdown →'
-        },
-        comments: []
-      };
-    } else {
-      newPost = {
-        id: `post_${Date.now()}`,
-        postType: 'text',
-        categoryLabel: '📢 Community Post',
-        categoryClass: 'update',
-        isUnread: true,
-        author: {
-          name: 'You (Contender)',
-          avatar: 'ME',
-          avatarBg: '#1A56C4',
-          avatarColor: '#FFFFFF',
-          badge: 'CONTENDER',
-          badgeStyle: { background: '#DBEAFE', color: '#1E40AF' },
-          time: 'Just now'
-        },
-        title: 'Community Update',
-        excerpt: composerText,
-        tags: ['#Community', '#SS4League'],
-        likesCount: 1,
-        isLiked: true,
-        isBookmarked: false,
-        comments: []
-      };
+    if (!user) {
+      openAuthModal('publish updates or duel challenges', null, 'login');
+      return;
     }
 
-    setPosts([newPost, ...posts]);
-    setComposerText('');
-    setComposerType('general');
+    const success = publishPost({
+      text: composerText,
+      composerType
+    });
+
+    if (success) {
+      setComposerText('');
+      setComposerType('general');
+    }
   };
 
-  // Filter posts
-  const filteredPosts = posts.filter(post => {
-    // Filter pill check
-    if (activeFilter === 'video' && post.mediaType !== 'video') return false;
-    if (activeFilter === 'photo_gallery' && post.mediaType !== 'photo_gallery') return false;
-    if (activeFilter === 'tournament' && post.categoryClass !== 'tournament') return false;
-    if (activeFilter === 'release' && post.categoryClass !== 'text-only') return false;
-    if (activeFilter === 'announcements' && post.categoryClass !== 'announcement' && post.categoryClass !== 'tournament') return false;
-    if (activeFilter === 'results' && post.embed?.type !== 'match') return false;
+  // Filter and enrich posts
+  const filteredPosts = useMemo(() => {
+    return allRawPosts
+      .map(enrichPost)
+      .filter(post => {
+        // Filter pill check
+        if (activeFilter === 'video' && post.mediaType !== 'video') return false;
+        if (activeFilter === 'photo_gallery' && post.mediaType !== 'photo_gallery') return false;
+        if (activeFilter === 'tournament' && post.categoryClass !== 'tournament') return false;
+        if (activeFilter === 'release' && post.categoryClass !== 'text-only') return false;
+        if (activeFilter === 'announcements' && post.categoryClass !== 'announcement' && post.categoryClass !== 'tournament') return false;
+        if (activeFilter === 'results' && post.embed?.type !== 'match') return false;
 
-    // Tag filter
-    if (selectedTag && !post.tags.includes(selectedTag)) return false;
+        // Tag filter
+        if (selectedTag && !post.tags?.includes(selectedTag)) return false;
 
-    // Search query
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      const matchTitle = post.title?.toLowerCase().includes(q);
-      const matchExcerpt = post.excerpt?.toLowerCase().includes(q);
-      const matchAuthor = post.author?.name?.toLowerCase().includes(q);
-      const matchTags = post.tags?.some(t => t.toLowerCase().includes(q));
-      if (!matchTitle && !matchExcerpt && !matchAuthor && !matchTags) return false;
-    }
+        // Search query
+        if (searchQuery.trim()) {
+          const q = searchQuery.toLowerCase();
+          const matchTitle = post.title?.toLowerCase().includes(q);
+          const matchExcerpt = post.excerpt?.toLowerCase().includes(q);
+          const matchAuthor = post.author?.name?.toLowerCase().includes(q);
+          const matchTags = post.tags?.some(t => t.toLowerCase().includes(q));
+          if (!matchTitle && !matchExcerpt && !matchAuthor && !matchTags) return false;
+        }
 
-    return true;
-  });
+        return true;
+      });
+  }, [allRawPosts, enrichPost, activeFilter, selectedTag, searchQuery]);
+
+  const userInitials = profile?.name
+    ? profile.name.trim().split(/\s+/).map(p => p[0]).join('').substring(0, 2).toUpperCase()
+    : 'YOU';
 
   return (
     <div className={className}>
@@ -239,63 +190,88 @@ export function FeedContainer({
 
       {/* Composer Card */}
       {showComposer && (
-        <div className="bg-card border border-border rounded-2xl p-4 sm:p-5 shadow-sm mb-6 space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground font-extrabold flex items-center justify-center text-xs shrink-0 shadow-sm">
-              YOU
+        user ? (
+          <div className="bg-card border border-border rounded-2xl p-4 sm:p-5 shadow-xs mb-6 space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground font-extrabold flex items-center justify-center text-xs shrink-0 shadow-xs">
+                {userInitials}
+              </div>
+              <input
+                type="text"
+                value={composerText}
+                onChange={(e) => setComposerText(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handlePublishPost(e)}
+                placeholder={
+                  composerType === 'challenge' 
+                    ? "Issue an open duel challenge: Specify subject, timer, and rules..."
+                    : composerType === 'score'
+                    ? "Share a verified test score or leaderboard breakthrough..."
+                    : "Share a match update, issue a challenge, or post an institutional announcement..."
+                }
+                className="w-full bg-slate-50 border border-border rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold text-foreground outline-none focus:border-primary focus:bg-card transition-all"
+              />
             </div>
-            <input
-              type="text"
-              value={composerText}
-              onChange={(e) => setComposerText(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handlePublishPost(e)}
-              placeholder={
-                composerType === 'challenge' 
-                  ? "Issue an open duel challenge: Specify subject, timer, and rules..."
-                  : composerType === 'score'
-                  ? "Share a verified test score or leaderboard breakthrough..."
-                  : "Share a match update, issue a challenge, or post an institutional announcement..."
-              }
-              className="w-full bg-slate-50 border border-border rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold text-foreground outline-none focus:border-primary focus:bg-card transition-all"
-            />
+
+            <div className="flex flex-wrap items-center justify-between border-t border-slate-100 pt-3 gap-2.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setComposerType(composerType === 'challenge' ? 'general' : 'challenge')}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                    composerType === 'challenge'
+                      ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                      : 'bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-900 border border-border'
+                  }`}
+                >
+                  ⚔️ Challenge Contender
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setComposerType(composerType === 'score' ? 'general' : 'score')}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                    composerType === 'score'
+                      ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                      : 'bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-900 border border-border'
+                  }`}
+                >
+                  🎯 Attach Score Card
+                </button>
+              </div>
+
+              <button
+                onClick={handlePublishPost}
+                disabled={!composerText.trim()}
+                className="w-full sm:w-auto bg-primary hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground font-extrabold px-5 py-2 rounded-full text-xs shadow-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shrink-0"
+              >
+                Publish Post →
+              </button>
+            </div>
           </div>
-
-          <div className="flex flex-wrap items-center justify-between border-t border-slate-100 pt-3 gap-2.5">
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setComposerType(composerType === 'challenge' ? 'general' : 'challenge')}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
-                  composerType === 'challenge'
-                    ? 'bg-amber-100 text-amber-900 border border-amber-300'
-                    : 'bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-900 border border-border'
-                }`}
-              >
-                ⚔️ Challenge Contender
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setComposerType(composerType === 'score' ? 'general' : 'score')}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
-                  composerType === 'score'
-                    ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
-                    : 'bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-900 border border-border'
-                }`}
-              >
-                🎯 Attach Score Card
-              </button>
+        ) : (
+          <div className="bg-gradient-to-r from-blue-50/90 via-slate-50 to-amber-50/50 border border-blue-100 rounded-2xl p-4 sm:p-5 shadow-xs mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-black text-base shrink-0">
+                ⚡
+              </div>
+              <div className="text-left">
+                <h3 className="text-xs sm:text-sm font-black text-slate-900 font-outfit">
+                  Join the SS4 Contender Stream
+                </h3>
+                <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-0.5">
+                  Sign in to post updates, issue 1v1 duel challenges, and react to live tournament broadcasts.
+                </p>
+              </div>
             </div>
-
             <button
-              onClick={handlePublishPost}
-              disabled={!composerText.trim()}
-              className="w-full sm:w-auto bg-primary hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground font-extrabold px-5 py-2 rounded-full text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5 shrink-0"
+              type="button"
+              onClick={() => openAuthModal('publish posts and issue challenges', null, 'login')}
+              className="w-full sm:w-auto px-4 py-2 bg-primary hover:bg-primary-hover text-primary-foreground text-xs font-black rounded-xl shadow-xs transition-all cursor-pointer shrink-0"
             >
-              Publish Post →
+              Sign In to Post →
             </button>
           </div>
-        </div>
+        )
       )}
 
       {/* Feed List */}
@@ -323,6 +299,9 @@ export function FeedContainer({
             <FeedCard
               key={post.id}
               post={post}
+              onToggleLike={toggleLike}
+              onToggleBookmark={toggleBookmark}
+              onAddComment={addComment}
               onPlayVideo={(p) => setActiveVideoModal(p)}
               onSelectTag={(tag) => setSelectedTag(tag)}
             />
@@ -368,7 +347,6 @@ export function FeedContainer({
                 />
               )}
               
-              {/* Simulated active player animation */}
               <div className="relative z-10 flex flex-col items-center gap-3 text-center px-4">
                 <div className="w-16 h-16 rounded-full bg-[#7C3AED]/90 text-white flex items-center justify-center shadow-lg animate-pulse">
                   <svg className="w-8 h-8 translate-x-0.5" viewBox="0 0 24 24" fill="currentColor">

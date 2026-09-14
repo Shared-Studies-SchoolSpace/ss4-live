@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import AuthGate from '../../features/auth-portal/components/AuthGate';
+import { toast } from 'react-toastify';
 
 export function FeedCardActions({ 
   likes = 0, 
@@ -8,49 +10,61 @@ export function FeedCardActions({
   onToggleLike, 
   onToggleComments, 
   onToggleBookmark,
-  shareTitle = 'SS4 Feed Post'
+  shareTitle = 'SS4 Feed Post',
+  postId
 }) {
   const [copied, setCopied] = useState(false);
 
   const handleShare = async (e) => {
     e.stopPropagation();
+    const shareUrl = typeof window !== 'undefined' 
+      ? (postId ? `${window.location.origin}/news#post-${postId}` : window.location.href)
+      : '';
+
     if (navigator.share) {
       try {
         await navigator.share({
           title: shareTitle,
-          url: window.location.href,
+          url: shareUrl,
         });
         return;
       } catch {
-        // Fallback to clipboard
+        // Fallback to clipboard if cancelled or unsupported
       }
     }
 
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
+      toast.success('Post link copied to clipboard!');
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
+      toast.info('Could not copy link directly.');
     }
   };
 
   return (
     <div className="feed-card-footer">
       <div className="action-group">
-        <button 
-          className={`action-btn ${isLiked ? 'liked' : ''}`}
-          onClick={onToggleLike}
-          aria-label="Like post"
-          title={isLiked ? "Unlike" : "Like"}
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-          </svg>
-          <span>{likes}</span>
-        </button>
+        {/* Like Button (Gated to signed-in users) */}
+        <AuthGate reason="like this post" onAction={onToggleLike}>
+          <button 
+            type="button"
+            className={`action-btn ${isLiked ? 'liked' : ''}`}
+            onClick={onToggleLike}
+            aria-label="Like post"
+            title={isLiked ? "Unlike" : "Like"}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+            <span>{likes}</span>
+          </button>
+        </AuthGate>
 
+        {/* Comment Count / Toggle Button (Accessible to all) */}
         <button 
+          type="button"
           className="action-btn"
           onClick={onToggleComments}
           aria-label="Comments"
@@ -62,7 +76,9 @@ export function FeedCardActions({
           <span>{commentsCount}</span>
         </button>
 
+        {/* Share Button (Accessible to all) */}
         <button 
+          type="button"
           className="action-btn" 
           onClick={handleShare}
           aria-label="Share"
@@ -79,16 +95,20 @@ export function FeedCardActions({
         </button>
       </div>
 
-      <button 
-        className={`action-btn ${isBookmarked ? 'bookmarked' : ''}`}
-        onClick={onToggleBookmark}
-        aria-label="Bookmark post"
-        title={isBookmarked ? "Remove Bookmark" : "Bookmark"}
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-        </svg>
-      </button>
+      {/* Bookmark Button (Gated to signed-in users) */}
+      <AuthGate reason="bookmark this post" onAction={onToggleBookmark}>
+        <button 
+          type="button"
+          className={`action-btn ${isBookmarked ? 'bookmarked' : ''}`}
+          onClick={onToggleBookmark}
+          aria-label="Bookmark post"
+          title={isBookmarked ? "Remove Bookmark" : "Bookmark"}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+          </svg>
+        </button>
+      </AuthGate>
     </div>
   );
 }

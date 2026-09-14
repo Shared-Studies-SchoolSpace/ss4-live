@@ -115,6 +115,7 @@ export function TextPost({
         )}
 
         <FeedCardActions
+          postId={post.id || id}
           likes={likesCount}
           commentsCount={commentsCount}
           isLiked={isLiked}

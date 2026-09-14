@@ -181,6 +181,7 @@ const playerApiCache = {};
 export async function fetchCompletePlayerData(username, platform = 'chess.com') {
   if (!username) return null;
   const cleanUser = username.trim().toLowerCase();
+  if (cleanUser.includes(' ') || cleanUser.length < 2) return null;
   const cacheKey = `${platform}:${cleanUser}`;
   
   if (playerApiCache[cacheKey]) {
@@ -210,10 +211,12 @@ export async function fetchCompletePlayerData(username, platform = 'chess.com') 
   try {
     if (platform === 'chess.com') {
       const profilePromise = fetch(`https://api.chess.com/pub/player/${encodeURIComponent(cleanUser)}`)
-        .then(r => r.ok ? r.json() : null);
+        .then(r => (r && r.ok ? r.json() : null))
+        .catch(() => null);
 
       const statsPromise = fetch(`https://api.chess.com/pub/player/${encodeURIComponent(cleanUser)}/stats`)
-        .then(r => r.ok ? r.json() : null);
+        .then(r => (r && r.ok ? r.json() : null))
+        .catch(() => null);
 
       const [profile, stats] = await Promise.all([profilePromise, statsPromise]);
       if (profile) {
@@ -226,11 +229,13 @@ export async function fetchCompletePlayerData(username, platform = 'chess.com') 
       }
     } else {
       // Lichess API
-      const res = await fetch(`https://lichess.org/api/user/${encodeURIComponent(cleanUser)}`);
-      if (res.ok) {
-        const data = await res.json();
-        result.rating = data.perfs?.rapid?.rating || data.perfs?.blitz?.rating || 1500;
-        result.title = data.title || null;
+      const res = await fetch(`https://lichess.org/api/user/${encodeURIComponent(cleanUser)}`).catch(() => null);
+      if (res && res.ok) {
+        const data = await res.json().catch(() => null);
+        if (data) {
+          result.rating = data.perfs?.rapid?.rating || data.perfs?.blitz?.rating || 1500;
+          result.title = data.title || null;
+        }
       }
     }
 
@@ -241,7 +246,6 @@ export async function fetchCompletePlayerData(username, platform = 'chess.com') 
 
     return result;
   } catch (err) {
-    console.error('Error in fetchCompletePlayerData:', err);
     result.error = err.message;
     return result;
   }

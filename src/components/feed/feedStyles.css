@@ -597,76 +597,96 @@
   z-index: 2;
 }
 
-/* EMBEDDED CARDS (MATCH, LOBBY, CHALLENGE) */
-.feed-embed-card {
-  border-radius: 12px;
-  padding: 10px 14px;
-  margin-bottom: 14px;
+/* ACTION BUTTONS STACK (BORDERLESS, VERTICAL, ALIGNED) */
+.feed-actions-stack {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
-  position: relative;
-  transition: all 0.2s ease;
+  margin: 14px 0 16px 0;
+  padding: 0;
+  background: transparent;
+  border: none;
 }
 
-.feed-embed-match {
-  background: var(--feed-slate-50);
-  border: 1px solid var(--feed-slate-200);
+.feed-embed-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 14px 0 16px 0;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-.feed-embed-lobby {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-}
-
+.feed-embed-match,
+.feed-embed-lobby,
 .feed-embed-challenge {
-  background: #fff7ed;
-  border: 1px solid #ffedd5;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
 .feed-embed-action-btn {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
-  padding: 6px 14px;
+  height: 38px;
+  padding: 0 20px;
   border-radius: 20px;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  min-width: 240px;
+  max-width: 100%;
+}
+
+.feed-embed-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px -1px rgba(37, 99, 235, 0.25);
 }
 
 /* CALENDAR BUTTON & DROPDOWN */
 .feed-calendar-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 8px;
   background: #ffffff;
   color: var(--feed-slate-800);
   border: 1px solid var(--feed-slate-300);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
-  padding: 6px 14px;
+  height: 38px;
+  padding: 0 20px;
   border-radius: 20px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  min-width: 240px;
+  max-width: 100%;
 }
 
 .feed-calendar-btn:hover {
   background: var(--feed-slate-50);
   border-color: var(--feed-slate-400);
   color: var(--feed-slate-900);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.08);
 }
 
 .feed-calendar-dropdown {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  min-width: 210px;
+  min-width: 240px;
+  width: 100%;
   background: #ffffff;
   border: 1px solid var(--feed-slate-200);
   border-radius: 12px;

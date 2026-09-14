@@ -117,7 +117,7 @@ export function AddToCalendarButton({ event = {} }) {
         aria-expanded={isOpen}
       >
         <svg
-          className="w-3.5 h-3.5 text-primary"
+          className="w-4 h-4 text-primary shrink-0"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -129,9 +129,9 @@ export function AddToCalendarButton({ event = {} }) {
             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
           />
         </svg>
-        <span>Calendar</span>
+        <span>Add to Calendar</span>
         <svg
-          className={`w-3 h-3 text-slate-400 transition-transform duration-200 ${
+          className={`w-3.5 h-3.5 text-slate-400 shrink-0 transition-transform duration-200 ${
             isOpen ? 'rotate-180' : ''
           }`}
           fill="none"

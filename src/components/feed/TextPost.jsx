@@ -91,14 +91,11 @@ export function TextPost({
 
         {/* Embed Action Section (Register button + Calendar button) */}
         {embed && (
-          <div className={`feed-embed-card ${
-            embed.type === 'match' ? 'feed-embed-match' :
-            embed.type === 'lobby' ? 'feed-embed-lobby' : 'feed-embed-challenge'
-          }`}>
+          <div className="feed-actions-stack">
             {embed.actionLabel && (
               <button 
                 onClick={embed.onAction || (() => alert(`Action: ${embed.actionLabel}`))}
-                className="feed-embed-action-btn bg-primary hover:bg-primary-hover text-primary-foreground shrink-0 shadow-sm"
+                className="feed-embed-action-btn bg-primary hover:bg-primary-hover text-primary-foreground shadow-sm"
               >
                 {embed.actionLabel}
               </button>

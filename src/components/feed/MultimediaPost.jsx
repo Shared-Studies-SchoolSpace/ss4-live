@@ -146,9 +146,11 @@ export function MultimediaPost({
 
   return (
     <article className={`feed-card ${isUnread ? 'unread' : ''}`}>
-      <div className={`feed-card-category-tag ${categoryClass}`}>
-        <span>{categoryLabel}</span>
-      </div>
+      {categoryLabel && (
+        <div className={`feed-card-category-tag ${categoryClass}`}>
+          <span>{categoryLabel}</span>
+        </div>
+      )}
 
       {renderMedia()}
 

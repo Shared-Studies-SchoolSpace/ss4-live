@@ -6,7 +6,6 @@ export const INITIAL_FEED_POSTS = [
     postType: 'multimedia',
     mediaType: 'poster',
     imageUrl: '/varsity-tournament-poster.jpeg',
-    categoryLabel: '🏆 Varsity Tournament Announcement',
     categoryClass: 'tournament',
     readTime: '2 min read',
     isUnread: true,

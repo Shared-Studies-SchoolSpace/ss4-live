@@ -1,8 +1,9 @@
 // F-06 Updates/news feed displays cards with headline, tag, date, and excerpt.
-import React from 'react';
+import React, { useState } from 'react';
 import SectionWrapper from '../components/SectionWrapper';
 import { H1 } from '../components/Typography';
 import NewsCard from '../components/NewsCard';
+import { FeedContainer } from '../components/feed';
 
 const mockNews = [
     { 
@@ -49,28 +50,72 @@ const mockNews = [
 ];
 
 export default function NewsPage() {
+    const [viewMode, setViewMode] = useState('feed'); // 'feed' | 'grid'
+
     return (
         <div className="w-full">
             <SectionWrapper variant="default">
-                <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6">
-                    <H1 className="text-center mb-12">Updates & News</H1>
-                    
-                    {/* Grid Layout mimicking newsfeed.webp */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16">
-                        {mockNews.map((item, i) => (
-                            <NewsCard 
-                                key={i}
-                                tag={item.tag}
-                                title={item.title}
-                                desc={item.desc}
-                                date={item.date}
-                                image={item.image}
-                                gradient={item.gradient}
-                                colSpan={item.colSpan}
-                                isHero={item.isHero}
-                            />
-                        ))}
+                <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6">
+                    <div className="text-center max-w-3xl mx-auto mb-8">
+                        <H1 className="mb-4">Updates & News</H1>
+                        <p className="text-sm text-gray-600 font-medium">
+                            Live competitive dispatches, video duel recaps, tournament registrations, and institutional announcements from the SS4 platform.
+                        </p>
+
+                        {/* View Switcher Tabs */}
+                        <div className="mt-6 inline-flex items-center bg-white border border-gray-200 p-1.5 rounded-2xl shadow-sm gap-1.5">
+                            <button
+                                onClick={() => setViewMode('feed')}
+                                className={`px-5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-2 ${
+                                    viewMode === 'feed'
+                                        ? 'bg-[#1A56C4] text-white shadow-md'
+                                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                                }`}
+                            >
+                                <span>📰</span> Interactive Feed
+                            </button>
+                            <button
+                                onClick={() => setViewMode('grid')}
+                                className={`px-5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-2 ${
+                                    viewMode === 'grid'
+                                        ? 'bg-[#1A56C4] text-white shadow-md'
+                                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                                }`}
+                            >
+                                <span>📑</span> Editorial Grid
+                            </button>
+                        </div>
                     </div>
+                    
+                    {/* View 1: Extracted SAS Feed Components */}
+                    {viewMode === 'feed' && (
+                        <div className="w-full">
+                            <FeedContainer 
+                                title="Live SS4 & SAS Community Stream" 
+                                subtitle="Real-time duel highlights, tournament broadcasts, photo galleries, and platform releases"
+                                showComposer={true}
+                            />
+                        </div>
+                    )}
+
+                    {/* View 2: Classic Grid Layout */}
+                    {viewMode === 'grid' && (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16 max-w-6xl mx-auto pt-4">
+                            {mockNews.map((item, i) => (
+                                <NewsCard 
+                                    key={i}
+                                    tag={item.tag}
+                                    title={item.title}
+                                    desc={item.desc}
+                                    date={item.date}
+                                    image={item.image}
+                                    gradient={item.gradient}
+                                    colSpan={item.colSpan}
+                                    isHero={item.isHero}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </SectionWrapper>
         </div>

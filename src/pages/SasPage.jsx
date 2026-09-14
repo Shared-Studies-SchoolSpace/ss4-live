@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionWrapper from '../components/SectionWrapper';
 import { H1, H2, Body, BodyLarge } from '../components/Typography';
+import { FeedContainer } from '../components/feed';
 
 const mockSubjects = [
     { title: "English Language", image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=800", scope: "Comprehension, Lexis & Structure, Oral English", topics: "Consonants, Vowels, Reading Comprehension, Synonyms, Antonyms", isAvailable: false },
@@ -70,6 +71,24 @@ export default function SasPage() {
                             </div>
                         </div>
                     ))}
+                </div>
+            </SectionWrapper>
+
+            {/* Live SAS Contender & Assessment Feed Section */}
+            <SectionWrapper variant="default">
+                <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6">
+                    <div className="text-center mb-8">
+                        <H2>SAS Community & Live Duel Feed</H2>
+                        <Body className="mt-2 text-gray-600">
+                            Real-time academic battle recaps, student highlights, and official assessment series drops.
+                        </Body>
+                    </div>
+
+                    <FeedContainer 
+                        title="SAS Assessment Stream"
+                        subtitle="Latest lightning round replays, qualification drops, and contender updates"
+                        showComposer={true}
+                    />
                 </div>
             </SectionWrapper>
         </div>

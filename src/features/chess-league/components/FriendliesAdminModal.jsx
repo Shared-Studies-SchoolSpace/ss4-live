@@ -4,6 +4,7 @@ import Modal from '../../../components/Modal';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../auth-portal/hooks/useAuth';
 
 const ADMIN_PIN = '1926';
 
@@ -52,6 +53,7 @@ export function extractLichessHostUsername(input) {
 }
 
 export default function FriendliesAdminModal({ isOpen, onClose, onArenaUpdated }) {
+  const { profile } = useAuth();
   const [pinInput, setPinInput] = useState('');
   const [pinErr, setPinErr] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -87,8 +89,11 @@ export default function FriendliesAdminModal({ isOpen, onClose, onArenaUpdated }
       setInspectErr('');
       setHostTournaments([]);
       setHostErr('');
+    } else if (profile?.role === 'admin') {
+      setIsUnlocked(true);
+      fetchStoredArenas();
     }
-  }, [isOpen]);
+  }, [isOpen, profile?.role]);
 
   const handleUnlockPin = (e) => {
     e.preventDefault();

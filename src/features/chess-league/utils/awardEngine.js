@@ -14,50 +14,62 @@ export async function calculateAndStoreAwards(tournament) {
   const awardsToInsert = [];
 
   try {
-    // 1. Champion Award
-    // Find the profile of the tournament winner using name/username matching
-    const winnerUsername = typeof tournament.winner === 'object' ? tournament.winner.username : tournament.winner;
-    const { data: winnerProfile } = await supabase
-      .from('profiles')
-      .select('id')
-      .or(`chess_username.ieq.${winnerUsername},lichess_username.ieq.${winnerUsername},name.ieq.${winnerUsername}`)
-      .maybeSingle();
+    const players = tournament.players || [];
 
-    if (winnerProfile) {
+    // Fetch relevant profiles in a single query to prevent N+1 loop and comma parsing bugs
+    const { data: profilesList } = await supabase
+      .from('profiles')
+      .select('id, chess_username, lichess_username, name');
+
+    // Build in-memory lookup maps
+    const idMap = new Map();
+    const userMap = new Map();
+    const nameMap = new Map();
+
+    (profilesList || []).forEach(p => {
+      if (p.id) idMap.set(p.id, p.id);
+      if (p.chess_username) userMap.set(p.chess_username.toLowerCase(), p.id);
+      if (p.lichess_username) userMap.set(p.lichess_username.toLowerCase(), p.id);
+      if (p.name) nameMap.set(p.name.toLowerCase().trim(), p.id);
+    });
+
+    const resolveProfileId = (ident) => {
+      if (!ident) return null;
+      if (typeof ident === 'object') {
+        return idMap.get(ident.id) ||
+               userMap.get(ident.username?.toLowerCase()?.trim()) ||
+               nameMap.get(ident.name?.toLowerCase()?.trim()) ||
+               null;
+      }
+      const s = String(ident).toLowerCase().trim();
+      return idMap.get(ident) || userMap.get(s) || nameMap.get(s) || null;
+    };
+
+    // 1. Champion Award
+    const winnerId = resolveProfileId(tournament.winner);
+    if (winnerId) {
       awardsToInsert.push({
-        user_id: winnerProfile.id,
+        user_id: winnerId,
         award_type: 'champion',
         tournament_id: tournamentId
       });
     }
 
-    // 2. Undefeated & Top Positions
-    // Scan all tournament players to detect accomplishments
-    const players = tournament.players || [];
+    // 2. Undefeated & Accomplishments
     for (const player of players) {
-      // Find the player profile
-      const { data: playerProfile } = await supabase
-        .from('profiles')
-        .select('id')
-        .or(`chess_username.ieq.${player.username},lichess_username.ieq.${player.username},name.ieq.${player.name}`)
-        .maybeSingle();
-
-      if (!playerProfile) continue;
+      const playerId = resolveProfileId(player);
+      if (!playerId) continue;
 
       // Check Undefeated (P > 0, L === 0)
       const played = Number(player.P) || 0;
       const losses = Number(player.L) || 0;
       if (played > 0 && losses === 0) {
         awardsToInsert.push({
-          user_id: playerProfile.id,
+          user_id: playerId,
           award_type: 'undefeated',
           tournament_id: tournamentId
         });
       }
-
-      // Check Top 5: Standings point check or rank check
-      // For simplicity, we check if they won at least 80% of their points or are ranks 1-5.
-      // If tournament standings are available in a sorted order, we can map ranks.
     }
 
     if (awardsToInsert.length > 0) {

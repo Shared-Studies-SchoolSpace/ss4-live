@@ -99,7 +99,7 @@ export function useTournament(monthYear) {
 
         if (!adminId) {
           try {
-            const { data: adminProf } = await supabase.from('profiles').select('id').limit(1).maybeSingle();
+            const { data: adminProf } = await supabase.from('profiles').select('id').eq('role', 'admin').limit(1).maybeSingle();
             adminId = adminProf?.id;
           } catch (profErr) {
             console.warn('Could not fetch fallback admin profile ID:', profErr.message);
@@ -147,10 +147,20 @@ export function useTournament(monthYear) {
         });
 
         if (notifications.length > 0) {
-          const batchSize = 100;
-          for (let i = 0; i < notifications.length; i += batchSize) {
-            const { error: notifErr } = await supabase.from('notifications').insert(notifications.slice(i, i + batchSize));
-            if (notifErr) console.warn('Opponent notification insertion error:', notifErr.message);
+          try {
+            // Verify candidate IDs exist in profiles to prevent foreign key violations on guest/offline UUIDs
+            const candidateIds = [...new Set(notifications.map(n => n.user_id))];
+            const { data: validProfiles } = await supabase.from('profiles').select('id').in('id', candidateIds);
+            const validIdSet = new Set((validProfiles || []).map(p => p.id));
+            const validNotifications = notifications.filter(n => validIdSet.has(n.user_id));
+
+            const batchSize = 100;
+            for (let i = 0; i < validNotifications.length; i += batchSize) {
+              const { error: notifErr } = await supabase.from('notifications').insert(validNotifications.slice(i, i + batchSize));
+              if (notifErr) console.warn('Opponent notification insertion error:', notifErr.message);
+            }
+          } catch (nErr) {
+            console.warn('Notification validation/dispatch failed:', nErr.message);
           }
         }
       }
@@ -208,7 +218,7 @@ export function useTournament(monthYear) {
           }
           if (!broadcastAdminId) {
             try {
-              const { data: adminProf } = await supabase.from('profiles').select('id').limit(1).maybeSingle();
+              const { data: adminProf } = await supabase.from('profiles').select('id').eq('role', 'admin').limit(1).maybeSingle();
               broadcastAdminId = adminProf?.id;
             } catch { /* ignore fallback error */ }
           }

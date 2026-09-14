@@ -59,21 +59,24 @@ export default function TournamentCountdownBanner() {
   const [bannerConfig, setBannerConfig] = useState({ showBanner: true, mode: 'auto', version: 1, headline: '' });
 
   useEffect(() => {
+    let isMounted = true;
+
     const loadTarget = async () => {
       let tObj = null;
       try {
         const { data } = await supabase
           .from('tournaments')
-          .select('*')
+          .select('id, status, month_year, finals_completed_at, next_round_start, next_round_label, show_banner, banner_mode, banner_version, banner_headline, rounds')
           .or('status.eq.active,status.eq.upcoming')
           .order('month_year', { ascending: false })
           .limit(1)
           .maybeSingle();
-        if (data) tObj = data;
+        if (data && isMounted) tObj = data;
       } catch (err) {
         console.warn('Could not fetch active tournament for banner:', err);
       }
 
+      if (!isMounted) return;
       const { date, label, showBanner, mode, version, headline } = getCountdownTarget(tObj);
 
       if (showBanner === false || !date) {
@@ -111,8 +114,27 @@ export default function TournamentCountdownBanner() {
     };
 
     loadTarget();
-    const intervalId = setInterval(loadTarget, 10000);
-    return () => clearInterval(intervalId);
+
+    // Listen for realtime updates to tournaments table instead of aggressive polling
+    const tournamentChannel = supabase
+      .channel('tournament-banner-sync')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'tournaments' },
+        () => {
+          loadTarget();
+        }
+      )
+      .subscribe();
+
+    // Fallback polling interval reduced from 10s to 60s
+    const intervalId = setInterval(loadTarget, 60000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(intervalId);
+      supabase.removeChannel(tournamentChannel);
+    };
   }, []);
 
   const handleDismiss = () => {

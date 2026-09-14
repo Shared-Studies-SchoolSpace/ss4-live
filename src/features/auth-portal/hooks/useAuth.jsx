@@ -639,13 +639,25 @@ export function AuthProvider({ children }) {
         }));
       }
 
+      // Persist directly to profiles table (schema updated via migration R2)
+      const targetUserId = profileObj?.id || user?.id;
+      if (targetUserId) {
+        try {
+          await supabase
+            .from('profiles')
+            .update({ phone: phoneNum, whatsapp: phoneNum })
+            .eq('id', targetUserId);
+        } catch (profErr) {
+          console.warn('Failed to update phone in profiles table directly:', profErr.message);
+        }
+      }
+
       // Sync auth user metadata (source of truth for re-login hydration)
       await supabase.auth.updateUser({
         data: { phone: phoneNum, whatsapp: phoneNum }
       });
 
-      // Update local profile state   phone/whatsapp are virtual fields resolved
-      // from divisions; profiles table has no contact/phone column
+      // Update local profile state
       setProfile(prev => prev ? ({
         ...prev,
         phone: phoneNum,
@@ -683,7 +695,7 @@ export function AuthProvider({ children }) {
 
   const signUp = async (email, password, profileData) => {
     const rememberMe = typeof localStorage !== 'undefined' && localStorage.getItem('ss4_remember_me') === 'true';
-    const result = await signUpUser({ email, password, profileData, rememberMe }, updatePlayerDivision);
+    const result = await signUpUser({ email, password, profileData, rememberMe });
     if (!result.error && result.data?.user) {
       fetchingUidRef.current = null;
       const uid = result.data.user.id;
@@ -704,6 +716,17 @@ export function AuthProvider({ children }) {
         role: 'player'
       };
       setProfile(freshProfile);
+      setUser(result.data.user);
+      activeUserIdRef.current = uid;
+
+      // Ensure player is assigned to their division on registration
+      const maxRating = Math.max(freshProfile.chess_rating || 0, freshProfile.lichess_rating || 0);
+      try {
+        await updatePlayerDivision(freshProfile, maxRating);
+      } catch (divErr) {
+        console.warn('Failed to assign player division on signup:', divErr);
+      }
+
       await fetchProfile(uid);
     }
     return result;

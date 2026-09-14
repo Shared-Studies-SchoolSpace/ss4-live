@@ -302,13 +302,7 @@ export default function DirectChat() {
                 return [...prev, msgToAdd];
               });
 
-              if (isFromActive) {
-                supabase
-                  .from("direct_messages")
-                  .update({ read_at: nowIso })
-                  .eq("id", newMsg.id)
-                  .then();
-              }
+              // Optimistically update local message read state; central read receipt DB update is managed by useAuth
             }
           }
 

@@ -845,7 +845,8 @@ export const AdminTab = ({
                           try {
                             await supabase.from('divisions').delete().eq('id', d.id);
                             if (selectedDivisionId === d.id) {
-                              setSelectedDivisionId(divisions.find(div => div.id !== d.id).id);
+                              const nextDiv = divisions.find(div => div.id !== d.id);
+                              setSelectedDivisionId(nextDiv ? nextDiv.id : null);
                             }
                             toast.warn(`Deleted ${d.name}`, { theme: 'dark' });
                           } catch (e) {

@@ -439,17 +439,32 @@ export default function DashboardPage() {
         return;
       }
       
-      const updatedPlayers = [
-        ...(upcomingTournament.players || []).filter(p => p.id !== user.id),
-        regPlayer
-      ];
-      
-      const { error } = await supabase
-        .from('tournaments')
-        .update({ players: updatedPlayers })
-        .eq('id', upcomingTournament.id);
+      let updatedPlayers = null;
+      try {
+        const { data: rpcPlayers, error: rpcErr } = await supabase.rpc('register_tournament_player', {
+          target_tournament_id: upcomingTournament.id,
+          new_player: regPlayer
+        });
+        if (!rpcErr && rpcPlayers) {
+          updatedPlayers = rpcPlayers;
+        }
+      } catch {
+        // Fallback to client update if RPC not deployed yet
+      }
+
+      if (!updatedPlayers) {
+        updatedPlayers = [
+          ...(upcomingTournament.players || []).filter(p => p.id !== user.id),
+          regPlayer
+        ];
         
-      if (error) throw error;
+        const { error } = await supabase
+          .from('tournaments')
+          .update({ players: updatedPlayers })
+          .eq('id', upcomingTournament.id);
+          
+        if (error) throw error;
+      }
       
       setUpcomingTournament(prev => ({ ...prev, players: updatedPlayers }));
       setIsRegistered(true);
@@ -900,12 +915,27 @@ export default function DashboardPage() {
     toast.info(`Scanning external games against ${pairing.opponent.name || 'opponent'}...`);
 
     try {
-      // Find opponent's full profile
-      const { data: oppProfile } = await supabase
-        .from('profiles')
-        .select('*')
-        .or(`chess_username.ieq.${pairing.opponent.username},lichess_username.ieq.${pairing.opponent.username},name.ieq.${pairing.opponent.name}`)
-        .maybeSingle();
+      // Find opponent's full profile safely without PostgREST comma break
+      const oppUser = (pairing.opponent.username || '').trim();
+      const oppName = (pairing.opponent.name || '').trim();
+
+      let oppProfile = null;
+      if (oppUser) {
+        const { data } = await supabase
+          .from('profiles')
+          .select('*')
+          .or(`chess_username.ieq."${oppUser}",lichess_username.ieq."${oppUser}"`)
+          .maybeSingle();
+        oppProfile = data;
+      }
+      if (!oppProfile && oppName) {
+        const { data } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('name', oppName)
+          .maybeSingle();
+        oppProfile = data;
+      }
 
       if (!oppProfile) {
         throw new Error('Opponent has not linked their chess accounts to SS4 profile yet.');

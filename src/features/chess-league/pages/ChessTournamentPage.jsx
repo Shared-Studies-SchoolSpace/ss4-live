@@ -1039,17 +1039,32 @@ export default function ChessTournamentPage() {
 
       const regPlayer = buildPlayerRecord(targetUser, targetProfile);
 
-      const updatedPlayers = [
-        ...(currentT.players || []).filter(p => p.id !== targetUser.id),
-        regPlayer
-      ];
+      let updatedPlayers = null;
+      try {
+        const { data: rpcPlayers, error: rpcErr } = await supabase.rpc('register_tournament_player', {
+          target_tournament_id: currentT.id,
+          new_player: regPlayer
+        });
+        if (!rpcErr && rpcPlayers) {
+          updatedPlayers = rpcPlayers;
+        }
+      } catch {
+        // Fallback to direct client update if RPC not present
+      }
 
-      const { error } = await supabase
-        .from('tournaments')
-        .update({ players: updatedPlayers })
-        .eq('id', currentT.id);
+      if (!updatedPlayers) {
+        updatedPlayers = [
+          ...(currentT.players || []).filter(p => p.id !== targetUser.id),
+          regPlayer
+        ];
 
-      if (error) throw error;
+        const { error } = await supabase
+          .from('tournaments')
+          .update({ players: updatedPlayers })
+          .eq('id', currentT.id);
+
+        if (error) throw error;
+      }
 
       setUpcomingTournament({ ...currentT, players: updatedPlayers });
       toast.success("Your spot is locked in! The board awaits.");

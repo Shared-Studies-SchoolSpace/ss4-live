@@ -16,10 +16,19 @@ export function FeedContainer({
   title = "SS4 Assessment & Community Feed",
   subtitle = "Real-time duel highlights, tournament broadcasts, photo galleries, and platform releases",
   showComposer = true,
-  defaultFilter = 'all'
+  defaultFilter = 'all',
+  activeFilter: controlledFilter,
+  onFilterChange,
+  showHeader = true,
+  className = "w-full max-w-3xl mx-auto px-4 py-8"
 }) {
   const [posts, setPosts] = useState(initialPosts);
-  const [activeFilter, setActiveFilter] = useState(defaultFilter);
+  const [internalFilter, setInternalFilter] = useState(defaultFilter);
+  const activeFilter = controlledFilter !== undefined ? controlledFilter : internalFilter;
+  const setActiveFilter = (val) => {
+    setInternalFilter(val);
+    if (onFilterChange) onFilterChange(val);
+  };
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState(null);
   const [composerText, setComposerText] = useState('');
@@ -138,6 +147,8 @@ export function FeedContainer({
     if (activeFilter === 'photo_gallery' && post.mediaType !== 'photo_gallery') return false;
     if (activeFilter === 'tournament' && post.categoryClass !== 'tournament') return false;
     if (activeFilter === 'release' && post.categoryClass !== 'text-only') return false;
+    if (activeFilter === 'announcements' && post.categoryClass !== 'announcement' && post.categoryClass !== 'tournament') return false;
+    if (activeFilter === 'results' && post.embed?.type !== 'match') return false;
 
     // Tag filter
     if (selectedTag && !post.tags.includes(selectedTag)) return false;
@@ -156,18 +167,20 @@ export function FeedContainer({
   });
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 py-8">
+    <div className={className}>
       {/* Feed Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight font-outfit flex items-center gap-2.5">
-          <span className="text-[#1A56C4]">📰</span> {title}
-        </h1>
-        {subtitle && (
-          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-            {subtitle}
-          </p>
-        )}
-      </div>
+      {showHeader && (
+        <div className="mb-6">
+          <h1 className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight font-outfit flex items-center gap-2.5">
+            <span className="text-[#1A56C4]">📰</span> {title}
+          </h1>
+          {subtitle && (
+            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
+              {subtitle}
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Filter Pills & Search Bar */}
       <div className="space-y-3 mb-6">

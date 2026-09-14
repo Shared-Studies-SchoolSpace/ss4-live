@@ -12,6 +12,7 @@ import { PlayerProfile } from '../features/chess-league/components/PlayerProfile
 import { Hero } from '../components/Hero';
 import { fetchCompletePlayerData } from '../features/chess-league/utils/chessService';
 import LoadingScreen from '../components/LoadingScreen';
+import { FeedContainer } from '../components/feed';
 
 // Fallback results for Daily Friendlies (since start on July 13, 2026)
 const FALLBACK_DAILY_FRIENDLIES = [
@@ -807,199 +808,27 @@ export default function LandingPage() {
             
             {/* Header Feed Title */}
             <div className="flex items-center justify-between pb-3.5 border-b border-m3-outline-variant">
-              <h2 className="text-base font-black font-space text-brand-text-dark uppercase tracking-widest">
-                League Feed
-              </h2>
-              <span className="text-xs font-black bg-brand-accent/10 text-brand-accent px-3.5 py-1 rounded-full uppercase tracking-wider">
-                Live updates
-              </span>
+              <div className="flex items-center gap-2.5">
+                <h2 className="text-base font-black font-space text-brand-text-dark uppercase tracking-widest">
+                  League & Community Feed
+                </h2>
+                <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> Live
+                </span>
+              </div>
+              <a href="/news" className="text-xs font-bold text-brand-primary hover:text-brand-accent transition-colors flex items-center gap-1">
+                Full Feed View →
+              </a>
             </div>
 
-            {/* News / Announcements Auto-Sliding Card */}
-            {filteredAnnouncements.length > 0 && (() => {
-              const item = filteredAnnouncements[newsSafeIdx];
-              return (
-                <Motion.div
-                  onMouseEnter={() => setIsNewsHovered(true)}
-                  onMouseLeave={() => setIsNewsHovered(false)}
-                  whileHover={{ rotate: -1.5, scale: 1.01 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                  style={{ originX: 0.5, originY: 0.5 }}
-                  className="varsity-card no-hover-effects p-5 bg-white overflow-hidden relative"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="w-8 h-8 rounded-full bg-brand-accent/10 text-brand-accent flex items-center justify-center shrink-0">
-                        <AnnouncementIcon />
-                      </span>
-                      <span className="text-xs font-black text-brand-text-dark uppercase tracking-widest">Announcements</span>
-                    </div>
-                    {filteredAnnouncements.length > 1 && (
-                      <div className="flex items-center gap-1.5">
-                        {filteredAnnouncements.map((_, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => setNewsSlideIdx(idx)}
-                            aria-label={`Announcement ${idx + 1}`}
-                            className={`w-1.5 h-1.5 rounded-full transition-all cursor-pointer ${
-                              idx === newsSafeIdx ? "bg-brand-accent scale-125" : "bg-brand-accent/30 hover:bg-brand-accent/60"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <div className="relative min-h-[72px]">
-                    <AnimatePresence mode="wait" initial={false}>
-                      <Motion.div
-                        key={item.id}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.35, ease: "easeInOut" }}
-                      >
-                        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 mb-1.5">
-                          <h3 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">{item.title}</h3>
-                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{item.date}</span>
-                        </div>
-                        <p className="text-sm font-medium text-gray-700 leading-relaxed">{item.content}</p>
-                        <div className="flex items-center gap-1.5 mt-2.5">
-                          <span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span>
-                          <span className="text-[10px] font-black text-brand-accent uppercase tracking-widest">Broadcast by {item.author}</span>
-                        </div>
-                      </Motion.div>
-                    </AnimatePresence>
-                  </div>
-                </Motion.div>
-              );
-            })()}
-
-            {/* Match Results Sliding Card */}
-            {filteredMatches.length === 0 ? null : (() => {
-              const item = filteredMatches[matchSafeIdx];
-              const wLabel = `${item.white?.name || ''} (${item.white?.username || ''})`;
-              const bLabel = `${item.black?.name || ''} (${item.black?.username || ''})`;
-              const resValue = item.winner === item.white?.name ? 'white'
-                : item.winner === item.black?.name ? 'black'
-                : (item.winner === 'Draw' || item.winner === 'draw') ? 'draw'
-                : null;
-              return (
-                <Motion.div
-                  onMouseEnter={() => setIsMatchHovered(true)}
-                  onMouseLeave={() => setIsMatchHovered(false)}
-                  whileHover={{ rotate: 1.5, scale: 1.01 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                  style={{ originX: 0.5, originY: 0.5 }}
-                  className="varsity-card no-hover-effects p-5 bg-white space-y-4 overflow-hidden"
-                >
-                  {/* Header */}
-                  <div className="flex items-center justify-between gap-2.5">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0 shadow-inner">
-                        <span className="material-symbols-outlined text-[16px] select-none">sports_esports</span>
-                      </div>
-                      <h3 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">Match Results</h3>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {filteredMatches.length > 1 && (
-                        <div className="flex items-center gap-1.5">
-                          {filteredMatches.map((_, idx) => (
-                            <button
-                              key={idx}
-                              onClick={() => setMatchSlideIdx(idx)}
-                              aria-label={`Match ${idx + 1}`}
-                              className={`w-1.5 h-1.5 rounded-full transition-all cursor-pointer ${
-                                idx === matchSafeIdx ? "bg-brand-primary scale-125" : "bg-brand-primary/30 hover:bg-brand-primary/60"
-                              }`}
-                            />
-                          ))}
-                        </div>
-                      )}
-                      <div className="flex items-center gap-1.5">
-                        {item.groupLabel && (
-                          <span className="text-[10px] font-black bg-[#0B193C] text-amber-300 border border-amber-400/30 px-2.5 py-0.5 rounded-md uppercase tracking-wider shadow-2xs">
-                            Group {item.groupLabel}
-                          </span>
-                        )}
-                        {item.isPending ? (
-                          <span className="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                            Upcoming
-                          </span>
-                        ) : (
-                          <span className="text-xs font-bold text-gray-650 bg-m3-surface-variant px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                            {item.roundName}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Sliding content */}
-                  <AnimatePresence mode="wait" initial={false}>
-                    <Motion.div
-                      key={item.id}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.35, ease: "easeInOut" }}
-                    >
-                      {item.isPending ? (
-                        /* Pending pairing  show VS layout */
-                        <div className="flex items-center gap-3 py-1">
-                          <div className="flex-1 text-center">
-                            <p className="text-sm font-black text-brand-text-dark leading-tight">{item.white?.name || '-'}</p>
-                            <p className="text-[10px] font-bold text-gray-500 mt-0.5">@{item.white?.username}</p>
-                            {item.white?.rating && (
-                              <span className="inline-block mt-1.5 text-[10px] font-black bg-brand-primary/10 text-brand-primary px-2 py-0.5 rounded-full">
-                                {item.white.rating} ELO
-                              </span>
-                            )}
-                          </div>
-                          <div className="flex flex-col items-center gap-1 shrink-0">
-                            <span className="text-base font-black text-brand-accent">VS</span>
-                            <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Pending</span>
-                          </div>
-                          <div className="flex-1 text-center">
-                            <p className="text-sm font-black text-brand-text-dark leading-tight">{item.black?.name || '-'}</p>
-                            <p className="text-[10px] font-bold text-gray-500 mt-0.5">@{item.black?.username}</p>
-                            {item.black?.rating && (
-                              <span className="inline-block mt-1.5 text-[10px] font-black bg-brand-primary/10 text-brand-primary px-2 py-0.5 rounded-full">
-                                {item.black.rating} ELO
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      ) : (
-                        /* Completed game  existing MatchResult component */
-                        <MatchResult
-                          w={wLabel}
-                          b={bLabel}
-                          res={resValue}
-                          date={item.date}
-                          round={item.roundName}
-                          division={{ players: allPlayers }}
-                          onPlayerSelect={(p) => setSelectedPlayer(p)}
-                          isAdmin={false}
-                          disableHover={true}
-                        />
-                      )}
-                      {item.gameLink && (
-                        <div className="flex justify-end pt-1">
-                          <a
-                            href={item.gameLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs font-black text-brand-primary hover:text-brand-accent uppercase tracking-wider inline-flex items-center gap-0.5 transition-colors"
-                          >
-                            Watch the game <span className="material-symbols-outlined text-[12px]">open_in_new</span>
-                          </a>
-                        </div>
-                      )}
-                    </Motion.div>
-                  </AnimatePresence>
-                </Motion.div>
-              );
-            })()}
+            {/* Extracted SAS Feed Display System */}
+            <FeedContainer 
+              showHeader={false}
+              className="w-full"
+              activeFilter={activeFilter}
+              onFilterChange={setActiveFilter}
+              showComposer={true}
+            />
 
             {/* Spotlights Sub-Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">

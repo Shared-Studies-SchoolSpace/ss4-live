@@ -300,7 +300,93 @@ BEGIN
     ALTER PUBLICATION supabase_realtime ADD TABLE public.direct_messages;
     ALTER PUBLICATION supabase_realtime ADD TABLE public.announcements;
     ALTER PUBLICATION supabase_realtime ADD TABLE public.notifications;
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.partner_offers;
   END IF;
 EXCEPTION WHEN OTHERS THEN
   NULL;
 END $$;
+
+
+-- =============================================================================
+-- 10. Partner Offers Table (Onboarding / Sponsorship Intake)
+-- =============================================================================
+CREATE TABLE IF NOT EXISTS public.partner_offers (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  reference_code text UNIQUE NOT NULL,
+
+  -- Section 1: About You
+  full_name text NOT NULL,
+  state_of_residence text,
+  phone text NOT NULL,
+  email text NOT NULL,
+  profession text,
+  organization text,
+  social_profile text,
+
+  -- Section 2: Communication Protocol
+  preferred_contact_method text NOT NULL DEFAULT 'whatsapp',
+  preferred_contact_method_other text,
+  email_frequency text NOT NULL DEFAULT 'once_a_day',
+  preferred_time_window text DEFAULT 'morning',
+
+  -- Section 3: Your Partnership
+  partnership_interests text,
+  contributions text[] DEFAULT '{}'::text[],
+  contribution_other text,
+
+  -- Section 4: SCL Monthly Sponsorship
+  sponsorship_amount_monthly text DEFAULT '50,000',
+  sponsorship_duration text DEFAULT '3 months',
+  sponsorship_duration_other text,
+
+  -- Section 5: Recognition & Discovery
+  public_recognition boolean DEFAULT true,
+  recognition_name text,
+  referral_source text,
+  referral_source_other text,
+  additional_notes text,
+
+  -- Section 6: Confirmation
+  confirmation_name text NOT NULL,
+  confirmation_date text,
+
+  -- Status & Intake Workflow
+  status text DEFAULT 'pending' NOT NULL,
+  admin_notes text,
+  reviewed_by uuid REFERENCES public.profiles(id) ON DELETE SET NULL,
+  reviewed_at timestamp with time zone,
+
+  -- Timestamps
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+  updated_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_partner_offers_reference_code ON public.partner_offers (reference_code);
+CREATE INDEX IF NOT EXISTS idx_partner_offers_email ON public.partner_offers (email);
+CREATE INDEX IF NOT EXISTS idx_partner_offers_status ON public.partner_offers (status);
+CREATE INDEX IF NOT EXISTS idx_partner_offers_created_at ON public.partner_offers (created_at DESC);
+
+ALTER TABLE public.partner_offers ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Anyone can submit a partner offer" ON public.partner_offers;
+CREATE POLICY "Anyone can submit a partner offer" ON public.partner_offers
+  FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Admins can view partner offers" ON public.partner_offers;
+CREATE POLICY "Admins can view partner offers" ON public.partner_offers
+  FOR SELECT USING (
+    EXISTS (
+      SELECT 1 FROM public.profiles
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
+DROP POLICY IF EXISTS "Admins can update partner offers" ON public.partner_offers;
+CREATE POLICY "Admins can update partner offers" ON public.partner_offers
+  FOR UPDATE USING (
+    EXISTS (
+      SELECT 1 FROM public.profiles
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+

@@ -50,7 +50,7 @@ Will Covenant University's Anuchi Emmanuel defend his August crown, or will a ne
       type: 'lobby',
       actionLabel: 'Enter Tournament Arena & Live Hub →',
       onAction: () => {
-        window.location.href = '/chess-league/tournament';
+        window.location.href = '/theboardgames';
       },
       calendarEvent: {
         title: 'SS4 Chess League: theBOARDGAMES (October 2026)',

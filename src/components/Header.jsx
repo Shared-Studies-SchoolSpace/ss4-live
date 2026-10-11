@@ -106,11 +106,30 @@ export const Header = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
-                <div className="absolute top-[100%] left-0 mt-1 w-48 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
+                <div className="absolute top-[100%] left-0 mt-1 w-52 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
                   <a href="/league" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Daily League</a>
                   <a href="/chess-league/tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Monthly Tournament</a>
+                  <a href="/chess-league/varsity" className="block px-4 py-2.5 text-xs font-bold text-brand-primary hover:bg-brand-primary/5 transition-colors flex items-center justify-between">
+                    <span>Varsity Tournament</span>
+                    <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">New</span>
+                  </a>
+                  <a href="/theboardgames" className="block px-4 py-2.5 text-xs font-black text-orange-600 hover:bg-orange-50 transition-colors flex items-center justify-between">
+                    <span>theBOARDGAMES</span>
+                    <span className="text-[9px] font-black bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded uppercase">Match 1</span>
+                  </a>
                 </div>
               </div>
+              <a 
+                href="/theboardgames"
+                className="relative inline-flex items-center gap-1.5 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-xl text-[12px] xl:text-[13px] font-black transition-all bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-orange-500/15 border border-orange-500/30 text-orange-600 hover:text-orange-700 hover:border-orange-500 hover:shadow-xs whitespace-nowrap shrink-0 group"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                </span>
+                <span className="font-black tracking-tight">theBOARDGAMES</span>
+                <span className="text-[9px] font-black bg-orange-600 text-white px-1.5 py-0.5 rounded-full uppercase tracking-wider">LIVE</span>
+              </a>
               <a href="/sas" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Assessment Series</a>
               <a href="/award" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Aspirants Award</a>
               <a href="/news" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">News</a>
@@ -131,7 +150,9 @@ export const Header = () => {
                 className="hidden sm:inline-flex items-center h-9 sm:h-10 gap-1.5 px-3.5 bg-brand-accent text-white text-xs font-black rounded-full hover:bg-brand-accent/90 transition-colors shadow-sm cursor-pointer uppercase tracking-wider whitespace-nowrap"
                 title="Open Admin Broadcast Drawer"
               >
-                <span>📢</span>
+                <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.684A1.761 1.761 0 013 12c0-.664.37-1.242.92-1.536l5.228-2.614" />
+                </svg>
                 <span className="hidden md:inline">Broadcast</span>
               </button>
             )}
@@ -368,8 +389,27 @@ export const Header = () => {
               className="lg:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 flex flex-col gap-2.5 overflow-hidden shadow-lg"
             >
               <a href="/" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Home</a>
-              <a href="/league" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>League</a>
-              <a href="/chess-league/tournament" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Tournament</a>
+              <a href="/league" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Daily League</a>
+              <a href="/chess-league/tournament" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournament</a>
+              <a href="/chess-league/varsity" className="text-[13px] sm:text-[14px] font-black text-brand-primary hover:text-brand-primary/80 py-0.5 flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
+                <span>Varsity Tournament</span>
+                <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">New</span>
+              </a>
+              <a 
+                href="/theboardgames" 
+                className="text-[13px] sm:text-[14px] font-black text-orange-600 hover:text-orange-700 py-2 px-3.5 rounded-xl bg-orange-50 border border-orange-200/80 flex items-center justify-between shadow-2xs my-0.5" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                  </span>
+                  <span>theBOARDGAMES (Day 1)</span>
+                </div>
+                <span className="text-[9px] font-black bg-orange-600 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">Match 1 Live</span>
+              </a>
+
               <a href="/tertiary/admission" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Admission</a>
               <a href="/award" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</a>
               <a href="/news" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>News</a>

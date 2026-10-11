@@ -77,41 +77,6 @@ const INSTITUTION_CARDS = ORDERED_INSTITUTION_IDS.map(id => {
   };
 });
 
-const SCHEDULE_MILESTONES = [
-  {
-    phase: 'Phase 1 • Day 1 Arena',
-    title: 'theBoardGames LeagueMatch 1 Launch',
-    dates: '9th – 11th Oct 2026',
-    status: 'ACTIVE NOW',
-    desc: 'The official Day 1 kickoff arena on Lichess. All registered university contenders clash for opening season points.',
-    isActive: true
-  },
-  {
-    phase: 'Phase 2 • Swiss Sprints',
-    title: 'Institutional Points Race & Qualifiers',
-    dates: '12th – 20th Oct 2026',
-    status: 'UPCOMING',
-    desc: 'Accelerated pairing rounds to establish seeds, university standings, and individual tier rankings.',
-    isActive: false
-  },
-  {
-    phase: 'Phase 3 • Elimination',
-    title: 'Round of 16 & Quarterfinal Showdown',
-    dates: '21st – 27th Oct 2026',
-    status: 'SCHEDULED',
-    desc: 'Head-to-head match fixtures. Only the top 8 survivor grandmasters advance to the medal rounds.',
-    isActive: false
-  },
-  {
-    phase: 'Phase 4 • Championship',
-    title: 'Final Four & Grand Final Coronation',
-    dates: '28th – 31st Oct 2026',
-    status: 'FINALE',
-    desc: 'The national title decider. The October 2026 Champion of theBOARDGAMES is crowned.',
-    isActive: false
-  }
-];
-
 const TOURNAMENT_DAYS = [
   {
     day: 9,
@@ -636,13 +601,13 @@ export default function TheBoardGamesPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.18 }}
-                  className="rounded-2xl sm:rounded-3xl bg-slate-50 border border-slate-200/90 p-5 sm:p-6 shadow-xs flex flex-col justify-between"
+                  className="rounded-2xl sm:rounded-3xl bg-slate-100/70 p-5 sm:p-6 shadow-sm flex flex-col justify-between min-h-[500px]"
                 >
                   {selectedDay.isCompleted && selectedDay.results ? (
                     /* ── COMPLETED ARENA WINNERS VIEW ── */
                     <div className="space-y-4">
                       {/* Header Row */}
-                      <div className="border-b border-slate-200/80 pb-3 flex items-center justify-between">
+                      <div className="pb-3 flex items-center justify-between">
                         <div>
                           <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
                             Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
@@ -651,7 +616,7 @@ export default function TheBoardGamesPage() {
                             {selectedDay.phase} &bull; {selectedDay.stage}
                           </span>
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1.5 shadow-xs">
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 flex items-center gap-1.5 shadow-2xs">
                           <svg className="w-3.5 h-3.5 text-amber-600" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V19H7v2h10v-2h-4v-3.1c1.98-.44 3.49-2.07 3.61-4.06C19.08 11.63 21 9.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
                           </svg>
@@ -665,19 +630,19 @@ export default function TheBoardGamesPage() {
                           {selectedDay.title}
                         </h3>
                         <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md flex items-center gap-1.5">
+                          <span className="text-[11px] font-bold text-slate-600 bg-white shadow-2xs px-2.5 py-1 rounded-lg flex items-center gap-1.5">
                             <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
                             <span>{selectedDay.results.totalPlayers} Contenders</span>
                           </span>
-                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md flex items-center gap-1.5">
+                          <span className="text-[11px] font-bold text-slate-600 bg-white shadow-2xs px-2.5 py-1 rounded-lg flex items-center gap-1.5">
                             <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
                             <span>{selectedDay.results.totalGames} Games</span>
                           </span>
-                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md flex items-center gap-1.5">
+                          <span className="text-[11px] font-bold text-slate-600 bg-white shadow-2xs px-2.5 py-1 rounded-lg flex items-center gap-1.5">
                             <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -698,9 +663,9 @@ export default function TheBoardGamesPage() {
                         {/* 3-Column Olympic Podium Layout: 2nd on Left, 1st in Middle, 3rd on Right */}
                         <div className="grid grid-cols-3 gap-2 items-end pt-1">
                           {/* 2nd Place (Silver) */}
-                          <div className="bg-slate-100/90 border border-slate-300 rounded-xl p-2.5 text-center flex flex-col justify-between min-h-[145px]">
+                          <div className="bg-white/80 shadow-xs rounded-xl p-2.5 text-center flex flex-col justify-between min-h-[145px]">
                             <div>
-                              <div className="w-6 h-6 rounded-full bg-slate-300 text-slate-800 mx-auto flex items-center justify-center text-[10px] font-black shadow-2xs mb-1">
+                              <div className="w-6 h-6 rounded-full bg-slate-200 text-slate-800 mx-auto flex items-center justify-center text-[10px] font-black shadow-2xs mb-1">
                                 2
                               </div>
                               <span className="text-[9px] font-black uppercase tracking-wider text-slate-500 block">
@@ -715,7 +680,7 @@ export default function TheBoardGamesPage() {
                                 </span>
                               )}
                             </div>
-                            <div className="mt-2 pt-1 border-t border-slate-200/70">
+                            <div className="mt-2 pt-1">
                               <span className="text-base sm:text-lg font-black text-slate-800 font-outfit block leading-none">
                                 {selectedDay.results.podium[1].score}
                               </span>
@@ -724,9 +689,9 @@ export default function TheBoardGamesPage() {
                           </div>
 
                           {/* 1st Place (Gold - Elevated Champion) */}
-                          <div className="bg-gradient-to-b from-amber-50 to-amber-100/60 border-2 border-amber-400 rounded-2xl p-3 text-center flex flex-col justify-between min-h-[165px] shadow-sm relative">
+                          <div className="bg-gradient-to-b from-amber-100 to-amber-200/50 rounded-2xl p-3 text-center flex flex-col justify-between min-h-[165px] shadow-sm relative">
                             <div className="absolute -top-2.5 inset-x-0 flex justify-center">
-                              <span className="bg-amber-500 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-2xs">
+                              <span className="bg-amber-500 text-white text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">
                                 Champion
                               </span>
                             </div>
@@ -744,7 +709,7 @@ export default function TheBoardGamesPage() {
                                 Rating {selectedDay.results.podium[0].rating}
                               </span>
                             </div>
-                            <div className="mt-2 pt-1.5 border-t border-amber-200/80">
+                            <div className="mt-2 pt-1.5">
                               <span className="text-xl sm:text-2xl font-black text-amber-900 font-outfit block leading-none">
                                 {selectedDay.results.podium[0].score}
                               </span>
@@ -753,7 +718,7 @@ export default function TheBoardGamesPage() {
                           </div>
 
                           {/* 3rd Place (Bronze) */}
-                          <div className="bg-orange-50/80 border border-orange-200 rounded-xl p-2.5 text-center flex flex-col justify-between min-h-[145px]">
+                          <div className="bg-orange-100/60 rounded-xl p-2.5 text-center flex flex-col justify-between min-h-[145px] shadow-2xs">
                             <div>
                               <div className="w-6 h-6 rounded-full bg-amber-700/20 text-amber-900 mx-auto flex items-center justify-center text-[10px] font-black shadow-2xs mb-1">
                                 3
@@ -768,7 +733,7 @@ export default function TheBoardGamesPage() {
                                 Rating {selectedDay.results.podium[2].rating}
                               </span>
                             </div>
-                            <div className="mt-2 pt-1 border-t border-orange-200/70">
+                            <div className="mt-2 pt-1">
                               <span className="text-base sm:text-lg font-black text-orange-950 font-outfit block leading-none">
                                 {selectedDay.results.podium[2].score}
                               </span>
@@ -793,7 +758,7 @@ export default function TheBoardGamesPage() {
                           </button>
                         </div>
 
-                        <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100 overflow-hidden text-xs">
+                        <div className="bg-white rounded-xl shadow-xs overflow-hidden text-xs">
                           {(showAllStandings ? selectedDay.results.standings : selectedDay.results.standings.slice(0, 5)).map((p) => (
                             <div key={p.rank} className="flex items-center justify-between px-3 py-1.5 hover:bg-slate-50 transition-colors">
                               <div className="flex items-center gap-2">
@@ -816,12 +781,12 @@ export default function TheBoardGamesPage() {
                       </div>
 
                       {/* Actions */}
-                      <div className="flex flex-wrap items-center gap-2 pt-4 mt-2 border-t border-slate-200">
+                      <div className="flex flex-wrap items-center gap-2 pt-3 mt-1">
                         <a
                           href={selectedDay.arenaLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-sm transition-all cursor-pointer"
+                          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-xs hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer"
                         >
                           <span>Full Lichess Results</span>
                           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -832,7 +797,7 @@ export default function TheBoardGamesPage() {
                         <button
                           type="button"
                           onClick={handleCopyLink}
-                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs transition-all cursor-pointer"
+                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
                         >
                           <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
@@ -843,7 +808,7 @@ export default function TheBoardGamesPage() {
                         <button
                           type="button"
                           onClick={handleShare}
-                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs transition-all cursor-pointer"
+                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
                           title="Share match details"
                         >
                           <svg className="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -857,7 +822,7 @@ export default function TheBoardGamesPage() {
                     /* ── INCOMPLETE / SCHEDULED DAYS VIEW ── */
                     <div className="space-y-4">
                       {/* Header Row */}
-                      <div className="border-b border-slate-200/80 pb-3">
+                      <div className="pb-2">
                         <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
                           Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
                         </span>
@@ -877,9 +842,11 @@ export default function TheBoardGamesPage() {
                       </div>
 
                       {/* Time Control Card */}
-                      <div className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-lg bg-orange-50 border border-orange-100 flex items-center justify-center text-base shrink-0">
-                          ⏱️
+                      <div className="p-3.5 rounded-2xl bg-white shadow-xs flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-orange-100 text-[#E8640A] flex items-center justify-center shrink-0">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
                         </div>
                         <div>
                           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Time Control</span>
@@ -898,7 +865,7 @@ export default function TheBoardGamesPage() {
                           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Match Highlights</span>
                           <div className="flex flex-wrap gap-1.5">
                             {selectedDay.highlights.map((h, i) => (
-                              <span key={i} className="inline-flex items-center text-[11px] font-semibold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-md">
+                              <span key={i} className="inline-flex items-center text-[11px] font-semibold text-slate-700 bg-white shadow-2xs px-2.5 py-1 rounded-lg">
                                 {h}
                               </span>
                             ))}
@@ -908,12 +875,12 @@ export default function TheBoardGamesPage() {
 
                       {/* Actions / Match Day Notice */}
                       {selectedDay.arenaLink ? (
-                        <div className="flex flex-wrap items-center gap-2 pt-5 mt-5 border-t border-slate-200">
+                        <div className="flex flex-wrap items-center gap-2 pt-4 mt-3">
                           <a
                             href={selectedDay.arenaLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-sm transition-all cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-xs hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer"
                           >
                             <span>Join on Lichess</span>
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -924,7 +891,7 @@ export default function TheBoardGamesPage() {
                           <button
                             type="button"
                             onClick={handleCopyLink}
-                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs transition-all cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
                           >
                             <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
@@ -935,7 +902,7 @@ export default function TheBoardGamesPage() {
                           <button
                             type="button"
                             onClick={handleShare}
-                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs transition-all cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
                             title="Share match details"
                           >
                             <svg className="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -945,7 +912,7 @@ export default function TheBoardGamesPage() {
                           </button>
                         </div>
                       ) : (
-                        <div className="pt-4 mt-5 border-t border-slate-200 flex items-center gap-2 text-xs text-slate-500 font-medium">
+                        <div className="pt-4 mt-3 flex items-center gap-2 text-xs text-slate-500 font-medium">
                           <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
                           <span>Arena link and pairing fixtures unlock on match day.</span>
                         </div>
@@ -1188,7 +1155,7 @@ export default function TheBoardGamesPage() {
                   }
                 }}
                 aria-label={`${uni.name} roster card. Click to flip.`}
-                className="perspective-1000 h-[205px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-brand-primary rounded-2xl select-none"
+                className="perspective-1000 h-[235px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-brand-primary rounded-2xl select-none"
               >
                 <div
                   className={`relative w-full h-full duration-500 transform-style-3d transition-transform ${
@@ -1196,10 +1163,10 @@ export default function TheBoardGamesPage() {
                   }`}
                 >
                   {/* FRONT FACE: Clean, small card with black university text and no bg */}
-                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-sm hover:shadow-md transition-all p-4 flex flex-col justify-between overflow-hidden">
+                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between overflow-hidden">
                     <div>
                       {/* Top Bar: University Short (Black text, no bg) & Rating */}
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center justify-between mb-2.5">
                         <span className="text-xs font-black uppercase tracking-wider text-black">
                           {uni.short}
                         </span>
@@ -1226,9 +1193,9 @@ export default function TheBoardGamesPage() {
                   </div>
 
                   {/* BACK FACE: SS4 Blue Small Roster with Clickable Names (No chess.com buttons) */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-brand-primary text-white shadow-md p-3.5 flex flex-col justify-between overflow-hidden">
+                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-brand-primary text-white shadow-md p-4 flex flex-col justify-between overflow-hidden">
                     {/* Header */}
-                    <div className="flex items-center justify-between pb-1.5 mb-1 shrink-0 border-b border-white/15">
+                    <div className="flex items-center justify-between pb-2 mb-1 shrink-0 border-b border-white/15">
                       <span className="text-xs font-black text-white font-outfit uppercase tracking-wider">
                         {uni.short} Roster
                       </span>
@@ -1249,7 +1216,7 @@ export default function TheBoardGamesPage() {
                     </div>
 
                     {/* 5-Board Player List: Names clickable to pop up PlayerProfile */}
-                    <div className="space-y-1 overflow-y-auto flex-1 py-0.5 pr-0.5">
+                    <div className="space-y-1.5 overflow-y-auto flex-1 py-1 pr-0.5">
                       {uni.players && uni.players.length > 0 ? (
                         uni.players
                           .slice()
@@ -1257,7 +1224,7 @@ export default function TheBoardGamesPage() {
                           .map((player) => (
                             <div
                               key={player.id || player.board}
-                              className="flex items-center justify-between py-1 px-1.5 rounded-lg bg-white/10 hover:bg-white/15 transition-all text-xs"
+                              className="flex items-center justify-between py-1 px-2 rounded-lg bg-white/10 hover:bg-white/15 transition-all text-xs"
                             >
                               <div className="flex items-center gap-2 min-w-0 flex-1">
                                 <span className="w-5 h-5 rounded bg-white/20 text-white font-mono text-[10px] font-black flex items-center justify-center shrink-0">
@@ -1298,66 +1265,7 @@ export default function TheBoardGamesPage() {
         </div>
       </section>
 
-      {/* ── 6. MATCHDAY TIMELINE / TOURNAMENT ROADMAP ── */}
-      <section className="bg-slate-900 text-white py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-xs font-black uppercase tracking-widest text-orange-400 mb-2">
-              Tournament Roadmap
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-black font-outfit tracking-tight">
-              theBOARDGAMES October Calendar
-            </h2>
-            <p className="text-sm text-slate-400 mt-2">
-              23 days of non-stop inter-collegiate chess culminating in the national crowning ceremony.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {SCHEDULE_MILESTONES.map((mile, idx) => (
-              <div
-                key={idx}
-                className={`rounded-3xl p-6 border transition-all ${
-                  mile.isActive
-                    ? 'bg-gradient-to-b from-orange-500/20 to-orange-500/5 border-orange-500/50 shadow-lg shadow-orange-500/10'
-                    : 'bg-white/[0.04] border-white/10'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
-                    {mile.dates}
-                  </span>
-                  <span
-                    className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider ${
-                      mile.isActive
-                        ? 'bg-orange-500 text-white'
-                        : 'bg-white/10 text-slate-300'
-                    }`}
-                  >
-                    {mile.status}
-                  </span>
-                </div>
-
-                <span className="text-xs font-bold text-orange-400 block mb-1">{mile.phase}</span>
-                <h3 className="text-base font-black text-white mb-2 font-outfit">{mile.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed font-normal">{mile.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Slogan Banner */}
-          <div className="mt-14 pt-8 border-t border-white/10 text-center space-y-2">
-            <p className="text-lg font-black text-white font-outfit">
-              Many Institutions, One Space.
-            </p>
-            <p className="text-xs font-bold tracking-widest uppercase text-orange-400">
-              The Board Remembers.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 7. POSTER FULLSCREEN ZOOM MODAL ── */}
+      {/* ── 6. POSTER FULLSCREEN ZOOM MODAL ── */}
       <AnimatePresence>
         {isZoomOpen && (
           <motion.div

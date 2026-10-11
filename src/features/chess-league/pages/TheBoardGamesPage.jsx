@@ -501,6 +501,7 @@ export default function TheBoardGamesPage() {
   const [copied, setCopied] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     document.title = 'theBOARDGAMES: LeagueMatch 1 | SS4 Chess League';
@@ -710,79 +711,153 @@ export default function TheBoardGamesPage() {
         </div>
       </section>
 
-      {/* ── 2. LIVE ARENA CENTER (Interactive Lichess Tournament Frame) ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
-        <div className="rounded-3xl bg-white border border-slate-200/80 shadow-xl overflow-hidden">
-          {/* Header Bar */}
-          <div className="bg-slate-900 text-white p-5 sm:p-6 flex flex-wrap items-center justify-between gap-4 border-b border-slate-800">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <span className="text-xs font-black uppercase tracking-widest text-emerald-400">Official Match Arena</span>
-              </div>
-              <h2 className="text-xl sm:text-2xl font-black font-outfit tracking-tight">
-                theBoardGames LeagueMatch 1 Arena
-              </h2>
-              <p className="text-xs text-slate-400">
-                Arena Tournament ID: <code className="text-orange-400 font-mono font-bold">{ARENA_ID}</code> &bull; Hosted on Lichess.org
-              </p>
+      {/* ── 2. LIVE ARENA CENTER (The Varsity Arena Broadcast Deck) ── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        {/* Section Header / Eyebrow */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span className="text-xs font-black uppercase tracking-wider text-emerald-700 font-mono">
+                LIVE BROADCAST &bull; OFFICIAL ARENA
+              </span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black font-outfit text-slate-900 tracking-tight">
+              theBoardGames LeagueMatch 1 Arena
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              Live inter-collegiate arena tournament hosted on Lichess.org &bull; Tournament ID:{' '}
+              <code className="text-[#E8640A] font-mono font-bold bg-orange-50 px-1.5 py-0.5 rounded border border-orange-200">
+                {ARENA_ID}
+              </code>
+            </p>
+          </div>
+
+          {/* Quick Header Actions */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            <a
+              href={ARENA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white text-xs sm:text-sm font-black shadow-sm hover:shadow transition-all active:scale-[0.98] cursor-pointer"
+            >
+              <span>Open on Lichess</span>
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+
+            <button
+              type="button"
+              onClick={handleCopyLink}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-bold border border-slate-200 shadow-2xs transition-all active:scale-[0.98] cursor-pointer"
+            >
+              <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+              </svg>
+              <span>{copied ? 'Copied!' : 'Copy Link'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Arena Frame Container */}
+        <div className="rounded-2xl sm:rounded-3xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+          {/* Arena Control Deck Bar */}
+          <div className="bg-[#0B192C] text-white px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3 border-b border-slate-800">
+            {/* Status & Match Specs Badges */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-[11px] font-black tracking-wider uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                Official Arena
+              </span>
+
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/10 border border-white/15 text-slate-200 text-[11px] font-bold">
+                <span>⏱️</span>
+                <span>3+0 Blitz &bull; 5+0 Blitz &bull; 10+0 Rapid</span>
+              </span>
+
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/10 border border-white/15 text-slate-300 text-[11px] font-mono">
+                ID: {ARENA_ID}
+              </span>
             </div>
 
-            <div className="flex items-center gap-2.5 flex-wrap">
+            {/* View Mode & Utility Controls */}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer"
+                title={isExpanded ? "Collapse View" : "Expand Arena Height"}
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {isExpanded ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
+                  )}
+                </svg>
+                <span>{isExpanded ? 'Default Size' : 'Expand Height'}</span>
+              </button>
+
               <a
                 href={ARENA_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-black tracking-wide flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer"
+                title="Launch in Full Window"
               >
-                <span>Open in Lichess</span>
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
+                <span>Full Tab</span>
               </a>
-
-              <button
-                onClick={handleCopyLink}
-                className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 transition-all border border-slate-700 cursor-pointer"
-              >
-                <span>{copied ? 'Link Copied!' : 'Copy Link'}</span>
-              </button>
             </div>
           </div>
 
-          {/* Embedded Arena Frame */}
-          <div className="relative w-full bg-slate-950 min-h-[580px] sm:min-h-[640px] flex items-center justify-center">
+          {/* Iframe Arena Canvas */}
+          <div className={`relative w-full bg-[#181614] flex items-center justify-center transition-all duration-300 ${
+            isExpanded ? 'h-[780px] sm:h-[900px]' : 'h-[600px] sm:h-[680px]'
+          }`}>
+            {/* Loading Indicator */}
+            {!iframeLoaded && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#181614] text-white z-10">
+                <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-2xl mb-3 animate-pulse">
+                  ♟️
+                </div>
+                <p className="text-sm font-bold text-slate-200">Connecting to Lichess Arena...</p>
+                <p className="text-xs text-slate-400 mt-1">theBoardGames LeagueMatch 1</p>
+              </div>
+            )}
+
             <iframe
               src={ARENA_LINK}
               title="theBoardGames LeagueMatch 1 Live Arena"
-              className="w-full h-[580px] sm:h-[680px] border-none"
+              className="w-full h-full border-none"
               allowFullScreen
               onLoad={() => setIframeLoaded(true)}
             />
+          </div>
 
-            {/* Quick access overlay fallback banner at the bottom */}
-            <div className="absolute bottom-4 inset-x-4 sm:inset-x-8 bg-slate-900/95 backdrop-blur-md border border-slate-700/80 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-black text-sm shrink-0">
-                  ♟️
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-white">Direct Lichess Arena Access</p>
-                  <p className="text-[11px] text-slate-400">
-                    If browser security prevents direct in-page pairing or chat, launch the full arena in your Lichess app/browser tab.
-                  </p>
-                </div>
-              </div>
-
-              <a
-                href={ARENA_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-xl bg-white text-slate-900 hover:bg-orange-50 text-xs font-black shrink-0 transition-colors cursor-pointer"
-              >
-                Launch Arena Direct &rarr;
-              </a>
+          {/* Dedicated Non-Obtrusive Arena Footer Strip */}
+          <div className="bg-slate-50 border-t border-slate-200 px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+            <div className="flex items-center gap-2.5">
+              <span className="w-6 h-6 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-xs shrink-0">
+                ♟
+              </span>
+              <span>
+                <strong className="text-slate-800">Direct Lichess Arena Access:</strong> If browser cookie policies limit in-frame pairing or chat, open directly on Lichess.
+              </span>
             </div>
+
+            <a
+              href={ARENA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-bold text-[#E8640A] hover:text-[#c95307] transition-colors whitespace-nowrap shrink-0"
+            >
+              <span>Launch Arena in Lichess App / Browser</span>
+              <span aria-hidden="true">&rarr;</span>
+            </a>
           </div>
         </div>
       </section>

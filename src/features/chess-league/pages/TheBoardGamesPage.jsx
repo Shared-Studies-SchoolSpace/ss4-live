@@ -1188,22 +1188,19 @@ export default function TheBoardGamesPage() {
                   }
                 }}
                 aria-label={`${uni.name} roster card. Click to flip.`}
-                className="perspective-1000 h-[225px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-brand-primary rounded-2xl select-none"
+                className="perspective-1000 h-[205px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-brand-primary rounded-2xl select-none"
               >
                 <div
                   className={`relative w-full h-full duration-500 transform-style-3d transition-transform ${
                     isFlipped ? 'rotate-y-180' : ''
                   }`}
                 >
-                  {/* FRONT FACE: Small, clean institution card (Borderless, Elevated) */}
+                  {/* FRONT FACE: Clean, small card with black university text and no bg */}
                   <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-sm hover:shadow-md transition-all p-4 flex flex-col justify-between overflow-hidden">
                     <div>
-                      {/* Top Bar: Abbreviation badge & rating */}
-                      <div className="flex items-center justify-between mb-2.5">
-                        <span
-                          className="px-2 py-0.5 rounded-md text-[11px] font-black uppercase tracking-wider"
-                          style={{ backgroundColor: `${uni.color}15`, color: uni.color }}
-                        >
+                      {/* Top Bar: University Short (Black text, no bg) & Rating */}
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-black uppercase tracking-wider text-black">
                           {uni.short}
                         </span>
                         <span className="text-[11px] font-bold font-mono text-slate-500">
@@ -1211,23 +1208,15 @@ export default function TheBoardGamesPage() {
                         </span>
                       </div>
 
-                      {/* University Name */}
-                      <h4 className="text-sm font-black text-slate-900 font-outfit leading-snug line-clamp-2 group-hover:text-brand-primary transition-colors">
+                      {/* University Full Name (Black text, no bg) */}
+                      <h4 className="text-sm font-black text-black font-outfit leading-snug line-clamp-2">
                         {uni.name}
                       </h4>
-
-                      {/* Subtitle / Motto */}
-                      {uni.motto && (
-                        <p className="text-[11px] text-slate-500 mt-1 truncate font-medium">
-                          {uni.motto}
-                        </p>
-                      )}
                     </div>
 
-                    {/* Footer: Simple Flip Affordance */}
-                    <div className="pt-2 flex items-center justify-between text-xs font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
-                      <span className="text-[11px] text-slate-400 font-semibold">5 Boards</span>
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold bg-blue-50 text-brand-primary px-2.5 py-1 rounded-md group-hover:bg-blue-100 transition-colors">
+                    {/* Footer: Roster Flip Action (No squad field) */}
+                    <div className="pt-2 flex items-center justify-end text-xs font-bold text-brand-primary">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-brand-primary hover:text-brand-accent transition-colors">
                         <span>Roster</span>
                         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />

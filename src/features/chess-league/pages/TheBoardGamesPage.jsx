@@ -234,13 +234,8 @@ export default function TheBoardGamesPage() {
               <span className="text-orange-400 font-bold">theBOARDGAMES</span>
             </div>
 
-            {/* Live Pulsing Beacon Pill */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-black tracking-wider uppercase shadow-xs">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-              </span>
-              <span>LIVE • DAY 1 LEAGUEMATCH 1</span>
+            <div className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
+              Day 1 &bull; LeagueMatch 1
             </div>
           </div>
 
@@ -373,7 +368,7 @@ export default function TheBoardGamesPage() {
           <div className="bg-slate-900 text-white p-5 sm:p-6 flex flex-wrap items-center justify-between gap-4 border-b border-slate-800">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
                 <span className="text-xs font-black uppercase tracking-widest text-emerald-400">Official Match Arena</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-black font-outfit tracking-tight">

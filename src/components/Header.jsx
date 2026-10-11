@@ -121,14 +121,9 @@ export const Header = () => {
               </div>
               <a 
                 href="/theboardgames"
-                className="relative inline-flex items-center gap-1.5 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-xl text-[12px] xl:text-[13px] font-black transition-all bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-orange-500/15 border border-orange-500/30 text-orange-600 hover:text-orange-700 hover:border-orange-500 hover:shadow-xs whitespace-nowrap shrink-0 group"
+                className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-orange-600 hover:text-orange-700 transition-colors whitespace-nowrap shrink-0"
               >
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-                </span>
-                <span className="font-black tracking-tight">theBOARDGAMES</span>
-                <span className="text-[9px] font-black bg-orange-600 text-white px-1.5 py-0.5 rounded-full uppercase tracking-wider">LIVE</span>
+                theBOARDGAMES
               </a>
               <a href="/sas" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Assessment Series</a>
               <a href="/award" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Aspirants Award</a>
@@ -397,17 +392,10 @@ export const Header = () => {
               </a>
               <a 
                 href="/theboardgames" 
-                className="text-[13px] sm:text-[14px] font-black text-orange-600 hover:text-orange-700 py-2 px-3.5 rounded-xl bg-orange-50 border border-orange-200/80 flex items-center justify-between shadow-2xs my-0.5" 
+                className="text-[13px] sm:text-[14px] font-bold text-orange-600 hover:text-orange-700 py-0.5" 
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-                  </span>
-                  <span>theBOARDGAMES (Day 1)</span>
-                </div>
-                <span className="text-[9px] font-black bg-orange-600 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">Match 1 Live</span>
+                theBOARDGAMES
               </a>
 
               <a href="/tertiary/admission" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Admission</a>

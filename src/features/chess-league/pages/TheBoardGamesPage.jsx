@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { VARSITY_TEAMS } from '../data/varsityData';
+import { PlayerProfile } from '../components/PlayerProfile';
 
 const ARENA_LINK = 'https://lichess.org/tournament/1e80iceM';
 const ARENA_ID = '1e80iceM';
@@ -75,16 +76,6 @@ const INSTITUTION_CARDS = ORDERED_INSTITUTION_IDS.map(id => {
     players: team.players || []
   };
 });
-
-const getPlayerProfileUrl = (player) => {
-  if (!player || !player.handle) return '#';
-  const handle = encodeURIComponent(player.handle);
-  if (player.platform === 'lichess') {
-    return `https://lichess.org/@/${handle}`;
-  }
-  return `https://www.chess.com/member/${handle}`;
-};
-
 
 const SCHEDULE_MILESTONES = [
   {
@@ -512,12 +503,34 @@ export default function TheBoardGamesPage() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showAllStandings, setShowAllStandings] = useState(false);
   const [flippedCards, setFlippedCards] = useState({});
+  const [selectedPlayerForModal, setSelectedPlayerForModal] = useState(null);
 
   const toggleCardFlip = (teamId) => {
     setFlippedCards(prev => ({
       ...prev,
       [teamId]: !prev[teamId]
     }));
+  };
+
+  const handlePlayerClick = (e, player, uni) => {
+    e.stopPropagation();
+    setSelectedPlayerForModal({
+      ...player,
+      name: player.name,
+      username: player.handle,
+      chess_username: player.platform === 'chesscom' ? player.handle : player.handle,
+      lichess_username: player.platform === 'lichess' ? player.handle : undefined,
+      university: uni.name,
+      school: uni.name,
+      department: `Board ${player.board} • ${uni.short}`,
+      rating: player.rating,
+      chess_rating: player.rating,
+      stats: player.stats || {},
+      P: player.stats?.played || 6,
+      W: player.stats?.wins || 0,
+      D: player.stats?.draws || 0,
+      L: player.stats?.losses || 0,
+    });
   };
 
   useEffect(() => {
@@ -1158,7 +1171,7 @@ export default function TheBoardGamesPage() {
           </a>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {INSTITUTION_CARDS.map((uni) => {
             const isFlipped = !!flippedCards[uni.id];
 
@@ -1175,172 +1188,117 @@ export default function TheBoardGamesPage() {
                   }
                 }}
                 aria-label={`${uni.name} roster card. Click to flip.`}
-                className="perspective-1000 h-[385px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-brand-primary rounded-2xl select-none"
+                className="perspective-1000 h-[225px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-brand-primary rounded-2xl select-none"
               >
                 <div
                   className={`relative w-full h-full duration-500 transform-style-3d transition-transform ${
                     isFlipped ? 'rotate-y-180' : ''
                   }`}
                 >
-                  {/* FRONT FACE: Institution Identity & Accolades (Borderless, Elevated) */}
-                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-md hover:shadow-xl transition-all p-5 flex flex-col justify-between overflow-hidden">
+                  {/* FRONT FACE: Small, clean institution card (Borderless, Elevated) */}
+                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-sm hover:shadow-md transition-all p-4 flex flex-col justify-between overflow-hidden">
                     <div>
-                      {/* Top Badges */}
-                      <div className="flex items-center justify-between mb-3.5">
+                      {/* Top Bar: Abbreviation badge & rating */}
+                      <div className="flex items-center justify-between mb-2.5">
                         <span
-                          className="px-2.5 py-1 rounded-lg text-[11px] font-black uppercase tracking-wider"
+                          className="px-2 py-0.5 rounded-md text-[11px] font-black uppercase tracking-wider"
                           style={{ backgroundColor: `${uni.color}15`, color: uni.color }}
                         >
                           {uni.short}
                         </span>
-                        <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full truncate max-w-[150px]">
-                          {uni.motto}
+                        <span className="text-[11px] font-bold font-mono text-slate-500">
+                          {uni.averageRating} Elo
                         </span>
                       </div>
 
-                      {/* University Title & Nickname */}
-                      <h4 className="text-base font-black text-slate-900 font-outfit leading-snug group-hover:text-brand-primary transition-colors line-clamp-2">
+                      {/* University Name */}
+                      <h4 className="text-sm font-black text-slate-900 font-outfit leading-snug line-clamp-2 group-hover:text-brand-primary transition-colors">
                         {uni.name}
                       </h4>
-                      {uni.nickname && (
-                        <p className="text-xs text-slate-500 font-medium mt-0.5 truncate">
-                          {uni.nickname}
+
+                      {/* Subtitle / Motto */}
+                      {uni.motto && (
+                        <p className="text-[11px] text-slate-500 mt-1 truncate font-medium">
+                          {uni.motto}
                         </p>
-                      )}
-
-                      {/* Team Stats Matrix */}
-                      <div className="mt-4 pt-3 grid grid-cols-2 gap-2 text-xs">
-                        <div className="bg-slate-50 rounded-xl p-2.5">
-                          <span className="text-[10px] font-semibold text-slate-400 block uppercase tracking-wider">Squad Field</span>
-                          <span className="font-black text-slate-800 text-xs">5 Boards Confirmed</span>
-                        </div>
-                        <div className="bg-slate-50 rounded-xl p-2.5">
-                          <span className="text-[10px] font-semibold text-slate-400 block uppercase tracking-wider">Avg Rating</span>
-                          <span className="font-black text-brand-primary font-space text-xs">{uni.averageRating} Elo</span>
-                        </div>
-                      </div>
-
-                      {/* Key Contenders */}
-                      {uni.notable && (
-                        <div className="mt-3 text-[11px] text-slate-600 bg-blue-50/50 rounded-xl p-2.5 leading-relaxed">
-                          <strong className="text-slate-800 font-bold block mb-0.5">Top Contenders:</strong>
-                          <span className="line-clamp-2">{uni.notable}</span>
-                        </div>
                       )}
                     </div>
 
-                    {/* Interactive Flip Affordance Footer */}
-                    <div className="pt-3 flex items-center justify-between text-xs font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
-                      <span>View 5-Board Roster</span>
-                      <span className="inline-flex items-center gap-1.5 text-[11px] font-bold bg-blue-50 text-brand-primary px-3 py-1 rounded-full group-hover:bg-blue-100 transition-colors">
-                        <span>Flip</span>
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    {/* Footer: Simple Flip Affordance */}
+                    <div className="pt-2 flex items-center justify-between text-xs font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
+                      <span className="text-[11px] text-slate-400 font-semibold">5 Boards</span>
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold bg-blue-50 text-brand-primary px-2.5 py-1 rounded-md group-hover:bg-blue-100 transition-colors">
+                        <span>Roster</span>
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
                         </svg>
                       </span>
                     </div>
                   </div>
 
-                  {/* BACK FACE: SS4 Blue Official 5-Board Roster with Direct Profile Links (Borderless, SS4 Blue) */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-brand-primary text-white shadow-xl p-4 sm:p-5 flex flex-col justify-between overflow-hidden">
-                    <div className="min-h-0 flex flex-col">
-                      {/* Back Header */}
-                      <div className="flex items-center justify-between pb-2.5 mb-2.5 shrink-0 bg-white/10 -mx-4 -mt-4 sm:-mx-5 sm:-mt-5 px-4 sm:px-5 pt-3.5">
-                        <div className="flex items-center gap-2 min-w-0">
-                          <span className="px-2 py-0.5 rounded-md bg-white/20 text-white font-mono font-black text-[11px] uppercase tracking-wider shrink-0">
-                            {uni.short}
-                          </span>
-                          <div className="min-w-0">
-                            <h5 className="text-xs font-black text-white uppercase tracking-wider truncate font-outfit">
-                              Official Roster
-                            </h5>
-                            <p className="text-[10px] text-white/70 font-mono truncate leading-none">
-                              5 Confirmed Boards
-                            </p>
-                          </div>
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleCardFlip(uni.id);
-                          }}
-                          className="px-2.5 py-1 rounded-lg bg-white/20 hover:bg-white text-white hover:text-brand-primary text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
-                          title="Flip back to team overview"
-                        >
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                          </svg>
-                          <span>Back</span>
-                        </button>
-                      </div>
-
-                      {/* 5-Board Player List */}
-                      <div className="space-y-1.5 overflow-y-auto pr-0.5 flex-1 py-1">
-                        {uni.players && uni.players.length > 0 ? (
-                          uni.players
-                            .slice()
-                            .sort((a, b) => a.board - b.board)
-                            .map((player) => {
-                              const profileUrl = getPlayerProfileUrl(player);
-                              const platformName = player.platform === 'lichess' ? 'Lichess' : 'Chess.com';
-
-                              return (
-                                <div
-                                  key={player.id || player.board}
-                                  className="flex items-center justify-between py-1.5 px-2.5 rounded-xl bg-white/10 hover:bg-white/15 transition-all group/player"
-                                >
-                                  {/* Player Info */}
-                                  <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                                    <span className="w-6 h-6 rounded-lg bg-white/20 text-white font-mono text-[11px] font-black flex items-center justify-center shrink-0">
-                                      B{player.board}
-                                    </span>
-                                    <div className="min-w-0">
-                                      <p className="text-xs font-bold text-white truncate leading-tight group-hover/player:text-amber-200 transition-colors">
-                                        {player.name}
-                                      </p>
-                                      <p className="text-[10px] text-white/70 font-mono truncate leading-none mt-0.5">
-                                        @{player.handle} &bull; <span className="text-white/95 font-semibold">{player.rating} Elo</span>
-                                      </p>
-                                    </div>
-                                  </div>
-
-                                  {/* Profile External Link Button */}
-                                  <a
-                                    href={profileUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={(e) => e.stopPropagation()}
-                                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/20 hover:bg-white text-white hover:text-brand-primary text-[10px] font-bold shrink-0 transition-all cursor-pointer shadow-xs"
-                                    title={`Open ${player.name}'s verified profile on ${platformName}`}
-                                  >
-                                    <span>{platformName}</span>
-                                    <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                    </svg>
-                                  </a>
-                                </div>
-                              );
-                            })
-                        ) : (
-                          <div className="py-6 text-center text-xs text-white/70">
-                            Roster pending verification
-                          </div>
-                        )}
-                      </div>
+                  {/* BACK FACE: SS4 Blue Small Roster with Clickable Names (No chess.com buttons) */}
+                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-brand-primary text-white shadow-md p-3.5 flex flex-col justify-between overflow-hidden">
+                    {/* Header */}
+                    <div className="flex items-center justify-between pb-1.5 mb-1 shrink-0 border-b border-white/15">
+                      <span className="text-xs font-black text-white font-outfit uppercase tracking-wider">
+                        {uni.short} Roster
+                      </span>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleCardFlip(uni.id);
+                        }}
+                        className="px-2 py-0.5 rounded-md bg-white/15 hover:bg-white text-white hover:text-brand-primary text-[10px] font-bold transition-all flex items-center gap-1 cursor-pointer"
+                        title="Flip back"
+                      >
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        <span>Back</span>
+                      </button>
                     </div>
 
-                    {/* Back Footer */}
-                    <div className="pt-2 mt-1 flex items-center justify-between text-[10px] text-white/75 shrink-0">
-                      <span className="flex items-center gap-1.5">
-                        <span>Click profile to view live games</span>
-                        <svg className="w-3 h-3 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </span>
-                      <span className="text-white font-bold truncate max-w-[130px]">
-                        {uni.short} Varsity
+                    {/* 5-Board Player List: Names clickable to pop up PlayerProfile */}
+                    <div className="space-y-1 overflow-y-auto flex-1 py-0.5 pr-0.5">
+                      {uni.players && uni.players.length > 0 ? (
+                        uni.players
+                          .slice()
+                          .sort((a, b) => a.board - b.board)
+                          .map((player) => (
+                            <div
+                              key={player.id || player.board}
+                              className="flex items-center justify-between py-1 px-1.5 rounded-lg bg-white/10 hover:bg-white/15 transition-all text-xs"
+                            >
+                              <div className="flex items-center gap-2 min-w-0 flex-1">
+                                <span className="w-5 h-5 rounded bg-white/20 text-white font-mono text-[10px] font-black flex items-center justify-center shrink-0">
+                                  B{player.board}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={(e) => handlePlayerClick(e, player, uni)}
+                                  className="font-bold text-white hover:text-amber-200 hover:underline truncate text-left cursor-pointer transition-colors"
+                                  title={`View ${player.name}'s profile`}
+                                >
+                                  {player.name}
+                                </button>
+                              </div>
+                              <span className="text-[10px] text-white/75 font-mono shrink-0 pl-1">
+                                {player.rating}
+                              </span>
+                            </div>
+                          ))
+                      ) : (
+                        <div className="py-4 text-center text-xs text-white/70">
+                          Roster pending
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Footer hint */}
+                    <div className="pt-1 mt-0.5 text-center shrink-0">
+                      <span className="text-[10px] text-white/60">
+                        Tap player name to view info
                       </span>
                     </div>
                   </div>
@@ -1436,6 +1394,14 @@ export default function TheBoardGamesPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ── 8. PLAYER PROFILE MODAL ── */}
+      {selectedPlayerForModal && (
+        <PlayerProfile
+          player={selectedPlayerForModal}
+          onClose={() => setSelectedPlayerForModal(null)}
+        />
+      )}
     </div>
   );
 }

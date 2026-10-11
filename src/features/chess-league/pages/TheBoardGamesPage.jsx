@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
+import { VARSITY_TEAMS } from '../data/varsityData';
 
 const ARENA_LINK = 'https://lichess.org/tournament/1e80iceM';
 const ARENA_ID = '1e80iceM';
@@ -29,112 +30,61 @@ const TIME_CONTROLS = [
   }
 ];
 
-const SCORING_RULES = [
-  {
-    title: 'Match Win',
-    score: '+2 Pts',
-    sub: 'Standard Win',
-    desc: 'Regular arena victory awarded upon checkmate, resignation, or opponent clock expiry.'
-  },
-  {
-    title: 'Win Streak Fire',
-    score: '+3 Pts',
-    sub: 'Flame Multiplier',
-    desc: 'After 2 consecutive wins, all subsequent victories in the streak grant double points (+3 to +4).'
-  },
-  {
-    title: 'Match Draw',
-    score: '+1 Pt',
-    sub: 'Shared Result',
-    desc: 'Stalemate, threefold repetition, or agreed draw (subject to minimum move requirements).'
-  },
-  {
-    title: 'Berserk Mode',
-    score: '+1 Bonus',
-    sub: 'Half Clock Risk',
-    desc: 'Voluntarily slash your clock by 50% at move 0. If you win, you earn an extra bonus point.'
-  }
+const INSTITUTION_METAS = {
+  covenant: { short: 'CU', motto: 'Reigning Champions', color: '#0D9488', notable: 'Anuchi Emmanuel (August Champion), Alao David' },
+  unilorin: { short: 'UNILORIN', motto: 'The Better By Far', color: '#DB2777', notable: 'Kenneth Gilbert (August Runner-Up), Durojaiye B.' },
+  bells: { short: 'BELLSTECH', motto: 'First Private Tech University', color: '#DC2626', notable: 'James Henshaw (August Semifinalist), Anietie Ben' },
+  futia: { short: 'FUTIA', motto: 'Aerospace & Tech Pride', color: '#059669', notable: 'Emmanuel Michael (August Semifinalist), Thompson E.' },
+  uniuyo: { short: 'UNIUYO', motto: 'Unity, Wisdom & Service', color: '#EA580C', notable: 'Jesse Edem (June Champion), Peter Eti' },
+  babcock: { short: 'BABCOCK', motto: 'Knowledge, Truth & Service', color: '#D97706', notable: 'Akogo Simon (Elite 8), Adedipe Temini' },
+  landmark: { short: 'LANDMARK', motto: 'Agrarian Revolutionaries', color: '#7C3AED', notable: 'Princewill Obi (Elite 8), Mbah Ernest' },
+  unn: { short: 'UNN', motto: 'Restoring The Dignity', color: '#0284C7', notable: 'Okoli Tochukwu (July Champion), Ugwu Praise' },
+  unical: { short: 'UNICAL', motto: 'Knowledge For Service', color: '#E11D48', notable: 'Dean Bassey (Elite 8), Ita Best James' },
+  redeemers: { short: 'RUN', motto: 'Running with the Vision', color: '#2563EB', notable: 'Daniel Daniel, Odukoya Emmanuel' },
+  biu: { short: 'BIU', motto: 'Academic Excellence', color: '#B45309', notable: 'Akinrogunde Clinton, Jeffrey Obanor' }
+};
+
+const ORDERED_INSTITUTION_IDS = [
+  'covenant',
+  'unilorin',
+  'bells',
+  'futia',
+  'uniuyo',
+  'babcock',
+  'landmark',
+  'unn',
+  'unical',
+  'redeemers',
+  'biu'
 ];
 
-const PARTICIPATING_UNIVERSITIES = [
-  {
-    name: 'Covenant University',
-    short: 'CU',
-    color: '#0D9488',
-    notable: 'Anuchi Emmanuel (August Champion), Alao David',
-    motto: 'Reigning Champions'
-  },
-  {
-    name: 'University of Ilorin',
-    short: 'UNILORIN',
-    color: '#DB2777',
-    notable: 'Kenneth Gilbert (August Runner-Up), Durojaiye B.',
-    motto: 'The Better By Far'
-  },
-  {
-    name: 'Bells University of Technology',
-    short: 'BELLSTECH',
-    color: '#DC2626',
-    notable: 'James Henshaw (August Semifinalist), Anietie Ben',
-    motto: 'First Private Tech University'
-  },
-  {
-    name: 'Fed. Univ. of Tech. Ikot Abasi',
-    short: 'FUTIA',
-    color: '#059669',
-    notable: 'Emmanuel Michael (August Semifinalist), Thompson E.',
-    motto: 'Aerospace & Tech Pride'
-  },
-  {
-    name: 'University of Uyo',
-    short: 'UNIUYO',
-    color: '#EA580C',
-    notable: 'Jesse Edem (June Champion), Esang Uwe',
-    motto: 'Unity, Wisdom & Service'
-  },
-  {
-    name: 'Babcock University',
-    short: 'BABCOCK',
-    color: '#D97706',
-    notable: 'Akogo Simon (Elite 8), Adedipe Temini',
-    motto: 'Knowledge, Truth & Service'
-  },
-  {
-    name: 'Landmark University',
-    short: 'LANDMARK',
-    color: '#7C3AED',
-    notable: 'Princewill Obi (Elite 8), Mbah Ernest',
-    motto: 'Agrarian Revolutionaries'
-  },
-  {
-    name: 'University of Nigeria Nsukka',
-    short: 'UNN',
-    color: '#0284C7',
-    notable: 'Okoli Tochukwu (July Champion), Ugwu Praise',
-    motto: 'Restoring The Dignity'
-  },
-  {
-    name: 'University of Calabar',
-    short: 'UNICAL',
-    color: '#E11D48',
-    notable: 'Dean Bassey (Elite 8), Ita Best James',
-    motto: 'Knowledge For Service'
-  },
-  {
-    name: "Redeemer's University",
-    short: 'RUN',
-    color: '#2563EB',
-    notable: 'Daniel Daniel, Odukoya Emmanuel',
-    motto: 'Running with the Vision'
-  },
-  {
-    name: 'Benson Idahosa University',
-    short: 'BIU',
-    color: '#B45309',
-    notable: 'Akinrogunde Clinton, Jeffrey Obanor',
-    motto: 'Academic Excellence'
+const INSTITUTION_CARDS = ORDERED_INSTITUTION_IDS.map(id => {
+  const team = VARSITY_TEAMS.find(t => t.id === id) || {};
+  const meta = INSTITUTION_METAS[id] || {};
+  return {
+    id,
+    name: team.name || meta.short,
+    short: meta.short || team.shortName || id.toUpperCase(),
+    color: meta.color || team.color || '#E8640A',
+    motto: meta.motto || team.nickname || 'Varsity Challenger',
+    notable: meta.notable || '',
+    nickname: team.nickname || '',
+    location: team.location || team.name,
+    averageRating: team.averageRating || 2050,
+    record: team.record || { wins: 0, draws: 0, losses: 0 },
+    players: team.players || []
+  };
+});
+
+const getPlayerProfileUrl = (player) => {
+  if (!player || !player.handle) return '#';
+  const handle = encodeURIComponent(player.handle);
+  if (player.platform === 'lichess') {
+    return `https://lichess.org/@/${handle}`;
   }
-];
+  return `https://www.chess.com/member/${handle}`;
+};
+
 
 const SCHEDULE_MILESTONES = [
   {
@@ -179,12 +129,73 @@ const TOURNAMENT_DAYS = [
     title: 'theBoardGames LeagueMatch 1',
     phase: 'Phase 1',
     stage: 'Kickoff Arena Launch',
-    status: 'ACTIVE NOW',
-    isLive: true,
+    status: 'COMPLETED',
+    isCompleted: true,
+    isLive: false,
     timeControl: '3+0 Blitz • 5+0 Blitz • 10+0 Rapid',
     arenaLink: ARENA_LINK,
-    description: 'The official Day 1 kickoff arena on Lichess. All 11 registered university contenders clash for opening season points and leaderboard seeding.',
-    highlights: ['Official Lichess Arena', 'Win Streak Multipliers active', 'Open to all registered universities']
+    description: 'Day 1 kickoff arena on Lichess has officially concluded. 31 university contenders clashed across 112 matches with Juk3s taking the championship with 33 points.',
+    highlights: ['31 Contenders', '112 Games Played', 'Winner: Juk3s (33 pts)', 'Runner-Up: minatoe5 (26 pts)'],
+    results: {
+      totalPlayers: 31,
+      totalGames: 112,
+      totalMoves: 8162,
+      durationMinutes: 60,
+      podium: [
+        {
+          rank: 1,
+          medal: '🥇',
+          label: 'Champion',
+          name: 'Juk3s',
+          school: 'Champion',
+          rating: 2264,
+          score: 33,
+          performance: 2246,
+          games: 12,
+          wins: 9,
+          berserks: 8
+        },
+        {
+          rank: 2,
+          medal: '🥈',
+          label: 'Runner-Up',
+          name: 'minatoe5',
+          realName: 'Peter Eti Essien',
+          school: 'University of Uyo',
+          rating: 2132,
+          score: 26,
+          performance: 2274,
+          games: 11,
+          wins: 7,
+          berserks: 8
+        },
+        {
+          rank: 3,
+          medal: '🥉',
+          label: '2nd Runner-Up',
+          name: 'D-genius',
+          school: '2nd Runner-Up',
+          rating: 2228,
+          score: 23,
+          performance: 1975,
+          games: 12,
+          wins: 7,
+          berserks: 4
+        }
+      ],
+      standings: [
+        { rank: 1, name: 'Juk3s', rating: 2264, score: 33, performance: 2246, record: '9W • 12G' },
+        { rank: 2, name: 'minatoe5', detail: 'Peter Eti Essien (UNIUYO)', rating: 2132, score: 26, performance: 2274, record: '7W • 11G' },
+        { rank: 3, name: 'D-genius', rating: 2228, score: 23, performance: 1975, record: '7W • 12G' },
+        { rank: 4, name: 'simon25', rating: 2034, score: 20, performance: 2031, record: '6W • 12G' },
+        { rank: 5, name: 'garconune', rating: 1876, score: 20, performance: 1986, record: '6W • 12G' },
+        { rank: 6, name: 'Darlington12', rating: 2297, score: 18, performance: 2212, record: '6W • 8G' },
+        { rank: 7, name: 'emike001', rating: 2082, score: 18, performance: 2081, record: '6W • 12G' },
+        { rank: 8, name: 'Yuki_Prime', rating: 1843, score: 16, performance: 1961, record: '5W • 11G' },
+        { rank: 9, name: 'mittensttock', rating: 1864, score: 15, performance: 1914, record: '5W • 11G' },
+        { rank: 10, name: 'KeseneNicholas', rating: 1640, score: 14, performance: 1680, record: '5W • 10G' }
+      ]
+    }
   },
   {
     day: 10,
@@ -502,6 +513,15 @@ export default function TheBoardGamesPage() {
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showAllStandings, setShowAllStandings] = useState(false);
+  const [flippedCards, setFlippedCards] = useState({});
+
+  const toggleCardFlip = (teamId) => {
+    setFlippedCards(prev => ({
+      ...prev,
+      [teamId]: !prev[teamId]
+    }));
+  };
 
   useEffect(() => {
     document.title = 'theBOARDGAMES: LeagueMatch 1 | SS4 Chess League';
@@ -589,7 +609,7 @@ export default function TheBoardGamesPage() {
                       <span className={`text-[9px] sm:text-[10px] font-semibold leading-none ${
                         isSelected ? 'text-orange-100' : 'text-slate-500'
                       }`}>
-                        {d.day === 9 ? 'Match 1' : 'Oct'}
+                        {d.isCompleted ? 'Final' : 'Oct'}
                       </span>
                     </button>
                   );
@@ -608,100 +628,307 @@ export default function TheBoardGamesPage() {
                   transition={{ duration: 0.18 }}
                   className="rounded-2xl sm:rounded-3xl bg-slate-50 border border-slate-200/90 p-5 sm:p-6 shadow-xs flex flex-col justify-between"
                 >
-                  <div className="space-y-4">
-                    {/* Header Row */}
-                    <div className="border-b border-slate-200/80 pb-3">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
-                        Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
-                      </span>
-                      <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide">
-                        {selectedDay.phase}
-                      </span>
-                    </div>
-
-                    {/* Match Title & Stage */}
-                    <div>
-                      <h3 className="text-xl sm:text-2xl font-black font-outfit text-slate-900 leading-snug">
-                        {selectedDay.title}
-                      </h3>
-                      <p className="text-xs font-bold text-slate-500 mt-1">
-                        Stage: {selectedDay.stage}
-                      </p>
-                    </div>
-
-                    {/* Time Control Card */}
-                    <div className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-orange-50 border border-orange-100 flex items-center justify-center text-base shrink-0">
-                        ⏱️
+                  {selectedDay.isCompleted && selectedDay.results ? (
+                    /* ── COMPLETED ARENA WINNERS VIEW ── */
+                    <div className="space-y-4">
+                      {/* Header Row */}
+                      <div className="border-b border-slate-200/80 pb-3 flex items-center justify-between">
+                        <div>
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+                            Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
+                          </span>
+                          <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide">
+                            {selectedDay.phase} &bull; {selectedDay.stage}
+                          </span>
+                        </div>
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1">
+                          <span>🏆</span>
+                          <span>Final Results</span>
+                        </span>
                       </div>
+
+                      {/* Title & Stats */}
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Time Control</span>
-                        <span className="text-xs sm:text-sm font-black text-slate-800">{selectedDay.timeControl}</span>
+                        <h3 className="text-xl sm:text-2xl font-black font-outfit text-slate-900 leading-snug">
+                          {selectedDay.title}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md">
+                            👥 {selectedDay.results.totalPlayers} Contenders
+                          </span>
+                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md">
+                            ⚔️ {selectedDay.results.totalGames} Games
+                          </span>
+                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md">
+                            ⏱️ 60 Mins Arena
+                          </span>
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Description */}
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      {selectedDay.description}
-                    </p>
+                      {/* ── Official Tournament Podium ── */}
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
+                            Official Podium Winners
+                          </span>
+                          <span className="text-[10px] font-bold text-amber-700">Top 3 Finishers</span>
+                        </div>
 
-                    {/* Highlights */}
-                    {selectedDay.highlights && (
-                      <div className="space-y-1.5 pt-1">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Match Highlights</span>
-                        <div className="flex flex-wrap gap-1.5">
-                          {selectedDay.highlights.map((h, i) => (
-                            <span key={i} className="inline-flex items-center text-[11px] font-semibold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-md">
-                              {h}
-                            </span>
+                        {/* 3-Column Olympic Podium Layout: 2nd on Left, 1st in Middle, 3rd on Right */}
+                        <div className="grid grid-cols-3 gap-2 items-end pt-1">
+                          {/* 2nd Place (Silver) */}
+                          <div className="bg-slate-100/90 border border-slate-300 rounded-xl p-2.5 text-center flex flex-col justify-between min-h-[145px]">
+                            <div>
+                              <div className="w-6 h-6 rounded-full bg-slate-200 border border-slate-300 mx-auto flex items-center justify-center text-xs font-bold shadow-2xs mb-1">
+                                🥈
+                              </div>
+                              <span className="text-[9px] font-black uppercase tracking-wider text-slate-500 block">
+                                2nd Place
+                              </span>
+                              <span className="text-xs sm:text-sm font-black text-slate-900 block truncate" title={selectedDay.results.podium[1].name}>
+                                {selectedDay.results.podium[1].name}
+                              </span>
+                              {selectedDay.results.podium[1].school && (
+                                <span className="text-[9px] font-semibold text-slate-500 block truncate leading-tight mt-0.5">
+                                  {selectedDay.results.podium[1].school}
+                                </span>
+                              )}
+                            </div>
+                            <div className="mt-2 pt-1 border-t border-slate-200/70">
+                              <span className="text-base sm:text-lg font-black text-slate-800 font-outfit block leading-none">
+                                {selectedDay.results.podium[1].score}
+                              </span>
+                              <span className="text-[9px] font-bold text-slate-400">pts &bull; {selectedDay.results.podium[1].rating}</span>
+                            </div>
+                          </div>
+
+                          {/* 1st Place (Gold - Elevated Champion) */}
+                          <div className="bg-gradient-to-b from-amber-50 to-amber-100/60 border-2 border-amber-400 rounded-2xl p-3 text-center flex flex-col justify-between min-h-[165px] shadow-sm relative">
+                            <div className="absolute -top-2.5 inset-x-0 flex justify-center">
+                              <span className="bg-amber-500 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-2xs">
+                                Champion
+                              </span>
+                            </div>
+                            <div className="pt-1">
+                              <div className="w-7 h-7 rounded-full bg-amber-400 border border-amber-500 mx-auto flex items-center justify-center text-sm font-bold shadow-xs mb-1">
+                                🥇
+                              </div>
+                              <span className="text-[9px] font-black uppercase tracking-wider text-amber-800 block">
+                                Winner
+                              </span>
+                              <span className="text-sm sm:text-base font-black text-slate-900 block truncate" title={selectedDay.results.podium[0].name}>
+                                {selectedDay.results.podium[0].name}
+                              </span>
+                              <span className="text-[10px] font-bold text-amber-700 block mt-0.5">
+                                Rating {selectedDay.results.podium[0].rating}
+                              </span>
+                            </div>
+                            <div className="mt-2 pt-1.5 border-t border-amber-200/80">
+                              <span className="text-xl sm:text-2xl font-black text-amber-900 font-outfit block leading-none">
+                                {selectedDay.results.podium[0].score}
+                              </span>
+                              <span className="text-[9px] font-bold text-amber-800">points &bull; {selectedDay.results.podium[0].wins} wins</span>
+                            </div>
+                          </div>
+
+                          {/* 3rd Place (Bronze) */}
+                          <div className="bg-orange-50/80 border border-orange-200 rounded-xl p-2.5 text-center flex flex-col justify-between min-h-[145px]">
+                            <div>
+                              <div className="w-6 h-6 rounded-full bg-orange-200/70 border border-orange-300 mx-auto flex items-center justify-center text-xs font-bold shadow-2xs mb-1">
+                                🥉
+                              </div>
+                              <span className="text-[9px] font-black uppercase tracking-wider text-orange-700 block">
+                                3rd Place
+                              </span>
+                              <span className="text-xs sm:text-sm font-black text-slate-900 block truncate" title={selectedDay.results.podium[2].name}>
+                                {selectedDay.results.podium[2].name}
+                              </span>
+                              <span className="text-[9px] font-semibold text-slate-500 block truncate leading-tight mt-0.5">
+                                Rating {selectedDay.results.podium[2].rating}
+                              </span>
+                            </div>
+                            <div className="mt-2 pt-1 border-t border-orange-200/70">
+                              <span className="text-base sm:text-lg font-black text-orange-950 font-outfit block leading-none">
+                                {selectedDay.results.podium[2].score}
+                              </span>
+                              <span className="text-[9px] font-bold text-orange-700">pts &bull; {selectedDay.results.podium[2].wins} wins</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Top Standings Mini-Table (Ranks 1-10) with expandable view */}
+                      <div className="pt-1">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                            Leaderboard (Top 10)
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setShowAllStandings(!showAllStandings)}
+                            className="text-[10px] font-bold text-[#E8640A] hover:underline cursor-pointer"
+                          >
+                            {showAllStandings ? 'Show Less' : 'View Top 10'}
+                          </button>
+                        </div>
+
+                        <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100 overflow-hidden text-xs">
+                          {(showAllStandings ? selectedDay.results.standings : selectedDay.results.standings.slice(0, 5)).map((p) => (
+                            <div key={p.rank} className="flex items-center justify-between px-3 py-1.5 hover:bg-slate-50 transition-colors">
+                              <div className="flex items-center gap-2">
+                                <span className={`w-4 text-[10px] font-black ${
+                                  p.rank === 1 ? 'text-amber-500' : p.rank === 2 ? 'text-slate-400' : p.rank === 3 ? 'text-orange-500' : 'text-slate-400'
+                                }`}>
+                                  #{p.rank}
+                                </span>
+                                <span className="font-bold text-slate-800 text-[11px] truncate max-w-[150px]">
+                                  {p.name}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <span className="text-[10px] text-slate-400 font-mono">{p.rating}</span>
+                                <span className="text-xs font-black text-slate-900 font-outfit">{p.score} pts</span>
+                              </div>
+                            </div>
                           ))}
                         </div>
                       </div>
-                    )}
-                  </div>
 
-                  {/* Actions (if arenaLink exists) or Match Day Notice */}
-                  {selectedDay.arenaLink ? (
-                    <div className="flex flex-wrap items-center gap-2 pt-5 mt-5 border-t border-slate-200">
-                      <a
-                        href={selectedDay.arenaLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-sm transition-all cursor-pointer"
-                      >
-                        <span>Join on Lichess</span>
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </a>
+                      {/* Actions */}
+                      <div className="flex flex-wrap items-center gap-2 pt-4 mt-2 border-t border-slate-200">
+                        <a
+                          href={selectedDay.arenaLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-sm transition-all cursor-pointer"
+                        >
+                          <span>Full Lichess Results</span>
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
 
-                      <button
-                        type="button"
-                        onClick={handleCopyLink}
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs transition-all cursor-pointer"
-                      >
-                        <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                        </svg>
-                        <span>{copied ? 'Copied!' : 'Copy Link'}</span>
-                      </button>
+                        <button
+                          type="button"
+                          onClick={handleCopyLink}
+                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs transition-all cursor-pointer"
+                        >
+                          <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                          </svg>
+                          <span>{copied ? 'Copied!' : 'Copy Link'}</span>
+                        </button>
 
-                      <button
-                        type="button"
-                        onClick={handleShare}
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs transition-all cursor-pointer"
-                        title="Share match details"
-                      >
-                        <svg className="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                        </svg>
-                        <span>Share</span>
-                      </button>
+                        <button
+                          type="button"
+                          onClick={handleShare}
+                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs transition-all cursor-pointer"
+                          title="Share match details"
+                        >
+                          <svg className="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                          </svg>
+                          <span>Share</span>
+                        </button>
+                      </div>
                     </div>
                   ) : (
-                    <div className="pt-4 mt-5 border-t border-slate-200 flex items-center gap-2 text-xs text-slate-500 font-medium">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                      <span>Arena link and pairing fixtures unlock on match day.</span>
+                    /* ── INCOMPLETE / SCHEDULED DAYS VIEW ── */
+                    <div className="space-y-4">
+                      {/* Header Row */}
+                      <div className="border-b border-slate-200/80 pb-3">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+                          Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
+                        </span>
+                        <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide">
+                          {selectedDay.phase}
+                        </span>
+                      </div>
+
+                      {/* Match Title & Stage */}
+                      <div>
+                        <h3 className="text-xl sm:text-2xl font-black font-outfit text-slate-900 leading-snug">
+                          {selectedDay.title}
+                        </h3>
+                        <p className="text-xs font-bold text-slate-500 mt-1">
+                          Stage: {selectedDay.stage}
+                        </p>
+                      </div>
+
+                      {/* Time Control Card */}
+                      <div className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-orange-50 border border-orange-100 flex items-center justify-center text-base shrink-0">
+                          ⏱️
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Time Control</span>
+                          <span className="text-xs sm:text-sm font-black text-slate-800">{selectedDay.timeControl}</span>
+                        </div>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        {selectedDay.description}
+                      </p>
+
+                      {/* Highlights */}
+                      {selectedDay.highlights && (
+                        <div className="space-y-1.5 pt-1">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Match Highlights</span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {selectedDay.highlights.map((h, i) => (
+                              <span key={i} className="inline-flex items-center text-[11px] font-semibold text-slate-700 bg-white border border-slate-200 px-2 py-0.5 rounded-md">
+                                {h}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Actions / Match Day Notice */}
+                      {selectedDay.arenaLink ? (
+                        <div className="flex flex-wrap items-center gap-2 pt-5 mt-5 border-t border-slate-200">
+                          <a
+                            href={selectedDay.arenaLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-sm transition-all cursor-pointer"
+                          >
+                            <span>Join on Lichess</span>
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+
+                          <button
+                            type="button"
+                            onClick={handleCopyLink}
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs transition-all cursor-pointer"
+                          >
+                            <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                            </svg>
+                            <span>{copied ? 'Copied!' : 'Copy Link'}</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={handleShare}
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs transition-all cursor-pointer"
+                            title="Share match details"
+                          >
+                            <svg className="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                            <span>Share</span>
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="pt-4 mt-5 border-t border-slate-200 flex items-center gap-2 text-xs text-slate-500 font-medium">
+                          <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                          <span>Arena link and pairing fixtures unlock on match day.</span>
+                        </div>
+                      )}
                     </div>
                   )}
                 </motion.div>
@@ -763,24 +990,7 @@ export default function TheBoardGamesPage() {
         {/* Arena Frame Container */}
         <div className="rounded-2xl sm:rounded-3xl bg-white border border-slate-200 shadow-sm overflow-hidden">
           {/* Arena Control Deck Bar */}
-          <div className="bg-[#0B192C] text-white px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3 border-b border-slate-800">
-            {/* Status & Match Specs Badges */}
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-[11px] font-black tracking-wider uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                Official Arena
-              </span>
-
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/10 border border-white/15 text-slate-200 text-[11px] font-bold">
-                <span>⏱️</span>
-                <span>3+0 Blitz &bull; 5+0 Blitz &bull; 10+0 Rapid</span>
-              </span>
-
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/10 border border-white/15 text-slate-300 text-[11px] font-mono">
-                ID: {ARENA_ID}
-              </span>
-            </div>
-
+          <div className="bg-[#0B192C] text-white px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-end gap-3 border-b border-slate-800">
             {/* View Mode & Utility Controls */}
             <div className="flex items-center gap-2">
               <button
@@ -909,89 +1119,215 @@ export default function TheBoardGamesPage() {
         </div>
       </section>
 
-      {/* ── 4. ARENA RULES & SCORING SYSTEM (MD3 Surface System) ── */}
-      <section className="bg-slate-100/70 border-y border-slate-200/80 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-xs font-black uppercase tracking-widest text-sky-600 mb-2">
-              Arena Mechanics
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-black font-outfit tracking-tight text-slate-900">
-              Scoring System & Streak Multipliers
-            </h2>
-            <p className="text-sm text-slate-600 mt-2 font-medium">
-              Lichess Arena format keeps matches nonstop. Pairings occur automatically as soon as contenders finish a game.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {SCORING_RULES.map((rule, idx) => (
-              <div
-                key={idx}
-                className="rounded-3xl bg-white p-6 border border-slate-200 shadow-xs flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">{rule.sub}</span>
-                    <span className="text-lg font-black font-space text-orange-600">{rule.score}</span>
-                  </div>
-                  <h3 className="text-base font-black text-slate-900 mb-2 font-outfit">{rule.title}</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">{rule.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 5. PARTICIPATING UNIVERSITIES ROSTER ── */}
+      {/* ── 4. CONTESTING INSTITUTIONS (Interactive 3D Flip Cards with 5-Board Rosters) ── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div>
-            <p className="text-xs font-black uppercase tracking-widest text-orange-600 mb-2">
-              National Collegiate Field
-            </p>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="w-2 h-2 rounded-full bg-orange-500"></span>
+              <p className="text-xs font-black uppercase tracking-widest text-orange-600">
+                National Collegiate Field
+              </p>
+            </div>
             <h2 className="text-2xl sm:text-3xl font-black font-outfit tracking-tight text-slate-900">
               11 Premier Nigerian Institutions
             </h2>
             <p className="text-sm text-slate-600 mt-1 font-medium">
-              Representing student grandmasters and varsity contenders across federal, state, and private universities.
+              Click any university card to flip and inspect verified 5-board student rosters linked to their live chess profiles.
             </p>
           </div>
 
           <a
             href="/chess-league/varsity"
-            className="text-xs font-black text-brand-primary hover:text-brand-accent transition-colors flex items-center gap-1 shrink-0"
+            className="text-xs font-black text-brand-primary hover:text-brand-accent transition-colors flex items-center gap-1.5 shrink-0 px-3.5 py-2 rounded-xl bg-blue-50 border border-blue-200 hover:border-blue-300"
           >
             <span>View Full Varsity Rosters</span>
             <span>&rarr;</span>
           </a>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {PARTICIPATING_UNIVERSITIES.map((uni, idx) => (
-            <div
-              key={idx}
-              className="rounded-2xl p-4 bg-white border border-slate-200/90 shadow-2xs hover:border-slate-300 transition-all space-y-2.5"
-            >
-              <div className="flex items-center justify-between">
-                <span 
-                  className="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider"
-                  style={{ backgroundColor: `${uni.color}15`, color: uni.color }}
-                >
-                  {uni.short}
-                </span>
-                <span className="text-[10px] font-bold text-slate-400">{uni.motto}</span>
-              </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {INSTITUTION_CARDS.map((uni) => {
+            const isFlipped = !!flippedCards[uni.id];
 
-              <div>
-                <h4 className="text-sm font-black text-slate-900 truncate font-outfit">{uni.name}</h4>
-                <p className="text-[11px] text-slate-500 truncate mt-0.5 font-medium">
-                  Contenders: {uni.notable}
-                </p>
+            return (
+              <div
+                key={uni.id}
+                onClick={() => toggleCardFlip(uni.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleCardFlip(uni.id);
+                  }
+                }}
+                aria-label={`${uni.name} roster card. Click to flip.`}
+                className="perspective-1000 h-[385px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-2xl select-none"
+              >
+                <div
+                  className={`relative w-full h-full duration-500 transform-style-3d transition-transform ${
+                    isFlipped ? 'rotate-y-180' : ''
+                  }`}
+                >
+                  {/* FRONT FACE: Institution Identity & Accolades */}
+                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-slate-300 transition-all p-5 flex flex-col justify-between overflow-hidden">
+                    <div>
+                      {/* Top Badges */}
+                      <div className="flex items-center justify-between mb-3.5">
+                        <span
+                          className="px-2.5 py-1 rounded-lg text-[11px] font-black uppercase tracking-wider"
+                          style={{ backgroundColor: `${uni.color}15`, color: uni.color }}
+                        >
+                          {uni.short}
+                        </span>
+                        <span className="text-[10px] font-bold text-slate-500 bg-slate-50 border border-slate-200/60 px-2 py-0.5 rounded-full truncate max-w-[150px]">
+                          {uni.motto}
+                        </span>
+                      </div>
+
+                      {/* University Title & Nickname */}
+                      <h4 className="text-base font-black text-slate-900 font-outfit leading-snug group-hover:text-orange-600 transition-colors line-clamp-2">
+                        {uni.name}
+                      </h4>
+                      {uni.nickname && (
+                        <p className="text-xs text-slate-500 font-medium mt-0.5 truncate">
+                          {uni.nickname}
+                        </p>
+                      )}
+
+                      {/* Team Stats Matrix */}
+                      <div className="mt-4 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-xs">
+                        <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-100">
+                          <span className="text-[10px] font-semibold text-slate-400 block uppercase tracking-wider">Squad Field</span>
+                          <span className="font-black text-slate-800 text-xs">5 Boards Confirmed</span>
+                        </div>
+                        <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-100">
+                          <span className="text-[10px] font-semibold text-slate-400 block uppercase tracking-wider">Avg Rating</span>
+                          <span className="font-black text-orange-600 font-space text-xs">{uni.averageRating} Elo</span>
+                        </div>
+                      </div>
+
+                      {/* Key Contenders */}
+                      {uni.notable && (
+                        <div className="mt-3 text-[11px] text-slate-600 bg-orange-50/50 border border-orange-100/80 rounded-xl p-2.5 leading-relaxed">
+                          <strong className="text-slate-800 font-bold block mb-0.5">Top Contenders:</strong>
+                          <span className="line-clamp-2">{uni.notable}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Interactive Flip Affordance Footer */}
+                    <div className="pt-3 border-t border-dashed border-slate-200 flex items-center justify-between text-xs font-bold text-orange-600 group-hover:text-orange-700">
+                      <span>View 5-Board Roster</span>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">
+                        Flip ↻
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* BACK FACE: 5-Board Roster with Live Profile Links */}
+                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-xl p-4 sm:p-5 flex flex-col justify-between overflow-hidden">
+                    <div className="min-h-0 flex flex-col">
+                      {/* Back Header */}
+                      <div className="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-2.5 shrink-0">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span
+                            className="w-2.5 h-2.5 rounded-full shrink-0"
+                            style={{ backgroundColor: uni.color }}
+                          />
+                          <span className="text-xs font-black text-white uppercase tracking-wider truncate font-outfit">
+                            {uni.short} Roster
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-mono shrink-0">
+                            (5 Boards)
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleCardFlip(uni.id);
+                          }}
+                          className="px-2 py-0.5 rounded-md bg-white/10 hover:bg-white/20 text-[10px] font-bold text-slate-300 transition-colors shrink-0 flex items-center gap-1 cursor-pointer"
+                          title="Flip back to team summary"
+                        >
+                          <span>↺</span>
+                          <span>Back</span>
+                        </button>
+                      </div>
+
+                      {/* 5-Board Player List */}
+                      <div className="space-y-1.5 overflow-y-auto pr-0.5">
+                        {uni.players && uni.players.length > 0 ? (
+                          uni.players
+                            .slice()
+                            .sort((a, b) => a.board - b.board)
+                            .map((player) => {
+                              const profileUrl = getPlayerProfileUrl(player);
+                              const platformName = player.platform === 'lichess' ? 'Lichess' : 'Chess.com';
+
+                              return (
+                                <div
+                                  key={player.id || player.board}
+                                  className="flex items-center justify-between py-1.5 px-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.05] transition-colors group/player"
+                                >
+                                  {/* Player Info */}
+                                  <div className="flex items-center gap-2 min-w-0 pr-2">
+                                    <span className="w-5 h-5 rounded-md bg-orange-500/20 text-orange-400 font-mono text-[10px] font-black flex items-center justify-center shrink-0">
+                                      B{player.board}
+                                    </span>
+                                    <div className="min-w-0">
+                                      <p className="text-xs font-bold text-white truncate leading-tight group-hover/player:text-orange-300 transition-colors">
+                                        {player.name}
+                                      </p>
+                                      <p className="text-[10px] text-slate-400 font-mono truncate leading-none mt-0.5">
+                                        @{player.handle} &bull; <span className="text-slate-300 font-semibold">{player.rating} Elo</span>
+                                      </p>
+                                    </div>
+                                  </div>
+
+                                  {/* Profile External Link Button */}
+                                  <a
+                                    href={profileUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white/10 hover:bg-orange-500 hover:text-white text-slate-300 text-[10px] font-bold shrink-0 transition-colors cursor-pointer border border-white/10"
+                                    title={`Open ${player.name}'s verified profile on ${platformName}`}
+                                  >
+                                    <span>{platformName}</span>
+                                    <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                  </a>
+                                </div>
+                              );
+                            })
+                        ) : (
+                          <div className="py-6 text-center text-xs text-slate-400">
+                            Roster pending verification
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Back Footer */}
+                    <div className="pt-2 border-t border-slate-800/80 mt-2 flex items-center justify-between text-[10px] text-slate-400 shrink-0">
+                      <span className="flex items-center gap-1 text-slate-400">
+                        <span>Click profile to view games</span>
+                        <span>↗</span>
+                      </span>
+                      <span className="text-orange-400 font-bold truncate max-w-[120px]">
+                        {uni.short} Varsity
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 

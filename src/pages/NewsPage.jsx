@@ -7,13 +7,21 @@ import { FeedContainer } from '../components/feed';
 
 const mockNews = [
     { 
-        tag: 'October 2026 Cycle', 
-        title: 'SS4 October SCL Tournament & Aspirants Award Applications Live', 
-        desc: 'The October competitive cycle is officially underway: applications open October 30 for the Aspirants Award, and registration for the October 2026 SCL tournament is now live.', 
-        date: 'Oct 2, 2026',
-        image: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&q=80&w=1200',
+        tag: 'theBOARDGAMES', 
+        title: 'SS4 Chess League theBOARDGAMES: October 2026 Championship Underway on Lichess', 
+        desc: 'Featuring the best chess players from top universities in Nigeria. Battles run 9th–31st October 2026 across 3+0, 5+0, and 10+0 time controls. The Board Remembers.', 
+        date: 'Oct 9, 2026',
+        image: '/october-tournament-poster.png',
         colSpan: 'md:col-span-2 lg:col-span-2',
         isHero: true
+    },
+    { 
+        tag: 'Aspirants Award', 
+        title: 'First Cycle Announcement: Applications Open Oct 30', 
+        desc: 'Prestige recognition program celebrating top JAMB scorers from verified SS4 secondary schools with cash prizes and sponsorships.', 
+        date: 'Oct 2, 2026',
+        image: 'https://images.unsplash.com/photo-1523821741446-edb2b68bb7a0?auto=format&fit=crop&q=80&w=800',
+        colSpan: 'md:col-span-1 lg:col-span-1'
     },
     { 
         tag: 'Varsity Tournament', 

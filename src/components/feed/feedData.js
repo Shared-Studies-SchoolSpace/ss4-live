@@ -1,11 +1,70 @@
 // Initial Feed Data for SS4 Platform Ecosystem
 // Authentic posts with strict chronological timestamps and post indexing:
-// October Announcement (postIndex: 0) -> September Varsity (postIndex: 1, 2) -> August Tournament (postIndex: 3, 4, 5)
+// October Tournament Poster (postIndex: 0) -> October Aspirants (postIndex: 1) -> September Varsity (postIndex: 2, 3) -> August Tournament (postIndex: 4, 5, 6)
 
 export const INITIAL_FEED_POSTS = [
   {
-    id: 'post_admin_october_tournament_2026',
+    id: 'post_admin_october_theboardgames_2026',
     postIndex: 0,
+    createdAt: '2026-10-09T08:00:00Z',
+    timestamp: '2026-10-09T08:00:00Z',
+    postType: 'multimedia',
+    mediaType: 'poster',
+    imageUrl: '/october-tournament-poster.png',
+    categoryClass: 'tournament',
+    readTime: '',
+    isUnread: true,
+    author: {
+      name: 'SS4',
+      avatarImg: '/ss4_logo_without_text.jpg',
+      isAdmin: true,
+      time: 'Oct 9, 2026'
+    },
+    title: 'SS4 Chess League: theBOARDGAMES (October 2026) — Nigeria’s Top University Chess Masters Collide on Lichess!',
+    excerpt: `♟️ **SS4 CHESS LEAGUE — theBOARDGAMES**
+*Featuring the best chess players from top universities in Nigeria.*
+
+The October 2026 inter-collegiate championship is officially live! Across 23 days of relentless digital warfare, the sharpest collegiate minds and university contenders in Nigeria clash on 64 squares for institutional supremacy and national ranking points.
+
+📅 **TOURNAMENT DETAILS:**
+• **Match Window:** 9th – 31st October 2026
+• **Hosting Platform:** **Lichess** (Official SS4 Arena & Swiss Lobbies)
+• **Participants:** Elite university contenders from Nigeria’s premier tertiary institutions
+
+⚡ **OFFICIAL TIME CONTROLS:**
+• **Blitz:** 3 + 0
+• **Blitz:** 5 + 0
+• **Rapid:** 10 + 0
+
+🏛️ **INSTITUTIONAL BATTLEFIELD:**
+Contenders representing Covenant University, UNILORIN, Bells University of Technology, FUTIA, UNIUYO, Babcock, Landmark, UNN, UNICAL, Redeemer’s University, and Benson Idahosa University take the stage.
+
+Will Covenant University's Anuchi Emmanuel defend his August crown, or will a new grandmaster rise to claim the October mantle?
+
+**The Board Remembers.**`,
+    tags: ['#theBOARDGAMES', '#SS4ChessLeague', '#OctoberTournament', '#Lichess', '#UniversityChess', '#TheBoardRemembers'],
+    likesCount: 46,
+    isLiked: false,
+    isBookmarked: false,
+    embed: {
+      type: 'lobby',
+      actionLabel: 'Enter Tournament Arena & Live Hub →',
+      onAction: () => {
+        window.location.href = '/chess-league/tournament';
+      },
+      calendarEvent: {
+        title: 'SS4 Chess League: theBOARDGAMES (October 2026)',
+        description: 'Featuring the best chess players from top universities in Nigeria (Oct 9–31, 2026). Hosted online on Lichess. Time Controls: 3+0, 5+0, 10+0. The Board Remembers.',
+        startDate: '2026-10-09',
+        endDate: '2026-10-31',
+        location: 'Online (Lichess)'
+      }
+    },
+    comments: []
+  },
+  {
+    id: 'post_admin_october_aspirants_2026',
+    postIndex: 1,
     createdAt: '2026-10-02T09:00:00Z',
     timestamp: '2026-10-02T09:00:00Z',
     postType: 'text',
@@ -19,18 +78,21 @@ export const INITIAL_FEED_POSTS = [
       isAdmin: true,
       time: 'Oct 2, 2026'
     },
-    title: 'SS4 October 2026 SCL Tournament & Aspirants Award Applications Announced!',
-    excerpt: `The official SS4 competitive platform cycle for October 2026 is officially underway!
+    title: 'SS4 Aspirants Award 2026: First Cycle Applications Open October 30!',
+    excerpt: `The official SS4 academic prestige program announcement:
 
-♟️ SS4 CHESS LEAGUE OCTOBER TOURNAMENT:
-Following the historic August Championship and the high-stakes September Varsity battles, the monthly individual arena returns for October 2026. Players across Nigerian tertiary institutions will compete for national ranking points, verified FIDE/Lichess/Chess.com honors, and exclusive platform sponsorships.
+🎓 **SS4 ASPIRANTS AWARD 2026:**
+First Cycle Announcement: Applications open **October 30, 2026**!
 
-🎓 SS4 ASPIRANTS AWARD 2026:
-First Cycle Announcement: Applications open October 30, 2026!
-The Aspirants Award is a prestige recognition program designed to celebrate the highest verified JAMB UTME scorers among our verified SS4 partner secondary schools. Top scorers receive comprehensive cash prizes, corporate sponsorship recognition, and national academic spotlighting.
+The Aspirants Award is a prestige recognition program designed to celebrate the highest verified JAMB UTME scorers among our verified SS4 partner secondary schools. Top-performing students receive comprehensive cash prizes, corporate sponsorship recognition, and national academic spotlighting.
+
+• **Eligibility:** Must be a registered SS3 student in an SS4 affiliated secondary school
+• **Criterion:** Highest verified score in the Joint Admissions and Matriculation Board (JAMB) UTME
+• **Reward:** Comprehensive cash prize and corporate sponsorship packages
+• **Recognition:** National highlight across the SS4 platform and partner networks
 
 Many Institutions, One Space. The Board Remembers.`,
-    tags: ['#SS4October2026', '#ChessLeague', '#AspirantsAward', '#JAMBExcellence', '#TheBoardRemembers'],
+    tags: ['#SS4October2026', '#AspirantsAward', '#JAMBExcellence', '#AcademicPrestige', '#TheBoardRemembers'],
     likesCount: 31,
     isLiked: false,
     isBookmarked: false,
@@ -45,7 +107,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_varsity_lineups_2026',
-    postIndex: 1,
+    postIndex: 2,
     createdAt: '2026-09-16T12:00:00Z',
     timestamp: '2026-09-16T12:00:00Z',
     postType: 'multimedia',
@@ -165,7 +227,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_varsity_tournament_2026',
-    postIndex: 2,
+    postIndex: 3,
     createdAt: '2026-09-14T10:00:00Z',
     timestamp: '2026-09-14T10:00:00Z',
     postType: 'multimedia',
@@ -201,7 +263,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_champion_2026',
-    postIndex: 3,
+    postIndex: 4,
     createdAt: '2026-09-04T22:30:00Z',
     timestamp: '2026-09-04T22:30:00Z',
     postType: 'multimedia',
@@ -246,7 +308,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_semifinals_2026',
-    postIndex: 4,
+    postIndex: 5,
     createdAt: '2026-09-03T19:00:00Z',
     timestamp: '2026-09-03T19:00:00Z',
     postType: 'multimedia',
@@ -296,7 +358,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_quarterfinals_2026',
-    postIndex: 5,
+    postIndex: 6,
     createdAt: '2026-09-02T19:00:00Z',
     timestamp: '2026-09-02T19:00:00Z',
     postType: 'multimedia',

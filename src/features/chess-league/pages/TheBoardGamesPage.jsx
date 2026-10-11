@@ -62,6 +62,11 @@ const ORDERED_INSTITUTION_IDS = [
 const INSTITUTION_CARDS = ORDERED_INSTITUTION_IDS.map(id => {
   const team = VARSITY_TEAMS.find(t => t.id === id) || {};
   const meta = INSTITUTION_METAS[id] || {};
+  const players = team.players || [];
+  const ratings = players.map(p => p.rating).filter(Boolean);
+  const minRating = ratings.length ? Math.min(...ratings) : 2000;
+  const maxRating = ratings.length ? Math.max(...ratings) : 2250;
+  const board1 = players.find(p => p.board === 1);
   return {
     id,
     name: team.name || meta.short,
@@ -73,7 +78,11 @@ const INSTITUTION_CARDS = ORDERED_INSTITUTION_IDS.map(id => {
     location: team.location || team.name,
     averageRating: team.averageRating || 2050,
     record: team.record || { wins: 0, draws: 0, losses: 0 },
-    players: team.players || []
+    recentForm: team.recentForm || ['W', 'W', 'W', 'D', 'W'],
+    players,
+    board1,
+    ratingRange: `${minRating} – ${maxRating}`,
+    points: team.points || 0
   };
 });
 
@@ -1162,29 +1171,91 @@ export default function TheBoardGamesPage() {
                     isFlipped ? 'rotate-y-180' : ''
                   }`}
                 >
-                  {/* FRONT FACE: Clean, small card with black university text and no bg */}
-                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-sm hover:shadow-md transition-all p-5 sm:p-6 flex flex-col justify-between overflow-hidden">
+                  {/* FRONT FACE: Enriched Collegiate Card with Black University Text and Chess Intelligence */}
+                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-sm hover:shadow-md transition-all p-4 sm:p-5 flex flex-col justify-between overflow-hidden">
                     <div>
                       {/* Top Bar: University Short (Black text, no bg) & Rating */}
-                      <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center justify-between mb-2">
                         <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-black">
                           {uni.short}
                         </span>
-                        <span className="text-xs font-bold font-mono text-slate-500">
+                        <span className="text-[11px] font-bold font-mono text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md">
                           {uni.averageRating} Elo
                         </span>
                       </div>
 
                       {/* University Full Name (Black text, no bg) */}
-                      <h4 className="text-base font-black text-black font-outfit leading-snug line-clamp-2 mt-1">
+                      <h4 className="text-sm sm:text-base font-black text-black font-outfit leading-tight line-clamp-2">
                         {uni.name}
                       </h4>
+
+                      {/* Board 1 Star Contender Pill */}
+                      {uni.board1 && (
+                        <div className="mt-2.5 bg-slate-50 rounded-xl p-2.5 flex items-center justify-between">
+                          <div className="min-w-0 flex-1 pr-2">
+                            <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block">
+                              Board 1 Lead
+                            </span>
+                            <span className="text-xs font-bold text-slate-900 truncate block leading-tight mt-0.5">
+                              {uni.board1.name}
+                            </span>
+                          </div>
+                          <span className="text-[11px] font-mono font-black text-slate-800 bg-white shadow-2xs px-2 py-0.5 rounded-md shrink-0">
+                            {uni.board1.rating}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Collegiate Metrics: Match Record & Rating Range */}
+                      <div className="grid grid-cols-2 gap-2 mt-2">
+                        <div className="bg-slate-50 rounded-xl p-2 text-left">
+                          <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block">
+                            Match Record
+                          </span>
+                          <span className="text-xs font-black font-space text-slate-800 block mt-0.5">
+                            {uni.record ? `${uni.record.wins}W • ${uni.record.draws}D • ${uni.record.losses}L` : 'Active'}
+                          </span>
+                        </div>
+                        <div className="bg-slate-50 rounded-xl p-2 text-left">
+                          <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block">
+                            Rating Range
+                          </span>
+                          <span className="text-xs font-black font-mono text-slate-800 block mt-0.5">
+                            {uni.ratingRange}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Recent Form */}
+                      {uni.recentForm && uni.recentForm.length > 0 && (
+                        <div className="flex items-center justify-between px-1 mt-2.5">
+                          <span className="text-[9px] font-black uppercase tracking-wider text-slate-400">
+                            Recent Form
+                          </span>
+                          <div className="flex items-center gap-1">
+                            {uni.recentForm.map((result, rIdx) => (
+                              <span
+                                key={rIdx}
+                                className={`w-4 h-4 rounded text-[9px] font-black flex items-center justify-center font-mono ${
+                                  result === 'W'
+                                    ? 'bg-emerald-100 text-emerald-800'
+                                    : result === 'D'
+                                    ? 'bg-amber-100 text-amber-800'
+                                    : 'bg-rose-100 text-rose-800'
+                                }`}
+                              >
+                                {result}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Footer: Roster Flip Action (No squad field) */}
                     <div className="pt-2 flex items-center justify-end text-xs font-bold text-brand-primary">
                       <span className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-primary hover:text-brand-accent transition-colors">
-                        <span>View Roster</span>
+                        <span>View 5-Board Roster</span>
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
                         </svg>

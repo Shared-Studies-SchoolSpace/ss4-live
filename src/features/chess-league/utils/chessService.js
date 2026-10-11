@@ -16,12 +16,15 @@ export async function fetchChessComStats(username) {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     
-    const rapid = data.chess_rapid || {};
-    const rating = rapid.last?.rating || 1200;
+    const rapid = data.chess_rapid?.last?.rating;
+    const blitz = data.chess_blitz?.last?.rating;
+    const bullet = data.chess_bullet?.last?.rating;
+    const daily = data.chess_daily?.last?.rating;
+    const rating = rapid || blitz || bullet || daily || 1200;
     
-    const wins = rapid.record?.win || 0;
-    const losses = rapid.record?.loss || 0;
-    const draws = rapid.record?.draw || 0;
+    const wins = data.chess_rapid?.record?.win || data.chess_blitz?.record?.win || 0;
+    const losses = data.chess_rapid?.record?.loss || data.chess_blitz?.record?.loss || 0;
+    const draws = data.chess_rapid?.record?.draw || data.chess_blitz?.record?.draw || 0;
 
     return { rating, wins, losses, draws, error: null };
   } catch (err) {
@@ -43,8 +46,11 @@ export async function fetchLichessStats(username) {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
 
-    const rapid = data.perfs?.rapid?.rating || 1500;
-    const rating = rapid;
+    const rapid = data.perfs?.rapid?.rating;
+    const blitz = data.perfs?.blitz?.rating;
+    const bullet = data.perfs?.bullet?.rating;
+    const classical = data.perfs?.classical?.rating;
+    const rating = rapid || blitz || bullet || classical || 1500;
 
     // Fetch game stats
     const count = data.count || {};
@@ -182,7 +188,10 @@ export async function fetchCompletePlayerData(username, platform = 'chess.com') 
   if (!username) return null;
   const cleanUser = username.trim().toLowerCase();
   if (cleanUser.includes(' ') || cleanUser.length < 2) return null;
-  const cacheKey = `${platform}:${cleanUser}`;
+
+  const isChessCom = platform === 'chess.com' || platform === 'chesscom';
+  const normPlatform = isChessCom ? 'chess.com' : 'lichess';
+  const cacheKey = `${normPlatform}:${cleanUser}`;
   
   if (playerApiCache[cacheKey]) {
     return playerApiCache[cacheKey];
@@ -201,7 +210,7 @@ export async function fetchCompletePlayerData(username, platform = 'chess.com') 
 
   const result = {
     username,
-    platform,
+    platform: normPlatform,
     avatar: null,
     rating: null,
     title: null,
@@ -209,7 +218,7 @@ export async function fetchCompletePlayerData(username, platform = 'chess.com') 
   };
 
   try {
-    if (platform === 'chess.com') {
+    if (isChessCom) {
       const profilePromise = fetch(`https://api.chess.com/pub/player/${encodeURIComponent(cleanUser)}`)
         .then(r => (r && r.ok ? r.json() : null))
         .catch(() => null);
@@ -224,8 +233,11 @@ export async function fetchCompletePlayerData(username, platform = 'chess.com') 
         result.title = profile.title || null;
       }
       if (stats) {
-        const rapid = stats.chess_rapid || {};
-        result.rating = rapid.last?.rating || stats.chess_blitz?.last?.rating || 1200;
+        const rapid = stats.chess_rapid?.last?.rating;
+        const blitz = stats.chess_blitz?.last?.rating;
+        const bullet = stats.chess_bullet?.last?.rating;
+        const daily = stats.chess_daily?.last?.rating;
+        result.rating = rapid || blitz || bullet || daily || (profile ? 1200 : null);
       }
     } else {
       // Lichess API
@@ -233,16 +245,19 @@ export async function fetchCompletePlayerData(username, platform = 'chess.com') 
       if (res && res.ok) {
         const data = await res.json().catch(() => null);
         if (data) {
-          result.rating = data.perfs?.rapid?.rating || data.perfs?.blitz?.rating || 1500;
+          result.avatar = data.profile?.avatar || null;
+          result.rating = data.perfs?.rapid?.rating || data.perfs?.blitz?.rating || data.perfs?.bullet?.rating || data.perfs?.classical?.rating || 1500;
           result.title = data.title || null;
         }
       }
     }
 
-    playerApiCache[cacheKey] = result;
-    try {
-      sessionStorage.setItem(`chess_player:${cacheKey}`, JSON.stringify(result));
-    } catch (e) {}
+    if (result.rating !== null) {
+      playerApiCache[cacheKey] = result;
+      try {
+        sessionStorage.setItem(`chess_player:${cacheKey}`, JSON.stringify(result));
+      } catch (e) {}
+    }
 
     return result;
   } catch (err) {

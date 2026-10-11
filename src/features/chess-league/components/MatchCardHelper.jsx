@@ -3,12 +3,15 @@ import { fetchCompletePlayerData } from '../utils/chessService';
 
 export function usePlayerDetails(username, playerObj) {
   const initialRating = playerObj?.rating || playerObj?.chess_rating || 1200;
+  const isLichess = playerObj?.platform === 'lichess' || (playerObj?.lichess_username && !playerObj?.chess_username && !playerObj?.handle_c);
+  const initialPlatform = isLichess ? 'lichess' : 'chess.com';
+
   const [details, setDetails] = useState({
     avatar: null,
     rating: initialRating,
     title: null,
     loading: true,
-    platform: playerObj?.lichess_username && !playerObj?.username ? 'lichess' : 'chess.com'
+    platform: initialPlatform
   });
 
   useEffect(() => {
@@ -18,13 +21,16 @@ export function usePlayerDetails(username, playerObj) {
     }
 
     let isMounted = true;
-    const platform = playerObj?.lichess_username && !playerObj?.username ? 'lichess' : 'chess.com';
-    const targetUsername = platform === 'lichess' ? playerObj?.lichess_username : username;
+    const isTargetLichess = playerObj?.platform === 'lichess' || (playerObj?.lichess_username && !playerObj?.chess_username && !playerObj?.handle_c);
+    const platform = isTargetLichess ? 'lichess' : 'chess.com';
+    const targetUsername = isTargetLichess 
+      ? (playerObj?.lichess_username || playerObj?.handle_l || playerObj?.handle || username) 
+      : (playerObj?.chess_username || playerObj?.handle_c || playerObj?.handle || username);
 
     async function loadData() {
       const data = await fetchCompletePlayerData(targetUsername, platform);
       if (isMounted) {
-        const syncedRating = playerObj?.rating || playerObj?.chess_rating || data?.rating || initialRating;
+        const syncedRating = data?.rating || playerObj?.rating || playerObj?.chess_rating || initialRating;
         setDetails({
           avatar: data?.avatar || null,
           rating: syncedRating,
@@ -39,7 +45,7 @@ export function usePlayerDetails(username, playerObj) {
     return () => {
       isMounted = false;
     };
-  }, [username, playerObj?.rating, playerObj?.chess_rating, playerObj?.username, playerObj?.lichess_username]);
+  }, [username, playerObj?.rating, playerObj?.chess_rating, playerObj?.username, playerObj?.lichess_username, playerObj?.platform, playerObj?.handle, playerObj?.handle_c, playerObj?.handle_l]);
 
   return details;
 }

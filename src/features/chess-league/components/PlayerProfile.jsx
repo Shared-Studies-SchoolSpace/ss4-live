@@ -28,9 +28,10 @@ export const PlayerProfile = ({ player, onClose }) => {
   };
 
   // Ratings & division
-  const chessRating = player.chess_rating || player.rating || 1200;
-  const lichessRating = player.lichess_rating || 0;
-  const rating = Math.max(chessRating, lichessRating);
+  const isLichessPrimary = player.platform === 'lichess' || (!player.chess_username && !!player.lichess_username);
+  const chessRating = player.chess_rating || (!isLichessPrimary ? player.rating : 0) || 1200;
+  const lichessRating = player.lichess_rating || (isLichessPrimary ? player.rating : 0) || 0;
+  const rating = player.rating || Math.max(chessRating, lichessRating);
   
   const peakRating = player.peak_rating || Math.round(rating * 1.05);
   const dateJoined = player.created_at 
@@ -152,11 +153,11 @@ export const PlayerProfile = ({ player, onClose }) => {
     }).join(' ');
   };
 
-  const primaryChessHandle = chessUsername || lichessUsername;
-  const primaryChessUrl = chessUsername 
-    ? `https://www.chess.com/member/${chessUsername}` 
-    : `https://lichess.org/@/${lichessUsername}`;
-  const primaryChessLabel = chessUsername ? 'Chess.com' : 'Lichess';
+  const primaryChessHandle = isLichessPrimary ? (lichessUsername || chessUsername) : (chessUsername || lichessUsername);
+  const primaryChessUrl = isLichessPrimary 
+    ? `https://lichess.org/@/${primaryChessHandle}` 
+    : `https://www.chess.com/member/${primaryChessHandle}`;
+  const primaryChessLabel = isLichessPrimary ? 'Lichess' : 'Chess.com';
 
   return (
     <div 

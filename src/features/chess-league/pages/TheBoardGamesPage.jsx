@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { VARSITY_TEAMS } from '../data/varsityData';
 import { PlayerProfile } from '../components/PlayerProfile';
+import { fetchCompletePlayerData } from '../utils/chessService';
 
 const ARENA_LINK = 'https://lichess.org/tournament/1e80iceM';
 const ARENA_ID = '1e80iceM';
@@ -59,32 +60,6 @@ const ORDERED_INSTITUTION_IDS = [
   'biu'
 ];
 
-const INSTITUTION_CARDS = ORDERED_INSTITUTION_IDS.map(id => {
-  const team = VARSITY_TEAMS.find(t => t.id === id) || {};
-  const meta = INSTITUTION_METAS[id] || {};
-  const players = team.players || [];
-  const ratings = players.map(p => p.rating).filter(Boolean);
-  const minRating = ratings.length ? Math.min(...ratings) : 2000;
-  const maxRating = ratings.length ? Math.max(...ratings) : 2250;
-  const board1 = players.find(p => p.board === 1);
-  return {
-    id,
-    name: team.name || meta.short,
-    short: meta.short || team.shortName || id.toUpperCase(),
-    color: meta.color || team.color || '#E8640A',
-    motto: meta.motto || team.nickname || 'Varsity Challenger',
-    notable: meta.notable || '',
-    nickname: team.nickname || '',
-    location: team.location || team.name,
-    averageRating: team.averageRating || 2050,
-    record: team.record || { wins: 0, draws: 0, losses: 0 },
-    recentForm: team.recentForm || ['W', 'W', 'W', 'D', 'W'],
-    players,
-    board1,
-    ratingRange: `${minRating} – ${maxRating}`,
-    points: team.points || 0
-  };
-});
 
 const TOURNAMENT_DAYS = [
   {
@@ -478,6 +453,76 @@ export default function TheBoardGamesPage() {
   const [showAllStandings, setShowAllStandings] = useState(false);
   const [flippedCards, setFlippedCards] = useState({});
   const [selectedPlayerForModal, setSelectedPlayerForModal] = useState(null);
+  const [reconciledRatings, setReconciledRatings] = useState({});
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function pollLiveRatings() {
+      const allPlayers = VARSITY_TEAMS.flatMap(t => (t.players || []));
+      for (const p of allPlayers) {
+        if (!p.handle) continue;
+        try {
+          const data = await fetchCompletePlayerData(p.handle, p.platform || 'chess.com');
+          if (data?.rating && isMounted) {
+            setReconciledRatings(prev => {
+              const key = p.id || `${p.platform}:${p.handle}`;
+              if (prev[key] === data.rating) return prev;
+              return { ...prev, [key]: data.rating };
+            });
+          }
+        } catch (err) {
+          // Graceful fallback to verified baseline
+        }
+      }
+    }
+
+    pollLiveRatings();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const institutionCards = useMemo(() => {
+    return ORDERED_INSTITUTION_IDS.map(id => {
+      const team = VARSITY_TEAMS.find(t => t.id === id) || {};
+      const meta = INSTITUTION_METAS[id] || {};
+      const rawPlayers = team.players || [];
+      const players = rawPlayers.map(p => {
+        const key = p.id || `${p.platform}:${p.handle}`;
+        const live = reconciledRatings[key];
+        return {
+          ...p,
+          rating: live || p.rating
+        };
+      });
+      const ratings = players.map(p => p.rating).filter(Boolean);
+      const minRating = ratings.length ? Math.min(...ratings) : 1200;
+      const maxRating = ratings.length ? Math.max(...ratings) : 2200;
+      const avgRating = ratings.length 
+        ? Math.round(ratings.reduce((a, b) => a + b, 0) / ratings.length) 
+        : (team.averageRating || 1200);
+      const board1 = players.find(p => p.board === 1);
+      return {
+        id,
+        name: team.name || meta.short,
+        short: meta.short || team.shortName || id.toUpperCase(),
+        color: meta.color || team.color || '#E8640A',
+        motto: meta.motto || team.nickname || 'Varsity Challenger',
+        notable: meta.notable || '',
+        nickname: team.nickname || '',
+        location: team.location || team.name,
+        averageRating: avgRating,
+        record: team.record || { wins: 0, draws: 0, losses: 0 },
+        recentForm: team.recentForm || ['W', 'W', 'W', 'D', 'W'],
+        players,
+        board1,
+        ratingRange: `${minRating} – ${maxRating}`,
+        points: team.points || 0
+      };
+    });
+  }, [reconciledRatings]);
 
   const toggleCardFlip = (teamId) => {
     setFlippedCards(prev => ({
@@ -488,17 +533,20 @@ export default function TheBoardGamesPage() {
 
   const handlePlayerClick = (e, player, uni) => {
     e.stopPropagation();
+    const isLichess = player.platform === 'lichess';
     setSelectedPlayerForModal({
       ...player,
       name: player.name,
       username: player.handle,
-      chess_username: player.platform === 'chesscom' ? player.handle : player.handle,
-      lichess_username: player.platform === 'lichess' ? player.handle : undefined,
+      platform: player.platform,
+      chess_username: player.handle_c || (!isLichess ? player.handle : undefined),
+      lichess_username: player.handle_l || (isLichess ? player.handle : undefined),
       university: uni.name,
       school: uni.name,
       department: `Board ${player.board} • ${uni.short}`,
       rating: player.rating,
-      chess_rating: player.rating,
+      chess_rating: !isLichess ? player.rating : undefined,
+      lichess_rating: isLichess ? player.rating : undefined,
       stats: player.stats || {},
       P: player.stats?.played || 6,
       W: player.stats?.wins || 0,
@@ -1148,7 +1196,7 @@ export default function TheBoardGamesPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {INSTITUTION_CARDS.map((uni) => {
+          {institutionCards.map((uni) => {
             const isFlipped = !!flippedCards[uni.id];
 
             return (

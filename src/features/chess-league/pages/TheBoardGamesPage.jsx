@@ -609,22 +609,12 @@ export default function TheBoardGamesPage() {
                 >
                   <div className="space-y-4">
                     {/* Header Row */}
-                    <div className="flex items-center justify-between gap-2 border-b border-slate-200/80 pb-3">
-                      <div>
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
-                          Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
-                        </span>
-                        <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide">
-                          {selectedDay.phase}
-                        </span>
-                      </div>
-
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${
-                        selectedDay.isLive
-                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                          : 'bg-white text-slate-600 border-slate-200'
-                      }`}>
-                        {selectedDay.status}
+                    <div className="border-b border-slate-200/80 pb-3">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+                        Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
+                      </span>
+                      <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide">
+                        {selectedDay.phase}
                       </span>
                     </div>
 

@@ -4,6 +4,8 @@ import { FeedCardComments } from './FeedCardComments';
 import { AddToCalendarButton } from './AddToCalendarButton';
 import './feedStyles.css';
 
+import { FormattedFeedText } from './FormattedFeedText';
+
 export function MultimediaPost({
   post,
   isLiked,
@@ -175,6 +177,7 @@ export function MultimediaPost({
                   <div className="author-name" style={{ fontSize: '14px', fontWeight: 900, color: '#0F172A', letterSpacing: '-0.02em' }}>
                     SS4
                   </div>
+                  {author.time && <div className="author-time">{author.time}</div>}
                 </div>
               </>
             ) : (
@@ -203,7 +206,7 @@ export function MultimediaPost({
         </div>
 
         <h2 className="feed-card-title">{title}</h2>
-        <p className="feed-card-excerpt">{excerpt}</p>
+        <FormattedFeedText text={excerpt} className="feed-card-excerpt" />
 
         {/* Embed Action Section (Register button + Calendar button) */}
         {embed && (

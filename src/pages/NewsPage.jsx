@@ -7,44 +7,44 @@ import { FeedContainer } from '../components/feed';
 
 const mockNews = [
     { 
-        tag: 'June Tournament Ahead', 
-        title: 'Preparations Underway', 
-        desc: 'The June tournament runs in the last seven days of the month. League matches continue every two days. Students are preparing. Institutions are watching. Registration remains open.', 
-        date: 'Jun 16, 2026',
+        tag: 'October 2026 Cycle', 
+        title: 'SS4 October SCL Tournament & Aspirants Award Applications Live', 
+        desc: 'The October competitive cycle is officially underway: applications open October 30 for the Aspirants Award, and registration for the October 2026 SCL tournament is now live.', 
+        date: 'Oct 2, 2026',
         image: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&q=80&w=1200',
         colSpan: 'md:col-span-2 lg:col-span-2',
         isHero: true
     },
     { 
-        tag: 'League Growth', 
-        title: '140 Players and Counting', 
-        desc: 'The SS4 Chess League has grown from 60 to 140 players in less than 40 days, 100% through peer referral across Nigerian states. Institutions are connecting.', 
-        date: 'Jun 14, 2026',
-        gradient: 'blue',
+        tag: 'Varsity Tournament', 
+        title: 'Official 11-Team Squad Lineups Released', 
+        desc: '11 top Nigerian universities locked in their 5-player rosters for the SS4 Chess League Varsity Tournament.', 
+        date: 'Sep 16, 2026',
+        image: '/varsity-lineups-poster.jpg',
         colSpan: 'md:col-span-1 lg:col-span-1'
     },
     { 
-        tag: 'Retention', 
-        title: 'Inter-Tournament League Active', 
-        desc: 'Over 30 matches played by more than 30 players in the weeks between tournaments. The calendar is working. The habit is forming.', 
-        date: 'Jun 10, 2026',
-        image: 'https://images.unsplash.com/photo-1586165368502-1badb97a64e1?auto=format&fit=crop&q=80&w=800',
+        tag: 'August Champion', 
+        title: 'Anuchi Emmanuel Crowned August Champion', 
+        desc: 'Covenant University’s Anuchi Emmanuel conquers a 56-player field and 115 matches to claim the August 2026 SS4 Chess League crown.', 
+        date: 'Sep 4, 2026',
+        image: '/august-tournament-champion.png',
         colSpan: 'md:col-span-1 lg:col-span-1'
     },
     { 
-        tag: 'Sponsorship', 
-        title: 'Partner with the Next Generation', 
-        desc: 'SS4 offers sponsors direct visibility into an active, connected community of Nigerian students and institutions competing on a known monthly calendar.', 
-        date: 'Jun 5, 2026',
-        gradient: 'orange',
+        tag: 'August Semifinals', 
+        title: 'Final Four Clash Over 64 Squares', 
+        desc: 'Semifinals showdown featuring FUTIA, UNILORIN, Bells Tech, and Covenant University.', 
+        date: 'Sep 3, 2026',
+        image: '/august-tournament-semifinals.png',
         colSpan: 'md:col-span-1 lg:col-span-1'
     },
     { 
-        tag: 'May Tournament Concludes', 
-        title: 'First Tournament Cycle Complete', 
-        desc: 'The inaugural SS4 Chess League tournament wrapped successfully. Winners recorded. Rankings live. The leaderboard is no longer empty.', 
-        date: 'Jun 2, 2026',
-        image: 'https://images.unsplash.com/photo-1523821741446-edb2b68bb7a0?auto=format&fit=crop&q=80&w=800',
+        tag: 'August Quarterfinals', 
+        title: 'Elite 8 Contenders Battle', 
+        desc: 'Quarterfinal fixtures across 8 top Nigerian university contenders.', 
+        date: 'Sep 2, 2026',
+        image: '/august-tournament-quarterfinals.jpg',
         colSpan: 'md:col-span-1 lg:col-span-1'
     }
 ];

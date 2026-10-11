@@ -151,10 +151,16 @@ export function useFeedEngagement() {
               postType: 'text',
               categoryClass: 'announcement',
               isUnread: true,
+              createdAt: ann.created_at,
+              timestamp: ann.created_at,
               author: isAdmin ? {
                 name: 'SS4',
                 avatarImg: '/ss4_logo_without_text.jpg',
-                isAdmin: true
+                isAdmin: true,
+                time: new Date(ann.created_at).toLocaleDateString(undefined, {
+                  month: 'short',
+                  day: 'numeric'
+                })
               } : {
                 name: ann.sender?.name || 'Contender',
                 avatar: getAvatarInitials(ann.sender?.name || 'SS4'),
@@ -384,6 +390,9 @@ export function useFeedEngagement() {
         comments: []
       };
     }
+    const nowIso = new Date().toISOString();
+    newPost.createdAt = nowIso;
+    newPost.timestamp = nowIso;
 
     const currentPosts = readStorage(STORAGE_KEYS.USER_POSTS, []);
     const updatedPosts = [newPost, ...currentPosts];

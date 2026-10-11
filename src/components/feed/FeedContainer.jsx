@@ -55,10 +55,22 @@ export function FeedContainer({
   const allRawPosts = useMemo(() => {
     const combined = [...userPosts, ...dbAnnouncements, ...initialPosts];
     const seen = new Set();
-    return combined.filter(p => {
+    const uniquePosts = combined.filter(p => {
       if (!p || !p.id || seen.has(p.id)) return false;
       seen.add(p.id);
       return true;
+    });
+
+    // Strictly sort so that newer posts (e.g. October 2026) appear before older posts (September, August)
+    return uniquePosts.sort((a, b) => {
+      const timeA = a.createdAt ? new Date(a.createdAt).getTime() : (a.timestamp ? new Date(a.timestamp).getTime() : 0);
+      const timeB = b.createdAt ? new Date(b.createdAt).getTime() : (b.timestamp ? new Date(b.timestamp).getTime() : 0);
+      if (timeB !== timeA && timeB > 0 && timeA > 0) {
+        return timeB - timeA;
+      }
+      const idxA = a.postIndex !== undefined ? a.postIndex : 999;
+      const idxB = b.postIndex !== undefined ? b.postIndex : 999;
+      return idxA - idxB;
     });
   }, [userPosts, dbAnnouncements, initialPosts]);
 

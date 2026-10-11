@@ -20,6 +20,8 @@ import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import { fetchCompletePlayerData, searchMutualGames } from '../utils/chessService';
 import AdminBroadcastPanel from '../../../components/announcements/AdminBroadcastPanel';
+import { VarsityTournamentHub } from '../components/varsity/VarsityTournamentHub';
+
 
 const ADMIN_PIN = '1926';
 
@@ -1721,6 +1723,8 @@ export default function ChessTournamentPage() {
           <div className={`${activeTab === 'table' ? 'max-w-7xl' : 'max-w-5xl'} mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-10 transition-all duration-300`}>
 
         {/* TABLE (GROUP STANDINGS) */}
+
+
         {activeTab === 'table' && (
           <GroupStageTable
             tournament={tournament}

@@ -64,14 +64,25 @@ export default function TournamentCountdownBanner() {
     const loadTarget = async () => {
       let tObj = null;
       try {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('tournaments')
-          .select('id, status, month_year, finals_completed_at, next_round_start, next_round_label, show_banner, banner_mode, banner_version, banner_headline, rounds')
-          .or('status.eq.active,status.eq.upcoming')
+          .select('*')
+          .in('status', ['active', 'upcoming'])
           .order('month_year', { ascending: false })
           .limit(1)
           .maybeSingle();
-        if (data && isMounted) tObj = data;
+
+        if (error) {
+          const { data: fallbackData } = await supabase
+            .from('tournaments')
+            .select('*')
+            .order('month_year', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+          if (fallbackData && isMounted) tObj = fallbackData;
+        } else if (data && isMounted) {
+          tObj = data;
+        }
       } catch (err) {
         console.warn('Could not fetch active tournament for banner:', err);
       }
@@ -115,25 +126,28 @@ export default function TournamentCountdownBanner() {
 
     loadTarget();
 
-    // Listen for realtime updates to tournaments table instead of aggressive polling
+    // Unique channel ID per listener instance to prevent "cannot add postgres_changes callbacks after subscribe()"
+    const channelId = `tournament-banner-sync-${Math.random().toString(36).substring(2, 9)}`;
     const tournamentChannel = supabase
-      .channel('tournament-banner-sync')
+      .channel(channelId)
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'tournaments' },
         () => {
-          loadTarget();
+          if (isMounted) loadTarget();
         }
       )
       .subscribe();
 
-    // Fallback polling interval reduced from 10s to 60s
+    // Fallback polling interval (60s)
     const intervalId = setInterval(loadTarget, 60000);
 
     return () => {
       isMounted = false;
       clearInterval(intervalId);
-      supabase.removeChannel(tournamentChannel);
+      if (tournamentChannel) {
+        supabase.removeChannel(tournamentChannel);
+      }
     };
   }, []);
 

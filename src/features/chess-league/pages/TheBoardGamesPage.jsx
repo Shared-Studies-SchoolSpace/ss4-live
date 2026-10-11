@@ -144,7 +144,6 @@ const TOURNAMENT_DAYS = [
       podium: [
         {
           rank: 1,
-          medal: '🥇',
           label: 'Champion',
           name: 'Juk3s',
           school: 'Champion',
@@ -157,7 +156,6 @@ const TOURNAMENT_DAYS = [
         },
         {
           rank: 2,
-          medal: '🥈',
           label: 'Runner-Up',
           name: 'minatoe5',
           realName: 'Peter Eti Essien',
@@ -171,7 +169,6 @@ const TOURNAMENT_DAYS = [
         },
         {
           rank: 3,
-          medal: '🥉',
           label: '2nd Runner-Up',
           name: 'D-genius',
           school: '2nd Runner-Up',
@@ -541,7 +538,7 @@ export default function TheBoardGamesPage() {
   const handleShare = () => {
     const shareData = {
       title: 'theBoardGames LeagueMatch 1 | SS4 Chess League',
-      text: '📣 theBoardGames LeagueMatch 1 is LIVE!\nFeaturing the best chess players from top universities in Nigeria.\n\n🔗 Arena Link: https://lichess.org/tournament/1e80iceM\n\nThe Board Remembers.',
+      text: 'theBoardGames LeagueMatch 1 is LIVE!\nFeaturing the best chess players from top universities in Nigeria.\n\nArena Link: https://lichess.org/tournament/1e80iceM\n\nThe Board Remembers.',
       url: ARENA_LINK
     };
 
@@ -641,8 +638,10 @@ export default function TheBoardGamesPage() {
                             {selectedDay.phase} &bull; {selectedDay.stage}
                           </span>
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1">
-                          <span>🏆</span>
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1.5 shadow-xs">
+                          <svg className="w-3.5 h-3.5 text-amber-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V19H7v2h10v-2h-4v-3.1c1.98-.44 3.49-2.07 3.61-4.06C19.08 11.63 21 9.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
+                          </svg>
                           <span>Final Results</span>
                         </span>
                       </div>
@@ -653,14 +652,23 @@ export default function TheBoardGamesPage() {
                           {selectedDay.title}
                         </h3>
                         <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md">
-                            👥 {selectedDay.results.totalPlayers} Contenders
+                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md flex items-center gap-1.5">
+                            <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span>{selectedDay.results.totalPlayers} Contenders</span>
                           </span>
-                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md">
-                            ⚔️ {selectedDay.results.totalGames} Games
+                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md flex items-center gap-1.5">
+                            <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            <span>{selectedDay.results.totalGames} Games</span>
                           </span>
-                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md">
-                            ⏱️ 60 Mins Arena
+                          <span className="text-[11px] font-bold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded-md flex items-center gap-1.5">
+                            <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>60 Mins Arena</span>
                           </span>
                         </div>
                       </div>
@@ -679,8 +687,8 @@ export default function TheBoardGamesPage() {
                           {/* 2nd Place (Silver) */}
                           <div className="bg-slate-100/90 border border-slate-300 rounded-xl p-2.5 text-center flex flex-col justify-between min-h-[145px]">
                             <div>
-                              <div className="w-6 h-6 rounded-full bg-slate-200 border border-slate-300 mx-auto flex items-center justify-center text-xs font-bold shadow-2xs mb-1">
-                                🥈
+                              <div className="w-6 h-6 rounded-full bg-slate-300 text-slate-800 mx-auto flex items-center justify-center text-[10px] font-black shadow-2xs mb-1">
+                                2
                               </div>
                               <span className="text-[9px] font-black uppercase tracking-wider text-slate-500 block">
                                 2nd Place
@@ -710,8 +718,8 @@ export default function TheBoardGamesPage() {
                               </span>
                             </div>
                             <div className="pt-1">
-                              <div className="w-7 h-7 rounded-full bg-amber-400 border border-amber-500 mx-auto flex items-center justify-center text-sm font-bold shadow-xs mb-1">
-                                🥇
+                              <div className="w-7 h-7 rounded-full bg-amber-400 text-amber-950 mx-auto flex items-center justify-center text-xs font-black shadow-xs mb-1">
+                                1
                               </div>
                               <span className="text-[9px] font-black uppercase tracking-wider text-amber-800 block">
                                 Winner
@@ -734,8 +742,8 @@ export default function TheBoardGamesPage() {
                           {/* 3rd Place (Bronze) */}
                           <div className="bg-orange-50/80 border border-orange-200 rounded-xl p-2.5 text-center flex flex-col justify-between min-h-[145px]">
                             <div>
-                              <div className="w-6 h-6 rounded-full bg-orange-200/70 border border-orange-300 mx-auto flex items-center justify-center text-xs font-bold shadow-2xs mb-1">
-                                🥉
+                              <div className="w-6 h-6 rounded-full bg-amber-700/20 text-amber-900 mx-auto flex items-center justify-center text-[10px] font-black shadow-2xs mb-1">
+                                3
                               </div>
                               <span className="text-[9px] font-black uppercase tracking-wider text-orange-700 block">
                                 3rd Place
@@ -1031,8 +1039,10 @@ export default function TheBoardGamesPage() {
             {/* Loading Indicator */}
             {!iframeLoaded && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#181614] text-white z-10">
-                <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-2xl mb-3 animate-pulse">
-                  ♟️
+                <div className="w-12 h-12 rounded-2xl bg-orange-500/10 flex items-center justify-center text-orange-400 mb-3 animate-pulse">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 22H5v-2h14v2zm-3-4H8v-1.5c0-.83.67-1.5 1.5-1.5h.5c0-.87-.39-1.65-1-2.18V11c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v1.82c-.61.53-1 1.31-1 2.18h.5c.83 0 1.5.67 1.5 1.5V18zm-4-11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+                  </svg>
                 </div>
                 <p className="text-sm font-bold text-slate-200">Connecting to Lichess Arena...</p>
                 <p className="text-xs text-slate-400 mt-1">theBoardGames LeagueMatch 1</p>
@@ -1051,8 +1061,10 @@ export default function TheBoardGamesPage() {
           {/* Dedicated Non-Obtrusive Arena Footer Strip */}
           <div className="bg-slate-50 border-t border-slate-200 px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
             <div className="flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-xs shrink-0">
-                ♟
+              <span className="w-6 h-6 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center shrink-0">
+                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 22H5v-2h14v2zm-3-4H8v-1.5c0-.83.67-1.5 1.5-1.5h.5c0-.87-.39-1.65-1-2.18V11c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v1.82c-.61.53-1 1.31-1 2.18h.5c.83 0 1.5.67 1.5 1.5V18zm-4-11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+                </svg>
               </span>
               <span>
                 <strong className="text-slate-800">Direct Lichess Arena Access:</strong> If browser cookie policies limit in-frame pairing or chat, open directly on Lichess.
@@ -1124,8 +1136,8 @@ export default function TheBoardGamesPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="w-2 h-2 rounded-full bg-orange-500"></span>
-              <p className="text-xs font-black uppercase tracking-widest text-orange-600">
+              <span className="w-2 h-2 rounded-full bg-brand-primary"></span>
+              <p className="text-xs font-black uppercase tracking-widest text-brand-primary">
                 National Collegiate Field
               </p>
             </div>
@@ -1139,10 +1151,10 @@ export default function TheBoardGamesPage() {
 
           <a
             href="/chess-league/varsity"
-            className="text-xs font-black text-brand-primary hover:text-brand-accent transition-colors flex items-center gap-1.5 shrink-0 px-3.5 py-2 rounded-xl bg-blue-50 border border-blue-200 hover:border-blue-300"
+            className="text-xs font-black text-brand-primary hover:text-brand-accent transition-colors flex items-center gap-1.5 shrink-0 px-4 py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 shadow-2xs"
           >
             <span>View Full Varsity Rosters</span>
-            <span>&rarr;</span>
+            <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
 
@@ -1163,15 +1175,15 @@ export default function TheBoardGamesPage() {
                   }
                 }}
                 aria-label={`${uni.name} roster card. Click to flip.`}
-                className="perspective-1000 h-[385px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-2xl select-none"
+                className="perspective-1000 h-[385px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-brand-primary rounded-2xl select-none"
               >
                 <div
                   className={`relative w-full h-full duration-500 transform-style-3d transition-transform ${
                     isFlipped ? 'rotate-y-180' : ''
                   }`}
                 >
-                  {/* FRONT FACE: Institution Identity & Accolades */}
-                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-slate-300 transition-all p-5 flex flex-col justify-between overflow-hidden">
+                  {/* FRONT FACE: Institution Identity & Accolades (Borderless, Elevated) */}
+                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-md hover:shadow-xl transition-all p-5 flex flex-col justify-between overflow-hidden">
                     <div>
                       {/* Top Badges */}
                       <div className="flex items-center justify-between mb-3.5">
@@ -1181,13 +1193,13 @@ export default function TheBoardGamesPage() {
                         >
                           {uni.short}
                         </span>
-                        <span className="text-[10px] font-bold text-slate-500 bg-slate-50 border border-slate-200/60 px-2 py-0.5 rounded-full truncate max-w-[150px]">
+                        <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full truncate max-w-[150px]">
                           {uni.motto}
                         </span>
                       </div>
 
                       {/* University Title & Nickname */}
-                      <h4 className="text-base font-black text-slate-900 font-outfit leading-snug group-hover:text-orange-600 transition-colors line-clamp-2">
+                      <h4 className="text-base font-black text-slate-900 font-outfit leading-snug group-hover:text-brand-primary transition-colors line-clamp-2">
                         {uni.name}
                       </h4>
                       {uni.nickname && (
@@ -1197,20 +1209,20 @@ export default function TheBoardGamesPage() {
                       )}
 
                       {/* Team Stats Matrix */}
-                      <div className="mt-4 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-xs">
-                        <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-100">
+                      <div className="mt-4 pt-3 grid grid-cols-2 gap-2 text-xs">
+                        <div className="bg-slate-50 rounded-xl p-2.5">
                           <span className="text-[10px] font-semibold text-slate-400 block uppercase tracking-wider">Squad Field</span>
                           <span className="font-black text-slate-800 text-xs">5 Boards Confirmed</span>
                         </div>
-                        <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-100">
+                        <div className="bg-slate-50 rounded-xl p-2.5">
                           <span className="text-[10px] font-semibold text-slate-400 block uppercase tracking-wider">Avg Rating</span>
-                          <span className="font-black text-orange-600 font-space text-xs">{uni.averageRating} Elo</span>
+                          <span className="font-black text-brand-primary font-space text-xs">{uni.averageRating} Elo</span>
                         </div>
                       </div>
 
                       {/* Key Contenders */}
                       {uni.notable && (
-                        <div className="mt-3 text-[11px] text-slate-600 bg-orange-50/50 border border-orange-100/80 rounded-xl p-2.5 leading-relaxed">
+                        <div className="mt-3 text-[11px] text-slate-600 bg-blue-50/50 rounded-xl p-2.5 leading-relaxed">
                           <strong className="text-slate-800 font-bold block mb-0.5">Top Contenders:</strong>
                           <span className="line-clamp-2">{uni.notable}</span>
                         </div>
@@ -1218,30 +1230,34 @@ export default function TheBoardGamesPage() {
                     </div>
 
                     {/* Interactive Flip Affordance Footer */}
-                    <div className="pt-3 border-t border-dashed border-slate-200 flex items-center justify-between text-xs font-bold text-orange-600 group-hover:text-orange-700">
+                    <div className="pt-3 flex items-center justify-between text-xs font-bold text-brand-primary group-hover:text-brand-accent transition-colors">
                       <span>View 5-Board Roster</span>
-                      <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">
-                        Flip ↻
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-bold bg-blue-50 text-brand-primary px-3 py-1 rounded-full group-hover:bg-blue-100 transition-colors">
+                        <span>Flip</span>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
                       </span>
                     </div>
                   </div>
 
-                  {/* BACK FACE: 5-Board Roster with Live Profile Links */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-xl p-4 sm:p-5 flex flex-col justify-between overflow-hidden">
+                  {/* BACK FACE: SS4 Blue Official 5-Board Roster with Direct Profile Links (Borderless, SS4 Blue) */}
+                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-brand-primary text-white shadow-xl p-4 sm:p-5 flex flex-col justify-between overflow-hidden">
                     <div className="min-h-0 flex flex-col">
                       {/* Back Header */}
-                      <div className="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-2.5 shrink-0">
+                      <div className="flex items-center justify-between pb-2.5 mb-2.5 shrink-0 bg-white/10 -mx-4 -mt-4 sm:-mx-5 sm:-mt-5 px-4 sm:px-5 pt-3.5">
                         <div className="flex items-center gap-2 min-w-0">
-                          <span
-                            className="w-2.5 h-2.5 rounded-full shrink-0"
-                            style={{ backgroundColor: uni.color }}
-                          />
-                          <span className="text-xs font-black text-white uppercase tracking-wider truncate font-outfit">
-                            {uni.short} Roster
+                          <span className="px-2 py-0.5 rounded-md bg-white/20 text-white font-mono font-black text-[11px] uppercase tracking-wider shrink-0">
+                            {uni.short}
                           </span>
-                          <span className="text-[10px] text-slate-400 font-mono shrink-0">
-                            (5 Boards)
-                          </span>
+                          <div className="min-w-0">
+                            <h5 className="text-xs font-black text-white uppercase tracking-wider truncate font-outfit">
+                              Official Roster
+                            </h5>
+                            <p className="text-[10px] text-white/70 font-mono truncate leading-none">
+                              5 Confirmed Boards
+                            </p>
+                          </div>
                         </div>
 
                         <button
@@ -1250,16 +1266,18 @@ export default function TheBoardGamesPage() {
                             e.stopPropagation();
                             toggleCardFlip(uni.id);
                           }}
-                          className="px-2 py-0.5 rounded-md bg-white/10 hover:bg-white/20 text-[10px] font-bold text-slate-300 transition-colors shrink-0 flex items-center gap-1 cursor-pointer"
-                          title="Flip back to team summary"
+                          className="px-2.5 py-1 rounded-lg bg-white/20 hover:bg-white text-white hover:text-brand-primary text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+                          title="Flip back to team overview"
                         >
-                          <span>↺</span>
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                          </svg>
                           <span>Back</span>
                         </button>
                       </div>
 
                       {/* 5-Board Player List */}
-                      <div className="space-y-1.5 overflow-y-auto pr-0.5">
+                      <div className="space-y-1.5 overflow-y-auto pr-0.5 flex-1 py-1">
                         {uni.players && uni.players.length > 0 ? (
                           uni.players
                             .slice()
@@ -1271,19 +1289,19 @@ export default function TheBoardGamesPage() {
                               return (
                                 <div
                                   key={player.id || player.board}
-                                  className="flex items-center justify-between py-1.5 px-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.05] transition-colors group/player"
+                                  className="flex items-center justify-between py-1.5 px-2.5 rounded-xl bg-white/10 hover:bg-white/15 transition-all group/player"
                                 >
                                   {/* Player Info */}
-                                  <div className="flex items-center gap-2 min-w-0 pr-2">
-                                    <span className="w-5 h-5 rounded-md bg-orange-500/20 text-orange-400 font-mono text-[10px] font-black flex items-center justify-center shrink-0">
+                                  <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                                    <span className="w-6 h-6 rounded-lg bg-white/20 text-white font-mono text-[11px] font-black flex items-center justify-center shrink-0">
                                       B{player.board}
                                     </span>
                                     <div className="min-w-0">
-                                      <p className="text-xs font-bold text-white truncate leading-tight group-hover/player:text-orange-300 transition-colors">
+                                      <p className="text-xs font-bold text-white truncate leading-tight group-hover/player:text-amber-200 transition-colors">
                                         {player.name}
                                       </p>
-                                      <p className="text-[10px] text-slate-400 font-mono truncate leading-none mt-0.5">
-                                        @{player.handle} &bull; <span className="text-slate-300 font-semibold">{player.rating} Elo</span>
+                                      <p className="text-[10px] text-white/70 font-mono truncate leading-none mt-0.5">
+                                        @{player.handle} &bull; <span className="text-white/95 font-semibold">{player.rating} Elo</span>
                                       </p>
                                     </div>
                                   </div>
@@ -1294,7 +1312,7 @@ export default function TheBoardGamesPage() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
-                                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white/10 hover:bg-orange-500 hover:text-white text-slate-300 text-[10px] font-bold shrink-0 transition-colors cursor-pointer border border-white/10"
+                                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/20 hover:bg-white text-white hover:text-brand-primary text-[10px] font-bold shrink-0 transition-all cursor-pointer shadow-xs"
                                     title={`Open ${player.name}'s verified profile on ${platformName}`}
                                   >
                                     <span>{platformName}</span>
@@ -1306,7 +1324,7 @@ export default function TheBoardGamesPage() {
                               );
                             })
                         ) : (
-                          <div className="py-6 text-center text-xs text-slate-400">
+                          <div className="py-6 text-center text-xs text-white/70">
                             Roster pending verification
                           </div>
                         )}
@@ -1314,12 +1332,14 @@ export default function TheBoardGamesPage() {
                     </div>
 
                     {/* Back Footer */}
-                    <div className="pt-2 border-t border-slate-800/80 mt-2 flex items-center justify-between text-[10px] text-slate-400 shrink-0">
-                      <span className="flex items-center gap-1 text-slate-400">
-                        <span>Click profile to view games</span>
-                        <span>↗</span>
+                    <div className="pt-2 mt-1 flex items-center justify-between text-[10px] text-white/75 shrink-0">
+                      <span className="flex items-center gap-1.5">
+                        <span>Click profile to view live games</span>
+                        <svg className="w-3 h-3 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
                       </span>
-                      <span className="text-orange-400 font-bold truncate max-w-[120px]">
+                      <span className="text-white font-bold truncate max-w-[130px]">
                         {uni.short} Varsity
                       </span>
                     </div>

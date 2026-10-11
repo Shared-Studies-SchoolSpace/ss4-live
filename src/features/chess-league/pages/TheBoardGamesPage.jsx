@@ -1155,7 +1155,7 @@ export default function TheBoardGamesPage() {
                   }
                 }}
                 aria-label={`${uni.name} roster card. Click to flip.`}
-                className="perspective-1000 h-[235px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-brand-primary rounded-2xl select-none"
+                className="perspective-1000 h-[290px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-brand-primary rounded-2xl select-none"
               >
                 <div
                   className={`relative w-full h-full duration-500 transform-style-3d transition-transform ${
@@ -1163,39 +1163,39 @@ export default function TheBoardGamesPage() {
                   }`}
                 >
                   {/* FRONT FACE: Clean, small card with black university text and no bg */}
-                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between overflow-hidden">
+                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-sm hover:shadow-md transition-all p-5 sm:p-6 flex flex-col justify-between overflow-hidden">
                     <div>
                       {/* Top Bar: University Short (Black text, no bg) & Rating */}
-                      <div className="flex items-center justify-between mb-2.5">
-                        <span className="text-xs font-black uppercase tracking-wider text-black">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-black">
                           {uni.short}
                         </span>
-                        <span className="text-[11px] font-bold font-mono text-slate-500">
+                        <span className="text-xs font-bold font-mono text-slate-500">
                           {uni.averageRating} Elo
                         </span>
                       </div>
 
                       {/* University Full Name (Black text, no bg) */}
-                      <h4 className="text-sm font-black text-black font-outfit leading-snug line-clamp-2">
+                      <h4 className="text-base font-black text-black font-outfit leading-snug line-clamp-2 mt-1">
                         {uni.name}
                       </h4>
                     </div>
 
                     {/* Footer: Roster Flip Action (No squad field) */}
                     <div className="pt-2 flex items-center justify-end text-xs font-bold text-brand-primary">
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-brand-primary hover:text-brand-accent transition-colors">
-                        <span>Roster</span>
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-primary hover:text-brand-accent transition-colors">
+                        <span>View Roster</span>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
                         </svg>
                       </span>
                     </div>
                   </div>
 
-                  {/* BACK FACE: SS4 Blue Small Roster with Clickable Names (No chess.com buttons) */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-brand-primary text-white shadow-md p-4 flex flex-col justify-between overflow-hidden">
+                  {/* BACK FACE: SS4 Blue Roster with Clickable Names (No chess.com buttons, holds all 5 players, no scroll) */}
+                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-brand-primary text-white shadow-md p-4 sm:p-5 flex flex-col justify-between overflow-hidden">
                     {/* Header */}
-                    <div className="flex items-center justify-between pb-2 mb-1 shrink-0 border-b border-white/15">
+                    <div className="flex items-center justify-between pb-2 mb-1.5 shrink-0 border-b border-white/15">
                       <span className="text-xs font-black text-white font-outfit uppercase tracking-wider">
                         {uni.short} Roster
                       </span>
@@ -1215,8 +1215,8 @@ export default function TheBoardGamesPage() {
                       </button>
                     </div>
 
-                    {/* 5-Board Player List: Names clickable to pop up PlayerProfile */}
-                    <div className="space-y-1.5 overflow-y-auto flex-1 py-1 pr-0.5">
+                    {/* 5-Board Player List: Comfortably holds all 5 players with no scroll */}
+                    <div className="space-y-1.5 flex-1 flex flex-col justify-center py-1">
                       {uni.players && uni.players.length > 0 ? (
                         uni.players
                           .slice()
@@ -1224,7 +1224,7 @@ export default function TheBoardGamesPage() {
                           .map((player) => (
                             <div
                               key={player.id || player.board}
-                              className="flex items-center justify-between py-1 px-2 rounded-lg bg-white/10 hover:bg-white/15 transition-all text-xs"
+                              className="flex items-center justify-between py-1.5 px-2.5 rounded-lg bg-white/10 hover:bg-white/15 transition-all text-xs"
                             >
                               <div className="flex items-center gap-2 min-w-0 flex-1">
                                 <span className="w-5 h-5 rounded bg-white/20 text-white font-mono text-[10px] font-black flex items-center justify-center shrink-0">
@@ -1239,7 +1239,7 @@ export default function TheBoardGamesPage() {
                                   {player.name}
                                 </button>
                               </div>
-                              <span className="text-[10px] text-white/75 font-mono shrink-0 pl-1">
+                              <span className="text-[10px] text-white/75 font-mono shrink-0 pl-1.5">
                                 {player.rating}
                               </span>
                             </div>
@@ -1252,7 +1252,7 @@ export default function TheBoardGamesPage() {
                     </div>
 
                     {/* Footer hint */}
-                    <div className="pt-1 mt-0.5 text-center shrink-0">
+                    <div className="pt-2 text-center shrink-0">
                       <span className="text-[10px] text-white/60">
                         Tap player name to view info
                       </span>

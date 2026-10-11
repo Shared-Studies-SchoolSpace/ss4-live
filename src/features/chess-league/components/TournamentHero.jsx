@@ -57,9 +57,23 @@ export function TournamentHero({ tournament, selectedMonthYear, history, onMonth
 
   const winnerObj = useMemo(() => {
     if (!tournament?.winner) return null;
-    return typeof tournament.winner === 'object'
-      ? tournament.winner
-      : { name: String(tournament.winner), username: String(tournament.winner) };
+    let obj = null;
+    if (typeof tournament.winner === 'object') {
+      obj = tournament.winner;
+    } else {
+      try {
+        const parsed = JSON.parse(tournament.winner);
+        if (typeof parsed === 'object') obj = parsed;
+      } catch (e) {}
+    }
+    if (!obj) {
+      const match = (tournament?.players || []).find(p =>
+        p.name?.toLowerCase().trim() === String(tournament.winner).toLowerCase().trim() ||
+        p.username?.toLowerCase().trim() === String(tournament.winner).toLowerCase().trim()
+      );
+      obj = match ? { ...match } : { name: String(tournament.winner), username: String(tournament.winner) };
+    }
+    return obj;
   }, [tournament]);
 
   const winnerName = winnerObj?.name || winnerObj?.username || 'Champion';

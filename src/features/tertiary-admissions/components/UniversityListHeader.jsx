@@ -6,7 +6,7 @@ export default function UniversityListHeader({
 }) {
   const navigate = useNavigate();
   const gotoPartner = () => {
-    navigate("/partner");
+    navigate("/schools/enhance");
   };
   return (
     <div className="mb-8">

@@ -40,9 +40,12 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/schools" element={<SchoolsPage />} />
+            <Route path="/schools/enhance" element={<CreateUniversityPage />} />
             <Route path="/school/:id" element={<UniversityPage />} />
-            <Route path="/partner" element={<CreateUniversityPage />} />
+            <Route path="/partner" element={<PartnerOnboardingPage />} />
+            <Route path="/partners" element={<PartnerOnboardingPage />} />
             <Route path="/partner/onboarding" element={<PartnerOnboardingPage />} />
+            <Route path="/partner/school" element={<CreateUniversityPage />} />
             <Route path="/sas" element={<SasPage />} />
             <Route path="/award" element={<AspirantsAwardPage />} />
             <Route path="/news" element={<NewsPage />} />

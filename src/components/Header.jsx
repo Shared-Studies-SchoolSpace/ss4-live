@@ -128,13 +128,14 @@ export const Header = () => {
               <a href="/sas" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Assessment Series</a>
               <a href="/award" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Aspirants Award</a>
               <a href="/news" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">News</a>
+              <a href="/partners" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Partners</a>
               <a href="/about" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">About</a>
             </nav>
           </div>
 
           {/* Action & Utility Group - Equal heights & gap spacing */}
           <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 xl:gap-3 shrink-0">
-            <button className="hidden xl:inline-flex items-center h-9 sm:h-10 px-3 xl:px-4 border border-[#E8640A] text-[#E8640A] font-bold text-xs xl:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer whitespace-nowrap shrink-0" onClick={() => window.location.href='/partner'}>
+            <button className="hidden xl:inline-flex items-center h-9 sm:h-10 px-3 xl:px-4 border border-[#E8640A] text-[#E8640A] font-bold text-xs xl:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer whitespace-nowrap shrink-0" onClick={() => window.location.href='/partners'}>
               Partner With Us
             </button>
 
@@ -401,10 +402,11 @@ export const Header = () => {
               <a href="/tertiary/admission" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Admission</a>
               <a href="/award" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</a>
               <a href="/news" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>News</a>
+              <a href="/partners" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Partners</a>
               <a href="/about" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>About</a>
               
               <a 
-                href="/partner" 
+                href="/partners" 
                 className="py-2.5 px-4 border border-[#E8640A] text-[#E8640A] font-bold text-xs sm:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors text-center inline-block my-1" 
                 onClick={() => setIsMobileMenuOpen(false)}
               >

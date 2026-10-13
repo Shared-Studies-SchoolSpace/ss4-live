@@ -324,7 +324,7 @@ const TOURNAMENT_DAYS = [
     isLive: true,
     timeControl: '3+0 Blitz',
     arenaLink: ARENA_MATCH_3_LINK,
-    description: 'theBoardGames LeagueMatch 3 Arena is LIVE tonight! Contenders from all 11 collegiate rosters clash over 64 squares in a fast-paced 60-minute 3+0 blitz arena on Lichess. Individual scores count toward national varsity points.',
+    description: 'theBoardGames LeagueMatch 3 Arena is LIVE tonight! Contenders from all 11 collegiate rosters clash over 64 squares in a fast-paced 60-minute 3+0 blitz arena on Lichess. Individual scores count toward theBOARDGAMES tournament points.',
     highlights: ['3+0 Blitz Arena', '60 Minutes Duration', 'Berserk Multipliers Active', 'Live on Lichess']
   },
   {
@@ -649,7 +649,7 @@ export default function TheBoardGamesPage() {
         name: team.name || meta.short,
         short: meta.short || team.shortName || id.toUpperCase(),
         color: meta.color || team.color || '#E8640A',
-        motto: meta.motto || team.nickname || 'Varsity Challenger',
+        motto: meta.motto || team.nickname || 'theBoardGames Contender',
         notable: meta.notable || '',
         nickname: team.nickname || '',
         location: team.location || team.name,
@@ -1180,7 +1180,7 @@ export default function TheBoardGamesPage() {
         </div>
       </section>
 
-      {/* ── 2. LIVE ARENA CENTER (The Varsity Arena Broadcast Deck) ── */}
+      {/* ── 2. LIVE ARENA CENTER (theBOARDGAMES Arena Broadcast Deck) ── */}
       <section id="arena-broadcast-deck" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         {/* Section Header / Eyebrow */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-6">

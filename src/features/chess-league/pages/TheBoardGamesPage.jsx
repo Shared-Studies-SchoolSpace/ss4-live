@@ -5,8 +5,82 @@ import { VARSITY_TEAMS } from '../data/varsityData';
 import { PlayerProfile } from '../components/PlayerProfile';
 import { fetchCompletePlayerData } from '../utils/chessService';
 
-const ARENA_LINK = 'https://lichess.org/tournament/1e80iceM';
-const ARENA_ID = '1e80iceM';
+export const ARENA_MATCH_1_LINK = 'https://lichess.org/tournament/1e80iceM';
+export const ARENA_MATCH_1_ID = '1e80iceM';
+
+export const ARENA_MATCH_2_LINK = 'https://lichess.org/tournament/xBhaDpJO';
+export const ARENA_MATCH_2_ID = 'xBhaDpJO';
+
+export const ARENA_MATCH_3_LINK = 'https://lichess.org/tournament/DdKrKXJb';
+export const ARENA_MATCH_3_ID = 'DdKrKXJb';
+
+// Default active arena (Match 3 - Today's Live Tournament)
+export const ARENA_LINK = ARENA_MATCH_3_LINK;
+export const ARENA_ID = ARENA_MATCH_3_ID;
+
+export const LEAGUE_MATCHES = [
+  {
+    id: ARENA_MATCH_3_ID,
+    matchNumber: 3,
+    day: 13,
+    weekday: 'Tue',
+    dateStr: 'Tue, Oct 13',
+    title: 'theBoardGames LeagueMatch 3',
+    shortTitle: 'Match 3',
+    link: ARENA_MATCH_3_LINK,
+    status: 'LIVE',
+    isLive: true,
+    isCompleted: false,
+    timeControl: '3+0 Blitz',
+    stage: 'Tuesday Arena Clashes',
+    description: 'theBoardGames LeagueMatch 3 Arena is LIVE! Contenders from all 11 collegiate rosters clash over 64 squares in a fast-paced 60-minute 3+0 blitz arena on Lichess.',
+    highlights: ['3+0 Blitz Arena', '60 Minutes Duration', 'Berserk Multipliers Active', 'Live on Lichess']
+  },
+  {
+    id: ARENA_MATCH_2_ID,
+    matchNumber: 2,
+    day: 11,
+    weekday: 'Sun',
+    dateStr: 'Sun, Oct 11',
+    title: 'theBoardGames LeagueMatch 2',
+    shortTitle: 'Match 2',
+    link: ARENA_MATCH_2_LINK,
+    status: 'COMPLETED',
+    isLive: false,
+    isCompleted: true,
+    timeControl: '3+0 Blitz',
+    stage: 'Sunday Blitz Arena',
+    description: 'theBoardGames LeagueMatch 2 on Lichess has officially concluded. 36 university contenders clashed across 116 matches with Amakuro Minalabh (D-genius) seizing the championship with 32 points.',
+    highlights: ['36 Contenders', '116 Games Played', 'Winner: D-genius (32 pts)', 'Runner-Up: simon25 (28 pts)', '3rd: minatoe5 (22 pts)'],
+    winner: 'D-genius (32 pts)',
+    runnerUp: 'simon25 (28 pts)',
+    third: 'minatoe5 (22 pts)',
+    totalPlayers: 36,
+    totalGames: 116
+  },
+  {
+    id: ARENA_MATCH_1_ID,
+    matchNumber: 1,
+    day: 9,
+    weekday: 'Fri',
+    dateStr: 'Fri, Oct 9',
+    title: 'theBoardGames LeagueMatch 1',
+    shortTitle: 'Match 1',
+    link: ARENA_MATCH_1_LINK,
+    status: 'COMPLETED',
+    isLive: false,
+    isCompleted: true,
+    timeControl: '3+0 Blitz • 5+0 Blitz • 10+0 Rapid',
+    stage: 'Kickoff Arena Launch',
+    description: 'Day 1 kickoff arena on Lichess has officially concluded. 31 university contenders clashed across 112 matches with Juk3s taking the championship with 33 points.',
+    highlights: ['31 Contenders', '112 Games Played', 'Winner: Juk3s (33 pts)', 'Runner-Up: minatoe5 (26 pts)', '3rd: D-genius (23 pts)'],
+    winner: 'Juk3s (33 pts)',
+    runnerUp: 'minatoe5 (26 pts)',
+    third: 'D-genius (23 pts)',
+    totalPlayers: 31,
+    totalGames: 112
+  }
+];
 
 const TIME_CONTROLS = [
   {
@@ -73,7 +147,7 @@ const TOURNAMENT_DAYS = [
     isCompleted: true,
     isLive: false,
     timeControl: '3+0 Blitz • 5+0 Blitz • 10+0 Rapid',
-    arenaLink: ARENA_LINK,
+    arenaLink: ARENA_MATCH_1_LINK,
     description: 'Day 1 kickoff arena on Lichess has officially concluded. 31 university contenders clashed across 112 matches with Juk3s taking the championship with 33 points.',
     highlights: ['31 Contenders', '112 Games Played', 'Winner: Juk3s (33 pts)', 'Runner-Up: minatoe5 (26 pts)'],
     results: {
@@ -138,57 +212,120 @@ const TOURNAMENT_DAYS = [
     day: 10,
     dayIndex: 2,
     weekday: 'Sat',
-    title: 'LeagueMatch 1 • Day 2 Arena Sprint',
+    title: 'Phase 1 • Strategy & Repertoire Review',
     phase: 'Phase 1',
-    stage: 'Opening Weekend Arena',
-    status: 'Upcoming',
+    stage: 'Opening Weekend Strategy',
+    status: 'COMPLETED',
+    isCompleted: true,
     isLive: false,
-    timeControl: '3+0 Blitz • 5+0 Blitz',
+    timeControl: 'Rest & Strategy Day',
     arenaLink: null,
-    description: 'High-speed blitz arena battles continuing the opening weekend points rally. Contenders fight for podium placement and early streak bonuses.',
-    highlights: ['Blitz Arena Speedrun', 'Streak multiplier enabled', 'Standings update at 22:00 UTC']
+    description: 'Post-Match 1 team debriefs, opening repertoire preparation, and tactical review across all 11 universities ahead of LeagueMatch 2.',
+    highlights: ['Institutional Squad Review', 'Opening Repertoire Prep', 'Readiness for LeagueMatch 2']
   },
   {
     day: 11,
     dayIndex: 3,
     weekday: 'Sun',
-    title: 'LeagueMatch 1 • Weekend Wrap-up',
+    title: 'theBoardGames LeagueMatch 2',
     phase: 'Phase 1',
-    stage: 'Weekend Finale',
-    status: 'Upcoming',
+    stage: 'Sunday Blitz Arena',
+    status: 'COMPLETED',
+    isCompleted: true,
     isLive: false,
-    timeControl: '5+0 Blitz • 10+0 Rapid',
-    arenaLink: null,
-    description: 'Conclusion of opening weekend arena fixtures and consolidation of Phase 1 team points before the Swiss sprint phase.',
-    highlights: ['Phase 1 points lock', 'Weekly leaderboard reset', 'Player of the Week voting']
+    timeControl: '3+0 Blitz',
+    arenaLink: ARENA_MATCH_2_LINK,
+    description: 'theBoardGames LeagueMatch 2 on Lichess has officially concluded. 36 university contenders clashed across 116 matches. UNIUYO’s Board 1 lead Amakuro Minalabh (D-genius) clinched 1st place with 32 points, edging out Babcock’s simon25 (28 pts) and UNIUYO teammate minatoe5 (22 pts).',
+    highlights: ['36 Contenders', '116 Games Played', 'Winner: D-genius (32 pts)', 'Runner-Up: simon25 (28 pts)', '3rd Place: minatoe5 (22 pts)'],
+    results: {
+      totalPlayers: 36,
+      totalGames: 116,
+      totalMoves: 8802,
+      durationMinutes: 60,
+      podium: [
+        {
+          rank: 1,
+          label: 'Champion',
+          name: 'D-genius',
+          realName: 'Amakuro Minalabh',
+          school: 'University of Uyo',
+          rating: 2282,
+          score: 32,
+          performance: 2324,
+          games: 11,
+          wins: 10,
+          berserks: 0
+        },
+        {
+          rank: 2,
+          label: 'Runner-Up',
+          name: 'simon25',
+          realName: 'Akogo Simon',
+          school: 'Babcock University',
+          rating: 2053,
+          score: 28,
+          performance: 2174,
+          games: 12,
+          wins: 9,
+          berserks: 1
+        },
+        {
+          rank: 3,
+          label: '2nd Runner-Up',
+          name: 'minatoe5',
+          realName: 'Peter Eti Essien',
+          school: 'University of Uyo',
+          rating: 2114,
+          score: 22,
+          performance: 1963,
+          games: 12,
+          wins: 7,
+          berserks: 8
+        }
+      ],
+      standings: [
+        { rank: 1, name: 'D-genius', detail: 'Amakuro Minalabh (UNIUYO)', rating: 2282, score: 32, performance: 2324, record: '10W • 11G' },
+        { rank: 2, name: 'simon25', detail: 'Akogo Simon (BABCOCK)', rating: 2053, score: 28, performance: 2174, record: '9W • 12G' },
+        { rank: 3, name: 'minatoe5', detail: 'Peter Eti Essien (UNIUYO)', rating: 2114, score: 22, performance: 1963, record: '7W • 12G' },
+        { rank: 4, name: 'emike001', detail: 'Emmanuel Michael (FUTIA)', rating: 2091, score: 20, record: '8W • 11G' },
+        { rank: 5, name: 'Ataria-Daniel-2002', detail: 'Daniel Daniel (REDEEMER\'S)', rating: 2065, score: 18, record: '6W • 10G' },
+        { rank: 6, name: 'Archerlima111', rating: 1870, score: 18, record: '6W • 12G' },
+        { rank: 7, name: 'Juk3s', rating: 2253, score: 16, record: '5W • 9G' },
+        { rank: 8, name: 'Crown_mf', rating: 1952, score: 13, record: '6W • 11G' },
+        { rank: 9, name: 'garconune', rating: 1833, score: 12, record: '4W • 10G' },
+        { rank: 10, name: 'Esamzy', rating: 2005, score: 12, record: '4W • 10G' }
+      ]
+    }
   },
   {
     day: 12,
     dayIndex: 4,
     weekday: 'Mon',
-    title: 'Swiss Sprints • Round 1',
-    phase: 'Phase 2',
-    stage: 'Institutional Qualifiers',
-    status: 'Scheduled',
+    title: 'Phase 1 • Tactical Calibration & Rest',
+    phase: 'Phase 1',
+    stage: 'Inter-Match Preparation',
+    status: 'COMPLETED',
+    isCompleted: true,
     isLive: false,
-    timeControl: '5+0 Blitz',
+    timeControl: 'Rest & Analysis',
     arenaLink: null,
-    description: 'First round of Swiss pairings between university representatives across seeded institutional brackets.',
-    highlights: ['Official Swiss pairings', 'Direct head-to-head matchplay', 'Buchholz tiebreak tracking']
+    description: 'Debriefing following LeagueMatch 2. Teams rested and calibrated their board strategies ahead of Tuesday’s LeagueMatch 3.',
+    highlights: ['LeagueMatch 2 Point Consolidation', 'Rest & Board Calibration', 'Squad Readiness for Match 3']
   },
   {
     day: 13,
     dayIndex: 5,
     weekday: 'Tue',
-    title: 'Swiss Sprints • Round 2',
-    phase: 'Phase 2',
-    stage: 'Institutional Qualifiers',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '5+0 Blitz',
-    arenaLink: null,
-    description: 'Accelerated pairing rounds to establish seeds, university standings, and individual tier positions.',
-    highlights: ['Winner bracket clashes', 'Reigning champions in action', 'Live board analysis']
+    title: 'theBoardGames LeagueMatch 3',
+    phase: 'Phase 1',
+    stage: 'Tuesday Arena Clashes',
+    status: 'LIVE',
+    isCompleted: false,
+    isLive: true,
+    timeControl: '3+0 Blitz',
+    arenaLink: ARENA_MATCH_3_LINK,
+    description: 'theBoardGames LeagueMatch 3 Arena is LIVE tonight! Contenders from all 11 collegiate rosters clash over 64 squares in a fast-paced 60-minute 3+0 blitz arena on Lichess. Individual scores count toward national varsity points.',
+    highlights: ['3+0 Blitz Arena', '60 Minutes Duration', 'Berserk Multipliers Active', 'Live on Lichess']
   },
   {
     day: 14,
@@ -445,7 +582,10 @@ const TOURNAMENT_DAYS = [
 ];
 
 export default function TheBoardGamesPage() {
-  const [selectedDay, setSelectedDay] = useState(TOURNAMENT_DAYS[0]);
+  const [activeArenaMatch, setActiveArenaMatch] = useState(LEAGUE_MATCHES[0]);
+  const [selectedDay, setSelectedDay] = useState(() => {
+    return TOURNAMENT_DAYS.find(d => d.day === 13) || TOURNAMENT_DAYS[0];
+  });
   const [copied, setCopied] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -556,31 +696,35 @@ export default function TheBoardGamesPage() {
   };
 
   useEffect(() => {
-    document.title = 'theBOARDGAMES: LeagueMatch 1 | SS4 Chess League';
+    document.title = `${activeArenaMatch.title} | SS4 Chess League`;
     window.scrollTo(0, 0);
-  }, []);
+  }, [activeArenaMatch]);
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(ARENA_LINK).then(() => {
+  const handleCopyLink = (linkOverride) => {
+    const link = typeof linkOverride === 'string' ? linkOverride : activeArenaMatch.link;
+    navigator.clipboard.writeText(link).then(() => {
       setCopied(true);
       toast.success('Lichess Arena link copied to clipboard!');
       setTimeout(() => setCopied(false), 2500);
     }).catch(() => {
-      toast.info(`Arena Link: ${ARENA_LINK}`);
+      toast.info(`Arena Link: ${link}`);
     });
   };
 
-  const handleShare = () => {
+  const handleShare = (matchOrDay) => {
+    const targetLink = matchOrDay?.arenaLink || matchOrDay?.link || activeArenaMatch.link;
+    const targetTitle = matchOrDay?.title || activeArenaMatch.title;
+    const isLive = matchOrDay?.isLive !== undefined ? matchOrDay.isLive : activeArenaMatch.isLive;
     const shareData = {
-      title: 'theBoardGames LeagueMatch 1 | SS4 Chess League',
-      text: 'theBoardGames LeagueMatch 1 is LIVE!\nFeaturing the best chess players from top universities in Nigeria.\n\nArena Link: https://lichess.org/tournament/1e80iceM\n\nThe Board Remembers.',
-      url: ARENA_LINK
+      title: `${targetTitle} | SS4 Chess League`,
+      text: `${targetTitle} is ${isLive ? 'LIVE' : 'available'} on Lichess!\nFeaturing the best chess players from top universities in Nigeria.\n\nArena Link: ${targetLink}\n\nThe Board Remembers.`,
+      url: targetLink
     };
 
     if (navigator.share) {
       navigator.share(shareData).catch(() => {});
     } else {
-      handleCopyLink();
+      handleCopyLink(targetLink);
     }
   };
 
@@ -639,10 +783,13 @@ export default function TheBoardGamesPage() {
                         {d.day}
                       </span>
                       <span className={`text-[9px] sm:text-[10px] font-semibold leading-none ${
-                        isSelected ? 'text-orange-100' : 'text-slate-500'
+                        isSelected ? 'text-orange-100' : d.isLive ? 'text-emerald-600 font-black' : 'text-slate-500'
                       }`}>
-                        {d.isCompleted ? 'Final' : 'Oct'}
+                        {d.isCompleted ? 'Final' : d.isLive ? 'LIVE' : 'Oct'}
                       </span>
+                      {d.isLive && (
+                        <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Live Today"></span>
+                      )}
                     </button>
                   );
                 })}
@@ -853,7 +1000,7 @@ export default function TheBoardGamesPage() {
 
                         <button
                           type="button"
-                          onClick={handleCopyLink}
+                          onClick={() => handleCopyLink(selectedDay.arenaLink)}
                           className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
                         >
                           <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -864,7 +1011,7 @@ export default function TheBoardGamesPage() {
 
                         <button
                           type="button"
-                          onClick={handleShare}
+                          onClick={() => handleShare(selectedDay)}
                           className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
                           title="Share match details"
                         >
@@ -873,6 +1020,28 @@ export default function TheBoardGamesPage() {
                           </svg>
                           <span>Share</span>
                         </button>
+
+                        {selectedDay.arenaLink && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const match = LEAGUE_MATCHES.find(m => m.link === selectedDay.arenaLink);
+                              if (match) {
+                                setActiveArenaMatch(match);
+                                setIframeLoaded(false);
+                              }
+                              const el = document.getElementById('arena-broadcast-deck');
+                              if (el) el.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#E8640A] border border-orange-200 font-bold text-xs transition-all cursor-pointer"
+                            title="Load in Live Arena Broadcast Deck"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            <span>Arena Deck</span>
+                          </button>
+                        )}
                       </div>
                     </div>
                   ) : (
@@ -883,9 +1052,17 @@ export default function TheBoardGamesPage() {
                         <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
                           Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
                         </span>
-                        <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide">
-                          {selectedDay.phase}
-                        </span>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide">
+                            {selectedDay.phase}
+                          </span>
+                          {selectedDay.isLive && (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 uppercase tracking-wider">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                              Live Tonight
+                            </span>
+                          )}
+                        </div>
                       </div>
 
                       {/* Match Title & Stage */}
@@ -947,7 +1124,7 @@ export default function TheBoardGamesPage() {
 
                           <button
                             type="button"
-                            onClick={handleCopyLink}
+                            onClick={() => handleCopyLink(selectedDay.arenaLink)}
                             className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
                           >
                             <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -958,7 +1135,7 @@ export default function TheBoardGamesPage() {
 
                           <button
                             type="button"
-                            onClick={handleShare}
+                            onClick={() => handleShare(selectedDay)}
                             className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
                             title="Share match details"
                           >
@@ -966,6 +1143,26 @@ export default function TheBoardGamesPage() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                             </svg>
                             <span>Share</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const match = LEAGUE_MATCHES.find(m => m.link === selectedDay.arenaLink);
+                              if (match) {
+                                setActiveArenaMatch(match);
+                                setIframeLoaded(false);
+                              }
+                              const el = document.getElementById('arena-broadcast-deck');
+                              if (el) el.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#E8640A] border border-orange-200 font-bold text-xs transition-all cursor-pointer"
+                            title="Watch in Live Arena Broadcast Deck"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            <span>Arena Deck</span>
                           </button>
                         </div>
                       ) : (
@@ -984,31 +1181,65 @@ export default function TheBoardGamesPage() {
       </section>
 
       {/* ── 2. LIVE ARENA CENTER (The Varsity Arena Broadcast Deck) ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <section id="arena-broadcast-deck" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         {/* Section Header / Eyebrow */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span className="text-xs font-black uppercase tracking-wider text-emerald-700 font-mono">
-                LIVE BROADCAST &bull; OFFICIAL ARENA
+              <span className={`w-2 h-2 rounded-full ${activeArenaMatch.isLive ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`}></span>
+              <span className={`text-xs font-black uppercase tracking-wider font-mono ${
+                activeArenaMatch.isLive ? 'text-emerald-700' : 'text-slate-500'
+              }`}>
+                {activeArenaMatch.isLive ? 'LIVE BROADCAST • OFFICIAL ARENA' : 'OFFICIAL ARENA ARCHIVE & REPLAY'}
               </span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black font-outfit text-slate-900 tracking-tight">
-              theBoardGames LeagueMatch 1 Arena
+              {activeArenaMatch.title} Arena
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
               Live inter-collegiate arena tournament hosted on Lichess.org &bull; Tournament ID:{' '}
               <code className="text-[#E8640A] font-mono font-bold bg-orange-50 px-1.5 py-0.5 rounded border border-orange-200">
-                {ARENA_ID}
+                {activeArenaMatch.id}
               </code>
             </p>
           </div>
 
-          {/* Quick Header Actions */}
-          <div className="flex items-center gap-2.5 shrink-0">
+          {/* Quick Header Actions & Match Switcher */}
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            {/* Match Select Pills */}
+            <div className="inline-flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200 gap-1">
+              {LEAGUE_MATCHES.map((match) => {
+                const isActive = activeArenaMatch.id === match.id;
+                return (
+                  <button
+                    key={match.id}
+                    type="button"
+                    onClick={() => {
+                      setActiveArenaMatch(match);
+                      setIframeLoaded(false);
+                    }}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                      isActive
+                        ? 'bg-[#E8640A] text-white shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
+                    }`}
+                  >
+                    {match.isLive && (
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    )}
+                    <span>Match {match.matchNumber}</span>
+                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                      isActive ? 'bg-black/20 text-white' : 'bg-slate-200/70 text-slate-500'
+                    }`}>
+                      {match.isLive ? 'LIVE' : 'Final'}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
             <a
-              href={ARENA_LINK}
+              href={activeArenaMatch.link}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white text-xs sm:text-sm font-black shadow-sm hover:shadow transition-all active:scale-[0.98] cursor-pointer"
@@ -1021,7 +1252,7 @@ export default function TheBoardGamesPage() {
 
             <button
               type="button"
-              onClick={handleCopyLink}
+              onClick={() => handleCopyLink(activeArenaMatch.link)}
               className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-bold border border-slate-200 shadow-2xs transition-all active:scale-[0.98] cursor-pointer"
             >
               <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1035,7 +1266,15 @@ export default function TheBoardGamesPage() {
         {/* Arena Frame Container */}
         <div className="rounded-2xl sm:rounded-3xl bg-white border border-slate-200 shadow-sm overflow-hidden">
           {/* Arena Control Deck Bar */}
-          <div className="bg-[#0B192C] text-white px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-end gap-3 border-b border-slate-800">
+          <div className="bg-[#0B192C] text-white px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3 border-b border-slate-800">
+            <div className="flex items-center gap-2 text-xs">
+              <span className="font-bold text-slate-300">{activeArenaMatch.title}:</span>
+              <span className="text-orange-400 font-semibold">{activeArenaMatch.stage || activeArenaMatch.dateStr}</span>
+              {activeArenaMatch.winner && (
+                <span className="hidden md:inline text-slate-400">&bull; Winner: {activeArenaMatch.winner}</span>
+              )}
+            </div>
+
             {/* View Mode & Utility Controls */}
             <div className="flex items-center gap-2">
               <button
@@ -1055,7 +1294,7 @@ export default function TheBoardGamesPage() {
               </button>
 
               <a
-                href={ARENA_LINK}
+                href={activeArenaMatch.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer"
@@ -1082,13 +1321,14 @@ export default function TheBoardGamesPage() {
                   </svg>
                 </div>
                 <p className="text-sm font-bold text-slate-200">Connecting to Lichess Arena...</p>
-                <p className="text-xs text-slate-400 mt-1">theBoardGames LeagueMatch 1</p>
+                <p className="text-xs text-slate-400 mt-1">{activeArenaMatch.title}</p>
               </div>
             )}
 
             <iframe
-              src={ARENA_LINK}
-              title="theBoardGames LeagueMatch 1 Live Arena"
+              key={activeArenaMatch.id}
+              src={activeArenaMatch.link}
+              title={`${activeArenaMatch.title} Live Arena`}
               className="w-full h-full border-none"
               allowFullScreen
               onLoad={() => setIframeLoaded(true)}
@@ -1109,12 +1349,12 @@ export default function TheBoardGamesPage() {
             </div>
 
             <a
-              href={ARENA_LINK}
+              href={activeArenaMatch.link}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 font-bold text-[#E8640A] hover:text-[#c95307] transition-colors whitespace-nowrap shrink-0"
             >
-              <span>Launch Arena in Lichess App / Browser</span>
+              <span>Launch {activeArenaMatch.title} in Lichess</span>
               <span aria-hidden="true">&rarr;</span>
             </a>
           </div>

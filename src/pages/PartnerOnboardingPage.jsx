@@ -37,7 +37,7 @@ export default function PartnerOnboardingPage() {
   const [formData, setFormData] = useState({
     // Section 1: About You
     fullName: '',
-    stateOfResidence: 'Lagos State',
+    stateOfResidence: '',
     phone: '',
     email: '',
     profession: '',
@@ -46,7 +46,7 @@ export default function PartnerOnboardingPage() {
 
     // Section 2: Your Partnership
     interestsText: '',
-    contributions: ['Mentorship', 'Networking'],
+    contributions: [],
     contributionOtherText: '',
 
     // Section 3: SCL Monthly Sponsorship

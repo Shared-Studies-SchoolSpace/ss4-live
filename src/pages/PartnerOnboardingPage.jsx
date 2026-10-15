@@ -21,15 +21,6 @@ const CONTRIBUTION_OPTIONS = [
   'Other'
 ];
 
-// Sponsorship Duration options
-const DURATION_OPTIONS = [
-  '1 month',
-  '3 months',
-  '6 months',
-  '12 months',
-  'Other'
-];
-
 // Referral Options
 const REFERRAL_OPTIONS = [
   'Social media',
@@ -38,18 +29,8 @@ const REFERRAL_OPTIONS = [
   'Other'
 ];
 
-// Quick Naira Presets
-const SPONSORSHIP_PRESETS = [
-  '25,000',
-  '50,000',
-  '100,000',
-  '250,000',
-  '500,000'
-];
-
 export default function PartnerOnboardingPage() {
   const otherContribId = useId();
-  const otherDurationId = useId();
   const otherReferralId = useId();
 
   // Form State
@@ -69,9 +50,7 @@ export default function PartnerOnboardingPage() {
     contributionOtherText: '',
 
     // Section 3: SCL Monthly Sponsorship
-    sponsorshipAmount: '50,000',
-    sponsorshipDuration: '3 months',
-    durationOtherText: '',
+    sponsorshipAmount: '',
 
     // Section 4: Recognition & Final Details
     publicRecognition: 'yes', // 'yes' | 'no'
@@ -136,9 +115,7 @@ export default function PartnerOnboardingPage() {
       partnership_interests: formData.interestsText.trim(),
       contributions: formData.contributions,
       contribution_other: formData.contributions.includes('Other') ? formData.contributionOtherText.trim() : null,
-      sponsorship_amount_monthly: formData.sponsorshipAmount,
-      sponsorship_duration: formData.sponsorshipDuration,
-      sponsorship_duration_other: formData.sponsorshipDuration === 'Other' ? formData.durationOtherText.trim() : null,
+      sponsorship_amount_monthly: formData.sponsorshipAmount ? formData.sponsorshipAmount.trim() : null,
       public_recognition: formData.publicRecognition === 'yes',
       recognition_name: formData.publicRecognition === 'yes' ? (formData.recognitionName.trim() || formData.fullName.trim()) : null,
       referral_source: formData.referralSource,
@@ -243,15 +220,13 @@ export default function PartnerOnboardingPage() {
                 <div>
                   <dt className="text-xs text-gray-500 font-bold mb-0.5">Monthly Commitment</dt>
                   <dd className="font-space font-black text-lg text-[#C84E00]">
-                    ₦{submittedData.sponsorshipAmount || '0'} / month
+                    {submittedData.sponsorshipAmount ? `₦${submittedData.sponsorshipAmount} / month` : 'Voluntary / General Support'}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-gray-500 font-bold mb-0.5">Sponsorship Duration</dt>
+                  <dt className="text-xs text-gray-500 font-bold mb-0.5">Organization / Role</dt>
                   <dd className="font-space font-extrabold text-[#1B2433]">
-                    {submittedData.sponsorshipDuration === 'Other'
-                      ? submittedData.durationOtherText
-                      : submittedData.sponsorshipDuration}
+                    {submittedData.organization || submittedData.profession || 'Independent Partner'}
                   </dd>
                 </div>
                 <div>
@@ -515,103 +490,20 @@ export default function PartnerOnboardingPage() {
                 </div>
 
                 {/* Amount */}
-                <div className="mb-6">
+                <div>
                   <label className="block font-space text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
                     Intended sponsorship for the SS4 Chess League (SCL) Monthly Games
                   </label>
-                  <div className="flex items-baseline gap-2 text-2xl font-black text-[#C84E00] mb-3">
+                  <div className="flex items-baseline gap-2 text-2xl font-black text-[#C84E00]">
                     <span>₦</span>
                     <input
                       type="text"
                       className="font-space font-black text-2xl bg-transparent border-0 border-b-2 border-[#1559B2] outline-none text-[#1B2433] w-48 sm:w-56 px-0 py-0.5 focus:border-[#C84E00] transition-colors"
                       value={formData.sponsorshipAmount}
                       onChange={(e) => handleInputChange('sponsorshipAmount', e.target.value)}
-                      placeholder="50,000"
                     />
                     <small className="text-sm font-semibold text-gray-600 font-avenir">per month</small>
                   </div>
-
-                  {/* Preset Chips */}
-                  <div className="flex flex-wrap items-center gap-2 pt-1">
-                    <span className="text-[11px] font-space font-bold uppercase tracking-wider text-gray-500 mr-1">
-                      Quick Select:
-                    </span>
-                    {SPONSORSHIP_PRESETS.map((preset) => (
-                      <button
-                        key={preset}
-                        type="button"
-                        onClick={() => handleInputChange('sponsorshipAmount', preset)}
-                        className={`text-xs font-space font-bold px-2.5 py-1 rounded-lg border transition-all cursor-pointer ${
-                          formData.sponsorshipAmount === preset
-                            ? 'bg-[#1559B2] text-white border-[#1559B2]'
-                            : 'bg-white text-gray-700 border-[#B9C4D6] hover:bg-gray-50'
-                        }`}
-                      >
-                        ₦{preset}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Sponsorship Duration */}
-                <div>
-                  <span className="block font-space text-sm font-extrabold text-[#1B2433] mb-2">
-                    Sponsorship duration
-                  </span>
-                  <div className="flex flex-wrap gap-2.5">
-                    {DURATION_OPTIONS.map((dur) => {
-                      const isSelected = formData.sponsorshipDuration === dur;
-                      return (
-                        <button
-                          key={dur}
-                          type="button"
-                          onClick={() => handleInputChange('sponsorshipDuration', dur)}
-                          className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-space font-bold border transition-all cursor-pointer ${
-                            isSelected
-                              ? 'border-[#1559B2] bg-[#EEF3FB] text-[#1559B2]'
-                              : 'border-[#B9C4D6] bg-[#FAF8F4] hover:bg-white text-gray-700'
-                          }`}
-                        >
-                          <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${
-                            isSelected ? 'border-[#1559B2] bg-[#1559B2]' : 'border-gray-400 bg-white'
-                          }`}>
-                            {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
-                          </span>
-                          <span>{dur}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Other duration input */}
-                  <AnimatePresence>
-                    {formData.sponsorshipDuration === 'Other' && (
-                      <Motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden mt-2"
-                      >
-                        <div className="pt-2">
-                          <label
-                            htmlFor={otherDurationId}
-                            className="block text-xs font-space font-bold uppercase tracking-wider text-gray-700 mb-1"
-                          >
-                            Specify your duration
-                          </label>
-                          <input
-                            id={otherDurationId}
-                            type="text"
-                            className="w-full bg-transparent border-0 border-b-[1.5px] border-[#B9C4D6] rounded-none px-0 py-2 text-sm text-[#1B2433] outline-none focus:border-[#1559B2] transition-colors"
-                            placeholder="e.g. 2 years / Indefinite recurring"
-                            value={formData.durationOtherText}
-                            onChange={(e) => handleInputChange('durationOtherText', e.target.value)}
-                          />
-                        </div>
-                      </Motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
               </section>
 

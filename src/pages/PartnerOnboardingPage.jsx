@@ -12,58 +12,6 @@ const CheckIcon = ({ className = "w-4 h-4" }) => (
   </svg>
 );
 
-const WhatsAppGlyph = ({ className = "w-5 h-5" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm.01 1.67c4.55 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.83a8.19 8.19 0 01-5.82 2.41c-1.45 0-2.88-.38-4.14-1.11l-.3-.18-3.12.82.83-3.04-.19-.31a8.167 8.167 0 01-1.24-4.42c0-4.54 3.69-8.24 8.24-8.24zm4.52 11.64c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.07-.39-2.03-1.25-.75-.67-1.26-1.5-1.4-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.3z" />
-  </svg>
-);
-
-const EmailGlyph = ({ className = "w-5 h-5" }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-  </svg>
-);
-
-const OtherChannelGlyph = ({ className = "w-5 h-5" }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-  </svg>
-);
-
-// Email Frequency Options
-const EMAIL_FREQUENCIES = [
-  {
-    id: 'multiple_per_day',
-    label: 'Multiple times a day',
-    tag: 'Real-time',
-    detail: 'Continuous monitoring throughout the workday.'
-  },
-  {
-    id: 'every_morning',
-    label: 'Every morning',
-    tag: 'Morning',
-    detail: 'Processed at the start of the academic/administrative day.'
-  },
-  {
-    id: 'once_a_day',
-    label: 'Once a day',
-    tag: 'Dedicated Block',
-    detail: 'A focused review window once daily.'
-  },
-  {
-    id: 'every_evening',
-    label: 'Every evening',
-    tag: 'Evening',
-    detail: 'Reviewed at the close of daily operations.'
-  },
-  {
-    id: 'few_times_week',
-    label: 'A few times a week',
-    tag: 'Periodic',
-    detail: 'Checked periodically every couple of days.'
-  },
-];
-
 // Contribution options
 const CONTRIBUTION_OPTIONS = [
   'Mentorship',
@@ -99,15 +47,7 @@ const SPONSORSHIP_PRESETS = [
   '500,000'
 ];
 
-// Time Windows
-const TIME_WINDOWS = [
-  { id: 'morning', label: 'Morning (08:00 – 12:00)' },
-  { id: 'afternoon', label: 'Afternoon (12:00 – 16:00)' },
-  { id: 'evening', label: 'Evening (16:00 – 19:00)' },
-];
-
 export default function PartnerOnboardingPage() {
-  const otherContactId = useId();
   const otherContribId = useId();
   const otherDurationId = useId();
   const otherReferralId = useId();
@@ -123,30 +63,24 @@ export default function PartnerOnboardingPage() {
     organization: '',
     socialProfile: '',
 
-    // Section 2: Communication Preferences (Crucial user questions)
-    preferredMeans: 'whatsapp', // 'whatsapp' | 'email' | 'other'
-    preferredMeansOtherText: '',
-    emailFrequency: 'once_a_day',
-    preferredTimeWindow: 'morning',
-
-    // Section 3: Your Partnership
+    // Section 2: Your Partnership
     interestsText: '',
     contributions: ['Mentorship', 'Networking'],
     contributionOtherText: '',
 
-    // Section 4: SCL Monthly Sponsorship
+    // Section 3: SCL Monthly Sponsorship
     sponsorshipAmount: '50,000',
     sponsorshipDuration: '3 months',
     durationOtherText: '',
 
-    // Section 5: Recognition & Final Details
+    // Section 4: Recognition & Final Details
     publicRecognition: 'yes', // 'yes' | 'no'
     recognitionName: '',
     referralSource: 'Social media',
     referralOtherText: '',
     additionalNotes: '',
 
-    // Section 6: Confirmation
+    // Section 5: Confirmation
     confirmationName: '',
     confirmationDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
   });
@@ -187,11 +121,6 @@ export default function PartnerOnboardingPage() {
       toast.error('Please enter a valid email address.');
       return;
     }
-    if (formData.preferredMeans === 'other' && !formData.preferredMeansOtherText.trim()) {
-      toast.error('Please specify your alternative preferred means of being reached.');
-      return;
-    }
-
     setIsSubmitting(true);
     const ref = `SS4-PRT-${Math.floor(100000 + Math.random() * 900000)}`;
 
@@ -204,10 +133,6 @@ export default function PartnerOnboardingPage() {
       profession: formData.profession.trim(),
       organization: formData.organization.trim(),
       social_profile: formData.socialProfile.trim(),
-      preferred_contact_method: formData.preferredMeans,
-      preferred_contact_method_other: formData.preferredMeans === 'other' ? formData.preferredMeansOtherText.trim() : null,
-      email_frequency: formData.emailFrequency,
-      preferred_time_window: formData.preferredTimeWindow,
       partnership_interests: formData.interestsText.trim(),
       contributions: formData.contributions,
       contribution_other: formData.contributions.includes('Other') ? formData.contributionOtherText.trim() : null,
@@ -330,17 +255,15 @@ export default function PartnerOnboardingPage() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-gray-500 font-bold mb-0.5">Preferred Contact Channel</dt>
-                  <dd className="font-space font-extrabold text-[#1559B2] capitalize">
-                    {submittedData.preferredMeans === 'other'
-                      ? submittedData.preferredMeansOtherText
-                      : submittedData.preferredMeans}
+                  <dt className="text-xs text-gray-500 font-bold mb-0.5">Primary Contact</dt>
+                  <dd className="font-space font-extrabold text-[#1559B2] truncate">
+                    {submittedData.email || submittedData.phone}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-gray-500 font-bold mb-0.5">Email Checking Routine</dt>
-                  <dd className="font-space font-bold text-[#1B2433]">
-                    {EMAIL_FREQUENCIES.find((f) => f.id === submittedData.emailFrequency)?.label || submittedData.emailFrequency}
+                  <dt className="text-xs text-gray-500 font-bold mb-0.5">Location</dt>
+                  <dd className="font-space font-extrabold text-[#1B2433]">
+                    {submittedData.stateOfResidence || 'Nigeria'}
                   </dd>
                 </div>
               </dl>
@@ -493,208 +416,11 @@ export default function PartnerOnboardingPage() {
                   </div>
                 </div>
               </section>
-
-              {/* SECTION 2: Communication Preferences (Crucial questions from prompt) */}
+              {/* SECTION 2: Your Partnership */}
               <section className="mb-8 pt-4 border-t border-gray-100">
                 <div className="flex items-center gap-2.5 my-6">
                   <span className="w-7 h-7 rounded-full bg-[#C84E00] text-white flex items-center justify-center font-space font-black text-xs shrink-0">
                     2
-                  </span>
-                  <h2 className="text-lg sm:text-xl font-space font-black text-[#1559B2] m-0">
-                    Communication Protocol
-                  </h2>
-                </div>
-
-                {/* Question 1: Preferred Means */}
-                <div className="mb-6">
-                  <div className="flex items-baseline justify-between mb-1.5">
-                    <label className="font-space text-sm sm:text-base font-black text-[#1B2433]">
-                      What is your preferred means of being reached? <span className="text-[#C84E00]">*</span>
-                    </label>
-                  </div>
-                  <p className="text-xs text-gray-500 mb-3">
-                    Choose the primary channel for our direct correspondence.
-                  </p>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {/* WhatsApp */}
-                    <button
-                      type="button"
-                      onClick={() => handleInputChange('preferredMeans', 'whatsapp')}
-                      className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
-                        formData.preferredMeans === 'whatsapp'
-                          ? 'border-emerald-600 bg-emerald-50 text-emerald-950 ring-1 ring-emerald-600'
-                          : 'border-[#B9C4D6] bg-[#FAF8F4] hover:bg-white text-[#1B2433]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <WhatsAppGlyph className={formData.preferredMeans === 'whatsapp' ? 'text-emerald-600' : 'text-gray-500'} />
-                        <span className="font-space font-extrabold text-sm">WhatsApp</span>
-                      </div>
-                      {formData.preferredMeans === 'whatsapp' && (
-                        <span className="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center">
-                          <CheckIcon className="w-3 h-3" />
-                        </span>
-                      )}
-                    </button>
-
-                    {/* Email */}
-                    <button
-                      type="button"
-                      onClick={() => handleInputChange('preferredMeans', 'email')}
-                      className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
-                        formData.preferredMeans === 'email'
-                          ? 'border-[#1559B2] bg-[#EEF3FB] text-[#1559B2] ring-1 ring-[#1559B2]'
-                          : 'border-[#B9C4D6] bg-[#FAF8F4] hover:bg-white text-[#1B2433]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <EmailGlyph className={formData.preferredMeans === 'email' ? 'text-[#1559B2]' : 'text-gray-500'} />
-                        <span className="font-space font-extrabold text-sm">Email</span>
-                      </div>
-                      {formData.preferredMeans === 'email' && (
-                        <span className="w-4 h-4 rounded-full bg-[#1559B2] text-white flex items-center justify-center">
-                          <CheckIcon className="w-3 h-3" />
-                        </span>
-                      )}
-                    </button>
-
-                    {/* Other */}
-                    <button
-                      type="button"
-                      onClick={() => handleInputChange('preferredMeans', 'other')}
-                      className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
-                        formData.preferredMeans === 'other'
-                          ? 'border-[#C84E00] bg-[#FFEEDB] text-[#C84E00] ring-1 ring-[#C84E00]'
-                          : 'border-[#B9C4D6] bg-[#FAF8F4] hover:bg-white text-[#1B2433]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <OtherChannelGlyph className={formData.preferredMeans === 'other' ? 'text-[#C84E00]' : 'text-gray-500'} />
-                        <span className="font-space font-extrabold text-sm">Other</span>
-                      </div>
-                      {formData.preferredMeans === 'other' && (
-                        <span className="w-4 h-4 rounded-full bg-[#C84E00] text-white flex items-center justify-center">
-                          <CheckIcon className="w-3 h-3" />
-                        </span>
-                      )}
-                    </button>
-                  </div>
-
-                  {/* Conditional text entry on Other */}
-                  <AnimatePresence>
-                    {formData.preferredMeans === 'other' && (
-                      <Motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden mt-2"
-                      >
-                        <div className="pt-2">
-                          <label
-                            htmlFor={otherContactId}
-                            className="block text-xs font-space font-bold uppercase tracking-wider text-gray-700 mb-1"
-                          >
-                            Specify your preferred contact channel <span className="text-[#C84E00]">*</span>
-                          </label>
-                          <input
-                            id={otherContactId}
-                            type="text"
-                            className="w-full bg-transparent border-0 border-b-[1.5px] border-[#B9C4D6] rounded-none px-0 py-2 text-sm text-[#1B2433] outline-none focus:border-[#1559B2] transition-colors"
-                            placeholder="e.g. Phone call, Telegram (@handle), In-person office"
-                            value={formData.preferredMeansOtherText}
-                            onChange={(e) => handleInputChange('preferredMeansOtherText', e.target.value)}
-                            autoFocus
-                            required={formData.preferredMeans === 'other'}
-                          />
-                        </div>
-                      </Motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Question 2: Email Checking Frequency */}
-                <div>
-                  <label className="font-space text-sm sm:text-base font-black text-[#1B2433] block mb-0.5">
-                    How often do you check your email? <span className="text-[#C84E00]">*</span>
-                  </label>
-                  <p className="text-xs text-gray-600 mb-3 leading-relaxed">
-                    Choose the option that best describes your daily email checking routine so we time our communications when you are most attentive.
-                  </p>
-
-                  <div className="space-y-2">
-                    {EMAIL_FREQUENCIES.map((freq) => {
-                      const isSelected = formData.emailFrequency === freq.id;
-                      return (
-                        <button
-                          key={freq.id}
-                          type="button"
-                          onClick={() => handleInputChange('emailFrequency', freq.id)}
-                          className={`w-full p-3 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
-                            isSelected
-                              ? 'border-[#1559B2] bg-[#EEF3FB] text-[#1B2433] ring-1 ring-[#1559B2]'
-                              : 'border-[#B9C4D6]/70 bg-[#FAF8F4] hover:bg-white text-[#1B2433]'
-                          }`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <span
-                              className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
-                                isSelected ? 'border-[#1559B2] bg-[#1559B2]' : 'border-gray-400 bg-white'
-                              }`}
-                            >
-                              {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
-                            </span>
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <span className="font-space text-sm font-extrabold">{freq.label}</span>
-                                <span className={`text-[10px] font-space font-bold uppercase px-1.5 py-0.5 rounded ${
-                                  isSelected ? 'bg-[#1559B2] text-white' : 'bg-gray-200 text-gray-700'
-                                }`}>
-                                  {freq.tag}
-                                </span>
-                              </div>
-                              <span className="text-xs text-gray-500 block">{freq.detail}</span>
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Preferred time window */}
-                <div className="mt-5">
-                  <span className="block text-xs font-space font-bold uppercase tracking-wider text-gray-700 mb-2">
-                    Preferred window for phone calls / syncs
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    {TIME_WINDOWS.map((win) => {
-                      const isSelected = formData.preferredTimeWindow === win.id;
-                      return (
-                        <button
-                          key={win.id}
-                          type="button"
-                          onClick={() => handleInputChange('preferredTimeWindow', win.id)}
-                          className={`p-2.5 rounded-xl border text-center text-xs font-space font-bold transition-all cursor-pointer ${
-                            isSelected
-                              ? 'border-[#1559B2] bg-[#1559B2] text-white'
-                              : 'border-[#B9C4D6] bg-[#FAF8F4] hover:bg-white text-gray-700'
-                          }`}
-                        >
-                          {win.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </section>
-
-              {/* SECTION 3: Your Partnership */}
-              <section className="mb-8 pt-4 border-t border-gray-100">
-                <div className="flex items-center gap-2.5 my-6">
-                  <span className="w-7 h-7 rounded-full bg-[#C84E00] text-white flex items-center justify-center font-space font-black text-xs shrink-0">
-                    3
                   </span>
                   <h2 className="text-lg sm:text-xl font-space font-black text-[#1559B2] m-0">
                     Your Partnership
@@ -777,11 +503,11 @@ export default function PartnerOnboardingPage() {
                 </div>
               </section>
 
-              {/* SECTION 4: SCL Monthly Sponsorship */}
+              {/* SECTION 3: SCL Monthly Sponsorship */}
               <section className="mb-8 pt-4 border-t border-gray-100">
                 <div className="flex items-center gap-2.5 my-6">
                   <span className="w-7 h-7 rounded-full bg-[#C84E00] text-white flex items-center justify-center font-space font-black text-xs shrink-0">
-                    4
+                    3
                   </span>
                   <h2 className="text-lg sm:text-xl font-space font-black text-[#1559B2] m-0">
                     SCL Monthly Sponsorship
@@ -889,11 +615,11 @@ export default function PartnerOnboardingPage() {
                 </div>
               </section>
 
-              {/* SECTION 5: Recognition & Final Details */}
+              {/* SECTION 4: Recognition & Final Details */}
               <section className="mb-8 pt-4 border-t border-gray-100">
                 <div className="flex items-center gap-2.5 my-6">
                   <span className="w-7 h-7 rounded-full bg-[#C84E00] text-white flex items-center justify-center font-space font-black text-xs shrink-0">
-                    5
+                    4
                   </span>
                   <h2 className="text-lg sm:text-xl font-space font-black text-[#1559B2] m-0">
                     Recognition & Discovery
@@ -1020,11 +746,11 @@ export default function PartnerOnboardingPage() {
                 </div>
               </section>
 
-              {/* SECTION 6: Confirmation */}
+              {/* SECTION 5: Confirmation */}
               <section className="mb-8 pt-4 border-t border-gray-100">
                 <div className="flex items-center gap-2.5 my-6">
                   <span className="w-7 h-7 rounded-full bg-[#C84E00] text-white flex items-center justify-center font-space font-black text-xs shrink-0">
-                    6
+                    5
                   </span>
                   <h2 className="text-lg sm:text-xl font-space font-black text-[#1559B2] m-0">
                     Confirmation

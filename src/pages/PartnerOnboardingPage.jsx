@@ -2,7 +2,7 @@ import React, { useState, useId } from 'react';
 import { Link } from 'react-router-dom';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
-import { supabase } from '../supabase';
+import { submitPartnerOfferToGoogleSheets } from '../services/partnerSheetService';
 import Button from '../components/Button';
 
 // SVG Icons
@@ -126,23 +126,11 @@ export default function PartnerOnboardingPage() {
       created_at: new Date().toISOString(),
     };
 
-    // Store in localStorage for complete persistence
+    // Write partnership form details to Google Sheets (instead of Supabase)
     try {
-      const records = JSON.parse(localStorage.getItem('ss4_partner_offers') || '[]');
-      records.unshift(payload);
-      localStorage.setItem('ss4_partner_offers', JSON.stringify(records));
+      await submitPartnerOfferToGoogleSheets(payload);
     } catch (err) {
-      console.warn('LocalStorage save failed:', err);
-    }
-
-    // Try Supabase insert gracefully
-    try {
-      const { error } = await supabase.from('partner_offers').insert([payload]);
-      if (error) {
-        console.info('[PartnerOffer] Supabase table pending or unavailable, stored in session:', error.message);
-      }
-    } catch (err) {
-      console.info('[PartnerOffer] Supabase fallback handled:', err);
+      console.warn('[PartnerOffer] Google Sheets sync error:', err);
     }
 
     setTimeout(() => {

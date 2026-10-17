@@ -4,12 +4,7 @@
  * Replaces Supabase storage for the SS4 Partnership Form by writing directly
  * to Google Sheets.
  *
- * Target Spreadsheet:
- * https://docs.google.com/spreadsheets/d/1WYHMJItVidg78B-4FBMJJuG06VzqVNzBMo82b1ijZ4U/edit?usp=sharing
  */
-
-export const PARTNERSHIP_SPREADSHEET_ID = '1WYHMJItVidg78B-4FBMJJuG06VzqVNzBMo82b1ijZ4U';
-export const PARTNERSHIP_SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${PARTNERSHIP_SPREADSHEET_ID}/edit?usp=sharing`;
 
 // Google Apps Script Webhook URL (configured via environment variable)
 const WEBHOOK_URL = import.meta.env.VITE_PARTNERSHIP_SHEET_WEBHOOK_URL || import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL || '';
@@ -59,7 +54,6 @@ export async function submitPartnerOfferToGoogleSheets(payload) {
     const existing = JSON.parse(localStorage.getItem('ss4_partner_offers') || '[]');
     existing.unshift({
       ...payload,
-      _sheetTarget: PARTNERSHIP_SPREADSHEET_ID,
       _syncedAt: new Date().toISOString()
     });
     localStorage.setItem('ss4_partner_offers', JSON.stringify(existing));
@@ -85,7 +79,7 @@ export async function submitPartnerOfferToGoogleSheets(payload) {
     }
   } else {
     console.info(
-      `[PartnerSheetService] Submission saved locally. Target Google Sheet: ${PARTNERSHIP_SPREADSHEET_URL}. To enable direct live streaming to the sheet, deploy the provided Google Apps Script and set VITE_PARTNERSHIP_SHEET_WEBHOOK_URL in .env.`
+      '[PartnerSheetService] Submission saved locally. To enable direct live streaming to Google Sheets, configure VITE_PARTNERSHIP_SHEET_WEBHOOK_URL in .env.'
     );
     return { success: true, via: 'local_storage_backup' };
   }

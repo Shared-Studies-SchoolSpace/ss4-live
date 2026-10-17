@@ -7,7 +7,9 @@
  */
 
 // Google Apps Script Webhook URL (configured via environment variable)
-const WEBHOOK_URL = import.meta.env.VITE_PARTNERSHIP_SHEET_WEBHOOK_URL || import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL || '';
+const WEBHOOK_URL = (typeof import.meta !== 'undefined' && import.meta.env)
+  ? (import.meta.env.VITE_PARTNERSHIP_SHEET_WEBHOOK_URL || import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL || '')
+  : (typeof process !== 'undefined' && process.env ? (process.env.VITE_PARTNERSHIP_SHEET_WEBHOOK_URL || process.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL || '') : '');
 
 /**
  * Format the partner payload into standardized Google Sheet row values

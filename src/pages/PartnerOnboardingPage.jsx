@@ -93,6 +93,10 @@ export default function PartnerOnboardingPage() {
       toast.error('Please enter your full name.');
       return;
     }
+    if (!formData.stateOfResidence.trim()) {
+      toast.error('Please select your state of residence.');
+      return;
+    }
     if (!formData.phone.trim()) {
       toast.error('Please provide a contact phone number.');
       return;

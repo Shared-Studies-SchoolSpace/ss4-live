@@ -56,7 +56,7 @@ export default function PartnerOnboardingPage() {
     // Section 4: Recognition & Final Details
     publicRecognition: 'yes', // 'yes' | 'no'
     recognitionName: '',
-    referralSource: 'Social media',
+    referralSource: '',
     referralOtherText: '',
     additionalNotes: '',
 
@@ -583,7 +583,7 @@ export default function PartnerOnboardingPage() {
                         <button
                           key={ref}
                           type="button"
-                          onClick={() => handleInputChange('referralSource', ref)}
+                          onClick={() => handleInputChange('referralSource', formData.referralSource === ref ? '' : ref)}
                           className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-space font-bold border transition-all cursor-pointer ${
                             isSelected
                               ? 'border-[#1559B2] bg-[#EEF3FB] text-[#1559B2]'

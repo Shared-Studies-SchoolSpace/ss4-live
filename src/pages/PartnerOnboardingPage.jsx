@@ -182,7 +182,7 @@ export default function PartnerOnboardingPage() {
               Thank You, {submittedData.fullName || 'Partner'}
             </h1>
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6">
-              Your official partnership registration for the SS4 Chess League has been logged. Our partnership directorate will review your dossier and initiate the onboarding protocol.
+              Your official partnership registration for the SS4 Chess League has been logged. Our partnership directorate will review your application and initiate the onboarding protocol.
             </p>
 
             {/* Reference Card */}
@@ -207,7 +207,7 @@ export default function PartnerOnboardingPage() {
             {/* Summary Box */}
             <div className="border border-[#B9C4D6]/70 rounded-2xl p-6 mb-8 bg-[#EEF3FB]/40">
               <h2 className="text-xs font-space font-black uppercase tracking-wider text-gray-500 mb-4">
-                Dossier Summary
+                Application Summary
               </h2>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div>
@@ -703,7 +703,7 @@ export default function PartnerOnboardingPage() {
                     disabled={isSubmitting}
                     className="w-full sm:w-auto text-base px-8 py-3.5 bg-[#1559B2] hover:bg-[#124b96]"
                   >
-                    {isSubmitting ? 'Registering Offer...' : 'Submit Partner Registration'}
+                    {isSubmitting ? 'Processing...' : 'Submit Partner Registration'}
                   </Button>
                 </div>
               </section>

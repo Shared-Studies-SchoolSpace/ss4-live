@@ -729,6 +729,17 @@ export function getCountdownTarget(tournament) {
 
   // Priority 3: Fallback for upcoming tournaments - start of monthly tournament (24th/25th 18:00 WAT)
   if (tournament.status === 'upcoming' || (!tournament.status && tournament.month_year)) {
+    if (tournament.registration_status === 'closed' || mode === 'partner') {
+      return {
+        date: null,
+        label: null,
+        showBanner,
+        mode: 'partner',
+        version,
+        headline,
+        registrationStatus: 'closed'
+      };
+    }
     let year, month;
     if (tournament.month_year) {
       [year, month] = tournament.month_year.split('-').map(Number);
@@ -741,15 +752,16 @@ export function getCountdownTarget(tournament) {
     const fallbackDate = startDateStr ? new Date(startDateStr) : new Date(now.getTime() + 7 * 86400 * 1000);
     return {
       date: fallbackDate,
-      label: tournament.next_round_label || 'Registration Closes in',
+      label: tournament.next_round_label || 'Tournament Round',
       showBanner,
       mode,
       version,
-      headline
+      headline,
+      registrationStatus: tournament.registration_status
     };
   }
 
-  return { date: null, label: null, showBanner, mode, version, headline };
+  return { date: null, label: null, showBanner, mode, version, headline, registrationStatus: tournament.registration_status };
 }
 
 

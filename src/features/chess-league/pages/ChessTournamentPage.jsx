@@ -573,10 +573,10 @@ export default function ChessTournamentPage() {
 
   // Admin Banner & Registration Management States
   const [showBanner, setShowBanner] = useState(true);
-  const [bannerMode, setBannerMode] = useState('auto'); // 'auto' | 'registration' | 'matches' | 'custom'
+  const [bannerMode, setBannerMode] = useState('partner'); // 'partner' | 'auto' | 'registration' | 'matches' | 'custom'
   const [bannerHeadline, setBannerHeadline] = useState('');
   const [bannerVersion, setBannerVersion] = useState(1);
-  const [registrationStatus, setRegistrationStatus] = useState('open'); // 'open' | 'closed'
+  const [registrationStatus, setRegistrationStatus] = useState('closed'); // 'open' | 'closed'
   const [autoCloseRegistration, setAutoCloseRegistration] = useState(true);
 
   const [isScouring, setIsScouring] = useState(false);
@@ -961,6 +961,11 @@ export default function ChessTournamentPage() {
 
   const handleJoinTournament = async () => {
     if (!user) return;
+
+    if (isRegistrationClosed) {
+      toast.info('Registration for this tournament is currently closed.');
+      return;
+    }
 
     if (isUserRegisteredForUpcoming) {
       toast.info("You're already registered for this tournament.");
@@ -1566,6 +1571,13 @@ export default function ChessTournamentPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                   </svg>
                   You have Joined! 🚀
+                </div>
+              ) : isRegistrationClosed ? (
+                <div className="px-6 py-3.5 bg-gray-800/90 border border-gray-700 text-gray-300 text-xs sm:text-sm font-black rounded-xl flex items-center gap-2 select-none shadow-sm">
+                  <svg className="w-4.5 h-4.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  Registration Closed
                 </div>
               ) : (
                 <AuthGate reason="join the next tournament" onAction={handleJoinTournamentAfterAuth}>
@@ -2322,19 +2334,34 @@ export default function ChessTournamentPage() {
 
               {/* Registration CTA  auth-gated */}
               <div className="varsity-card p-6">
-                <p className="text-xs font-bold tracking-[0.2em] text-brand-primary uppercase mb-2">Join the Tournament</p>
-                <h3 className="font-space font-black text-lg text-[#111111] mb-1.5">Ready to Compete?</h3>
-                <p className="text-sm text-gray-500 mb-4">
-                  Sign in to your SS4 player account to register for the next tournament and access your pairings.
+                <p className="text-xs font-bold tracking-[0.2em] text-brand-primary uppercase mb-2">
+                  {isRegistrationClosed ? 'Tournament Status' : 'Join the Tournament'}
                 </p>
-                <AuthGate
-                  reason="register for this tournament"
-                  onAction={() => navigate('/dashboard')}
-                >
-                  <button className="w-full bg-brand-primary text-white text-sm font-bold px-6 py-3.5 rounded-full hover:bg-brand-accent transition-all shadow-md cursor-pointer">
-                    Register for Tournament
+                <h3 className="font-space font-black text-lg text-[#111111] mb-1.5">
+                  {isRegistrationClosed ? 'Registration Closed' : 'Ready to Compete?'}
+                </h3>
+                <p className="text-sm text-gray-500 mb-4">
+                  {isRegistrationClosed
+                    ? 'Registration for the current tournament is currently closed. Pairings and standings are updated after each round.'
+                    : 'Sign in to your SS4 player account to register for the next tournament and access your pairings.'}
+                </p>
+                {isRegistrationClosed ? (
+                  <button 
+                    disabled 
+                    className="w-full bg-gray-100 text-gray-400 border border-gray-200 text-sm font-bold px-6 py-3.5 rounded-full cursor-not-allowed select-none"
+                  >
+                    Registration Closed
                   </button>
-                </AuthGate>
+                ) : (
+                  <AuthGate
+                    reason="register for this tournament"
+                    onAction={() => navigate('/dashboard')}
+                  >
+                    <button className="w-full bg-brand-primary text-white text-sm font-bold px-6 py-3.5 rounded-full hover:bg-brand-accent transition-all shadow-md cursor-pointer">
+                      Register for Tournament
+                    </button>
+                  </AuthGate>
+                )}
               </div>
 
               <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-6 text-center">
@@ -2500,8 +2527,9 @@ export default function ChessTournamentPage() {
               {/* BANNER MODE SELECTOR */}
               <div className="space-y-2">
                 <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest">Banner Display Mode</label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                   {[
+                    { id: 'partner', label: 'Become a Partner', desc: 'SS4 orange partner CTA' },
                     { id: 'auto', label: 'Auto (Smart)', desc: 'Detects stage' },
                     { id: 'registration', label: 'Registration', desc: 'Forces signup copy' },
                     { id: 'matches', label: 'Match Schedule', desc: 'Forces match copy' },
@@ -2665,20 +2693,50 @@ export default function ChessTournamentPage() {
               <div className="pt-2 border-t border-gray-100">
                 <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Live Top Banner Preview</div>
                 {showBanner ? (
-                  <div className="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-gray-900 text-white text-xs font-medium border border-gray-800">
+                  <div
+                    className="w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl text-white text-xs font-medium border"
+                    style={{
+                      background: bannerMode === 'partner'
+                        ? 'linear-gradient(90deg, #C84E00 0%, #E8640A 50%, #F07018 100%)'
+                        : '#111827',
+                      borderColor: bannerMode === 'partner' ? 'rgba(255,255,255,0.2)' : '#1f2937'
+                    }}
+                  >
                     <div className="flex items-center gap-2">
-                      <span className="bg-gray-800 border border-gray-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider text-gray-300">
-                        {bannerMode === 'custom' ? 'SCL Announcement' : bannerMode === 'registration' ? 'SCL Registration' : `SCL ${nextRoundLabelInput || 'Round'}`}
+                      <span
+                        className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider"
+                        style={{
+                          background: bannerMode === 'partner' ? 'rgba(255,255,255,0.22)' : '#1f2937',
+                          color: '#ffffff'
+                        }}
+                      >
+                        {bannerMode === 'partner'
+                          ? 'Partner'
+                          : bannerMode === 'custom'
+                          ? 'SCL Announcement'
+                          : bannerMode === 'registration'
+                          ? 'SCL Registration'
+                          : `SCL ${nextRoundLabelInput || 'Round'}`}
                       </span>
-                      <span>
-                        {bannerMode === 'custom' 
+                      <span className="font-bold">
+                        {bannerMode === 'partner'
+                          ? 'Become a Partner — Collaborate with SS4 to empower collegiate chess & student excellence across Nigeria'
+                          : bannerMode === 'custom' 
                           ? (bannerHeadline || 'Custom Announcement Copy') 
                           : bannerMode === 'registration' 
-                            ? 'Registration is open! Closes in 2d 4h.' 
+                            ? 'Registration is closed.' 
                             : 'Matches are scheduled! Starting in 2d 4h.'}
                       </span>
                     </div>
-                    <span className="text-[10px] text-gray-400 border border-gray-700 px-2 py-0.5 rounded">Preview</span>
+                    <span
+                      className="text-[10px] font-bold px-2.5 py-1 rounded-lg"
+                      style={{
+                        background: bannerMode === 'partner' ? '#ffffff' : '#1f2937',
+                        color: bannerMode === 'partner' ? '#C84E00' : '#9ca3af'
+                      }}
+                    >
+                      {bannerMode === 'partner' ? 'Partner With Us' : 'Preview'}
+                    </span>
                   </div>
                 ) : (
                   <div className="p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-400 font-medium text-center">

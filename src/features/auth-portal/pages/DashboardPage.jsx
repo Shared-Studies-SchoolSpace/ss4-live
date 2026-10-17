@@ -417,6 +417,10 @@ export default function DashboardPage() {
 
   const handleRegisterReady = async () => {
     if (!upcomingTournament || !profile) return;
+    if (upcomingTournament.registration_status === 'closed') {
+      toast.info('Registration for this tournament is currently closed.');
+      return;
+    }
     setLoadingReg(true);
     
     try {
@@ -1191,8 +1195,10 @@ export default function DashboardPage() {
                 <div className="varsity-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="h-2.5 w-2.5 rounded-full bg-brand-accent animate-pulse"></span>
-                      <span className="text-[9px] font-black text-brand-accent uppercase tracking-widest">SCL Registration Open</span>
+                      <span className={`h-2.5 w-2.5 rounded-full ${upcomingTournament.registration_status === 'closed' ? 'bg-gray-400' : 'bg-brand-accent animate-pulse'}`}></span>
+                      <span className={`text-[9px] font-black uppercase tracking-widest ${upcomingTournament.registration_status === 'closed' ? 'text-gray-500' : 'text-brand-accent'}`}>
+                        {upcomingTournament.registration_status === 'closed' ? 'SCL Registration Closed' : 'SCL Registration Open'}
+                      </span>
                     </div>
                     <h3 className="text-base font-black font-space text-brand-text-dark">
                       {upcomingTournament.name}
@@ -1200,6 +1206,8 @@ export default function DashboardPage() {
                     <p className="text-xs font-semibold text-gray-500">
                       {isRegistered 
                         ? "Your participation is locked and confirmed. Prepare your matches!"
+                        : upcomingTournament.registration_status === 'closed'
+                        ? "Registration for this tournament edition is currently closed."
                         : "Sign up is open. Click the button to confirm your slot."
                       }
                     </p>
@@ -1209,6 +1217,10 @@ export default function DashboardPage() {
                     {isRegistered ? (
                       <span className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-50 text-emerald-700 text-xs font-black uppercase tracking-wider rounded-full border border-emerald-150">
                         ✓ Confirmed Ready
+                      </span>
+                    ) : upcomingTournament.registration_status === 'closed' ? (
+                      <span className="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-100 text-gray-500 text-xs font-black uppercase tracking-wider rounded-full border border-gray-200 select-none">
+                        Registration Closed
                       </span>
                     ) : (
                       <button

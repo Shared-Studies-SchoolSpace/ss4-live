@@ -25,9 +25,9 @@
  */
 
 var SPREADSHEET_ID = "1WYHMJItVidg78B-4FBMJJuG06VzqVNzBMo82b1ijZ4U";
-var SHEET_NAME = "Partnership Submissions";
+var SHEET_NAME = "Sheet2";
 
-function getTargetSheet() {
+function getTargetSheet(sheetName) {
   var ss;
   try {
     ss = SpreadsheetApp.openById(SPREADSHEET_ID);
@@ -35,12 +35,13 @@ function getTargetSheet() {
     ss = SpreadsheetApp.getActiveSpreadsheet();
   }
   
-  var sheet = ss.getSheetByName(SHEET_NAME);
+  var targetName = sheetName || SHEET_NAME;
+  var sheet = ss.getSheetByName(targetName);
   if (!sheet) {
-    // If "Partnership Submissions" does not exist, use active or rename Sheet1
-    sheet = ss.getActiveSheet();
-    if (sheet.getLastRow() === 0 && sheet.getLastColumn() === 0) {
-      sheet.setName(SHEET_NAME);
+    try {
+      sheet = ss.insertSheet(targetName);
+    } catch (insertErr) {
+      sheet = ss.getActiveSheet();
     }
   }
   return sheet;
@@ -103,9 +104,6 @@ function doPost(e) {
   }
   
   try {
-    var sheet = getTargetSheet();
-    ensureHeaders(sheet);
-    
     var data = {};
     if (e && e.postData && e.postData.contents) {
       try {
@@ -116,6 +114,9 @@ function doPost(e) {
     } else if (e && e.parameter) {
       data = e.parameter;
     }
+
+    var sheet = getTargetSheet(data.sheet_name);
+    ensureHeaders(sheet);
     
     var row = [
       data.reference_code || ("SS4-PRT-" + Math.floor(100000 + Math.random() * 900000)),

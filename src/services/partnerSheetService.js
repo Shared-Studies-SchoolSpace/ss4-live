@@ -16,6 +16,7 @@ const WEBHOOK_URL = (typeof import.meta !== 'undefined' && import.meta.env)
  */
 export function formatPartnerDataForSheet(payload) {
   return {
+    sheet_name: payload.sheet_name || 'Sheet2',
     reference_code: payload.reference_code,
     created_at: payload.created_at || new Date().toISOString(),
     full_name: payload.full_name,

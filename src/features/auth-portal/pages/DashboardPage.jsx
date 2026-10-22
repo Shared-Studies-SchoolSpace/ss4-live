@@ -781,20 +781,18 @@ export default function DashboardPage() {
           rounds.forEach(r => {
             const games = r.games || [];
             games.forEach(g => {
-              const matchesMyChess = profile.chess_username && (
-                g.white?.username?.toLowerCase() === profile.chess_username.toLowerCase() ||
-                g.black?.username?.toLowerCase() === profile.chess_username.toLowerCase()
-              );
-              const matchesMyLichess = profile.lichess_username && (
-                g.white?.username?.toLowerCase() === profile.lichess_username.toLowerCase() ||
-                g.black?.username?.toLowerCase() === profile.lichess_username.toLowerCase()
-              );
+              const whiteUser = (g.white?.username || g.p1?.username || '').toLowerCase();
+              const blackUser = (g.black?.username || g.p2?.username || '').toLowerCase();
+              const myChess = (profile.chess_username || '').toLowerCase();
+              const myLichess = (profile.lichess_username || '').toLowerCase();
+
+              const matchesMyChess = myChess && (whiteUser === myChess || blackUser === myChess);
+              const matchesMyLichess = myLichess && (whiteUser === myLichess || blackUser === myLichess);
 
               if (matchesMyChess || matchesMyLichess) {
                 // Determine opponent
-                const isWhite = g.white?.username?.toLowerCase() === profile.chess_username?.toLowerCase() ||
-                                g.white?.username?.toLowerCase() === profile.lichess_username?.toLowerCase();
-                const opponent = isWhite ? g.black : g.white;
+                const isWhite = (myChess && whiteUser === myChess) || (myLichess && whiteUser === myLichess);
+                const opponent = isWhite ? (g.black || g.p2) : (g.white || g.p1);
 
                 activeGames.push({
                   id: `${t.id}_${r.name.replace(/\s+/g, '')}_${g.id}`,

@@ -6,7 +6,6 @@ import { supabase } from '../supabase';
 import Button from '../components/Button';
 import AuthGate from '../features/auth-portal/components/AuthGate';
 import { toast } from "react-toastify";
-import { MatchResult } from '../features/chess-league/components/MatchResult';
 import { PlayerProfile } from '../features/chess-league/components/PlayerProfile';
 import { Hero } from '../components/Hero';
 import { fetchCompletePlayerData } from '../features/chess-league/utils/chessService';
@@ -107,8 +106,6 @@ export default function LandingPage() {
   const [dailyFriendlies, setDailyFriendlies] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [loadingFeed, setLoadingFeed] = useState(true);
-  const [newsSlideIdx, setNewsSlideIdx] = useState(0);
-  const [matchSlideIdx, setMatchSlideIdx] = useState(0);
 
   // Preloading States
   const [isPreloading, setIsPreloading] = useState(true);
@@ -531,7 +528,7 @@ export default function LandingPage() {
   const feedMatches = useMemo(() => {
     return (dbMatches || []).map(m => {
       const winnerName = typeof m.winner === "object" ? m.winner?.name : m.winner;
-      const parsedTimestamp = m.date ? Date.parse(`${m.date}-01`) : NaN;
+      const parsedTimestamp = m.date ? (m.date.length === 7 ? Date.parse(`${m.date}-01`) : Date.parse(m.date)) : NaN;
       return {
         id: `match_${m.id}`,
         type: "match",
@@ -545,14 +542,10 @@ export default function LandingPage() {
         gameLink: m.gameLink,
         date: m.date,
         isPending: m.isPending || false,
-        timestamp: isNaN(parsedTimestamp) ? Date.now() : parsedTimestamp
+        timestamp: isNaN(parsedTimestamp) ? 0 : parsedTimestamp
       };
     });
   }, [dbMatches]);
-
-  // Track hover states for slideshow pausing
-  const [isNewsHovered, setIsNewsHovered] = useState(false);
-  const [isMatchHovered, setIsMatchHovered] = useState(false);
 
   // Filtered lists based on activeFilter
   const filteredAnnouncements = useMemo(() => {
@@ -564,31 +557,6 @@ export default function LandingPage() {
     if (activeFilter === "all" || activeFilter === "results") return feedMatches;
     return [];
   }, [feedMatches, activeFilter]);
-
-  // Reset slide indices when filter changes to prevent out-of-bounds errors or flashing
-  useEffect(() => {
-    setNewsSlideIdx(0);
-    setMatchSlideIdx(0);
-  }, [activeFilter]);
-
-  const newsSafeIdx = filteredAnnouncements.length ? newsSlideIdx % filteredAnnouncements.length : 0;
-  const matchSafeIdx = filteredMatches.length ? matchSlideIdx % filteredMatches.length : 0;
-
-  // Auto-advance news slideshow (paused when hovered)
-  useEffect(() => {
-    if (filteredAnnouncements.length < 2 || isNewsHovered) return;
-    const t = setInterval(() =>
-      setNewsSlideIdx(p => (p + 1) % filteredAnnouncements.length), 5000);
-    return () => clearInterval(t);
-  }, [filteredAnnouncements.length, isNewsHovered]);
-
-  // Auto-advance match slideshow (paused when hovered)
-  useEffect(() => {
-    if (filteredMatches.length < 2 || isMatchHovered) return;
-    const t = setInterval(() =>
-      setMatchSlideIdx(p => (p + 1) % filteredMatches.length), 6000);
-    return () => clearInterval(t);
-  }, [filteredMatches.length, isMatchHovered]);
 
 
   if (isPreloading) {

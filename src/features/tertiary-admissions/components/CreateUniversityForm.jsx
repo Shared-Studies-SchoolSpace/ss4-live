@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Button from '../../../components/Button';
 
 export default function CreateUniversityForm() {
@@ -19,9 +20,17 @@ export default function CreateUniversityForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting Inquiry:", formData);
-    // Add your API call here
-    alert("Inquiry sent successfully.");
+    try {
+      const existing = JSON.parse(localStorage.getItem('ss4_school_inquiries') || '[]');
+      existing.unshift({
+        ...formData,
+        submittedAt: new Date().toISOString()
+      });
+      localStorage.setItem('ss4_school_inquiries', JSON.stringify(existing));
+      toast.success("Inquiry submitted! An SS4 Academic Liaison will review your school details.");
+    } catch {
+      toast.success("Inquiry received. Thank you!");
+    }
     navigate("/schools");
   };
 

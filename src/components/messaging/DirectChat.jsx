@@ -144,9 +144,7 @@ export default function DirectChat() {
           setProfiles((prev) =>
             prev.map((p) => (p.id === updatedProf.id ? { ...p, ...updatedProf } : p))
           );
-          if (activeContact?.id === updatedProf.id) {
-            setActiveContact((prev) => (prev ? { ...prev, ...updatedProf } : prev));
-          }
+          setActiveContact((prev) => (prev?.id === updatedProf.id ? { ...prev, ...updatedProf } : prev));
         }
       )
       .subscribe();
@@ -173,7 +171,7 @@ export default function DirectChat() {
       supabase.removeChannel(profilesChannel);
       supabase.removeChannel(dmGlobalListener);
     };
-  }, [user, activeContact?.id]);
+  }, [user]);
 
   // Auto-select contact based on location search/state params once per target key
   useEffect(() => {

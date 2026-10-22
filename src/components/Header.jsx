@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../features/auth-portal/hooks/useAuth';
 import { useAuthModal } from '../features/auth-portal/context/AuthModalContext';
@@ -6,6 +7,7 @@ import TournamentCountdownBanner from '../features/chess-league/components/Tourn
 import AdminDrawer from './admin/AdminDrawer';
 
 export const Header = () => {
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -81,9 +83,9 @@ export const Header = () => {
       <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-lg border-b border-white/40 shadow-sm">
         <div className="container mx-auto px-3 sm:px-6 md:px-8 lg:px-10 xl:px-16 h-16 lg:h-20 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 lg:gap-3 xl:gap-6 min-w-0">
-            <a href="/" className="flex items-center shrink-0 pr-1 sm:pr-2">
+            <Link to="/" className="flex items-center shrink-0 pr-1 sm:pr-2">
               <img src="/ss4_logo.jpg" alt="SS4" className="h-8 sm:h-9 md:h-10 lg:h-11 w-auto object-contain shrink-0" />
-            </a>
+            </Link>
             
             {/* Primary Navigation Group - Responsive hitboxes & font sizes */}
             <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 shrink-1">
@@ -95,8 +97,8 @@ export const Header = () => {
                   </svg>
                 </button>
                 <div className="absolute top-[100%] left-0 mt-1 w-48 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
-                  <a href="/schools" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Secondary Schools</a>
-                  <a href="/tertiary" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Tertiary Institutions</a>
+                  <Link to="/schools" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Secondary Schools</Link>
+                  <Link to="/tertiary" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Tertiary Institutions</Link>
                 </div>
               </div>
               <div className="relative group shrink-0">
@@ -107,37 +109,37 @@ export const Header = () => {
                   </svg>
                 </button>
                 <div className="absolute top-[100%] left-0 mt-1 w-52 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
-                  <a href="/league" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Daily League</a>
-                  <a href="/chess-league/tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Monthly Tournament</a>
-                  <a href="/chess-league/varsity" className="block px-4 py-2.5 text-xs font-bold text-brand-primary hover:bg-brand-primary/5 transition-colors flex items-center justify-between">
+                  <Link to="/league" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Daily League</Link>
+                  <Link to="/chess-league/tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Monthly Tournament</Link>
+                  <Link to="/chess-league/varsity" className="block px-4 py-2.5 text-xs font-bold text-brand-primary hover:bg-brand-primary/5 transition-colors flex items-center justify-between">
                     <span>Varsity Tournament</span>
                     <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">New</span>
-                  </a>
-                  <a href="/theboardgames" className="block px-4 py-2.5 text-xs font-black text-orange-600 hover:bg-orange-50 transition-colors flex items-center justify-between">
+                  </Link>
+                  <Link to="/theboardgames" className="block px-4 py-2.5 text-xs font-black text-orange-600 hover:bg-orange-50 transition-colors flex items-center justify-between">
                     <span>theBOARDGAMES</span>
                     <span className="text-[9px] font-black bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded uppercase">Match 1</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
-              <a 
-                href="/theboardgames"
+              <Link 
+                to="/theboardgames"
                 className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-orange-600 hover:text-orange-700 transition-colors whitespace-nowrap shrink-0"
               >
                 theBOARDGAMES
-              </a>
-              <a href="/sas" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Assessment Series</a>
-              <a href="/award" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Aspirants Award</a>
-              <a href="/news" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">News</a>
-              <a href="/partners" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Partners</a>
-              <a href="/about" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">About</a>
+              </Link>
+              <Link to="/sas" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Assessment Series</Link>
+              <Link to="/award" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Aspirants Award</Link>
+              <Link to="/news" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">News</Link>
+              <Link to="/partners" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Partners</Link>
+              <Link to="/about" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">About</Link>
             </nav>
           </div>
 
           {/* Action & Utility Group - Equal heights & gap spacing */}
           <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 xl:gap-3 shrink-0">
-            <button className="hidden xl:inline-flex items-center h-9 sm:h-10 px-3 xl:px-4 border border-[#E8640A] text-[#E8640A] font-bold text-xs xl:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer whitespace-nowrap shrink-0" onClick={() => window.location.href='/partners'}>
+            <Link to="/partners" className="hidden xl:inline-flex items-center h-9 sm:h-10 px-3 xl:px-4 border border-[#E8640A] text-[#E8640A] font-bold text-xs xl:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer whitespace-nowrap shrink-0">
               Partner With Us
-            </button>
+            </Link>
 
             {/* Admin Quick Broadcast Button in Navbar */}
             {profile?.role === 'admin' && (
@@ -209,7 +211,11 @@ export const Header = () => {
                                   if (isUnread) await markNotificationAsRead(n.id);
                                   setIsNotifOpen(false);
                                   if (n.link) {
-                                    window.location.href = n.link;
+                                    if (n.link.startsWith('http')) {
+                                      window.location.href = n.link;
+                                    } else {
+                                      navigate(n.link);
+                                    }
                                   }
                                 }}
                                 className={`w-full flex items-start gap-3 px-4 py-3 hover:bg-background transition-colors border-b border-gray-50 text-left focus:outline-none cursor-pointer relative ${
@@ -302,7 +308,7 @@ export const Header = () => {
                         </div>
                       </div>
                       
-                      <a href="/dashboard" className="flex items-center justify-between px-4 py-2.5 text-xs font-bold text-gray-700 hover:bg-background hover:text-brand-primary transition-colors">
+                      <Link to="/dashboard" onClick={() => setIsDropdownOpen(false)} className="flex items-center justify-between px-4 py-2.5 text-xs font-bold text-gray-700 hover:bg-background hover:text-brand-primary transition-colors">
                         <div className="flex items-center gap-2.5">
                           <svg className="w-4 h-4 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -314,7 +320,7 @@ export const Header = () => {
                             {unreadMessages.length} unread
                           </span>
                         )}
-                      </a>
+                      </Link>
 
                       {profile?.role === 'admin' && (
                         <button
@@ -384,34 +390,34 @@ export const Header = () => {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 flex flex-col gap-2.5 overflow-hidden shadow-lg"
             >
-              <a href="/" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Home</a>
-              <a href="/league" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Daily League</a>
-              <a href="/chess-league/tournament" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournament</a>
-              <a href="/chess-league/varsity" className="text-[13px] sm:text-[14px] font-black text-brand-primary hover:text-brand-primary/80 py-0.5 flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link to="/" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+              <Link to="/league" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Daily League</Link>
+              <Link to="/chess-league/tournament" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournament</Link>
+              <Link to="/chess-league/varsity" className="text-[13px] sm:text-[14px] font-black text-brand-primary hover:text-brand-primary/80 py-0.5 flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
                 <span>Varsity Tournament</span>
                 <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">New</span>
-              </a>
-              <a 
-                href="/theboardgames" 
+              </Link>
+              <Link 
+                to="/theboardgames" 
                 className="text-[13px] sm:text-[14px] font-bold text-orange-600 hover:text-orange-700 py-0.5" 
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 theBOARDGAMES
-              </a>
+              </Link>
 
-              <a href="/tertiary/admission" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Admission</a>
-              <a href="/award" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</a>
-              <a href="/news" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>News</a>
-              <a href="/partners" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Partners</a>
-              <a href="/about" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>About</a>
+              <Link to="/tertiary" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Institutions</Link>
+              <Link to="/award" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</Link>
+              <Link to="/news" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>News</Link>
+              <Link to="/partners" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Partners</Link>
+              <Link to="/about" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
               
-              <a 
-                href="/partners" 
+              <Link 
+                to="/partners" 
                 className="py-2.5 px-4 border border-[#E8640A] text-[#E8640A] font-bold text-xs sm:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors text-center inline-block my-1" 
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Partner With Us
-              </a>
+              </Link>
 
               <hr className="my-1 border-gray-100" />
               
@@ -436,8 +442,8 @@ export const Header = () => {
                   </div>
 
                   <div className="grid grid-cols-1 gap-2 pt-1 border-t border-gray-200/60">
-                    <a 
-                      href="/dashboard" 
+                    <Link 
+                      to="/dashboard" 
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold hover:bg-primary-hover transition-all shadow-2xs cursor-pointer"
                     >
@@ -452,7 +458,7 @@ export const Header = () => {
                           {unreadMessages.length} unread
                         </span>
                       )}
-                    </a>
+                    </Link>
 
                     {profile?.role === 'admin' && (
                       <button

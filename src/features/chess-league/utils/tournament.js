@@ -128,6 +128,16 @@ export function propagateWinners(rounds) {
   const r = JSON.parse(JSON.stringify(rounds));
   for (let i = 0; i < r.length - 1; i++) {
     const next = r[i + 1];
+    const curr = r[i];
+
+    // Only propagate binary bracket winners if BOTH rounds are knockout rounds
+    // and curr has exactly double the games of next (binary tree reduction).
+    const isCurrKnockout = curr.isKnockout || (curr.name && !curr.name.toLowerCase().includes('group'));
+    const isNextKnockout = next.isKnockout || (next.name && !next.name.toLowerCase().includes('group'));
+    if (!isCurrKnockout || !isNextKnockout || curr.games?.length !== (next.games?.length || 0) * 2) {
+      continue;
+    }
+
     next.games.forEach((g, gi) => {
       const a = r[i].games[2 * gi];
       const b = r[i].games[2 * gi + 1];
@@ -369,7 +379,7 @@ export function getGroupData(tournament, customPlayers = null) {
           P++;
           const isWinner = typeof g.winner === 'object'
             ? (g.winner.username === p.username || g.winner.id === p.id)
-            : false;
+            : (g.winner === p.username || g.winner === p.name || g.winner === p.id);
           const isDraw = typeof g.winner === 'object'
             ? (g.winner.username === 'draw' || g.winner.name === 'Draw')
             : g.winner === 'draw';
@@ -381,7 +391,7 @@ export function getGroupData(tournament, customPlayers = null) {
       });
 
       const computedPts = (W * 1) + (D * 0.5);
-      const Pts = typeof p.pts === 'number' ? p.pts : typeof p.Pts === 'number' ? p.Pts : computedPts;
+      const Pts = computedPts;
 
       return {
         ...p,

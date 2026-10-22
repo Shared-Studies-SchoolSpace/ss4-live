@@ -29,7 +29,9 @@ export default function SchoolsPage() {
             import(`../data/schools/${state}.json`).then(m => m.default.map(s => ({
               ...s, 
               // Normalize state name for filtering
-              state: state.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+              state: state === 'fct'
+                ? 'FCT - Abuja'
+                : state.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
             })))
           )
         );
@@ -61,7 +63,10 @@ export default function SchoolsPage() {
     if (state) {
       const lowerState = state.toLowerCase();
       // Match against the normalized state name
-      filtered = filtered.filter(s => s.state.toLowerCase() === lowerState);
+      filtered = filtered.filter(s =>
+        s.state.toLowerCase() === lowerState ||
+        (lowerState.includes('fct') && s.state.toLowerCase().includes('fct'))
+      );
     }
 
     if (lga && (Array.isArray(lga) ? lga.length > 0 : lga)) {

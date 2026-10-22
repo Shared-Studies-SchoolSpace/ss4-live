@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import UniversityHeader from '../components/UniversityHeader';
 import { supabase } from '../../../supabase';
@@ -7,8 +7,11 @@ import { PlayerProfile } from '../../chess-league/components/PlayerProfile';
 
 export default function UniversityPage() {
   const location = useLocation();
-  const school = location.state?.school;
-  const schoolName = school?.name || "King's College";
+  const { id } = useParams();
+  const formatSlugName = (slug) => slug ? slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : "King's College";
+  const resolvedName = location.state?.school?.name || (id ? formatSlugName(id) : "King's College");
+  const school = location.state?.school || { name: resolvedName, location: "Nigeria", state: "NG", type: "Secondary School", verified: false };
+  const schoolName = school.name;
 
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);

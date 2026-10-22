@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import XIcon from '@mui/icons-material/X';
@@ -22,7 +23,11 @@ const FooterColumn = ({ title, links }) => (
     <ul className="flex flex-wrap gap-x-6 gap-y-2">
       {links.map((link) => (
         <li key={link.label}>
-          <a href={link.href} className="text-[13px] font-bold text-gray-600 hover:text-brand-accent transition-colors">{link.label}</a>
+          {link.href.startsWith('mailto:') || link.href.startsWith('http') ? (
+            <a href={link.href} className="text-[13px] font-bold text-gray-600 hover:text-brand-accent transition-colors">{link.label}</a>
+          ) : (
+            <Link to={link.href} className="text-[13px] font-bold text-gray-600 hover:text-brand-accent transition-colors">{link.label}</Link>
+          )}
         </li>
       ))}
     </ul>
@@ -36,18 +41,24 @@ export const Footer = () => {
         {/* Main Links Grid */}
         <div className="flex flex-col gap-12 mb-24">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-gray-50 pb-8">
-             <div className="flex items-center gap-2 opacity-100 transition-all cursor-pointer">
+             <Link to="/" className="flex items-center gap-2 opacity-100 transition-all cursor-pointer">
                 <img src="/ss4_logo.jpg" alt="SS4" className="h-6" />
-             </div>
+             </Link>
              <ul className="flex flex-wrap gap-x-8 gap-y-3">
                 {[
                   { label: 'About Us', href: '/about' },
                   { label: 'Daily League', href: '/league' },
-                  { label: 'SS4 for Sponsors', href: '/partner' },
+                  { label: 'SS4 for Sponsors', href: '/partners' },
                   { label: 'Blog', href: '/news' },
                   { label: 'Contact SS4', href: 'mailto:ss4.mail.org@gmail.com' }
                 ].map(l => (
-                    <li key={l.label}><a href={l.href} className="text-sm font-bold text-gray-500 hover:text-brand-accent whitespace-nowrap">{l.label}</a></li>
+                    <li key={l.label}>
+                      {l.href.startsWith('mailto:') || l.href.startsWith('http') ? (
+                        <a href={l.href} className="text-sm font-bold text-gray-500 hover:text-brand-accent whitespace-nowrap">{l.label}</a>
+                      ) : (
+                        <Link to={l.href} className="text-sm font-bold text-gray-500 hover:text-brand-accent whitespace-nowrap">{l.label}</Link>
+                      )}
+                    </li>
                 ))}
              </ul>
           </div>

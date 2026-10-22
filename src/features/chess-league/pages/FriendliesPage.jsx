@@ -2,15 +2,32 @@ import React, { useState, useCallback, useEffect } from 'react';
 import DailyFriendliesLeaderboard from '../components/DailyFriendliesLeaderboard';
 import { PlayerProfile } from '../components/PlayerProfile';
 import FriendliesAdminModal from '../components/FriendliesAdminModal';
+import { supabase } from '../../../supabase';
 
 export default function FriendliesPage() {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [statsData, setStatsData] = useState(null);
   const [showAdminModal, setShowAdminModal] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [allPlayers, setAllPlayers] = useState([]);
 
   useEffect(() => {
     document.title = 'League Leaderboard | SS4 Chess League';
+    let isMounted = true;
+    const fetchProfiles = async () => {
+      try {
+        const { data } = await supabase
+          .from('profiles')
+          .select('id, name, university, department, chess_username, lichess_username, chess_rating, lichess_rating, phone, whatsapp');
+        if (data && isMounted) {
+          setAllPlayers(data);
+        }
+      } catch (err) {
+        console.warn('Failed to load profiles for friendlies leaderboard:', err);
+      }
+    };
+    fetchProfiles();
+    return () => { isMounted = false; };
   }, []);
 
   const handleStatsUpdate = useCallback((data) => {
@@ -165,7 +182,15 @@ export default function FriendliesPage() {
       {/* ── Main Content Area ── */}
       <div className="container mx-auto max-w-6xl px-4 py-8 md:py-12">
         <DailyFriendliesLeaderboard
-          onPlayerSelect={(p) => setSelectedPlayer(p)}
+          allPlayers={allPlayers}
+          onPlayerSelect={(p) => {
+            const pUser = (p.username || '').toLowerCase();
+            const full = allPlayers.find(ap => 
+              ap.chess_username?.toLowerCase() === pUser || 
+              ap.lichess_username?.toLowerCase() === pUser
+            );
+            setSelectedPlayer(full ? { ...full, ...p } : p);
+          }}
           onStatsUpdate={handleStatsUpdate}
           refreshTrigger={refreshTrigger}
         />

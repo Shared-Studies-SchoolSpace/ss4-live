@@ -6,24 +6,7 @@ import tournamentPlayers from '../data/playersWithRatings.json';
 
 const LS_KEY = (my) => `scl_tournament_${my}`;
 
-// ponytail: mock history lives here, cleared by admin clear action
-export const MOCK_HISTORY = [
-  {
-    id: '2026-06',
-    month_year: '2026-06',
-    name: 'June 2026 SCL Tournament',
-    status: 'active',
-    winner: null,
-    players: tournamentPlayers,
-    rounds: [generateRound1(tournamentPlayers, 2026, 6)]
-  },
-  ...['2026-05'].map(my => ({
-    id: my, month_year: my,
-    name: 'May 2026 SCL Tournament',
-    status: 'completed', winner: 'Destiny Chilaka',
-    players: [], rounds: []
-  }))
-];
+export const MOCK_HISTORY = [];
 
 const normalizeRoundNames = (t) => {
   if (!t || !t.rounds) return t;
@@ -265,7 +248,6 @@ export function useTournament(monthYear) {
       const merged = [...db];
       if (!merged.find(x => x.month_year === currentMY))
         merged.push({ month_year: currentMY, name: `${currentMY} SCL Tournament`, status: 'upcoming', winner: null });
-      MOCK_HISTORY.forEach(m => { if (!merged.find(x => x.month_year === m.month_year)) merged.push(m); });
       setHistory(merged.sort((a, b) => b.month_year.localeCompare(a.month_year)));
     } catch {
       const local = Object.keys(localStorage)
@@ -274,7 +256,6 @@ export function useTournament(monthYear) {
       const merged = [...local];
       if (!merged.find(x => x.month_year === currentMY))
         merged.push({ month_year: currentMY, name: `${currentMY} SCL Tournament`, status: 'upcoming', winner: null });
-      MOCK_HISTORY.forEach(m => { if (!merged.find(x => x.month_year === m.month_year)) merged.push(m); });
       setHistory(merged.sort((a, b) => b.month_year.localeCompare(a.month_year)));
     }
   };
@@ -292,8 +273,7 @@ export function useTournament(monthYear) {
       } catch { setIsDbFallback(true); }
       const local = localStorage.getItem(LS_KEY(monthYear));
       if (local) { setTournamentState(JSON.parse(local)); setIsLoading(false); return; }
-      const mock = MOCK_HISTORY.find(m => m.month_year === monthYear);
-      setTournamentState(mock || null);
+      setTournamentState(null);
       setIsLoading(false);
     };
     load();
@@ -370,12 +350,16 @@ export function useTournament(monthYear) {
   // Seed Round 1 permanently - called once by admin
   const initialize = async (options = {}) => {
     const [y, m] = monthYear.split('-').map(Number);
-    const round1 = generateRound1(tournamentPlayers, y, m, options);
+    // Prioritize registered players from the tournament row in Supabase
+    const playersToSeed = (tournament?.players && tournament.players.length > 0)
+      ? tournament.players
+      : tournamentPlayers;
+    const round1 = generateRound1(playersToSeed, y, m, options);
 
     const t = {
       id: monthYear, name: `${monthYear} SCL Tournament`,
       month_year: monthYear, status: 'active', winner: null,
-      players: tournamentPlayers, rounds: [round1],
+      players: playersToSeed, rounds: [round1],
       finals_completed_at: null
     };
     save(t);
@@ -508,7 +492,9 @@ export function useTournament(monthYear) {
   };
 
   const clearMocks = () => {
-    MOCK_HISTORY.forEach(m => localStorage.removeItem(LS_KEY(m.month_year)));
+    Object.keys(localStorage)
+      .filter(k => k.startsWith('scl_tournament_'))
+      .forEach(k => localStorage.removeItem(k));
     setTournamentState(null);
     fetchHistory();
   };

@@ -72,20 +72,35 @@ export function useResolvedPlayerPhone(player) {
       }
     }
 
-    // 2. Static dataset lookups
-    const staticMatch =
-      (tournamentPlayers || []).find(p => (usernameKey && p.username?.toLowerCase() === usernameKey) || (nameKey && p.name?.toLowerCase() === nameKey)) ||
-      (initialPlayers || []).find(p => (usernameKey && p.username?.toLowerCase() === usernameKey) || (nameKey && p.name?.toLowerCase() === nameKey));
-
-    if (staticMatch?.contact || staticMatch?.phone || staticMatch?.whatsapp) {
-      setPhone(staticMatch.contact || staticMatch.phone || staticMatch.whatsapp);
-      return;
-    }
-
-    // 3. Supabase divisions table lookup
+    // 2. Query Supabase profiles table for player's verified phone/whatsapp
     let isMounted = true;
-    async function fetchFromDivisions() {
+    async function fetchFromSupabase() {
       try {
+        if (playerId) {
+          const { data: prof } = await supabase
+            .from('profiles')
+            .select('phone, whatsapp')
+            .eq('id', playerId)
+            .maybeSingle();
+          if (prof && (prof.phone || prof.whatsapp) && isMounted) {
+            setPhone(prof.whatsapp || prof.phone);
+            return;
+          }
+        }
+
+        if (usernameKey) {
+          const { data: prof } = await supabase
+            .from('profiles')
+            .select('phone, whatsapp')
+            .or(`chess_username.ilike.${usernameKey},lichess_username.ilike.${usernameKey}`)
+            .maybeSingle();
+          if (prof && (prof.phone || prof.whatsapp) && isMounted) {
+            setPhone(prof.whatsapp || prof.phone);
+            return;
+          }
+        }
+
+        // 3. Fallback: Supabase divisions table lookup
         const { data: divData } = await supabase.from('divisions').select('players');
         if (divData && isMounted) {
           for (const d of divData) {
@@ -99,12 +114,21 @@ export function useResolvedPlayerPhone(player) {
             }
           }
         }
+
+        // 4. Static dataset lookups
+        const staticMatch =
+          (tournamentPlayers || []).find(p => (usernameKey && p.username?.toLowerCase() === usernameKey) || (nameKey && p.name?.toLowerCase() === nameKey)) ||
+          (initialPlayers || []).find(p => (usernameKey && p.username?.toLowerCase() === usernameKey) || (nameKey && p.name?.toLowerCase() === nameKey));
+
+        if (staticMatch && (staticMatch.contact || staticMatch.phone || staticMatch.whatsapp) && isMounted) {
+          setPhone(staticMatch.contact || staticMatch.phone || staticMatch.whatsapp);
+        }
       } catch (err) {
-        console.warn('Divisions phone lookup failed:', err);
+        console.warn('Player phone lookup failed:', err);
       }
     }
 
-    fetchFromDivisions();
+    fetchFromSupabase();
     return () => { isMounted = false; };
   }, [player, user, authProfile]);
 

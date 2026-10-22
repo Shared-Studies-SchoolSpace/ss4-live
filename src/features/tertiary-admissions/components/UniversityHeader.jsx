@@ -8,17 +8,6 @@ export default function UniversityHeader({ school, registeredCount }) {
   const location = school ? `${school.location}, ${school.state}` : "Lagos, NG";
   const verified = school !== undefined ? school.verified : true;
 
-  // Let's generate a stable pseudo-random student count if not present
-  const getStudentsCount = () => {
-    if (school?.studentsCount) return school.studentsCount;
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const count = (Math.abs(hash) % 400) + 400; // between 400 and 800
-    return `${count} Students`;
-  };
-
   return (
     <div className="flex flex-col md:flex-row gap-6 mb-8 items-start">
       <div className="relative shrink-0 mx-auto md:mx-0">
@@ -50,14 +39,10 @@ export default function UniversityHeader({ school, registeredCount }) {
         <p className="text-gray-500 text-base md:text-lg mb-6 font-medium capitalize">{type}</p>
 
         <div className="flex flex-wrap gap-3 md:gap-4 text-xs md:text-sm text-[#111111] justify-center md:justify-start">
-          <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm hover:border-brand-primary transition-colors">
-            <span className="text-brand-primary flex items-center"><GroupIcon sx={{ fontSize: 18 }}/></span>
-            <span className="font-bold">{getStudentsCount()}</span>
-          </div>
           {registeredCount !== undefined && (
             <div className="flex items-center gap-1.5 bg-brand-primary/5 px-3 py-1.5 rounded-full border border-brand-primary/20 shadow-sm hover:border-brand-primary transition-colors">
-              <span className="text-brand-primary font-bold">♟</span>
-              <span className="font-black text-brand-primary">{registeredCount} SCL Players</span>
+              <span className="text-brand-primary flex items-center"><GroupIcon sx={{ fontSize: 18 }}/></span>
+              <span className="font-black text-brand-primary">{registeredCount} {registeredCount === 1 ? 'Registered Student' : 'Registered Students'}</span>
             </div>
           )}
           <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm hover:border-brand-primary transition-colors">

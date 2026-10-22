@@ -34,12 +34,15 @@ function getChampionScopedStats(historyItem) {
     ? (winnerRaw.username || String(winnerRaw).toLowerCase().replace(/\s+/g, ''))
     : String(winnerRaw).toLowerCase().replace(/\s+/g, '');
 
-  const playerObj = (tournamentPlayers || []).find(p =>
+  const playerObj = (historyItem?.players || []).find(p =>
+    p.username?.toLowerCase() === winnerUsername.toLowerCase() ||
+    p.name?.toLowerCase() === winnerName.toLowerCase()
+  ) || (tournamentPlayers || []).find(p =>
     p.username?.toLowerCase() === winnerUsername.toLowerCase() ||
     p.name?.toLowerCase() === winnerName.toLowerCase()
   ) || (typeof winnerRaw === 'object' ? winnerRaw : { name: winnerName, username: winnerUsername });
 
-  const rating = playerObj.rating || winnerRaw.rating || 1850;
+  const rating = playerObj.chess_rating || playerObj.lichess_rating || playerObj.rating || winnerRaw.rating || 0;
   const school = playerObj.school || playerObj.university || 'SS4 League';
   const avatar = playerObj.avatar || playerObj.image || `https://unavatar.io/lichess/${winnerUsername}`;
 
@@ -102,7 +105,10 @@ function getChampionScopedStats(historyItem) {
     ? (runnerUpRaw.username || String(runnerUpRaw).toLowerCase().replace(/\s+/g, ''))
     : String(runnerUpRaw).toLowerCase().replace(/\s+/g, '')) : 'finalist';
 
-  const runnerUpObj = runnerUpRaw ? ((tournamentPlayers || []).find(p =>
+  const runnerUpObj = runnerUpRaw ? ((historyItem?.players || []).find(p =>
+    p.username?.toLowerCase() === runnerUpUsername.toLowerCase() ||
+    p.name?.toLowerCase() === runnerUpName.toLowerCase()
+  ) || (tournamentPlayers || []).find(p =>
     p.username?.toLowerCase() === runnerUpUsername.toLowerCase() ||
     p.name?.toLowerCase() === runnerUpName.toLowerCase()
   ) || (typeof runnerUpRaw === 'object' ? runnerUpRaw : { name: runnerUpName, username: runnerUpUsername })) : null;
@@ -690,18 +696,21 @@ export default function ChessTournamentPage() {
   };
 
   const getSeededPlayersR1 = () => {
-    const nonProvisional = tournamentPlayers.filter(p => !p.isProvisional);
-    const provisional = tournamentPlayers.filter(p => p.isProvisional);
-    nonProvisional.sort((a, b) => b.rating - a.rating);
+    const rawRoster = (tournament?.players && tournament.players.length > 0)
+      ? tournament.players
+      : (registeredPlayers.length > 0 ? registeredPlayers : tournamentPlayers);
+    const nonProvisional = rawRoster.filter(p => !p.isProvisional);
+    const provisional = rawRoster.filter(p => p.isProvisional);
+    nonProvisional.sort((a, b) => (b.chess_rating || b.lichess_rating || b.rating || 0) - (a.chess_rating || a.lichess_rating || a.rating || 0));
     const shuffledProvisional = [...provisional].sort((a, b) => {
       const hashA = [...(a.username || '')].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
       const hashB = [...(b.username || '')].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
-      return hashA - hashB || a.username.localeCompare(b.username);
+      return hashA - hashB || (a.username || '').localeCompare(b.username || '');
     });
     const sorted = [...nonProvisional, ...shuffledProvisional];
     const numByes = 64 - sorted.length;
-    const byes = sorted.slice(0, numByes);
-    const active = sorted.slice(numByes);
+    const byes = sorted.slice(0, Math.max(0, numByes));
+    const active = sorted.slice(Math.max(0, numByes));
     return { byes, active };
   };
 
@@ -2392,7 +2401,7 @@ export default function ChessTournamentPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               <div className="bg-brand-primary/5 border border-brand-primary/10 rounded-2xl p-4 sm:p-6 space-y-3">
                 <p className="font-space font-black text-base text-[#111111]">Initialize Bracket</p>
-                <p className="text-sm text-gray-500">Seed {selectedMonthYear} tournament with 53 registered players.</p>
+                <p className="text-sm text-gray-500">Seed {selectedMonthYear} tournament with {(tournament?.players?.length || registeredPlayers.length || tournamentPlayers.length)} registered players.</p>
                 <button onClick={handleOpenR1Gen} className="w-full min-h-[44px] bg-brand-primary text-white text-sm font-bold px-5 py-3 rounded-xl cursor-pointer hover:bg-brand-primary/90 transition-colors flex items-center justify-center">
                   Generate Bracket
                 </button>
@@ -2852,11 +2861,11 @@ export default function ChessTournamentPage() {
             {/* Test cleanup  user requested */}
             {/* Test cleanup user requested */}
             <div className="border border-dashed border-brand-primary/20 bg-brand-primary/5 rounded-2xl p-4 sm:p-5 space-y-3">
-              <p className="font-space font-black text-base text-[#111111]">Test Data Cleanup</p>
-              <p className="text-sm text-gray-600">Removes April &amp; May 2026 mock archives from local storage after testing.</p>
+              <p className="font-space font-black text-base text-[#111111]">Cache Cleanup</p>
+              <p className="text-sm text-gray-600">Clears cached tournament archives from local storage.</p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3">
                 <button onClick={clearMocks} className="w-full sm:w-auto min-h-[44px] text-sm font-bold bg-brand-primary text-white px-4 py-2.5 rounded-xl cursor-pointer hover:bg-brand-primary/80 transition-colors flex items-center justify-center">
-                   Clear Mock History
+                   Clear Cache
                 </button>
                 <button onClick={() => { setIsAdmin(false); toast.info('Admin locked'); }} className="w-full sm:w-auto min-h-[44px] text-sm font-bold bg-gray-200 text-gray-600 px-4 py-2.5 rounded-xl cursor-pointer hover:bg-gray-300 transition-colors flex items-center justify-center">
                   Lock Panel

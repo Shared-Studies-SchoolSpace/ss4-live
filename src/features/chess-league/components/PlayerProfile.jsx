@@ -29,14 +29,14 @@ export const PlayerProfile = ({ player, onClose }) => {
 
   // Ratings & division
   const isLichessPrimary = player.platform === 'lichess' || (!player.chess_username && !!player.lichess_username);
-  const chessRating = player.chess_rating || (!isLichessPrimary ? player.rating : 0) || 1200;
+  const chessRating = player.chess_rating || (!isLichessPrimary ? player.rating : 0) || 0;
   const lichessRating = player.lichess_rating || (isLichessPrimary ? player.rating : 0) || 0;
-  const rating = player.rating || Math.max(chessRating, lichessRating);
+  const rating = player.rating || Math.max(chessRating, lichessRating) || 0;
   
-  const peakRating = player.peak_rating || Math.round(rating * 1.05);
+  const peakRating = player.peak_rating || rating;
   const dateJoined = player.created_at 
     ? new Date(player.created_at).toLocaleDateString(undefined, { month: 'long', year: 'numeric' }) 
-    : 'June 2026';
+    : 'Active Member';
 
   // Standings / Stats
   const gamesPlayed = player.P !== undefined ? player.P : 0;
@@ -46,10 +46,10 @@ export const PlayerProfile = ({ player, onClose }) => {
   const winRate = gamesPlayed > 0 ? ((wins / gamesPlayed) * 100).toFixed(1) : '0.0';
   const history = player.history || [];
 
-  // Extended SCL stats
-  const appearances = player.appearances || Math.max(1, Math.floor(gamesPlayed / 4));
-  const titles = player.titles || (rating >= 1900 ? 'Arena Grandmaster' : rating >= 1650 ? 'Candidate Master' : 'Challenger');
-  const ranking = player.ranking || Math.max(1, Math.floor(200 - rating / 10));
+  // SCL stats (derive only from actual data, no synthetic multipliers)
+  const appearances = player.appearances !== undefined ? player.appearances : (gamesPlayed > 0 ? 1 : 0);
+  const titles = player.role === 'admin' ? 'Admin' : (player.titles || player.title || (rating >= 1800 ? 'Division A' : rating >= 1000 ? 'Fork Division' : 'Pin Division'));
+  const ranking = player.ranking ? `#${player.ranking}` : '—';
 
   // Determine SCL Division
   const getDivisionDetails = (elo) => {
@@ -318,19 +318,21 @@ export const PlayerProfile = ({ player, onClose }) => {
               <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Joined {dateJoined}</span>
             </div>
 
-            {/* Sparkline Graph */}
-            <div className="bg-brand-bg-cream/40 rounded-2xl p-4 border border-gray-150 flex flex-col justify-center h-20 overflow-hidden relative">
-              <svg className="w-full h-12 text-brand-primary overflow-visible" viewBox="0 0 340 50">
-                <polyline
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  points={generateTimelinePoints()}
-                />
-              </svg>
-            </div>
+            {/* Sparkline Graph (only when match history exists) */}
+            {history.length > 0 && (
+              <div className="bg-brand-bg-cream/40 rounded-2xl p-4 border border-gray-150 flex flex-col justify-center h-20 overflow-hidden relative">
+                <svg className="w-full h-12 text-brand-primary overflow-visible" viewBox="0 0 340 50">
+                  <polyline
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    points={generateTimelinePoints()}
+                  />
+                </svg>
+              </div>
+            )}
             
             <div className="flex items-center gap-1.5 mt-3 flex-wrap">
               <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Recent:</span>

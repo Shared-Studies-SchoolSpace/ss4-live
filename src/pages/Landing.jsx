@@ -6,108 +6,12 @@ import { supabase } from '../supabase';
 import Button from '../components/Button';
 import AuthGate from '../features/auth-portal/components/AuthGate';
 import { toast } from "react-toastify";
-import mockPlayers from '../features/chess-league/data/playersWithRatings.json';
 import { MatchResult } from '../features/chess-league/components/MatchResult';
 import { PlayerProfile } from '../features/chess-league/components/PlayerProfile';
 import { Hero } from '../components/Hero';
 import { fetchCompletePlayerData } from '../features/chess-league/utils/chessService';
 import LoadingScreen from '../components/LoadingScreen';
 import { FeedContainer } from '../components/feed';
-
-// Fallback results for Daily Friendlies (since start on July 13, 2026)
-const FALLBACK_DAILY_FRIENDLIES = [
-  // July 13, 2026
-  { tournament_date: '2026-07-13', player_username: 'HAKAI026', points: 30, performance: 1981, is_winner: true },
-  { tournament_date: '2026-07-13', player_username: 'Tyrannt', points: 14, performance: 1693, is_winner: false },
-  { tournament_date: '2026-07-13', player_username: 'Act1ve_001', points: 13, performance: 1668, is_winner: false },
-  { tournament_date: '2026-07-13', player_username: 'Robert_plays_chess', points: 8, performance: 1420, is_winner: false },
-  { tournament_date: '2026-07-13', player_username: 'karyptus', points: 6, performance: 1487, is_winner: false },
-  { tournament_date: '2026-07-13', player_username: 'Veek_Austin01', points: 4, performance: 1708, is_winner: false },
-  { tournament_date: '2026-07-13', player_username: 'iyanamubongabasi', points: 2, performance: 1455, is_winner: false },
-  { tournament_date: '2026-07-13', player_username: 'Yaribem05', points: 2, performance: 1404, is_winner: false },
-
-  // July 14, 2026
-  { tournament_date: '2026-07-14', player_username: 'oblivion14', points: 22, performance: 2029, is_winner: true },
-  { tournament_date: '2026-07-14', player_username: 'Act1ve_001', points: 6, performance: 1584, is_winner: false },
-  { tournament_date: '2026-07-14', player_username: 'Veek_Austin01', points: 14, performance: 1832, is_winner: false },
-  { tournament_date: '2026-07-14', player_username: 'Glorrreeeyy', points: 16, performance: 1868, is_winner: false },
-  { tournament_date: '2026-07-14', player_username: 'simon25', points: 14, performance: 1570, is_winner: false },
-  { tournament_date: '2026-07-14', player_username: 'Robert_plays_chess', points: 4, performance: 1446, is_winner: false },
-  { tournament_date: '2026-07-14', player_username: 'Laka2142', points: 10, performance: 1663, is_winner: false },
-  { tournament_date: '2026-07-14', player_username: 'Power_101', points: 8, performance: 1611, is_winner: false },
-  { tournament_date: '2026-07-14', player_username: 'iyanamubongabasi', points: 6, performance: 1547, is_winner: false },
-  { tournament_date: '2026-07-14', player_username: 'Jhudex', points: 5, performance: 1366, is_winner: false },
-
-  // July 15, 2026
-  { tournament_date: '2026-07-15', player_username: 'simon25', points: 31, performance: 1802, is_winner: true },
-  { tournament_date: '2026-07-15', player_username: 'Act1ve_001', points: 5, performance: 1555, is_winner: false },
-  { tournament_date: '2026-07-15', player_username: 'Robert_plays_chess', points: 4, performance: 1456, is_winner: false },
-  { tournament_date: '2026-07-15', player_username: 'Tyrannt', points: 1, performance: 1580, is_winner: false },
-  { tournament_date: '2026-07-15', player_username: 'Weehfhi_Plays', points: 14, performance: 1630, is_winner: false },
-  { tournament_date: '2026-07-15', player_username: 'Praisehans', points: 12, performance: 1896, is_winner: false },
-  { tournament_date: '2026-07-15', player_username: 'Klaus-Michael', points: 12, performance: 1815, is_winner: false },
-
-  // July 16, 2026
-  { tournament_date: '2026-07-16', player_username: 'simon25', points: 1, performance: 1674, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'Veek_Austin01', points: 12, performance: 1834, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'Act1ve_001', points: 6, performance: 1532, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'oblivion14', points: 4, performance: 1927, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'Laka2142', points: 12, performance: 1885, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'Robert_plays_chess', points: 6, performance: 1444, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'Weehfhi_Plays', points: 6, performance: 1620, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'Jhudex', points: 14, performance: 1365, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'Power_101', points: 8, performance: 1724, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'Klaus-Michael', points: 4, performance: 1647, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'Gmpeerless', points: 14, performance: 1905, is_winner: true },
-  { tournament_date: '2026-07-16', player_username: 'KeseneNicholas', points: 12, performance: 1786, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'Davidbarakaii', points: 8, performance: 1615, is_winner: false },
-  { tournament_date: '2026-07-16', player_username: 'iyanamubongabasi', points: 2, performance: 1568, is_winner: false }
-];
-
-const spotlightPlayers = [
-  {
-    name: "Simon (simon25)",
-    school: "University of Lagos",
-    detail: "Economics • July 15 Arena Champion",
-    metric1Label: "Pts Scored",
-    metric1Value: "31 pts",
-    metric2Label: "Performance",
-    metric2Value: "1802",
-    avatarInitial: "S"
-  },
-  {
-    name: "HAKAI026",
-    school: "Lichess Competitor",
-    detail: "July 13 Arena Champion",
-    metric1Label: "Pts Scored",
-    metric1Value: "30 pts",
-    metric2Label: "Performance",
-    metric2Value: "1981",
-    avatarInitial: "H"
-  },
-  {
-    name: "oblivion14",
-    school: "Bells University of Technology",
-    detail: "Mechatronics • July 14 Arena Champion",
-    metric1Label: "Pts Scored",
-    metric1Value: "22 pts",
-    metric2Label: "Performance",
-    metric2Value: "2029",
-    avatarInitial: "O"
-  },
-  {
-    name: "Gmpeerless",
-    school: "University of Ibadan",
-    detail: "Mathematics • July 16 Arena Champion",
-    metric1Label: "Pts Scored",
-    metric1Value: "14 pts",
-    metric2Label: "Performance",
-    metric2Value: "1905",
-    avatarInitial: "G"
-  }
-];
-
-
 
 // Vector SVG Icons
 const AnnouncementIcon = () => (
@@ -295,18 +199,8 @@ export default function LandingPage() {
           .select("name, university, chess_username, lichess_username, chess_rating, lichess_rating")
           .order("chess_rating", { ascending: false });
 
-        const mergedPlayers = [...(profs || [])];
-        mockPlayers.forEach(m => {
-          if (!mergedPlayers.find(p => p.chess_username?.toLowerCase() === m.username.toLowerCase())) {
-            mergedPlayers.push({
-              name: m.name,
-              university: m.school,
-              chess_username: m.username,
-              chess_rating: m.rating || 1200
-            });
-          }
-        });
-        setAllPlayers(mergedPlayers);
+        const realPlayers = profs || [];
+        setAllPlayers(realPlayers);
         setPreloadProgress(55);
 
         // Fetch daily friendly results from Supabase if table is created
@@ -327,7 +221,7 @@ export default function LandingPage() {
 
         // Aggregate top universities
         const schoolMap = {};
-        mergedPlayers.forEach(p => {
+        realPlayers.forEach(p => {
           if (!p.university) return;
           const school = p.university.trim();
           if (!schoolMap[school]) {
@@ -349,10 +243,10 @@ export default function LandingPage() {
 
         // Preload profiles & avatar pictures
         setPreloadStatus("Caching active profiles & avatar pictures...");
-        const activeUsernames = new Set(["Kontor_001"]);
+        const activeUsernames = new Set();
         
         // 1. Preload top 6 players on high ELO leaderboard
-        mergedPlayers
+        realPlayers
           .filter(p => (p.chess_rating || 0) >= 1800)
           .slice(0, 6)
           .forEach(p => { if (p.chess_username) activeUsernames.add(p.chess_username); });
@@ -371,7 +265,7 @@ export default function LandingPage() {
           setPreloadStatus(`Caching player data (${idx}/${listToFetch.length})...`);
           
           await Promise.all(batch.map(async (uname) => {
-            const player = mergedPlayers.find(p => p.chess_username === uname);
+            const player = realPlayers.find(p => p.chess_username === uname);
             const platform = player?.lichess_username && !player?.username ? 'lichess' : 'chess.com';
             
             // fetchCompletePlayerData checks and writes to sessionStorage
@@ -490,11 +384,12 @@ export default function LandingPage() {
 
   // Cumulative Daily Friendlies standings
   const dailyFriendliesLeaderboard = useMemo(() => {
-    const data = dailyFriendlies.length > 0 ? dailyFriendlies : FALLBACK_DAILY_FRIENDLIES;
+    const data = dailyFriendlies || [];
     
     const playerMap = {};
     data.forEach(item => {
       const username = item.player_username;
+      if (!username) return;
       if (!playerMap[username]) {
         playerMap[username] = {
           username: username,
@@ -504,8 +399,8 @@ export default function LandingPage() {
           count: 0
         };
       }
-      playerMap[username].pts += item.points;
-      playerMap[username].perf = item.performance;
+      playerMap[username].pts += (item.points || 0);
+      playerMap[username].perf = item.performance || 0;
       if (item.is_winner) {
         playerMap[username].wins += 1;
       }
@@ -522,16 +417,44 @@ export default function LandingPage() {
         return {
           ...p,
           name: details?.name || p.username,
-          university: details?.university || "Lichess Competitor"
+          university: details?.university || "SS4 Contender"
         };
       });
   }, [dailyFriendlies, allPlayers]);
 
-  // Dynamic daily spotlight (changes every calendar day)
+  // Dynamic daily spotlight (derived directly from Supabase friendlies top performer or top ranked player)
   const dailySpotlightPlayer = useMemo(() => {
-    const day = new Date().getDate();
-    return spotlightPlayers[day % spotlightPlayers.length];
-  }, []);
+    if (dailyFriendliesLeaderboard.length > 0) {
+      const topFriendly = dailyFriendliesLeaderboard[0];
+      return {
+        name: topFriendly.name || topFriendly.username,
+        school: topFriendly.university || "SS4 League Contender",
+        detail: `Arena Leader • ${topFriendly.wins} ${topFriendly.wins === 1 ? 'Win' : 'Wins'}`,
+        metric1Label: "Pts Scored",
+        metric1Value: `${topFriendly.pts} pts`,
+        metric2Label: "Performance",
+        metric2Value: `${topFriendly.perf || 1600}`,
+        avatarInitial: (topFriendly.name || topFriendly.username || 'U')[0].toUpperCase()
+      };
+    }
+
+    if (allPlayers.length > 0) {
+      const topPlayer = allPlayers[0];
+      const elo = topPlayer.chess_rating || topPlayer.lichess_rating || 1200;
+      return {
+        name: topPlayer.name || topPlayer.chess_username || topPlayer.lichess_username,
+        school: topPlayer.university || "SS4 League Contender",
+        detail: `${topPlayer.university || 'SS4 League'} • Top Ranked`,
+        metric1Label: "ELO Rating",
+        metric1Value: `${elo}`,
+        metric2Label: "Division",
+        metric2Value: elo >= 1800 ? "Division A" : elo >= 1000 ? "Fork Division" : "Pin Division",
+        avatarInitial: (topPlayer.name || topPlayer.chess_username || 'U')[0].toUpperCase()
+      };
+    }
+
+    return null;
+  }, [dailyFriendliesLeaderboard, allPlayers]);
 
   const handlePlayerClick = (username) => {
     const player = allPlayers.find(
@@ -539,9 +462,9 @@ export default function LandingPage() {
             ap.lichess_username?.toLowerCase() === username.toLowerCase()
     ) || {
       name: username,
-      university: "Lichess Competitor",
+      university: "SS4 Contender",
       chess_username: username,
-      chess_rating: 1500
+      chess_rating: 0
     };
     setSelectedPlayer(player);
   };
@@ -833,68 +756,87 @@ export default function LandingPage() {
             {/* Spotlights Sub-Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
               {/* Featured Player Spotlight (M3 Filled Card style) */}
-              <div className="varsity-card p-5 bg-m3-surface-low relative overflow-hidden border-none shadow-none text-left">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-brand-accent"><TrophyIcon /></span>
-                  <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
-                    Player Spotlight
-                  </h4>
+              {dailySpotlightPlayer ? (
+                <div className="varsity-card p-5 bg-m3-surface-low relative overflow-hidden border-none shadow-none text-left">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-brand-accent"><TrophyIcon /></span>
+                    <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                      Player Spotlight
+                    </h4>
+                  </div>
+                  <div className="flex items-start gap-3 mt-4">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-accent to-yellow-400 text-white font-black text-lg flex items-center justify-center shrink-0 shadow-sm">
+                      {dailySpotlightPlayer.avatarInitial}
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="text-sm font-black text-brand-text-dark truncate leading-tight">{dailySpotlightPlayer.name}</h4>
+                      <p className="text-[10px] font-semibold text-gray-650 truncate mt-0.5">{dailySpotlightPlayer.detail}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 pt-3.5 border-t border-m3-outline-variant/60 flex items-center justify-between text-sm">
+                    <div>
+                      <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">{dailySpotlightPlayer.metric1Label}</span>
+                      <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1">
+                        {dailySpotlightPlayer.metric1Value}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">{dailySpotlightPlayer.metric2Label}</span>
+                      <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
+                        {dailySpotlightPlayer.metric2Value}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-start gap-3 mt-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-accent to-yellow-400 text-white font-black text-lg flex items-center justify-center shrink-0 shadow-sm">
-                    {dailySpotlightPlayer.avatarInitial}
+              ) : (
+                <div className="varsity-card p-5 bg-m3-surface-low border-none shadow-none text-left">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-brand-accent"><TrophyIcon /></span>
+                    <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                      Player Spotlight
+                    </h4>
                   </div>
-                  <div className="min-w-0">
-                    <h4 className="text-sm font-black text-brand-text-dark truncate leading-tight">{dailySpotlightPlayer.name}</h4>
-                    <p className="text-[10px] font-semibold text-gray-650 truncate mt-0.5">{dailySpotlightPlayer.detail}</p>
-                  </div>
+                  <p className="text-xs text-gray-500 mt-4">Connecting player records...</p>
                 </div>
-                
-                <div className="mt-4 pt-3.5 border-t border-m3-outline-variant/60 flex items-center justify-between text-sm">
-                  <div>
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">{dailySpotlightPlayer.metric1Label}</span>
-                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1">
-                      {dailySpotlightPlayer.metric1Value}
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">{dailySpotlightPlayer.metric2Label}</span>
-                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
-                      {dailySpotlightPlayer.metric2Value} ELO
-                    </span>
-                  </div>
-                </div>
-              </div>
+              )}
 
               {/* Featured Institution Spotlight (M3 Filled Card style) */}
-              <div className="varsity-card p-5 bg-m3-surface-low border-none shadow-none text-left">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-brand-primary"><SchoolIcon /></span>
-                  <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
-                    Top Institution
-                  </h4>
-                </div>
-                <div>
-                  <h4 className="text-sm font-black text-brand-text-dark leading-tight mt-3">
-                    Bells University of Technology
-                  </h4>
-                  <p className="text-[10px] font-semibold text-gray-600 mt-1">Ota, Ogun State &bull; Mechatronics hub</p>
-                </div>
-                <div className="mt-4 pt-3.5 border-t border-m3-outline-variant/60 flex items-center justify-between text-sm">
-                  <div>
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Registrations</span>
-                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
-                      45 students
-                    </span>
+              {(() => {
+                const topInstitution = leaderboardSchools[0];
+                return (
+                  <div className="varsity-card p-5 bg-m3-surface-low border-none shadow-none text-left">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-brand-primary"><SchoolIcon /></span>
+                      <h4 className="text-sm font-black text-brand-text-dark font-space uppercase tracking-wider">
+                        Top Institution
+                      </h4>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-black text-brand-text-dark leading-tight mt-3">
+                        {topInstitution?.name || "Awaiting Tournament Results"}
+                      </h4>
+                      <p className="text-[10px] font-semibold text-gray-600 mt-1">
+                        {topInstitution ? `${topInstitution.count} registered ${topInstitution.count === 1 ? 'player' : 'players'} • SCL Leaderboard` : "Participating in SS4 League"}
+                      </p>
+                    </div>
+                    <div className="mt-4 pt-3.5 border-t border-m3-outline-variant/60 flex items-center justify-between text-sm">
+                      <div>
+                        <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Registrations</span>
+                        <span className="inline-flex items-center px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-xs font-black rounded-md mt-1">
+                          {topInstitution ? `${topInstitution.count} ${topInstitution.count === 1 ? 'student' : 'students'}` : "0 students"}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Avg ELO</span>
+                        <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1">
+                          {topInstitution ? topInstitution.avgRating : "—"}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider block">Avg ELO</span>
-                    <span className="inline-flex items-center px-2 py-0.5 bg-brand-accent/10 text-brand-accent text-xs font-black rounded-md mt-1">
-                      1540
-                    </span>
-                  </div>
-                </div>
-              </div>
+                );
+              })()}
             </div>
 
           </div>

@@ -21,22 +21,22 @@ export const INITIAL_FEED_POSTS = [
       time: 'Oct 9, 2026'
     },
     title: 'SS4 Chess League: theBOARDGAMES (October 2026) — Nigeria’s Top University Chess Masters Collide on Lichess!',
-    excerpt: `♟️ **SS4 CHESS LEAGUE — theBOARDGAMES**
+    excerpt: `**SS4 CHESS LEAGUE — theBOARDGAMES**
 *Featuring the best chess players from top universities in Nigeria.*
 
 The October 2026 inter-collegiate championship is officially live! Across 23 days of relentless digital warfare, the sharpest collegiate minds and university contenders in Nigeria clash on 64 squares for institutional supremacy and national ranking points.
 
-📅 **TOURNAMENT DETAILS:**
+**TOURNAMENT DETAILS:**
 • **Match Window:** 9th – 31st October 2026
 • **Hosting Platform:** **Lichess** (Official SS4 Arena & Swiss Lobbies)
 • **Participants:** Elite university contenders from Nigeria’s premier tertiary institutions
 
-⚡ **OFFICIAL TIME CONTROLS:**
+**OFFICIAL TIME CONTROLS:**
 • **Blitz:** 3 + 0
 • **Blitz:** 5 + 0
 • **Rapid:** 10 + 0
 
-🏛️ **INSTITUTIONAL BATTLEFIELD:**
+**INSTITUTIONAL BATTLEFIELD:**
 Contenders representing Covenant University, UNILORIN, Bells University of Technology, FUTIA, UNIUYO, Babcock, Landmark, UNN, UNICAL, Redeemer’s University, and Benson Idahosa University take the stage.
 
 Will Covenant University's Anuchi Emmanuel defend his August crown, or will a new grandmaster rise to claim the October mantle?
@@ -81,7 +81,7 @@ Will Covenant University's Anuchi Emmanuel defend his August crown, or will a ne
     title: 'SS4 Aspirants Award 2026: First Cycle Applications Open October 30!',
     excerpt: `The official SS4 academic prestige program announcement:
 
-🎓 **SS4 ASPIRANTS AWARD 2026:**
+**SS4 ASPIRANTS AWARD 2026:**
 First Cycle Announcement: Applications open **October 30, 2026**!
 
 The Aspirants Award is a prestige recognition program designed to celebrate the highest verified JAMB UTME scorers among our verified SS4 partner secondary schools. Top-performing students receive comprehensive cash prizes, corporate sponsorship recognition, and national academic spotlighting.
@@ -125,84 +125,106 @@ Many Institutions, One Space. The Board Remembers.`,
     title: 'SS4 Chess League Varsity Tournament: Official 11-Team Squad Lineups Released!',
     excerpt: `The official squad lineups for the SS4 Chess League Varsity Tournament are locked in! 11 top Nigerian institutions, 55 elite contenders, 1 national varsity crown.
 
-🏆 OFFICIAL VARSITY SQUAD ROSTERS:
+**OFFICIAL VARSITY SQUAD ROSTERS:**
 
-<h1 style="color: #DC2626; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">🚩 1. BELLS UNIVERSITY OF TECHNOLOGY</h1>
+<div class="roster-team-heading" style="color: #DC2626;">1. BELLS UNIVERSITY OF TECHNOLOGY</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Anietie Ben</div>
 <div class="player-name-badge-vertical">02 Isuekwebo Joel</div>
 <div class="player-name-badge-vertical">03 Oyebode Samuel</div>
 <div class="player-name-badge-vertical">04 Okoya Oladimeji</div>
 <div class="player-name-badge-vertical">05 Henshaw John</div>
+</div>
 
-<h1 style="color: #EA580C; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">⚡ 2. UNIVERSITY OF UYO (UNIUYO)</h1>
+<div class="roster-team-heading" style="color: #EA580C;">2. UNIVERSITY OF UYO (UNIUYO)</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Jesse Edem</div>
 <div class="player-name-badge-vertical">02 Esang Uwe</div>
 <div class="player-name-badge-vertical">03 God'swisdom</div>
 <div class="player-name-badge-vertical">04 Amakuro Minalabh</div>
 <div class="player-name-badge-vertical">05 Peter Eti</div>
+</div>
 
-<h1 style="color: #D97706; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">👑 3. BABCOCK UNIVERSITY</h1>
+<div class="roster-team-heading" style="color: #D97706;">3. BABCOCK UNIVERSITY</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Adedipe Temini</div>
 <div class="player-name-badge-vertical">02 Timi David Opeyemi</div>
 <div class="player-name-badge-vertical">03 George George</div>
 <div class="player-name-badge-vertical">04 Lawore Daniel</div>
 <div class="player-name-badge-vertical">05 Ogunsanya Iteoluwaleyi</div>
+</div>
 
-<h1 style="color: #059669; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">🌲 4. FEDERAL UNIVERSITY OF TECHNOLOGY IKOT ABASI (FUTIA)</h1>
+<div class="roster-team-heading" style="color: #059669;">4. FEDERAL UNIVERSITY OF TECHNOLOGY IKOT ABASI (FUTIA)</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Thompson Etimbuk Pauli</div>
 <div class="player-name-badge-vertical">02 Emmanuel Micheal</div>
 <div class="player-name-badge-vertical">03 Bassey Okon Etia</div>
 <div class="player-name-badge-vertical">04 David Ituen Ofonime</div>
 <div class="player-name-badge-vertical">05 Covenant Ifiok Udobia</div>
+</div>
 
-<h1 style="color: #0284C7; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">🦁 5. UNIVERSITY OF NIGERIA NSUKKA (UNN)</h1>
+<div class="roster-team-heading" style="color: #0284C7;">5. UNIVERSITY OF NIGERIA NSUKKA (UNN)</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Okoli Tochukwu</div>
 <div class="player-name-badge-vertical">02 Ugwu Praise Chinwuba</div>
 <div class="player-name-badge-vertical">03 Chukwumaeze Joseph</div>
 <div class="player-name-badge-vertical">04 Kenechukwu Micheal</div>
 <div class="player-name-badge-vertical">05 AGU DANIEL</div>
+</div>
 
-<h1 style="color: #2563EB; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">✝️ 6. REDEEMER'S UNIVERSITY</h1>
+<div class="roster-team-heading" style="color: #2563EB;">6. REDEEMER'S UNIVERSITY</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Daniel Daniel</div>
 <div class="player-name-badge-vertical">02 Odukoya Emmanuel</div>
 <div class="player-name-badge-vertical">03 John Akeju</div>
 <div class="player-name-badge-vertical">04 David Oladipo</div>
 <div class="player-name-badge-vertical">05 Akinduti Damilare</div>
+</div>
 
-<h1 style="color: #7C3AED; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">🎓 7. LANDMARK UNIVERSITY</h1>
+<div class="roster-team-heading" style="color: #7C3AED;">7. LANDMARK UNIVERSITY</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Omotunde oluwadamilare</div>
 <div class="player-name-badge-vertical">02 Mbah Ernest</div>
 <div class="player-name-badge-vertical">03 Emmanuel Chisom</div>
 <div class="player-name-badge-vertical">04 Edafe Osagie</div>
 <div class="player-name-badge-vertical">05 Obi Princewill</div>
+</div>
 
-<h1 style="color: #DB2777; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">⚔️ 8. UNIVERSITY OF ILORIN (UNILORIN)</h1>
+<div class="roster-team-heading" style="color: #DB2777;">8. UNIVERSITY OF ILORIN (UNILORIN)</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Kenneth Gilbert</div>
 <div class="player-name-badge-vertical">02 Durojaiye Boluwatife</div>
 <div class="player-name-badge-vertical">03 Malik Idris</div>
 <div class="player-name-badge-vertical">04 Fasiku David</div>
 <div class="player-name-badge-vertical">05 Iysa-bello Adegboyega</div>
+</div>
 
-<h1 style="color: #E11D48; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">🏆 9. UNIVERSITY OF CALABAR (UNICAL)</h1>
+<div class="roster-team-heading" style="color: #E11D48;">9. UNIVERSITY OF CALABAR (UNICAL)</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Ita Best James</div>
 <div class="player-name-badge-vertical">02 John, Praisesquwakeh Ekwe</div>
 <div class="player-name-badge-vertical">03 Bassey, Dean Sonnie</div>
 <div class="player-name-badge-vertical">04 Emmanuel Edet</div>
 <div class="player-name-badge-vertical">05 Gloria okoro</div>
+</div>
 
-<h1 style="color: #0D9488; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">🏛️ 10. COVENANT UNIVERSITY</h1>
+<div class="roster-team-heading" style="color: #0D9488;">10. COVENANT UNIVERSITY</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Ninuoluwa</div>
 <div class="player-name-badge-vertical">02 Anuchi Emmanuel Chijindu</div>
 <div class="player-name-badge-vertical">03 Alao David O.</div>
 <div class="player-name-badge-vertical">04 Malasowe Ezekiel</div>
 <div class="player-name-badge-vertical">05 Divine chigozirim</div>
+</div>
 
-<h1 style="color: #B45309; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit', sans-serif; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: -0.01em;">🦅 11. BENSON IDAHOSA UNIVERSITY (BIU)</h1>
+<div class="roster-team-heading" style="color: #B45309;">11. BENSON IDAHOSA UNIVERSITY (BIU)</div>
+<div class="roster-badges-row">
 <div class="player-name-badge-vertical">01 Akinrogunde Clinton</div>
 <div class="player-name-badge-vertical">02 Jeffrey obanor</div>
 <div class="player-name-badge-vertical">03 Iheanyichukwu Godswill</div>
 <div class="player-name-badge-vertical">04 Ogbewe James Edosa</div>
 <div class="player-name-badge-vertical">05 Lawal doyinsola</div>
+</div>
 
 **Many Institutions, One Space. The Board Remembers.**`,
     tags: ['#SS4VarsityTournament', '#TeamLineups', '#11Universities', '#ChessNigeria', '#TheBoardRemembers'],
@@ -279,13 +301,13 @@ Many Institutions, One Space. The Board Remembers.`,
       time: 'Sept 4, 2026'
     },
     title: 'Crowned: Anuchi Emmanuel of Covenant University is the SS4 August Tournament Champion!',
-    excerpt: `Out of Many Players, One Emerges — CHAMPION OF AUGUST! 🏆♟️
+    excerpt: `Out of Many Players, One Emerges — CHAMPION OF AUGUST!
 
 Congratulations to Anuchi Emmanuel (@Robobobobobobob_Emma / @robobobobobobob) from the Department of Electrical Engineering, Covenant University, for claiming the August 2026 SS4 Chess League Championship title!
 
 Following an intense 56-player tournament run spanning 14 groups, Round of 32, Sweet 16, Quarterfinals, and Semifinals, Emmanuel delivered a masterclass performance in the Grand Final to hoist the August trophy.
 
-🏅 TOURNAMENT RECAP:
+**TOURNAMENT RECAP:**
 • Champion: Anuchi Emmanuel (Covenant University — Electrical Engineering)
 • Runner-up: Kenneth Gilbert (University of Ilorin — Mathematics)
 • Semifinalists: Emmanuel Michael (FUTIA), James Henshaw (Bells Tech)
@@ -324,29 +346,18 @@ Many Institutions, One Space. The Board Remembers.`,
       time: 'Sept 3, 2026'
     },
     title: 'SS4 Chess League August Semifinals: The Final Four Clash Tonight at 8:00 PM!',
-    excerpt: `SS4 CHESS LEAGUE — SEMIFINALS ⚔️
+    excerpt: `**SS4 CHESS LEAGUE — SEMIFINALS**
 Many Institutions, One Space.
 
 Only four collegiate grandmasters remain standing. Tonight, two spots in the Grand Final are on the line as Nigeria's finest university talents face off over 64 squares!
 
-📅 DATE: Thursday, September 3rd, 2026
-⏰ TIME: 8:00 PM WAT
-♟️ HOSTED ON: Chess.com & Lichess
+• **Date:** Thursday, September 3rd, 2026
+• **Time:** 8:00 PM WAT
+• **Hosted On:** Chess.com & Lichess
 
-🔥 SEMIFINAL FIXTURES:
-• BOARD 1:
-  Emmanuel Michael (@lkbeast1)
-  Aerospace Engineering, Federal University of Technology, Ikot Abasi (FUTIA)
-  vs
-  Kenneth Gilbert (@Prince_of_pieceX)
-  Mathematics, University of Ilorin (UNILORIN)
-
-• BOARD 2:
-  James Henshaw (@oblivion1416)
-  Mechatronics Engineering, Bells University of Technology
-  vs
-  Anuchi Emmanuel (@robobobobobobob)
-  Electrical Engineering, Covenant University
+**SEMIFINAL FIXTURES:**
+• **Board 1:** Emmanuel Michael (@lkbeast1 — FUTIA) vs Kenneth Gilbert (@Prince_of_pieceX — UNILORIN)
+• **Board 2:** James Henshaw (@oblivion1416 — Bells Tech) vs Anuchi Emmanuel (@robobobobobobob — Covenant University)
 
 WHO WILL BE IN THE FINALS?
 Many Institutions, One Space. The Board Remembers.`,
@@ -374,34 +385,19 @@ Many Institutions, One Space. The Board Remembers.`,
       time: 'Sept 2, 2026'
     },
     title: 'SS4 Chess League August Quarterfinals: Elite 8 Contenders Collide Tonight at 8:00 PM!',
-    excerpt: `SS4 CHESS LEAGUE — QUARTERFINALS ⚔️
+    excerpt: `**SS4 CHESS LEAGUE — QUARTERFINALS**
 Many Institutions, One Space.
 
 From 56 players down to the Elite 8! The battle for inter-university chess supremacy reaches fever pitch tonight as the quarterfinal showdowns commence over 64 squares.
 
-📅 DATE: Wednesday, September 2nd, 2026
-⏰ TIME: 8:00 PM WAT
+• **Date:** Wednesday, September 2nd, 2026
+• **Time:** 8:00 PM WAT
 
-🔥 QUARTERFINAL FIXTURES:
-• BOARD 1:
-  Emmanuel Michael (@lkbeast1) — Aerospace Engineering, FUTIA
-  vs
-  Jesse Edem (@jesse70256) — Biochemistry, UNIUYO
-
-• BOARD 2:
-  Kenneth Gilbert (@Prince_of_pieceX) — Mathematics, UNILORIN
-  vs
-  Princewill Obi (@Mathemachesser-THE-GOAT) — Computer Science, Landmark University
-
-• BOARD 3:
-  Akogo Simon (@Akogo) — Computer Science, Babcock University
-  vs
-  Anuchi Emmanuel (@robobobobobobob) — Electrical Engineering, Covenant University
-
-• BOARD 4:
-  Dean Bassey (@deanbassey001) — Medicine and Surgery, UNICAL
-  vs
-  James Henshaw (@oblivion1416) — Mechatronics Engineering, Bells University of Technology
+**QUARTERFINAL FIXTURES:**
+• **Board 1:** Emmanuel Michael (@lkbeast1 — FUTIA) vs Jesse Edem (@jesse70256 — UNIUYO)
+• **Board 2:** Kenneth Gilbert (@Prince_of_pieceX — UNILORIN) vs Princewill Obi (@Mathemachesser-THE-GOAT — Landmark University)
+• **Board 3:** Akogo Simon (@Akogo — Babcock University) vs Anuchi Emmanuel (@robobobobobobob — Covenant University)
+• **Board 4:** Dean Bassey (@deanbassey001 — UNICAL) vs James Henshaw (@oblivion1416 — Bells Tech)
 
 WHO WILL MAKE IT TO THE FINAL FOUR?
 Many Institutions, One Space. The Board Remembers.`,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { VARSITY_TEAMS } from '../data/varsityData';
 import { PlayerProfile } from '../components/PlayerProfile';
@@ -169,11 +169,11 @@ const EVENTS = BOARD_GAMES_EVENTS.map((e) => {
 });
 
 const lastLink = EVENTS.filter((e) => e.link).pop();
-export const ARENA_LINK = lastLink.link;
-export const ARENA_ID = lastLink.id;
+const ARENA_LINK = lastLink.link;
+const ARENA_ID = lastLink.id;
 
 // Live Arena deck list, newest first
-export const LEAGUE_MATCHES = EVENTS
+const LEAGUE_MATCHES = EVENTS
   .filter((e) => e.link)
   .slice()
   .reverse()
@@ -196,6 +196,7 @@ export const LEAGUE_MATCHES = EVENTS
     winner: e.podium[0],
     runnerUp: e.podium[1],
     third: e.podium[2],
+    key: e.key,
   }));
 
 
@@ -253,28 +254,60 @@ const ORDERED_INSTITUTION_IDS = [
 
 
 
-const REST_DAY = {
-  title: 'No Match Day',
-  phase: 'Rest Day',
-  stage: 'No matches scheduled',
+const NO_MATCH_DAY = {
+  hasMatch: false,
+  title: 'No Matches Scheduled',
+  phase: 'Tournament Calendar',
+  stage: 'No match data',
   timeControl: 'No matches',
   arenaLink: null,
   isLive: false,
   isCompleted: false,
-  gridLabel: 'Rest',
-  description: 'No theBoardGames matches were scheduled for this day.',
+  gridLabel: null,
+  gridLabelShort: null,
+  description: 'No theBoardGames matches were scheduled for this date.',
   highlights: null,
 };
 
-// Calendar: Oct 9 – Oct 31. Match days come from the chat export; the rest are rest days.
+// Calendar: Oct 9 – Oct 31 based on verified tournament schedule (boardGamesData.json).
+// Non-match days carry zero fabricated labels or results.
 const TOURNAMENT_DAYS = Array.from({ length: 23 }, (_, i) => {
   const day = 9 + i;
   const weekday = new Date(2026, 9, day).toLocaleDateString('en-US', { weekday: 'short' });
   const base = { day, dayIndex: i + 1, weekday };
   const ev = EVENTS.find((e) => e.day === day);
+
   if (ev) {
+    let gridLabel = ev.label;
+    let gridLabelShort = ev.label;
+
+    if (ev.key === 'F') {
+      // The single authentic final of the tournament on Oct 31
+      gridLabel = 'Final';
+      gridLabelShort = 'Final';
+    } else if (ev.isLive) {
+      gridLabel = 'LIVE';
+      gridLabelShort = 'LIVE';
+    } else if (ev.key === 'SF') {
+      gridLabel = 'Semifinals';
+      gridLabelShort = 'SF';
+    } else if (ev.key === 'QF') {
+      gridLabel = 'Quarterfinals';
+      gridLabelShort = 'QF';
+    } else if (ev.key === 'RO16') {
+      gridLabel = 'Round of 16';
+      gridLabelShort = 'R16';
+    } else if (ev.key === 'RO32') {
+      gridLabel = 'Round of 32';
+      gridLabelShort = 'R32';
+    } else if (ev.matchNumber != null) {
+      gridLabel = `Match ${ev.matchNumber}`;
+      gridLabelShort = `M${ev.matchNumber}`;
+    }
+
     return {
       ...base,
+      hasMatch: true,
       title: ev.title,
       phase: ev.phase,
       stage: ev.stage,
@@ -286,21 +319,14 @@ const TOURNAMENT_DAYS = Array.from({ length: 23 }, (_, i) => {
       description: ev.description,
       highlights: ev.highlights,
       results: ev.results,
+      gridLabel,
+      gridLabelShort,
+      key: ev.key,
     };
   }
-  if (day === 25) {
-    return {
-      ...base,
-      ...REST_DAY,
-      title: 'Round of 32 (Postponed)',
-      phase: 'Knockout Stage',
-      stage: 'Rescheduled to Oct 26',
-      timeControl: '10+0 Rapid • Best of 3',
-      gridLabel: 'Moved',
-      description: 'The Round of 32 was inadvertently missed on this date. The league announced it would be replayed on Monday, 26th October at 8:00 PM.',
-    };
-  }
-  return { ...base, ...REST_DAY };
+
+  // Days with no match: honest, zero hallucination
+  return { ...base, ...NO_MATCH_DAY };
 });
 
 
@@ -313,7 +339,6 @@ export default function TheBoardGamesPage() {
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showAllStandings, setShowAllStandings] = useState(false);
   const [flippedCards, setFlippedCards] = useState({});
   const [selectedPlayerForModal, setSelectedPlayerForModal] = useState(null);
   const [reconciledRatings, setReconciledRatings] = useState({});
@@ -334,7 +359,7 @@ export default function TheBoardGamesPage() {
               return { ...prev, [key]: data.rating };
             });
           }
-        } catch (err) {
+        } catch {
           // Graceful fallback to verified baseline
         }
       }
@@ -455,34 +480,31 @@ export default function TheBoardGamesPage() {
     <div className="w-full bg-[#FAF9F6] text-slate-900 min-h-screen selection:bg-orange-500 selection:text-white font-sans">
       
       {/* ── 1. HERO & TOURNAMENT DATES SECTION ── */}
-      <section className="relative bg-white text-slate-900 pt-8 sm:pt-10 pb-16 px-4 sm:px-6 lg:px-8 border-b border-slate-200">
+      <section className="relative bg-white text-slate-900 pt-3 sm:pt-4 pb-4 sm:pb-5 px-3 sm:px-6 lg:px-8 border-b border-slate-200">
         <div className="max-w-7xl mx-auto">
-          {/* Header Title & Subtitle */}
-          <div className="mb-8 sm:mb-10 max-w-3xl">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight font-outfit text-slate-900 leading-tight">
-              <span>the</span>
-              <span className="text-[#E8640A]">BOARDGAMES</span>
-            </h1>
-            <p className="text-sm sm:text-base text-slate-600 font-normal mt-2.5 max-w-2xl leading-relaxed">
-              Featuring the best chess players from top universities in Nigeria.
-            </p>
+          {/* Header Title Bar */}
+          <div className="mb-2 sm:mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <h1 className="text-xl sm:text-2xl font-black tracking-tight font-outfit text-slate-900 leading-none">
+                <span>the</span>
+                <span className="text-[#E8640A]">BOARDGAMES</span>
+              </h1>
+              <span className="text-xs font-bold text-slate-500 font-sans hidden sm:inline">
+                &bull; Top Nigerian University Chess Masters
+              </span>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <span className="font-bold text-slate-500">9th – 31st October 2026</span>
+              <span className="text-slate-300">&bull;</span>
+              <span className="font-bold text-[#E8640A]">Select date for match data</span>
+            </div>
           </div>
 
-          {/* 5 by 4 Date Grid & Day Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-            {/* Left Column: 5 by 4 Grid of Squares from 9th to 31st */}
-            <div className="lg:col-span-7 space-y-3">
-              <div className="flex items-center justify-between pb-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-black uppercase tracking-wider text-slate-500">October Dates</span>
-                  <span className="text-xs text-slate-400">&bull;</span>
-                  <span className="text-xs font-bold text-slate-600">9th – 31st October 2026</span>
-                </div>
-                <span className="text-xs font-bold text-[#E8640A] hidden sm:inline-block">Select date for match data</span>
-              </div>
-
-              {/* 5 by 4 Grid: 5 columns across */}
-              <div className="grid grid-cols-5 gap-2 sm:gap-3">
+          {/* Date Grid & Active Day Details */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-5 items-stretch">
+            {/* Left Column: Compact 5-Column Grid (all dates visible without scrolling) */}
+            <div className="lg:col-span-7 flex flex-col justify-between">
+              <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
                 {TOURNAMENT_DAYS.map((d) => {
                   const isSelected = selectedDay.day === d.day;
                   return (
@@ -490,28 +512,43 @@ export default function TheBoardGamesPage() {
                       key={d.day}
                       type="button"
                       onClick={() => setSelectedDay(d)}
-                      aria-label={`Select October ${d.day}`}
-                      className={`aspect-square rounded-xl sm:rounded-2xl border flex flex-col items-center justify-center p-1 sm:p-2 transition-all cursor-pointer select-none text-center relative ${
+                      aria-label={`Select October ${d.day}${d.gridLabel ? ` - ${d.gridLabel}` : ''}`}
+                      className={`h-[46px] sm:h-[50px] rounded-lg sm:rounded-xl border flex flex-col items-center justify-center px-1 py-0.5 sm:py-1 transition-all cursor-pointer select-none text-center relative ${
                         isSelected
-                          ? 'bg-[#E8640A] text-white border-[#E8640A] shadow-md shadow-orange-500/20 ring-2 ring-[#E8640A] ring-offset-2'
-                          : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200/90 hover:border-slate-300'
+                          ? 'bg-[#E8640A] text-white border-[#E8640A] shadow-xs shadow-orange-500/20 ring-2 ring-[#E8640A] ring-offset-1'
+                          : d.hasMatch
+                            ? 'bg-white hover:bg-orange-50/50 text-slate-800 border-slate-200/90 hover:border-orange-300'
+                            : 'bg-slate-50/60 hover:bg-slate-100/60 text-slate-400 border-slate-100 hover:border-slate-200'
                       }`}
                     >
-                      <span className={`text-[9px] sm:text-[11px] font-bold uppercase tracking-wider leading-none ${
+                      <span className={`text-[8px] sm:text-[9px] font-bold uppercase tracking-wider leading-none ${
                         isSelected ? 'text-orange-100' : 'text-slate-400'
                       }`}>
                         {d.weekday}
                       </span>
-                      <span className="text-lg sm:text-2xl font-black font-outfit leading-none my-1 sm:my-1.5">
+                      <span className={`text-sm sm:text-base font-black font-outfit leading-none my-0.5 ${
+                        isSelected ? 'text-white' : d.hasMatch ? 'text-slate-900' : 'text-slate-400 font-medium'
+                      }`}>
                         {d.day}
                       </span>
-                      <span className={`text-[9px] sm:text-[10px] font-semibold leading-none ${
-                        isSelected ? 'text-orange-100' : d.isLive ? 'text-emerald-600 font-black' : 'text-slate-500'
-                      }`}>
-                        {d.gridLabel || (d.isCompleted ? 'Final' : d.isLive ? 'LIVE' : 'Oct')}
-                      </span>
+                      {d.gridLabel ? (
+                        <span className={`text-[7.5px] sm:text-[8.5px] font-bold leading-none truncate max-w-full px-0.5 ${
+                          isSelected
+                            ? 'text-orange-100'
+                            : d.isLive
+                              ? 'text-emerald-600 font-black'
+                              : d.key === 'F'
+                                ? 'text-amber-600 font-black'
+                                : 'text-slate-500'
+                        }`}>
+                          <span className="hidden sm:inline">{d.gridLabel}</span>
+                          <span className="sm:hidden">{d.gridLabelShort}</span>
+                        </span>
+                      ) : (
+                        <span className="h-2 sm:h-2.5 block" aria-hidden="true" />
+                      )}
                       {d.isLive && (
-                        <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Live Today"></span>
+                        <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="Live Today"></span>
                       )}
                     </button>
                   );
@@ -520,383 +557,253 @@ export default function TheBoardGamesPage() {
             </div>
 
             {/* Right Column: Active Day Data Card */}
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 flex flex-col">
               <AnimatePresence mode="wait">
-                <motion.div
+                <Motion.div
                   key={selectedDay.day}
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.18 }}
-                  className="rounded-2xl sm:rounded-3xl bg-slate-100/70 p-5 sm:p-6 shadow-sm flex flex-col justify-between min-h-[500px]"
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.15 }}
+                  className="rounded-xl sm:rounded-2xl bg-slate-100/80 border border-slate-200/80 p-3 sm:p-4 shadow-2xs flex flex-col justify-between h-full min-h-[255px]"
                 >
-                  {selectedDay.isCompleted && selectedDay.results ? (
-                    /* ── COMPLETED ARENA WINNERS VIEW ── */
-                    <div className="space-y-4">
+                  {selectedDay.hasMatch && selectedDay.isCompleted && selectedDay.results ? (
+                    /* ── COMPLETED MATCH VIEW ── */
+                    <div className="space-y-2">
                       {/* Header Row */}
-                      <div className="pb-3 flex items-center justify-between">
+                      <div className="pb-1.5 border-b border-slate-200/60 flex items-center justify-between">
                         <div>
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block leading-tight">
                             Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
                           </span>
-                          <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide">
+                          <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide leading-tight">
                             {selectedDay.phase} &bull; {selectedDay.stage}
                           </span>
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 flex items-center gap-1.5 shadow-2xs">
-                          <svg className="w-3.5 h-3.5 text-amber-600" fill="currentColor" viewBox="0 0 24 24">
+                        <span className="text-[9.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 flex items-center gap-1 shadow-2xs">
+                          <svg className="w-3 h-3 text-amber-600" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V19H7v2h10v-2h-4v-3.1c1.98-.44 3.49-2.07 3.61-4.06C19.08 11.63 21 9.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
                           </svg>
-                          <span>Final Results</span>
+                          <span>{selectedDay.key === 'F' ? 'Final Results' : 'Official Results'}</span>
                         </span>
                       </div>
 
                       {/* Title & Stats */}
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-black font-outfit text-slate-900 leading-snug">
+                        <h3 className="text-base sm:text-lg font-black font-outfit text-slate-900 leading-tight">
                           {selectedDay.title}
                         </h3>
-                        <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                          <span className="text-[11px] font-bold text-slate-600 bg-white shadow-2xs px-2.5 py-1 rounded-lg flex items-center gap-1.5">
-                            <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                          <span className="text-[10px] font-bold text-slate-600 bg-white shadow-2xs px-2 py-0.5 rounded-md flex items-center gap-1">
+                            <svg className="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
                             <span>{selectedDay.results.totalPlayers} Contenders</span>
                           </span>
-                          <span className="text-[11px] font-bold text-slate-600 bg-white shadow-2xs px-2.5 py-1 rounded-lg flex items-center gap-1.5">
-                            <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <span className="text-[10px] font-bold text-slate-600 bg-white shadow-2xs px-2 py-0.5 rounded-md flex items-center gap-1">
+                            <svg className="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
                             <span>{selectedDay.results.totalGames} Games</span>
                           </span>
-                          <span className="text-[11px] font-bold text-slate-600 bg-white shadow-2xs px-2.5 py-1 rounded-lg flex items-center gap-1.5">
-                            <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>60 Mins Arena</span>
+                          <span className="text-[10px] font-bold text-slate-600 bg-white shadow-2xs px-2 py-0.5 rounded-md flex items-center gap-1">
+                            <span>{selectedDay.timeControl}</span>
                           </span>
                         </div>
                       </div>
 
-                      {/* ── Official Tournament Podium ── */}
-                      <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
-                            Official Podium Winners
+                      {/* Official Podium Winners */}
+                      {selectedDay.results.podium && selectedDay.results.podium.length >= 3 && (
+                        <div>
+                          <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1">
+                            Top 3 Podium Winners
                           </span>
-                          <span className="text-[10px] font-bold text-amber-700">Top 3 Finishers</span>
-                        </div>
-
-                        {/* 3-Column Olympic Podium Layout: 2nd on Left, 1st in Middle, 3rd on Right */}
-                        <div className="grid grid-cols-3 gap-2 items-end pt-1">
-                          {/* 2nd Place (Silver) */}
-                          <div className="bg-white/80 shadow-xs rounded-xl p-2.5 text-center flex flex-col justify-between min-h-[145px]">
-                            <div>
-                              <div className="w-6 h-6 rounded-full bg-slate-200 text-slate-800 mx-auto flex items-center justify-center text-[10px] font-black shadow-2xs mb-1">
-                                2
-                              </div>
-                              <span className="text-[9px] font-black uppercase tracking-wider text-slate-500 block">
-                                2nd Place
-                              </span>
-                              <span className="text-xs sm:text-sm font-black text-slate-900 block truncate" title={selectedDay.results.podium[1].name}>
-                                {selectedDay.results.podium[1].name}
-                              </span>
-                              {selectedDay.results.podium[1].school && (
-                                <span className="text-[9px] font-semibold text-slate-500 block truncate leading-tight mt-0.5">
-                                  {selectedDay.results.podium[1].school}
+                          <div className="grid grid-cols-3 gap-1.5 items-stretch">
+                            {/* 2nd Place */}
+                            <div className="bg-white/90 border border-slate-200/70 rounded-lg p-1.5 text-center flex flex-col justify-between">
+                              <div>
+                                <span className="w-4 h-4 rounded-full bg-slate-200 text-slate-700 text-[8px] font-black mx-auto flex items-center justify-center mb-0.5">2</span>
+                                <span className="text-[10px] font-black text-slate-800 block truncate" title={selectedDay.results.podium[1].name}>
+                                  {selectedDay.results.podium[1].name}
                                 </span>
-                              )}
-                            </div>
-                            <div className="mt-2 pt-1">
-                              <span className="text-base sm:text-lg font-black text-slate-800 font-outfit block leading-none">
-                                {selectedDay.results.podium[1].score}
-                              </span>
-                              <span className="text-[9px] font-bold text-slate-400">pts &bull; {selectedDay.results.podium[1].rating}</span>
-                            </div>
-                          </div>
-
-                          {/* 1st Place (Gold - Elevated Champion) */}
-                          <div className="bg-gradient-to-b from-amber-100 to-amber-200/50 rounded-2xl p-3 text-center flex flex-col justify-between min-h-[165px] shadow-sm relative">
-                            <div className="absolute -top-2.5 inset-x-0 flex justify-center">
-                              <span className="bg-amber-500 text-white text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">
-                                Champion
-                              </span>
-                            </div>
-                            <div className="pt-1">
-                              <div className="w-7 h-7 rounded-full bg-amber-400 text-amber-950 mx-auto flex items-center justify-center text-xs font-black shadow-xs mb-1">
-                                1
                               </div>
-                              <span className="text-[9px] font-black uppercase tracking-wider text-amber-800 block">
-                                Winner
-                              </span>
-                              <span className="text-sm sm:text-base font-black text-slate-900 block truncate" title={selectedDay.results.podium[0].name}>
-                                {selectedDay.results.podium[0].name}
-                              </span>
-                              <span className="text-[10px] font-bold text-amber-700 block mt-0.5">
-                                Rating {selectedDay.results.podium[0].rating}
-                              </span>
-                            </div>
-                            <div className="mt-2 pt-1.5">
-                              <span className="text-xl sm:text-2xl font-black text-amber-900 font-outfit block leading-none">
-                                {selectedDay.results.podium[0].score}
-                              </span>
-                              <span className="text-[9px] font-bold text-amber-800">points &bull; {selectedDay.results.podium[0].wins} wins</span>
-                            </div>
-                          </div>
-
-                          {/* 3rd Place (Bronze) */}
-                          <div className="bg-orange-100/60 rounded-xl p-2.5 text-center flex flex-col justify-between min-h-[145px] shadow-2xs">
-                            <div>
-                              <div className="w-6 h-6 rounded-full bg-amber-700/20 text-amber-900 mx-auto flex items-center justify-center text-[10px] font-black shadow-2xs mb-1">
-                                3
+                              <div className="mt-1 leading-none">
+                                <span className="text-xs font-black text-slate-800">{selectedDay.results.podium[1].score} pts</span>
+                                <span className="text-[8px] text-slate-400 block font-mono mt-0.5">{selectedDay.results.podium[1].rating}</span>
                               </div>
-                              <span className="text-[9px] font-black uppercase tracking-wider text-orange-700 block">
-                                3rd Place
-                              </span>
-                              <span className="text-xs sm:text-sm font-black text-slate-900 block truncate" title={selectedDay.results.podium[2].name}>
-                                {selectedDay.results.podium[2].name}
-                              </span>
-                              <span className="text-[9px] font-semibold text-slate-500 block truncate leading-tight mt-0.5">
-                                Rating {selectedDay.results.podium[2].rating}
-                              </span>
                             </div>
-                            <div className="mt-2 pt-1">
-                              <span className="text-base sm:text-lg font-black text-orange-950 font-outfit block leading-none">
-                                {selectedDay.results.podium[2].score}
-                              </span>
-                              <span className="text-[9px] font-bold text-orange-700">pts &bull; {selectedDay.results.podium[2].wins} wins</span>
+
+                            {/* 1st Place (Champion) */}
+                            <div className="bg-gradient-to-b from-amber-100 to-amber-200/60 border border-amber-300/70 rounded-lg p-1.5 text-center flex flex-col justify-between shadow-2xs">
+                              <div>
+                                <span className="w-4 h-4 rounded-full bg-amber-500 text-white text-[8px] font-black mx-auto flex items-center justify-center mb-0.5">1</span>
+                                <span className="text-[10px] font-black text-slate-900 block truncate" title={selectedDay.results.podium[0].name}>
+                                  {selectedDay.results.podium[0].name}
+                                </span>
+                              </div>
+                              <div className="mt-1 leading-none">
+                                <span className="text-xs font-black text-amber-900">{selectedDay.results.podium[0].score} pts</span>
+                                <span className="text-[8px] text-amber-800 block font-mono mt-0.5">{selectedDay.results.podium[0].rating}</span>
+                              </div>
+                            </div>
+
+                            {/* 3rd Place */}
+                            <div className="bg-orange-50/90 border border-orange-200/70 rounded-lg p-1.5 text-center flex flex-col justify-between">
+                              <div>
+                                <span className="w-4 h-4 rounded-full bg-orange-200 text-orange-800 text-[8px] font-black mx-auto flex items-center justify-center mb-0.5">3</span>
+                                <span className="text-[10px] font-black text-slate-800 block truncate" title={selectedDay.results.podium[2].name}>
+                                  {selectedDay.results.podium[2].name}
+                                </span>
+                              </div>
+                              <div className="mt-1 leading-none">
+                                <span className="text-xs font-black text-slate-800">{selectedDay.results.podium[2].score} pts</span>
+                                <span className="text-[8px] text-slate-400 block font-mono mt-0.5">{selectedDay.results.podium[2].rating}</span>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                      )}
 
-                      {/* Top Standings Mini-Table (Ranks 1-10) with expandable view */}
-                      <div className="pt-1">
-                        <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                            Leaderboard (Top 10)
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => setShowAllStandings(!showAllStandings)}
-                            className="text-[10px] font-bold text-[#E8640A] hover:underline cursor-pointer"
-                          >
-                            {showAllStandings ? 'Show Less' : 'View Top 10'}
-                          </button>
-                        </div>
-
-                        <div className="bg-white rounded-xl shadow-xs overflow-hidden text-xs">
-                          {(showAllStandings ? selectedDay.results.standings : selectedDay.results.standings.slice(0, 5)).map((p) => (
-                            <div key={p.rank} className="flex items-center justify-between px-3 py-1.5 hover:bg-slate-50 transition-colors">
-                              <div className="flex items-center gap-2">
-                                <span className={`w-4 text-[10px] font-black ${
-                                  p.rank === 1 ? 'text-amber-500' : p.rank === 2 ? 'text-slate-400' : p.rank === 3 ? 'text-orange-500' : 'text-slate-400'
-                                }`}>
-                                  #{p.rank}
-                                </span>
-                                <span className="font-bold text-slate-800 text-[11px] truncate max-w-[150px]">
-                                  {p.name}
-                                </span>
-                              </div>
-                              <div className="flex items-center gap-3">
-                                <span className="text-[10px] text-slate-400 font-mono">{p.rating}</span>
-                                <span className="text-xs font-black text-slate-900 font-outfit">{p.score} pts</span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Actions */}
-                      <div className="flex flex-wrap items-center gap-2 pt-3 mt-1">
+                      {/* Action Links */}
+                      <div className="flex flex-wrap items-center gap-1.5 pt-1">
                         <a
                           href={selectedDay.arenaLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-xs hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer"
+                          className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-[11px] shadow-2xs hover:shadow-xs active:scale-[0.98] transition-all cursor-pointer"
                         >
                           <span>Full Lichess Results</span>
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>
                         </a>
-
                         <button
                           type="button"
                           onClick={() => handleCopyLink(selectedDay.arenaLink)}
-                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
+                          className="inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 shadow-2xs font-bold text-[11px] transition-all cursor-pointer border border-slate-200/80"
                         >
-                          <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                           </svg>
-                          <span>{copied ? 'Copied!' : 'Copy Link'}</span>
+                          <span>{copied ? 'Copied!' : 'Copy'}</span>
                         </button>
-
                         <button
                           type="button"
                           onClick={() => handleShare(selectedDay)}
-                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
+                          className="inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 shadow-2xs font-bold text-[11px] transition-all cursor-pointer border border-slate-200/80"
                           title="Share match details"
                         >
-                          <svg className="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                           </svg>
                           <span>Share</span>
                         </button>
-
-                        {selectedDay.arenaLink && (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              const match = LEAGUE_MATCHES.find(m => m.link === selectedDay.arenaLink);
-                              if (match) {
-                                setActiveArenaMatch(match);
-                                setIframeLoaded(false);
-                              }
-                              const el = document.getElementById('arena-broadcast-deck');
-                              if (el) el.scrollIntoView({ behavior: 'smooth' });
-                            }}
-                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#E8640A] border border-orange-200 font-bold text-xs transition-all cursor-pointer"
-                            title="Load in Live Arena Broadcast Deck"
-                          >
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                            </svg>
-                            <span>Arena Deck</span>
-                          </button>
-                        )}
                       </div>
                     </div>
-                  ) : (
-                    /* ── INCOMPLETE / SCHEDULED DAYS VIEW ── */
-                    <div className="space-y-4">
+                  ) : selectedDay.hasMatch ? (
+                    /* ── UPCOMING / LIVE MATCH VIEW ── */
+                    <div className="space-y-2">
                       {/* Header Row */}
-                      <div className="pb-2">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
-                          Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
-                        </span>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide">
-                            {selectedDay.phase}
+                      <div className="pb-1.5 border-b border-slate-200/60 flex items-center justify-between">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block leading-tight">
+                            Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
                           </span>
-                          {selectedDay.isLive && (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 uppercase tracking-wider">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-                              Live Tonight
-                            </span>
-                          )}
+                          <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide leading-tight">
+                            {selectedDay.phase} &bull; {selectedDay.stage}
+                          </span>
                         </div>
+                        {selectedDay.isLive ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9.5px] font-black bg-emerald-100 text-emerald-800 uppercase tracking-wider shadow-2xs">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            Live Tonight
+                          </span>
+                        ) : (
+                          <span className="text-[9.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 shadow-2xs">
+                            Scheduled
+                          </span>
+                        )}
                       </div>
 
-                      {/* Match Title & Stage */}
+                      {/* Match Title & Format */}
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-black font-outfit text-slate-900 leading-snug">
+                        <h3 className="text-base sm:text-lg font-black font-outfit text-slate-900 leading-tight">
                           {selectedDay.title}
                         </h3>
-                        <p className="text-xs font-bold text-slate-500 mt-1">
-                          Stage: {selectedDay.stage}
-                        </p>
-                      </div>
-
-                      {/* Time Control Card */}
-                      <div className="p-3.5 rounded-2xl bg-white shadow-xs flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-orange-100 text-[#E8640A] flex items-center justify-center shrink-0">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="inline-flex items-center gap-1.5 mt-1 px-2.5 py-1 rounded-md bg-white border border-slate-200/80 text-xs font-bold text-slate-700">
+                          <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Time Control</span>
-                          <span className="text-xs sm:text-sm font-black text-slate-800">{selectedDay.timeControl}</span>
+                          <span>{selectedDay.timeControl}</span>
                         </div>
                       </div>
 
                       {/* Description */}
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                      <p className="text-xs text-slate-600 leading-relaxed">
                         {selectedDay.description}
                       </p>
 
-                      {/* Highlights */}
-                      {selectedDay.highlights && (
-                        <div className="space-y-1.5 pt-1">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Match Highlights</span>
-                          <div className="flex flex-wrap gap-1.5">
-                            {selectedDay.highlights.map((h, i) => (
-                              <span key={i} className="inline-flex items-center text-[11px] font-semibold text-slate-700 bg-white shadow-2xs px-2.5 py-1 rounded-lg">
-                                {h}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Actions / Match Day Notice */}
+                      {/* Actions */}
                       {selectedDay.arenaLink ? (
-                        <div className="flex flex-wrap items-center gap-2 pt-4 mt-3">
+                        <div className="flex flex-wrap items-center gap-1.5 pt-1.5">
                           <a
                             href={selectedDay.arenaLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-xs hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-[11px] shadow-2xs hover:shadow-xs active:scale-[0.98] transition-all cursor-pointer"
                           >
                             <span>{selectedDay.isCompleted ? 'View on Lichess' : 'Join on Lichess'}</span>
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                             </svg>
                           </a>
-
                           <button
                             type="button"
                             onClick={() => handleCopyLink(selectedDay.arenaLink)}
-                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 shadow-2xs font-bold text-[11px] transition-all cursor-pointer border border-slate-200/80"
                           >
-                            <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                            </svg>
-                            <span>{copied ? 'Copied!' : 'Copy Link'}</span>
-                          </button>
-
-                          <button
-                            type="button"
-                            onClick={() => handleShare(selectedDay)}
-                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 shadow-xs hover:shadow-sm active:scale-[0.98] font-bold text-xs transition-all cursor-pointer"
-                            title="Share match details"
-                          >
-                            <svg className="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                            </svg>
-                            <span>Share</span>
-                          </button>
-
-                          <button
-                            type="button"
-                            onClick={() => {
-                              const match = LEAGUE_MATCHES.find(m => m.link === selectedDay.arenaLink);
-                              if (match) {
-                                setActiveArenaMatch(match);
-                                setIframeLoaded(false);
-                              }
-                              const el = document.getElementById('arena-broadcast-deck');
-                              if (el) el.scrollIntoView({ behavior: 'smooth' });
-                            }}
-                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#E8640A] border border-orange-200 font-bold text-xs transition-all cursor-pointer"
-                            title="Watch in Live Arena Broadcast Deck"
-                          >
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                            </svg>
-                            <span>Arena Deck</span>
+                            <span>{copied ? 'Copied!' : 'Copy'}</span>
                           </button>
                         </div>
                       ) : (
-                        <div className="pt-4 mt-3 flex items-center gap-2 text-xs text-slate-500 font-medium">
+                        <div className="pt-1.5 text-[11px] text-slate-500 font-medium flex items-center gap-1.5">
                           <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                          <span>{selectedDay.arenaLink === null && selectedDay.highlights ? 'Arena link will be shared on match day.' : 'No arena link for this day.'}</span>
+                          <span>Official Lichess arena link will be broadcast on match day.</span>
                         </div>
                       )}
                     </div>
+                  ) : (
+                    /* ── NO MATCH SCHEDULED VIEW ── */
+                    <div className="space-y-2">
+                      {/* Header Row */}
+                      <div className="pb-1.5 border-b border-slate-200/60">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block leading-tight">
+                          Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
+                        </span>
+                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wide leading-tight">
+                          Tournament Calendar
+                        </span>
+                      </div>
+
+                      {/* Title & Description */}
+                      <div>
+                        <h3 className="text-base sm:text-lg font-black font-outfit text-slate-800 leading-tight">
+                          No Matches Scheduled
+                        </h3>
+                        <p className="text-xs text-slate-600 leading-relaxed mt-1">
+                          No theBoardGames tournament matches were scheduled for this date.
+                        </p>
+                      </div>
+
+                      <div className="p-2.5 rounded-lg bg-white/80 border border-slate-200/80 text-[11px] text-slate-500 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span>Select a match day on the calendar to inspect pairing details and results.</span>
+                      </div>
+                    </div>
                   )}
-                </motion.div>
+                </Motion.div>
               </AnimatePresence>
             </div>
           </div>
@@ -954,7 +861,7 @@ export default function TheBoardGamesPage() {
                     <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
                       isActive ? 'bg-black/20 text-white' : 'bg-slate-200/70 text-slate-500'
                     }`}>
-                      {match.isLive ? 'LIVE' : 'Final'}
+                      {match.isLive ? 'LIVE' : match.key === 'F' ? 'Final' : 'Completed'}
                     </span>
                   </button>
                 );
@@ -1350,7 +1257,7 @@ export default function TheBoardGamesPage() {
       {/* ── 6. POSTER FULLSCREEN ZOOM MODAL ── */}
       <AnimatePresence>
         {isZoomOpen && (
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -1370,7 +1277,7 @@ export default function TheBoardGamesPage() {
                 Close Viewer &times;
               </button>
             </div>
-          </motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
 

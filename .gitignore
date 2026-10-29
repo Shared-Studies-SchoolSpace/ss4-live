@@ -34,3 +34,40 @@ scripts/download-assets.mjs
 .trash/
 scratch/
 .agent/
+
+# Archives and compressed exports
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Spreadsheets and Office documents
+*.xlsx
+*.xls
+*.docx
+*.doc
+
+# Media and chat export dumps
+WhatsApp Image*
+WhatsApp Video*
+ss4_logo_without_text.jpg
+
+# Sprint, backlog, and user story working files
+ARCHITECTURE_NOTES.md
+DEFINITION_OF_DONE.md
+PRODUCT_BACKLOG.md
+SPRINT_*.md
+USER_STORIES.*
+
+# Ephemeral synced data
+synced_varsity_rosters.json
+
+# One-off migration and scratch scripts
+scripts/fix_august_fixtures_exact.cjs
+scripts/syncVarsityRosters.js
+scripts/sync_tournament_player_accounts.cjs
+scripts/update_august_fixtures_correct.cjs
+scripts/update_player_details.cjs
+scripts/upload_recommended_groupings.cjs
+

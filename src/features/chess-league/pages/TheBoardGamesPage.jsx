@@ -5,151 +5,14 @@ import { VARSITY_TEAMS } from '../data/varsityData';
 import { PlayerProfile } from '../components/PlayerProfile';
 import { fetchCompletePlayerData } from '../utils/chessService';
 
-export const ARENA_MATCH_1_LINK = 'https://lichess.org/tournament/1e80iceM';
-export const ARENA_MATCH_1_ID = '1e80iceM';
+import BOARD_GAMES_EVENTS from '../data/boardGamesData.json';
 
-export const ARENA_MATCH_2_LINK = 'https://lichess.org/tournament/xBhaDpJO';
-export const ARENA_MATCH_2_ID = 'xBhaDpJO';
-
-export const ARENA_MATCH_3_LINK = 'https://lichess.org/tournament/DdKrKXJb';
-export const ARENA_MATCH_3_ID = 'DdKrKXJb';
-
-// Default active arena (Match 3 - Today's Live Tournament)
-export const ARENA_LINK = ARENA_MATCH_3_LINK;
-export const ARENA_ID = ARENA_MATCH_3_ID;
-
-export const LEAGUE_MATCHES = [
-  {
-    id: ARENA_MATCH_3_ID,
-    matchNumber: 3,
-    day: 13,
-    weekday: 'Tue',
-    dateStr: 'Tue, Oct 13',
-    title: 'theBoardGames LeagueMatch 3',
-    shortTitle: 'Match 3',
-    link: ARENA_MATCH_3_LINK,
-    status: 'LIVE',
-    isLive: true,
-    isCompleted: false,
-    timeControl: '3+0 Blitz',
-    stage: 'Tuesday Arena Clashes',
-    description: 'theBoardGames LeagueMatch 3 Arena is LIVE! Contenders from all 11 collegiate rosters clash over 64 squares in a fast-paced 60-minute 3+0 blitz arena on Lichess.',
-    highlights: ['3+0 Blitz Arena', '60 Minutes Duration', 'Berserk Multipliers Active', 'Live on Lichess']
-  },
-  {
-    id: ARENA_MATCH_2_ID,
-    matchNumber: 2,
-    day: 11,
-    weekday: 'Sun',
-    dateStr: 'Sun, Oct 11',
-    title: 'theBoardGames LeagueMatch 2',
-    shortTitle: 'Match 2',
-    link: ARENA_MATCH_2_LINK,
-    status: 'COMPLETED',
-    isLive: false,
-    isCompleted: true,
-    timeControl: '3+0 Blitz',
-    stage: 'Sunday Blitz Arena',
-    description: 'theBoardGames LeagueMatch 2 on Lichess has officially concluded. 36 university contenders clashed across 116 matches with Amakuro Minalabh (D-genius) seizing the championship with 32 points.',
-    highlights: ['36 Contenders', '116 Games Played', 'Winner: D-genius (32 pts)', 'Runner-Up: simon25 (28 pts)', '3rd: minatoe5 (22 pts)'],
-    winner: 'D-genius (32 pts)',
-    runnerUp: 'simon25 (28 pts)',
-    third: 'minatoe5 (22 pts)',
-    totalPlayers: 36,
-    totalGames: 116
-  },
-  {
-    id: ARENA_MATCH_1_ID,
-    matchNumber: 1,
-    day: 9,
-    weekday: 'Fri',
-    dateStr: 'Fri, Oct 9',
-    title: 'theBoardGames LeagueMatch 1',
-    shortTitle: 'Match 1',
-    link: ARENA_MATCH_1_LINK,
-    status: 'COMPLETED',
-    isLive: false,
-    isCompleted: true,
-    timeControl: '3+0 Blitz • 5+0 Blitz • 10+0 Rapid',
-    stage: 'Kickoff Arena Launch',
-    description: 'Day 1 kickoff arena on Lichess has officially concluded. 31 university contenders clashed across 112 matches with Juk3s taking the championship with 33 points.',
-    highlights: ['31 Contenders', '112 Games Played', 'Winner: Juk3s (33 pts)', 'Runner-Up: minatoe5 (26 pts)', '3rd: D-genius (23 pts)'],
-    winner: 'Juk3s (33 pts)',
-    runnerUp: 'minatoe5 (26 pts)',
-    third: 'D-genius (23 pts)',
-    totalPlayers: 31,
-    totalGames: 112
-  }
-];
-
-const TIME_CONTROLS = [
-  {
-    mode: 'Blitz',
-    time: '3 + 0',
-    description: '3 minutes, zero increment. Maximum tactical pressure and lightning instincts.',
-    icon: 'bolt',
-    accent: '#F97316'
-  },
-  {
-    mode: 'Blitz',
-    time: '5 + 0',
-    description: '5 minutes flat. Strategic calculations balanced with fast clock management.',
-    icon: 'timer',
-    accent: '#EAB308'
-  },
-  {
-    mode: 'Rapid',
-    time: '10 + 0',
-    description: '10 minutes per contender. Deep positional battles, endgames, and grandmaster precision.',
-    icon: 'hourglass_top',
-    accent: '#0284C7'
-  }
-];
-
-const INSTITUTION_METAS = {
-  covenant: { short: 'CU', motto: 'Reigning Champions', color: '#0D9488', notable: 'Anuchi Emmanuel (August Champion), Alao David' },
-  unilorin: { short: 'UNILORIN', motto: 'The Better By Far', color: '#DB2777', notable: 'Kenneth Gilbert (August Runner-Up), Durojaiye B.' },
-  bells: { short: 'BELLSTECH', motto: 'First Private Tech University', color: '#DC2626', notable: 'James Henshaw (August Semifinalist), Anietie Ben' },
-  futia: { short: 'FUTIA', motto: 'Aerospace & Tech Pride', color: '#059669', notable: 'Emmanuel Michael (August Semifinalist), Thompson E.' },
-  uniuyo: { short: 'UNIUYO', motto: 'Unity, Wisdom & Service', color: '#EA580C', notable: 'Jesse Edem (June Champion), Peter Eti' },
-  babcock: { short: 'BABCOCK', motto: 'Knowledge, Truth & Service', color: '#D97706', notable: 'Akogo Simon (Elite 8), Adedipe Temini' },
-  landmark: { short: 'LANDMARK', motto: 'Agrarian Revolutionaries', color: '#7C3AED', notable: 'Princewill Obi (Elite 8), Mbah Ernest' },
-  unn: { short: 'UNN', motto: 'Restoring The Dignity', color: '#0284C7', notable: 'Okoli Tochukwu (July Champion), Ugwu Praise' },
-  unical: { short: 'UNICAL', motto: 'Knowledge For Service', color: '#E11D48', notable: 'Dean Bassey (Elite 8), Ita Best James' },
-  redeemers: { short: 'RUN', motto: 'Running with the Vision', color: '#2563EB', notable: 'Daniel Daniel, Odukoya Emmanuel' },
-  biu: { short: 'BIU', motto: 'Academic Excellence', color: '#B45309', notable: 'Akinrogunde Clinton, Jeffrey Obanor' }
-};
-
-const ORDERED_INSTITUTION_IDS = [
-  'covenant',
-  'unilorin',
-  'bells',
-  'futia',
-  'uniuyo',
-  'babcock',
-  'landmark',
-  'unn',
-  'unical',
-  'redeemers',
-  'biu'
-];
-
-
-const TOURNAMENT_DAYS = [
-  {
-    day: 9,
-    dayIndex: 1,
-    weekday: 'Fri',
-    title: 'theBoardGames LeagueMatch 1',
-    phase: 'Phase 1',
-    stage: 'Kickoff Arena Launch',
-    status: 'COMPLETED',
-    isCompleted: true,
-    isLive: false,
-    timeControl: '3+0 Blitz • 5+0 Blitz • 10+0 Rapid',
-    arenaLink: ARENA_MATCH_1_LINK,
-    description: 'Day 1 kickoff arena on Lichess has officially concluded. 31 university contenders clashed across 112 matches with Juk3s taking the championship with 33 points.',
-    highlights: ['31 Contenders', '112 Games Played', 'Winner: Juk3s (33 pts)', 'Runner-Up: minatoe5 (26 pts)'],
+// Event data (links, dates, titles, podiums) is generated from the SS4 Chess League
+// WhatsApp export by `scripts/extract_boardgames.py`. Detailed Lichess standings
+// below were verified separately for the first two arenas.
+const VERIFIED_RESULTS = {
+  LM1: {
+    description: 'LeagueMatch 1 on Lichess has officially concluded. 31 university contenders clashed across 112 matches with Juk3s taking the championship with 33 points.',
     results: {
       totalPlayers: 31,
       totalGames: 112,
@@ -206,37 +69,10 @@ const TOURNAMENT_DAYS = [
         { rank: 9, name: 'mittensttock', rating: 1864, score: 15, performance: 1914, record: '5W • 11G' },
         { rank: 10, name: 'KeseneNicholas', rating: 1640, score: 14, performance: 1680, record: '5W • 10G' }
       ]
-    }
+    },
   },
-  {
-    day: 10,
-    dayIndex: 2,
-    weekday: 'Sat',
-    title: 'Phase 1 • Strategy & Repertoire Review',
-    phase: 'Phase 1',
-    stage: 'Opening Weekend Strategy',
-    status: 'COMPLETED',
-    isCompleted: true,
-    isLive: false,
-    timeControl: 'Rest & Strategy Day',
-    arenaLink: null,
-    description: 'Post-Match 1 team debriefs, opening repertoire preparation, and tactical review across all 11 universities ahead of LeagueMatch 2.',
-    highlights: ['Institutional Squad Review', 'Opening Repertoire Prep', 'Readiness for LeagueMatch 2']
-  },
-  {
-    day: 11,
-    dayIndex: 3,
-    weekday: 'Sun',
-    title: 'theBoardGames LeagueMatch 2',
-    phase: 'Phase 1',
-    stage: 'Sunday Blitz Arena',
-    status: 'COMPLETED',
-    isCompleted: true,
-    isLive: false,
-    timeControl: '3+0 Blitz',
-    arenaLink: ARENA_MATCH_2_LINK,
-    description: 'theBoardGames LeagueMatch 2 on Lichess has officially concluded. 36 university contenders clashed across 116 matches. UNIUYO’s Board 1 lead Amakuro Minalabh (D-genius) clinched 1st place with 32 points, edging out Babcock’s simon25 (28 pts) and UNIUYO teammate minatoe5 (22 pts).',
-    highlights: ['36 Contenders', '116 Games Played', 'Winner: D-genius (32 pts)', 'Runner-Up: simon25 (28 pts)', '3rd Place: minatoe5 (22 pts)'],
+  LM2: {
+    description: 'LeagueMatch 2 on Lichess has officially concluded. 36 university contenders clashed across 116 matches. UNIUYO’s Board 1 lead Amakuro Minalabh (D-genius) clinched 1st place with 32 points, edging out Babcock’s simon25 (28 pts) and UNIUYO teammate minatoe5 (22 pts).',
     results: {
       totalPlayers: 36,
       totalGames: 116,
@@ -295,296 +131,183 @@ const TOURNAMENT_DAYS = [
         { rank: 9, name: 'garconune', rating: 1833, score: 12, record: '4W • 10G' },
         { rank: 10, name: 'Esamzy', rating: 2005, score: 12, record: '4W • 10G' }
       ]
-    }
+    },
+  },
+};
+
+const PODIUM_LABELS = ['Winner', 'Runner-Up', '3rd'];
+const PILL_LABELS = { RO32: 'R32', RO16: 'R16', QF: 'QF', SF: 'SF', F: 'Final' };
+
+const withPts = (r) => `${r.name} (${r.score} pts)`;
+
+const EVENTS = BOARD_GAMES_EVENTS.map((e) => {
+  const verified = VERIFIED_RESULTS[e.key];
+  const podium = verified
+    ? verified.results.podium.map(withPts)
+    : e.podium;
+  const isLeague = e.matchNumber != null;
+  const podiumHighlights = podium.map((name, i) => `${PODIUM_LABELS[i]}: ${name}`);
+  let description = e.recap;
+  if (verified) description = verified.description;
+  else if (e.status === 'LIVE') description = `${e.title} is LIVE tonight at 8 PM on Lichess. ${e.recap}`;
+  else if (e.status === 'SCHEDULED') description = `${e.title} is scheduled for Oct ${e.day}. The Lichess link will be shared on match day.`;
+  else if (isLeague) {
+    description = `${e.title} (${e.timeControl} arena) on Lichess has concluded.${podium[0] ? ` ${podium[0]} took the top spot.` : ''}`;
+  }
+  return {
+    ...e,
+    isLeague,
+    podium,
+    description,
+    results: verified?.results,
+    phase: isLeague ? 'League Stage' : 'Knockout Stage',
+    stage: isLeague ? `League Match ${e.matchNumber}` : e.label,
+    isLive: e.status === 'LIVE',
+    isCompleted: e.status === 'COMPLETED',
+    highlights: [e.timeControl, ...(['RO32', 'RO16', 'QF'].includes(e.key) ? ['Best of 3'] : []), ...podiumHighlights],
+  };
+});
+
+const lastLink = EVENTS.filter((e) => e.link).pop();
+export const ARENA_LINK = lastLink.link;
+export const ARENA_ID = lastLink.id;
+
+// Live Arena deck list, newest first
+export const LEAGUE_MATCHES = EVENTS
+  .filter((e) => e.link)
+  .slice()
+  .reverse()
+  .map((e) => ({
+    id: e.id,
+    matchNumber: e.matchNumber,
+    day: e.day,
+    weekday: e.weekday,
+    dateStr: `${e.weekday}, Oct ${e.day}`,
+    title: e.title,
+    shortTitle: e.isLeague ? e.label : PILL_LABELS[e.key],
+    link: e.link,
+    status: e.status,
+    isLive: e.isLive,
+    isCompleted: e.isCompleted,
+    timeControl: e.timeControl,
+    stage: e.stage,
+    description: e.description,
+    highlights: e.highlights,
+    winner: e.podium[0],
+    runnerUp: e.podium[1],
+    third: e.podium[2],
+  }));
+
+
+const TIME_CONTROLS = [
+  {
+    mode: 'Blitz',
+    time: '3 + 0',
+    description: '3 minutes, zero increment. Maximum tactical pressure and lightning instincts.',
+    icon: 'bolt',
+    accent: '#F97316'
   },
   {
-    day: 12,
-    dayIndex: 4,
-    weekday: 'Mon',
-    title: 'Phase 1 • Tactical Calibration & Rest',
-    phase: 'Phase 1',
-    stage: 'Inter-Match Preparation',
-    status: 'COMPLETED',
-    isCompleted: true,
-    isLive: false,
-    timeControl: 'Rest & Analysis',
-    arenaLink: null,
-    description: 'Debriefing following LeagueMatch 2. Teams rested and calibrated their board strategies ahead of Tuesday’s LeagueMatch 3.',
-    highlights: ['LeagueMatch 2 Point Consolidation', 'Rest & Board Calibration', 'Squad Readiness for Match 3']
+    mode: 'Blitz',
+    time: '5 + 0',
+    description: '5 minutes flat. Strategic calculations balanced with fast clock management.',
+    icon: 'timer',
+    accent: '#EAB308'
   },
   {
-    day: 13,
-    dayIndex: 5,
-    weekday: 'Tue',
-    title: 'theBoardGames LeagueMatch 3',
-    phase: 'Phase 1',
-    stage: 'Tuesday Arena Clashes',
-    status: 'LIVE',
-    isCompleted: false,
-    isLive: true,
-    timeControl: '3+0 Blitz',
-    arenaLink: ARENA_MATCH_3_LINK,
-    description: 'theBoardGames LeagueMatch 3 Arena is LIVE tonight! Contenders from all 11 collegiate rosters clash over 64 squares in a fast-paced 60-minute 3+0 blitz arena on Lichess. Individual scores count toward theBOARDGAMES tournament points.',
-    highlights: ['3+0 Blitz Arena', '60 Minutes Duration', 'Berserk Multipliers Active', 'Live on Lichess']
-  },
-  {
-    day: 14,
-    dayIndex: 6,
-    weekday: 'Wed',
-    title: 'Swiss Sprints • Round 3',
-    phase: 'Phase 2',
-    stage: 'Mid-Week Points Race',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '3+0 Blitz • 5+0 Blitz',
-    arenaLink: null,
-    description: 'Cross-institutional rivalries intensify as top board contenders battle for crucial seed advantages.',
-    highlights: ['Top 16 cutoff race', 'Berserk risk rounds', 'Institutional derby matchups']
-  },
-  {
-    day: 15,
-    dayIndex: 7,
-    weekday: 'Thu',
-    title: 'Swiss Sprints • Round 4',
-    phase: 'Phase 2',
-    stage: 'Mid-Week Points Race',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '5+0 Blitz',
-    arenaLink: null,
-    description: 'Round 4 fixtures featuring top performers from Covenant, UNILORIN, BELLSTECH, and UNN.',
-    highlights: ['Key institutional derbies', 'Grandmaster precision required', 'Live standings tracker']
-  },
-  {
-    day: 16,
-    dayIndex: 8,
-    weekday: 'Fri',
-    title: 'Swiss Sprints • Round 5',
-    phase: 'Phase 2',
-    stage: 'Weekend Qualifier Kickoff',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '10+0 Rapid',
-    arenaLink: null,
-    description: 'First rapid format series of Phase 2, testing deep calculation, opening preparation, and endgame technique.',
-    highlights: ['Rapid 10+0 time control', 'No berserk permitted', 'Deep positional clashes']
-  },
-  {
-    day: 17,
-    dayIndex: 9,
-    weekday: 'Sat',
-    title: 'Swiss Sprints • Round 6',
-    phase: 'Phase 2',
-    stage: 'Super Saturday',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '3+0 Blitz • 5+0 Blitz',
-    arenaLink: null,
-    description: 'Doubleheader sprint rounds with double points on active win streaks across university boards.',
-    highlights: ['High-stakes speed run', 'Win streak multipliers active', 'Full league broadcast']
-  },
-  {
-    day: 18,
-    dayIndex: 10,
-    weekday: 'Sun',
-    title: 'Swiss Sprints • Round 7',
-    phase: 'Phase 2',
-    stage: 'Sunday Showdown',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '5+0 Blitz',
-    arenaLink: null,
-    description: 'Penultimate Swiss round. Contenders battle fiercely to avoid lower seed elimination slots.',
-    highlights: ['Top seed bubble matches', 'Pressure games on Board 1-4', 'Provisional brackets posted']
-  },
-  {
-    day: 19,
-    dayIndex: 11,
-    weekday: 'Mon',
-    title: 'Swiss Sprints • Round 8',
-    phase: 'Phase 2',
-    stage: 'Elimination Decider',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '5+0 Blitz',
-    arenaLink: null,
-    description: 'Critical round 8 fixtures determining the top 32 contenders advancing to the main knockout draw.',
-    highlights: ['Top 32 qualification line', 'Sudden-death tiebreak prep', 'Rivalry match fixtures']
-  },
-  {
-    day: 20,
-    dayIndex: 12,
-    weekday: 'Tue',
-    title: 'Swiss Sprints • Final Round 9',
-    phase: 'Phase 2',
-    stage: 'Qualification Climax',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '10+0 Rapid',
-    arenaLink: null,
-    description: 'Final Swiss standings locked in. The top 32 seeds are officially confirmed for the knockout stage.',
-    highlights: ['Final Swiss standings locked', 'Knockout bracket reveal', 'Official seed certificates']
-  },
-  {
-    day: 21,
-    dayIndex: 13,
-    weekday: 'Wed',
-    title: 'Round of 32 • Matchday 1',
-    phase: 'Phase 3',
-    stage: 'Knockout Stage',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '10+0 Rapid + Blitz Tiebreaks',
-    arenaLink: null,
-    description: 'Top 32 knockout bracket begins. Matches 1 through 8 in sudden-death head-to-head fixtures.',
-    highlights: ['Single elimination begins', 'Matches 1 to 8', 'Armageddon tiebreak rules']
-  },
-  {
-    day: 22,
-    dayIndex: 14,
-    weekday: 'Thu',
-    title: 'Round of 32 • Matchday 2',
-    phase: 'Phase 3',
-    stage: 'Knockout Stage',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '10+0 Rapid + Blitz Tiebreaks',
-    arenaLink: null,
-    description: 'Matches 9 through 16 to finalize the Sweet 16 roster for the Round of 16 showdown.',
-    highlights: ['Matches 9 to 16', 'Remaining Round of 32 fixtures', 'Sweet 16 roster finalized']
-  },
-  {
-    day: 23,
-    dayIndex: 15,
-    weekday: 'Fri',
-    title: 'Round of 16 • Part 1',
-    phase: 'Phase 3',
-    stage: 'Sweet 16',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '10+0 Rapid (Best of 3)',
-    arenaLink: null,
-    description: 'First 4 matches of the Round of 16. Elite university players clash for quarterfinal spots.',
-    highlights: ['Best of 3 series', 'Elite 8 qualification on the line', 'Featured streamed matches']
-  },
-  {
-    day: 24,
-    dayIndex: 16,
-    weekday: 'Sat',
-    title: 'Round of 16 • Part 2',
-    phase: 'Phase 3',
-    stage: 'Sweet 16',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '10+0 Rapid (Best of 3)',
-    arenaLink: null,
-    description: 'Remaining 4 Round of 16 matches to decide the Elite 8 quarterfinalists.',
-    highlights: ['Elite 8 bracket finalized', 'High-tension rapid series', 'Official quarterfinal draw']
-  },
-  {
-    day: 25,
-    dayIndex: 17,
-    weekday: 'Sun',
-    title: 'Quarterfinals • Matchday 1',
-    phase: 'Phase 3',
-    stage: 'Elite 8',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '10+0 Rapid (Best of 4)',
-    arenaLink: null,
-    description: 'Quarterfinal 1 & 2 fixtures. Highest stakes matches of the tournament to date.',
-    highlights: ['Quarterfinals 1 & 2', 'Best of 4 rapid games', 'Semi-final berth at stake']
-  },
-  {
-    day: 26,
-    dayIndex: 18,
-    weekday: 'Mon',
-    title: 'Quarterfinals • Matchday 2',
-    phase: 'Phase 3',
-    stage: 'Elite 8',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: '10+0 Rapid (Best of 4)',
-    arenaLink: null,
-    description: 'Quarterfinal 3 & 4 fixtures. The Final Four championship contenders emerge.',
-    highlights: ['Quarterfinals 3 & 4', 'Final Four locked in', 'Medal contenders confirmed']
-  },
-  {
-    day: 27,
-    dayIndex: 19,
-    weekday: 'Tue',
-    title: 'Tactical Briefing & Rest Day',
-    phase: 'Phase 3',
-    stage: 'Semifinal Prep',
-    status: 'Scheduled',
-    isLive: false,
-    timeControl: 'Exhibition & Analysis',
-    arenaLink: null,
-    description: 'Player interviews, game analysis of the Elite 8 games, and technical preparation ahead of the championship semifinals.',
-    highlights: ['Official stream breakdown', 'Player interview specials', 'Semifinal previews']
-  },
-  {
-    day: 28,
-    dayIndex: 20,
-    weekday: 'Wed',
-    title: 'Semifinals • Final Four Clashes',
-    phase: 'Phase 4',
-    stage: 'Championship Semifinals',
-    status: 'Championship',
-    isLive: false,
-    timeControl: '10+0 Rapid + Blitz Armageddon',
-    arenaLink: null,
-    description: 'National semifinals. Two historic matchups to decide who advances to the October 2026 Grand Final.',
-    highlights: ['Semifinal 1 & 2', 'Best of 4 games', 'Grand Final spots decided']
-  },
-  {
-    day: 29,
-    dayIndex: 21,
-    weekday: 'Thu',
-    title: 'Third-Place Playoff',
-    phase: 'Phase 4',
-    stage: 'Bronze Medal Match',
-    status: 'Championship',
-    isLive: false,
-    timeControl: '10+0 Rapid (Best of 4)',
-    arenaLink: null,
-    description: 'Battle for 3rd place podium honors and university pride between the semifinal runners-up.',
-    highlights: ['Podium battle', 'Bronze medal decider', 'University points bonus']
-  },
-  {
-    day: 30,
-    dayIndex: 22,
-    weekday: 'Fri',
-    title: 'Grand Final • Match 1',
-    phase: 'Phase 4',
-    stage: 'Grand Final Series',
-    status: 'Championship',
-    isLive: false,
-    timeControl: '10+0 Rapid Classical Match',
-    arenaLink: null,
-    description: 'Game 1 and 2 of the October 2026 Grand Final series between Nigeria’s top two university grandmasters.',
-    highlights: ['Grand Final Game 1 & 2', 'Peak collegiate chess', 'National live stream']
-  },
-  {
-    day: 31,
-    dayIndex: 23,
-    weekday: 'Sat',
-    title: 'Grand Final Decider & Coronation',
-    phase: 'Phase 4',
-    stage: 'Grand Final Decider',
-    status: 'Grand Finale',
-    isLive: false,
-    timeControl: '10+0 Rapid + Blitz Playoff',
-    arenaLink: null,
-    description: 'The final game of theBOARDGAMES October 2026. Champion crowned, awards ceremony and prize presentation.',
-    highlights: ['Trophy presentation', 'Champion coronation', 'October 2026 Season Finale']
+    mode: 'Rapid',
+    time: '10 + 0',
+    description: '10 minutes per contender. Deep positional battles, endgames, and grandmaster precision.',
+    icon: 'hourglass_top',
+    accent: '#0284C7'
   }
 ];
+
+const INSTITUTION_METAS = {
+  covenant: { short: 'CU', motto: 'Reigning Champions', color: '#0D9488', notable: 'Anuchi Emmanuel (August Champion), Alao David' },
+  unilorin: { short: 'UNILORIN', motto: 'The Better By Far', color: '#DB2777', notable: 'Kenneth Gilbert (August Runner-Up), Durojaiye B.' },
+  bells: { short: 'BELLSTECH', motto: 'First Private Tech University', color: '#DC2626', notable: 'James Henshaw (August Semifinalist), Anietie Ben' },
+  futia: { short: 'FUTIA', motto: 'Aerospace & Tech Pride', color: '#059669', notable: 'Emmanuel Michael (August Semifinalist), Thompson E.' },
+  uniuyo: { short: 'UNIUYO', motto: 'Unity, Wisdom & Service', color: '#EA580C', notable: 'Jesse Edem (June Champion), Peter Eti' },
+  babcock: { short: 'BABCOCK', motto: 'Knowledge, Truth & Service', color: '#D97706', notable: 'Akogo Simon (Elite 8), Adedipe Temini' },
+  landmark: { short: 'LANDMARK', motto: 'Agrarian Revolutionaries', color: '#7C3AED', notable: 'Princewill Obi (Elite 8), Mbah Ernest' },
+  unn: { short: 'UNN', motto: 'Restoring The Dignity', color: '#0284C7', notable: 'Okoli Tochukwu (July Champion), Ugwu Praise' },
+  unical: { short: 'UNICAL', motto: 'Knowledge For Service', color: '#E11D48', notable: 'Dean Bassey (Elite 8), Ita Best James' },
+  redeemers: { short: 'RUN', motto: 'Running with the Vision', color: '#2563EB', notable: 'Daniel Daniel, Odukoya Emmanuel' },
+  biu: { short: 'BIU', motto: 'Academic Excellence', color: '#B45309', notable: 'Akinrogunde Clinton, Jeffrey Obanor' }
+};
+
+const ORDERED_INSTITUTION_IDS = [
+  'covenant',
+  'unilorin',
+  'bells',
+  'futia',
+  'uniuyo',
+  'babcock',
+  'landmark',
+  'unn',
+  'unical',
+  'redeemers',
+  'biu'
+];
+
+
+
+const REST_DAY = {
+  title: 'No Match Day',
+  phase: 'Rest Day',
+  stage: 'No matches scheduled',
+  timeControl: 'No matches',
+  arenaLink: null,
+  isLive: false,
+  isCompleted: false,
+  gridLabel: 'Rest',
+  description: 'No theBoardGames matches were scheduled for this day.',
+  highlights: null,
+};
+
+// Calendar: Oct 9 – Oct 31. Match days come from the chat export; the rest are rest days.
+const TOURNAMENT_DAYS = Array.from({ length: 23 }, (_, i) => {
+  const day = 9 + i;
+  const weekday = new Date(2026, 9, day).toLocaleDateString('en-US', { weekday: 'short' });
+  const base = { day, dayIndex: i + 1, weekday };
+  const ev = EVENTS.find((e) => e.day === day);
+  if (ev) {
+    return {
+      ...base,
+      title: ev.title,
+      phase: ev.phase,
+      stage: ev.stage,
+      status: ev.status,
+      isCompleted: ev.isCompleted,
+      isLive: ev.isLive,
+      timeControl: ev.timeControl,
+      arenaLink: ev.link,
+      description: ev.description,
+      highlights: ev.highlights,
+      results: ev.results,
+    };
+  }
+  if (day === 25) {
+    return {
+      ...base,
+      ...REST_DAY,
+      title: 'Round of 32 (Postponed)',
+      phase: 'Knockout Stage',
+      stage: 'Rescheduled to Oct 26',
+      timeControl: '10+0 Rapid • Best of 3',
+      gridLabel: 'Moved',
+      description: 'The Round of 32 was inadvertently missed on this date. The league announced it would be replayed on Monday, 26th October at 8:00 PM.',
+    };
+  }
+  return { ...base, ...REST_DAY };
+});
+
 
 export default function TheBoardGamesPage() {
   const [activeArenaMatch, setActiveArenaMatch] = useState(LEAGUE_MATCHES[0]);
   const [selectedDay, setSelectedDay] = useState(() => {
-    return TOURNAMENT_DAYS.find(d => d.day === 13) || TOURNAMENT_DAYS[0];
+    return TOURNAMENT_DAYS.find(d => d.isLive) || TOURNAMENT_DAYS[0];
   });
   const [copied, setCopied] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
@@ -785,7 +508,7 @@ export default function TheBoardGamesPage() {
                       <span className={`text-[9px] sm:text-[10px] font-semibold leading-none ${
                         isSelected ? 'text-orange-100' : d.isLive ? 'text-emerald-600 font-black' : 'text-slate-500'
                       }`}>
-                        {d.isCompleted ? 'Final' : d.isLive ? 'LIVE' : 'Oct'}
+                        {d.gridLabel || (d.isCompleted ? 'Final' : d.isLive ? 'LIVE' : 'Oct')}
                       </span>
                       {d.isLive && (
                         <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Live Today"></span>
@@ -1116,7 +839,7 @@ export default function TheBoardGamesPage() {
                             rel="noopener noreferrer"
                             className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-xs hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer"
                           >
-                            <span>Join on Lichess</span>
+                            <span>{selectedDay.isCompleted ? 'View on Lichess' : 'Join on Lichess'}</span>
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                             </svg>
@@ -1168,7 +891,7 @@ export default function TheBoardGamesPage() {
                       ) : (
                         <div className="pt-4 mt-3 flex items-center gap-2 text-xs text-slate-500 font-medium">
                           <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                          <span>Arena link and pairing fixtures unlock on match day.</span>
+                          <span>{selectedDay.arenaLink === null && selectedDay.highlights ? 'Arena link will be shared on match day.' : 'No arena link for this day.'}</span>
                         </div>
                       )}
                     </div>
@@ -1207,7 +930,7 @@ export default function TheBoardGamesPage() {
           {/* Quick Header Actions & Match Switcher */}
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
             {/* Match Select Pills */}
-            <div className="inline-flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200 gap-1">
+            <div className="inline-flex flex-wrap items-center bg-slate-100 p-1 rounded-2xl border border-slate-200 gap-1">
               {LEAGUE_MATCHES.map((match) => {
                 const isActive = activeArenaMatch.id === match.id;
                 return (
@@ -1227,7 +950,7 @@ export default function TheBoardGamesPage() {
                     {match.isLive && (
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                     )}
-                    <span>Match {match.matchNumber}</span>
+                    <span>{match.shortTitle}</span>
                     <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
                       isActive ? 'bg-black/20 text-white' : 'bg-slate-200/70 text-slate-500'
                     }`}>

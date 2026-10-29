@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FeedCardActions } from './FeedCardActions';
 import { FeedCardComments } from './FeedCardComments';
 import { AddToCalendarButton } from './AddToCalendarButton';
@@ -18,6 +18,8 @@ export function MultimediaPost({
   onPlayVideo,
   onSelectTag
 }) {
+  const [isTextExpanded, setIsTextExpanded] = useState(false);
+
   const {
     mediaType = 'banner', // 'video' | 'photo_gallery' | 'banner'
     readTime,
@@ -205,8 +207,19 @@ export function MultimediaPost({
           </div>
         </div>
 
-        <h2 className="feed-card-title">{title}</h2>
-        <FormattedFeedText text={excerpt} className="feed-card-excerpt" />
+        <h2 
+          className="feed-card-title"
+          onClick={() => setIsTextExpanded(prev => !prev)}
+          title="Click to expand/collapse post"
+        >
+          {title}
+        </h2>
+        <FormattedFeedText 
+          text={excerpt} 
+          className="feed-card-excerpt" 
+          isExpanded={isTextExpanded}
+          onToggleExpand={setIsTextExpanded}
+        />
 
         {/* Embed Action Section (Register button + Calendar button) */}
         {embed && (
@@ -239,7 +252,7 @@ export function MultimediaPost({
         )}
 
         <FeedCardActions
-          postId={post.id || id}
+          postId={post.id}
           likes={likesCount}
           commentsCount={commentsCount}
           isLiked={isLiked}

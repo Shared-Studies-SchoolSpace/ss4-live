@@ -13,13 +13,125 @@
     "timeControl": "3+0",
     "status": "COMPLETED",
     "podium": [
-      "Juk3s",
-      "minatoe5",
-      "D-genius"
+      "Juk3s (33 pts)",
+      "minatoe5 (26 pts)",
+      "D-genius (23 pts)"
     ],
     "totalPlayers": 31,
     "totalGames": 112,
-    "recap": "Verified Lichess archive: 31 contenders competed across 112 games."
+    "recap": "Verified Lichess archive: 31 contenders competed across 112 games.",
+    "results": {
+      "totalPlayers": 31,
+      "totalGames": 112,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "Juk3s",
+          "rating": 2264,
+          "score": 33,
+          "performance": 2246
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "minatoe5",
+          "rating": 2132,
+          "score": 26,
+          "performance": 2274
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "D-genius",
+          "rating": 2228,
+          "score": 23,
+          "performance": 1975
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Juk3s",
+          "score": 33,
+          "rating": 2264,
+          "performance": 2246,
+          "record": "33 pts"
+        },
+        {
+          "rank": 2,
+          "name": "minatoe5",
+          "score": 26,
+          "rating": 2132,
+          "performance": 2274,
+          "record": "26 pts"
+        },
+        {
+          "rank": 3,
+          "name": "D-genius",
+          "score": 23,
+          "rating": 2228,
+          "performance": 1975,
+          "record": "23 pts"
+        },
+        {
+          "rank": 4,
+          "name": "simon25",
+          "score": 20,
+          "rating": 2034,
+          "performance": 2031,
+          "record": "20 pts"
+        },
+        {
+          "rank": 5,
+          "name": "garconune",
+          "score": 20,
+          "rating": 1876,
+          "performance": 1986,
+          "record": "20 pts"
+        },
+        {
+          "rank": 6,
+          "name": "Darlington12",
+          "score": 18,
+          "rating": 2297,
+          "performance": 2212,
+          "record": "18 pts"
+        },
+        {
+          "rank": 7,
+          "name": "emike001",
+          "score": 18,
+          "rating": 2082,
+          "performance": 2081,
+          "record": "18 pts"
+        },
+        {
+          "rank": 8,
+          "name": "Yuki_Prime",
+          "score": 16,
+          "rating": 1843,
+          "performance": 1961,
+          "record": "16 pts"
+        },
+        {
+          "rank": 9,
+          "name": "mittensttock",
+          "score": 15,
+          "rating": 1864,
+          "performance": 1914,
+          "record": "15 pts"
+        },
+        {
+          "rank": 10,
+          "name": "KeseneNicholas",
+          "score": 14,
+          "rating": 1640,
+          "performance": 1680,
+          "record": "14 pts"
+        }
+      ]
+    }
   },
   {
     "key": "xBhaDpJO",
@@ -35,13 +147,125 @@
     "timeControl": "3+0",
     "status": "COMPLETED",
     "podium": [
-      "D-genius",
-      "simon25",
-      "minatoe5"
+      "D-genius (32 pts)",
+      "simon25 (28 pts)",
+      "minatoe5 (22 pts)"
     ],
     "totalPlayers": 36,
     "totalGames": 116,
-    "recap": "Verified Lichess archive: 36 contenders competed across 116 games."
+    "recap": "Verified Lichess archive: 36 contenders competed across 116 games.",
+    "results": {
+      "totalPlayers": 36,
+      "totalGames": 116,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "D-genius",
+          "rating": 2282,
+          "score": 32,
+          "performance": 2324
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "simon25",
+          "rating": 2053,
+          "score": 28,
+          "performance": 2174
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "minatoe5",
+          "rating": 2114,
+          "score": 22,
+          "performance": 1963
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "D-genius",
+          "score": 32,
+          "rating": 2282,
+          "performance": 2324,
+          "record": "32 pts"
+        },
+        {
+          "rank": 2,
+          "name": "simon25",
+          "score": 28,
+          "rating": 2053,
+          "performance": 2174,
+          "record": "28 pts"
+        },
+        {
+          "rank": 3,
+          "name": "minatoe5",
+          "score": 22,
+          "rating": 2114,
+          "performance": 1963,
+          "record": "22 pts"
+        },
+        {
+          "rank": 4,
+          "name": "emike001",
+          "score": 20,
+          "rating": 2091,
+          "performance": 2149,
+          "record": "20 pts"
+        },
+        {
+          "rank": 5,
+          "name": "Ataria-Daniel-2002",
+          "score": 18,
+          "rating": 2065,
+          "performance": 2057,
+          "record": "18 pts"
+        },
+        {
+          "rank": 6,
+          "name": "Archerlima111",
+          "score": 18,
+          "rating": 1870,
+          "performance": 1901,
+          "record": "18 pts"
+        },
+        {
+          "rank": 7,
+          "name": "Juk3s",
+          "score": 16,
+          "rating": 2253,
+          "performance": 1951,
+          "record": "16 pts"
+        },
+        {
+          "rank": 8,
+          "name": "Crown_mf",
+          "score": 13,
+          "rating": 1952,
+          "performance": 1944,
+          "record": "13 pts"
+        },
+        {
+          "rank": 9,
+          "name": "garconune",
+          "score": 12,
+          "rating": 1833,
+          "performance": 1806,
+          "record": "12 pts"
+        },
+        {
+          "rank": 10,
+          "name": "Esamzy",
+          "score": 12,
+          "rating": 2005,
+          "performance": 1716,
+          "record": "12 pts"
+        }
+      ]
+    }
   },
   {
     "key": "DdKrKXJb",
@@ -57,13 +281,125 @@
     "timeControl": "3+0",
     "status": "COMPLETED",
     "podium": [
-      "D-genius",
-      "Frizzy1000",
-      "Ataria-Daniel-2002"
+      "D-genius (29 pts)",
+      "Frizzy1000 (27 pts)",
+      "Ataria-Daniel-2002 (22 pts)"
     ],
     "totalPlayers": 29,
     "totalGames": 108,
-    "recap": "Verified Lichess archive: 29 contenders competed across 108 games."
+    "recap": "Verified Lichess archive: 29 contenders competed across 108 games.",
+    "results": {
+      "totalPlayers": 29,
+      "totalGames": 108,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "D-genius",
+          "rating": 2286,
+          "score": 29,
+          "performance": 2320
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "Frizzy1000",
+          "rating": 1996,
+          "score": 27,
+          "performance": 2090
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "Ataria-Daniel-2002",
+          "rating": 2034,
+          "score": 22,
+          "performance": 1907
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "D-genius",
+          "score": 29,
+          "rating": 2286,
+          "performance": 2320,
+          "record": "29 pts"
+        },
+        {
+          "rank": 2,
+          "name": "Frizzy1000",
+          "score": 27,
+          "rating": 1996,
+          "performance": 2090,
+          "record": "27 pts"
+        },
+        {
+          "rank": 3,
+          "name": "Ataria-Daniel-2002",
+          "score": 22,
+          "rating": 2034,
+          "performance": 1907,
+          "record": "22 pts"
+        },
+        {
+          "rank": 4,
+          "name": "simon25",
+          "score": 20,
+          "rating": 2045,
+          "performance": 2003,
+          "record": "20 pts"
+        },
+        {
+          "rank": 5,
+          "name": "garconune",
+          "score": 19,
+          "rating": 1883,
+          "performance": 2076,
+          "record": "19 pts"
+        },
+        {
+          "rank": 6,
+          "name": "junnysimp",
+          "score": 18,
+          "rating": 1890,
+          "performance": 2207,
+          "record": "18 pts"
+        },
+        {
+          "rank": 7,
+          "name": "bobby_f1she",
+          "score": 15,
+          "rating": 2011,
+          "performance": 2098,
+          "record": "15 pts"
+        },
+        {
+          "rank": 8,
+          "name": "prince_of_piece",
+          "score": 13,
+          "rating": 2216,
+          "performance": 2178,
+          "record": "13 pts"
+        },
+        {
+          "rank": 9,
+          "name": "mittensttock",
+          "score": 12,
+          "rating": 1860,
+          "performance": 2025,
+          "record": "12 pts"
+        },
+        {
+          "rank": 10,
+          "name": "DNT512",
+          "score": 12,
+          "rating": 1631,
+          "performance": 1808,
+          "record": "12 pts"
+        }
+      ]
+    }
   },
   {
     "key": "qzORCUgb",
@@ -79,13 +415,125 @@
     "timeControl": "3+0",
     "status": "COMPLETED",
     "podium": [
-      "D-genius",
-      "Scrabbleplayer28",
-      "Chi_chibaby"
+      "D-genius (31 pts)",
+      "Scrabbleplayer28 (23 pts)",
+      "Chi_chibaby (22 pts)"
     ],
     "totalPlayers": 25,
     "totalGames": 102,
-    "recap": "Verified Lichess archive: 25 contenders competed across 102 games."
+    "recap": "Verified Lichess archive: 25 contenders competed across 102 games.",
+    "results": {
+      "totalPlayers": 25,
+      "totalGames": 102,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "D-genius",
+          "rating": 2297,
+          "score": 31,
+          "performance": 2226
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "Scrabbleplayer28",
+          "rating": 1965,
+          "score": 23,
+          "performance": 2086
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "Chi_chibaby",
+          "rating": 2019,
+          "score": 22,
+          "performance": 2292
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "D-genius",
+          "score": 31,
+          "rating": 2297,
+          "performance": 2226,
+          "record": "31 pts"
+        },
+        {
+          "rank": 2,
+          "name": "Scrabbleplayer28",
+          "score": 23,
+          "rating": 1965,
+          "performance": 2086,
+          "record": "23 pts"
+        },
+        {
+          "rank": 3,
+          "name": "Chi_chibaby",
+          "score": 22,
+          "rating": 2019,
+          "performance": 2292,
+          "record": "22 pts"
+        },
+        {
+          "rank": 4,
+          "name": "minatoe5",
+          "score": 18,
+          "rating": 2037,
+          "performance": 1773,
+          "record": "18 pts"
+        },
+        {
+          "rank": 5,
+          "name": "Jhudex",
+          "score": 16,
+          "rating": 1597,
+          "performance": 1826,
+          "record": "16 pts"
+        },
+        {
+          "rank": 6,
+          "name": "Ataria-Daniel-2002",
+          "score": 15,
+          "rating": 2037,
+          "performance": 1942,
+          "record": "15 pts"
+        },
+        {
+          "rank": 7,
+          "name": "bobby_f1she",
+          "score": 15,
+          "rating": 1995,
+          "performance": 1907,
+          "record": "15 pts"
+        },
+        {
+          "rank": 8,
+          "name": "ukemes",
+          "score": 15,
+          "rating": 1666,
+          "performance": 1698,
+          "record": "15 pts"
+        },
+        {
+          "rank": 9,
+          "name": "emike001",
+          "score": 14,
+          "rating": 1986,
+          "performance": 2198,
+          "record": "14 pts"
+        },
+        {
+          "rank": 10,
+          "name": "Esamzy",
+          "score": 14,
+          "rating": 2025,
+          "performance": 1833,
+          "record": "14 pts"
+        }
+      ]
+    }
   },
   {
     "key": "XGm4uGP6",
@@ -101,13 +549,125 @@
     "timeControl": "5+0",
     "status": "COMPLETED",
     "podium": [
-      "Ataria-Daniel-2002",
-      "Fastandmaybefurious",
-      "mittensttock"
+      "Ataria-Daniel-2002 (20 pts)",
+      "Fastandmaybefurious (19 pts)",
+      "mittensttock (14 pts)"
     ],
     "totalPlayers": 26,
     "totalGames": 54,
-    "recap": "Verified Lichess archive: 26 contenders competed across 54 games."
+    "recap": "Verified Lichess archive: 26 contenders competed across 54 games.",
+    "results": {
+      "totalPlayers": 26,
+      "totalGames": 54,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "Ataria-Daniel-2002",
+          "rating": 2056,
+          "score": 20,
+          "performance": 2420
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "Fastandmaybefurious",
+          "rating": 2325,
+          "score": 19,
+          "performance": 2157
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "mittensttock",
+          "rating": 1822,
+          "score": 14,
+          "performance": 1766
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Ataria-Daniel-2002",
+          "score": 20,
+          "rating": 2056,
+          "performance": 2420,
+          "record": "20 pts"
+        },
+        {
+          "rank": 2,
+          "name": "Fastandmaybefurious",
+          "score": 19,
+          "rating": 2325,
+          "performance": 2157,
+          "record": "19 pts"
+        },
+        {
+          "rank": 3,
+          "name": "mittensttock",
+          "score": 14,
+          "rating": 1822,
+          "performance": 1766,
+          "record": "14 pts"
+        },
+        {
+          "rank": 4,
+          "name": "Juk3s",
+          "score": 13,
+          "rating": 2281,
+          "performance": 2254,
+          "record": "13 pts"
+        },
+        {
+          "rank": 5,
+          "name": "ukemes",
+          "score": 12,
+          "rating": 1666,
+          "performance": 1793,
+          "record": "12 pts"
+        },
+        {
+          "rank": 6,
+          "name": "deanbassey001",
+          "score": 11,
+          "rating": 1904,
+          "performance": 1905,
+          "record": "11 pts"
+        },
+        {
+          "rank": 7,
+          "name": "Esamzy",
+          "score": 10,
+          "rating": 2060,
+          "performance": 2037,
+          "record": "10 pts"
+        },
+        {
+          "rank": 8,
+          "name": "emike001",
+          "score": 9,
+          "rating": 1999,
+          "performance": 2013,
+          "record": "9 pts"
+        },
+        {
+          "rank": 9,
+          "name": "Veek_Austin01",
+          "score": 8,
+          "rating": 1660,
+          "performance": 1790,
+          "record": "8 pts"
+        },
+        {
+          "rank": 10,
+          "name": "Jhudex",
+          "score": 8,
+          "rating": 1589,
+          "performance": 1553,
+          "record": "8 pts"
+        }
+      ]
+    }
   },
   {
     "key": "HgN0v9pk",
@@ -123,13 +683,125 @@
     "timeControl": "5+0",
     "status": "COMPLETED",
     "podium": [
-      "Frizzy1000",
-      "Ataria-Daniel-2002",
-      "Juk3s"
+      "Frizzy1000 (19 pts)",
+      "Ataria-Daniel-2002 (16 pts)",
+      "Juk3s (15 pts)"
     ],
     "totalPlayers": 29,
     "totalGames": 69,
-    "recap": "Verified Lichess archive: 29 contenders competed across 69 games."
+    "recap": "Verified Lichess archive: 29 contenders competed across 69 games.",
+    "results": {
+      "totalPlayers": 29,
+      "totalGames": 69,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "Frizzy1000",
+          "rating": 2035,
+          "score": 19,
+          "performance": 2350
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "Ataria-Daniel-2002",
+          "rating": 2071,
+          "score": 16,
+          "performance": 2276
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "Juk3s",
+          "rating": 2274,
+          "score": 15,
+          "performance": 2284
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Frizzy1000",
+          "score": 19,
+          "rating": 2035,
+          "performance": 2350,
+          "record": "19 pts"
+        },
+        {
+          "rank": 2,
+          "name": "Ataria-Daniel-2002",
+          "score": 16,
+          "rating": 2071,
+          "performance": 2276,
+          "record": "16 pts"
+        },
+        {
+          "rank": 3,
+          "name": "Juk3s",
+          "score": 15,
+          "rating": 2274,
+          "performance": 2284,
+          "record": "15 pts"
+        },
+        {
+          "rank": 4,
+          "name": "bobby_f1she",
+          "score": 15,
+          "rating": 1965,
+          "performance": 1720,
+          "record": "15 pts"
+        },
+        {
+          "rank": 5,
+          "name": "mittensttock",
+          "score": 14,
+          "rating": 1852,
+          "performance": 2152,
+          "record": "14 pts"
+        },
+        {
+          "rank": 6,
+          "name": "D-genius",
+          "score": 12,
+          "rating": 2259,
+          "performance": 1951,
+          "record": "12 pts"
+        },
+        {
+          "rank": 7,
+          "name": "garconune",
+          "score": 11,
+          "rating": 1903,
+          "performance": 2336,
+          "record": "11 pts"
+        },
+        {
+          "rank": 8,
+          "name": "Esamzy",
+          "score": 10,
+          "rating": 2094,
+          "performance": 1931,
+          "record": "10 pts"
+        },
+        {
+          "rank": 9,
+          "name": "simon25",
+          "score": 9,
+          "rating": 2041,
+          "performance": 1952,
+          "record": "9 pts"
+        },
+        {
+          "rank": 10,
+          "name": "Benz123",
+          "score": 8,
+          "rating": 1909,
+          "performance": 2015,
+          "record": "8 pts"
+        }
+      ]
+    }
   },
   {
     "key": "HPHdBUO7",
@@ -145,13 +817,125 @@
     "timeControl": "5+0",
     "status": "COMPLETED",
     "podium": [
-      "emike001",
-      "mittensttock",
-      "bobby_f1she"
+      "emike001 (28 pts)",
+      "mittensttock (18 pts)",
+      "bobby_f1she (15 pts)"
     ],
     "totalPlayers": 21,
     "totalGames": 57,
-    "recap": "Verified Lichess archive: 21 contenders competed across 57 games."
+    "recap": "Verified Lichess archive: 21 contenders competed across 57 games.",
+    "results": {
+      "totalPlayers": 21,
+      "totalGames": 57,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "emike001",
+          "rating": 2006,
+          "score": 28,
+          "performance": 2441
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "mittensttock",
+          "rating": 1883,
+          "score": 18,
+          "performance": 2126
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "bobby_f1she",
+          "rating": 1993,
+          "score": 15,
+          "performance": 1917
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "emike001",
+          "score": 28,
+          "rating": 2006,
+          "performance": 2441,
+          "record": "28 pts"
+        },
+        {
+          "rank": 2,
+          "name": "mittensttock",
+          "score": 18,
+          "rating": 1883,
+          "performance": 2126,
+          "record": "18 pts"
+        },
+        {
+          "rank": 3,
+          "name": "bobby_f1she",
+          "score": 15,
+          "rating": 1993,
+          "performance": 1917,
+          "record": "15 pts"
+        },
+        {
+          "rank": 4,
+          "name": "Chi_chibaby",
+          "score": 12,
+          "rating": 1998,
+          "performance": 1973,
+          "record": "12 pts"
+        },
+        {
+          "rank": 5,
+          "name": "simon25",
+          "score": 11,
+          "rating": 2035,
+          "performance": 2044,
+          "record": "11 pts"
+        },
+        {
+          "rank": 6,
+          "name": "Benz123",
+          "score": 10,
+          "rating": 1902,
+          "performance": 1887,
+          "record": "10 pts"
+        },
+        {
+          "rank": 7,
+          "name": "Ataria-Daniel-2002",
+          "score": 9,
+          "rating": 2057,
+          "performance": 1926,
+          "record": "9 pts"
+        },
+        {
+          "rank": 8,
+          "name": "Bionic-Alpha",
+          "score": 8,
+          "rating": 2054,
+          "performance": 1748,
+          "record": "8 pts"
+        },
+        {
+          "rank": 9,
+          "name": "mathemachesser",
+          "score": 7,
+          "rating": 1957,
+          "performance": 1886,
+          "record": "7 pts"
+        },
+        {
+          "rank": 10,
+          "name": "Veek_Austin01",
+          "score": 7,
+          "rating": 1668,
+          "performance": 1729,
+          "record": "7 pts"
+        }
+      ]
+    }
   },
   {
     "key": "qbHQB9WN",
@@ -167,13 +951,125 @@
     "timeControl": "5+0",
     "status": "COMPLETED",
     "podium": [
-      "D-genius",
-      "Darlington12",
-      "Juk3s"
+      "D-genius (31 pts)",
+      "Darlington12 (30 pts)",
+      "Juk3s (26 pts)"
     ],
     "totalPlayers": 24,
     "totalGames": 79,
-    "recap": "Verified Lichess archive: 24 contenders competed across 79 games."
+    "recap": "Verified Lichess archive: 24 contenders competed across 79 games.",
+    "results": {
+      "totalPlayers": 24,
+      "totalGames": 79,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "D-genius",
+          "rating": 2263,
+          "score": 31,
+          "performance": 2343
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "Darlington12",
+          "rating": 2213,
+          "score": 30,
+          "performance": 2195
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "Juk3s",
+          "rating": 2256,
+          "score": 26,
+          "performance": 2166
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "D-genius",
+          "score": 31,
+          "rating": 2263,
+          "performance": 2343,
+          "record": "31 pts"
+        },
+        {
+          "rank": 2,
+          "name": "Darlington12",
+          "score": 30,
+          "rating": 2213,
+          "performance": 2195,
+          "record": "30 pts"
+        },
+        {
+          "rank": 3,
+          "name": "Juk3s",
+          "score": 26,
+          "rating": 2256,
+          "performance": 2166,
+          "record": "26 pts"
+        },
+        {
+          "rank": 4,
+          "name": "Esamzy",
+          "score": 17,
+          "rating": 2080,
+          "performance": 2127,
+          "record": "17 pts"
+        },
+        {
+          "rank": 5,
+          "name": "Ataria-Daniel-2002",
+          "score": 16,
+          "rating": 2057,
+          "performance": 1998,
+          "record": "16 pts"
+        },
+        {
+          "rank": 6,
+          "name": "Fastandmaybefurious",
+          "score": 14,
+          "rating": 2278,
+          "performance": 2304,
+          "record": "14 pts"
+        },
+        {
+          "rank": 7,
+          "name": "emike001",
+          "score": 14,
+          "rating": 2002,
+          "performance": 2100,
+          "record": "14 pts"
+        },
+        {
+          "rank": 8,
+          "name": "deanbassey001",
+          "score": 12,
+          "rating": 1901,
+          "performance": 1868,
+          "record": "12 pts"
+        },
+        {
+          "rank": 9,
+          "name": "mittensttock",
+          "score": 9,
+          "rating": 1870,
+          "performance": 1723,
+          "record": "9 pts"
+        },
+        {
+          "rank": 10,
+          "name": "Davidbarakaii",
+          "score": 8,
+          "rating": 1554,
+          "performance": 2016,
+          "record": "8 pts"
+        }
+      ]
+    }
   },
   {
     "key": "LAaeLViF",
@@ -189,13 +1085,125 @@
     "timeControl": "10+0",
     "status": "COMPLETED",
     "podium": [
-      "Juk3s",
-      "Fastandmaybefurious",
-      "Benz123"
+      "Juk3s (3 pts)",
+      "Fastandmaybefurious (3 pts)",
+      "Benz123 (3 pts)"
     ],
     "totalPlayers": 28,
     "totalGames": 35,
-    "recap": "Verified Lichess archive: 28 contenders competed across 35 games."
+    "recap": "Verified Lichess archive: 28 contenders competed across 35 games.",
+    "results": {
+      "totalPlayers": 28,
+      "totalGames": 35,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "Juk3s",
+          "rating": 2194,
+          "score": 3,
+          "performance": 2428
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "Fastandmaybefurious",
+          "rating": 2138,
+          "score": 3,
+          "performance": 2179
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "Benz123",
+          "rating": 1976,
+          "score": 3,
+          "performance": 2074
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Juk3s",
+          "score": 3,
+          "rating": 2194,
+          "performance": 2428,
+          "record": "3 pts"
+        },
+        {
+          "rank": 2,
+          "name": "Fastandmaybefurious",
+          "score": 3,
+          "rating": 2138,
+          "performance": 2179,
+          "record": "3 pts"
+        },
+        {
+          "rank": 3,
+          "name": "Benz123",
+          "score": 3,
+          "rating": 1976,
+          "performance": 2074,
+          "record": "3 pts"
+        },
+        {
+          "rank": 4,
+          "name": "emike001",
+          "score": 3,
+          "rating": 2169,
+          "performance": 1622,
+          "record": "3 pts"
+        },
+        {
+          "rank": 5,
+          "name": "Frizzy1000",
+          "score": 2.5,
+          "rating": 2047,
+          "performance": 2332,
+          "record": "2.5 pts"
+        },
+        {
+          "rank": 6,
+          "name": "D-genius",
+          "score": 2.5,
+          "rating": 2339,
+          "performance": 2401,
+          "record": "2.5 pts"
+        },
+        {
+          "rank": 7,
+          "name": "Glorrreeeyy",
+          "score": 2,
+          "rating": 1825,
+          "performance": 2185,
+          "record": "2 pts"
+        },
+        {
+          "rank": 8,
+          "name": "Chi_chibaby",
+          "score": 2,
+          "rating": 2258,
+          "performance": 2004,
+          "record": "2 pts"
+        },
+        {
+          "rank": 9,
+          "name": "Esamzy",
+          "score": 2,
+          "rating": 2102,
+          "performance": 1950,
+          "record": "2 pts"
+        },
+        {
+          "rank": 10,
+          "name": "simon25",
+          "score": 2,
+          "rating": 1974,
+          "performance": 1709,
+          "record": "2 pts"
+        }
+      ]
+    }
   },
   {
     "key": "8VVBHELH",
@@ -211,13 +1219,125 @@
     "timeControl": "10+0",
     "status": "COMPLETED",
     "podium": [
-      "Frizzy1000",
-      "Ataria-Daniel-2002",
-      "Juk3s"
+      "Frizzy1000 (2.5 pts)",
+      "Ataria-Daniel-2002 (2.5 pts)",
+      "Juk3s (2 pts)"
     ],
     "totalPlayers": 16,
     "totalGames": 19,
-    "recap": "Verified Lichess archive: 16 contenders competed across 19 games."
+    "recap": "Verified Lichess archive: 16 contenders competed across 19 games.",
+    "results": {
+      "totalPlayers": 16,
+      "totalGames": 19,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "Frizzy1000",
+          "rating": 2041,
+          "score": 2.5,
+          "performance": 2737
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "Ataria-Daniel-2002",
+          "rating": 2149,
+          "score": 2.5,
+          "performance": 1967
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "Juk3s",
+          "rating": 2206,
+          "score": 2,
+          "performance": 2403
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Frizzy1000",
+          "score": 2.5,
+          "rating": 2041,
+          "performance": 2737,
+          "record": "2.5 pts"
+        },
+        {
+          "rank": 2,
+          "name": "Ataria-Daniel-2002",
+          "score": 2.5,
+          "rating": 2149,
+          "performance": 1967,
+          "record": "2.5 pts"
+        },
+        {
+          "rank": 3,
+          "name": "Juk3s",
+          "score": 2,
+          "rating": 2206,
+          "performance": 2403,
+          "record": "2 pts"
+        },
+        {
+          "rank": 4,
+          "name": "Darlington12",
+          "score": 2,
+          "rating": 2372,
+          "performance": 2242,
+          "record": "2 pts"
+        },
+        {
+          "rank": 5,
+          "name": "emike001",
+          "score": 2,
+          "rating": 2165,
+          "performance": 2003,
+          "record": "2 pts"
+        },
+        {
+          "rank": 6,
+          "name": "Fastandmaybefurious",
+          "score": 2,
+          "rating": 2145,
+          "performance": 2457,
+          "record": "2 pts"
+        },
+        {
+          "rank": 7,
+          "name": "Chi_chibaby",
+          "score": 2,
+          "rating": 2156,
+          "performance": 2202,
+          "record": "2 pts"
+        },
+        {
+          "rank": 8,
+          "name": "simon25",
+          "score": 2,
+          "rating": 1982,
+          "performance": 2128,
+          "record": "2 pts"
+        },
+        {
+          "rank": 9,
+          "name": "Esamzy",
+          "score": 1,
+          "rating": 2076,
+          "performance": 2205,
+          "record": "1 pts"
+        },
+        {
+          "rank": 10,
+          "name": "D-genius",
+          "score": 1,
+          "rating": 2237,
+          "performance": 2039,
+          "record": "1 pts"
+        }
+      ]
+    }
   },
   {
     "key": "y72XMtFc",
@@ -233,13 +1353,109 @@
     "timeControl": "10+0",
     "status": "COMPLETED",
     "podium": [
-      "Fastandmaybefurious",
-      "Chi_chibaby",
-      "Darlington12"
+      "Fastandmaybefurious (2.5 pts)",
+      "Chi_chibaby (2.5 pts)",
+      "Darlington12 (2 pts)"
     ],
     "totalPlayers": 8,
     "totalGames": 10,
-    "recap": "Verified Lichess archive: 8 contenders competed across 10 games."
+    "recap": "Verified Lichess archive: 8 contenders competed across 10 games.",
+    "results": {
+      "totalPlayers": 8,
+      "totalGames": 10,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "Fastandmaybefurious",
+          "rating": 2146,
+          "score": 2.5,
+          "performance": 2334
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "Chi_chibaby",
+          "rating": 2159,
+          "score": 2.5,
+          "performance": 2211
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "Darlington12",
+          "rating": 2380,
+          "score": 2,
+          "performance": 2631
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Fastandmaybefurious",
+          "score": 2.5,
+          "rating": 2146,
+          "performance": 2334,
+          "record": "2.5 pts"
+        },
+        {
+          "rank": 2,
+          "name": "Chi_chibaby",
+          "score": 2.5,
+          "rating": 2159,
+          "performance": 2211,
+          "record": "2.5 pts"
+        },
+        {
+          "rank": 3,
+          "name": "Darlington12",
+          "score": 2,
+          "rating": 2380,
+          "performance": 2631,
+          "record": "2 pts"
+        },
+        {
+          "rank": 4,
+          "name": "Juk3s",
+          "score": 2,
+          "rating": 2211,
+          "performance": 2475,
+          "record": "2 pts"
+        },
+        {
+          "rank": 5,
+          "name": "Frizzy1000",
+          "score": 1.5,
+          "rating": 2039,
+          "performance": 1992,
+          "record": "1.5 pts"
+        },
+        {
+          "rank": 6,
+          "name": "emike001",
+          "score": 1.5,
+          "rating": 2168,
+          "performance": 1979,
+          "record": "1.5 pts"
+        },
+        {
+          "rank": 7,
+          "name": "Ataria-Daniel-2002",
+          "score": 0,
+          "rating": 2131,
+          "performance": 1880,
+          "record": "0 pts"
+        },
+        {
+          "rank": 8,
+          "name": "simon25",
+          "score": 0,
+          "rating": 1969,
+          "performance": 1711,
+          "record": "0 pts"
+        }
+      ]
+    }
   },
   {
     "key": "Y7Sf6EvG",
@@ -255,12 +1471,76 @@
     "timeControl": "10+0",
     "status": "COMPLETED",
     "podium": [
-      "Juk3s",
-      "Darlington12",
-      "Chi_chibaby"
+      "Juk3s (2 pts)",
+      "Darlington12 (2 pts)",
+      "Chi_chibaby (1 pts)"
     ],
     "totalPlayers": 4,
     "totalGames": 6,
-    "recap": "Verified Lichess archive: 4 contenders competed across 6 games."
+    "recap": "Verified Lichess archive: 4 contenders competed across 6 games.",
+    "results": {
+      "totalPlayers": 4,
+      "totalGames": 6,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "Juk3s",
+          "rating": 2217,
+          "score": 2,
+          "performance": 2387
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "Darlington12",
+          "rating": 2379,
+          "score": 2,
+          "performance": 2333
+        },
+        {
+          "rank": 3,
+          "label": "2nd Runner-Up",
+          "name": "Chi_chibaby",
+          "rating": 2149,
+          "score": 1,
+          "performance": 2083
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Juk3s",
+          "score": 2,
+          "rating": 2217,
+          "performance": 2387,
+          "record": "2 pts"
+        },
+        {
+          "rank": 2,
+          "name": "Darlington12",
+          "score": 2,
+          "rating": 2379,
+          "performance": 2333,
+          "record": "2 pts"
+        },
+        {
+          "rank": 3,
+          "name": "Chi_chibaby",
+          "score": 1,
+          "rating": 2149,
+          "performance": 2083,
+          "record": "1 pts"
+        },
+        {
+          "rank": 4,
+          "name": "Fastandmaybefurious",
+          "score": 1,
+          "rating": 2152,
+          "performance": 2075,
+          "record": "1 pts"
+        }
+      ]
+    }
   }
 ]

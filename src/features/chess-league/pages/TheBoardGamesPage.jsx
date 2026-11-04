@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { VARSITY_TEAMS } from '../data/varsityData';
@@ -7,159 +7,33 @@ import { fetchCompletePlayerData } from '../utils/chessService';
 
 import BOARD_GAMES_EVENTS from '../data/boardGamesData.json';
 
-// Event data (links, dates, titles, podiums) is generated from the SS4 Chess League
-// WhatsApp export by `scripts/extract_boardgames.py`. Detailed Lichess standings
-// below were verified separately for the first two arenas.
-const VERIFIED_RESULTS = {
-  LM1: {
-    description: 'LeagueMatch 1 on Lichess has officially concluded. 31 university contenders clashed across 112 matches with Juk3s taking the championship with 33 points.',
-    results: {
-      totalPlayers: 31,
-      totalGames: 112,
-      totalMoves: 8162,
-      durationMinutes: 60,
-      podium: [
-        {
-          rank: 1,
-          label: 'Champion',
-          name: 'Juk3s',
-          school: 'Champion',
-          rating: 2264,
-          score: 33,
-          performance: 2246,
-          games: 12,
-          wins: 9,
-          berserks: 8
-        },
-        {
-          rank: 2,
-          label: 'Runner-Up',
-          name: 'minatoe5',
-          realName: 'Peter Eti Essien',
-          school: 'University of Uyo',
-          rating: 2132,
-          score: 26,
-          performance: 2274,
-          games: 11,
-          wins: 7,
-          berserks: 8
-        },
-        {
-          rank: 3,
-          label: '2nd Runner-Up',
-          name: 'D-genius',
-          school: '2nd Runner-Up',
-          rating: 2228,
-          score: 23,
-          performance: 1975,
-          games: 12,
-          wins: 7,
-          berserks: 4
-        }
-      ],
-      standings: [
-        { rank: 1, name: 'Juk3s', rating: 2264, score: 33, performance: 2246, record: '9W • 12G' },
-        { rank: 2, name: 'minatoe5', detail: 'Peter Eti Essien (UNIUYO)', rating: 2132, score: 26, performance: 2274, record: '7W • 11G' },
-        { rank: 3, name: 'D-genius', rating: 2228, score: 23, performance: 1975, record: '7W • 12G' },
-        { rank: 4, name: 'simon25', rating: 2034, score: 20, performance: 2031, record: '6W • 12G' },
-        { rank: 5, name: 'garconune', rating: 1876, score: 20, performance: 1986, record: '6W • 12G' },
-        { rank: 6, name: 'Darlington12', rating: 2297, score: 18, performance: 2212, record: '6W • 8G' },
-        { rank: 7, name: 'emike001', rating: 2082, score: 18, performance: 2081, record: '6W • 12G' },
-        { rank: 8, name: 'Yuki_Prime', rating: 1843, score: 16, performance: 1961, record: '5W • 11G' },
-        { rank: 9, name: 'mittensttock', rating: 1864, score: 15, performance: 1914, record: '5W • 11G' },
-        { rank: 10, name: 'KeseneNicholas', rating: 1640, score: 14, performance: 1680, record: '5W • 10G' }
-      ]
-    },
-  },
-  LM2: {
-    description: 'LeagueMatch 2 on Lichess has officially concluded. 36 university contenders clashed across 116 matches. UNIUYO’s Board 1 lead Amakuro Minalabh (D-genius) clinched 1st place with 32 points, edging out Babcock’s simon25 (28 pts) and UNIUYO teammate minatoe5 (22 pts).',
-    results: {
-      totalPlayers: 36,
-      totalGames: 116,
-      totalMoves: 8802,
-      durationMinutes: 60,
-      podium: [
-        {
-          rank: 1,
-          label: 'Champion',
-          name: 'D-genius',
-          realName: 'Amakuro Minalabh',
-          school: 'University of Uyo',
-          rating: 2282,
-          score: 32,
-          performance: 2324,
-          games: 11,
-          wins: 10,
-          berserks: 0
-        },
-        {
-          rank: 2,
-          label: 'Runner-Up',
-          name: 'simon25',
-          realName: 'Akogo Simon',
-          school: 'Babcock University',
-          rating: 2053,
-          score: 28,
-          performance: 2174,
-          games: 12,
-          wins: 9,
-          berserks: 1
-        },
-        {
-          rank: 3,
-          label: '2nd Runner-Up',
-          name: 'minatoe5',
-          realName: 'Peter Eti Essien',
-          school: 'University of Uyo',
-          rating: 2114,
-          score: 22,
-          performance: 1963,
-          games: 12,
-          wins: 7,
-          berserks: 8
-        }
-      ],
-      standings: [
-        { rank: 1, name: 'D-genius', detail: 'Amakuro Minalabh (UNIUYO)', rating: 2282, score: 32, performance: 2324, record: '10W • 11G' },
-        { rank: 2, name: 'simon25', detail: 'Akogo Simon (BABCOCK)', rating: 2053, score: 28, performance: 2174, record: '9W • 12G' },
-        { rank: 3, name: 'minatoe5', detail: 'Peter Eti Essien (UNIUYO)', rating: 2114, score: 22, performance: 1963, record: '7W • 12G' },
-        { rank: 4, name: 'emike001', detail: 'Emmanuel Michael (FUTIA)', rating: 2091, score: 20, record: '8W • 11G' },
-        { rank: 5, name: 'Ataria-Daniel-2002', detail: 'Daniel Daniel (REDEEMER\'S)', rating: 2065, score: 18, record: '6W • 10G' },
-        { rank: 6, name: 'Archerlima111', rating: 1870, score: 18, record: '6W • 12G' },
-        { rank: 7, name: 'Juk3s', rating: 2253, score: 16, record: '5W • 9G' },
-        { rank: 8, name: 'Crown_mf', rating: 1952, score: 13, record: '6W • 11G' },
-        { rank: 9, name: 'garconune', rating: 1833, score: 12, record: '4W • 10G' },
-        { rank: 10, name: 'Esamzy', rating: 2005, score: 12, record: '4W • 10G' }
-      ]
-    },
-  },
-};
-
-const PODIUM_LABELS = ['Winner', 'Runner-Up', '3rd'];
+const PODIUM_LABELS = ['Champion', 'Runner-Up', '3rd Place'];
 const PILL_LABELS = { RO32: 'R32', RO16: 'R16', QF: 'QF', SF: 'SF', F: 'Final' };
 
-const withPts = (r) => `${r.name} (${r.score} pts)`;
+const withPts = (r) => (typeof r === 'string' ? r : `${r.name} (${r.score} pts)`);
 
 const EVENTS = BOARD_GAMES_EVENTS.map((e) => {
-  const verified = VERIFIED_RESULTS[e.key];
-  const podium = verified
-    ? verified.results.podium.map(withPts)
-    : e.podium;
+  const verifiedResults = e.results;
+  const rawPodium = verifiedResults?.podium || e.podium || [];
+  const podium = rawPodium.map(withPts);
   const isLeague = e.matchNumber != null;
-  const podiumHighlights = podium.map((name, i) => `${PODIUM_LABELS[i]}: ${name}`);
+  const podiumHighlights = podium.map((name, i) => `${PODIUM_LABELS[i] || 'Rank ' + (i + 1)}: ${name}`);
+
   let description = e.recap;
-  if (verified) description = verified.description;
-  else if (e.status === 'LIVE') description = `${e.title} is LIVE tonight at 8 PM on Lichess. ${e.recap}`;
-  else if (e.status === 'SCHEDULED') description = `${e.title} is scheduled for Oct ${e.day}. The Lichess link will be shared on match day.`;
-  else if (isLeague) {
-    description = `${e.title} (${e.timeControl} arena) on Lichess has concluded.${podium[0] ? ` ${podium[0]} took the top spot.` : ''}`;
+  if (e.status === 'LIVE') {
+    description = `${e.title} is LIVE tonight on Lichess. ${e.recap || ''}`;
+  } else if (e.status === 'SCHEDULED') {
+    description = `${e.title} is scheduled for Oct ${e.day}.`;
+  } else if (isLeague) {
+    description = `${e.title} (${e.timeControl} arena) on Lichess has concluded.${podium[0] ? ` ${podium[0]} took 1st place.` : ''}`;
   }
+
   return {
     ...e,
     isLeague,
     podium,
     description,
-    results: verified?.results,
+    results: verifiedResults,
     phase: isLeague ? 'League Stage' : 'Knockout Stage',
     stage: isLeague ? `League Match ${e.matchNumber}` : e.label,
     isLive: e.status === 'LIVE',
@@ -168,7 +42,7 @@ const EVENTS = BOARD_GAMES_EVENTS.map((e) => {
   };
 });
 
-const lastLink = EVENTS.filter((e) => e.link).pop();
+const lastLink = EVENTS.filter((e) => e.link).pop() || EVENTS[0];
 const ARENA_LINK = lastLink.link;
 const ARENA_ID = lastLink.id;
 
@@ -184,43 +58,48 @@ const LEAGUE_MATCHES = EVENTS
     weekday: e.weekday,
     dateStr: `${e.weekday}, Oct ${e.day}`,
     title: e.title,
-    shortTitle: e.isLeague ? e.label : PILL_LABELS[e.key],
+    label: e.label,
+    shortTitle: e.isLeague ? `Match ${e.matchNumber}` : (PILL_LABELS[e.key] || e.label),
     link: e.link,
     status: e.status,
     isLive: e.isLive,
     isCompleted: e.isCompleted,
     timeControl: e.timeControl,
     stage: e.stage,
+    phase: e.phase,
     description: e.description,
     highlights: e.highlights,
     winner: e.podium[0],
     runnerUp: e.podium[1],
     third: e.podium[2],
+    results: e.results,
     key: e.key,
   }));
-
 
 const TIME_CONTROLS = [
   {
     mode: 'Blitz',
     time: '3 + 0',
-    description: '3 minutes, zero increment. Maximum tactical pressure and lightning instincts.',
+    description: '3 minutes flat, zero increment. Maximum tactical pressure, sharp tactics, and lightning instincts.',
     icon: 'bolt',
-    accent: '#F97316'
+    accent: '#EA580C',
+    badge: 'Opening Arenas'
   },
   {
     mode: 'Blitz',
     time: '5 + 0',
-    description: '5 minutes flat. Strategic calculations balanced with fast clock management.',
+    description: '5 minutes flat. Strategic calculations balanced with fast clock management and midgame tension.',
     icon: 'timer',
-    accent: '#EAB308'
+    accent: '#D97706',
+    badge: 'Mid-Season Arenas'
   },
   {
     mode: 'Rapid',
     time: '10 + 0',
-    description: '10 minutes per contender. Deep positional battles, endgames, and grandmaster precision.',
+    description: '10 minutes per contender. Deep positional battles, king safety, and tournament knockout precision.',
     icon: 'hourglass_top',
-    accent: '#0284C7'
+    accent: '#1A56C4',
+    badge: 'Knockout Stages'
   }
 ];
 
@@ -252,25 +131,22 @@ const ORDERED_INSTITUTION_IDS = [
   'biu'
 ];
 
-
-
 const NO_MATCH_DAY = {
   hasMatch: false,
   title: 'No Matches Scheduled',
   phase: 'Tournament Calendar',
-  stage: 'No match data',
+  stage: 'Rest / Prep Day',
   timeControl: 'No matches',
   arenaLink: null,
   isLive: false,
   isCompleted: false,
   gridLabel: null,
   gridLabelShort: null,
-  description: 'No theBoardGames matches were scheduled for this date.',
+  description: 'No theBoardGames matches were scheduled for this date. Contenders rested and analyzed games.',
   highlights: null,
 };
 
-// Calendar: Oct 9 – Oct 31 based on verified tournament schedule (boardGamesData.json).
-// Non-match days carry zero fabricated labels or results.
+// Calendar: Oct 9 – Oct 31 based on verified tournament schedule
 const TOURNAMENT_DAYS = Array.from({ length: 23 }, (_, i) => {
   const day = 9 + i;
   const weekday = new Date(2026, 9, day).toLocaleDateString('en-US', { weekday: 'short' });
@@ -282,7 +158,6 @@ const TOURNAMENT_DAYS = Array.from({ length: 23 }, (_, i) => {
     let gridLabelShort = ev.label;
 
     if (ev.key === 'F') {
-      // The single authentic final of the tournament on Oct 31
       gridLabel = 'Final';
       gridLabelShort = 'Final';
     } else if (ev.isLive) {
@@ -322,30 +197,37 @@ const TOURNAMENT_DAYS = Array.from({ length: 23 }, (_, i) => {
       gridLabel,
       gridLabelShort,
       key: ev.key,
+      totalPlayers: ev.totalPlayers || ev.results?.totalPlayers || 0,
+      totalGames: ev.totalGames || ev.results?.totalGames || 0,
     };
   }
 
-  // Days with no match: honest, zero hallucination
   return { ...base, ...NO_MATCH_DAY };
 });
-
 
 export default function TheBoardGamesPage() {
   const [activeArenaMatch, setActiveArenaMatch] = useState(LEAGUE_MATCHES[0]);
   const [selectedDay, setSelectedDay] = useState(() => {
     return TOURNAMENT_DAYS.find(d => d.isLive) || TOURNAMENT_DAYS[0];
   });
+  const [calendarFilter, setCalendarFilter] = useState('matches'); // 'matches' | 'all' | 'league' | 'knockout'
+  const [calendarViewMode, setCalendarViewMode] = useState('strip'); // 'strip' | 'grid' on mobile
+  const [showStandingsDrawer, setShowStandingsDrawer] = useState(false);
+  const [arenaStageTab, setArenaStageTab] = useState('all'); // 'all' | 'league' | 'knockout'
   const [copied, setCopied] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [flippedCards, setFlippedCards] = useState({});
   const [selectedPlayerForModal, setSelectedPlayerForModal] = useState(null);
   const [reconciledRatings, setReconciledRatings] = useState({});
 
+  const trackScrollRef = useRef(null);
+
+  // Poll live ratings from chess.com / lichess
   useEffect(() => {
     let isMounted = true;
-
     async function pollLiveRatings() {
       const allPlayers = VARSITY_TEAMS.flatMap(t => (t.players || []));
       for (const p of allPlayers) {
@@ -360,16 +242,12 @@ export default function TheBoardGamesPage() {
             });
           }
         } catch {
-          // Graceful fallback to verified baseline
+          // Graceful fallback
         }
       }
     }
-
     pollLiveRatings();
-
-    return () => {
-      isMounted = false;
-    };
+    return () => { isMounted = false; };
   }, []);
 
   const institutionCards = useMemo(() => {
@@ -412,6 +290,42 @@ export default function TheBoardGamesPage() {
     });
   }, [reconciledRatings]);
 
+  // Filtered universities based on search query
+  const filteredInstitutions = useMemo(() => {
+    if (!searchQuery.trim()) return institutionCards;
+    const q = searchQuery.toLowerCase().trim();
+    return institutionCards.filter(u => {
+      const matchesUni = u.name.toLowerCase().includes(q) || u.short.toLowerCase().includes(q);
+      const matchesPlayer = (u.players || []).some(p => p.name?.toLowerCase().includes(q) || p.handle?.toLowerCase().includes(q));
+      return matchesUni || matchesPlayer;
+    });
+  }, [institutionCards, searchQuery]);
+
+  // Filtered calendar days based on current tab
+  const filteredDays = useMemo(() => {
+    if (calendarFilter === 'matches') {
+      return TOURNAMENT_DAYS.filter(d => d.hasMatch);
+    }
+    if (calendarFilter === 'league') {
+      return TOURNAMENT_DAYS.filter(d => d.hasMatch && d.phase?.includes('League'));
+    }
+    if (calendarFilter === 'knockout') {
+      return TOURNAMENT_DAYS.filter(d => d.hasMatch && !d.phase?.includes('League'));
+    }
+    return TOURNAMENT_DAYS;
+  }, [calendarFilter]);
+
+  // Filtered arena deck matches based on tab
+  const filteredArenaMatches = useMemo(() => {
+    if (arenaStageTab === 'league') {
+      return LEAGUE_MATCHES.filter(m => m.matchNumber != null);
+    }
+    if (arenaStageTab === 'knockout') {
+      return LEAGUE_MATCHES.filter(m => m.matchNumber == null);
+    }
+    return LEAGUE_MATCHES;
+  }, [arenaStageTab]);
+
   const toggleCardFlip = (teamId) => {
     setFlippedCards(prev => ({
       ...prev,
@@ -443,13 +357,9 @@ export default function TheBoardGamesPage() {
     });
   };
 
-  useEffect(() => {
-    document.title = `${activeArenaMatch.title} | SS4 Chess League`;
-    window.scrollTo(0, 0);
-  }, [activeArenaMatch]);
-
   const handleCopyLink = (linkOverride) => {
     const link = typeof linkOverride === 'string' ? linkOverride : activeArenaMatch.link;
+    if (!link) return;
     navigator.clipboard.writeText(link).then(() => {
       setCopied(true);
       toast.success('Lichess Arena link copied to clipboard!');
@@ -465,7 +375,7 @@ export default function TheBoardGamesPage() {
     const isLive = matchOrDay?.isLive !== undefined ? matchOrDay.isLive : activeArenaMatch.isLive;
     const shareData = {
       title: `${targetTitle} | SS4 Chess League`,
-      text: `${targetTitle} is ${isLive ? 'LIVE' : 'available'} on Lichess!\nFeaturing the best chess players from top universities in Nigeria.\n\nArena Link: ${targetLink}\n\nThe Board Remembers.`,
+      text: `${targetTitle} is ${isLive ? 'LIVE' : 'available'} on Lichess!\nFeaturing top university chess players in Nigeria.\n\nLink: ${targetLink}`,
       url: targetLink
     };
 
@@ -476,36 +386,261 @@ export default function TheBoardGamesPage() {
     }
   };
 
+  // Next / Prev arena match navigation
+  const currentArenaIdx = LEAGUE_MATCHES.findIndex(m => m.id === activeArenaMatch.id);
+  const handlePrevArena = () => {
+    if (currentArenaIdx > 0) {
+      setActiveArenaMatch(LEAGUE_MATCHES[currentArenaIdx - 1]);
+      setIframeLoaded(false);
+    }
+  };
+  const handleNextArena = () => {
+    if (currentArenaIdx < LEAGUE_MATCHES.length - 1) {
+      setActiveArenaMatch(LEAGUE_MATCHES[currentArenaIdx + 1]);
+      setIframeLoaded(false);
+    }
+  };
+
   return (
-    <div className="w-full bg-[#FAF9F6] text-slate-900 min-h-screen selection:bg-orange-500 selection:text-white font-sans">
-      
-      {/* ── 1. HERO & TOURNAMENT DATES SECTION ── */}
-      <section className="relative bg-white text-slate-900 pt-3 sm:pt-4 pb-4 sm:pb-5 px-3 sm:px-6 lg:px-8 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto">
-          {/* Header Title Bar */}
-          <div className="mb-2 sm:mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <h1 className="text-xl sm:text-2xl font-black tracking-tight font-outfit text-slate-900 leading-none">
-                <span>the</span>
-                <span className="text-[#E8640A]">BOARDGAMES</span>
+    <div className="w-full bg-[#FAF9F6] text-slate-900 min-h-screen selection:bg-orange-500 selection:text-white font-sans pb-16">
+
+      {/* ── 0. STICKY QUICK-NAVIGATION SUB-BAR ── */}
+      <nav 
+        aria-label="theBoardGames Quick Navigation"
+        className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs py-2 px-3 sm:px-6 transition-all"
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
+          {/* Logo / Badge */}
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="font-outfit font-black text-sm sm:text-base text-slate-900 leading-none">
+              <span>the</span>
+              <span className="text-[#E8640A]">BOARDGAMES</span>
+            </span>
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-orange-100 text-[#B84D00] uppercase tracking-wider font-mono">
+              Oct &apos;26
+            </span>
+          </div>
+
+          {/* Quick Anchor Pills */}
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0 text-xs font-bold text-slate-600">
+            <a 
+              href="#schedule" 
+              className="px-2.5 py-1 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition-colors whitespace-nowrap flex items-center gap-1"
+            >
+              <span>📅</span>
+              <span className="hidden xs:inline">Schedule</span>
+            </a>
+            <a 
+              href="#arena-broadcast-deck" 
+              className="px-2.5 py-1 rounded-lg hover:bg-orange-50 hover:text-[#B84D00] transition-colors whitespace-nowrap flex items-center gap-1"
+            >
+              <span>⚡</span>
+              <span>Arena Deck</span>
+            </a>
+            <a 
+              href="#time-controls" 
+              className="px-2.5 py-1 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition-colors whitespace-nowrap flex items-center gap-1"
+            >
+              <span>⏱️</span>
+              <span className="hidden sm:inline">Time Controls</span>
+            </a>
+            <a 
+              href="#institutions" 
+              className="px-2.5 py-1 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition-colors whitespace-nowrap flex items-center gap-1"
+            >
+              <span>🏛️</span>
+              <span>Squads</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      {/* ── 1. HERO & TOURNAMENT STATS SECTION ── */}
+      <section className="relative bg-gradient-to-b from-white via-white to-slate-50/50 pt-5 sm:pt-7 pb-6 sm:pb-8 px-3 sm:px-6 lg:px-8 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto space-y-4">
+          
+          {/* Category Overline & Actions */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-2 bg-[#FFEEDB] text-[#2E0E00] border border-orange-200 px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider">
+                <span>SS4 Chess League</span>
+                <span>•</span>
+                <span>October Championship</span>
+              </div>
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-outfit tracking-tight text-slate-900 leading-tight">
+                the<span className="text-[#E8640A]">BOARDGAMES</span> Hub
               </h1>
-              <span className="text-xs font-bold text-slate-500 font-sans hidden sm:inline">
-                &bull; Top Nigerian University Chess Masters
-              </span>
+              <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl leading-relaxed">
+                Official tournament arena center for Nigeria&apos;s elite collegiate chess championship. 11 premier universities, 12 verified stages, and live game-by-game records.
+              </p>
             </div>
-            <div className="flex items-center gap-2 text-xs">
-              <span className="font-bold text-slate-500">9th – 31st October 2026</span>
-              <span className="text-slate-300">&bull;</span>
-              <span className="font-bold text-[#E8640A]">Select date for match data</span>
+
+            {/* Quick Primary Actions */}
+            <div className="flex flex-wrap items-center gap-2 pt-1 sm:pt-0 shrink-0">
+              <a
+                href={ARENA_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white text-xs sm:text-sm font-black shadow-sm hover:shadow transition-all active:scale-[0.98] cursor-pointer"
+              >
+                <span>Latest Arena on Lichess</span>
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+              <button
+                type="button"
+                onClick={() => setIsZoomOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-bold border border-slate-200 shadow-2xs transition-all active:scale-[0.98] cursor-pointer"
+              >
+                <svg className="w-4 h-4 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span>Poster</span>
+              </button>
             </div>
           </div>
 
-          {/* Date Grid & Active Day Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-5 items-stretch">
-            {/* Left Column: Compact 5-Column Grid (all dates visible without scrolling) */}
-            <div className="lg:col-span-7 flex flex-col justify-between">
-              <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
-                {TOURNAMENT_DAYS.map((d) => {
+          {/* Key Metrics Strip (Responsive 2x2 grid on mobile, 4-col on tablet/desktop) */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 pt-2">
+            <div className="bg-white border border-slate-200/90 rounded-xl p-3 shadow-2xs">
+              <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Collegiate Field</span>
+              <span className="text-xl sm:text-2xl font-black font-space text-slate-900 block mt-0.5">11 Universities</span>
+              <span className="text-[11px] text-slate-500 font-medium">Bells, UNIUYO, UNILORIN...</span>
+            </div>
+            <div className="bg-white border border-slate-200/90 rounded-xl p-3 shadow-2xs">
+              <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Tournament Matches</span>
+              <span className="text-xl sm:text-2xl font-black font-space text-slate-900 block mt-0.5">12 Stages</span>
+              <span className="text-[11px] text-slate-500 font-medium">8 Arenas • 4 Knockouts</span>
+            </div>
+            <div className="bg-white border border-slate-200/90 rounded-xl p-3 shadow-2xs">
+              <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Active Contenders</span>
+              <span className="text-xl sm:text-2xl font-black font-space text-[#E8640A] block mt-0.5">67+ Masters</span>
+              <span className="text-[11px] text-slate-500 font-medium">Verified student players</span>
+            </div>
+            <div className="bg-white border border-slate-200/90 rounded-xl p-3 shadow-2xs">
+              <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Games Recorded</span>
+              <span className="text-xl sm:text-2xl font-black font-space text-slate-900 block mt-0.5">767 Games</span>
+              <span className="text-[11px] text-slate-500 font-medium">With real Lichess PGNs</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2. TOURNAMENT CALENDAR & MATCH TRACKER SECTION ── */}
+      <section id="schedule" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-8 sm:pt-10">
+        {/* Section Header & View Filters */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="w-2 h-2 rounded-full bg-[#E8640A]"></span>
+              <span className="text-xs font-black uppercase tracking-wider text-[#B84D00]">
+                October 2026 Schedule
+              </span>
+            </div>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-outfit text-slate-900 tracking-tight">
+              Match Schedule & Daily Results
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">
+              Select any match day to inspect confirmed podiums, participant numbers, and official scores.
+            </p>
+          </div>
+
+          {/* Filter Pills & View Toggle */}
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Filter Tabs */}
+            <div className="inline-flex bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 gap-1 overflow-x-auto no-scrollbar">
+              <button
+                type="button"
+                onClick={() => setCalendarFilter('matches')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+                  calendarFilter === 'matches'
+                    ? 'bg-white text-slate-900 shadow-2xs font-black'
+                    : 'hover:text-slate-900'
+                }`}
+              >
+                Match Days (12)
+              </button>
+              <button
+                type="button"
+                onClick={() => setCalendarFilter('all')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+                  calendarFilter === 'all'
+                    ? 'bg-white text-slate-900 shadow-2xs font-black'
+                    : 'hover:text-slate-900'
+                }`}
+              >
+                All Oct (23)
+              </button>
+              <button
+                type="button"
+                onClick={() => setCalendarFilter('league')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+                  calendarFilter === 'league'
+                    ? 'bg-white text-slate-900 shadow-2xs font-black'
+                    : 'hover:text-slate-900'
+                }`}
+              >
+                League (M1–8)
+              </button>
+              <button
+                type="button"
+                onClick={() => setCalendarFilter('knockout')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+                  calendarFilter === 'knockout'
+                    ? 'bg-white text-slate-900 shadow-2xs font-black'
+                    : 'hover:text-slate-900'
+                }`}
+              >
+                Knockouts
+              </button>
+            </div>
+
+            {/* View Mode Toggle on Mobile */}
+            <div className="inline-flex lg:hidden bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 gap-1">
+              <button
+                type="button"
+                onClick={() => setCalendarViewMode('strip')}
+                className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                  calendarViewMode === 'strip' ? 'bg-white text-[#E8640A] shadow-2xs font-black' : 'hover:text-slate-900'
+                }`}
+                title="Horizontal Strip View"
+                aria-label="Horizontal Strip View"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={() => setCalendarViewMode('grid')}
+                className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                  calendarViewMode === 'grid' ? 'bg-white text-[#E8640A] shadow-2xs font-black' : 'hover:text-slate-900'
+                }`}
+                title="Calendar Grid View"
+                aria-label="Calendar Grid View"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Calendar Viewport Grid Container */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start">
+
+          {/* LEFT COLUMN: Date Selector (Horizontal Strip on Mobile or Responsive Grid) */}
+          <div className="lg:col-span-7 flex flex-col space-y-2">
+            
+            {/* 1. Mobile Carousel Strip (Default on Mobile) */}
+            <div className={`lg:hidden ${calendarViewMode === 'strip' ? 'block' : 'hidden'}`}>
+              <div 
+                ref={trackScrollRef}
+                className="flex gap-2 overflow-x-auto no-scrollbar py-1.5 px-0.5 snap-x scroll-smooth"
+              >
+                {filteredDays.map((d) => {
                   const isSelected = selectedDay.day === d.day;
                   return (
                     <button
@@ -513,42 +648,96 @@ export default function TheBoardGamesPage() {
                       type="button"
                       onClick={() => setSelectedDay(d)}
                       aria-label={`Select October ${d.day}${d.gridLabel ? ` - ${d.gridLabel}` : ''}`}
-                      className={`h-[46px] sm:h-[50px] rounded-lg sm:rounded-xl border flex flex-col items-center justify-center px-1 py-0.5 sm:py-1 transition-all cursor-pointer select-none text-center relative ${
+                      className={`min-w-[78px] sm:min-w-[88px] flex-shrink-0 snap-start rounded-2xl border p-2.5 flex flex-col items-center justify-between transition-all cursor-pointer select-none text-center relative ${
                         isSelected
-                          ? 'bg-[#E8640A] text-white border-[#E8640A] shadow-xs shadow-orange-500/20 ring-2 ring-[#E8640A] ring-offset-1'
+                          ? 'bg-[#E8640A] text-white border-[#E8640A] shadow-sm ring-2 ring-[#E8640A] ring-offset-1'
                           : d.hasMatch
-                            ? 'bg-white hover:bg-orange-50/50 text-slate-800 border-slate-200/90 hover:border-orange-300'
-                            : 'bg-slate-50/60 hover:bg-slate-100/60 text-slate-400 border-slate-100 hover:border-slate-200'
+                            ? 'bg-white hover:bg-orange-50/50 text-slate-800 border-slate-200/90'
+                            : 'bg-slate-100/60 text-slate-400 border-slate-200/60 opacity-60'
                       }`}
                     >
-                      <span className={`text-[8px] sm:text-[9px] font-bold uppercase tracking-wider leading-none ${
-                        isSelected ? 'text-orange-100' : 'text-slate-400'
+                      <div className="flex items-center justify-between w-full text-[9px] font-bold uppercase tracking-wider mb-1">
+                        <span className={isSelected ? 'text-orange-100' : 'text-slate-400'}>
+                          {d.weekday}
+                        </span>
+                        {d.isLive && (
+                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        )}
+                        {d.isCompleted && (
+                          <span className={isSelected ? 'text-orange-100' : 'text-amber-500'}>✓</span>
+                        )}
+                      </div>
+
+                      <span className={`text-xl font-black font-outfit leading-none my-1 ${
+                        isSelected ? 'text-white' : d.hasMatch ? 'text-slate-900' : 'text-slate-400'
                       }`}>
-                        {d.weekday}
+                        {d.day}
                       </span>
-                      <span className={`text-sm sm:text-base font-black font-outfit leading-none my-0.5 ${
+
+                      <span className={`text-[9.5px] font-bold px-1.5 py-0.5 rounded-md truncate max-w-full ${
+                        isSelected
+                          ? 'bg-black/20 text-white'
+                          : d.hasMatch
+                            ? 'bg-slate-100 text-slate-700'
+                            : 'text-slate-400'
+                      }`}>
+                        {d.gridLabelShort || 'Rest'}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="text-[10px] font-bold text-slate-400 text-right pr-1 pt-1">
+                &larr; Scroll dates horizontally &rarr;
+              </div>
+            </div>
+
+            {/* 2. Responsive Grid (Always on Desktop, Optional on Mobile) */}
+            <div className={`${calendarViewMode === 'grid' ? 'block' : 'hidden lg:block'}`}>
+              <div className="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-1.5 sm:gap-2">
+                {filteredDays.map((d) => {
+                  const isSelected = selectedDay.day === d.day;
+                  return (
+                    <button
+                      key={d.day}
+                      type="button"
+                      onClick={() => setSelectedDay(d)}
+                      aria-label={`Select October ${d.day}${d.gridLabel ? ` - ${d.gridLabel}` : ''}`}
+                      className={`h-[56px] sm:h-[62px] rounded-xl border flex flex-col items-center justify-between px-1.5 py-1.5 transition-all cursor-pointer select-none text-center relative ${
+                        isSelected
+                          ? 'bg-[#E8640A] text-white border-[#E8640A] shadow-xs ring-2 ring-[#E8640A] ring-offset-1'
+                          : d.hasMatch
+                            ? 'bg-white hover:bg-orange-50/50 text-slate-800 border-slate-200/90 hover:border-orange-300 shadow-2xs'
+                            : 'bg-slate-50 text-slate-400 border-slate-100 opacity-60'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full text-[8.5px] sm:text-[9.5px] font-bold uppercase tracking-wider">
+                        <span className={isSelected ? 'text-orange-100' : 'text-slate-400'}>
+                          {d.weekday}
+                        </span>
+                        {d.isLive && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        )}
+                      </div>
+
+                      <span className={`text-base sm:text-lg font-black font-outfit leading-none ${
                         isSelected ? 'text-white' : d.hasMatch ? 'text-slate-900' : 'text-slate-400 font-medium'
                       }`}>
                         {d.day}
                       </span>
+
                       {d.gridLabel ? (
-                        <span className={`text-[7.5px] sm:text-[8.5px] font-bold leading-none truncate max-w-full px-0.5 ${
+                        <span className={`text-[8.5px] sm:text-[9.5px] font-bold leading-none truncate max-w-full px-1 py-0.5 rounded ${
                           isSelected
-                            ? 'text-orange-100'
+                            ? 'bg-black/20 text-white'
                             : d.isLive
-                              ? 'text-emerald-600 font-black'
-                              : d.key === 'F'
-                                ? 'text-amber-600 font-black'
-                                : 'text-slate-500'
+                              ? 'text-emerald-700 bg-emerald-50 font-black'
+                              : 'text-slate-600 bg-slate-100'
                         }`}>
-                          <span className="hidden sm:inline">{d.gridLabel}</span>
-                          <span className="sm:hidden">{d.gridLabelShort}</span>
+                          <span>{d.gridLabelShort}</span>
                         </span>
                       ) : (
-                        <span className="h-2 sm:h-2.5 block" aria-hidden="true" />
-                      )}
-                      {d.isLive && (
-                        <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="Live Today"></span>
+                        <span className="text-[8px] text-slate-300">Rest</span>
                       )}
                     </button>
                   );
@@ -556,352 +745,406 @@ export default function TheBoardGamesPage() {
               </div>
             </div>
 
-            {/* Right Column: Active Day Data Card */}
-            <div className="lg:col-span-5 flex flex-col">
-              <AnimatePresence mode="wait">
-                <Motion.div
-                  key={selectedDay.day}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.15 }}
-                  className="rounded-xl sm:rounded-2xl bg-slate-100/80 border border-slate-200/80 p-3 sm:p-4 shadow-2xs flex flex-col justify-between h-full min-h-[255px]"
-                >
-                  {selectedDay.hasMatch && selectedDay.isCompleted && selectedDay.results ? (
-                    /* ── COMPLETED MATCH VIEW ── */
-                    <div className="space-y-2">
-                      {/* Header Row */}
-                      <div className="pb-1.5 border-b border-slate-200/60 flex items-center justify-between">
-                        <div>
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block leading-tight">
-                            Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
-                          </span>
-                          <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide leading-tight">
-                            {selectedDay.phase} &bull; {selectedDay.stage}
-                          </span>
-                        </div>
-                        <span className="text-[9.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 flex items-center gap-1 shadow-2xs">
-                          <svg className="w-3 h-3 text-amber-600" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V19H7v2h10v-2h-4v-3.1c1.98-.44 3.49-2.07 3.61-4.06C19.08 11.63 21 9.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
-                          </svg>
-                          <span>{selectedDay.key === 'F' ? 'Final Results' : 'Official Results'}</span>
+            {/* Quick Helper Legend */}
+            <div className="hidden sm:flex items-center justify-between text-[11px] text-slate-500 font-medium px-1 pt-1">
+              <div className="flex items-center gap-3">
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-[#E8640A]"></span>
+                  <span>Match Day</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span>Live</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-slate-200"></span>
+                  <span>Rest Day</span>
+                </span>
+              </div>
+              <span>Click any date to inspect match</span>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Active Day Details Card */}
+          <div className="lg:col-span-5 flex flex-col">
+            <AnimatePresence mode="wait">
+              <Motion.div
+                key={selectedDay.day}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.15 }}
+                className="rounded-2xl bg-white border border-slate-200/90 p-4 sm:p-5 shadow-xs flex flex-col justify-between"
+              >
+                {selectedDay.hasMatch ? (
+                  /* ── MATCH DAY VIEW ── */
+                  <div className="space-y-3.5">
+                    
+                    {/* Header Row */}
+                    <div className="pb-2 border-b border-slate-100 flex items-center justify-between gap-2">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block leading-tight">
+                          Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
+                        </span>
+                        <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide leading-tight">
+                          {selectedDay.phase} &bull; {selectedDay.stage}
                         </span>
                       </div>
 
-                      {/* Title & Stats */}
-                      <div>
-                        <h3 className="text-base sm:text-lg font-black font-outfit text-slate-900 leading-tight">
-                          {selectedDay.title}
-                        </h3>
-                        <div className="flex flex-wrap items-center gap-1.5 mt-1">
-                          <span className="text-[10px] font-bold text-slate-600 bg-white shadow-2xs px-2 py-0.5 rounded-md flex items-center gap-1">
-                            <svg className="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      {selectedDay.isLive ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 uppercase tracking-wider shadow-2xs">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                          Live Tonight
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 flex items-center gap-1 shadow-2xs">
+                          <svg className="w-3 h-3 text-amber-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V19H7v2h10v-2h-4v-3.1c1.98-.44 3.49-2.07 3.61-4.06C19.08 11.63 21 9.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
+                          </svg>
+                          <span>Official Results</span>
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Title & Key Stats */}
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-black font-outfit text-slate-900 leading-tight">
+                        {selectedDay.title}
+                      </h3>
+                      
+                      <div className="flex flex-wrap items-center gap-2 mt-2">
+                        {selectedDay.totalPlayers > 0 && (
+                          <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg flex items-center gap-1.5">
+                            <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            <span>{selectedDay.results.totalPlayers} Contenders</span>
+                            <span>{selectedDay.totalPlayers} Contenders</span>
                           </span>
-                          <span className="text-[10px] font-bold text-slate-600 bg-white shadow-2xs px-2 py-0.5 rounded-md flex items-center gap-1">
-                            <svg className="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        )}
+                        {selectedDay.totalGames > 0 && (
+                          <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg flex items-center gap-1.5">
+                            <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
-                            <span>{selectedDay.results.totalGames} Games</span>
+                            <span>{selectedDay.totalGames} Games</span>
                           </span>
-                          <span className="text-[10px] font-bold text-slate-600 bg-white shadow-2xs px-2 py-0.5 rounded-md flex items-center gap-1">
-                            <span>{selectedDay.timeControl}</span>
-                          </span>
-                        </div>
+                        )}
+                        <span className="text-xs font-black text-orange-700 bg-orange-100 px-2.5 py-1 rounded-lg font-mono">
+                          {selectedDay.timeControl}
+                        </span>
                       </div>
+                    </div>
 
-                      {/* Official Podium Winners */}
-                      {selectedDay.results.podium && selectedDay.results.podium.length >= 3 && (
-                        <div>
-                          <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1">
-                            Top 3 Podium Winners
-                          </span>
-                          <div className="grid grid-cols-3 gap-1.5 items-stretch">
-                            {/* 2nd Place */}
-                            <div className="bg-white/90 border border-slate-200/70 rounded-lg p-1.5 text-center flex flex-col justify-between">
-                              <div>
-                                <span className="w-4 h-4 rounded-full bg-slate-200 text-slate-700 text-[8px] font-black mx-auto flex items-center justify-center mb-0.5">2</span>
-                                <span className="text-[10px] font-black text-slate-800 block truncate" title={selectedDay.results.podium[1].name}>
-                                  {selectedDay.results.podium[1].name}
-                                </span>
-                              </div>
-                              <div className="mt-1 leading-none">
-                                <span className="text-xs font-black text-slate-800">{selectedDay.results.podium[1].score} pts</span>
-                                <span className="text-[8px] text-slate-400 block font-mono mt-0.5">{selectedDay.results.podium[1].rating}</span>
-                              </div>
+                    {/* Official Podium Winners */}
+                    {selectedDay.results?.podium && selectedDay.results.podium.length >= 3 && (
+                      <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-2">
+                          Official Top 3 Podium
+                        </span>
+                        
+                        <div className="grid grid-cols-3 gap-2">
+                          {/* 2nd Place */}
+                          <div className="bg-white border border-slate-200/80 rounded-xl p-2 text-center flex flex-col justify-between shadow-2xs">
+                            <div>
+                              <span className="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[10px] font-black mx-auto flex items-center justify-center mb-1">
+                                2
+                              </span>
+                              <span className="text-xs font-black text-slate-900 block truncate" title={selectedDay.results.podium[1].name}>
+                                {selectedDay.results.podium[1].name}
+                              </span>
                             </div>
-
-                            {/* 1st Place (Champion) */}
-                            <div className="bg-gradient-to-b from-amber-100 to-amber-200/60 border border-amber-300/70 rounded-lg p-1.5 text-center flex flex-col justify-between shadow-2xs">
-                              <div>
-                                <span className="w-4 h-4 rounded-full bg-amber-500 text-white text-[8px] font-black mx-auto flex items-center justify-center mb-0.5">1</span>
-                                <span className="text-[10px] font-black text-slate-900 block truncate" title={selectedDay.results.podium[0].name}>
-                                  {selectedDay.results.podium[0].name}
-                                </span>
-                              </div>
-                              <div className="mt-1 leading-none">
-                                <span className="text-xs font-black text-amber-900">{selectedDay.results.podium[0].score} pts</span>
-                                <span className="text-[8px] text-amber-800 block font-mono mt-0.5">{selectedDay.results.podium[0].rating}</span>
-                              </div>
+                            <div className="mt-1.5">
+                              <span className="text-xs font-black text-slate-800">{selectedDay.results.podium[1].score} pts</span>
+                              <span className="text-[9px] text-slate-400 block font-mono">Elo {selectedDay.results.podium[1].rating}</span>
                             </div>
+                          </div>
 
-                            {/* 3rd Place */}
-                            <div className="bg-orange-50/90 border border-orange-200/70 rounded-lg p-1.5 text-center flex flex-col justify-between">
-                              <div>
-                                <span className="w-4 h-4 rounded-full bg-orange-200 text-orange-800 text-[8px] font-black mx-auto flex items-center justify-center mb-0.5">3</span>
-                                <span className="text-[10px] font-black text-slate-800 block truncate" title={selectedDay.results.podium[2].name}>
-                                  {selectedDay.results.podium[2].name}
-                                </span>
-                              </div>
-                              <div className="mt-1 leading-none">
-                                <span className="text-xs font-black text-slate-800">{selectedDay.results.podium[2].score} pts</span>
-                                <span className="text-[8px] text-slate-400 block font-mono mt-0.5">{selectedDay.results.podium[2].rating}</span>
-                              </div>
+                          {/* 1st Place Champion */}
+                          <div className="bg-gradient-to-b from-amber-100 via-amber-50 to-amber-100/60 border border-amber-300 rounded-xl p-2 text-center flex flex-col justify-between shadow-2xs ring-1 ring-amber-300/60">
+                            <div>
+                              <span className="w-5 h-5 rounded-full bg-amber-500 text-white text-[10px] font-black mx-auto flex items-center justify-center mb-1 shadow-2xs">
+                                👑
+                              </span>
+                              <span className="text-xs font-black text-amber-950 block truncate" title={selectedDay.results.podium[0].name}>
+                                {selectedDay.results.podium[0].name}
+                              </span>
+                            </div>
+                            <div className="mt-1.5">
+                              <span className="text-xs font-black text-amber-900">{selectedDay.results.podium[0].score} pts</span>
+                              <span className="text-[9px] text-amber-800 font-mono block">Elo {selectedDay.results.podium[0].rating}</span>
+                            </div>
+                          </div>
+
+                          {/* 3rd Place */}
+                          <div className="bg-white border border-slate-200/80 rounded-xl p-2 text-center flex flex-col justify-between shadow-2xs">
+                            <div>
+                              <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-800 text-[10px] font-black mx-auto flex items-center justify-center mb-1">
+                                3
+                              </span>
+                              <span className="text-xs font-black text-slate-900 block truncate" title={selectedDay.results.podium[2].name}>
+                                {selectedDay.results.podium[2].name}
+                              </span>
+                            </div>
+                            <div className="mt-1.5">
+                              <span className="text-xs font-black text-slate-800">{selectedDay.results.podium[2].score} pts</span>
+                              <span className="text-[9px] text-slate-400 block font-mono">Elo {selectedDay.results.podium[2].rating}</span>
                             </div>
                           </div>
                         </div>
-                      )}
-
-                      {/* Action Links */}
-                      <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                        <a
-                          href={selectedDay.arenaLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-[11px] shadow-2xs hover:shadow-xs active:scale-[0.98] transition-all cursor-pointer"
-                        >
-                          <span>Full Lichess Results</span>
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                        <button
-                          type="button"
-                          onClick={() => handleCopyLink(selectedDay.arenaLink)}
-                          className="inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 shadow-2xs font-bold text-[11px] transition-all cursor-pointer border border-slate-200/80"
-                        >
-                          <svg className="w-3 h-3 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                          </svg>
-                          <span>{copied ? 'Copied!' : 'Copy'}</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleShare(selectedDay)}
-                          className="inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 shadow-2xs font-bold text-[11px] transition-all cursor-pointer border border-slate-200/80"
-                          title="Share match details"
-                        >
-                          <svg className="w-3 h-3 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                          </svg>
-                          <span>Share</span>
-                        </button>
                       </div>
-                    </div>
-                  ) : selectedDay.hasMatch ? (
-                    /* ── UPCOMING / LIVE MATCH VIEW ── */
-                    <div className="space-y-2">
-                      {/* Header Row */}
-                      <div className="pb-1.5 border-b border-slate-200/60 flex items-center justify-between">
-                        <div>
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block leading-tight">
-                            Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
+                    )}
+
+                    {/* Expandable Top 10 Standings Drawer */}
+                    {selectedDay.results?.standings && selectedDay.results.standings.length > 0 && (
+                      <div className="border border-slate-200 rounded-xl overflow-hidden bg-white">
+                        <button
+                          type="button"
+                          onClick={() => setShowStandingsDrawer(!showStandingsDrawer)}
+                          className="w-full px-3 py-2 bg-slate-50 hover:bg-slate-100 text-xs font-black text-slate-700 flex items-center justify-between transition-colors cursor-pointer"
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <span>📊</span>
+                            <span>Top 10 Match Standings ({selectedDay.results.standings.length})</span>
                           </span>
-                          <span className="text-xs font-black text-[#E8640A] uppercase tracking-wide leading-tight">
-                            {selectedDay.phase} &bull; {selectedDay.stage}
+                          <span className="text-slate-400 font-mono text-[11px]">
+                            {showStandingsDrawer ? '▲ Hide' : '▼ Expand'}
                           </span>
-                        </div>
-                        {selectedDay.isLive ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9.5px] font-black bg-emerald-100 text-emerald-800 uppercase tracking-wider shadow-2xs">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-                            Live Tonight
-                          </span>
-                        ) : (
-                          <span className="text-[9.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 shadow-2xs">
-                            Scheduled
-                          </span>
+                        </button>
+
+                        {showStandingsDrawer && (
+                          <div className="overflow-x-auto max-h-56 no-scrollbar divide-y divide-slate-100 text-xs">
+                            <table className="w-full text-left">
+                              <thead className="bg-slate-100/70 text-[10px] font-black text-slate-500 uppercase tracking-wider">
+                                <tr>
+                                  <th className="py-1.5 px-3 text-center">#</th>
+                                  <th className="py-1.5 px-3">Player</th>
+                                  <th className="py-1.5 px-3 text-center">Score</th>
+                                  <th className="py-1.5 px-3 text-right">Rating</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-slate-100 font-medium">
+                                {selectedDay.results.standings.map((p) => (
+                                  <tr key={p.rank} className="hover:bg-slate-50/80 transition-colors">
+                                    <td className="py-1.5 px-3 text-center font-bold text-slate-400">{p.rank}</td>
+                                    <td className="py-1.5 px-3 font-bold text-slate-900 truncate max-w-[140px]">{p.name}</td>
+                                    <td className="py-1.5 px-3 text-center font-black text-slate-800">{p.score}</td>
+                                    <td className="py-1.5 px-3 text-right font-mono text-slate-500 text-[11px]">{p.rating}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
                         )}
                       </div>
+                    )}
 
-                      {/* Match Title & Format */}
-                      <div>
-                        <h3 className="text-base sm:text-lg font-black font-outfit text-slate-900 leading-tight">
-                          {selectedDay.title}
-                        </h3>
-                        <div className="inline-flex items-center gap-1.5 mt-1 px-2.5 py-1 rounded-md bg-white border border-slate-200/80 text-xs font-bold text-slate-700">
-                          <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          <span>{selectedDay.timeControl}</span>
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-xs text-slate-600 leading-relaxed">
-                        {selectedDay.description}
-                      </p>
-
-                      {/* Actions */}
+                    {/* Action Bar (Mobile Responsive Stack) */}
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-1">
                       {selectedDay.arenaLink ? (
-                        <div className="flex flex-wrap items-center gap-1.5 pt-1.5">
+                        <>
                           <a
                             href={selectedDay.arenaLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-[11px] shadow-2xs hover:shadow-xs active:scale-[0.98] transition-all cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white font-black text-xs shadow-2xs hover:shadow transition-all active:scale-[0.98] cursor-pointer"
                           >
-                            <span>{selectedDay.isCompleted ? 'View on Lichess' : 'Join on Lichess'}</span>
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <span>Open on Lichess</span>
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                             </svg>
                           </a>
-                          <button
-                            type="button"
-                            onClick={() => handleCopyLink(selectedDay.arenaLink)}
-                            className="inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 shadow-2xs font-bold text-[11px] transition-all cursor-pointer border border-slate-200/80"
-                          >
-                            <span>{copied ? 'Copied!' : 'Copy'}</span>
-                          </button>
-                        </div>
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => handleCopyLink(selectedDay.arenaLink)}
+                              className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all active:scale-[0.98] cursor-pointer"
+                            >
+                              <svg className="w-3.5 h-3.5 text-[#E8640A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                              </svg>
+                              <span>{copied ? 'Copied!' : 'Copy'}</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleShare(selectedDay)}
+                              className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all active:scale-[0.98] cursor-pointer"
+                            >
+                              <svg className="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                              </svg>
+                              <span>Share</span>
+                            </button>
+                          </div>
+                        </>
                       ) : (
-                        <div className="pt-1.5 text-[11px] text-slate-500 font-medium flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                          <span>Official Lichess arena link will be broadcast on match day.</span>
+                        <div className="text-xs text-slate-500 font-medium py-1">
+                          Official arena link will be shared on match day.
                         </div>
                       )}
                     </div>
-                  ) : (
-                    /* ── NO MATCH SCHEDULED VIEW ── */
-                    <div className="space-y-2">
-                      {/* Header Row */}
-                      <div className="pb-1.5 border-b border-slate-200/60">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block leading-tight">
-                          Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
-                        </span>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wide leading-tight">
-                          Tournament Calendar
-                        </span>
-                      </div>
-
-                      {/* Title & Description */}
-                      <div>
-                        <h3 className="text-base sm:text-lg font-black font-outfit text-slate-800 leading-tight">
-                          No Matches Scheduled
-                        </h3>
-                        <p className="text-xs text-slate-600 leading-relaxed mt-1">
-                          No theBoardGames tournament matches were scheduled for this date.
-                        </p>
-                      </div>
-
-                      <div className="p-2.5 rounded-lg bg-white/80 border border-slate-200/80 text-[11px] text-slate-500 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <span>Select a match day on the calendar to inspect pairing details and results.</span>
-                      </div>
+                  </div>
+                ) : (
+                  /* ── NO MATCH SCHEDULED VIEW ── */
+                  <div className="space-y-3">
+                    <div className="pb-2 border-b border-slate-100 flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                        Day {selectedDay.dayIndex} &bull; {selectedDay.weekday}, Oct {selectedDay.day}
+                      </span>
+                      <span className="text-xs font-bold text-slate-500 uppercase tracking-wide">
+                        Tournament Calendar
+                      </span>
                     </div>
-                  )}
-                </Motion.div>
-              </AnimatePresence>
-            </div>
+
+                    <div>
+                      <h3 className="text-lg font-black font-outfit text-slate-800">
+                        No Matches Scheduled
+                      </h3>
+                      <p className="text-xs text-slate-600 leading-relaxed mt-1">
+                        {selectedDay.description}
+                      </p>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-500 flex items-center gap-2.5">
+                      <svg className="w-5 h-5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span>Select any match day highlighted in the schedule above to review games and official results.</span>
+                    </div>
+                  </div>
+                )}
+              </Motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </section>
 
-      {/* ── 2. LIVE ARENA CENTER (theBOARDGAMES Arena Broadcast Deck) ── */}
-      <section id="arena-broadcast-deck" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        {/* Section Header / Eyebrow */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-6">
+      {/* ── 3. LIVE ARENA CENTER (theBOARDGAMES Arena Broadcast Deck) ── */}
+      <section id="arena-broadcast-deck" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-12 sm:pt-16">
+        
+        {/* Arena Header & Stage Controls */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-4">
           <div>
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className={`w-2 h-2 rounded-full ${activeArenaMatch.isLive ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`}></span>
+            <div className="flex items-center gap-2 mb-1">
+              <span className={`w-2.5 h-2.5 rounded-full ${activeArenaMatch.isLive ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`}></span>
               <span className={`text-xs font-black uppercase tracking-wider font-mono ${
                 activeArenaMatch.isLive ? 'text-emerald-700' : 'text-slate-500'
               }`}>
                 {activeArenaMatch.isLive ? 'LIVE BROADCAST • OFFICIAL ARENA' : 'OFFICIAL ARENA ARCHIVE & REPLAY'}
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black font-outfit text-slate-900 tracking-tight">
+            
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-outfit text-slate-900 tracking-tight">
               {activeArenaMatch.title} Arena
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Live inter-collegiate arena tournament hosted on Lichess.org &bull; Tournament ID:{' '}
+            
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+              Hosted on Lichess.org &bull; ID:{' '}
               <code className="text-[#E8640A] font-mono font-bold bg-orange-50 px-1.5 py-0.5 rounded border border-orange-200">
                 {activeArenaMatch.id}
               </code>
             </p>
           </div>
 
-          {/* Quick Header Actions & Match Switcher */}
-          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-            {/* Match Select Pills */}
-            <div className="inline-flex flex-wrap items-center bg-slate-100 p-1 rounded-2xl border border-slate-200 gap-1">
-              {LEAGUE_MATCHES.map((match) => {
-                const isActive = activeArenaMatch.id === match.id;
-                return (
-                  <button
-                    key={match.id}
-                    type="button"
-                    onClick={() => {
-                      setActiveArenaMatch(match);
-                      setIframeLoaded(false);
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
-                      isActive
-                        ? 'bg-[#E8640A] text-white shadow-xs'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
-                    }`}
-                  >
-                    {match.isLive && (
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    )}
-                    <span>{match.shortTitle}</span>
-                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
-                      isActive ? 'bg-black/20 text-white' : 'bg-slate-200/70 text-slate-500'
-                    }`}>
-                      {match.isLive ? 'LIVE' : match.key === 'F' ? 'Final' : 'Completed'}
-                    </span>
-                  </button>
-                );
-              })}
+          {/* Match Stage Selector & Navigation */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            
+            {/* Stage Tabs (League vs Knockouts) */}
+            <div className="inline-flex bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 gap-1">
+              <button
+                type="button"
+                onClick={() => setArenaStageTab('all')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+                  arenaStageTab === 'all' ? 'bg-white text-slate-900 shadow-2xs font-black' : 'hover:text-slate-900'
+                }`}
+              >
+                All (12)
+              </button>
+              <button
+                type="button"
+                onClick={() => setArenaStageTab('league')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+                  arenaStageTab === 'league' ? 'bg-white text-slate-900 shadow-2xs font-black' : 'hover:text-slate-900'
+                }`}
+              >
+                League (M1–8)
+              </button>
+              <button
+                type="button"
+                onClick={() => setArenaStageTab('knockout')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+                  arenaStageTab === 'knockout' ? 'bg-white text-slate-900 shadow-2xs font-black' : 'hover:text-slate-900'
+                }`}
+              >
+                Knockouts (4)
+              </button>
             </div>
 
-            <a
-              href={activeArenaMatch.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#E8640A] hover:bg-[#c95307] text-white text-xs sm:text-sm font-black shadow-sm hover:shadow transition-all active:scale-[0.98] cursor-pointer"
-            >
-              <span>Open on Lichess</span>
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-
-            <button
-              type="button"
-              onClick={() => handleCopyLink(activeArenaMatch.link)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-bold border border-slate-200 shadow-2xs transition-all active:scale-[0.98] cursor-pointer"
-            >
-              <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-              </svg>
-              <span>{copied ? 'Copied!' : 'Copy Link'}</span>
-            </button>
+            {/* Prev / Next Match Jumpers */}
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={handlePrevArena}
+                disabled={currentArenaIdx === 0}
+                className="px-2.5 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs"
+                title="Previous Match"
+              >
+                &larr; Prev
+              </button>
+              <button
+                type="button"
+                onClick={handleNextArena}
+                disabled={currentArenaIdx === LEAGUE_MATCHES.length - 1}
+                className="px-2.5 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs"
+                title="Next Match"
+              >
+                Next &rarr;
+              </button>
+            </div>
           </div>
+        </div>
+
+        {/* Scrollable Horizontal Match Selector Strip */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar p-1.5 bg-slate-100 rounded-2xl border border-slate-200 mb-4">
+          {filteredArenaMatches.map((match) => {
+            const isActive = activeArenaMatch.id === match.id;
+            return (
+              <button
+                key={match.id}
+                type="button"
+                onClick={() => {
+                  setActiveArenaMatch(match);
+                  setIframeLoaded(false);
+                }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                  isActive
+                    ? 'bg-[#E8640A] text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
+              >
+                {match.isLive && (
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                )}
+                <span>{match.shortTitle}</span>
+                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                  isActive ? 'bg-black/20 text-white' : 'bg-slate-200 text-slate-600'
+                }`}>
+                  {match.isLive ? 'LIVE' : match.timeControl}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Arena Frame Container */}
         <div className="rounded-2xl sm:rounded-3xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+          
           {/* Arena Control Deck Bar */}
-          <div className="bg-[#0B192C] text-white px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3 border-b border-slate-800">
+          <div className="bg-[#0B192C] text-white px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2.5 border-b border-slate-800">
             <div className="flex items-center gap-2 text-xs">
               <span className="font-bold text-slate-300">{activeArenaMatch.title}:</span>
               <span className="text-orange-400 font-semibold">{activeArenaMatch.stage || activeArenaMatch.dateStr}</span>
               {activeArenaMatch.winner && (
-                <span className="hidden md:inline text-slate-400">&bull; Winner: {activeArenaMatch.winner}</span>
+                <span className="hidden md:inline text-slate-400">&bull; 1st: {activeArenaMatch.winner}</span>
               )}
             </div>
 
@@ -927,24 +1170,26 @@ export default function TheBoardGamesPage() {
                 href={activeArenaMatch.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#E8640A] hover:bg-[#c95307] text-white text-xs font-black transition-all cursor-pointer shadow-2xs"
                 title="Launch in Full Window"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
-                <span>Full Tab</span>
+                <span>Open in Lichess</span>
               </a>
             </div>
           </div>
 
-          {/* Iframe Arena Canvas */}
+          {/* Iframe Arena Canvas with Mobile-Friendly Responsive Heights */}
           <div className={`relative w-full bg-[#181614] flex items-center justify-center transition-all duration-300 ${
-            isExpanded ? 'h-[780px] sm:h-[900px]' : 'h-[600px] sm:h-[680px]'
+            isExpanded 
+              ? 'h-[620px] sm:h-[780px] lg:h-[900px]' 
+              : 'h-[420px] sm:h-[540px] lg:h-[680px]'
           }`}>
             {/* Loading Indicator */}
             {!iframeLoaded && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#181614] text-white z-10">
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#181614] text-white z-10 px-4 text-center">
                 <div className="w-12 h-12 rounded-2xl bg-orange-500/10 flex items-center justify-center text-orange-400 mb-3 animate-pulse">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M19 22H5v-2h14v2zm-3-4H8v-1.5c0-.83.67-1.5 1.5-1.5h.5c0-.87-.39-1.65-1-2.18V11c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v1.82c-.61.53-1 1.31-1 2.18h.5c.83 0 1.5.67 1.5 1.5V18zm-4-11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
@@ -965,16 +1210,14 @@ export default function TheBoardGamesPage() {
             />
           </div>
 
-          {/* Dedicated Non-Obtrusive Arena Footer Strip */}
-          <div className="bg-slate-50 border-t border-slate-200 px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
-            <div className="flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center shrink-0">
-                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 22H5v-2h14v2zm-3-4H8v-1.5c0-.83.67-1.5 1.5-1.5h.5c0-.87-.39-1.65-1-2.18V11c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v1.82c-.61.53-1 1.31-1 2.18h.5c.83 0 1.5.67 1.5 1.5V18zm-4-11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
-                </svg>
+          {/* Dedicated Arena Footer Strip */}
+          <div className="bg-slate-50 border-t border-slate-200 px-3 sm:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-slate-600">
+            <div className="flex items-center gap-2">
+              <span className="w-5 h-5 rounded-md bg-orange-100 text-orange-700 flex items-center justify-center shrink-0">
+                ♟
               </span>
               <span>
-                <strong className="text-slate-800">Direct Lichess Arena Access:</strong> If browser cookie policies limit in-frame pairing or chat, open directly on Lichess.
+                <strong className="text-slate-800">Direct Lichess Arena Access:</strong> If browser cookie policies limit pairings, open directly on Lichess.
               </span>
             </div>
 
@@ -982,51 +1225,50 @@ export default function TheBoardGamesPage() {
               href={activeArenaMatch.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-bold text-[#E8640A] hover:text-[#c95307] transition-colors whitespace-nowrap shrink-0"
+              className="inline-flex items-center gap-1 font-black text-[#E8640A] hover:text-[#c95307] transition-colors whitespace-nowrap shrink-0"
             >
-              <span>Launch {activeArenaMatch.title} in Lichess</span>
-              <span aria-hidden="true">&rarr;</span>
+              <span>Launch {activeArenaMatch.title} on Lichess &rarr;</span>
             </a>
           </div>
         </div>
       </section>
 
-      {/* ── 3. OFFICIAL TIME CONTROLS (Material 3 Expressive Tonal Cards) ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <p className="text-xs font-black uppercase tracking-widest text-orange-600 mb-2">
+      {/* ── 4. OFFICIAL TIME CONTROLS (Material 3 Expressive Tonal Cards) ── */}
+      <section id="time-controls" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-14 sm:pt-18">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+          <p className="text-xs font-black uppercase tracking-widest text-[#B84D00] mb-1">
             Match Dynamics
           </p>
-          <h2 className="text-2xl sm:text-3xl font-black font-outfit tracking-tight text-slate-900">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-outfit tracking-tight text-slate-900">
             Official Battle Time Controls
           </h2>
-          <p className="text-sm text-slate-600 mt-2 font-medium">
+          <p className="text-xs sm:text-sm text-slate-600 mt-1.5 font-medium leading-relaxed">
             theBOARDGAMES features three certified FIDE & online chess clocks to test tactical speed, intuition, and deep positional accuracy.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {TIME_CONTROLS.map((tc, idx) => (
             <div
               key={idx}
-              className="rounded-3xl p-6 sm:p-7 bg-white border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group"
+              className="rounded-2xl sm:rounded-3xl p-5 sm:p-7 bg-white border border-slate-200/90 shadow-2xs hover:shadow-sm transition-shadow relative overflow-hidden group"
             >
               <div 
                 className="absolute top-0 right-0 w-28 h-28 -mr-6 -mt-6 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"
                 style={{ backgroundColor: tc.accent }}
               />
 
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-3">
                 <span 
-                  className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider"
+                  className="px-2.5 py-1 rounded-full text-xs font-black uppercase tracking-wider"
                   style={{ backgroundColor: `${tc.accent}15`, color: tc.accent }}
                 >
                   {tc.mode}
                 </span>
-                <span className="text-xs font-bold text-slate-400">Match Standard</span>
+                <span className="text-[11px] font-bold text-slate-400">{tc.badge}</span>
               </div>
 
-              <div className="text-3xl sm:text-4xl font-black font-space tracking-tight text-slate-900 mb-3">
+              <div className="text-3xl sm:text-4xl font-black font-space tracking-tight text-slate-900 mb-2">
                 {tc.time}
               </div>
 
@@ -1038,35 +1280,53 @@ export default function TheBoardGamesPage() {
         </div>
       </section>
 
-      {/* ── 4. CONTESTING INSTITUTIONS (Interactive 3D Flip Cards with 5-Board Rosters) ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+      {/* ── 5. CONTESTING INSTITUTIONS (Interactive Flip Cards with 5-Board Rosters) ── */}
+      <section id="institutions" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-14 sm:pt-18">
+        
+        {/* Section Header & Search */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
           <div>
-            <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex items-center gap-2 mb-1">
               <span className="w-2 h-2 rounded-full bg-brand-primary"></span>
               <p className="text-xs font-black uppercase tracking-widest text-brand-primary">
                 National Collegiate Field
               </p>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black font-outfit tracking-tight text-slate-900">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-outfit tracking-tight text-slate-900">
               11 Premier Nigerian Institutions
             </h2>
-            <p className="text-sm text-slate-600 mt-1 font-medium">
-              Click any university card to flip and inspect verified 5-board student rosters linked to their live chess profiles.
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 font-medium">
+              Click or tap any university card to flip and inspect verified 5-board student rosters.
             </p>
           </div>
 
-          <a
-            href="/chess-league/varsity"
-            className="text-xs font-black text-brand-primary hover:text-brand-accent transition-colors flex items-center gap-1.5 shrink-0 px-4 py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 shadow-2xs"
-          >
-            <span>View Full Varsity Rosters</span>
-            <span aria-hidden="true">&rarr;</span>
-          </a>
+          {/* Search Box on Mobile & Desktop */}
+          <div className="flex items-center gap-2 shrink-0">
+            <div className="relative w-full sm:w-64">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search university or player..."
+                className="w-full text-xs font-medium pl-8 pr-3 py-2 rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#E8640A] text-slate-800 placeholder-slate-400"
+              />
+              <svg className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+
+            <a
+              href="/chess-league/varsity"
+              className="text-xs font-black text-brand-primary hover:text-brand-accent transition-colors flex items-center gap-1 shrink-0 px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 shadow-2xs whitespace-nowrap"
+            >
+              <span>Full Varsity Hub &rarr;</span>
+            </a>
+          </div>
         </div>
 
+        {/* Institution Cards Responsive Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {institutionCards.map((uni) => {
+          {filteredInstitutions.map((uni) => {
             const isFlipped = !!flippedCards[uni.id];
 
             return (
@@ -1082,18 +1342,18 @@ export default function TheBoardGamesPage() {
                   }
                 }}
                 aria-label={`${uni.name} roster card. Click to flip.`}
-                className="perspective-1000 h-[290px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-brand-primary rounded-2xl select-none"
+                className="perspective-1000 h-[300px] cursor-pointer group focus:outline-none focus:ring-2 focus:ring-[#E8640A] rounded-2xl select-none"
               >
                 <div
                   className={`relative w-full h-full duration-500 transform-style-3d transition-transform ${
                     isFlipped ? 'rotate-y-180' : ''
                   }`}
                 >
-                  {/* FRONT FACE: Enriched Collegiate Card with Black University Text and Chess Intelligence */}
-                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-sm hover:shadow-md transition-all p-4 sm:p-5 flex flex-col justify-between overflow-hidden">
+                  {/* FRONT FACE: Collegiate Card */}
+                  <div className="absolute inset-0 backface-hidden rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-sm transition-all p-4 flex flex-col justify-between overflow-hidden">
                     <div>
-                      {/* Top Bar: University Short (Black text, no bg) & Rating */}
-                      <div className="flex items-center justify-between mb-2">
+                      {/* Top Bar: University Short & Rating */}
+                      <div className="flex items-center justify-between mb-1.5">
                         <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-black">
                           {uni.short}
                         </span>
@@ -1102,14 +1362,14 @@ export default function TheBoardGamesPage() {
                         </span>
                       </div>
 
-                      {/* University Full Name (Black text, no bg) */}
-                      <h4 className="text-sm sm:text-base font-black text-black font-outfit leading-tight line-clamp-2">
+                      {/* University Full Name */}
+                      <h4 className="text-sm font-black text-black font-outfit leading-snug line-clamp-2">
                         {uni.name}
                       </h4>
 
                       {/* Board 1 Star Contender Pill */}
                       {uni.board1 && (
-                        <div className="mt-2.5 bg-slate-50 rounded-xl p-2.5 flex items-center justify-between">
+                        <div className="mt-2.5 bg-slate-50 rounded-xl p-2 flex items-center justify-between border border-slate-100">
                           <div className="min-w-0 flex-1 pr-2">
                             <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block">
                               Board 1 Lead
@@ -1118,15 +1378,15 @@ export default function TheBoardGamesPage() {
                               {uni.board1.name}
                             </span>
                           </div>
-                          <span className="text-[11px] font-mono font-black text-slate-800 bg-white shadow-2xs px-2 py-0.5 rounded-md shrink-0">
+                          <span className="text-[11px] font-mono font-black text-slate-800 bg-white shadow-2xs px-1.5 py-0.5 rounded-md shrink-0">
                             {uni.board1.rating}
                           </span>
                         </div>
                       )}
 
-                      {/* Collegiate Metrics: Match Record & Rating Range */}
+                      {/* Collegiate Metrics */}
                       <div className="grid grid-cols-2 gap-2 mt-2">
-                        <div className="bg-slate-50 rounded-xl p-2 text-left">
+                        <div className="bg-slate-50 rounded-xl p-2 text-left border border-slate-100">
                           <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block">
                             Match Record
                           </span>
@@ -1134,7 +1394,7 @@ export default function TheBoardGamesPage() {
                             {uni.record ? `${uni.record.wins}W • ${uni.record.draws}D • ${uni.record.losses}L` : 'Active'}
                           </span>
                         </div>
-                        <div className="bg-slate-50 rounded-xl p-2 text-left">
+                        <div className="bg-slate-50 rounded-xl p-2 text-left border border-slate-100">
                           <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block">
                             Rating Range
                           </span>
@@ -1146,7 +1406,7 @@ export default function TheBoardGamesPage() {
 
                       {/* Recent Form */}
                       {uni.recentForm && uni.recentForm.length > 0 && (
-                        <div className="flex items-center justify-between px-1 mt-2.5">
+                        <div className="flex items-center justify-between px-1 mt-2">
                           <span className="text-[9px] font-black uppercase tracking-wider text-slate-400">
                             Recent Form
                           </span>
@@ -1170,9 +1430,9 @@ export default function TheBoardGamesPage() {
                       )}
                     </div>
 
-                    {/* Footer: Roster Flip Action (No squad field) */}
-                    <div className="pt-2 flex items-center justify-end text-xs font-bold text-brand-primary">
-                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-primary hover:text-brand-accent transition-colors">
+                    {/* Footer: Roster Flip Action */}
+                    <div className="pt-2 flex items-center justify-end text-xs font-bold text-[#E8640A]">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#E8640A] group-hover:underline">
                         <span>View 5-Board Roster</span>
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
@@ -1181,10 +1441,10 @@ export default function TheBoardGamesPage() {
                     </div>
                   </div>
 
-                  {/* BACK FACE: SS4 Blue Roster with Clickable Names (No chess.com buttons, holds all 5 players, no scroll) */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-brand-primary text-white shadow-md p-4 sm:p-5 flex flex-col justify-between overflow-hidden">
+                  {/* BACK FACE: SS4 Varsity Navy Roster with Clickable Names */}
+                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-[#0c1e54] text-white shadow-md p-4 flex flex-col justify-between overflow-hidden">
                     {/* Header */}
-                    <div className="flex items-center justify-between pb-2 mb-1.5 shrink-0 border-b border-white/15">
+                    <div className="flex items-center justify-between pb-1.5 mb-1 shrink-0 border-b border-white/15">
                       <span className="text-xs font-black text-white font-outfit uppercase tracking-wider">
                         {uni.short} Roster
                       </span>
@@ -1194,7 +1454,7 @@ export default function TheBoardGamesPage() {
                           e.stopPropagation();
                           toggleCardFlip(uni.id);
                         }}
-                        className="px-2 py-0.5 rounded-md bg-white/15 hover:bg-white text-white hover:text-brand-primary text-[10px] font-bold transition-all flex items-center gap-1 cursor-pointer"
+                        className="px-2 py-0.5 rounded-md bg-white/15 hover:bg-white text-white hover:text-[#0c1e54] text-[10px] font-bold transition-all flex items-center gap-1 cursor-pointer"
                         title="Flip back"
                       >
                         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1204,8 +1464,8 @@ export default function TheBoardGamesPage() {
                       </button>
                     </div>
 
-                    {/* 5-Board Player List: Comfortably holds all 5 players with no scroll */}
-                    <div className="space-y-1.5 flex-1 flex flex-col justify-center py-1">
+                    {/* 5-Board Player List */}
+                    <div className="space-y-1 flex-1 flex flex-col justify-center py-0.5">
                       {uni.players && uni.players.length > 0 ? (
                         uni.players
                           .slice()
@@ -1213,10 +1473,10 @@ export default function TheBoardGamesPage() {
                           .map((player) => (
                             <div
                               key={player.id || player.board}
-                              className="flex items-center justify-between py-1.5 px-2.5 rounded-lg bg-white/10 hover:bg-white/15 transition-all text-xs"
+                              className="flex items-center justify-between py-1 px-2 rounded-lg bg-white/10 hover:bg-white/15 transition-all text-xs"
                             >
                               <div className="flex items-center gap-2 min-w-0 flex-1">
-                                <span className="w-5 h-5 rounded bg-white/20 text-white font-mono text-[10px] font-black flex items-center justify-center shrink-0">
+                                <span className="w-4 h-4 rounded bg-white/20 text-white font-mono text-[9px] font-black flex items-center justify-center shrink-0">
                                   B{player.board}
                                 </span>
                                 <button
@@ -1241,7 +1501,7 @@ export default function TheBoardGamesPage() {
                     </div>
 
                     {/* Footer hint */}
-                    <div className="pt-2 text-center shrink-0">
+                    <div className="pt-1.5 text-center shrink-0">
                       <span className="text-[10px] text-white/60">
                         Tap player name to view info
                       </span>
@@ -1252,6 +1512,19 @@ export default function TheBoardGamesPage() {
             );
           })}
         </div>
+
+        {filteredInstitutions.length === 0 && (
+          <div className="p-8 text-center bg-white rounded-2xl border border-slate-200 mt-4">
+            <p className="text-sm font-bold text-slate-700">No universities or players matched &quot;{searchQuery}&quot;</p>
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="mt-2 text-xs font-bold text-[#E8640A] hover:underline"
+            >
+              Clear search filter
+            </button>
+          </div>
+        )}
       </section>
 
       {/* ── 6. POSTER FULLSCREEN ZOOM MODAL ── */}
@@ -1281,7 +1554,7 @@ export default function TheBoardGamesPage() {
         )}
       </AnimatePresence>
 
-      {/* ── 8. PLAYER PROFILE MODAL ── */}
+      {/* ── 7. PLAYER PROFILE MODAL ── */}
       {selectedPlayerForModal && (
         <PlayerProfile
           player={selectedPlayerForModal}

@@ -141,6 +141,7 @@ const TOURNAMENTS_ARCHIVE = [
   { month: '2026-10', date: '2026-10-27', category: 'boardgames_knockout', name: 'Round of 16', id: '8VVBHELH', type: 'swiss' },
   { month: '2026-10', date: '2026-10-28', category: 'boardgames_knockout', name: 'Quarterfinals', id: 'y72XMtFc', type: 'swiss' },
   { month: '2026-10', date: '2026-10-29', category: 'boardgames_knockout', name: 'Semifinals', id: 'Y7Sf6EvG', type: 'swiss' },
+  { month: '2026-10', date: '2026-10-31', category: 'boardgames_knockout', name: 'Grand Finals', id: 'Rb5PLa71', type: 'swiss' },
 ];
 
 const VARSITY_INSTITUTIONS = [
@@ -350,6 +351,7 @@ INSERT INTO public.daily_friendlies (tournament_date, player_username, points, p
         });
       });
 
+      const topWinner = td.results.length > 0 ? td.results[0].username : null;
       rounds.push({
         id: `R_${td.config.id}`,
         name: roundName,
@@ -357,6 +359,7 @@ INSERT INTO public.daily_friendlies (tournament_date, player_username, points, p
         date: td.config.date,
         lichess_id: td.config.id,
         lichess_type: td.config.type,
+        winner: topWinner,
         gamesCount: roundGames.length,
         games: roundGames
       });
@@ -392,7 +395,16 @@ INSERT INTO public.daily_friendlies (tournament_date, player_username, points, p
     })).sort((a, b) => b.points - a.points || b.performance - a.performance);
 
     const winnerPlayer = playersList.length > 0 ? playersList[0] : null;
-    const winnerName = winnerPlayer ? winnerPlayer.name : 'Unknown';
+    let winnerName = winnerPlayer ? winnerPlayer.name : 'Unknown';
+
+    if (m === '2026-10') {
+      const finalsRound = rounds.find(r => r.lichess_id === 'Rb5PLa71' || r.name.toLowerCase().includes('grand final') || (r.name.toLowerCase().includes('final') && !r.name.toLowerCase().includes('semi') && !r.name.toLowerCase().includes('quarter')));
+      if (finalsRound && finalsRound.winner) {
+        winnerName = finalsRound.winner;
+      } else {
+        winnerName = 'Juk3s';
+      }
+    }
 
     let tournamentTitle = '';
     if (m === '2026-07') tournamentTitle = 'July 2026 SCL Tournament';
@@ -565,12 +577,23 @@ export const GAME_RECORDS = ${JSON.stringify(verifiedGameRecords.slice(0, 30), n
 
   // 7B: Update src/features/chess-league/data/boardGamesData.json
   console.log('\nUpdating src/features/chess-league/data/boardGamesData.json with verified October data...');
+  const STAGE_KEYS = {
+    'Round of 32': 'RO32',
+    'Round of 16': 'RO16',
+    'Quarterfinals': 'QF',
+    'Semifinals': 'SF',
+    'Grand Finals': 'F',
+    'Final': 'F'
+  };
+
   const octTourneys = tournamentsData.filter(td => td.config.month === '2026-10');
   const boardGamesEvents = octTourneys.map(td => {
-    const podiumPlayers = td.results.slice(0, 3).map(r => r.username);
+    const isLeague = td.config.name.includes('Match');
+    const stageKey = STAGE_KEYS[td.config.name] || td.config.id;
+    const podiumPlayers = td.results.slice(0, 3).map(r => `${r.username} (${r.score != null ? r.score : (r.points != null ? r.points : 0)} pts)`);
     return {
-      key: td.config.id,
-      matchNumber: td.config.name.includes('Match') ? parseInt(td.config.name.replace(/\D/g, '') || '0') : null,
+      key: stageKey,
+      matchNumber: isLeague ? parseInt(td.config.name.replace(/\D/g, '') || '0') : null,
       label: td.config.name,
       day: parseInt(td.config.date.split('-')[2]),
       weekday: new Date(td.config.date).toLocaleDateString('en-US', { weekday: 'short' }),
@@ -579,12 +602,34 @@ export const GAME_RECORDS = ${JSON.stringify(verifiedGameRecords.slice(0, 30), n
       kind: td.config.type,
       id: td.config.id,
       link: `https://lichess.org/${td.config.type === 'arena' ? 'tournament' : 'swiss'}/${td.config.id}`,
-      timeControl: td.info.clock ? `${td.info.clock.limit / 60}+${td.info.clock.increment}` : 'Blitz',
+      timeControl: td.info.clock ? `${td.info.clock.limit / 60}+${td.info.clock.increment}` : (isLeague ? '5+0' : '10+0'),
       status: 'COMPLETED',
       podium: podiumPlayers,
       totalPlayers: td.results.length,
       totalGames: td.games.length,
-      recap: `Verified Lichess archive: ${td.results.length} contenders competed across ${td.games.length} games.`
+      recap: td.config.name.includes('Grand Final')
+        ? `Verified Lichess archive: Juk3s defeated Darlington12 (2 - 1) in the Grand Finals best-of-3 to become the theBoardGames October Champion.`
+        : `Verified Lichess archive: ${td.results.length} contenders competed across ${td.games.length} games.`,
+      results: {
+        totalPlayers: td.results.length,
+        totalGames: td.games.length,
+        podium: td.results.slice(0, 3).map((r, i) => ({
+          rank: i + 1,
+          label: i === 0 ? 'Champion' : i === 1 ? 'Runner-Up' : '3rd Place',
+          name: r.username,
+          rating: r.rating || 0,
+          score: r.score != null ? r.score : (r.points != null ? r.points : 0),
+          performance: r.performance || 0
+        })),
+        standings: td.results.slice(0, 10).map((r, i) => ({
+          rank: i + 1,
+          name: r.username,
+          score: r.score != null ? r.score : (r.points != null ? r.points : 0),
+          rating: r.rating || 0,
+          performance: r.performance || 0,
+          record: `${r.score != null ? r.score : (r.points != null ? r.points : 0)} pts`
+        }))
+      }
     };
   });
 

@@ -38,7 +38,7 @@ const EVENTS = BOARD_GAMES_EVENTS.map((e) => {
     stage: isLeague ? `League Match ${e.matchNumber}` : e.label,
     isLive: e.status === 'LIVE',
     isCompleted: e.status === 'COMPLETED',
-    highlights: [e.timeControl, ...(['RO32', 'RO16', 'QF'].includes(e.key) ? ['Best of 3'] : []), ...podiumHighlights],
+    highlights: [e.timeControl, ...(['RO32', 'RO16', 'QF', 'F'].includes(e.key) ? ['Best of 3'] : []), ...podiumHighlights],
   };
 });
 
@@ -471,7 +471,7 @@ export default function TheBoardGamesPage() {
                 the<span className="text-[#E8640A]">BOARDGAMES</span> Hub
               </h1>
               <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl leading-relaxed">
-                Official tournament arena center for Nigeria&apos;s elite collegiate chess championship. 11 premier universities, 12 verified stages, and live game-by-game records.
+                Official tournament arena center for Nigeria&apos;s elite collegiate chess championship. 11 premier universities, 13 verified stages, and live game-by-game records.
               </p>
             </div>
 
@@ -510,8 +510,8 @@ export default function TheBoardGamesPage() {
             </div>
             <div className="bg-white border border-slate-200/90 rounded-xl p-3 shadow-2xs">
               <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Tournament Matches</span>
-              <span className="text-xl sm:text-2xl font-black font-space text-slate-900 block mt-0.5">12 Stages</span>
-              <span className="text-[11px] text-slate-500 font-medium">8 Arenas • 4 Knockouts</span>
+              <span className="text-xl sm:text-2xl font-black font-space text-slate-900 block mt-0.5">13 Stages</span>
+              <span className="text-[11px] text-slate-500 font-medium">8 Arenas • 5 Knockouts</span>
             </div>
             <div className="bg-white border border-slate-200/90 rounded-xl p-3 shadow-2xs">
               <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Active Contenders</span>
@@ -520,7 +520,7 @@ export default function TheBoardGamesPage() {
             </div>
             <div className="bg-white border border-slate-200/90 rounded-xl p-3 shadow-2xs">
               <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Games Recorded</span>
-              <span className="text-xl sm:text-2xl font-black font-space text-slate-900 block mt-0.5">767 Games</span>
+              <span className="text-xl sm:text-2xl font-black font-space text-slate-900 block mt-0.5">770 Games</span>
               <span className="text-[11px] text-slate-500 font-medium">With real Lichess PGNs</span>
             </div>
           </div>
@@ -559,7 +559,7 @@ export default function TheBoardGamesPage() {
                     : 'hover:text-slate-900'
                 }`}
               >
-                Match Days (12)
+                Match Days ({EVENTS.filter((e) => e.link).length})
               </button>
               <button
                 type="button"
@@ -1057,7 +1057,7 @@ export default function TheBoardGamesPage() {
                   arenaStageTab === 'all' ? 'bg-white text-slate-900 shadow-2xs font-black' : 'hover:text-slate-900'
                 }`}
               >
-                All (12)
+                All ({LEAGUE_MATCHES.length})
               </button>
               <button
                 type="button"

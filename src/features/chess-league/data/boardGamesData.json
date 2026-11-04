@@ -42,7 +42,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "D-genius",
           "rating": 2228,
           "score": 23,
@@ -176,7 +176,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "minatoe5",
           "rating": 2114,
           "score": 22,
@@ -310,7 +310,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "Ataria-Daniel-2002",
           "rating": 2034,
           "score": 22,
@@ -444,7 +444,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "Chi_chibaby",
           "rating": 2019,
           "score": 22,
@@ -578,7 +578,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "mittensttock",
           "rating": 1822,
           "score": 14,
@@ -712,7 +712,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "Juk3s",
           "rating": 2274,
           "score": 15,
@@ -846,7 +846,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "bobby_f1she",
           "rating": 1993,
           "score": 15,
@@ -980,7 +980,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "Juk3s",
           "rating": 2256,
           "score": 26,
@@ -1072,7 +1072,7 @@
     }
   },
   {
-    "key": "LAaeLViF",
+    "key": "RO32",
     "matchNumber": null,
     "label": "Round of 32",
     "day": 25,
@@ -1114,7 +1114,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "Benz123",
           "rating": 1976,
           "score": 3,
@@ -1206,7 +1206,7 @@
     }
   },
   {
-    "key": "8VVBHELH",
+    "key": "RO16",
     "matchNumber": null,
     "label": "Round of 16",
     "day": 27,
@@ -1248,7 +1248,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "Juk3s",
           "rating": 2206,
           "score": 2,
@@ -1340,7 +1340,7 @@
     }
   },
   {
-    "key": "y72XMtFc",
+    "key": "QF",
     "matchNumber": null,
     "label": "Quarterfinals",
     "day": 28,
@@ -1382,7 +1382,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "Darlington12",
           "rating": 2380,
           "score": 2,
@@ -1458,7 +1458,7 @@
     }
   },
   {
-    "key": "Y7Sf6EvG",
+    "key": "SF",
     "matchNumber": null,
     "label": "Semifinals",
     "day": 29,
@@ -1500,7 +1500,7 @@
         },
         {
           "rank": 3,
-          "label": "2nd Runner-Up",
+          "label": "3rd Place",
           "name": "Chi_chibaby",
           "rating": 2149,
           "score": 1,
@@ -1538,6 +1538,67 @@
           "score": 1,
           "rating": 2152,
           "performance": 2075,
+          "record": "1 pts"
+        }
+      ]
+    }
+  },
+  {
+    "key": "F",
+    "matchNumber": null,
+    "label": "Grand Finals",
+    "day": 31,
+    "weekday": "Sat",
+    "title": "theBoardGames Grand Finals",
+    "announcement": "theBoardGames F",
+    "kind": "swiss",
+    "id": "Rb5PLa71",
+    "link": "https://lichess.org/swiss/Rb5PLa71",
+    "timeControl": "10+0",
+    "status": "COMPLETED",
+    "podium": [
+      "Juk3s (2 pts)",
+      "Darlington12 (1 pts)"
+    ],
+    "totalPlayers": 2,
+    "totalGames": 3,
+    "recap": "Verified Lichess archive: Juk3s defeated Darlington12 (2 - 1) in the Grand Finals best-of-3 to become the theBoardGames October Champion.",
+    "results": {
+      "totalPlayers": 2,
+      "totalGames": 3,
+      "podium": [
+        {
+          "rank": 1,
+          "label": "Champion",
+          "name": "Juk3s",
+          "rating": 2235,
+          "score": 2,
+          "performance": 2538
+        },
+        {
+          "rank": 2,
+          "label": "Runner-Up",
+          "name": "Darlington12",
+          "rating": 2357,
+          "score": 1,
+          "performance": 2068
+        }
+      ],
+      "standings": [
+        {
+          "rank": 1,
+          "name": "Juk3s",
+          "score": 2,
+          "rating": 2235,
+          "performance": 2538,
+          "record": "2 pts"
+        },
+        {
+          "rank": 2,
+          "name": "Darlington12",
+          "score": 1,
+          "rating": 2357,
+          "performance": 2068,
           "record": "1 pts"
         }
       ]

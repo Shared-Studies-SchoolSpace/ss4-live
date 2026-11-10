@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FeedCardActions } from './FeedCardActions';
 import { FeedCardComments } from './FeedCardComments';
 import { AddToCalendarButton } from './AddToCalendarButton';
-import SCLFixtureCard from '../../features/chess-league/components/SCLFixtureCard';
+import { MatchResult } from '../../features/chess-league/components/MatchResult';
 import './feedStyles.css';
 
 import { FormattedFeedText } from './FormattedFeedText';
@@ -134,9 +134,16 @@ export function MultimediaPost({
 
     if (mediaType === 'fixture') {
       return (
-        <div className="p-3 sm:p-4 bg-slate-50 border-b border-slate-200 space-y-2">
+        <div className="p-3 sm:p-4 bg-brand-bg-cream/40 border-b border-gray-150 space-y-2">
           {(post.fixtures || []).map((fx, idx) => (
-            <SCLFixtureCard key={idx} {...fx} />
+            <MatchResult
+              key={idx}
+              w={fx.w || (fx.p1 ? `${fx.p1.name} (${fx.p1.username})` : '')}
+              b={fx.b || (fx.p2 ? `${fx.p2.name} (${fx.p2.username})` : '')}
+              res={fx.res || (fx.winner === 'p1' ? 'white' : fx.winner === 'p2' ? 'black' : fx.winner === 'draw' ? 'draw' : null)}
+              round={fx.round || `${fx.stage || ''}${fx.board ? ` • Board ${fx.board}` : ''}`}
+              date={fx.date}
+            />
           ))}
           {readTime && <div className="feed-card-readtime">{readTime}</div>}
         </div>

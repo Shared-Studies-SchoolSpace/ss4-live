@@ -337,28 +337,18 @@ Many Institutions, One Space. The Board Remembers.`,
     mediaType: 'fixture',
     fixtures: [
       {
-        tournament: 'SCL August Championship',
-        stage: 'Semifinals',
-        board: 1,
-        date: 'Sept 3, 2026',
-        time: '8:00 PM WAT',
-        platform: 'Chess.com / Lichess',
-        p1: { name: 'Emmanuel Michael', username: 'lkbeast1', school: 'FUTIA', rating: 2050, score: 2 },
-        p2: { name: 'Kenneth Gilbert', username: 'Prince_of_pieceX', school: 'UNILORIN', rating: 1980, score: 0 },
-        winner: 'p1',
-        status: 'completed'
+        w: 'Emmanuel Michael (lkbeast1)',
+        b: 'Kenneth Gilbert (Prince_of_pieceX)',
+        res: 'white',
+        round: 'Semifinals • Board 1',
+        date: 'Sept 3, 2026'
       },
       {
-        tournament: 'SCL August Championship',
-        stage: 'Semifinals',
-        board: 2,
-        date: 'Sept 3, 2026',
-        time: '8:00 PM WAT',
-        platform: 'Chess.com / Lichess',
-        p1: { name: 'James Henshaw', username: 'oblivion1416', school: 'Bells University', rating: 1920, score: 0 },
-        p2: { name: 'Anuchi Emmanuel', username: 'robobobobobobob', school: 'Covenant University', rating: 2110, score: 2 },
-        winner: 'p2',
-        status: 'completed'
+        w: 'James Henshaw (oblivion1416)',
+        b: 'Anuchi Emmanuel (robobobobobobob)',
+        res: 'black',
+        round: 'Semifinals • Board 2',
+        date: 'Sept 3, 2026'
       }
     ],
     categoryClass: 'tournament',
@@ -401,48 +391,32 @@ Many Institutions, One Space. The Board Remembers.`,
     mediaType: 'fixture',
     fixtures: [
       {
-        tournament: 'SCL August Championship',
-        stage: 'Quarterfinals',
-        board: 1,
-        date: 'Sept 2, 2026',
-        time: '8:00 PM WAT',
-        p1: { name: 'Emmanuel Michael', username: 'lkbeast1', school: 'FUTIA', rating: 2050, score: 2 },
-        p2: { name: 'Jesse Edem', username: 'jesse70256', school: 'UNIUYO', rating: 1820, score: 1 },
-        winner: 'p1',
-        status: 'completed'
+        w: 'Emmanuel Michael (lkbeast1)',
+        b: 'Jesse Edem (jesse70256)',
+        res: 'white',
+        round: 'Quarterfinals • Board 1',
+        date: 'Sept 2, 2026'
       },
       {
-        tournament: 'SCL August Championship',
-        stage: 'Quarterfinals',
-        board: 2,
-        date: 'Sept 2, 2026',
-        time: '8:00 PM WAT',
-        p1: { name: 'Kenneth Gilbert', username: 'Prince_of_pieceX', school: 'UNILORIN', rating: 1980, score: 2 },
-        p2: { name: 'Princewill Obi', username: 'Mathemachesser-THE-GOAT', school: 'Landmark University', rating: 1890, score: 1 },
-        winner: 'p1',
-        status: 'completed'
+        w: 'Kenneth Gilbert (Prince_of_pieceX)',
+        b: 'Princewill Obi (Mathemachesser-THE-GOAT)',
+        res: 'white',
+        round: 'Quarterfinals • Board 2',
+        date: 'Sept 2, 2026'
       },
       {
-        tournament: 'SCL August Championship',
-        stage: 'Quarterfinals',
-        board: 3,
-        date: 'Sept 2, 2026',
-        time: '8:00 PM WAT',
-        p1: { name: 'Akogo Simon', username: 'Akogo', school: 'Babcock University', rating: 1850, score: 0 },
-        p2: { name: 'Anuchi Emmanuel', username: 'robobobobobobob', school: 'Covenant University', rating: 2110, score: 2 },
-        winner: 'p2',
-        status: 'completed'
+        w: 'Akogo Simon (Akogo)',
+        b: 'Anuchi Emmanuel (robobobobobobob)',
+        res: 'black',
+        round: 'Quarterfinals • Board 3',
+        date: 'Sept 2, 2026'
       },
       {
-        tournament: 'SCL August Championship',
-        stage: 'Quarterfinals',
-        board: 4,
-        date: 'Sept 2, 2026',
-        time: '8:00 PM WAT',
-        p1: { name: 'Dean Bassey', username: 'deanbassey001', school: 'UNICAL', rating: 1880, score: 0 },
-        p2: { name: 'James Henshaw', username: 'oblivion1416', school: 'Bells University', rating: 1920, score: 2 },
-        winner: 'p2',
-        status: 'completed'
+        w: 'Dean Bassey (deanbassey001)',
+        b: 'James Henshaw (oblivion1416)',
+        res: 'black',
+        round: 'Quarterfinals • Board 4',
+        date: 'Sept 2, 2026'
       }
     ],
     categoryClass: 'tournament',

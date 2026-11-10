@@ -97,9 +97,8 @@ export const Header = () => {
                   </svg>
                 </button>
                 <div className="absolute top-[100%] left-0 mt-1 w-56 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
-                  <Link to="/theboardgames" className="block px-4 py-2.5 text-xs font-black text-orange-600 hover:bg-orange-50 transition-colors flex items-center justify-between">
-                    <span>theBOARDGAMES Hub</span>
-                    <span className="text-[9px] font-black bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded uppercase">Active</span>
+                  <Link to="/theboardgames" className="block px-4 py-2.5 text-xs font-black text-orange-600 hover:bg-orange-50 transition-colors">
+                    theBOARDGAMES Hub
                   </Link>
                   <Link to="/theboardgames?tab=daily-league" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Daily League Arenas</Link>
                   <Link to="/theboardgames?tab=monthly-tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Monthly Tournaments</Link>

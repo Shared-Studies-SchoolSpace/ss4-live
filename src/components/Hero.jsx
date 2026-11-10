@@ -60,17 +60,17 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-lg"
         >
-          <h2 className="text-[10px] sm:text-xs lg:text-sm font-space font-bold tracking-[0.2em] mb-4 sm:mb-6 opacity-90 uppercase">
-            An Institution for Secondary Education Excellence
+          <h2 className="text-[10px] sm:text-xs lg:text-sm font-space font-bold tracking-[0.2em] mb-4 sm:mb-6 opacity-90 uppercase text-orange-400">
+            An Ecosystem for Academia
           </h2>
           <h1 className="text-3xl sm:text-4xl lg:text-6xl font-space font-black leading-tight mb-5 sm:mb-8 uppercase">
-            A Haven for Institutions
+            Many Institutions, One Space
           </h1>
           
           <div className="w-24 h-1 bg-brand-accent mb-8 rounded-full" />
           
           <p className="text-white text-sm sm:text-lg lg:text-xl font-medium mb-7 sm:mb-10 max-w-lg drop-shadow-md leading-relaxed">
-            SS4 connects schools, tertiary institutions, departments, and students into one shared space where they compete, collaborate, and build together. Before SS4, institutions were islands. Now they are one continent.
+            SS4 connects tertiary institutions, departments, and collegiate intellects into one shared arena. The SS4 Chess League (SCL) is its premier competitive initiative—uniting Nigeria&apos;s brightest student masters across verified tournaments, daily arenas, and inter-university rivalries.
           </p>
 
           <div className="space-y-6">
@@ -78,23 +78,23 @@ export const Hero = () => {
               Get Started
             </h3>
             <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6">
+              <Button 
+                onClick={() => navigate('/theboardgames')}
+                variant="primary" 
+                className="px-8 py-3 uppercase tracking-wider text-[11px] font-black shadow-md rounded-full border-none text-white cursor-pointer"
+                style={{ backgroundColor: '#E8640A' }}
+              >
+                Enter theBOARDGAMES
+              </Button>
+              
               <AuthGate reason="join the SS4 League" onAction={() => navigate('/dashboard')}>
                 <Button 
-                  variant="primary" 
-                  className="px-8 py-3 uppercase tracking-wider text-[11px] font-black shadow-md rounded-full border-none text-white"
-                  style={{ backgroundColor: '#E8640A' }}
+                  variant="secondary" 
+                  className="px-8 py-3 uppercase tracking-wider text-[11px] font-black rounded-full bg-white text-[#111111] hover:bg-gray-100 border-none cursor-pointer"
                 >
-                  Join League Arena
+                  Player Dashboard
                 </Button>
               </AuthGate>
-              
-              <Button 
-                onClick={() => navigate("/schools")} 
-                variant="secondary" 
-                className="px-8 py-3 uppercase tracking-wider text-[11px] font-black rounded-full bg-white text-[#111111] hover:bg-gray-100 border-none"
-              >
-                Explore Schools
-              </Button>
             </div>
           </div>
         </Motion.div>

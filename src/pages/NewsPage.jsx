@@ -16,14 +16,6 @@ const mockNews = [
         isHero: true
     },
     { 
-        tag: 'Aspirants Award', 
-        title: 'First Cycle Announcement: Applications Open Oct 30', 
-        desc: 'Prestige recognition program celebrating top JAMB scorers from verified SS4 secondary schools with cash prizes and sponsorships.', 
-        date: 'Oct 2, 2026',
-        image: 'https://images.unsplash.com/photo-1523821741446-edb2b68bb7a0?auto=format&fit=crop&q=80&w=800',
-        colSpan: 'md:col-span-1 lg:col-span-1'
-    },
-    { 
         tag: 'Varsity Tournament', 
         title: 'Official 11-Team Squad Lineups Released', 
         desc: '11 top Nigerian universities locked in their 5-player rosters for the SS4 Chess League Varsity Tournament.', 
@@ -42,17 +34,15 @@ const mockNews = [
     { 
         tag: 'August Semifinals', 
         title: 'Final Four Clash Over 64 Squares', 
-        desc: 'Semifinals showdown featuring FUTIA, UNILORIN, Bells Tech, and Covenant University.', 
+        desc: 'Semifinals showdown featuring FUTIA, UNILORIN, Bells Tech, and Covenant University. Verified collegiate showdowns on Lichess.', 
         date: 'Sep 3, 2026',
-        image: '/august-tournament-semifinals.png',
         colSpan: 'md:col-span-1 lg:col-span-1'
     },
     { 
         tag: 'August Quarterfinals', 
         title: 'Elite 8 Contenders Battle', 
-        desc: 'Quarterfinal fixtures across 8 top Nigerian university contenders.', 
+        desc: 'Quarterfinal fixtures across 8 top Nigerian university contenders. Pure collegiate chess excellence.', 
         date: 'Sep 2, 2026',
-        image: '/august-tournament-quarterfinals.jpg',
         colSpan: 'md:col-span-1 lg:col-span-1'
     }
 ];

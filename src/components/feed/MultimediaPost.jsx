@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FeedCardActions } from './FeedCardActions';
 import { FeedCardComments } from './FeedCardComments';
 import { AddToCalendarButton } from './AddToCalendarButton';
+import SCLFixtureCard from '../../features/chess-league/components/SCLFixtureCard';
 import './feedStyles.css';
 
 import { FormattedFeedText } from './FormattedFeedText';
@@ -127,6 +128,17 @@ export function MultimediaPost({
               <div className="photo-overlay-count">{photoMeta.remainingCount || '+4'}</div>
             </div>
           </div>
+        </div>
+      );
+    }
+
+    if (mediaType === 'fixture') {
+      return (
+        <div className="p-3 sm:p-4 bg-slate-50 border-b border-slate-200 space-y-2">
+          {(post.fixtures || []).map((fx, idx) => (
+            <SCLFixtureCard key={idx} {...fx} />
+          ))}
+          {readTime && <div className="feed-card-readtime">{readTime}</div>}
         </div>
       );
     }

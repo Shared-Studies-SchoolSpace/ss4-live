@@ -57,7 +57,7 @@ export default function FriendliesPage() {
                 <span className="material-symbols-outlined text-[16px] animate-spin select-none">
                   progress_activity
                 </span>
-                Loading Arena Data
+                Connecting...
               </span>
             ) : status === 'live' ? (
               <span className="inline-flex items-center gap-2 text-xs bg-rose-500/20 border border-rose-500/20 text-rose-200 font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">

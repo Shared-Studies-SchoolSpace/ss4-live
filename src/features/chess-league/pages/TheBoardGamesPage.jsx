@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { VARSITY_TEAMS } from '../data/varsityData';
 import { PlayerProfile } from '../components/PlayerProfile';
 import { fetchCompletePlayerData } from '../utils/chessService';
+import DailyFriendliesLeaderboard from '../components/DailyFriendliesLeaderboard';
+import ChessTournamentPage from './ChessTournamentPage';
 
 import BOARD_GAMES_EVENTS from '../data/boardGamesData.json';
 
@@ -206,6 +209,18 @@ const TOURNAMENT_DAYS = Array.from({ length: 23 }, (_, i) => {
 });
 
 export default function TheBoardGamesPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const rawTab = searchParams.get('tab');
+  const activeTab = (rawTab === 'daily' || rawTab === 'daily-league' || rawTab === 'league')
+    ? 'daily-league'
+    : (rawTab === 'monthly' || rawTab === 'monthly-tournament' || rawTab === 'tournament')
+    ? 'monthly-tournament'
+    : 'championship';
+
+  const handleTabChange = (tabKey) => {
+    setSearchParams({ tab: tabKey });
+  };
+
   const [activeArenaMatch, setActiveArenaMatch] = useState(LEAGUE_MATCHES[0]);
   const [selectedDay, setSelectedDay] = useState(() => {
     return TOURNAMENT_DAYS.find(d => d.isLive) || TOURNAMENT_DAYS[0];
@@ -404,10 +419,62 @@ export default function TheBoardGamesPage() {
   return (
     <div className="w-full bg-[#FAF9F6] text-slate-900 min-h-screen selection:bg-orange-500 selection:text-white font-sans pb-16">
 
+      {/* ── UNIFIED SCL COMPETITION SWITCHER BAR ── */}
+      <div className="bg-[#0B1B3D] text-white py-3 px-3 sm:px-6 border-b border-white/10 sticky top-0 z-50 shadow-md">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="font-outfit font-black text-sm tracking-wider uppercase text-orange-400">
+              SS4 Chess League
+            </span>
+            <span className="text-white/40 hidden sm:inline">•</span>
+            <span className="text-xs text-white/80 font-medium hidden sm:inline">theBOARDGAMES Hub</span>
+          </div>
+
+          <div className="flex items-center bg-white/10 p-1 rounded-xl border border-white/15 gap-1 overflow-x-auto max-w-full">
+            <button
+              type="button"
+              onClick={() => handleTabChange('championship')}
+              className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
+                activeTab === 'championship'
+                  ? 'bg-[#E8640A] text-white shadow-sm'
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              ⚡ theBOARDGAMES
+            </button>
+            <button
+              type="button"
+              onClick={() => handleTabChange('daily-league')}
+              className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
+                activeTab === 'daily-league'
+                  ? 'bg-[#E8640A] text-white shadow-sm'
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              🔥 Daily League
+            </button>
+            <button
+              type="button"
+              onClick={() => handleTabChange('monthly-tournament')}
+              className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
+                activeTab === 'monthly-tournament'
+                  ? 'bg-[#E8640A] text-white shadow-sm'
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              🏆 Monthly Tournaments
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ── TAB 1: theBOARDGAMES Championship ── */}
+      {activeTab === 'championship' && (
+        <React.Fragment>
       {/* ── 0. STICKY QUICK-NAVIGATION SUB-BAR ── */}
       <nav 
         aria-label="theBoardGames Quick Navigation"
-        className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs py-2 px-3 sm:px-6 transition-all"
+        className="sticky top-12 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs py-2 px-3 sm:px-6 transition-all"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
           {/* Logo / Badge */}
@@ -1526,6 +1593,38 @@ export default function TheBoardGamesPage() {
           </div>
         )}
       </section>
+      </React.Fragment>
+      )}
+
+      {/* ── TAB 2: Daily League Arenas & Standings ── */}
+      {activeTab === 'daily-league' && (
+        <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-10">
+          <div className="mb-6 space-y-1">
+            <div className="inline-flex items-center gap-2 bg-[#FFEEDB] text-[#2E0E00] border border-orange-200 px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider">
+              <span>SS4 Chess League</span>
+              <span>•</span>
+              <span>Daily Arena Series</span>
+            </div>
+            <h1 className="text-2xl sm:text-4xl font-black font-outfit text-slate-900 tracking-tight">
+              Daily League Leaderboard &amp; Arenas
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl">
+              Official cumulative standings, nightly blitz results, and performance ratings across all SCL Daily Arenas on Lichess.
+            </p>
+          </div>
+
+          <DailyFriendliesLeaderboard
+            onPlayerSelect={(p) => setSelectedPlayerForModal(p)}
+          />
+        </section>
+      )}
+
+      {/* ── TAB 3: Monthly Tournaments Hub ── */}
+      {activeTab === 'monthly-tournament' && (
+        <div className="w-full">
+          <ChessTournamentPage />
+        </div>
+      )}
 
       {/* ── 6. POSTER FULLSCREEN ZOOM MODAL ── */}
       <AnimatePresence>

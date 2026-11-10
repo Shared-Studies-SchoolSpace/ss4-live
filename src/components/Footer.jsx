@@ -46,10 +46,13 @@ export const Footer = () => {
              </Link>
              <ul className="flex flex-wrap gap-x-8 gap-y-3">
                 {[
-                  { label: 'About Us', href: '/about' },
-                  { label: 'Daily League', href: '/league' },
-                  { label: 'SS4 for Sponsors', href: '/partners' },
-                  { label: 'Blog', href: '/news' },
+                  { label: 'About SS4', href: '/about' },
+                  { label: 'theBOARDGAMES', href: '/theboardgames' },
+                  { label: 'Daily League', href: '/theboardgames?tab=daily-league' },
+                  { label: 'Monthly Tournaments', href: '/theboardgames?tab=monthly-tournament' },
+                  { label: 'Varsity Championship', href: '/chess-league/varsity' },
+                  { label: 'Universities', href: '/tertiary' },
+                  { label: 'Partners', href: '/partners' },
                   { label: 'Contact SS4', href: 'mailto:ss4.mail.org@gmail.com' }
                 ].map(l => (
                     <li key={l.label}>
@@ -64,12 +67,13 @@ export const Footer = () => {
           </div>
 
           <FooterColumn 
-            title="Search Categories"
+            title="SS4 Chess League"
             links={[
-              { label: 'Secondary Schools', href: '/schools' },
-              { label: 'Tertiary Institutions', href: '/tertiary' },
-              { label: 'Departments', href: '/tertiary' },
-              { label: 'Daily League', href: '/league' }
+              { label: 'theBOARDGAMES Championship', href: '/theboardgames' },
+              { label: 'Daily League Arenas', href: '/theboardgames?tab=daily-league' },
+              { label: 'Monthly Tournaments', href: '/theboardgames?tab=monthly-tournament' },
+              { label: 'Varsity Championship', href: '/chess-league/varsity' },
+              { label: 'Tertiary Institutions', href: '/tertiary' }
             ]}
           />
         </div>

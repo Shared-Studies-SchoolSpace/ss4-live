@@ -110,7 +110,6 @@ export default function LandingPage() {
   // Preloading States
   const [isPreloading, setIsPreloading] = useState(true);
   const [preloadProgress, setPreloadProgress] = useState(0);
-  const [preloadStatus, setPreloadStatus] = useState("Loading Arena...");
 
   // 1. Load data from Supabase / SessionStorage Cache
   useEffect(() => {
@@ -130,7 +129,6 @@ export default function LandingPage() {
 
     const loadAndPreload = async () => {
       try {
-        setPreloadStatus("Loading Arena...");
         setPreloadProgress(10);
         
         // Fetch announcements
@@ -143,7 +141,6 @@ export default function LandingPage() {
         setPreloadProgress(25);
 
         // Fetch tournaments
-        setPreloadStatus("Retrieving match history...");
         const { data: tournaments } = await supabase
           .from("tournaments")
           .select("*");
@@ -190,7 +187,6 @@ export default function LandingPage() {
         setPreloadProgress(45);
 
         // Fetch profiles
-        setPreloadStatus("Loading player records...");
         const { data: profs } = await supabase
           .from("profiles")
           .select("name, university, chess_username, lichess_username, chess_rating, lichess_rating")
@@ -239,7 +235,6 @@ export default function LandingPage() {
         setPreloadProgress(70);
 
         // Preload profiles & avatar pictures
-        setPreloadStatus("Caching active profiles & avatar pictures...");
         const activeUsernames = new Set();
         
         // 1. Preload top 6 players on high ELO leaderboard
@@ -294,7 +289,6 @@ export default function LandingPage() {
         sessionStorage.setItem('ss4_landing_preloaded_v2', JSON.stringify(cachedPayload));
         
         setPreloadProgress(100);
-        setPreloadStatus("Ready!");
 
         setTimeout(() => {
           setIsPreloading(false);
@@ -490,37 +484,6 @@ export default function LandingPage() {
       });
     });
 
-    const staticPosts = [
-      {
-        id: "comm_1",
-        type: "community",
-        title: "League Milestone Achieved!",
-        content: "The SS4 Chess League has officially reached 140+ active players across multiple tertiary and secondary institutions. 100% of registrations came through peer-to-peer student referrals. The academic community is connecting!",
-        author: "SS4 Community Manager",
-        date: "Jul 10",
-        timestamp: Date.now() - 3600000 * 24 * 2
-      },
-      {
-        id: "comm_2",
-        type: "community",
-        title: "Aspirants Award Prep Starts Now",
-        content: "Preparation guides and practice portals for the upcoming SS4 Aspirants Award will release next week. Make sure your academic profiles are up-to-date in your student dashboard to participate.",
-        author: "SS4 Academic Director",
-        date: "Jul 08",
-        timestamp: Date.now() - 3600000 * 24 * 5
-      },
-      {
-        id: "comm_3",
-        type: "community",
-        title: "Sponsorship Spotlights Open",
-        content: "SS4 offers official partners direct visibility into a growing, highly motivated group of Nigerian university students and secondary schools. Support academic excellence and get your organization on the portal map.",
-        author: "SS4 Partnerships",
-        date: "Jul 05",
-        timestamp: Date.now() - 3600000 * 24 * 8
-      }
-    ];
-
-    list.push(...staticPosts);
     return list.sort((a, b) => b.timestamp - a.timestamp);
   }, [dbAnnouncements]);
 
@@ -560,7 +523,7 @@ export default function LandingPage() {
 
 
   if (isPreloading) {
-    return <LoadingScreen progress={preloadProgress} status={preloadStatus} />;
+    return <LoadingScreen progress={preloadProgress} />;
   }
 
   return (
@@ -676,18 +639,20 @@ export default function LandingPage() {
               </div>
               <div className="space-y-3">
                 <div className="p-3.5 bg-m3-surface-low rounded-xl border border-m3-outline-variant">
-                  <span className="text-[10px] font-black text-brand-accent uppercase tracking-widest block">Next Tournament</span>
-                  <a href="/chess-league/tournament" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
-                    July 2026 Monthly Tournament
+                  <span className="text-[10px] font-black text-brand-accent uppercase tracking-widest block">Championship Arena</span>
+                  <a href="/theboardgames" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
+                    theBOARDGAMES Hub
                   </a>
                   <span className="text-xs font-semibold text-gray-700 block mt-0.5">
-                    Starts <span className="font-black text-xs text-brand-primary">July 25</span> | Secure your bracket
+                    11 Universities &bull; Live Standings &amp; Brackets
                   </span>
                 </div>
                 <div className="p-3.5 bg-m3-surface-low rounded-xl border border-m3-outline-variant">
                   <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest block">Daily League</span>
-                  <span className="text-sm font-bold text-brand-text-dark block mt-1">Lichess Tournament</span>
-                  <span className="text-xs font-semibold text-gray-700 block mt-0.5">Every night at 8 PM</span>
+                  <a href="/theboardgames?tab=daily-league" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
+                    SS4 Arena Series
+                  </a>
+                  <span className="text-xs font-semibold text-gray-700 block mt-0.5">Lichess Blitz Arenas &bull; 8:00 PM WAT</span>
                 </div>
               </div>
             </div>

@@ -17,7 +17,7 @@ export function FeedCard({
   };
 
   const isMultimedia = post?.postType === 'multimedia' || 
-    ['video', 'photo_gallery', 'banner', 'poster', 'image'].includes(post?.mediaType);
+    ['video', 'photo_gallery', 'banner', 'poster', 'image', 'fixture'].includes(post?.mediaType);
 
   if (isMultimedia) {
     return (

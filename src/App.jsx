@@ -39,27 +39,27 @@ function App() {
           <main className="flex-grow w-full max-w-full overflow-x-hidden">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/schools" element={<SchoolsPage />} />
+            <Route path="/schools" element={<Navigate to="/tertiary" replace />} />
             <Route path="/schools/enhance" element={<CreateUniversityPage />} />
             <Route path="/school/:id" element={<UniversityPage />} />
             <Route path="/partner" element={<PartnerOnboardingPage />} />
             <Route path="/partners" element={<PartnerOnboardingPage />} />
             <Route path="/partner/onboarding" element={<PartnerOnboardingPage />} />
             <Route path="/partner/school" element={<CreateUniversityPage />} />
-            <Route path="/sas" element={<SasPage />} />
-            <Route path="/award" element={<AspirantsAwardPage />} />
+            <Route path="/sas" element={<Navigate to="/theboardgames" replace />} />
+            <Route path="/award" element={<Navigate to="/theboardgames" replace />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/league" element={<FriendliesPage />} />
-            <Route path="/friendlies" element={<Navigate to="/league" replace />} />
-            <Route path="/chess-league" element={<Navigate to="/league" replace />} />
-            <Route path="/chess-league/tournament" element={<ChessTournamentPage />} />
-            <Route path="/chess-league/varsity" element={<VarsityPage />} />
-            <Route path="/varsity" element={<Navigate to="/chess-league/varsity" replace />} />
-            <Route path="/tournaments/register" element={<Navigate to="/chess-league/tournament" replace />} />
             <Route path="/theboardgames" element={<TheBoardGamesPage />} />
             <Route path="/the-board-games" element={<Navigate to="/theboardgames" replace />} />
             <Route path="/chess-league/theboardgames" element={<Navigate to="/theboardgames" replace />} />
+            <Route path="/league" element={<Navigate to="/theboardgames?tab=daily-league" replace />} />
+            <Route path="/friendlies" element={<Navigate to="/theboardgames?tab=daily-league" replace />} />
+            <Route path="/chess-league" element={<Navigate to="/theboardgames" replace />} />
+            <Route path="/chess-league/tournament" element={<Navigate to="/theboardgames?tab=monthly-tournament" replace />} />
+            <Route path="/tournaments/register" element={<Navigate to="/theboardgames?tab=monthly-tournament" replace />} />
+            <Route path="/chess-league/varsity" element={<VarsityPage />} />
+            <Route path="/varsity" element={<Navigate to="/chess-league/varsity" replace />} />
             <Route path="/tertiary" element={<TertiaryPage />} />
             <Route path="/tertiary/:id" element={<TertiaryDetailPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />

@@ -91,33 +91,21 @@ export const Header = () => {
             <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 shrink-1">
               <div className="relative group shrink-0">
                 <button className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer whitespace-nowrap">
-                  Schools
-                  <svg className="w-3.5 h-3.5 transition-transform duration-250 group-hover:rotate-180 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div className="absolute top-[100%] left-0 mt-1 w-48 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
-                  <Link to="/schools" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Secondary Schools</Link>
-                  <Link to="/tertiary" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Tertiary Institutions</Link>
-                </div>
-              </div>
-              <div className="relative group shrink-0">
-                <button className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors flex items-center gap-1 focus:outline-none cursor-pointer whitespace-nowrap">
                   Chess League
                   <svg className="w-3.5 h-3.5 transition-transform duration-250 group-hover:rotate-180 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
-                <div className="absolute top-[100%] left-0 mt-1 w-52 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
-                  <Link to="/league" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Daily League</Link>
-                  <Link to="/chess-league/tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Monthly Tournament</Link>
-                  <Link to="/chess-league/varsity" className="block px-4 py-2.5 text-xs font-bold text-brand-primary hover:bg-brand-primary/5 transition-colors flex items-center justify-between">
-                    <span>Varsity Tournament</span>
-                    <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">New</span>
-                  </Link>
+                <div className="absolute top-[100%] left-0 mt-1 w-56 bg-white border border-gray-150 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
                   <Link to="/theboardgames" className="block px-4 py-2.5 text-xs font-black text-orange-600 hover:bg-orange-50 transition-colors flex items-center justify-between">
-                    <span>theBOARDGAMES</span>
-                    <span className="text-[9px] font-black bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded uppercase">Match 1</span>
+                    <span>theBOARDGAMES Hub</span>
+                    <span className="text-[9px] font-black bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded uppercase">Active</span>
+                  </Link>
+                  <Link to="/theboardgames?tab=daily-league" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Daily League Arenas</Link>
+                  <Link to="/theboardgames?tab=monthly-tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Monthly Tournaments</Link>
+                  <Link to="/chess-league/varsity" className="block px-4 py-2.5 text-xs font-bold text-brand-primary hover:bg-brand-primary/5 transition-colors flex items-center justify-between">
+                    <span>Varsity Championship</span>
+                    <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">11 Teams</span>
                   </Link>
                 </div>
               </div>
@@ -127,11 +115,11 @@ export const Header = () => {
               >
                 theBOARDGAMES
               </Link>
-              <Link to="/sas" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Assessment Series</Link>
-              <Link to="/award" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Aspirants Award</Link>
+              <Link to="/chess-league/varsity" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Varsity</Link>
+              <Link to="/tertiary" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Universities</Link>
               <Link to="/news" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">News</Link>
-              <Link to="/partners" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Partners</Link>
               <Link to="/about" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">About</Link>
+              <Link to="/partners" className="px-2 py-1.5 xl:px-3 xl:py-2 rounded-xl hover:bg-black/[0.04] text-[12px] xl:text-[14px] font-bold text-gray-700 hover:text-brand-primary transition-colors whitespace-nowrap shrink-0">Partners</Link>
             </nav>
           </div>
 
@@ -391,25 +379,23 @@ export const Header = () => {
               className="lg:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 flex flex-col gap-2.5 overflow-hidden shadow-lg"
             >
               <Link to="/" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-              <Link to="/league" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Daily League</Link>
-              <Link to="/chess-league/tournament" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournament</Link>
-              <Link to="/chess-league/varsity" className="text-[13px] sm:text-[14px] font-black text-brand-primary hover:text-brand-primary/80 py-0.5 flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
-                <span>Varsity Tournament</span>
-                <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">New</span>
-              </Link>
               <Link 
                 to="/theboardgames" 
-                className="text-[13px] sm:text-[14px] font-bold text-orange-600 hover:text-orange-700 py-0.5" 
+                className="text-[13px] sm:text-[14px] font-black text-orange-600 hover:text-orange-700 py-0.5" 
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                theBOARDGAMES
+                theBOARDGAMES Hub
               </Link>
-
-              <Link to="/tertiary" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Tertiary Institutions</Link>
-              <Link to="/award" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Aspirants Award</Link>
+              <Link to="/theboardgames?tab=daily-league" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Daily League Arenas</Link>
+              <Link to="/theboardgames?tab=monthly-tournament" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournaments</Link>
+              <Link to="/chess-league/varsity" className="text-[13px] sm:text-[14px] font-black text-brand-primary hover:text-brand-primary/80 py-0.5 flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
+                <span>Varsity Championship</span>
+                <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">11 Teams</span>
+              </Link>
+              <Link to="/tertiary" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Universities</Link>
               <Link to="/news" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>News</Link>
-              <Link to="/partners" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Partners</Link>
               <Link to="/about" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
+              <Link to="/partners" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Partners</Link>
               
               <Link 
                 to="/partners" 

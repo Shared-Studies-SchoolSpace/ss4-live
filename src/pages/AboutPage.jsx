@@ -9,7 +9,7 @@ export default function AboutPage() {
             <SectionWrapper variant="default">
                 <div className="text-center max-w-4xl mx-auto py-16">
                     <H1>About SS4</H1>
-                    <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mt-4 mb-2">A Global Village for Institutions</p>
+                    <p className="text-xs font-bold tracking-[0.2em] text-brand-accent uppercase mt-4 mb-2">An Ecosystem for Academia • Many Institutions, One Space</p>
                     <BodyLarge className="mt-6 text-gray-700 max-w-3xl mx-auto leading-relaxed">
                         SS4 is building the infrastructure that connects schools, tertiary institutions, departments, and students into one shared space. A single environment where they compete, collaborate, discover talent, and build together. Institutions are stronger connected than they are alone. SS4 is that connection.
                     </BodyLarge>

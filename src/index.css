@@ -503,4 +503,97 @@ body {
   transform: rotateY(180deg);
 }
 
+/* ── Accessible Scrollable Tablist & Responsive Standings Table (Modern Web Standards) ── */
+@property --tab-fade-start {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --tab-fade-end {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+.ss4-tablist-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: inline proximity;
+  scroll-padding-inline: 1.5rem;
+  --tab-fade-size: 1.5rem;
+}
+
+.ss4-tablist-scroll > [role="tab"] {
+  flex: none;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+.ss4-tablist-scroll > [role="tab"][aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: 10px;
+  inset-block-end: 0;
+  border-block-end: 2px solid currentColor;
+  border-radius: 9999px;
+}
+
+@supports (animation-timeline: scroll(self inline)) {
+  .ss4-tablist-scroll {
+    mask:
+      linear-gradient(black, black) no-clip subtract,
+      linear-gradient(to right, black, transparent) 0 0 / var(--tab-fade-start) 100% no-repeat no-clip,
+      linear-gradient(to right, transparent, black) 100% 0 / var(--tab-fade-end) 100% no-repeat no-clip;
+    animation: ss4-tab-fade-start linear both, ss4-tab-fade-end linear both;
+    animation-timeline: scroll(self inline);
+    animation-range: 0 var(--tab-fade-size), calc(100% - var(--tab-fade-size)) 100%;
+  }
+}
+
+@keyframes ss4-tab-fade-start {
+  to {
+    --tab-fade-start: var(--tab-fade-size);
+  }
+}
+
+@keyframes ss4-tab-fade-end {
+  from {
+    --tab-fade-end: var(--tab-fade-size);
+  }
+}
+
+.ss4-standings-table-wrap {
+  overflow: auto;
+  max-inline-size: 100%;
+  container-type: inline-size;
+}
+
+.ss4-standings-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.ss4-standings-table thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+}
+
+.ss4-standings-table tbody th[scope="row"] {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+}
+
+@container (width < 560px) {
+  .ss4-standings-table th,
+  .ss4-standings-table td {
+    padding-inline: 0.625rem;
+    padding-block: 0.75rem;
+  }
+}
+
 

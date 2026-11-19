@@ -1,11 +1,66 @@
 // Initial Feed Data for SS4 Platform Ecosystem
 // Authentic posts with strict chronological timestamps and post indexing:
-// October Tournament Poster (postIndex: 0) -> October Aspirants (postIndex: 1) -> September Varsity (postIndex: 2, 3) -> August Tournament (postIndex: 4, 5, 6)
+// November Varsity Season 2 Poster (postIndex: 0) -> October Tournament Poster (postIndex: 1) -> October Aspirants (postIndex: 2) -> September Varsity (postIndex: 3, 4) -> August Tournament (postIndex: 5, 6, 7)
 
 export const INITIAL_FEED_POSTS = [
   {
-    id: 'post_admin_october_theboardgames_2026',
+    id: 'post_admin_varsity_nov_2026_s2',
     postIndex: 0,
+    createdAt: '2026-11-18T19:00:00Z',
+    timestamp: '2026-11-18T19:00:00Z',
+    postType: 'multimedia',
+    mediaType: 'poster',
+    imageUrl: '/varsity-nov-2026-poster.png',
+    categoryClass: 'tournament',
+    readTime: '',
+    isUnread: true,
+    author: {
+      name: 'SS4',
+      avatarImg: '/ss4_logo_without_text.jpg',
+      isAdmin: true,
+      time: 'Nov 18, 2026'
+    },
+    title: "SS4 Chess League: Varsity Tournament Nov. '26 (Season 2) — 15 Top Nigerian Universities Clash on Lichess",
+    excerpt: `**SS4 CHESS LEAGUE — VARSITY TOURNAMENT NOV. '26 (SEASON 2)**
+*Featuring the best chess players from top Universities in Nigeria.*
+
+Season 2 of the SS4 Chess League Varsity Tournament is officially underway on Lichess. Fifteen university institutions compete in five-player squads across four League Match Days in 3+0 Blitz, with the top eight teams advancing to the Quarter-Finals.
+
+**TOURNAMENT DETAILS:**
+• **Tournament Window:** 18th – 30th November 2026
+• **Hosting Platform:** **Lichess**
+• **Competition Format:** Teams of 5 — 15 Institutions · 5 Players each · 4 League Match Days (Top 8 qualify for the Quarter-Finals)
+• **Time Control:** 3+0 Blitz
+
+**MATCH DAY 1 SCHEDULE & LINKS:**
+• **League Match Day 1:** Wed, 18 Nov · 8:00–9:00 PM (WAT)
+• **Official Lichess Match Day 1 Arena:** <a href="https://lichess.org/tournament/wfufA03G" target="_blank" rel="noopener noreferrer" style="color: #1A56C4; text-decoration: underline; font-weight: 600;">lichess.org/tournament/wfufA03G</a>
+• **Match Day 1 Highlights:** <a href="https://youtube.com/shorts/iSLqvMT9urk?feature=share" target="_blank" rel="noopener noreferrer" style="color: #1A56C4; text-decoration: underline; font-weight: 600;">Watch Match Day 1 Highlights on YouTube</a>
+
+**Many Institutions, One Space. The Board Remembers.**`,
+    tags: ['#SS4VarsityTournament', '#Season2', '#SS4ChessLeague', '#Lichess', '#UniversityChess', '#TheBoardRemembers'],
+    likesCount: 0,
+    isLiked: false,
+    isBookmarked: false,
+    embed: {
+      type: 'lobby',
+      actionLabel: 'Enter Varsity Tournament Hub →',
+      onAction: () => {
+        window.location.href = '/chess-league/varsity';
+      },
+      calendarEvent: {
+        title: "SS4 Chess League: Varsity Tournament Nov. '26 (Season 2)",
+        description: 'Featuring the best chess players from top Universities in Nigeria (Nov 18–30, 2026). 15 Institutions, teams of 5 players each on Lichess. 3+0 Blitz League Stage. Many Institutions, One Space.',
+        startDate: '2026-11-18',
+        endDate: '2026-11-30',
+        location: 'Online (Lichess)'
+      }
+    },
+    comments: []
+  },
+  {
+    id: 'post_admin_october_theboardgames_2026',
+    postIndex: 1,
     createdAt: '2026-10-09T08:00:00Z',
     timestamp: '2026-10-09T08:00:00Z',
     postType: 'multimedia',
@@ -64,7 +119,7 @@ Will Covenant University's Anuchi Emmanuel defend his August crown, or will a ne
   },
   {
     id: 'post_admin_october_aspirants_2026',
-    postIndex: 1,
+    postIndex: 2,
     createdAt: '2026-10-02T09:00:00Z',
     timestamp: '2026-10-02T09:00:00Z',
     postType: 'text',
@@ -107,7 +162,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_varsity_lineups_2026',
-    postIndex: 2,
+    postIndex: 3,
     createdAt: '2026-09-16T12:00:00Z',
     timestamp: '2026-09-16T12:00:00Z',
     postType: 'multimedia',
@@ -249,7 +304,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_varsity_tournament_2026',
-    postIndex: 3,
+    postIndex: 4,
     createdAt: '2026-09-14T10:00:00Z',
     timestamp: '2026-09-14T10:00:00Z',
     postType: 'multimedia',
@@ -285,7 +340,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_champion_2026',
-    postIndex: 4,
+    postIndex: 5,
     createdAt: '2026-09-04T22:30:00Z',
     timestamp: '2026-09-04T22:30:00Z',
     postType: 'multimedia',
@@ -330,7 +385,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_semifinals_2026',
-    postIndex: 5,
+    postIndex: 6,
     createdAt: '2026-09-03T19:00:00Z',
     timestamp: '2026-09-03T19:00:00Z',
     postType: 'multimedia',
@@ -384,7 +439,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_quarterfinals_2026',
-    postIndex: 6,
+    postIndex: 7,
     createdAt: '2026-09-02T19:00:00Z',
     timestamp: '2026-09-02T19:00:00Z',
     postType: 'multimedia',

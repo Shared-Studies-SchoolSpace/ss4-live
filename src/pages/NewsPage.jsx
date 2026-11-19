@@ -7,13 +7,22 @@ import { FeedContainer } from '../components/feed';
 
 const mockNews = [
     { 
+        tag: 'Varsity Season 2', 
+        title: "SS4 Chess League Varsity Tournament Nov. '26 (Season 2) Underway on Lichess", 
+        desc: 'Featuring the best chess players from top Universities in Nigeria. 15 institutions compete in 5-player teams from 18th–30th November 2026 across 4 League Match Days in 3+0 Blitz, with the top 8 qualifying for the Quarter-Finals.', 
+        date: 'Nov 18, 2026',
+        image: '/varsity-nov-2026-poster.png',
+        colSpan: 'md:col-span-2 lg:col-span-2',
+        isHero: true
+    },
+    { 
         tag: 'theBOARDGAMES', 
         title: 'SS4 Chess League theBOARDGAMES: October 2026 Championship Underway on Lichess', 
         desc: 'Featuring the best chess players from top universities in Nigeria. Battles run 9th–31st October 2026 across 3+0, 5+0, and 10+0 time controls. The Board Remembers.', 
         date: 'Oct 9, 2026',
         image: '/october-tournament-poster.png',
-        colSpan: 'md:col-span-2 lg:col-span-2',
-        isHero: true
+        colSpan: 'md:col-span-1 lg:col-span-1',
+        isHero: false
     },
     { 
         tag: 'Varsity Tournament', 

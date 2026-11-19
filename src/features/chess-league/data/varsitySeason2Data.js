@@ -1,0 +1,196 @@
+/**
+ * SS4 Chess League: Varsity Tournament Season 2 (Nov. '26)
+ * Single source of truth for verified Season 2 tournament metadata,
+ * clickable match calendar, official overall standings, and star players.
+ */
+
+export const VARSITY_S2_METADATA = {
+  id: 'varsity-nov-2026-s2',
+  title: 'SS4 Varsity Games',
+  fullTitle: "SS4 Chess League: Varsity Tournament Nov. '26",
+  season: 'Season 2',
+  editionLabel: "Nov. '26",
+  tagline: 'Featuring the best chess players from top Universities in Nigeria.',
+  motto: 'Many Institutions. One Space.',
+  dateWindow: '18th – 30th November 2026',
+  dateWindowShort: '18 – 30 Nov',
+  platform: 'Lichess',
+  institutionsCount: 15,
+  playersPerTeam: 5,
+  leagueDaysTotal: 4,
+  leagueDaysCompleted: 1,
+  qualificationCutoff: 8,
+  qualificationNote: 'Top 8 qualify for the Quarter-Finals',
+  posterUrl: '/varsity-nov-2026-poster.png',
+  youtubeChannel: 'https://youtube.com/@sharedstudyschoolspace',
+  youtubeChannelLabel: 'youtube.com/@sharedstudyschoolspace',
+};
+
+/**
+ * Official Overall Standings — After League Day 1 of 4
+ * Top 8 institutions qualify for the Quarter-Finals.
+ */
+export const VARSITY_S2_STANDINGS = [
+  { rank: 1, id: 'unilag', shortName: 'UNILAG', name: 'University of Lagos', d1: 172, d2: null, d3: null, d4: null, total: 172, qualifiesQF: true },
+  { rank: 2, id: 'futa', shortName: 'FUTA', name: 'Federal University of Technology, Akure', d1: 138, d2: null, d3: null, d4: null, total: 138, qualifiesQF: true },
+  { rank: 3, id: 'unilorin', shortName: 'UNILORIN', name: 'University of Ilorin', d1: 119, d2: null, d3: null, d4: null, total: 119, qualifiesQF: true },
+  { rank: 4, id: 'uniben', shortName: 'UNIBEN', name: 'University of Benin', d1: 112, d2: null, d3: null, d4: null, total: 112, qualifiesQF: true },
+  { rank: 5, id: 'delsu', shortName: 'DELSU', name: 'Delta State University', d1: 109, d2: null, d3: null, d4: null, total: 109, qualifiesQF: true },
+  { rank: 6, id: 'uniuyo', shortName: 'UNIUYO', name: 'University of Uyo', d1: 102, d2: null, d3: null, d4: null, total: 102, qualifiesQF: true },
+  { rank: 7, id: 'absu', shortName: 'ABSU', name: 'Abia State University', d1: 97, d2: null, d3: null, d4: null, total: 97, qualifiesQF: true },
+  { rank: 8, id: 'atbu', shortName: 'ATBU', name: 'Abubakar Tafawa Balewa University', d1: 95, d2: null, d3: null, d4: null, total: 95, qualifiesQF: true },
+  { rank: 9, id: 'rsu', shortName: 'RSU', name: 'Rivers State University', d1: 77, d2: null, d3: null, d4: null, total: 77, qualifiesQF: false },
+  { rank: 10, id: 'udus', shortName: 'UDUS', name: 'Usmanu Danfodiyo University, Sokoto', d1: 61, d2: null, d3: null, d4: null, total: 61, qualifiesQF: false },
+  { rank: 11, id: 'unn', shortName: 'UNN', name: 'University of Nigeria, Nsukka', d1: 61, d2: null, d3: null, d4: null, total: 61, qualifiesQF: false },
+  { rank: 12, id: 'bells', shortName: 'BELLS', name: 'Bells University of Technology', d1: 60, d2: null, d3: null, d4: null, total: 60, qualifiesQF: false },
+  { rank: 13, id: 'mouau', shortName: 'MOUAU', name: 'Michael Okpara University of Agriculture, Umudike', d1: 48, d2: null, d3: null, d4: null, total: 48, qualifiesQF: false },
+  { rank: 14, id: 'futminna', shortName: 'FUTMINNA', name: 'Federal University of Technology, Minna', d1: 34, d2: null, d3: null, d4: null, total: 34, qualifiesQF: false },
+  { rank: 15, id: 'fubk', shortName: 'FUBK', name: 'Federal University Birnin Kebbi', d1: 33, d2: null, d3: null, d4: null, total: 33, qualifiesQF: false },
+];
+
+/**
+ * Verified Official Star Players — League Day 1
+ */
+export const VARSITY_S2_STAR_PLAYERS = [
+  {
+    id: 'md1-top-scorer',
+    category: 'Top Scorer',
+    matchDay: 1,
+    matchDayLabel: 'League Day 1',
+    institutionId: 'unilag',
+    university: 'University of Lagos',
+    shortName: 'UNILAG',
+    name: 'Abiamunwe Goodness',
+    handle: 'abiamuwegoodness',
+    rating: 2205,
+    metrics: [
+      { label: 'Arena Points', value: '57', highlight: true },
+      { label: "Of UNILAG's Total", value: '33%' },
+      { label: 'Games', value: '19' },
+    ],
+  },
+  {
+    id: 'md1-best-performance',
+    category: 'Best Performance',
+    matchDay: 1,
+    matchDayLabel: 'League Day 1',
+    institutionId: 'delsu',
+    university: 'Delta State University',
+    shortName: 'DELSU',
+    name: 'Moses Uzum',
+    handle: 'uzum3',
+    rating: 2327,
+    metrics: [
+      { label: 'Performance', value: '2483', highlight: true },
+      { label: 'Arena Points', value: '37' },
+      { label: 'Games', value: '13' },
+    ],
+  },
+];
+
+/**
+ * Verified Match Events (Season 2)
+ */
+export const VARSITY_S2_EVENTS = [
+  {
+    key: 'MD1',
+    matchDay: 1,
+    day: 18,
+    weekday: 'Wed',
+    dateStr: 'Wed, 18 Nov',
+    timeRange: '8:00–9:00 PM',
+    title: 'SS4 Varsity Games · League Match Day 1',
+    shortTitle: 'Match Day 1',
+    gridLabel: 'Day 1',
+    gridLabelShort: 'MD1',
+    phase: 'League Stage',
+    stage: 'League Day 1 of 4',
+    timeControl: '3+0 Blitz',
+    institutionsCount: 15,
+    playersPerTeam: 5,
+    status: 'COMPLETED',
+    isCompleted: true,
+    isLive: false,
+    id: 'wfufA03G',
+    link: 'https://lichess.org/tournament/wfufA03G',
+    highlightsUrl: 'https://youtube.com/shorts/iSLqvMT9urk?feature=share',
+    highlightsVideoId: 'iSLqvMT9urk',
+    description: 'League Match Day 1 (3+0 Blitz · 15 Institutions · 5 Players each) on Lichess has concluded. UNILAG leads the table with 172 pts ahead of FUTA (138 pts) and UNILORIN (119 pts).',
+    podium: VARSITY_S2_STANDINGS.slice(0, 3).map((team, idx) => ({
+      rank: team.rank,
+      label: idx === 0 ? '1st Place' : idx === 1 ? '2nd Place' : '3rd Place',
+      shortName: team.shortName,
+      name: team.name,
+      score: team.d1,
+    })),
+    standings: VARSITY_S2_STANDINGS.map((team) => ({
+      rank: team.rank,
+      id: team.id,
+      shortName: team.shortName,
+      name: team.name,
+      score: team.d1,
+      qualifiesQF: team.qualifiesQF,
+    })),
+    starPlayers: VARSITY_S2_STAR_PLAYERS,
+  },
+];
+
+const UPCOMING_DAY_TEMPLATE = {
+  hasMatch: false,
+  title: 'Schedule Pending',
+  phase: 'Tournament Window',
+  stage: '18th – 30th November',
+  timeControl: 'TBA',
+  arenaLink: null,
+  highlightsUrl: null,
+  isLive: false,
+  isCompleted: false,
+  gridLabel: null,
+  gridLabelShort: null,
+  description: 'Official match schedule for remaining League Days (2–4) and Quarter-Finals within the 18th – 30th November window will be published here once confirmed.',
+  podium: null,
+  standings: null,
+  starPlayers: null,
+};
+
+/**
+ * Clickable Tournament Calendar: Nov 18 – Nov 30, 2026 (13 days)
+ */
+export const VARSITY_S2_CALENDAR_DAYS = Array.from({ length: 13 }, (_, i) => {
+  const day = 18 + i;
+  const weekday = new Date(2026, 10, day).toLocaleDateString('en-US', { weekday: 'short' });
+  const base = { day, dayIndex: i + 1, weekday };
+  const ev = VARSITY_S2_EVENTS.find((e) => e.day === day);
+
+  if (ev) {
+    return {
+      ...base,
+      hasMatch: true,
+      matchDay: ev.matchDay,
+      title: ev.title,
+      shortTitle: ev.shortTitle,
+      phase: ev.phase,
+      stage: ev.stage,
+      status: ev.status,
+      isCompleted: ev.isCompleted,
+      isLive: ev.isLive,
+      timeRange: ev.timeRange,
+      timeControl: ev.timeControl,
+      institutionsCount: ev.institutionsCount,
+      playersPerTeam: ev.playersPerTeam,
+      arenaLink: ev.link,
+      arenaId: ev.id,
+      highlightsUrl: ev.highlightsUrl,
+      highlightsVideoId: ev.highlightsVideoId,
+      description: ev.description,
+      podium: ev.podium,
+      standings: ev.standings,
+      starPlayers: ev.starPlayers,
+      gridLabel: ev.gridLabel,
+      gridLabelShort: ev.gridLabelShort,
+      key: ev.key,
+    };
+  }
+
+  return { ...base, ...UPCOMING_DAY_TEMPLATE };
+});

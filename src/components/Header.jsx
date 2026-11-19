@@ -104,7 +104,7 @@ export const Header = () => {
                   <Link to="/theboardgames?tab=monthly-tournament" className="block px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-background hover:text-brand-primary transition-colors">Monthly Tournaments</Link>
                   <Link to="/chess-league/varsity" className="block px-4 py-2.5 text-xs font-bold text-brand-primary hover:bg-brand-primary/5 transition-colors flex items-center justify-between">
                     <span>Varsity Championship</span>
-                    <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">11 Teams</span>
+                    <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">15 Teams</span>
                   </Link>
                 </div>
               </div>
@@ -389,7 +389,7 @@ export const Header = () => {
               <Link to="/theboardgames?tab=monthly-tournament" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Monthly Tournaments</Link>
               <Link to="/chess-league/varsity" className="text-[13px] sm:text-[14px] font-black text-brand-primary hover:text-brand-primary/80 py-0.5 flex items-center justify-between" onClick={() => setIsMobileMenuOpen(false)}>
                 <span>Varsity Championship</span>
-                <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">11 Teams</span>
+                <span className="text-[9px] font-black bg-brand-primary/10 text-brand-primary px-1.5 py-0.5 rounded uppercase">15 Teams</span>
               </Link>
               <Link to="/tertiary" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Universities</Link>
               <Link to="/news" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>News</Link>

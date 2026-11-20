@@ -50,7 +50,7 @@ export const Footer = () => {
                   { label: 'theBOARDGAMES', href: '/theboardgames' },
                   { label: 'Daily League', href: '/theboardgames?tab=daily-league' },
                   { label: 'Monthly Tournaments', href: '/theboardgames?tab=monthly-tournament' },
-                  { label: 'Varsity Championship', href: '/chess-league/varsity' },
+                  { label: 'Varsity Tournament', href: '/chess-league/varsity' },
                   { label: 'Universities', href: '/tertiary' },
                   { label: 'Partners', href: '/partners' },
                   { label: 'Contact SS4', href: 'mailto:ss4.mail.org@gmail.com' }
@@ -72,7 +72,7 @@ export const Footer = () => {
               { label: 'theBOARDGAMES Championship', href: '/theboardgames' },
               { label: 'Daily League Arenas', href: '/theboardgames?tab=daily-league' },
               { label: 'Monthly Tournaments', href: '/theboardgames?tab=monthly-tournament' },
-              { label: 'Varsity Championship', href: '/chess-league/varsity' },
+              { label: 'Varsity Tournament', href: '/chess-league/varsity' },
               { label: 'Tertiary Institutions', href: '/tertiary' }
             ]}
           />

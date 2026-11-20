@@ -111,31 +111,31 @@ const TIME_CONTROLS = [
 ];
 
 const INSTITUTION_METAS = {
-  covenant: { short: 'CU', motto: 'Reigning Champions', color: '#0D9488', notable: 'Anuchi Emmanuel (August Champion), Alao David' },
-  unilorin: { short: 'UNILORIN', motto: 'The Better By Far', color: '#DB2777', notable: 'Kenneth Gilbert (August Runner-Up), Durojaiye B.' },
-  bells: { short: 'BELLSTECH', motto: 'First Private Tech University', color: '#DC2626', notable: 'James Henshaw (August Semifinalist), Anietie Ben' },
-  futia: { short: 'FUTIA', motto: 'Aerospace & Tech Pride', color: '#059669', notable: 'Emmanuel Michael (August Semifinalist), Thompson E.' },
-  uniuyo: { short: 'UNIUYO', motto: 'Unity, Wisdom & Service', color: '#EA580C', notable: 'Jesse Edem (June Champion), Peter Eti' },
-  babcock: { short: 'BABCOCK', motto: 'Knowledge, Truth & Service', color: '#D97706', notable: 'Akogo Simon (Elite 8), Adedipe Temini' },
-  landmark: { short: 'LANDMARK', motto: 'Agrarian Revolutionaries', color: '#7C3AED', notable: 'Princewill Obi (Elite 8), Mbah Ernest' },
-  unn: { short: 'UNN', motto: 'Restoring The Dignity', color: '#0284C7', notable: 'Okoli Tochukwu (July Champion), Ugwu Praise' },
-  unical: { short: 'UNICAL', motto: 'Knowledge For Service', color: '#E11D48', notable: 'Dean Bassey (Elite 8), Ita Best James' },
-  redeemers: { short: 'RUN', motto: 'Running with the Vision', color: '#2563EB', notable: 'Daniel Daniel, Odukoya Emmanuel' },
-  biu: { short: 'BIU', motto: 'Academic Excellence', color: '#B45309', notable: 'Akinrogunde Clinton, Jeffrey Obanor' }
+  unilorin: { short: 'UNILORIN', motto: 'The Better By Far', color: '#DB2777', notable: 'Kenneth Gilbert (Finalist), Durojaiye B., Iysa-Bello' },
+  unical: { short: 'UNICAL', motto: 'Knowledge For Service', color: '#E11D48', notable: 'Emmanuel Edet (Final Winner), Ita Best James, Dean Bassey' },
+  uniuyo: { short: 'UNIUYO', motto: 'Unity, Wisdom & Service', color: '#EA580C', notable: 'Jesse Edem (June Champion), Utibeabasi Inwang, Peter Eti' },
+  biu: { short: 'BIU', motto: 'Academic Excellence', color: '#B45309', notable: 'Fidelis Hickman (SF Lead), Clinton Akinrogunde, Jeffrey Obanor' },
+  bells: { short: 'BELLSTECH', motto: 'First Private Tech University', color: '#DC2626', notable: 'Akogo Simon, Isuekevbo Joel (M5 Winner), Anietie Ben' },
+  redeemers: { short: 'RUN', motto: 'Running with the Vision', color: '#2563EB', notable: 'Daniel Daniel, Emmanuel Odukoya, John Akeju' },
+  landmark: { short: 'LANDMARK', motto: 'Agrarian Revolutionaries', color: '#7C3AED', notable: 'Princewill Obi, Mbah Ernest, Emmanuel Chisom' },
+  babcock: { short: 'BABCOCK', motto: 'Knowledge, Truth & Service', color: '#D97706', notable: 'Yuki Prime, Daniel Lawore, Temini Adedipe' },
+  unn: { short: 'UNN', motto: 'Restoring The Dignity', color: '#0284C7', notable: 'Okoli Tochukwu (July Champion), Daniel Agu, Joseph Chukwumaeze' },
+  covenant: { short: 'CU', motto: 'Hebron Bishops', color: '#0D9488', notable: 'Odushina Emmanuel, Ninuoluwa, Alao David' },
+  futia: { short: 'FUTIA', motto: 'Aerospace & Tech Pride', color: '#059669', notable: 'Emike, Bassey Okon Etia, David Barakaii' }
 };
 
 const ORDERED_INSTITUTION_IDS = [
-  'covenant',
   'unilorin',
-  'bells',
-  'futia',
-  'uniuyo',
-  'babcock',
-  'landmark',
-  'unn',
   'unical',
+  'uniuyo',
+  'biu',
+  'bells',
   'redeemers',
-  'biu'
+  'landmark',
+  'babcock',
+  'unn',
+  'covenant',
+  'futia'
 ];
 
 const NO_MATCH_DAY = {

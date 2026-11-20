@@ -1,852 +1,5 @@
 [
   {
-    "id": "bells",
-    "name": "Bells University of Technology",
-    "shortName": "BELLS",
-    "nickname": "Bells Tech Knights",
-    "location": "Bells University of Technology",
-    "color": "#DC2626",
-    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 22,
-    "boardPoints": 26.5,
-    "record": {
-      "wins": 7,
-      "draws": 1,
-      "losses": 0
-    },
-    "averageRating": 1960,
-    "recentForm": [
-      "W",
-      "W",
-      "W",
-      "D",
-      "W"
-    ],
-    "players": [
-      {
-        "id": "49ff2b1b-14b8-4892-9c06-429df931e3b5",
-        "name": "Anietie Ben",
-        "board": 1,
-        "handle": "Jhudex",
-        "handle_c": "Jude_Ben",
-        "handle_l": "Jhudex",
-        "platform": "lichess",
-        "rating": 1537,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1587
-        }
-      },
-      {
-        "id": "1c0abf69-0436-4321-b652-6b4e62444304",
-        "name": "Isuekwebo Joel",
-        "board": 2,
-        "handle": "MaouTanner",
-        "handle_c": "MaouTanner",
-        "handle_l": "Uduehi",
-        "platform": "chesscom",
-        "rating": 2263,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 2313
-        }
-      },
-      {
-        "id": "759e74fb-76c0-4cac-8c4c-4f5fdd90bf5b",
-        "name": "Oyebode Samuel",
-        "board": 3,
-        "handle": "TheWeehfhi",
-        "handle_c": "TheWeehfhi",
-        "handle_l": "Weehfhi_Plays",
-        "platform": "chesscom",
-        "rating": 1999,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 2049
-        }
-      },
-      {
-        "id": "p-bells-4-mv3vrtit",
-        "name": "Okoya Oladimeji",
-        "board": 4,
-        "handle": "OkoyaOluwadamilare",
-        "handle_c": "OkoyaOluwadamilare",
-        "handle_l": "OkoyaOluwadamilare",
-        "platform": "chesscom",
-        "rating": 1962,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 2012
-        }
-      },
-      {
-        "id": "c48c5156-c9c6-4c91-ac50-8c8d569ef10f",
-        "name": "Henshaw John",
-        "board": 5,
-        "handle": "Shin_12",
-        "handle_c": "Shin_12",
-        "handle_l": "Shin_12",
-        "platform": "chesscom",
-        "rating": 2037,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 3,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 2087
-        }
-      }
-    ]
-  },
-  {
-    "id": "uniuyo",
-    "name": "University of Uyo",
-    "shortName": "UNIUYO",
-    "nickname": "Tuskers Gambit",
-    "location": "University of Uyo",
-    "color": "#EA580C",
-    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 20,
-    "boardPoints": 25,
-    "record": {
-      "wins": 6,
-      "draws": 1,
-      "losses": 1
-    },
-    "averageRating": 1798,
-    "recentForm": [
-      "W",
-      "W",
-      "W",
-      "D",
-      "W"
-    ],
-    "players": [
-      {
-        "id": "c0b36922-9396-4eb9-a5e7-c1b797658d28",
-        "name": "Jesse Edem",
-        "board": 1,
-        "handle": "Tyrannt",
-        "handle_c": "Jesse70256",
-        "handle_l": "Tyrannt",
-        "platform": "lichess",
-        "rating": 2050,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 2100
-        }
-      },
-      {
-        "id": "p-uniuyo-2-mv3vrtiu",
-        "name": "Esang Uwe",
-        "board": 2,
-        "handle": "EsangUwe_26",
-        "handle_c": "EsangUwe_26",
-        "handle_l": "EsangUwe",
-        "platform": "chesscom",
-        "rating": 1200,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1250
-        }
-      },
-      {
-        "id": "p-uniuyo-3-mv3vrtiu",
-        "name": "God'swisdom",
-        "board": 3,
-        "handle": "Godswisdom",
-        "handle_c": "Pawn1sha",
-        "handle_l": "Godswisdom",
-        "platform": "lichess",
-        "rating": 1269,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1319
-        }
-      },
-      {
-        "id": "p-uniuyo-4-mv3vrtiu",
-        "name": "Amakuro Minalabh",
-        "board": 4,
-        "handle": "Minalabh",
-        "handle_c": "AmakuroM",
-        "handle_l": "Minalabh",
-        "platform": "lichess",
-        "rating": 2236,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 2286
-        }
-      },
-      {
-        "id": "p-uniuyo-5-mv3vrtiu",
-        "name": "Peter Eti",
-        "board": 5,
-        "handle": "minatoe5",
-        "handle_c": "Minatoe5",
-        "handle_l": "minatoe5",
-        "platform": "lichess",
-        "rating": 2237,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 3,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 2287
-        }
-      }
-    ]
-  },
-  {
-    "id": "babcock",
-    "name": "Babcock University",
-    "shortName": "BABCOCK",
-    "nickname": "Babcock Strategists",
-    "location": "Babcock University",
-    "color": "#D97706",
-    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 18,
-    "boardPoints": 23.5,
-    "record": {
-      "wins": 5,
-      "draws": 1,
-      "losses": 2
-    },
-    "averageRating": 1510,
-    "recentForm": [
-      "W",
-      "W",
-      "W",
-      "D",
-      "W"
-    ],
-    "players": [
-      {
-        "id": "6dc34f2f-eec1-40dd-8ba0-2ff32fb7b47b",
-        "name": "Adedipe Temini",
-        "board": 1,
-        "handle": "Truthwithtemi",
-        "handle_c": "Godhasbachir",
-        "handle_l": "Truthwithtemi",
-        "platform": "lichess",
-        "rating": 1977,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 2027
-        }
-      },
-      {
-        "id": "p-babcock-2-mv3vrtiu",
-        "name": "Timi David Opeyemi",
-        "board": 2,
-        "handle": "TimiDavid",
-        "handle_c": "TimiDavidOp",
-        "handle_l": "TimiDavid",
-        "platform": "lichess",
-        "rating": 1198,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1248
-        }
-      },
-      {
-        "id": "71b059ff-b6f6-437c-a189-bd55b5534f7c",
-        "name": "George George",
-        "board": 3,
-        "handle": "Georgie_jn",
-        "handle_c": "Georgie_jn",
-        "handle_l": "GeorgeG",
-        "platform": "chesscom",
-        "rating": 1691,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1741
-        }
-      },
-      {
-        "id": "47604b50-c74d-4ddd-abae-d5c8ab286e26",
-        "name": "Lawore Daniel",
-        "board": 4,
-        "handle": "DannyLaw",
-        "handle_c": "dannylaw23",
-        "handle_l": "DannyLaw",
-        "platform": "lichess",
-        "rating": 1482,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1532
-        }
-      },
-      {
-        "id": "p-babcock-5-mv3vrtiv",
-        "name": "Ogunsanya Iteoluwaleyi",
-        "board": 5,
-        "handle": "Iteoluwaleyi",
-        "handle_c": "Iteoluwaleyi",
-        "handle_l": "OgunsanyaI",
-        "platform": "chesscom",
-        "rating": 1200,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 3,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
-        }
-      }
-    ]
-  },
-  {
-    "id": "futia",
-    "name": "Federal University of Technology Ikot Abasi",
-    "shortName": "FUTIA",
-    "nickname": "FUTIA Techmasters",
-    "location": "Federal University of Technology Ikot Abasi",
-    "color": "#059669",
-    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 16,
-    "boardPoints": 22,
-    "record": {
-      "wins": 4,
-      "draws": 1,
-      "losses": 0
-    },
-    "averageRating": 1566,
-    "recentForm": [
-      "W",
-      "W",
-      "W",
-      "D",
-      "W"
-    ],
-    "players": [
-      {
-        "id": "b3eeb2e1-6904-4ff2-aea5-b1448f8bc56e",
-        "name": "Thompson Etimbuk Pauli",
-        "board": 1,
-        "handle": "Bayron-sage_7",
-        "handle_c": "Bayron-sage7",
-        "handle_l": "Bayron-sage_7",
-        "platform": "lichess",
-        "rating": 1602,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1652
-        }
-      },
-      {
-        "id": "32e0aad6-bb62-456c-a16d-219f2c22f552",
-        "name": "Emmanuel Micheal",
-        "board": 2,
-        "handle": "Ikbeast1",
-        "handle_c": "Ikbeast1",
-        "handle_l": "EmmaMichael",
-        "platform": "chesscom",
-        "rating": 2115,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 2165
-        }
-      },
-      {
-        "id": "c9df178e-93f1-48ee-981f-198e3a7a2528",
-        "name": "Bassey Okon Etia",
-        "board": 3,
-        "handle": "BOE200",
-        "handle_c": "BOE200",
-        "handle_l": "BasseyEtia",
-        "platform": "chesscom",
-        "rating": 1405,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1455
-        }
-      },
-      {
-        "id": "p-futia-4-mv3vrtiv",
-        "name": "David Ituen Ofonime",
-        "board": 4,
-        "handle": "ItuenDavid",
-        "handle_c": "ItuenDavid",
-        "handle_l": "DavidItuen",
-        "platform": "chesscom",
-        "rating": 1200,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
-        }
-      },
-      {
-        "id": "b5cb7948-76c9-4111-bc18-1608f2b68cd9",
-        "name": "Covenant Ifiok Udobia",
-        "board": 5,
-        "handle": "Anonix_01",
-        "handle_c": "Anonix_01",
-        "handle_l": "Anonix_01",
-        "platform": "chesscom",
-        "rating": 1506,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 3,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1556
-        }
-      }
-    ]
-  },
-  {
-    "id": "unn",
-    "name": "University of Nigeria Nsukka",
-    "shortName": "UNN",
-    "nickname": "Lions Gambit",
-    "location": "University of Nigeria Nsukka",
-    "color": "#0284C7",
-    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 14,
-    "boardPoints": 20.5,
-    "record": {
-      "wins": 3,
-      "draws": 1,
-      "losses": 1
-    },
-    "averageRating": 1205,
-    "recentForm": [
-      "W",
-      "W",
-      "W",
-      "D",
-      "W"
-    ],
-    "players": [
-      {
-        "id": "4444613f-fbe7-40e1-9974-6e821a561e8b",
-        "name": "Okoli Tochukwu",
-        "board": 1,
-        "handle": "HAKAI026",
-        "handle_c": "HAKAI_026",
-        "handle_l": "HAKAI026",
-        "platform": "lichess",
-        "rating": 2038,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 2088
-        }
-      },
-      {
-        "id": "4bd1f752-63c6-473d-8e38-97aed477e700",
-        "name": "Ugwu Praise Chinwuba",
-        "board": 2,
-        "handle": "PraiseChinwuba ",
-        "handle_c": "PraiseChinwuba",
-        "handle_l": "PraiseUgwu",
-        "platform": "chesscom",
-        "rating": 612,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 662
-        }
-      },
-      {
-        "id": "e55106d4-20fc-4997-a61e-4706bb91b565",
-        "name": "Chukwumaeze Joseph",
-        "board": 3,
-        "handle": "joeblaq104",
-        "handle_c": "joeblaq104",
-        "handle_l": "JoeChukwuma",
-        "platform": "chesscom",
-        "rating": 1207,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1257
-        }
-      },
-      {
-        "id": "3d898a3c-aef2-4056-9d3e-3c55eed95ca5",
-        "name": "Kenechukwu Micheal",
-        "board": 4,
-        "handle": "Kenemichael",
-        "handle_c": "Kenemichael",
-        "handle_l": "KeneMichael",
-        "platform": "chesscom",
-        "rating": 528,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 578
-        }
-      },
-      {
-        "id": "382dd58b-36c1-4658-8d2f-0e2198bab3f5",
-        "name": "AGU DANIEL",
-        "board": 5,
-        "handle": "YariBem05",
-        "handle_c": "Yari-bem",
-        "handle_l": "YariBem05",
-        "platform": "lichess",
-        "rating": 1639,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 3,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1689
-        }
-      }
-    ]
-  },
-  {
-    "id": "redeemers",
-    "name": "Redeemer's University",
-    "shortName": "REDEEMERS",
-    "nickname": "Redeemer Royals",
-    "location": "Redeemer's University",
-    "color": "#2563EB",
-    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 12,
-    "boardPoints": 19,
-    "record": {
-      "wins": 7,
-      "draws": 1,
-      "losses": 2
-    },
-    "averageRating": 1072,
-    "recentForm": [
-      "W",
-      "W",
-      "W",
-      "D",
-      "W"
-    ],
-    "players": [
-      {
-        "id": "p-redeemers-1-mv3vrtiv",
-        "name": "Daniel Daniel",
-        "board": 1,
-        "handle": "Daniel2",
-        "handle_c": "DanielSquare",
-        "handle_l": "Daniel2",
-        "platform": "lichess",
-        "rating": 1354,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1404
-        }
-      },
-      {
-        "id": "p-redeemers-2-mv3vrtiv",
-        "name": "Odukoya Emmanuel",
-        "board": 2,
-        "handle": "EmmaOdukoya",
-        "handle_c": "EmmaOdukoya",
-        "handle_l": "OdukoyaE",
-        "platform": "chesscom",
-        "rating": 1200,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1250
-        }
-      },
-      {
-        "id": "p-redeemers-3-mv3vrtiv",
-        "name": "John Akeju",
-        "board": 3,
-        "handle": "AkejuJohn",
-        "handle_c": "AkejuJohn",
-        "handle_l": "JohnAkeju",
-        "platform": "chesscom",
-        "rating": 1200,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
-        }
-      },
-      {
-        "id": "p-redeemers-4-mv3vrtiv",
-        "name": "David Oladipo",
-        "board": 4,
-        "handle": "DavidOladipo",
-        "handle_c": "DavidOladipo",
-        "handle_l": "OladipoD",
-        "platform": "chesscom",
-        "rating": 406,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 456
-        }
-      },
-      {
-        "id": "p-redeemers-5-mv3vrtiv",
-        "name": "Akinduti Damilare",
-        "board": 5,
-        "handle": "DamilareA",
-        "handle_c": "DamilareA",
-        "handle_l": "AkindutiD",
-        "platform": "chesscom",
-        "rating": 1200,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 3,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
-        }
-      }
-    ]
-  },
-  {
-    "id": "landmark",
-    "name": "Landmark University",
-    "shortName": "LANDMARK",
-    "nickname": "Landmark Pathfinders",
-    "location": "Landmark University",
-    "color": "#7C3AED",
-    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 10,
-    "boardPoints": 17.5,
-    "record": {
-      "wins": 6,
-      "draws": 1,
-      "losses": 0
-    },
-    "averageRating": 1385,
-    "recentForm": [
-      "W",
-      "W",
-      "W",
-      "D",
-      "W"
-    ],
-    "players": [
-      {
-        "id": "p-landmark-1-mv3vrtiv",
-        "name": "Omotunde oluwadamilare",
-        "board": 1,
-        "handle": "OmotundeDami",
-        "handle_c": "OmotundeDami",
-        "handle_l": "OluwadamilareO",
-        "platform": "chesscom",
-        "rating": 1200,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1250
-        }
-      },
-      {
-        "id": "p-landmark-2-mv3vrtiv",
-        "name": "Mbah Ernest",
-        "board": 2,
-        "handle": "ErnestMbah",
-        "handle_c": "ErnestMbah",
-        "handle_l": "MbahErnest",
-        "platform": "chesscom",
-        "rating": 1200,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1250
-        }
-      },
-      {
-        "id": "p-landmark-3-mv3vrtiv",
-        "name": "Emmanuel Chisom",
-        "board": 3,
-        "handle": "ChisomEmma",
-        "handle_c": "ChisomEmma",
-        "handle_l": "EmmanuelChisom",
-        "platform": "chesscom",
-        "rating": 1200,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
-        }
-      },
-      {
-        "id": "p-landmark-4-mv3vrtiv",
-        "name": "Edafe Osagie",
-        "board": 4,
-        "handle": "EdafeOsagie",
-        "handle_c": "EdafeOsagie",
-        "handle_l": "OsagieEdafe",
-        "platform": "chesscom",
-        "rating": 1200,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 4,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
-        }
-      },
-      {
-        "id": "88080fb7-bab5-4916-96fb-5bec9381eade",
-        "name": "Obi Princewill",
-        "board": 5,
-        "handle": "Mathemachesser",
-        "handle_c": "Mathemachesser-the-GOAT",
-        "handle_l": "Mathemachesser",
-        "platform": "lichess",
-        "rating": 2125,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 3,
-          "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 2175
-        }
-      }
-    ]
-  },
-  {
     "id": "unilorin",
     "name": "University of Ilorin",
     "shortName": "UNILORIN",
@@ -854,115 +7,121 @@
     "location": "University of Ilorin",
     "color": "#DB2777",
     "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 8,
-    "boardPoints": 16,
+    "points": 521,
+    "boardPoints": 31.0,
     "record": {
-      "wins": 5,
-      "draws": 1,
-      "losses": 1
+      "wins": 8,
+      "draws": 0,
+      "losses": 0
     },
-    "averageRating": 1406,
+    "averageRating": 2019,
     "recentForm": [
       "W",
       "W",
       "W",
-      "D",
+      "W",
       "W"
     ],
+    "title": "SCL Varsity Tournament Champions",
     "players": [
       {
-        "id": "3acb3260-5994-4a49-b278-76564514d5c6",
+        "id": "lichess:fastandmaybefurious",
         "name": "Kenneth Gilbert",
         "board": 1,
-        "handle": "Fastandmaybefurious",
-        "handle_c": "Prince_of_pieceX",
-        "handle_l": "Fastandmaybefurious",
+        "handle": "fastandmaybefurious",
+        "handle_l": "fastandmaybefurious",
+        "handle_c": "fastandmaybefurious",
         "platform": "lichess",
-        "rating": 2166,
+        "rating": 2230,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 5,
+          "leaguePoints": 141,
+          "wins": 47,
           "draws": 1,
           "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 2216
+          "winRate": 93.4,
+          "perfRating": 2310
         }
       },
       {
-        "id": "p-unilorin-2-mv3vrtiv",
+        "id": "lichess:jaiyeblexxy",
         "name": "Durojaiye Boluwatife",
         "board": 2,
-        "handle": "TifeDurojaiye",
-        "handle_c": "TifeDurojaiye",
-        "handle_l": "DurojaiyeT",
-        "platform": "chesscom",
-        "rating": 1200,
+        "handle": "jaiyeblexxy",
+        "handle_l": "jaiyeblexxy",
+        "handle_c": "jaiyeblexxy",
+        "platform": "lichess",
+        "rating": 2016,
         "status": "Confirmed",
         "stats": {
-          "played": 6,
-          "wins": 5,
+          "played": 5,
+          "leaguePoints": 111,
+          "wins": 37,
           "draws": 1,
           "losses": 0,
           "winRate": 91.7,
-          "perfRating": 1250
+          "perfRating": 2096
         }
       },
       {
-        "id": "p-unilorin-3-mv3vrtiv",
-        "name": "Malik Idris",
+        "id": "lichess:iysabello",
+        "name": "Iysa-Bello Adegboyega",
         "board": 3,
-        "handle": "IdrisMalik",
-        "handle_c": "MalikIdris_01",
-        "handle_l": "IdrisMalik",
+        "handle": "iysabello",
+        "handle_l": "iysabello",
+        "handle_c": "iysabello",
         "platform": "lichess",
-        "rating": 745,
+        "rating": 1994,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 4,
+          "leaguePoints": 106,
+          "wins": 35,
           "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 795
+          "losses": 0,
+          "winRate": 91.4,
+          "perfRating": 2074
         }
       },
       {
-        "id": "p-unilorin-4-mv3vrtiv",
-        "name": "Fasiku David",
+        "id": "lichess:kryptonflash",
+        "name": "Malik Idris",
         "board": 4,
-        "handle": "DavidFasiku",
-        "handle_c": "DavidFasiku",
-        "handle_l": "FasikuD",
-        "platform": "chesscom",
-        "rating": 1200,
+        "handle": "kryptonflash",
+        "handle_l": "kryptonflash",
+        "handle_c": "kryptonflash",
+        "platform": "lichess",
+        "rating": 1923,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 4,
+          "leaguePoints": 98,
+          "wins": 33,
           "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
+          "losses": 0,
+          "winRate": 90.7,
+          "perfRating": 2003
         }
       },
       {
-        "id": "p-unilorin-5-mv3vrtiv",
-        "name": "Iysa-bello Adegboyega",
+        "id": "lichess:able_planner1",
+        "name": "Fasiku David",
         "board": 5,
-        "handle": "IysaBello",
-        "handle_c": "AdegboyegaIB",
-        "handle_l": "IysaBello",
+        "handle": "able_planner1",
+        "handle_l": "able_planner1",
+        "handle_c": "able_planner1",
         "platform": "lichess",
-        "rating": 1717,
+        "rating": 1934,
         "status": "Confirmed",
         "stats": {
-          "played": 6,
-          "wins": 3,
+          "played": 5,
+          "leaguePoints": 65,
+          "wins": 22,
           "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1767
+          "losses": 0,
+          "winRate": 86.7,
+          "perfRating": 1999
         }
       }
     ]
@@ -975,236 +134,248 @@
     "location": "University of Calabar",
     "color": "#E11D48",
     "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 6,
-    "boardPoints": 14.5,
+    "points": 391,
+    "boardPoints": 25.5,
     "record": {
-      "wins": 4,
-      "draws": 1,
+      "wins": 6,
+      "draws": 0,
       "losses": 2
     },
-    "averageRating": 1903,
+    "averageRating": 1900,
     "recentForm": [
       "W",
       "W",
       "W",
-      "D",
-      "W"
+      "W",
+      "L"
     ],
+    "title": "SCL Varsity Tournament Runners-Up",
     "players": [
       {
-        "id": "18067a49-7e97-4cbd-ac27-b8e7392d7a85",
-        "name": "Ita Best James",
+        "id": "lichess:scrabbleplayer28",
+        "name": "Emmanuel Edet",
         "board": 1,
-        "handle": "Bestmvh",
-        "handle_c": "Bestmvh",
-        "handle_l": "Bestmvh001",
-        "platform": "chesscom",
-        "rating": 2102,
-        "status": "Confirmed",
-        "stats": {
-          "played": 6,
-          "wins": 5,
-          "draws": 1,
-          "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 2152
-        }
-      },
-      {
-        "id": "4f69323a-5add-47d0-8e37-1445c203e661",
-        "name": "John, Praisesquwakeh Ekwe",
-        "board": 2,
-        "handle": "Praise-09",
-        "handle_c": "fishytactician",
-        "handle_l": "Praise-09",
+        "handle": "scrabbleplayer28",
+        "handle_l": "scrabbleplayer28",
+        "handle_c": "scrabbleplayer28",
         "platform": "lichess",
-        "rating": 1979,
+        "rating": 1976,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 5,
+          "leaguePoints": 111,
+          "wins": 37,
           "draws": 1,
           "losses": 0,
           "winRate": 91.7,
-          "perfRating": 2029
+          "perfRating": 2056
         }
       },
       {
-        "id": "9803ff08-f8f2-489a-bbbc-27717a48f55b",
-        "name": "Bassey, Dean Sonnie",
+        "id": "lichess:bestmvh001",
+        "name": "Ita Best James",
+        "board": 2,
+        "handle": "bestmvh001",
+        "handle_l": "bestmvh001",
+        "handle_c": "bestmvh001",
+        "platform": "lichess",
+        "rating": 2055,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 103,
+          "wins": 34,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 91.2,
+          "perfRating": 2135
+        }
+      },
+      {
+        "id": "lichess:deanbassey001",
+        "name": "Dean Sonnie Bassey",
         "board": 3,
         "handle": "deanbassey001",
-        "handle_c": "deanbassey001",
         "handle_l": "deanbassey001",
+        "handle_c": "deanbassey001",
         "platform": "lichess",
-        "rating": 2058,
+        "rating": 1901,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 4,
+          "leaguePoints": 87,
+          "wins": 29,
           "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 2108
+          "losses": 0,
+          "winRate": 89.7,
+          "perfRating": 1981
         }
       },
       {
-        "id": "p-unical-4-mv3vrtiw",
-        "name": "Emmanuel Edet",
+        "id": "lichess:praise-09",
+        "name": "Praiseosuwakeh John",
         "board": 4,
-        "handle": "NobbieFF",
-        "handle_c": "NobbieFF",
-        "handle_l": "EmmaEdet",
-        "platform": "chesscom",
-        "rating": 1561,
+        "handle": "praise-09",
+        "handle_l": "praise-09",
+        "handle_c": "praise-09",
+        "platform": "lichess",
+        "rating": 1916,
         "status": "Confirmed",
         "stats": {
-          "played": 6,
-          "wins": 4,
+          "played": 5,
+          "leaguePoints": 56,
+          "wins": 19,
           "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1611
+          "losses": 0,
+          "winRate": 84.8,
+          "perfRating": 1972
         }
       },
       {
-        "id": "365e9b2b-5e01-4c27-ab3a-023dfa686ef5",
-        "name": "Gloria okoro",
+        "id": "lichess:ezekielgukesh",
+        "name": "Ezekiel Gukesh",
         "board": 5,
-        "handle": "Glorrreeeyy",
-        "handle_c": "Gloria0726",
-        "handle_l": "Glorrreeeyy",
+        "handle": "ezekielgukesh",
+        "handle_l": "ezekielgukesh",
+        "handle_c": "ezekielgukesh",
         "platform": "lichess",
-        "rating": 1815,
+        "rating": 1654,
         "status": "Confirmed",
         "stats": {
-          "played": 6,
-          "wins": 3,
+          "played": 2,
+          "leaguePoints": 20,
+          "wins": 7,
           "draws": 1,
           "losses": 1,
-          "winRate": 75,
-          "perfRating": 1865
+          "winRate": 66.7,
+          "perfRating": 1674
         }
       }
     ]
   },
   {
-    "id": "covenant",
-    "name": "Covenant University",
-    "shortName": "COVENANT",
-    "nickname": "Eagles Tacticians",
-    "location": "Covenant University",
-    "color": "#0D9488",
+    "id": "uniuyo",
+    "name": "University of Uyo",
+    "shortName": "UNIUYO",
+    "nickname": "Tuskers Gambit",
+    "location": "University of Uyo",
+    "color": "#EA580C",
     "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 4,
-    "boardPoints": 13,
+    "points": 610,
+    "boardPoints": 32.5,
     "record": {
-      "wins": 3,
+      "wins": 6,
       "draws": 1,
-      "losses": 0
+      "losses": 1
     },
-    "averageRating": 1329,
+    "averageRating": 2096,
     "recentForm": [
       "W",
       "W",
       "W",
-      "D",
-      "W"
+      "W",
+      "D"
     ],
+    "title": "League Stage Winners (Summit Finish)",
     "players": [
       {
-        "id": "53c1c6e2-e874-45b7-895d-3af9a11dab89",
-        "name": "Ninuoluwa",
+        "id": "lichess:tyrannt",
+        "name": "Jesse Edem",
         "board": 1,
-        "handle": "Ninuoluwa",
-        "handle_c": "Ninuoluwa",
-        "handle_l": "Ninuoluwa",
+        "handle": "tyrannt",
+        "handle_l": "tyrannt",
+        "handle_c": "tyrannt",
         "platform": "lichess",
-        "rating": 1500,
+        "rating": 1869,
         "status": "Confirmed",
         "stats": {
-          "played": 6,
-          "wins": 5,
+          "played": 5,
+          "leaguePoints": 49,
+          "wins": 16,
           "draws": 1,
           "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1550
+          "winRate": 83.1,
+          "perfRating": 1918
         }
       },
       {
-        "id": "04433e83-0cdd-4cce-bde6-02ba49f80cab",
-        "name": "Anuchi Emmanuel Chijindu",
+        "id": "lichess:minatoe5",
+        "name": "Utibeabasi Inwang",
         "board": 2,
-        "handle": "Robobobobobobob",
-        "handle_c": "Robobobobobobob",
-        "handle_l": "ChijinduAnuchi",
-        "platform": "chesscom",
-        "rating": 1804,
+        "handle": "minatoe5",
+        "handle_l": "minatoe5",
+        "handle_c": "minatoe5",
+        "platform": "lichess",
+        "rating": 2040,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 5,
+          "leaguePoints": 188,
+          "wins": 63,
           "draws": 1,
           "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1854
+          "winRate": 94.9,
+          "perfRating": 2120
         }
       },
       {
-        "id": "p-covenant-3-mv3vrtiw",
-        "name": "Alao David O.",
+        "id": "lichess:d-genius",
+        "name": "Peter Eti",
         "board": 3,
-        "handle": "AlaoDavid",
-        "handle_c": "AlaoDavid",
-        "handle_l": "DavidAlao",
-        "platform": "chesscom",
-        "rating": 615,
+        "handle": "d-genius",
+        "handle_l": "d-genius",
+        "handle_c": "d-genius",
+        "platform": "lichess",
+        "rating": 2270,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 4,
+          "leaguePoints": 161,
+          "wins": 54,
           "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 665
+          "losses": 0,
+          "winRate": 94.2,
+          "perfRating": 2350
         }
       },
       {
-        "id": "06ab7faf-219e-42b5-af7c-feeaa7c6cbfa",
-        "name": "Malasowe Ezekiel",
+        "id": "lichess:emyjaychess",
+        "name": "Emmanuel Udoh",
         "board": 4,
-        "handle": "meeeot",
-        "handle_c": "meeeot",
-        "handle_l": "MalasoweE",
-        "platform": "chesscom",
-        "rating": 1527,
+        "handle": "emyjaychess",
+        "handle_l": "emyjaychess",
+        "handle_c": "emyjaychess",
+        "platform": "lichess",
+        "rating": 2286,
         "status": "Confirmed",
         "stats": {
-          "played": 6,
-          "wins": 4,
+          "played": 4,
+          "leaguePoints": 122,
+          "wins": 41,
           "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1577
+          "losses": 0,
+          "winRate": 92.4,
+          "perfRating": 2366
         }
       },
       {
-        "id": "p-covenant-5-mv3vrtiw",
-        "name": "Divine chigozirim",
+        "id": "lichess:wizzyboiii",
+        "name": "Wisdom Ekpenyong",
         "board": 5,
-        "handle": "DivineChigo",
-        "handle_c": "DivineChigo",
-        "handle_l": "ChigozirimD",
-        "platform": "chesscom",
-        "rating": 1200,
+        "handle": "wizzyboiii",
+        "handle_l": "wizzyboiii",
+        "handle_c": "wizzyboiii",
+        "platform": "lichess",
+        "rating": 2016,
         "status": "Confirmed",
         "stats": {
-          "played": 6,
-          "wins": 3,
+          "played": 2,
+          "leaguePoints": 31,
+          "wins": 10,
           "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
+          "losses": 0,
+          "winRate": 75.6,
+          "perfRating": 2047
         }
       }
     ]
@@ -1213,119 +384,974 @@
     "id": "biu",
     "name": "Benson Idahosa University",
     "shortName": "BIU",
-    "nickname": "Idahosa Champions",
+    "nickname": "BIU Kings",
     "location": "Benson Idahosa University",
     "color": "#B45309",
     "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
-    "points": 2,
-    "boardPoints": 11.5,
+    "points": 385,
+    "boardPoints": 24.0,
     "record": {
-      "wins": 7,
+      "wins": 5,
       "draws": 1,
-      "losses": 1
+      "losses": 2
     },
-    "averageRating": 1014,
+    "averageRating": 1832,
     "recentForm": [
       "W",
       "W",
-      "W",
       "D",
-      "W"
+      "W",
+      "L"
     ],
+    "title": "SCL Varsity Semifinalists",
     "players": [
       {
-        "id": "p-biu-1-mv3vrtiw",
-        "name": "Akinrogunde Clinton",
+        "id": "lichess:fidelishickman",
+        "name": "Fidelis Hickman",
         "board": 1,
-        "handle": "ClintonAkin",
-        "handle_c": "ClintonAkin",
-        "handle_l": "AkinrogundeC",
-        "platform": "chesscom",
-        "rating": 272,
+        "handle": "fidelishickman",
+        "handle_l": "fidelishickman",
+        "handle_c": "fidelishickman",
+        "platform": "lichess",
+        "rating": 2156,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 5,
+          "leaguePoints": 128,
+          "wins": 43,
           "draws": 1,
           "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 322
+          "winRate": 92.8,
+          "perfRating": 2236
         }
       },
       {
-        "id": "p-biu-2-mv3vrtiw",
-        "name": "Jeffrey obanor",
+        "id": "lichess:punstar",
+        "name": "Clinton Akinrogunde",
         "board": 2,
-        "handle": "ObanorJeffrey",
-        "handle_c": "ObanorJeffrey",
-        "handle_l": "JeffreyO",
-        "platform": "chesscom",
-        "rating": 1200,
+        "handle": "punstar",
+        "handle_l": "punstar",
+        "handle_c": "punstar",
+        "platform": "lichess",
+        "rating": 1914,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 5,
+          "leaguePoints": 83,
+          "wins": 28,
           "draws": 1,
           "losses": 0,
-          "winRate": 91.7,
-          "perfRating": 1250
+          "winRate": 89.2,
+          "perfRating": 1994
         }
       },
       {
-        "id": "p-biu-3-mv3vrtiw",
-        "name": "Iheanyichukwu Godswill",
+        "id": "lichess:gmajor",
+        "name": "Jeffrey Obanor",
         "board": 3,
-        "handle": "GodswillIhe",
-        "handle_c": "GodswillIhe",
-        "handle_l": "IheanyichukwuG",
-        "platform": "chesscom",
-        "rating": 1200,
+        "handle": "gmajor",
+        "handle_l": "gmajor",
+        "handle_c": "gmajor",
+        "platform": "lichess",
+        "rating": 1743,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 4,
+          "leaguePoints": 81,
+          "wins": 27,
           "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
+          "losses": 0,
+          "winRate": 89.0,
+          "perfRating": 1823
         }
       },
       {
-        "id": "p-biu-4-mv3vrtiw",
-        "name": "Ogbewe James Edosa",
+        "id": "lichess:doybest",
+        "name": "Doybest",
         "board": 4,
-        "handle": "EdosaOgbewe",
-        "handle_c": "EdosaOgbewe",
-        "handle_l": "JamesEdosa",
-        "platform": "chesscom",
-        "rating": 1200,
+        "handle": "doybest",
+        "handle_l": "doybest",
+        "handle_c": "doybest",
+        "platform": "lichess",
+        "rating": 1754,
         "status": "Confirmed",
         "stats": {
           "played": 6,
-          "wins": 4,
+          "leaguePoints": 58,
+          "wins": 19,
           "draws": 1,
-          "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
+          "losses": 0,
+          "winRate": 85.3,
+          "perfRating": 1812
         }
       },
       {
-        "id": "p-biu-5-mv3vrtiw",
-        "name": "Lawal doyinsola",
+        "id": "lichess:edosajames",
+        "name": "Ogbewe James Edosa",
         "board": 5,
-        "handle": "DoyinsolaLawal",
-        "handle_c": "DoyinsolaLawal",
-        "handle_l": "LawalD",
-        "platform": "chesscom",
-        "rating": 1200,
+        "handle": "edosajames",
+        "handle_l": "edosajames",
+        "handle_c": "edosajames",
+        "platform": "lichess",
+        "rating": 1592,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 35,
+          "wins": 12,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 77.8,
+          "perfRating": 1627
+        }
+      }
+    ]
+  },
+  {
+    "id": "bells",
+    "name": "Bells University of Technology",
+    "shortName": "BELLS",
+    "nickname": "Bells Tech Knights",
+    "location": "Bells University of Technology",
+    "color": "#DC2626",
+    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
+    "points": 376,
+    "boardPoints": 22.0,
+    "record": {
+      "wins": 3,
+      "draws": 0,
+      "losses": 3
+    },
+    "averageRating": 1935,
+    "recentForm": [
+      "L",
+      "L",
+      "L",
+      "W",
+      "W"
+    ],
+    "title": "5th Place Contenders",
+    "players": [
+      {
+        "id": "lichess:simon25",
+        "name": "Akogo Simon",
+        "board": 1,
+        "handle": "simon25",
+        "handle_l": "simon25",
+        "handle_c": "simon25",
+        "platform": "lichess",
+        "rating": 1988,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 92,
+          "wins": 31,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 90.2,
+          "perfRating": 2068
+        }
+      },
+      {
+        "id": "lichess:fayobami8989",
+        "name": "Fayobami Fashola",
+        "board": 2,
+        "handle": "fayobami8989",
+        "handle_l": "fayobami8989",
+        "handle_c": "fayobami8989",
+        "platform": "lichess",
+        "rating": 1887,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 78,
+          "wins": 26,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 88.6,
+          "perfRating": 1965
+        }
+      },
+      {
+        "id": "lichess:uduehi",
+        "name": "Isuekevbo Joel",
+        "board": 3,
+        "handle": "uduehi",
+        "handle_l": "uduehi",
+        "handle_c": "uduehi",
+        "platform": "lichess",
+        "rating": 2202,
+        "status": "Confirmed",
+        "stats": {
+          "played": 4,
+          "leaguePoints": 71,
+          "wins": 24,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 87.7,
+          "perfRating": 2273
+        }
+      },
+      {
+        "id": "lichess:jhudex",
+        "name": "Anietie Ben",
+        "board": 4,
+        "handle": "jhudex",
+        "handle_l": "jhudex",
+        "handle_c": "jhudex",
+        "platform": "lichess",
+        "rating": 1558,
         "status": "Confirmed",
         "stats": {
           "played": 6,
+          "leaguePoints": 51,
+          "wins": 17,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 83.6,
+          "perfRating": 1609
+        }
+      },
+      {
+        "id": "lichess:gmpeerless",
+        "name": "Kesene Nicholas",
+        "board": 5,
+        "handle": "gmpeerless",
+        "handle_l": "gmpeerless",
+        "handle_c": "gmpeerless",
+        "platform": "lichess",
+        "rating": 2041,
+        "status": "Confirmed",
+        "stats": {
+          "played": 3,
+          "leaguePoints": 46,
+          "wins": 15,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 82.1,
+          "perfRating": 2087
+        }
+      }
+    ]
+  },
+  {
+    "id": "redeemers",
+    "name": "Redeemer's University",
+    "shortName": "REDEEMERS",
+    "nickname": "Redeemer Royals",
+    "location": "Redeemer's University",
+    "color": "#2563EB",
+    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
+    "points": 229,
+    "boardPoints": 16.5,
+    "record": {
+      "wins": 2,
+      "draws": 0,
+      "losses": 4
+    },
+    "averageRating": 1815,
+    "recentForm": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "L"
+    ],
+    "title": "6th Place Contenders",
+    "players": [
+      {
+        "id": "lichess:almighty111",
+        "name": "Daniel Daniel",
+        "board": 1,
+        "handle": "almighty111",
+        "handle_l": "almighty111",
+        "handle_c": "almighty111",
+        "platform": "lichess",
+        "rating": 1929,
+        "status": "Confirmed",
+        "stats": {
+          "played": 4,
+          "leaguePoints": 66,
+          "wins": 22,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 86.8,
+          "perfRating": 1995
+        }
+      },
+      {
+        "id": "lichess:bobby_f1she",
+        "name": "Emmanuel Odukoya",
+        "board": 2,
+        "handle": "bobby_f1she",
+        "handle_l": "bobby_f1she",
+        "handle_c": "bobby_f1she",
+        "platform": "lichess",
+        "rating": 2040,
+        "status": "Confirmed",
+        "stats": {
+          "played": 4,
+          "leaguePoints": 51,
+          "wins": 17,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 83.6,
+          "perfRating": 2091
+        }
+      },
+      {
+        "id": "lichess:thewholegameisatrap",
+        "name": "John Akeju",
+        "board": 3,
+        "handle": "thewholegameisatrap",
+        "handle_l": "thewholegameisatrap",
+        "handle_c": "thewholegameisatrap",
+        "platform": "lichess",
+        "rating": 1693,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 44,
+          "wins": 15,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 81.5,
+          "perfRating": 1737
+        }
+      },
+      {
+        "id": "lichess:akinduti",
+        "name": "Akinduti Damilare",
+        "board": 4,
+        "handle": "akinduti",
+        "handle_l": "akinduti",
+        "handle_c": "akinduti",
+        "platform": "lichess",
+        "rating": 1794,
+        "status": "Confirmed",
+        "stats": {
+          "played": 3,
+          "leaguePoints": 36,
+          "wins": 12,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 78.3,
+          "perfRating": 1830
+        }
+      },
+      {
+        "id": "lichess:dipsyfc",
+        "name": "David Oladipo",
+        "board": 5,
+        "handle": "dipsyfc",
+        "handle_l": "dipsyfc",
+        "handle_c": "dipsyfc",
+        "platform": "lichess",
+        "rating": 1620,
+        "status": "Confirmed",
+        "stats": {
+          "played": 4,
+          "leaguePoints": 32,
+          "wins": 11,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 76.2,
+          "perfRating": 1652
+        }
+      }
+    ]
+  },
+  {
+    "id": "landmark",
+    "name": "Landmark University",
+    "shortName": "LANDMARK",
+    "nickname": "Landmark Pathfinders",
+    "location": "Landmark University",
+    "color": "#7C3AED",
+    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
+    "points": 207,
+    "boardPoints": 15.0,
+    "record": {
+      "wins": 2,
+      "draws": 0,
+      "losses": 4
+    },
+    "averageRating": 1759,
+    "recentForm": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "L"
+    ],
+    "title": "7th Place Contenders",
+    "players": [
+      {
+        "id": "lichess:mathemachesser",
+        "name": "Princewill Obi",
+        "board": 1,
+        "handle": "mathemachesser",
+        "handle_l": "mathemachesser",
+        "handle_c": "mathemachesser",
+        "platform": "lichess",
+        "rating": 1947,
+        "status": "Confirmed",
+        "stats": {
+          "played": 4,
+          "leaguePoints": 73,
+          "wins": 24,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 88.0,
+          "perfRating": 2020
+        }
+      },
+      {
+        "id": "lichess:mbah_ernest",
+        "name": "Mbah Ernest",
+        "board": 2,
+        "handle": "mbah_ernest",
+        "handle_l": "mbah_ernest",
+        "handle_c": "mbah_ernest",
+        "platform": "lichess",
+        "rating": 2082,
+        "status": "Confirmed",
+        "stats": {
+          "played": 3,
+          "leaguePoints": 63,
+          "wins": 21,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 86.3,
+          "perfRating": 2145
+        }
+      },
+      {
+        "id": "lichess:chisom456",
+        "name": "Emmanuel Chisom",
+        "board": 3,
+        "handle": "chisom456",
+        "handle_l": "chisom456",
+        "handle_c": "chisom456",
+        "platform": "lichess",
+        "rating": 1723,
+        "status": "Confirmed",
+        "stats": {
+          "played": 3,
+          "leaguePoints": 28,
+          "wins": 9,
+          "draws": 1,
+          "losses": 1,
+          "winRate": 73.7,
+          "perfRating": 1751
+        }
+      },
+      {
+        "id": "lichess:devitheking",
+        "name": "Devi The King",
+        "board": 4,
+        "handle": "devitheking",
+        "handle_l": "devitheking",
+        "handle_c": "devitheking",
+        "platform": "lichess",
+        "rating": 1461,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 22,
+          "wins": 7,
+          "draws": 1,
+          "losses": 1,
+          "winRate": 68.8,
+          "perfRating": 1483
+        }
+      },
+      {
+        "id": "lichess:peterisking1",
+        "name": "Peter Is King",
+        "board": 5,
+        "handle": "peterisking1",
+        "handle_l": "peterisking1",
+        "handle_c": "peterisking1",
+        "platform": "lichess",
+        "rating": 1584,
+        "status": "Confirmed",
+        "stats": {
+          "played": 3,
+          "leaguePoints": 21,
+          "wins": 7,
+          "draws": 1,
+          "losses": 1,
+          "winRate": 67.7,
+          "perfRating": 1605
+        }
+      }
+    ]
+  },
+  {
+    "id": "babcock",
+    "name": "Babcock University",
+    "shortName": "BABCOCK",
+    "nickname": "Babcock Strategists",
+    "location": "Babcock University",
+    "color": "#D97706",
+    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
+    "points": 199,
+    "boardPoints": 14.0,
+    "record": {
+      "wins": 1,
+      "draws": 0,
+      "losses": 5
+    },
+    "averageRating": 1637,
+    "recentForm": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "L"
+    ],
+    "title": "8th Place Contenders",
+    "players": [
+      {
+        "id": "lichess:yuki_prime",
+        "name": "Yuki Prime",
+        "board": 1,
+        "handle": "yuki_prime",
+        "handle_l": "yuki_prime",
+        "handle_c": "yuki_prime",
+        "platform": "lichess",
+        "rating": 1779,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 53,
+          "wins": 18,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 84.1,
+          "perfRating": 1832
+        }
+      },
+      {
+        "id": "lichess:dannylaw",
+        "name": "Daniel Lawore",
+        "board": 2,
+        "handle": "dannylaw",
+        "handle_l": "dannylaw",
+        "handle_c": "dannylaw",
+        "platform": "lichess",
+        "rating": 1401,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 42,
+          "wins": 14,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 80.8,
+          "perfRating": 1443
+        }
+      },
+      {
+        "id": "lichess:truthwithtemi",
+        "name": "Temini Adedipe",
+        "board": 3,
+        "handle": "truthwithtemi",
+        "handle_l": "truthwithtemi",
+        "handle_c": "truthwithtemi",
+        "platform": "lichess",
+        "rating": 1760,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 40,
+          "wins": 13,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 80.0,
+          "perfRating": 1800
+        }
+      },
+      {
+        "id": "lichess:georgeeeeeeee",
+        "name": "George George",
+        "board": 4,
+        "handle": "georgeeeeeeee",
+        "handle_l": "georgeeeeeeee",
+        "handle_c": "georgeeeeeeee",
+        "platform": "lichess",
+        "rating": 1632,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 31,
+          "wins": 10,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 75.6,
+          "perfRating": 1663
+        }
+      },
+      {
+        "id": "lichess:timidavidopeyemi",
+        "name": "Timi David Opeyemi",
+        "board": 5,
+        "handle": "timidavidopeyemi",
+        "handle_l": "timidavidopeyemi",
+        "handle_c": "timidavidopeyemi",
+        "platform": "lichess",
+        "rating": 1612,
+        "status": "Confirmed",
+        "stats": {
+          "played": 3,
+          "leaguePoints": 29,
+          "wins": 10,
+          "draws": 1,
+          "losses": 1,
+          "winRate": 74.4,
+          "perfRating": 1641
+        }
+      }
+    ]
+  },
+  {
+    "id": "unn",
+    "name": "University of Nigeria, Nsukka",
+    "shortName": "UNN",
+    "nickname": "Lions Gambit",
+    "location": "University of Nigeria Nsukka",
+    "color": "#0284C7",
+    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
+    "points": 132,
+    "boardPoints": 11.5,
+    "record": {
+      "wins": 0,
+      "draws": 1,
+      "losses": 5
+    },
+    "averageRating": 1510,
+    "recentForm": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "L"
+    ],
+    "title": "9th Place Contenders",
+    "players": [
+      {
+        "id": "lichess:hakai026",
+        "name": "Okoli Tochukwu",
+        "board": 1,
+        "handle": "hakai026",
+        "handle_l": "hakai026",
+        "handle_c": "hakai026",
+        "platform": "lichess",
+        "rating": 1938,
+        "status": "Confirmed",
+        "stats": {
+          "played": 5,
+          "leaguePoints": 55,
+          "wins": 18,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 84.6,
+          "perfRating": 1993
+        }
+      },
+      {
+        "id": "lichess:yaribem05",
+        "name": "Daniel Agu",
+        "board": 2,
+        "handle": "yaribem05",
+        "handle_l": "yaribem05",
+        "handle_c": "yaribem05",
+        "platform": "lichess",
+        "rating": 1523,
+        "status": "Confirmed",
+        "stats": {
+          "played": 4,
+          "leaguePoints": 42,
+          "wins": 14,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 80.8,
+          "perfRating": 1565
+        }
+      },
+      {
+        "id": "lichess:joeblaq104",
+        "name": "Joseph Chukwumaeze",
+        "board": 3,
+        "handle": "joeblaq104",
+        "handle_l": "joeblaq104",
+        "handle_c": "joeblaq104",
+        "platform": "lichess",
+        "rating": 1562,
+        "status": "Confirmed",
+        "stats": {
+          "played": 4,
+          "leaguePoints": 35,
+          "wins": 12,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 77.8,
+          "perfRating": 1597
+        }
+      },
+      {
+        "id": "lichess:praiseu",
+        "name": "Ugwu Praise",
+        "board": 4,
+        "handle": "praiseu",
+        "handle_l": "praiseu",
+        "handle_c": "praiseu",
+        "platform": "lichess",
+        "rating": 1015,
+        "status": "Confirmed",
+        "stats": {
+          "played": 2,
+          "leaguePoints": 0,
+          "wins": 0,
+          "draws": 0,
+          "losses": 1,
+          "winRate": 45,
+          "perfRating": 1015
+        }
+      }
+    ]
+  },
+  {
+    "id": "covenant",
+    "name": "Covenant University",
+    "shortName": "COVENANT",
+    "nickname": "Hebron Bishops",
+    "location": "Covenant University",
+    "color": "#0D9488",
+    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
+    "points": 105,
+    "boardPoints": 10.0,
+    "record": {
+      "wins": 0,
+      "draws": 0,
+      "losses": 6
+    },
+    "averageRating": 1569,
+    "recentForm": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "L"
+    ],
+    "title": "10th Place Contenders",
+    "players": [
+      {
+        "id": "lichess:odushines",
+        "name": "Odushina Emmanuel",
+        "board": 1,
+        "handle": "odushines",
+        "handle_l": "odushines",
+        "handle_c": "odushines",
+        "platform": "lichess",
+        "rating": 1877,
+        "status": "Confirmed",
+        "stats": {
+          "played": 4,
+          "leaguePoints": 64,
+          "wins": 21,
+          "draws": 1,
+          "losses": 0,
+          "winRate": 86.5,
+          "perfRating": 1941
+        }
+      },
+      {
+        "id": "lichess:ninuoluwa21",
+        "name": "Ninuoluwa",
+        "board": 2,
+        "handle": "ninuoluwa21",
+        "handle_l": "ninuoluwa21",
+        "handle_c": "ninuoluwa21",
+        "platform": "lichess",
+        "rating": 1606,
+        "status": "Confirmed",
+        "stats": {
+          "played": 4,
+          "leaguePoints": 20,
+          "wins": 7,
+          "draws": 1,
+          "losses": 1,
+          "winRate": 66.7,
+          "perfRating": 1626
+        }
+      },
+      {
+        "id": "lichess:malasowe",
+        "name": "Malasowe",
+        "board": 3,
+        "handle": "malasowe",
+        "handle_l": "malasowe",
+        "handle_c": "malasowe",
+        "platform": "lichess",
+        "rating": 1679,
+        "status": "Confirmed",
+        "stats": {
+          "played": 1,
+          "leaguePoints": 14,
+          "wins": 5,
+          "draws": 1,
+          "losses": 1,
+          "winRate": 58.3,
+          "perfRating": 1693
+        }
+      },
+      {
+        "id": "lichess:alao_david",
+        "name": "Alao David",
+        "board": 4,
+        "handle": "alao_david",
+        "handle_l": "alao_david",
+        "handle_c": "alao_david",
+        "platform": "lichess",
+        "rating": 1140,
+        "status": "Confirmed",
+        "stats": {
+          "played": 1,
+          "leaguePoints": 7,
+          "wins": 2,
+          "draws": 1,
+          "losses": 1,
+          "winRate": 45,
+          "perfRating": 1147
+        }
+      },
+      {
+        "id": "lichess:pealaboss",
+        "name": "Pealaboss",
+        "board": 5,
+        "handle": "pealaboss",
+        "handle_l": "pealaboss",
+        "handle_c": "pealaboss",
+        "platform": "lichess",
+        "rating": 1542,
+        "status": "Confirmed",
+        "stats": {
+          "played": 1,
+          "leaguePoints": 0,
+          "wins": 0,
+          "draws": 0,
+          "losses": 1,
+          "winRate": 45,
+          "perfRating": 1542
+        }
+      }
+    ]
+  },
+  {
+    "id": "futia",
+    "name": "Federal University of Technology Ikot Abasi",
+    "shortName": "FUTIA",
+    "nickname": "FUTIA Techmasters",
+    "location": "Federal University of Technology Ikot Abasi",
+    "color": "#059669",
+    "logoUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=120&h=120&fit=crop",
+    "points": 26,
+    "boardPoints": 3.5,
+    "record": {
+      "wins": 0,
+      "draws": 0,
+      "losses": 6
+    },
+    "averageRating": 1577,
+    "recentForm": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "L"
+    ],
+    "title": "11th Place Contenders",
+    "players": [
+      {
+        "id": "lichess:emike001",
+        "name": "Emike",
+        "board": 1,
+        "handle": "emike001",
+        "handle_l": "emike001",
+        "handle_c": "emike001",
+        "platform": "lichess",
+        "rating": 2026,
+        "status": "Confirmed",
+        "stats": {
+          "played": 1,
+          "leaguePoints": 10,
           "wins": 3,
           "draws": 1,
           "losses": 1,
-          "winRate": 75,
-          "perfRating": 1250
+          "winRate": 50.0,
+          "perfRating": 2036
+        }
+      },
+      {
+        "id": "lichess:boe200",
+        "name": "Bassey Okon Etia",
+        "board": 2,
+        "handle": "boe200",
+        "handle_l": "boe200",
+        "handle_c": "boe200",
+        "platform": "lichess",
+        "rating": 1441,
+        "status": "Confirmed",
+        "stats": {
+          "played": 1,
+          "leaguePoints": 8,
+          "wins": 3,
+          "draws": 1,
+          "losses": 1,
+          "winRate": 45,
+          "perfRating": 1449
+        }
+      },
+      {
+        "id": "lichess:davidbarakaii",
+        "name": "David Barakaii",
+        "board": 3,
+        "handle": "davidbarakaii",
+        "handle_l": "davidbarakaii",
+        "handle_c": "davidbarakaii",
+        "platform": "lichess",
+        "rating": 1554,
+        "status": "Confirmed",
+        "stats": {
+          "played": 1,
+          "leaguePoints": 8,
+          "wins": 3,
+          "draws": 1,
+          "losses": 1,
+          "winRate": 45,
+          "perfRating": 1562
+        }
+      },
+      {
+        "id": "lichess:anonix_01",
+        "name": "Covenant Ifiok Udobia",
+        "board": 4,
+        "handle": "anonix_01",
+        "handle_l": "anonix_01",
+        "handle_c": "anonix_01",
+        "platform": "lichess",
+        "rating": 1286,
+        "status": "Confirmed",
+        "stats": {
+          "played": 1,
+          "leaguePoints": 0,
+          "wins": 0,
+          "draws": 0,
+          "losses": 1,
+          "winRate": 45,
+          "perfRating": 1286
         }
       }
     ]

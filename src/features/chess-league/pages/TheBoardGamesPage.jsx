@@ -1465,22 +1465,20 @@ export default function TheBoardGamesPage() {
                         {uni.name}
                       </h4>
 
-                      {/* Board 1 Star Contender Pill */}
-                      {uni.board1 && (
-                        <div className="mt-2.5 bg-[#F6F4F0] rounded-xl p-2 flex items-center justify-between">
-                          <div className="min-w-0 flex-1 pr-2">
-                            <span className="text-[9px] font-extrabold font-space uppercase tracking-wider text-slate-500 block">
-                              Board 1 Lead
-                            </span>
-                            <span className="text-xs font-bold text-brand-text-dark truncate block leading-tight mt-0.5">
-                              {uni.board1.name}
-                            </span>
-                          </div>
-                          <span className="text-[11px] font-mono font-black text-slate-800 bg-white shadow-2xs px-1.5 py-0.5 rounded-md shrink-0">
-                            {uni.board1.rating}
+                      {/* Team Tournament Standing & Points */}
+                      <div className="mt-2.5 bg-[#F6F4F0] rounded-xl p-2 flex items-center justify-between">
+                        <div className="min-w-0 flex-1 pr-2">
+                          <span className="text-[9px] font-extrabold font-space uppercase tracking-wider text-slate-500 block">
+                            League Points
+                          </span>
+                          <span className="text-xs font-bold text-brand-text-dark truncate block leading-tight mt-0.5">
+                            {uni.points} Pts
                           </span>
                         </div>
-                      )}
+                        <span className="text-[11px] font-mono font-black text-[#B84D00] bg-white shadow-2xs px-2 py-0.5 rounded-md shrink-0">
+                          Rank #{ORDERED_INSTITUTION_IDS.indexOf(uni.id) + 1}
+                        </span>
+                      </div>
 
                       {/* Collegiate Metrics */}
                       <div className="grid grid-cols-2 gap-2 mt-2">

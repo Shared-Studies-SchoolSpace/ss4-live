@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { AnimatePresence, motion as Motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from '../features/auth-portal/hooks/useAuth';
 import { supabase } from '../supabase';
 import Button from '../components/Button';
@@ -93,38 +93,45 @@ const ChessVisual = () => (
   </div>
 );
 
+const LANDING_CACHE_KEY = 'ss4_landing_preloaded_v2';
+let hasLandingPreloadedInMemory = false;
+
+function readLandingCache() {
+  try {
+    const raw = sessionStorage.getItem(LANDING_CACHE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function LandingPage() {
   const navigate = useNavigate();
   const { user, profile } = useAuth();
+  const cachedLanding = useMemo(() => readLandingCache(), []);
+  const alreadyPreloaded = hasLandingPreloadedInMemory || Boolean(cachedLanding);
+
   const [activeFilter, setActiveFilter] = useState("all");
   const [leaderboardTab, setLeaderboardTab] = useState("players");
   const [selectedDivision, setSelectedDivision] = useState("A"); // "A", "Fork", "Pin"
-  const [dbAnnouncements, setDbAnnouncements] = useState([]);
-  const [dbMatches, setDbMatches] = useState([]);
-  const [allPlayers, setAllPlayers] = useState([]);
-  const [leaderboardSchools, setLeaderboardSchools] = useState([]);
-  const [dailyFriendlies, setDailyFriendlies] = useState([]);
+  const [dbAnnouncements, setDbAnnouncements] = useState(() => cachedLanding?.dbAnnouncements || []);
+  const [dbMatches, setDbMatches] = useState(() => cachedLanding?.dbMatches || []);
+  const [allPlayers, setAllPlayers] = useState(() => cachedLanding?.allPlayers || []);
+  const [leaderboardSchools, setLeaderboardSchools] = useState(() => cachedLanding?.leaderboardSchools || []);
+  const [dailyFriendlies, setDailyFriendlies] = useState(() => cachedLanding?.dailyFriendlies || []);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
-  const [loadingFeed, setLoadingFeed] = useState(true);
+  const [loadingFeed, setLoadingFeed] = useState(!alreadyPreloaded);
 
   // Preloading States
-  const [isPreloading, setIsPreloading] = useState(true);
-  const [preloadProgress, setPreloadProgress] = useState(0);
+  const [isPreloading, setIsPreloading] = useState(!alreadyPreloaded);
+  const [preloadProgress, setPreloadProgress] = useState(alreadyPreloaded ? 100 : 0);
 
   // 1. Load data from Supabase / SessionStorage Cache
   useEffect(() => {
-    // Only use cached announcements/schools for instant paint, but always fetch fresh tournament matches
-    const isCached = sessionStorage.getItem('ss4_landing_preloaded_v2');
-    if (isCached) {
-      try {
-        const cached = JSON.parse(isCached);
-        setDbAnnouncements(cached.dbAnnouncements || []);
-        setAllPlayers(cached.allPlayers || []);
-        setLeaderboardSchools(cached.leaderboardSchools || []);
-        setDailyFriendlies(cached.dailyFriendlies || []);
-      } catch (e) {
-        // Cache corrupted or disabled
-      }
+    if (alreadyPreloaded) {
+      hasLandingPreloadedInMemory = true;
+      setIsPreloading(false);
+      setLoadingFeed(false);
     }
 
     const loadAndPreload = async () => {
@@ -254,7 +261,6 @@ export default function LandingPage() {
         
         for (let idx = 0; idx < listToFetch.length; idx += batchSize) {
           const batch = listToFetch.slice(idx, idx + batchSize);
-          setPreloadStatus(`Caching player data (${idx}/${listToFetch.length})...`);
           
           await Promise.all(batch.map(async (uname) => {
             const player = realPlayers.find(p => p.chess_username === uname);
@@ -282,21 +288,29 @@ export default function LandingPage() {
         const cachedPayload = {
           dbAnnouncements: finalAnn,
           dbMatches: finalMatches,
-          allPlayers: mergedPlayers,
+          allPlayers: realPlayers,
           leaderboardSchools: schools,
           dailyFriendlies: finalFriendlies
         };
-        sessionStorage.setItem('ss4_landing_preloaded_v2', JSON.stringify(cachedPayload));
+        hasLandingPreloadedInMemory = true;
+        try {
+          sessionStorage.setItem(LANDING_CACHE_KEY, JSON.stringify(cachedPayload));
+        } catch {
+          // Ignore storage quota errors
+        }
         
         setPreloadProgress(100);
 
-        setTimeout(() => {
-          setIsPreloading(false);
-          setLoadingFeed(false);
-        }, 500);
+        if (!alreadyPreloaded) {
+          setTimeout(() => {
+            setIsPreloading(false);
+            setLoadingFeed(false);
+          }, 500);
+        }
 
       } catch (err) {
         console.error("Error preloading landing data:", err);
+        hasLandingPreloadedInMemory = true;
         setIsPreloading(false);
         setLoadingFeed(false);
       }
@@ -640,18 +654,18 @@ export default function LandingPage() {
               <div className="space-y-3">
                 <div className="p-3.5 bg-m3-surface-low rounded-xl border border-m3-outline-variant">
                   <span className="text-[10px] font-black text-brand-accent uppercase tracking-widest block">Championship Arena</span>
-                  <a href="/theboardgames" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
+                  <Link to="/theboardgames" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
                     theBOARDGAMES Hub
-                  </a>
+                  </Link>
                   <span className="text-xs font-semibold text-gray-700 block mt-0.5">
                     11 Universities &bull; Live Standings &amp; Brackets
                   </span>
                 </div>
                 <div className="p-3.5 bg-m3-surface-low rounded-xl border border-m3-outline-variant">
                   <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest block">Daily League</span>
-                  <a href="/theboardgames?tab=daily-league" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
+                  <Link to="/theboardgames?tab=daily-league" className="text-sm font-bold text-brand-text-dark block mt-1 hover:text-brand-primary transition-colors">
                     SS4 Arena Series
-                  </a>
+                  </Link>
                   <span className="text-xs font-semibold text-gray-700 block mt-0.5">Lichess Blitz Arenas &bull; 8:00 PM WAT</span>
                 </div>
               </div>
@@ -672,9 +686,9 @@ export default function LandingPage() {
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> Live
                 </span>
               </div>
-              <a href="/news" className="text-xs font-bold text-brand-primary hover:text-brand-accent transition-colors flex items-center gap-1">
+              <Link to="/news" className="text-xs font-bold text-brand-primary hover:text-brand-accent transition-colors flex items-center gap-1">
                 Full Feed View →
-              </a>
+              </Link>
             </div>
 
             {/* Extracted SAS Feed Display System */}

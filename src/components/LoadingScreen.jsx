@@ -33,7 +33,7 @@ export default function LoadingScreen({ progress = 0 }) {
             className="w-full h-1 bg-slate-200/80 rounded-full overflow-hidden relative"
           >
             <div
-              className="h-full bg-gradient-to-r from-[#155baa] to-[#E8640A] rounded-full transition-all duration-300 ease-out"
+              className="h-full bg-[#155baa] rounded-full transition-all duration-300 ease-out"
               style={{ width: `${normalizedProgress || 20}%` }}
             />
           </div>

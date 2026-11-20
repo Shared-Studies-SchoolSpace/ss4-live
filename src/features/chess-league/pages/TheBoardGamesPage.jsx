@@ -7,6 +7,7 @@ import { PlayerProfile } from '../components/PlayerProfile';
 import { fetchCompletePlayerData } from '../utils/chessService';
 import DailyFriendliesLeaderboard from '../components/DailyFriendliesLeaderboard';
 import ChessTournamentPage from './ChessTournamentPage';
+import PrimaryTabs from '../../../components/PrimaryTabs';
 
 import BOARD_GAMES_EVENTS from '../data/boardGamesData.json';
 
@@ -210,6 +211,37 @@ const TOURNAMENT_DAYS = Array.from({ length: 23 }, (_, i) => {
 
   return { ...base, ...NO_MATCH_DAY };
 });
+
+const COMPETITION_TABS = [
+  {
+    id: 'championship',
+    label: 'theBOARDGAMES',
+    icon: (
+      <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
+  },
+  {
+    id: 'daily-league',
+    label: 'Daily League',
+    icon: (
+      <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+      </svg>
+    ),
+  },
+  {
+    id: 'monthly-tournament',
+    label: 'Monthly Tournaments',
+    icon: (
+      <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M8 21h8m-4-4v4m-5-9a5 5 0 0010 0V5H7v7zm10-5h2a2 2 0 012 2v1a3 3 0 01-3 3h-1M7 7H5a2 2 0 00-2 2v1a3 3 0 003 3h1" />
+      </svg>
+    ),
+  },
+];
 
 export default function TheBoardGamesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -422,74 +454,14 @@ export default function TheBoardGamesPage() {
   return (
     <div className="w-full bg-brand-bg-cream text-brand-text-dark min-h-screen selection:bg-[#B84D00] selection:text-white font-avenir pb-16">
 
-      {/* ── UNIFIED SCL COMPETITION SWITCHER BAR ── */}
-      <div className="bg-[#0B192C] text-white py-3 px-3 sm:px-6">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="font-space font-black text-sm tracking-wider uppercase text-[#E8640A]">
-              SS4 Chess League
-            </span>
-            <span className="text-white/40 hidden sm:inline">•</span>
-            <span className="text-xs text-white/80 font-medium hidden sm:inline">theBOARDGAMES Hub</span>
-          </div>
-
-          <div
-            role="tablist"
-            aria-label="SS4 Chess League Competitions"
-            className="flex items-center bg-white/10 p-1 rounded-xl gap-1 overflow-x-auto max-w-full"
-          >
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === 'championship'}
-              onClick={() => handleTabChange('championship')}
-              className={`min-h-[44px] px-3.5 sm:px-4 py-2 rounded-lg text-xs font-black font-space transition-all cursor-pointer whitespace-nowrap inline-flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
-                activeTab === 'championship'
-                  ? 'bg-[#E8640A] text-white shadow-sm'
-                  : 'text-white/75 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              <span>theBOARDGAMES</span>
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === 'daily-league'}
-              onClick={() => handleTabChange('daily-league')}
-              className={`min-h-[44px] px-3.5 sm:px-4 py-2 rounded-lg text-xs font-black font-space transition-all cursor-pointer whitespace-nowrap inline-flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
-                activeTab === 'daily-league'
-                  ? 'bg-[#E8640A] text-white shadow-sm'
-                  : 'text-white/75 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
-              </svg>
-              <span>Daily League</span>
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === 'monthly-tournament'}
-              onClick={() => handleTabChange('monthly-tournament')}
-              className={`min-h-[44px] px-3.5 sm:px-4 py-2 rounded-lg text-xs font-black font-space transition-all cursor-pointer whitespace-nowrap inline-flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
-                activeTab === 'monthly-tournament'
-                  ? 'bg-[#E8640A] text-white shadow-sm'
-                  : 'text-white/75 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M8 21h8m-4-4v4m-5-9a5 5 0 0010 0V5H7v7zm10-5h2a2 2 0 012 2v1a3 3 0 01-3 3h-1M7 7H5a2 2 0 00-2 2v1a3 3 0 003 3h1" />
-              </svg>
-              <span>Monthly Tournaments</span>
-            </button>
-          </div>
-        </div>
-      </div>
+      {/* ── UNIFIED SCL COMPETITION TABS ── */}
+      <PrimaryTabs
+        tabs={COMPETITION_TABS}
+        activeTab={activeTab}
+        onChange={handleTabChange}
+        sticky={true}
+        stickyTop="top-16 lg:top-20"
+      />
 
       {/* ── TAB 1: theBOARDGAMES Championship ── */}
       {activeTab === 'championship' && (
@@ -497,7 +469,7 @@ export default function TheBoardGamesPage() {
       {/* ── 0. STICKY QUICK-NAVIGATION SUB-BAR ── */}
       <nav
         aria-label="theBoardGames Quick Navigation"
-        className="sticky top-16 lg:top-20 z-30 bg-white/95 backdrop-blur-md shadow-[0_2px_10px_rgba(15,23,42,0.05)] py-2 px-3 sm:px-6 transition-all"
+        className="sticky top-[120px] lg:top-[136px] z-30 bg-white/95 backdrop-blur-md shadow-[0_2px_10px_rgba(15,23,42,0.05)] py-2 px-3 sm:px-6 transition-all"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
           {/* Logo / Badge */}
@@ -789,7 +761,7 @@ export default function TheBoardGamesPage() {
 
                       <span className={`text-[9.5px] font-bold px-1.5 py-0.5 rounded-md truncate max-w-full ${
                         isSelected
-                          ? 'bg-black/20 text-white'
+                          ? 'bg-white/25 text-white'
                           : d.hasMatch
                             ? 'bg-[#F0EEEA] text-slate-700'
                             : 'text-slate-400'
@@ -843,7 +815,7 @@ export default function TheBoardGamesPage() {
                       {d.gridLabel ? (
                         <span className={`text-[8.5px] sm:text-[9.5px] font-bold leading-none truncate max-w-full px-1.5 py-0.5 rounded ${
                           isSelected
-                            ? 'bg-black/20 text-white'
+                            ? 'bg-white/25 text-white'
                             : d.isLive
                               ? 'text-emerald-800 bg-emerald-100 font-black'
                               : 'text-slate-700 bg-[#F0EEEA]'
@@ -1256,7 +1228,7 @@ export default function TheBoardGamesPage() {
                 )}
                 <span>{match.shortTitle}</span>
                 <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
-                  isActive ? 'bg-black/20 text-white' : 'bg-[#E5E2DC] text-slate-700'
+                  isActive ? 'bg-white/25 text-white' : 'bg-[#E5E2DC] text-slate-700'
                 }`}>
                   {match.isLive ? 'LIVE' : match.timeControl}
                 </span>

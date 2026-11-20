@@ -13,6 +13,7 @@ import { PlayerDirectory } from './PlayerDirectory';
 import { TeamCards } from './TeamCards';
 import { LeagueStandingsTable } from './LeagueStandingsTable';
 import { GameRecordsTable } from './GameRecordsTable';
+import PrimaryTabs from '../../../../components/PrimaryTabs';
 
 const PRIMARY_TABS = [
   { id: 'hub', label: 'Varsity Hub' },
@@ -53,6 +54,12 @@ const TabIcon = ({ id, className = 'w-4 h-4' }) => {
     </svg>
   );
 };
+
+const VARSITY_PRIMARY_TABS = [
+  { id: 'hub', label: 'Varsity Hub', icon: <TabIcon id="hub" className="w-4 h-4 shrink-0" /> },
+  { id: 'standings', label: 'Overall Standings', icon: <TabIcon id="standings" className="w-4 h-4 shrink-0" /> },
+  { id: 'archive', label: 'Season 1 Archive', icon: <TabIcon id="archive" className="w-4 h-4 shrink-0" /> },
+];
 
 export const VarsityTournamentHub = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -183,51 +190,14 @@ export const VarsityTournamentHub = () => {
 
   return (
     <div className="w-full bg-brand-bg-cream text-brand-text-dark min-h-screen selection:bg-brand-primary selection:text-white font-sans pb-16">
-      {/* ── UNIFIED VARSITY COMPETITION SWITCHER BAR ── */}
-      <div className="bg-[#0B192C] text-white py-3 px-3 sm:px-6 shadow-sm">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="font-space font-black text-sm tracking-wider uppercase text-[#93C5FD]">
-              SS4 Chess League
-            </span>
-            <span className="text-white/40 hidden sm:inline" aria-hidden="true">&bull;</span>
-            <span className="text-xs text-white/85 font-medium hidden sm:inline">
-              Varsity Hub &middot; {VARSITY_S2_METADATA.season}
-            </span>
-          </div>
-
-          <div
-            role="tablist"
-            aria-label="Varsity Tournament Views"
-            className="ss4-tablist-scroll items-center bg-white/10 p-1 rounded-xl gap-1 max-w-full no-scrollbar"
-          >
-            {PRIMARY_TABS.map((tab, idx) => {
-              const isSelected = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  ref={(el) => { tabRefs.current[tab.id] = el; }}
-                  id={`varsity-tab-${tab.id}`}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  tabIndex={isSelected ? 0 : -1}
-                  onClick={() => handleTabChange(tab.id)}
-                  onKeyDown={(e) => handleTabKeyDown(e, idx)}
-                  className={`px-3.5 sm:px-4 py-2 min-h-[38px] rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap inline-flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-white ${
-                    isSelected
-                      ? 'bg-brand-primary text-white shadow-sm'
-                      : 'text-white/75 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  <TabIcon id={tab.id} className="w-3.5 h-3.5 shrink-0" />
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+      {/* ── UNIFIED VARSITY COMPETITION TABS ── */}
+      <PrimaryTabs
+        tabs={VARSITY_PRIMARY_TABS}
+        activeTab={activeTab}
+        onChange={handleTabChange}
+        sticky={true}
+        stickyTop="top-16 lg:top-20"
+      />
 
       {/* ── TAB 1: VARSITY HUB ── */}
       {activeTab === 'hub' && (
@@ -235,7 +205,7 @@ export const VarsityTournamentHub = () => {
           {/* ── 0. STICKY QUICK-NAVIGATION SUB-BAR ── */}
           <nav
             aria-label="Varsity Hub Quick Navigation"
-            className="sticky top-16 lg:top-20 z-30 bg-white/95 backdrop-blur-md shadow-[0_2px_10px_rgba(15,23,42,0.05)] py-2.5 px-3 sm:px-6 transition-all"
+            className="sticky top-[120px] lg:top-[136px] z-30 bg-white/95 backdrop-blur-md shadow-[0_2px_10px_rgba(15,23,42,0.05)] py-2.5 px-3 sm:px-6 transition-all"
           >
             <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
               <div className="flex items-center gap-2 shrink-0">

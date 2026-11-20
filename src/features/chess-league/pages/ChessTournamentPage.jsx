@@ -21,6 +21,7 @@ import Input from '../../../components/Input';
 import { fetchCompletePlayerData, searchMutualGames } from '../utils/chessService';
 import AdminBroadcastPanel from '../../../components/announcements/AdminBroadcastPanel';
 import { VarsityTournamentHub } from '../components/varsity/VarsityTournamentHub';
+import PrimaryTabs from '../../../components/PrimaryTabs';
 
 
 const ADMIN_PIN = '1926';
@@ -1710,28 +1711,13 @@ export default function ChessTournamentPage() {
 
 
           {/* Sticky Mobile-First Tab Bar (Fitts's Law & Hick's Law Fix) */}
-          <div className="sticky top-16 lg:top-20 z-30 bg-white border-b border-gray-200 px-3 sm:px-6 md:px-12 lg:px-16 shadow-xs">
-            <div className="max-w-5xl mx-auto flex gap-2 sm:gap-6 overflow-x-auto no-scrollbar touch-pan-x py-1">
-              {TABS.map(t => {
-                const isPrimary = t.id === 'bracket';
-                const isActive = activeTab === t.id;
-                return (
-                  <button 
-                    key={t.id} 
-                    onClick={() => setActiveTab(t.id)}
-                    className={`min-h-[48px] px-3.5 py-3 font-black whitespace-nowrap border-b-2 transition-all cursor-pointer flex items-center gap-2 text-sm sm:text-base outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-t-xl ${
-                      isActive 
-                        ? 'border-brand-primary text-brand-primary bg-brand-primary/5' 
-                        : 'border-transparent text-gray-500 hover:text-[#111111] hover:bg-gray-50/50'
-                    }`}
-                  >
-                    {t.icon && <span className={isActive ? 'text-brand-primary' : 'text-gray-400'}>{t.icon}</span>}
-                    <span>{t.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          <PrimaryTabs
+            tabs={TABS}
+            activeTab={activeTab}
+            onChange={(id) => setActiveTab(id)}
+            sticky={true}
+            stickyTop="top-16 lg:top-20"
+          />
 
           {/* DB status pill */}
           {isDbFallback && (

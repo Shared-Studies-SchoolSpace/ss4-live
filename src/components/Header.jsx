@@ -390,10 +390,8 @@ export const Header = () => {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 flex flex-col gap-2.5 overflow-hidden shadow-lg"
             >
-              {/* Watch Live or Match Status in Mobile Drawer */}
-              <div className="pb-1 pt-0.5">
-                <WatchLiveButton variant="mobile-drawer" />
-              </div>
+              {/* Watch Live in Mobile Drawer (renders only when live) */}
+              <WatchLiveButton variant="mobile-drawer" />
 
               <Link to="/" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
               <Link 

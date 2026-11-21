@@ -18,6 +18,7 @@ import AboutPage from './pages/AboutPage';
 import FriendliesPage from './features/chess-league/pages/FriendliesPage';
 import ChessTournamentPage from './features/chess-league/pages/ChessTournamentPage';
 import VarsityPage from './features/chess-league/pages/VarsityPage';
+import VarsityAdminPage from './pages/VarsityAdminPage';
 import TertiaryPage from './features/tertiary-admissions/pages/TertiaryPage';
 import TertiaryDetailPage from './features/tertiary-admissions/pages/TertiaryDetailPage';
 import DashboardPage from './features/auth-portal/pages/DashboardPage';
@@ -34,9 +35,9 @@ function App() {
     <AuthModalProvider>
       <Router>
         <ScrollToTop />
-        <div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white flex flex-col w-full max-w-full overflow-x-hidden">
+        <div className="min-h-screen bg-brand-bg-cream text-brand-text-dark selection:bg-brand-primary selection:text-white flex flex-col w-full max-w-full overflow-x-clip">
           <Header />
-          <main className="flex-grow w-full max-w-full overflow-x-hidden">
+          <main className="flex-grow w-full max-w-full overflow-x-clip">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/schools" element={<Navigate to="/tertiary" replace />} />
@@ -60,6 +61,8 @@ function App() {
             <Route path="/tournaments/register" element={<Navigate to="/theboardgames?tab=monthly-tournament" replace />} />
             <Route path="/chess-league/varsity" element={<VarsityPage />} />
             <Route path="/varsity" element={<Navigate to="/chess-league/varsity" replace />} />
+            <Route path="/admin/varsity" element={<VarsityAdminPage />} />
+            <Route path="/varsity/admin" element={<Navigate to="/admin/varsity" replace />} />
             <Route path="/tertiary" element={<TertiaryPage />} />
             <Route path="/tertiary/:id" element={<TertiaryDetailPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />

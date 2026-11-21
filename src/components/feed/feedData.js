@@ -1,11 +1,62 @@
 // Initial Feed Data for SS4 Platform Ecosystem
 // Authentic posts with strict chronological timestamps and post indexing:
-// November Varsity Season 2 Poster (postIndex: 0) -> October Tournament Poster (postIndex: 1) -> October Aspirants (postIndex: 2) -> September Varsity (postIndex: 3, 4) -> August Tournament (postIndex: 5, 6, 7)
+// November Varsity Matchday 2 (postIndex: 0) -> November Varsity Season 2 Poster (postIndex: 1) -> October Tournament Poster (postIndex: 2) -> October Aspirants (postIndex: 3) -> September Varsity (postIndex: 4, 5) -> August Tournament (postIndex: 6, 7, 8)
 
 export const INITIAL_FEED_POSTS = [
   {
-    id: 'post_admin_varsity_nov_2026_s2',
+    id: 'post_admin_varsity_nov_2026_md2',
     postIndex: 0,
+    createdAt: '2026-11-20T18:00:00Z',
+    timestamp: '2026-11-20T18:00:00Z',
+    postType: 'multimedia',
+    mediaType: 'poster',
+    imageUrl: '/varsity-nov-2026-poster.png',
+    categoryClass: 'tournament',
+    readTime: '',
+    isUnread: true,
+    author: {
+      name: 'SS4',
+      avatarImg: '/ss4_logo_without_text.jpg',
+      isAdmin: true,
+      time: 'Nov 20, 2026'
+    },
+    title: 'SCL Varsity Games · Matchday 2: Opening Fixtures Complete — League Match 2 Tonight on Lichess',
+    excerpt: `**SCL VARSITY GAMES — MATCHDAY 2**
+
+The opening fixtures are complete.
+Next up: League Match 2.
+
+• **Schedule:** Fri 20 Nov · 8:00–9:00 PM (WAT)
+• **Time Control:** 3+0 Blitz
+• **Competition:** 15 Institutions · 5 Players each · League Stage Day 2
+• **Official Lichess Arena:** <a href="https://lichess.org/tournament/CnYWk8AG" target="_blank" rel="noopener noreferrer" style="color: #1A56C4; text-decoration: underline; font-weight: 600;">lichess.org/tournament/CnYWk8AG</a>
+
+Watch live and track institutional standings in real time!
+
+**Many Institutions, One Space. The Board Remembers.**`,
+    tags: ['#SCLVarsityGames', '#Matchday2', '#Season2', '#SS4ChessLeague', '#Lichess', '#UniversityChess'],
+    likesCount: 0,
+    isLiked: false,
+    isBookmarked: false,
+    embed: {
+      type: 'lobby',
+      actionLabel: 'Watch Live Arena on Lichess →',
+      onAction: () => {
+        window.open('https://lichess.org/tournament/CnYWk8AG', '_blank', 'noopener,noreferrer');
+      },
+      calendarEvent: {
+        title: 'SCL Varsity Games · Matchday 2',
+        description: 'League Match 2 (Fri 20 Nov · 8:00–9:00 PM · 3+0 Blitz). 15 Institutions on Lichess. The Board Remembers.',
+        startDate: '2026-11-20',
+        endDate: '2026-11-20',
+        location: 'Online (Lichess)'
+      }
+    },
+    comments: []
+  },
+  {
+    id: 'post_admin_varsity_nov_2026_s2',
+    postIndex: 1,
     createdAt: '2026-11-18T19:00:00Z',
     timestamp: '2026-11-18T19:00:00Z',
     postType: 'multimedia',
@@ -60,7 +111,7 @@ Season 2 of the SS4 Chess League Varsity Tournament is officially underway on Li
   },
   {
     id: 'post_admin_october_theboardgames_2026',
-    postIndex: 1,
+    postIndex: 2,
     createdAt: '2026-10-09T08:00:00Z',
     timestamp: '2026-10-09T08:00:00Z',
     postType: 'multimedia',
@@ -79,7 +130,7 @@ Season 2 of the SS4 Chess League Varsity Tournament is officially underway on Li
     excerpt: `**SS4 CHESS LEAGUE — theBOARDGAMES**
 *Featuring the best chess players from top universities in Nigeria.*
 
-The October 2026 inter-collegiate championship is officially live! Across 23 days of relentless digital warfare, the sharpest collegiate minds and university contenders in Nigeria clash on 64 squares for institutional supremacy and national ranking points.
+The October 2026 inter-university championship is officially live! Across 23 days of relentless digital warfare, the sharpest student minds and university contenders in Nigeria clash on 64 squares for institutional supremacy and national ranking points.
 
 **TOURNAMENT DETAILS:**
 • **Match Window:** 9th – 31st October 2026
@@ -119,7 +170,7 @@ Will Covenant University's Anuchi Emmanuel defend his August crown, or will a ne
   },
   {
     id: 'post_admin_october_aspirants_2026',
-    postIndex: 2,
+    postIndex: 3,
     createdAt: '2026-10-02T09:00:00Z',
     timestamp: '2026-10-02T09:00:00Z',
     postType: 'text',
@@ -162,7 +213,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_varsity_lineups_2026',
-    postIndex: 3,
+    postIndex: 4,
     createdAt: '2026-09-16T12:00:00Z',
     timestamp: '2026-09-16T12:00:00Z',
     postType: 'multimedia',
@@ -304,7 +355,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_varsity_tournament_2026',
-    postIndex: 4,
+    postIndex: 5,
     createdAt: '2026-09-14T10:00:00Z',
     timestamp: '2026-09-14T10:00:00Z',
     postType: 'multimedia',
@@ -320,7 +371,7 @@ Many Institutions, One Space. The Board Remembers.`,
       time: 'Sept 14, 2026'
     },
     title: 'SS4 Chess League Varsity Tournament 2026: Nigeria’s Top Universities Clash — Rosters Closed!',
-    excerpt: 'Nigeria’s premier inter-university chess championship is officially underway. From September 16th to 30th, 2026, the sharpest collegiate minds from top universities across Nigeria will clash in high-stakes 5-player squad battles hosted online on Chess.com and Lichess. The champion university takes home the national varsity crown and 5x 1-Month Chess.com Premium memberships.\n\n• Format: Teams of 5 contenders per institution\n• Match Window: 16th – 30th September 2026\n• Status: Rosters & Line-ups fully confirmed!\n• Match Hosting: Chess.com & Lichess\n\nFor arbiters and corporate university sponsorships, contact directly at 09060515456 or 08161673691.\n\nMany Institutions, One Space. The Board Remembers.',
+    excerpt: 'Nigeria’s premier inter-university chess championship is officially underway. From September 16th to 30th, 2026, the sharpest student minds from top universities across Nigeria will clash in high-stakes 5-player squad battles hosted online on Chess.com and Lichess. The champion university takes home the national varsity crown and 5x 1-Month Chess.com Premium memberships.\n\n• Format: Teams of 5 contenders per institution\n• Match Window: 16th – 30th September 2026\n• Status: Rosters & Line-ups fully confirmed!\n• Match Hosting: Chess.com & Lichess\n\nFor arbiters and corporate university sponsorships, contact directly at 09060515456 or 08161673691.\n\nMany Institutions, One Space. The Board Remembers.',
     tags: ['#SS4VarsityTournament', '#UniversityChess', '#ChessNigeria', '#ChessDotCom', '#Lichess', '#TheBoardRemembers'],
     likesCount: 8,
     isLiked: false,
@@ -340,7 +391,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_champion_2026',
-    postIndex: 5,
+    postIndex: 6,
     createdAt: '2026-09-04T22:30:00Z',
     timestamp: '2026-09-04T22:30:00Z',
     postType: 'multimedia',
@@ -385,7 +436,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_semifinals_2026',
-    postIndex: 6,
+    postIndex: 7,
     createdAt: '2026-09-03T19:00:00Z',
     timestamp: '2026-09-03T19:00:00Z',
     postType: 'multimedia',
@@ -419,7 +470,7 @@ Many Institutions, One Space. The Board Remembers.`,
     excerpt: `**SS4 CHESS LEAGUE — SEMIFINALS**
 Many Institutions, One Space.
 
-Only four collegiate grandmasters remain standing. Tonight, two spots in the Grand Final are on the line as Nigeria's finest university talents face off over 64 squares!
+Only four university contenders remain standing. Tonight, two spots in the Grand Final are on the line as Nigeria's finest university talents face off over 64 squares!
 
 • **Date:** Thursday, September 3rd, 2026
 • **Time:** 8:00 PM WAT
@@ -439,7 +490,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_quarterfinals_2026',
-    postIndex: 7,
+    postIndex: 8,
     createdAt: '2026-09-02T19:00:00Z',
     timestamp: '2026-09-02T19:00:00Z',
     postType: 'multimedia',

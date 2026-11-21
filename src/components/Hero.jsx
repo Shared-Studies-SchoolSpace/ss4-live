@@ -70,7 +70,7 @@ export const Hero = () => {
           <div className="w-24 h-1 bg-brand-accent mb-8 rounded-full" />
           
           <p className="text-white text-sm sm:text-lg lg:text-xl font-medium mb-7 sm:mb-10 max-w-lg drop-shadow-md leading-relaxed">
-            SS4 connects tertiary institutions, departments, and collegiate intellects into one shared arena. The SS4 Chess League (SCL) is its premier competitive initiative—uniting Nigeria&apos;s brightest student masters across verified tournaments, daily arenas, and inter-university rivalries.
+            SS4 connects tertiary institutions, departments, and university intellects into one shared arena. The SS4 Chess League (SCL) is its premier competitive initiative—uniting Nigeria&apos;s brightest student masters across verified tournaments, daily arenas, and inter-university rivalries.
           </p>
 
           <div className="space-y-6">

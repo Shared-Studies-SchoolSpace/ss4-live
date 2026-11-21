@@ -2715,7 +2715,7 @@ export default function ChessTournamentPage() {
                       </span>
                       <span className="font-bold">
                         {bannerMode === 'partner'
-                          ? 'Become a Partner — Collaborate with SS4 to empower collegiate chess & student excellence across Nigeria'
+                          ? 'Become a Partner — Collaborate with SS4 to empower university chess & student excellence across Nigeria'
                           : bannerMode === 'custom' 
                           ? (bannerHeadline || 'Custom Announcement Copy') 
                           : bannerMode === 'registration' 

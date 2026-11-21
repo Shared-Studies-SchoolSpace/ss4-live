@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../features/auth-portal/hooks/useAuth';
 import { useAuthModal } from '../features/auth-portal/context/AuthModalContext';
 import TournamentCountdownBanner from '../features/chess-league/components/TournamentCountdownBanner';
 import AdminDrawer from './admin/AdminDrawer';
+import { WatchLiveButton } from './WatchLiveButton';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ export const Header = () => {
     signOut, 
     unreadMessages = [],
     unreadNotificationsCount = 0,
-    unreadAnnouncementsCount = 0,
     notifications = [],
     markNotificationAsRead,
     markAllNotificationsAsRead
@@ -124,6 +124,9 @@ export const Header = () => {
 
           {/* Action & Utility Group - Equal heights & gap spacing */}
           <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 xl:gap-3 shrink-0">
+            {/* Watch Live or Live Status Button */}
+            <WatchLiveButton />
+
             <Link to="/partners" className="hidden xl:inline-flex items-center h-9 sm:h-10 px-3 xl:px-4 border border-[#E8640A] text-[#E8640A] font-bold text-xs xl:text-sm rounded-xl hover:bg-[#E8640A]/5 transition-colors cursor-pointer whitespace-nowrap shrink-0">
               Partner With Us
             </Link>
@@ -165,7 +168,7 @@ export const Header = () => {
 
                 <AnimatePresence>
                   {isNotifOpen && (
-                    <motion.div
+                    <Motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
@@ -229,7 +232,7 @@ export const Header = () => {
                           })
                         )}
                       </div>
-                    </motion.div>
+                    </Motion.div>
                   )}
                 </AnimatePresence>
               </div>
@@ -270,7 +273,7 @@ export const Header = () => {
 
                 <AnimatePresence>
                   {isDropdownOpen && (
-                    <motion.div 
+                    <Motion.div 
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
@@ -310,16 +313,26 @@ export const Header = () => {
                       </Link>
 
                       {profile?.role === 'admin' && (
-                        <button
-                          onClick={() => {
-                            setIsDropdownOpen(false);
-                            setIsAdminDrawerOpen(true);
-                          }}
-                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-amber-700 hover:bg-amber-50 transition-colors text-left cursor-pointer border-none bg-transparent"
-                        >
-                          <span className="text-sm">📢</span>
-                          <span>Admin Broadcast Panel</span>
-                        </button>
+                        <>
+                          <button
+                            onClick={() => {
+                              setIsDropdownOpen(false);
+                              setIsAdminDrawerOpen(true);
+                            }}
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-amber-700 hover:bg-amber-50 transition-colors text-left cursor-pointer border-none bg-transparent"
+                          >
+                            <span className="text-sm">📢</span>
+                            <span>Admin Broadcast Panel</span>
+                          </button>
+                          <Link
+                            to="/admin/varsity"
+                            onClick={() => setIsDropdownOpen(false)}
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-blue-700 hover:bg-blue-50 transition-colors text-left"
+                          >
+                            <span className="text-sm">♟</span>
+                            <span>Varsity Match Days Admin</span>
+                          </Link>
+                        </>
                       )}
                       
                       <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 transition-colors text-left cursor-pointer border-none bg-transparent">
@@ -328,7 +341,7 @@ export const Header = () => {
                         </svg>
                         <span>Sign Out</span>
                       </button>
-                    </motion.div>
+                    </Motion.div>
                   )}
                 </AnimatePresence>
               </div>
@@ -370,13 +383,18 @@ export const Header = () => {
         {/* Mobile Navigation Drawer */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div 
+            <Motion.div 
               ref={menuRef}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 flex flex-col gap-2.5 overflow-hidden shadow-lg"
             >
+              {/* Watch Live or Match Status in Mobile Drawer */}
+              <div className="pb-1 pt-0.5">
+                <WatchLiveButton variant="mobile-drawer" />
+              </div>
+
               <Link to="/" className="text-[13px] sm:text-[14px] font-bold text-gray-700 hover:text-brand-primary py-0.5" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
               <Link 
                 to="/theboardgames" 
@@ -446,16 +464,26 @@ export const Header = () => {
                     </Link>
 
                     {profile?.role === 'admin' && (
-                      <button
-                        onClick={() => {
-                          setIsMobileMenuOpen(false);
-                          setIsAdminDrawerOpen(true);
-                        }}
-                        className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-amber-500/10 text-amber-700 border border-amber-500/20 text-xs font-bold hover:bg-amber-500/20 transition-all text-left cursor-pointer"
-                      >
-                        <span className="text-sm">📢</span>
-                        <span>Admin Broadcast Panel</span>
-                      </button>
+                      <>
+                        <button
+                          onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            setIsAdminDrawerOpen(true);
+                          }}
+                          className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-amber-500/10 text-amber-700 border border-amber-500/20 text-xs font-bold hover:bg-amber-500/20 transition-all text-left cursor-pointer"
+                        >
+                          <span className="text-sm">📢</span>
+                          <span>Admin Broadcast Panel</span>
+                        </button>
+                        <Link
+                          to="/admin/varsity"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-blue-500/10 text-blue-700 border border-blue-500/20 text-xs font-bold hover:bg-blue-500/20 transition-all text-left"
+                        >
+                          <span className="text-sm">♟</span>
+                          <span>Varsity Match Days Admin</span>
+                        </Link>
+                      </>
                     )}
 
                     <button 
@@ -494,7 +522,7 @@ export const Header = () => {
                   </button>
                 </div>
               )}
-            </motion.div>
+            </Motion.div>
           )}
         </AnimatePresence>
       </header>

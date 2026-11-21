@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import {
@@ -7,8 +7,13 @@ import {
   VARSITY_S2_STANDINGS,
   VARSITY_S2_STAR_PLAYERS,
   VARSITY_S2_EVENTS,
-  VARSITY_S2_CALENDAR_DAYS,
+  buildCalendarDays,
 } from '../../data/varsitySeason2Data';
+import {
+  getStoredEvents,
+  fetchVarsityEvents,
+  subscribeToVarsityEvents,
+} from '../../services/varsityMatchService';
 import { PlayerDirectory } from './PlayerDirectory';
 import { TeamCards } from './TeamCards';
 import { LeagueStandingsTable } from './LeagueStandingsTable';
@@ -73,17 +78,26 @@ export const VarsityTournamentHub = () => {
   const tabRefs = useRef({});
   const trackScrollRef = useRef(null);
 
-  const [selectedDay, setSelectedDay] = useState(() => (
-    VARSITY_S2_CALENDAR_DAYS.find((d) => d.hasMatch) || VARSITY_S2_CALENDAR_DAYS[0]
-  ));
+  const [events, setEvents] = useState(() => getStoredEvents());
+  const calendarDays = useMemo(() => buildCalendarDays(events), [events]);
+
+  const [selectedDayNum, setSelectedDayNum] = useState(20);
   const [calendarFilter, setCalendarFilter] = useState('all'); // 'all' | 'matches'
   const [calendarViewMode, setCalendarViewMode] = useState('strip'); // 'strip' | 'grid' on mobile
   const [showStandingsDrawer, setShowStandingsDrawer] = useState(false);
 
-  const [activeArenaMatch, setActiveArenaMatch] = useState(VARSITY_S2_EVENTS[0]);
+  const [activeArenaMatchId, setActiveArenaMatchId] = useState('CnYWk8AG');
   const [deckMode, setDeckMode] = useState('arena'); // 'arena' | 'highlights'
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const selectedDay = useMemo(() => {
+    return calendarDays.find((d) => d.day === selectedDayNum) || calendarDays[calendarDays.length - 1] || calendarDays[0];
+  }, [calendarDays, selectedDayNum]);
+
+  const activeArenaMatch = useMemo(() => {
+    return events.find((e) => e.id === activeArenaMatchId) || events[events.length - 1] || events[0];
+  }, [events, activeArenaMatchId]);
 
   const [institutionQuery, setInstitutionQuery] = useState('');
   const [standingsQuery, setStandingsQuery] = useState('');
@@ -95,14 +109,18 @@ export const VarsityTournamentHub = () => {
 
   const handleTabChange = (tabKey, focusTab = false) => {
     setSearchParams(tabKey === 'hub' ? {} : { tab: tabKey });
+    window.scrollTo({ top: 0, behavior: 'instant' });
     const tabEl = tabRefs.current[tabKey];
-    if (tabEl) {
-      tabEl.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-      if (focusTab) tabEl.focus();
+    if (tabEl && focusTab) {
+      tabEl.focus();
     }
   };
 
-  const handleTabKeyDown = (e, currentIdx) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [activeTab]);
+
+  const _handleTabKeyDown = (e, currentIdx) => {
     const count = PRIMARY_TABS.length;
     let nextIdx = null;
     if (e.key === 'ArrowRight') nextIdx = (currentIdx + 1) % count;
@@ -125,12 +143,32 @@ export const VarsityTournamentHub = () => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [isZoomOpen]);
 
+  useEffect(() => {
+    let isMounted = true;
+    fetchVarsityEvents().then((remoteEvents) => {
+      if (isMounted && remoteEvents && remoteEvents.length > 0) {
+        setEvents(remoteEvents);
+      }
+    });
+
+    const unsubscribe = subscribeToVarsityEvents((updatedEvents) => {
+      if (isMounted && updatedEvents && updatedEvents.length > 0) {
+        setEvents(updatedEvents);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
+  }, []);
+
   const filteredDays = useMemo(() => {
     if (calendarFilter === 'matches') {
-      return VARSITY_S2_CALENDAR_DAYS.filter((d) => d.hasMatch);
+      return calendarDays.filter((d) => d.hasMatch);
     }
-    return VARSITY_S2_CALENDAR_DAYS;
-  }, [calendarFilter]);
+    return calendarDays;
+  }, [calendarDays, calendarFilter]);
 
   const filteredInstitutions = useMemo(() => {
     const q = institutionQuery.trim().toLowerCase();
@@ -181,11 +219,11 @@ export const VarsityTournamentHub = () => {
   };
 
   const jumpToMatchDay1 = () => {
-    const md1 = VARSITY_S2_CALENDAR_DAYS.find((d) => d.hasMatch);
-    if (md1) setSelectedDay(md1);
+    const md1 = calendarDays.find((d) => d.hasMatch);
+    if (md1) setSelectedDayNum(md1.day);
   };
 
-  const latestMatch = VARSITY_S2_EVENTS[0];
+  const latestMatch = events[events.length - 1] || VARSITY_S2_EVENTS[VARSITY_S2_EVENTS.length - 1];
   const leader = VARSITY_S2_STANDINGS[0];
 
   return (
@@ -202,107 +240,42 @@ export const VarsityTournamentHub = () => {
       {/* ── TAB 1: VARSITY HUB ── */}
       {activeTab === 'hub' && (
         <div role="tabpanel" aria-labelledby="varsity-tab-hub">
-          {/* ── 0. STICKY QUICK-NAVIGATION SUB-BAR ── */}
-          <nav
-            aria-label="Varsity Hub Quick Navigation"
-            className="sticky top-[120px] lg:top-[136px] z-30 bg-white/95 backdrop-blur-md shadow-[0_2px_10px_rgba(15,23,42,0.05)] py-2.5 px-3 sm:px-6 transition-all"
-          >
-            <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
-              <div className="flex items-center gap-2 shrink-0">
-                <span className="font-space font-black text-sm sm:text-base text-brand-text-dark leading-none tracking-tight">
-                  SS4 <span className="text-brand-primary">VARSITY</span>
-                </span>
-                <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-[#E8EFFF] text-[#00194B] uppercase tracking-wider font-space">
-                  {VARSITY_S2_METADATA.editionLabel}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-1 sm:gap-2 shrink-0 text-xs font-bold text-slate-600">
-                <a
-                  href="#schedule"
-                  className="px-2.5 py-1.5 rounded-lg hover:bg-[#E8EFFF]/70 hover:text-brand-primary transition-colors whitespace-nowrap inline-flex items-center gap-1.5"
-                >
-                  <svg className="w-3.5 h-3.5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>Schedule</span>
-                </a>
-                <a
-                  href="#arena-broadcast-deck"
-                  className="px-2.5 py-1.5 rounded-lg hover:bg-[#E8EFFF]/70 hover:text-brand-primary transition-colors whitespace-nowrap inline-flex items-center gap-1.5"
-                >
-                  <svg className="w-3.5 h-3.5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                  <span>Arena Deck</span>
-                </a>
-                <a
-                  href="#star-players"
-                  className="px-2.5 py-1.5 rounded-lg hover:bg-[#E8EFFF]/70 hover:text-brand-primary transition-colors whitespace-nowrap inline-flex items-center gap-1.5"
-                >
-                  <svg className="w-3.5 h-3.5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                  </svg>
-                  <span className="hidden sm:inline">Star Players</span>
-                </a>
-                <a
-                  href="#institutions"
-                  className="px-2.5 py-1.5 rounded-lg hover:bg-[#E8EFFF]/70 hover:text-brand-primary transition-colors whitespace-nowrap inline-flex items-center gap-1.5"
-                >
-                  <svg className="w-3.5 h-3.5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  </svg>
-                  <span>Institutions</span>
-                </a>
-                <button
-                  type="button"
-                  onClick={() => handleTabChange('standings')}
-                  className="px-2.5 py-1.5 rounded-lg bg-[#E8EFFF] text-[#00194B] hover:bg-[#dbeafe] transition-colors whitespace-nowrap inline-flex items-center gap-1 font-extrabold cursor-pointer"
-                >
-                  <span>Standings</span>
-                </button>
-              </div>
-            </div>
-          </nav>
-
           {/* ── 1. HERO & TOURNAMENT STATS SECTION ── */}
-          <section className="relative bg-white pt-6 sm:pt-8 pb-7 sm:pb-9 px-3 sm:px-6 lg:px-8 shadow-[0_1px_3px_rgba(15,23,42,0.04)]">
-            <div className="max-w-7xl mx-auto space-y-5">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div className="space-y-1.5">
-                  <div className="inline-flex items-center gap-2 bg-[#E8EFFF] text-[#00194B] px-3 py-1 rounded-md text-[11px] font-space font-extrabold uppercase tracking-wider">
-                    <span>SS4 Chess League</span>
-                    <span aria-hidden="true">&bull;</span>
+          <section className="relative bg-white pt-4 sm:pt-5 pb-4 sm:pb-5 px-3 sm:px-6 lg:px-8 shadow-[0_1px_3px_rgba(15,23,42,0.04)]">
+            <div className="max-w-7xl mx-auto space-y-3.5">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-2 bg-[#E8EFFF] text-[#00194B] px-2.5 py-0.5 rounded-md text-[11px] font-space font-extrabold uppercase tracking-wider">
                     <span>{VARSITY_S2_METADATA.season}</span>
                     <span aria-hidden="true">&bull;</span>
-                    <span>{VARSITY_S2_METADATA.dateWindowShort}</span>
+                    <span>{VARSITY_S2_METADATA.dateWindowShort} 2026</span>
                   </div>
-                  <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-space tracking-tight text-brand-text-dark leading-tight">
-                    SS4 <span className="text-brand-primary">VARSITY</span> Hub
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black font-space tracking-tight text-brand-text-dark leading-tight">
+                    Season 2 <span className="text-brand-primary">Tournament Hub</span>
                   </h1>
                   <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl leading-relaxed">
-                    {VARSITY_S2_METADATA.tagline} 15 institutions, teams of 5 players each, 4 league match days on Lichess, with the Top 8 qualifying for the Quarter-Finals.
+                    15 Nigerian universities, teams of 5 players each. 4 league match days on Lichess, with top 8 advancing to Quarter-Finals.
                   </p>
                 </div>
 
                 {/* Quick Primary Actions */}
-                <div className="flex flex-wrap items-center gap-2.5 pt-1 lg:pt-0 shrink-0">
+                <div className="flex flex-wrap items-center gap-2 pt-0.5 lg:pt-0 shrink-0">
                   <a
                     href={latestMatch.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2.5 min-h-[44px] rounded-xl bg-brand-primary hover:bg-primary-hover text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow transition-all active:scale-[0.98] cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 min-h-[40px] rounded-xl bg-brand-primary hover:bg-primary-hover text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow transition-all active:scale-[0.98] cursor-pointer"
                   >
-                    <span>Match Day 1 on Lichess</span>
+                    <span>{latestMatch.shortTitle} on Lichess</span>
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
                   <a
-                    href={latestMatch.highlightsUrl}
+                    href={latestMatch.highlightsUrl || VARSITY_S2_EVENTS[0].highlightsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2.5 min-h-[44px] rounded-xl bg-[#E8EFFF] hover:bg-[#dbeafe] text-[#00194B] text-xs sm:text-sm font-bold transition-all active:scale-[0.98] cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 min-h-[40px] rounded-xl bg-[#E8EFFF] hover:bg-[#dbeafe] text-[#00194B] text-xs sm:text-sm font-bold transition-all active:scale-[0.98] cursor-pointer"
                   >
                     <svg className="w-4 h-4 text-brand-primary" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M8 5v14l11-7z" />
@@ -312,7 +285,7 @@ export const VarsityTournamentHub = () => {
                   <button
                     type="button"
                     onClick={() => setIsZoomOpen(true)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2.5 min-h-[44px] rounded-xl bg-[#F6F4F0] hover:bg-[#EBE9E4] text-brand-text-dark text-xs sm:text-sm font-bold transition-all active:scale-[0.98] cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 min-h-[40px] rounded-xl bg-[#F6F4F0] hover:bg-[#EBE9E4] text-brand-text-dark text-xs sm:text-sm font-bold transition-all active:scale-[0.98] cursor-pointer"
                   >
                     <svg className="w-4 h-4 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -322,46 +295,87 @@ export const VarsityTournamentHub = () => {
                 </div>
               </div>
 
-              {/* Key Metrics Strip (Tonal Surface Wells — Zero Wire Borders) */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-1">
-                <div className="bg-[#F6F4F0] rounded-2xl p-3.5">
+              {/* In-Page Quick Section Jump Links */}
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs font-semibold text-slate-600">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1">Jump to:</span>
+                <a
+                  href="#schedule"
+                  className="px-2.5 py-1 rounded-lg bg-[#F6F4F0] hover:bg-[#E8EFFF] hover:text-brand-primary transition-colors whitespace-nowrap inline-flex items-center gap-1"
+                >
+                  <svg className="w-3 h-3 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span>Schedule</span>
+                </a>
+                <a
+                  href="#arena-broadcast-deck"
+                  className="px-2.5 py-1 rounded-lg bg-[#F6F4F0] hover:bg-[#E8EFFF] hover:text-brand-primary transition-colors whitespace-nowrap inline-flex items-center gap-1"
+                >
+                  <svg className="w-3 h-3 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  <span>Live Arena</span>
+                </a>
+                <a
+                  href="#star-players"
+                  className="px-2.5 py-1 rounded-lg bg-[#F6F4F0] hover:bg-[#E8EFFF] hover:text-brand-primary transition-colors whitespace-nowrap inline-flex items-center gap-1"
+                >
+                  <svg className="w-3 h-3 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                  </svg>
+                  <span>Star Players</span>
+                </a>
+                <a
+                  href="#institutions"
+                  className="px-2.5 py-1 rounded-lg bg-[#F6F4F0] hover:bg-[#E8EFFF] hover:text-brand-primary transition-colors whitespace-nowrap inline-flex items-center gap-1"
+                >
+                  <svg className="w-3 h-3 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                  <span>Universities</span>
+                </a>
+              </div>
+
+              {/* Key Metrics Strip (Tonal Surface Wells — Compact & Clean) */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 pt-0.5">
+                <div className="bg-[#F6F4F0] rounded-xl p-3">
                   <span className="text-[10px] font-space font-extrabold uppercase tracking-wider text-slate-500 block">
-                    Collegiate Field
+                    Universities
                   </span>
-                  <span className="text-xl sm:text-2xl font-black font-space text-brand-text-dark block mt-0.5">
-                    {VARSITY_S2_METADATA.institutionsCount} Institutions
+                  <span className="text-lg sm:text-xl font-black font-space text-brand-text-dark block mt-0.5">
+                    {VARSITY_S2_METADATA.institutionsCount} Universities
                   </span>
                   <span className="text-[11px] text-slate-600 font-medium">
                     Teams of {VARSITY_S2_METADATA.playersPerTeam} players each
                   </span>
                 </div>
-                <div className="bg-[#F6F4F0] rounded-2xl p-3.5">
+                <div className="bg-[#F6F4F0] rounded-xl p-3">
                   <span className="text-[10px] font-space font-extrabold uppercase tracking-wider text-slate-500 block">
-                    Tournament Window
+                    Tournament Dates
                   </span>
-                  <span className="text-xl sm:text-2xl font-black font-space text-brand-text-dark block mt-0.5">
+                  <span className="text-lg sm:text-xl font-black font-space text-brand-text-dark block mt-0.5">
                     {VARSITY_S2_METADATA.dateWindowShort}
                   </span>
                   <span className="text-[11px] text-slate-600 font-medium">
-                    4 League Days &bull; Top 8 to QF
+                    4 Match Days &bull; Top 8 to QF
                   </span>
                 </div>
-                <div className="bg-[#E8EFFF] rounded-2xl p-3.5">
+                <div className="bg-[#E8EFFF] rounded-xl p-3">
                   <span className="text-[10px] font-space font-extrabold uppercase tracking-wider text-[#00194B]/70 block">
-                    Day 1 Leader
+                    1st Place (Day 1)
                   </span>
-                  <span className="text-xl sm:text-2xl font-black font-space text-brand-primary block mt-0.5">
+                  <span className="text-lg sm:text-xl font-black font-space text-brand-primary block mt-0.5">
                     {leader.shortName}
                   </span>
                   <span className="text-[11px] text-[#00194B] font-semibold">
                     {leader.total} pts &bull; After Day 1 of 4
                   </span>
                 </div>
-                <div className="bg-[#F6F4F0] rounded-2xl p-3.5">
+                <div className="bg-[#F6F4F0] rounded-xl p-3">
                   <span className="text-[10px] font-space font-extrabold uppercase tracking-wider text-slate-500 block">
-                    Match Day 1 Format
+                    Match Format
                   </span>
-                  <span className="text-xl sm:text-2xl font-black font-space text-brand-text-dark block mt-0.5">
+                  <span className="text-lg sm:text-xl font-black font-space text-brand-text-dark block mt-0.5">
                     {latestMatch.timeControl}
                   </span>
                   <span className="text-[11px] text-slate-600 font-medium">
@@ -373,8 +387,8 @@ export const VarsityTournamentHub = () => {
           </section>
 
           {/* ── 2. TOURNAMENT CALENDAR & MATCH TRACKER SECTION ── */}
-          <section id="schedule" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-8 sm:pt-10">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-5">
+          <section id="schedule" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-5 sm:pt-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-4">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2 h-2 rounded-full bg-brand-primary" aria-hidden="true" />
@@ -386,7 +400,7 @@ export const VarsityTournamentHub = () => {
                   Match Schedule &amp; Daily Results
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-600 font-medium mt-0.5">
-                  Select any tournament date to inspect confirmed match day podiums, standings, and official links.
+                  Select any date to view confirmed match results, standings, and game links.
                 </p>
               </div>
 
@@ -403,7 +417,7 @@ export const VarsityTournamentHub = () => {
                         : 'hover:text-brand-text-dark'
                     }`}
                   >
-                    All Nov ({VARSITY_S2_CALENDAR_DAYS.length})
+                    All Nov ({calendarDays.length})
                   </button>
                   <button
                     type="button"
@@ -418,9 +432,20 @@ export const VarsityTournamentHub = () => {
                         : 'hover:text-brand-text-dark'
                     }`}
                   >
-                    Match Days ({VARSITY_S2_EVENTS.length})
+                    Match Days ({events.length})
                   </button>
                 </div>
+
+                <Link
+                  to="/admin/varsity"
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-[#EBE9E4] hover:bg-white text-slate-600 hover:text-brand-primary text-xs font-bold transition-all shadow-2xs"
+                  title="Upload Next Match Day Link"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span className="hidden sm:inline">Add Match Day</span>
+                </Link>
 
                 {/* View Mode Toggle on Mobile */}
                 <div className="inline-flex lg:hidden bg-[#EBE9E4] p-1 rounded-xl text-xs font-bold text-slate-600 gap-1">
@@ -469,7 +494,7 @@ export const VarsityTournamentHub = () => {
                         <button
                           key={d.day}
                           type="button"
-                          onClick={() => setSelectedDay(d)}
+                          onClick={() => setSelectedDayNum(d.day)}
                           aria-pressed={isSelected}
                           aria-label={`Select November ${d.day}${d.gridLabel ? ` - ${d.gridLabel}` : ''}`}
                           className={`min-w-[80px] sm:min-w-[88px] shrink-0 snap-start rounded-2xl p-2.5 flex flex-col items-center justify-between transition-all cursor-pointer select-none text-center focus-visible:outline-2 focus-visible:outline-brand-primary ${
@@ -530,7 +555,7 @@ export const VarsityTournamentHub = () => {
                         <button
                           key={d.day}
                           type="button"
-                          onClick={() => setSelectedDay(d)}
+                          onClick={() => setSelectedDayNum(d.day)}
                           aria-pressed={isSelected}
                           aria-label={`Select November ${d.day}${d.gridLabel ? ` - ${d.gridLabel}` : ''}`}
                           className={`h-[68px] rounded-2xl flex flex-col items-center justify-between px-2 py-2 transition-all cursor-pointer select-none text-center focus-visible:outline-2 focus-visible:outline-brand-primary ${
@@ -623,12 +648,23 @@ export const VarsityTournamentHub = () => {
                             </span>
                           </div>
 
-                          <span className="text-[10px] font-space font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#D1FAE5] text-[#065F46] inline-flex items-center gap-1 shrink-0">
-                            <svg className="w-3 h-3 text-[#059669]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                              <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V19H7v2h10v-2h-4v-3.1c1.98-.44 3.49-2.07 3.61-4.06C19.08 11.63 21 9.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z" />
-                            </svg>
-                            <span>Official Results</span>
-                          </span>
+                          {selectedDay.isLive ? (
+                            <span className="text-[10px] font-space font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-red-100 text-red-700 inline-flex items-center gap-1.5 shrink-0">
+                              <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+                              <span>Live Now</span>
+                            </span>
+                          ) : selectedDay.isCompleted ? (
+                            <span className="text-[10px] font-space font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#D1FAE5] text-[#065F46] inline-flex items-center gap-1 shrink-0">
+                              <svg className="w-3 h-3 text-[#059669]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V19H7v2h10v-2h-4v-3.1c1.98-.44 3.49-2.07 3.61-4.06C19.08 11.63 21 9.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z" />
+                              </svg>
+                              <span>Official Results</span>
+                            </span>
+                          ) : (
+                            <span className="text-[10px] font-space font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#E8EFFF] text-[#00194B] inline-flex items-center gap-1 shrink-0">
+                              <span>Next Match Tonight</span>
+                            </span>
+                          )}
                         </div>
 
                         {/* Title & Meta Chips */}
@@ -655,6 +691,23 @@ export const VarsityTournamentHub = () => {
                             </span>
                           </div>
                         </div>
+
+                        {/* Match Day Status Note when Podium Pending */}
+                        {!selectedDay.podium && (
+                          <div className="bg-[#F6F4F0] rounded-2xl p-4 text-xs text-slate-600 space-y-1.5">
+                            <div className="flex items-center justify-between">
+                              <span className="font-space font-extrabold text-[11px] uppercase tracking-wider text-brand-primary">
+                                League Match 2 Status
+                              </span>
+                              <span className="text-[10px] font-bold text-slate-500">
+                                {selectedDay.timeRange} WAT
+                              </span>
+                            </div>
+                            <p className="leading-relaxed text-slate-700">
+                              {selectedDay.description}
+                            </p>
+                          </div>
+                        )}
 
                         {/* Top 3 Institutions Podium */}
                         {selectedDay.podium && selectedDay.podium.length >= 3 && (
@@ -883,7 +936,7 @@ export const VarsityTournamentHub = () => {
                           onClick={jumpToMatchDay1}
                           className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl bg-brand-primary hover:bg-primary-hover text-white text-xs font-bold transition-all cursor-pointer"
                         >
-                          <span>Inspect Match Day 1 Results</span>
+                          <span>View Match Day 1 Results</span>
                           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                           </svg>
@@ -896,14 +949,14 @@ export const VarsityTournamentHub = () => {
             </div>
           </section>
 
-          {/* ── 3. ARENA BROADCAST DECK & VIDEO HIGHLIGHTS ── */}
-          <section id="arena-broadcast-deck" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-12 sm:pt-16">
+          {/* ── 3. LIVE ARENA & VIDEO HIGHLIGHTS ── */}
+          <section id="arena-broadcast-deck" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-10 sm:pt-14">
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-4">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2.5 h-2.5 rounded-full bg-brand-primary" aria-hidden="true" />
                   <span className="text-xs font-space font-extrabold uppercase tracking-wider text-brand-primary">
-                    Official Arena Archive &amp; Highlights
+                    Live Arena &amp; Highlights
                   </span>
                 </div>
 
@@ -923,7 +976,7 @@ export const VarsityTournamentHub = () => {
                 </p>
               </div>
 
-              {/* Deck Mode Switcher (Lichess Arena vs Day 1 Highlights) */}
+              {/* Arena Mode Switcher (Lichess Arena vs Day 1 Highlights) */}
               <div className="inline-flex bg-[#EBE9E4] p-1 rounded-xl text-xs font-bold text-slate-600 gap-1 self-start lg:self-auto">
                 <button
                   type="button"
@@ -953,21 +1006,21 @@ export const VarsityTournamentHub = () => {
                   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M8 5v14l11-7z" />
                   </svg>
-                  <span>Day 1 Highlights</span>
+                  <span>Video Highlights</span>
                 </button>
               </div>
             </div>
 
             {/* Match Selector Strip */}
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar p-1.5 bg-[#EBE9E4] rounded-2xl mb-4">
-              {VARSITY_S2_EVENTS.map((match) => {
+              {events.map((match) => {
                 const isActive = activeArenaMatch.id === match.id;
                 return (
                   <button
                     key={match.id}
                     type="button"
                     onClick={() => {
-                      setActiveArenaMatch(match);
+                      setActiveArenaMatchId(match.id);
                       setIframeLoaded(false);
                     }}
                     className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-2 shrink-0 ${
@@ -985,9 +1038,11 @@ export const VarsityTournamentHub = () => {
                   </button>
                 );
               })}
-              <span className="px-3 py-2 text-[11px] font-bold text-slate-500 whitespace-nowrap">
-                Match Days 2–4 upcoming
-              </span>
+              {events.length < 4 && (
+                <span className="px-3 py-2 text-[11px] font-bold text-slate-500 whitespace-nowrap">
+                  Match {events.length === 3 ? 'Day 4' : `Days ${events.length + 1}–4`} upcoming
+                </span>
+              )}
             </div>
 
             {/* Arena / Highlights Frame Container */}
@@ -999,9 +1054,15 @@ export const VarsityTournamentHub = () => {
                   <span className="text-[#93C5FD] font-semibold">
                     {activeArenaMatch.dateStr} &bull; {activeArenaMatch.timeRange}
                   </span>
-                  <span className="hidden md:inline text-slate-400">
-                    &bull; 1st: {leader.shortName} ({leader.total} pts)
-                  </span>
+                  {activeArenaMatch.isCompleted && leader ? (
+                    <span className="hidden md:inline text-slate-400">
+                      &bull; 1st: {leader.shortName} ({leader.total} pts)
+                    </span>
+                  ) : (
+                    <span className="hidden md:inline text-slate-400">
+                      &bull; Overall Leader: {leader.shortName} ({leader.total} pts)
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1022,17 +1083,19 @@ export const VarsityTournamentHub = () => {
                     </button>
                   )}
 
-                  <a
-                    href={activeArenaMatch.highlightsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer"
-                  >
-                    <svg className="w-3.5 h-3.5 text-[#93C5FD]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                    <span>YouTube Highlights</span>
-                  </a>
+                  {activeArenaMatch.highlightsUrl ? (
+                    <a
+                      href={activeArenaMatch.highlightsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer"
+                    >
+                      <svg className="w-3.5 h-3.5 text-[#93C5FD]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                      <span>YouTube Highlights</span>
+                    </a>
+                  ) : null}
 
                   <a
                     href={activeArenaMatch.link}
@@ -1075,12 +1138,12 @@ export const VarsityTournamentHub = () => {
                     onLoad={() => setIframeLoaded(true)}
                   />
                 </div>
-              ) : (
+              ) : activeArenaMatch.highlightsVideoId ? (
                 <div className="bg-[#0B192C] p-6 sm:p-8 flex flex-col md:flex-row items-center justify-center gap-8">
                   <div className="w-full max-w-[320px] aspect-[9/16] rounded-2xl overflow-hidden bg-black shadow-lg">
                     <iframe
                       src={`https://www.youtube.com/embed/${activeArenaMatch.highlightsVideoId}`}
-                      title="SS4 Varsity Games Match Day 1 Highlights"
+                      title={`${activeArenaMatch.title} Highlights`}
                       className="w-full h-full border-none"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -1091,10 +1154,10 @@ export const VarsityTournamentHub = () => {
                       Official Video Recap
                     </span>
                     <h3 className="text-xl sm:text-2xl font-space font-black leading-tight">
-                      League Match Day 1 Highlights
+                      {activeArenaMatch.shortTitle} Highlights
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Relive the decisive blitz combinations and top-board clashes from opening night across 15 Nigerian university squads.
+                      Relive the decisive blitz combinations and top-board clashes across 15 Nigerian university squads.
                     </p>
                     <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 pt-1">
                       <a
@@ -1117,6 +1180,40 @@ export const VarsityTournamentHub = () => {
                         <span>SS4 YouTube Channel</span>
                       </a>
                     </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-[#0B192C] p-8 sm:p-12 text-center text-white space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-white/10 text-[#93C5FD] flex items-center justify-center mx-auto mb-2">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-space font-black">
+                    {activeArenaMatch.shortTitle} Highlights Coming Soon
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto">
+                    Video highlights for {activeArenaMatch.shortTitle} will be published to YouTube Shorts once tonight&apos;s matches conclude.
+                  </p>
+                  <div className="pt-2 flex flex-wrap justify-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveArenaMatchId((events[0] || VARSITY_S2_EVENTS[0]).id);
+                        setDeckMode('highlights');
+                      }}
+                      className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+                    >
+                      Watch Day 1 Highlights
+                    </button>
+                    <a
+                      href={VARSITY_S2_METADATA.youtubeChannel}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 rounded-xl bg-brand-primary hover:bg-primary-hover text-xs font-bold text-white transition-all"
+                    >
+                      <span>SS4 YouTube Channel &rarr;</span>
+                    </a>
                   </div>
                 </div>
               )}
@@ -1229,21 +1326,21 @@ export const VarsityTournamentHub = () => {
             </div>
           </section>
 
-          {/* ── 5. PARTICIPATING INSTITUTIONS (15 UNIVERSITIES) ── */}
-          <section id="institutions" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-14 sm:pt-16">
+          {/* ── 5. PARTICIPATING UNIVERSITIES (15 TEAMS) ── */}
+          <section id="institutions" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-10 sm:pt-14">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2 h-2 rounded-full bg-brand-primary" aria-hidden="true" />
                   <p className="text-xs font-space font-extrabold uppercase tracking-wider text-brand-primary">
-                    Season 2 Collegiate Field
+                    Participating Universities
                   </p>
                 </div>
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-space tracking-tight text-brand-text-dark">
-                  {VARSITY_S2_METADATA.institutionsCount} Participating Institutions
+                  {VARSITY_S2_METADATA.institutionsCount} Universities
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-600 mt-1 font-medium">
-                  Live Season 2 ranking snapshot after League Day 1 of 4. {VARSITY_S2_METADATA.qualificationNote}.
+                  Live Season 2 standings after League Day 1 of 4. {VARSITY_S2_METADATA.qualificationNote}.
                 </p>
               </div>
 
@@ -1369,7 +1466,7 @@ export const VarsityTournamentHub = () => {
 
       {/* ── TAB 2: OVERALL STANDINGS ── */}
       {activeTab === 'standings' && (
-        <div role="tabpanel" aria-labelledby="varsity-tab-standings">
+        <div role="tabpanel" aria-labelledby="varsity-tab-standings" className="scroll-mt-36 lg:scroll-mt-44">
           <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-6">
             {/* Header & Controls */}
             <div className="bg-white rounded-3xl p-5 sm:p-7 shadow-[0_2px_12px_rgba(15,23,42,0.05)] flex flex-col lg:flex-row lg:items-end justify-between gap-4">
@@ -1383,7 +1480,7 @@ export const VarsityTournamentHub = () => {
                   Overall Standings
                 </h1>
                 <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl">
-                  Cumulative institutional arena points across all 4 League Match Days. {VARSITY_S2_METADATA.qualificationNote}.
+                  Total university points across all 4 League Match Days. {VARSITY_S2_METADATA.qualificationNote}.
                 </p>
               </div>
 
@@ -1427,7 +1524,7 @@ export const VarsityTournamentHub = () => {
             </div>
 
             {/* Responsive Accessible Standings Table */}
-            <div className="bg-white rounded-3xl overflow-hidden shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
+            <div className="bg-white rounded-3xl overflow-hidden border border-[#EAEAEA] shadow-[0_2px_12px_rgba(15,23,42,0.04)]">
               <div
                 tabIndex={0}
                 role="region"
@@ -1438,15 +1535,15 @@ export const VarsityTournamentHub = () => {
                   <caption id="varsity-overall-standings-caption" className="sr-only">
                     SS4 Chess League Varsity Games Nov. 26 Overall Standings After League Day 1 of 4
                   </caption>
-                  <thead className="bg-[#0B192C] text-white text-[11px] font-space font-extrabold uppercase tracking-wider">
+                  <thead className="bg-[#F6F4F0] border-b border-[#EAEAEA] text-slate-500 text-[11px] font-space font-extrabold uppercase tracking-wider">
                     <tr>
                       <th scope="col" className="py-3.5 px-4 text-center w-16">Rank</th>
                       <th scope="col" className="py-3.5 px-4 min-w-[200px]">Institution</th>
-                      <th scope="col" className="py-3.5 px-3 text-center text-[#93C5FD]">D1</th>
-                      <th scope="col" className="py-3.5 px-3 text-center text-white/50">D2</th>
-                      <th scope="col" className="py-3.5 px-3 text-center text-white/50">D3</th>
-                      <th scope="col" className="py-3.5 px-3 text-center text-white/50">D4</th>
-                      <th scope="col" className="py-3.5 px-4 text-right text-[#93C5FD]">Total</th>
+                      <th scope="col" className="py-3.5 px-3 text-center text-brand-primary">D1</th>
+                      <th scope="col" className="py-3.5 px-3 text-center text-slate-400">D2</th>
+                      <th scope="col" className="py-3.5 px-3 text-center text-slate-400">D3</th>
+                      <th scope="col" className="py-3.5 px-3 text-center text-slate-400">D4</th>
+                      <th scope="col" className="py-3.5 px-4 text-right text-brand-primary">Total</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#F0EEEA] font-medium">
@@ -1588,10 +1685,10 @@ export const VarsityTournamentHub = () => {
 
       {/* ── TAB 3: SEASON 1 ARCHIVE (SEPTEMBER 2026) ── */}
       {activeTab === 'archive' && (
-        <div role="tabpanel" aria-labelledby="varsity-tab-archive">
+        <div role="tabpanel" aria-labelledby="varsity-tab-archive" className="scroll-mt-36 lg:scroll-mt-44">
           <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-6">
-            <div className="bg-white rounded-3xl p-5 sm:p-7 shadow-[0_2px_12px_rgba(15,23,42,0.05)] flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div className="space-y-1">
+            <div className="bg-white rounded-3xl p-5 sm:p-7 border border-[#EAEAEA] shadow-[0_2px_12px_rgba(15,23,42,0.04)] flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="space-y-1.5">
                 <span className="inline-block bg-[#F0EEEA] text-slate-700 px-3 py-1 rounded-md text-[10px] font-space font-extrabold uppercase tracking-wider">
                   Historical Record &bull; September 2026
                 </span>
@@ -1603,7 +1700,7 @@ export const VarsityTournamentHub = () => {
                 </p>
               </div>
 
-              <div className="inline-flex bg-[#F0EEEA] p-1 rounded-xl text-xs font-bold text-slate-600 gap-1 overflow-x-auto no-scrollbar">
+              <div className="inline-flex bg-[#F0EEEA] p-1 rounded-xl text-xs font-bold text-slate-600 gap-1 overflow-x-auto no-scrollbar shrink-0">
                 {ARCHIVE_SUBTABS.map((sub) => (
                   <button
                     key={sub.id}

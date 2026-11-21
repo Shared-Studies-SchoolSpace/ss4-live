@@ -7,13 +7,22 @@ import { FeedContainer } from '../components/feed';
 
 const mockNews = [
     { 
+        tag: 'Varsity Matchday 2', 
+        title: "SCL Varsity Games Matchday 2: League Match 2 Tonight on Lichess", 
+        desc: "The opening fixtures are complete. Next up: League Match 2 on Fri 20 Nov from 8:00–9:00 PM (WAT) in 3+0 Blitz across 15 Nigerian university squads.", 
+        date: 'Nov 20, 2026',
+        image: '/varsity-nov-2026-poster.png',
+        colSpan: 'md:col-span-2 lg:col-span-2',
+        isHero: true
+    },
+    { 
         tag: 'Varsity Season 2', 
         title: "SS4 Chess League Varsity Tournament Nov. '26 (Season 2) Underway on Lichess", 
         desc: 'Featuring the best chess players from top Universities in Nigeria. 15 institutions compete in 5-player teams from 18th–30th November 2026 across 4 League Match Days in 3+0 Blitz, with the top 8 qualifying for the Quarter-Finals.', 
         date: 'Nov 18, 2026',
         image: '/varsity-nov-2026-poster.png',
-        colSpan: 'md:col-span-2 lg:col-span-2',
-        isHero: true
+        colSpan: 'md:col-span-1 lg:col-span-1',
+        isHero: false
     },
     { 
         tag: 'theBOARDGAMES', 
@@ -43,14 +52,14 @@ const mockNews = [
     { 
         tag: 'August Semifinals', 
         title: 'Final Four Clash Over 64 Squares', 
-        desc: 'Semifinals showdown featuring FUTIA, UNILORIN, Bells Tech, and Covenant University. Verified collegiate showdowns on Lichess.', 
+        desc: 'Semifinals showdown featuring FUTIA, UNILORIN, Bells Tech, and Covenant University. Verified university showdowns on Lichess.', 
         date: 'Sep 3, 2026',
         colSpan: 'md:col-span-1 lg:col-span-1'
     },
     { 
         tag: 'August Quarterfinals', 
         title: 'Elite 8 Contenders Battle', 
-        desc: 'Quarterfinal fixtures across 8 top Nigerian university contenders. Pure collegiate chess excellence.', 
+        desc: 'Quarterfinal fixtures across 8 top Nigerian university contenders. Pure university chess excellence.', 
         date: 'Sep 2, 2026',
         colSpan: 'md:col-span-1 lg:col-span-1'
     }

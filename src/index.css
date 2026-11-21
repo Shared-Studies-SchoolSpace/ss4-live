@@ -181,6 +181,10 @@ body {
   mask-repeat: no-repeat;
 }
 
+.overflow-x-clip {
+  overflow-x: clip;
+}
+
 /* Hide scrollbar for Chrome, Safari, Opera, Edge, Firefox */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

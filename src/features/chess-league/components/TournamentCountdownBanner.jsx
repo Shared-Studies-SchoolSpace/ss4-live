@@ -310,7 +310,7 @@ export default function TournamentCountdownBanner() {
                   </span>
                   {!isCustomMode && (
                     <span className="hidden sm:inline text-white/95 text-xs font-normal ml-2">
-                      — Collaborate with SS4 to empower collegiate chess &amp; student excellence across Nigeria
+                      — Collaborate with SS4 to empower university chess &amp; student excellence across Nigeria
                     </span>
                   )}
                 </p>

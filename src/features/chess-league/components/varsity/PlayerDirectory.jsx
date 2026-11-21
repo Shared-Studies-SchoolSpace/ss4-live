@@ -42,7 +42,7 @@ export const PlayerDirectory = () => {
   };
 
   const handleExportCSV = () => {
-    const headers = ['Name', 'Board', 'Platform', 'Handle', 'University', 'Rating', 'Status', 'Played', 'Wins', 'Draws', 'Losses', 'Win Rate %', 'Perf Rating'];
+    const headers = ['Name', 'Board', 'Platform', 'Handle', 'University', 'Rating', 'Played', 'Wins', 'Draws', 'Losses', 'Win Rate %', 'Perf Rating'];
     const rows = filteredPlayers.map(p => [
       `"${p.name}"`,
       p.board,
@@ -50,7 +50,6 @@ export const PlayerDirectory = () => {
       `"${p.handle}"`,
       `"${p.universityName}"`,
       p.rating,
-      p.status,
       p.stats.played,
       p.stats.wins,
       p.stats.draws,
@@ -243,45 +242,58 @@ export const PlayerDirectory = () => {
         </div>
       ) : (
         /* Table View */
-        <div className="bg-white rounded-3xl overflow-hidden shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
+        <div className="bg-white rounded-3xl overflow-hidden border border-[#EAEAEA] shadow-[0_2px_12px_rgba(15,23,42,0.04)]">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-[#0B192C] text-white text-xs font-space font-bold uppercase tracking-wider">
+              <thead className="bg-[#F6F4F0] border-b border-[#EAEAEA] text-slate-500 text-[11px] font-space font-extrabold uppercase tracking-wider">
                 <tr>
-                  <th className="py-3.5 px-4">Board</th>
-                  <th className="py-3.5 px-4">Player</th>
-                  <th className="py-3.5 px-4">University</th>
-                  <th className="py-3.5 px-4">Platform &amp; Handle</th>
-                  <th className="py-3.5 px-4 text-center">Rating</th>
-                  <th className="py-3.5 px-4 text-center">Status</th>
-                  <th className="py-3.5 px-4 text-center">W-D-L</th>
-                  <th className="py-3.5 px-4 text-right">Win Rate</th>
+                  <th scope="col" className="py-3.5 px-4 text-center w-20">Board</th>
+                  <th scope="col" className="py-3.5 px-4 min-w-[160px]">Player</th>
+                  <th scope="col" className="py-3.5 px-4 min-w-[180px]">University</th>
+                  <th scope="col" className="py-3.5 px-4 min-w-[180px]">Platform &amp; Handle</th>
+                  <th scope="col" className="py-3.5 px-4 text-center">Rating</th>
+                  <th scope="col" className="py-3.5 px-4 text-center">W-D-L</th>
+                  <th scope="col" className="py-3.5 px-4 text-right">Win Rate</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#F0EEEA] font-medium">
                 {filteredPlayers.map(player => (
                   <tr key={player.id} className="hover:bg-[#F6F4F0]/70 transition-colors">
-                    <td className="py-3 px-4">
-                      <span className="inline-block bg-[#F0EEEA] text-slate-700 font-space font-extrabold text-xs px-2 py-0.5 rounded-md">
+                    <td className="py-3.5 px-4 text-center">
+                      <span className="inline-flex items-center justify-center font-space font-extrabold text-xs px-2.5 py-1 rounded-lg bg-[#E8EFFF] text-brand-primary">
                         B{player.board}
                       </span>
                     </td>
-                    <td className="py-3 px-4 font-bold text-brand-text-dark">{player.name}</td>
-                    <td className="py-3 px-4 text-slate-600">{player.universityName}</td>
-                    <td className="py-3 px-4 font-mono text-xs text-slate-600">
-                      <span className="text-slate-400 capitalize">{player.platform}:</span> @{player.handle}
+                    <td className="py-3.5 px-4 font-space font-bold text-brand-text-dark text-sm">
+                      {player.name}
                     </td>
-                    <td className="py-3 px-4 text-center font-space font-black text-brand-primary tabular-nums">{player.rating}</td>
-                    <td className="py-3 px-4 text-center">
-                      <span className="inline-block bg-[#D1FAE5] text-[#065F46] text-xs font-bold px-2.5 py-0.5 rounded-full">
-                        {player.status}
+                    <td className="py-3.5 px-4">
+                      <div className="flex items-center gap-2">
+                        <span className="text-slate-700 font-medium">{player.universityName}</span>
+                        <span className="bg-[#F0EEEA] text-slate-600 text-[10px] font-space font-bold px-1.5 py-0.5 rounded uppercase">
+                          {player.universityShort}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-4 font-mono text-xs">
+                      <div className="inline-flex items-center gap-1.5">
+                        <span className="text-slate-400 capitalize font-medium">{player.platform}:</span>
+                        <span className="font-bold text-slate-800 bg-[#F6F4F0] px-2 py-0.5 rounded-md">@{player.handle}</span>
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-4 text-center">
+                      <span className="font-space font-black text-brand-primary text-sm tabular-nums">{player.rating}</span>
+                      <span className="text-[10px] font-mono text-slate-400 ml-1">Elo</span>
+                    </td>
+                    <td className="py-3.5 px-4 text-center">
+                      <span className="font-space font-bold text-slate-700 tabular-nums">
+                        {player.stats.wins}W - {player.stats.draws}D - {player.stats.losses}L
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-center font-bold text-slate-700 tabular-nums">
-                      {player.stats.wins}-{player.stats.draws}-{player.stats.losses}
-                    </td>
-                    <td className="py-3 px-4 text-right font-space font-black text-emerald-600 tabular-nums">
-                      {player.stats.winRate}%
+                    <td className="py-3.5 px-4 text-right">
+                      <span className="font-space font-black text-emerald-600 tabular-nums text-sm">
+                        {player.stats.winRate}%
+                      </span>
                     </td>
                   </tr>
                 ))}

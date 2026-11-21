@@ -82,7 +82,7 @@ const CollegiateCrest = ({ profile, user, onClick }) => {
         transform: `perspective(300px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
         transformStyle: 'preserve-3d'
       }}
-      title="Click to view Intercollegiate Chess Transcript"
+      title="Click to view University Chess Transcript"
     >
       <svg width="72" height="88" viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-md">
         <defs>
@@ -1300,7 +1300,7 @@ export default function DashboardPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                     </svg>
-                    Academic & Collegiate Information
+                    Academic & University Information
                   </h3>
                   <button
                     onClick={() => setActiveTab('settings')}
@@ -2207,7 +2207,7 @@ export default function DashboardPage() {
               
               <div className="text-center space-y-1 mb-6 border-b border-[#111111]/25 pb-4">
                 <span className="text-[9px] font-black text-brand-primary uppercase tracking-widest block">Federal Chess Association</span>
-                <h3 className="text-sm font-black font-space text-brand-text-dark uppercase tracking-wider">SS4 Intercollegiate League</h3>
+                <h3 className="text-sm font-black font-space text-brand-text-dark uppercase tracking-wider">SS4 Inter-University League</h3>
                 <p className="text-[8px] font-mono text-gray-500">OFFICIAL ATHLETIC TRANSCRIPT</p>
               </div>
               

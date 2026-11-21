@@ -22,7 +22,7 @@ export default function PrimaryTabs({
 }) {
   return (
     <div 
-      className={`${sticky ? `sticky ${stickyTop} z-40` : ''} bg-white/95 backdrop-blur-md border-b border-gray-200/90 px-3 sm:px-6 md:px-12 lg:px-16 shadow-xs ${className}`}
+      className={`${sticky ? `sticky ${stickyTop} z-40` : ''} bg-white border-b border-gray-200/90 px-3 sm:px-6 md:px-12 lg:px-16 shadow-xs ${className}`}
     >
       <div 
         role="tablist"

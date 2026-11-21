@@ -541,7 +541,7 @@ export default function TheBoardGamesPage() {
                 the<span className="text-[#B84D00]">BOARDGAMES</span> Hub
               </h1>
               <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl leading-relaxed">
-                Official tournament arena center for Nigeria&apos;s elite collegiate chess championship. 11 premier universities, 13 verified stages, and live game-by-game records.
+                Official tournament arena center for Nigeria&apos;s elite university chess championship. 11 premier universities, 13 verified stages, and live game-by-game records.
               </p>
             </div>
 
@@ -574,7 +574,7 @@ export default function TheBoardGamesPage() {
           {/* Key Metrics Strip (Responsive 2x2 grid on mobile, 4-col on tablet/desktop) */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 pt-2">
             <div className="bg-white rounded-xl p-3.5 shadow-[0_2px_10px_rgba(15,23,42,0.04)]">
-              <span className="text-[10px] font-extrabold font-space uppercase tracking-wider text-slate-500 block">Collegiate Field</span>
+              <span className="text-[10px] font-extrabold font-space uppercase tracking-wider text-slate-500 block">Universities</span>
               <span className="text-xl sm:text-2xl font-black font-space text-brand-text-dark block mt-0.5">11 Universities</span>
               <span className="text-[11px] text-slate-600 font-medium">Bells, UNIUYO, UNILORIN...</span>
             </div>
@@ -1387,7 +1387,7 @@ export default function TheBoardGamesPage() {
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2 h-2 rounded-full bg-brand-primary"></span>
               <p className="text-xs font-extrabold font-space uppercase tracking-widest text-brand-primary">
-                National Collegiate Field
+                Participating Universities
               </p>
             </div>
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-space tracking-tight text-brand-text-dark">
@@ -1447,7 +1447,7 @@ export default function TheBoardGamesPage() {
                     isFlipped ? 'rotate-y-180' : ''
                   }`}
                 >
-                  {/* FRONT FACE: Collegiate Card */}
+                  {/* FRONT FACE: University Card */}
                   <div className="absolute inset-0 backface-hidden rounded-2xl bg-white shadow-[0_2px_10px_rgba(15,23,42,0.04)] hover:shadow-[0_4px_16px_rgba(15,23,42,0.08)] transition-all p-4 flex flex-col justify-between overflow-hidden">
                     <div>
                       {/* Top Bar: University Short & Rating */}
@@ -1480,7 +1480,7 @@ export default function TheBoardGamesPage() {
                         </span>
                       </div>
 
-                      {/* Collegiate Metrics */}
+                      {/* University Metrics */}
                       <div className="grid grid-cols-2 gap-2 mt-2">
                         <div className="bg-[#F6F4F0] rounded-xl p-2 text-left">
                           <span className="text-[9px] font-extrabold font-space uppercase tracking-wider text-slate-500 block">

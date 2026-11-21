@@ -133,47 +133,87 @@ export const VARSITY_S2_EVENTS = [
     })),
     starPlayers: VARSITY_S2_STAR_PLAYERS,
   },
+  {
+    key: 'MD2',
+    matchDay: 2,
+    day: 20,
+    weekday: 'Fri',
+    dateStr: 'Fri, 20 Nov',
+    timeRange: '8:00–9:00 PM',
+    title: 'SCL Varsity Games · Matchday 2',
+    shortTitle: 'Match Day 2',
+    gridLabel: 'Day 2',
+    gridLabelShort: 'MD2',
+    phase: 'League Stage',
+    stage: 'League Day 2 of 4',
+    timeControl: '3+0 Blitz',
+    institutionsCount: 15,
+    playersPerTeam: 5,
+    status: 'UPCOMING',
+    isCompleted: false,
+    isLive: false,
+    startTime: '2026-11-20T20:00:00+01:00',
+    endTime: '2026-11-20T21:00:00+01:00',
+    id: 'CnYWk8AG',
+    link: 'https://lichess.org/tournament/CnYWk8AG',
+    highlightsUrl: null,
+    highlightsVideoId: null,
+    description: 'The opening fixtures are complete. Next up: League Match 2. Fri 20 Nov · 8:00–9:00 PM · 3+0 Blitz on Lichess.',
+    podium: null,
+    standings: null,
+    starPlayers: null,
+  },
 ];
 
-const UPCOMING_DAY_TEMPLATE = {
-  hasMatch: false,
-  title: 'Schedule Pending',
-  phase: 'Tournament Window',
-  stage: '18th – 30th November',
-  timeControl: 'TBA',
-  arenaLink: null,
-  highlightsUrl: null,
-  isLive: false,
-  isCompleted: false,
-  gridLabel: null,
-  gridLabelShort: null,
-  description: 'Official match schedule for remaining League Days (2–4) and Quarter-Finals within the 18th – 30th November window will be published here once confirmed.',
-  podium: null,
-  standings: null,
-  starPlayers: null,
-};
+export function isVarsityEventLive(event, now = Date.now()) {
+  if (!event) return false;
+  if (event.isLive) return true;
+  if (event.startTime && event.endTime) {
+    const start = new Date(event.startTime).getTime();
+    const end = new Date(event.endTime).getTime();
+    return now >= start && now <= end;
+  }
+  return false;
+}
 
-/**
- * Clickable Tournament Calendar: Nov 18 – Nov 30, 2026 (13 days)
- */
-export const VARSITY_S2_CALENDAR_DAYS = Array.from({ length: 13 }, (_, i) => {
-  const day = 18 + i;
-  const weekday = new Date(2026, 10, day).toLocaleDateString('en-US', { weekday: 'short' });
-  const base = { day, dayIndex: i + 1, weekday };
-  const ev = VARSITY_S2_EVENTS.find((e) => e.day === day);
+export function isVarsityEventCompleted(event, now = Date.now()) {
+  if (!event) return false;
+  if (event.isCompleted) return true;
+  if (event.endTime) {
+    return now > new Date(event.endTime).getTime();
+  }
+  return false;
+}
 
-  if (ev) {
+export function getCurrentLiveVarsityMatch(now = Date.now()) {
+  for (const ev of VARSITY_S2_EVENTS) {
+    if (isVarsityEventLive(ev, now)) {
+      return ev;
+    }
+  }
+  return null;
+}
+
+export function buildCalendarDays(events = VARSITY_S2_EVENTS) {
+  return events.map((ev, idx) => {
+    const isLive = isVarsityEventLive(ev);
+    const isCompleted = isVarsityEventCompleted(ev);
+    const status = isLive ? 'LIVE' : isCompleted ? 'COMPLETED' : ev.status || 'UPCOMING';
+    const day = ev.day;
+    const weekday = ev.weekday || new Date(2026, 10, day).toLocaleDateString('en-US', { weekday: 'short' });
     return {
-      ...base,
+      day,
+      dayIndex: idx + 1,
+      weekday,
       hasMatch: true,
       matchDay: ev.matchDay,
       title: ev.title,
       shortTitle: ev.shortTitle,
       phase: ev.phase,
       stage: ev.stage,
-      status: ev.status,
-      isCompleted: ev.isCompleted,
-      isLive: ev.isLive,
+      status,
+      isCompleted,
+      isLive,
       timeRange: ev.timeRange,
       timeControl: ev.timeControl,
       institutionsCount: ev.institutionsCount,
@@ -189,8 +229,14 @@ export const VARSITY_S2_CALENDAR_DAYS = Array.from({ length: 13 }, (_, i) => {
       gridLabel: ev.gridLabel,
       gridLabelShort: ev.gridLabelShort,
       key: ev.key,
+      startTime: ev.startTime || null,
+      endTime: ev.endTime || null,
     };
-  }
+  });
+}
 
-  return { ...base, ...UPCOMING_DAY_TEMPLATE };
-});
+/**
+ * Clickable Tournament Calendar: Confirmed match days only (Day 1 & Day 2)
+ * Unplayed/unscheduled days are omitted until confirmed and uploaded.
+ */
+export const VARSITY_S2_CALENDAR_DAYS = buildCalendarDays(VARSITY_S2_EVENTS);

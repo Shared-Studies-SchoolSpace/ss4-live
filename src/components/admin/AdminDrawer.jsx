@@ -1,5 +1,6 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import AdminBroadcastPanel from '../announcements/AdminBroadcastPanel';
 
 export default function AdminDrawer({ isOpen, onClose }) {
@@ -8,7 +9,7 @@ export default function AdminDrawer({ isOpen, onClose }) {
       {isOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
           {/* Backdrop Overlay */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -17,7 +18,7 @@ export default function AdminDrawer({ isOpen, onClose }) {
           />
 
           {/* Drawer Content */}
-          <motion.div
+          <Motion.div
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -49,12 +50,26 @@ export default function AdminDrawer({ isOpen, onClose }) {
 
             {/* Panel Body */}
             <div 
-              className="p-3 sm:p-6 flex-grow bg-gray-50/50 overflow-y-auto max-w-full [-webkit-overflow-scrolling:touch]"
+              className="p-3 sm:p-6 flex-grow bg-gray-50/50 overflow-y-auto max-w-full [-webkit-overflow-scrolling:touch] space-y-4"
               style={{ WebkitOverflowScrolling: 'touch' }}
             >
+              <div className="bg-white p-3.5 rounded-2xl border border-gray-200 shadow-2xs flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-[10px] font-black uppercase tracking-wider text-slate-500 font-space">Varsity Season 2</div>
+                  <div className="text-xs font-black text-slate-800 truncate">Upload Next Match Day Link</div>
+                </div>
+                <Link
+                  to="/admin/varsity"
+                  onClick={onClose}
+                  className="px-3 py-1.5 rounded-xl bg-brand-primary hover:bg-primary-hover text-white text-xs font-bold shrink-0 transition-colors inline-flex items-center gap-1"
+                >
+                  <span>Open</span>
+                  <span>&rarr;</span>
+                </Link>
+              </div>
               <AdminBroadcastPanel onClose={onClose} />
             </div>
-          </motion.div>
+          </Motion.div>
         </div>
       )}
     </AnimatePresence>

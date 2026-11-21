@@ -20,20 +20,20 @@ export const LeagueStandingsTable = () => {
       </div>
 
       {/* Table Container */}
-      <div className="bg-white rounded-3xl overflow-hidden shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
+      <div className="bg-white rounded-3xl overflow-hidden border border-[#EAEAEA] shadow-[0_2px_12px_rgba(15,23,42,0.04)]">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-[#0B192C] text-white text-xs font-space font-bold uppercase tracking-wider">
+            <thead className="bg-[#F6F4F0] border-b border-[#EAEAEA] text-slate-500 text-[11px] font-space font-extrabold uppercase tracking-wider">
               <tr>
-                <th className="py-3.5 px-4 text-center">Rank</th>
-                <th className="py-3.5 px-4">University Team</th>
-                <th className="py-3.5 px-4 text-center">MP</th>
-                <th className="py-3.5 px-4 text-center">W</th>
-                <th className="py-3.5 px-4 text-center">D</th>
-                <th className="py-3.5 px-4 text-center">L</th>
-                <th className="py-3.5 px-4 text-center">Board Pts</th>
-                <th className="py-3.5 px-4 text-center">Total Pts</th>
-                <th className="py-3.5 px-4 text-center">Form Guide</th>
+                <th scope="col" className="py-3.5 px-4 text-center">Rank</th>
+                <th scope="col" className="py-3.5 px-4">University Team</th>
+                <th scope="col" className="py-3.5 px-4 text-center">MP</th>
+                <th scope="col" className="py-3.5 px-4 text-center">W</th>
+                <th scope="col" className="py-3.5 px-4 text-center">D</th>
+                <th scope="col" className="py-3.5 px-4 text-center">L</th>
+                <th scope="col" className="py-3.5 px-4 text-center">Board Pts</th>
+                <th scope="col" className="py-3.5 px-4 text-center">Total Pts</th>
+                <th scope="col" className="py-3.5 px-4 text-center">Form Guide</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#F0EEEA] font-medium">

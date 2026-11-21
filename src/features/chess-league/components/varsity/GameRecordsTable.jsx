@@ -82,18 +82,18 @@ export const GameRecordsTable = () => {
       </div>
 
       {/* Game Records Table */}
-      <div className="bg-white rounded-3xl overflow-hidden shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
+      <div className="bg-white rounded-3xl overflow-hidden border border-[#EAEAEA] shadow-[0_2px_12px_rgba(15,23,42,0.04)]">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-[#0B192C] text-white text-xs font-space font-bold uppercase tracking-wider">
+            <thead className="bg-[#F6F4F0] border-b border-[#EAEAEA] text-slate-500 text-[11px] font-space font-extrabold uppercase tracking-wider">
               <tr>
-                <th className="py-3.5 px-4">Season &amp; Round</th>
-                <th className="py-3.5 px-4">Fixture</th>
-                <th className="py-3.5 px-4 text-center">Board</th>
-                <th className="py-3.5 px-4">White Player</th>
-                <th className="py-3.5 px-4">Black Player</th>
-                <th className="py-3.5 px-4 text-center">Result</th>
-                <th className="py-3.5 px-4 text-center">External Board</th>
+                <th scope="col" className="py-3.5 px-4">Season &amp; Round</th>
+                <th scope="col" className="py-3.5 px-4">Fixture</th>
+                <th scope="col" className="py-3.5 px-4 text-center">Board</th>
+                <th scope="col" className="py-3.5 px-4">White Player</th>
+                <th scope="col" className="py-3.5 px-4">Black Player</th>
+                <th scope="col" className="py-3.5 px-4 text-center">Result</th>
+                <th scope="col" className="py-3.5 px-4 text-center">External Board</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#F0EEEA] font-medium">

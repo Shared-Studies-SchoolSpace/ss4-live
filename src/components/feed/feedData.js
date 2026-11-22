@@ -1,11 +1,59 @@
 // Initial Feed Data for SS4 Platform Ecosystem
 // Authentic posts with strict chronological timestamps and post indexing:
-// November Varsity Matchday 2 (postIndex: 0) -> November Varsity Season 2 Poster (postIndex: 1) -> October Tournament Poster (postIndex: 2) -> October Aspirants (postIndex: 3) -> September Varsity (postIndex: 4, 5) -> August Tournament (postIndex: 6, 7, 8)
+// November Varsity Matchday 3 (postIndex: 0) -> November Varsity Matchday 2 (postIndex: 1) -> November Varsity Season 2 Poster (postIndex: 2) -> October Tournament Poster (postIndex: 3) -> October Aspirants (postIndex: 4) -> September Varsity (postIndex: 5, 6) -> August Tournament (postIndex: 7, 8, 9)
 
 export const INITIAL_FEED_POSTS = [
   {
-    id: 'post_admin_varsity_nov_2026_md2',
+    id: 'post_admin_varsity_nov_2026_md3',
     postIndex: 0,
+    createdAt: '2026-11-22T18:00:00Z',
+    timestamp: '2026-11-22T18:00:00Z',
+    postType: 'multimedia',
+    mediaType: 'poster',
+    imageUrl: '/varsity-nov-2026-poster.png',
+    categoryClass: 'tournament',
+    readTime: '',
+    isUnread: true,
+    author: {
+      name: 'SS4',
+      avatarImg: '/ss4_logo_without_text.jpg',
+      isAdmin: true,
+      time: 'Nov 22, 2026'
+    },
+    title: 'SCL Varsity Games · Matchday 3: In Less Than 2 Hours, League Match 3 Kicks Off',
+    excerpt: `In less than 2 hours, League Match 3 kicks off.
+
+• **Schedule:** Sun 22 Nov · 8:00–9:00 PM (WAT)
+• **Time Control:** 3+0 Blitz
+• **Competition:** 15 Institutions · 5 Players each · League Stage Day 3
+• **Official Lichess Arena:** <a href="https://lichess.org/tournament/VPQtOc6R" target="_blank" rel="noopener noreferrer" style="color: #1A56C4; text-decoration: underline; font-weight: 600;">lichess.org/tournament/VPQtOc6R</a>
+
+Watch live and track institutional standings in real time!
+
+**Many Institutions, One Space. The Board Remembers.**`,
+    tags: ['#SCLVarsityGames', '#Matchday3', '#Season2', '#SS4ChessLeague', '#Lichess', '#UniversityChess'],
+    likesCount: 0,
+    isLiked: false,
+    isBookmarked: false,
+    embed: {
+      type: 'lobby',
+      actionLabel: 'Watch Live Arena on Lichess →',
+      onAction: () => {
+        window.open('https://lichess.org/tournament/VPQtOc6R', '_blank', 'noopener,noreferrer');
+      },
+      calendarEvent: {
+        title: 'SCL Varsity Games · Matchday 3',
+        description: 'League Match 3 (Sun 22 Nov · 8:00–9:00 PM · 3+0 Blitz). 15 Institutions on Lichess. The Board Remembers.',
+        startDate: '2026-11-22',
+        endDate: '2026-11-22',
+        location: 'Online (Lichess)'
+      }
+    },
+    comments: []
+  },
+  {
+    id: 'post_admin_varsity_nov_2026_md2',
+    postIndex: 1,
     createdAt: '2026-11-20T18:00:00Z',
     timestamp: '2026-11-20T18:00:00Z',
     postType: 'multimedia',
@@ -56,7 +104,7 @@ Watch live and track institutional standings in real time!
   },
   {
     id: 'post_admin_varsity_nov_2026_s2',
-    postIndex: 1,
+    postIndex: 2,
     createdAt: '2026-11-18T19:00:00Z',
     timestamp: '2026-11-18T19:00:00Z',
     postType: 'multimedia',
@@ -111,7 +159,7 @@ Season 2 of the SS4 Chess League Varsity Tournament is officially underway on Li
   },
   {
     id: 'post_admin_october_theboardgames_2026',
-    postIndex: 2,
+    postIndex: 3,
     createdAt: '2026-10-09T08:00:00Z',
     timestamp: '2026-10-09T08:00:00Z',
     postType: 'multimedia',
@@ -170,7 +218,7 @@ Will Covenant University's Anuchi Emmanuel defend his August crown, or will a ne
   },
   {
     id: 'post_admin_october_aspirants_2026',
-    postIndex: 3,
+    postIndex: 4,
     createdAt: '2026-10-02T09:00:00Z',
     timestamp: '2026-10-02T09:00:00Z',
     postType: 'text',
@@ -213,7 +261,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_varsity_lineups_2026',
-    postIndex: 4,
+    postIndex: 5,
     createdAt: '2026-09-16T12:00:00Z',
     timestamp: '2026-09-16T12:00:00Z',
     postType: 'multimedia',
@@ -355,7 +403,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_varsity_tournament_2026',
-    postIndex: 5,
+    postIndex: 6,
     createdAt: '2026-09-14T10:00:00Z',
     timestamp: '2026-09-14T10:00:00Z',
     postType: 'multimedia',
@@ -391,7 +439,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_champion_2026',
-    postIndex: 6,
+    postIndex: 7,
     createdAt: '2026-09-04T22:30:00Z',
     timestamp: '2026-09-04T22:30:00Z',
     postType: 'multimedia',
@@ -436,7 +484,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_semifinals_2026',
-    postIndex: 7,
+    postIndex: 8,
     createdAt: '2026-09-03T19:00:00Z',
     timestamp: '2026-09-03T19:00:00Z',
     postType: 'multimedia',
@@ -490,7 +538,7 @@ Many Institutions, One Space. The Board Remembers.`,
   },
   {
     id: 'post_admin_august_quarterfinals_2026',
-    postIndex: 8,
+    postIndex: 9,
     createdAt: '2026-09-02T19:00:00Z',
     timestamp: '2026-09-02T19:00:00Z',
     postType: 'multimedia',

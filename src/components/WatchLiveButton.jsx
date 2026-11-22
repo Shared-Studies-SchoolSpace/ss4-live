@@ -9,7 +9,7 @@ import {
   subscribeToVarsityEvents,
 } from '../features/chess-league/services/varsityMatchService';
 
-const DEFAULT_MATCHDAY_2_URL = 'https://lichess.org/tournament/CnYWk8AG';
+const DEFAULT_MATCHDAY_URL = 'https://lichess.org/tournament/VPQtOc6R';
 
 /**
  * WatchLiveButton
@@ -28,15 +28,15 @@ export const WatchLiveButton = ({ className = '', variant = 'navbar' }) => {
       if (params.get('offline') === '1' || params.get('live') === 'false') {
         return {
           isLive: false,
-          title: 'SCL Varsity Games · Matchday 2',
-          url: DEFAULT_MATCHDAY_2_URL,
+          title: 'SCL Varsity Games · Matchday 3',
+          url: DEFAULT_MATCHDAY_URL,
         };
       }
       if (params.get('live') === 'true' || params.get('testLive') === '1') {
         return {
           isLive: true,
-          title: 'SCL Varsity Games · Matchday 2',
-          url: DEFAULT_MATCHDAY_2_URL,
+          title: 'SCL Varsity Games · Matchday 3',
+          url: DEFAULT_MATCHDAY_URL,
         };
       }
     }
@@ -44,8 +44,8 @@ export const WatchLiveButton = ({ className = '', variant = 'navbar' }) => {
     const liveMatch = getCurrentLiveVarsityMatch(new Date(), initialEvents);
     return {
       isLive: Boolean(liveMatch),
-      title: liveMatch?.title || 'SCL Varsity Games · Matchday 2',
-      url: liveMatch?.link || DEFAULT_MATCHDAY_2_URL,
+      title: liveMatch?.title || 'SCL Varsity Games · Matchday 3',
+      url: liveMatch?.link || DEFAULT_MATCHDAY_URL,
     };
   });
 
@@ -80,16 +80,16 @@ export const WatchLiveButton = ({ className = '', variant = 'navbar' }) => {
         if (params.get('offline') === '1' || params.get('live') === 'false') {
           setLiveState({
             isLive: false,
-            title: 'SCL Varsity Games · Matchday 2',
-            url: DEFAULT_MATCHDAY_2_URL,
+            title: 'SCL Varsity Games · Matchday 3',
+            url: DEFAULT_MATCHDAY_URL,
           });
           return;
         }
         if (params.get('live') === 'true' || params.get('testLive') === '1') {
           setLiveState({
             isLive: true,
-            title: 'SCL Varsity Games · Matchday 2',
-            url: DEFAULT_MATCHDAY_2_URL,
+            title: 'SCL Varsity Games · Matchday 3',
+            url: DEFAULT_MATCHDAY_URL,
           });
           return;
         }
@@ -98,8 +98,8 @@ export const WatchLiveButton = ({ className = '', variant = 'navbar' }) => {
       const match = getCurrentLiveVarsityMatch(new Date(), events);
       setLiveState({
         isLive: Boolean(match),
-        title: match?.title || 'SCL Varsity Games',
-        url: match?.link || DEFAULT_MATCHDAY_2_URL,
+        title: match?.title || 'SCL Varsity Games · Matchday 3',
+        url: match?.link || DEFAULT_MATCHDAY_URL,
       });
     };
 

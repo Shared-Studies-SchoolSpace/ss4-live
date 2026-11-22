@@ -7,13 +7,22 @@ import { FeedContainer } from '../components/feed';
 
 const mockNews = [
     { 
-        tag: 'Varsity Matchday 2', 
-        title: "SCL Varsity Games Matchday 2: League Match 2 Tonight on Lichess", 
-        desc: "The opening fixtures are complete. Next up: League Match 2 on Fri 20 Nov from 8:00–9:00 PM (WAT) in 3+0 Blitz across 15 Nigerian university squads.", 
-        date: 'Nov 20, 2026',
+        tag: 'Varsity Matchday 3', 
+        title: "SCL Varsity Games Matchday 3: League Match 3 Kicks Off Tonight on Lichess", 
+        desc: "In less than 2 hours, League Match 3 kicks off. Sun 22 Nov from 8:00–9:00 PM (WAT) in 3+0 Blitz across 15 Nigerian university squads.", 
+        date: 'Nov 22, 2026',
         image: '/varsity-nov-2026-poster.png',
         colSpan: 'md:col-span-2 lg:col-span-2',
         isHero: true
+    },
+    { 
+        tag: 'Varsity Matchday 2', 
+        title: "SCL Varsity Games Matchday 2 Concluded on Lichess", 
+        desc: "League Match 2 on Fri 20 Nov in 3+0 Blitz across 15 Nigerian university squads concluded with thrilling board encounters.", 
+        date: 'Nov 20, 2026',
+        image: '/varsity-nov-2026-poster.png',
+        colSpan: 'md:col-span-1 lg:col-span-1',
+        isHero: false
     },
     { 
         tag: 'Varsity Season 2', 

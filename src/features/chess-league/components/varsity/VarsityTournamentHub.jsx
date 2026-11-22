@@ -81,12 +81,18 @@ export const VarsityTournamentHub = () => {
   const [events, setEvents] = useState(() => getStoredEvents());
   const calendarDays = useMemo(() => buildCalendarDays(events), [events]);
 
-  const [selectedDayNum, setSelectedDayNum] = useState(20);
+  const [selectedDayNum, setSelectedDayNum] = useState(() => {
+    const stored = getStoredEvents();
+    return stored[stored.length - 1]?.day || 22;
+  });
   const [calendarFilter, setCalendarFilter] = useState('all'); // 'all' | 'matches'
   const [calendarViewMode, setCalendarViewMode] = useState('strip'); // 'strip' | 'grid' on mobile
   const [showStandingsDrawer, setShowStandingsDrawer] = useState(false);
 
-  const [activeArenaMatchId, setActiveArenaMatchId] = useState('CnYWk8AG');
+  const [activeArenaMatchId, setActiveArenaMatchId] = useState(() => {
+    const stored = getStoredEvents();
+    return stored[stored.length - 1]?.id || 'VPQtOc6R';
+  });
   const [deckMode, setDeckMode] = useState('arena'); // 'arena' | 'highlights'
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);

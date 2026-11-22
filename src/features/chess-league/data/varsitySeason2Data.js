@@ -149,8 +149,8 @@ export const VARSITY_S2_EVENTS = [
     timeControl: '3+0 Blitz',
     institutionsCount: 15,
     playersPerTeam: 5,
-    status: 'UPCOMING',
-    isCompleted: false,
+    status: 'COMPLETED',
+    isCompleted: true,
     isLive: false,
     startTime: '2026-11-20T20:00:00+01:00',
     endTime: '2026-11-20T21:00:00+01:00',
@@ -158,7 +158,37 @@ export const VARSITY_S2_EVENTS = [
     link: 'https://lichess.org/tournament/CnYWk8AG',
     highlightsUrl: null,
     highlightsVideoId: null,
-    description: 'The opening fixtures are complete. Next up: League Match 2. Fri 20 Nov · 8:00–9:00 PM · 3+0 Blitz on Lichess.',
+    description: 'League Match Day 2 (3+0 Blitz · 15 Institutions · 5 Players each) on Lichess has concluded.',
+    podium: null,
+    standings: null,
+    starPlayers: null,
+  },
+  {
+    key: 'MD3',
+    matchDay: 3,
+    day: 22,
+    weekday: 'Sun',
+    dateStr: 'Sun, 22 Nov',
+    timeRange: '8:00–9:00 PM',
+    title: 'SCL Varsity Games · Matchday 3',
+    shortTitle: 'Match Day 3',
+    gridLabel: 'Day 3',
+    gridLabelShort: 'MD3',
+    phase: 'League Stage',
+    stage: 'League Day 3 of 4',
+    timeControl: '3+0 Blitz',
+    institutionsCount: 15,
+    playersPerTeam: 5,
+    status: 'UPCOMING',
+    isCompleted: false,
+    isLive: false,
+    startTime: '2026-11-22T20:00:00+01:00',
+    endTime: '2026-11-22T21:00:00+01:00',
+    id: 'VPQtOc6R',
+    link: 'https://lichess.org/tournament/VPQtOc6R',
+    highlightsUrl: null,
+    highlightsVideoId: null,
+    description: 'In less than 2 hours, League Match 3 kicks off. Sun 22 Nov · 8:00–9:00 PM · 3+0 Blitz on Lichess.',
     podium: null,
     standings: null,
     starPlayers: null,
@@ -185,8 +215,8 @@ export function isVarsityEventCompleted(event, now = Date.now()) {
   return false;
 }
 
-export function getCurrentLiveVarsityMatch(now = Date.now()) {
-  for (const ev of VARSITY_S2_EVENTS) {
+export function getCurrentLiveVarsityMatch(now = Date.now(), events = VARSITY_S2_EVENTS) {
+  for (const ev of events) {
     if (isVarsityEventLive(ev, now)) {
       return ev;
     }
